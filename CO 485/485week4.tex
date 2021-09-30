@@ -125,7 +125,7 @@ it is easy to extract the highest power of $2$ dividing $N$.
     \begin{algorithmic}[1]
         \State Set $a \gets 2$. \Comment{note that $\gcd(a, N) = 1$}
         \For{$i = 2$ \textbf{to} $B$} 
-            \State $a \gets a^j \pmod N$.
+            \State $a \gets a^i \pmod N$.
         \EndFor 
         \State $n \gets \gcd(a - 1, N)$. 
         \If{$1 < n < N$}
