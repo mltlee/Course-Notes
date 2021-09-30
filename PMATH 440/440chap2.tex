@@ -1,0 +1,302 @@
+\section{Asymptotic Analysis for $\pi(x)$}
+
+\subsection{The M\"obius Function}
+
+\begin{defn}
+Let $f$ and $g$ be functions from $\N$ or $\R^+$ to $\R$, and suppose that $g$ maps to $\R^+$. 
+\begin{enumerate}[(1)]
+    \item We write $f = O(g)$ if there exist constants $c_1, c_2 > 0$ such that for all $x > c_1$, 
+    we have $|f(x)| \leq c_2 g(x)$. 
+    \item We write $f = o(g)$ if $\lim_{n\to\infty} f(n)/g(n) = 0$. 
+    \item We write $f \sim g$ if $\lim_{n\to\infty} f(n)/g(n) = 1$, and we say that $f$ is 
+    {\bf asymptotic} to $g$. 
+\end{enumerate}
+\end{defn}
+
+By the Prime Number Theorem, we have $\pi(x) \sim x/\log x$, or equivalently, 
+\begin{equation}
+    \pi(x) = \frac{x}{\log x} + o\left( \frac{x}{\log x} \right). 
+\end{equation}
+\begin{remark}
+Let $\eps > 0$. Then the number of primes in the interval $[x, (1+\eps)x]$ is 
+\[ \pi((1+\eps)x) - \pi(x) = \frac{(1+\eps)x}{\log((1+\eps)x)} - \frac{x}{\log x} + o\left( \frac{x}{\log x} \right). \]
+Notice that 
+\[ \frac{(1+\eps)x}{\log((1+\eps)x)} = \frac{(1+\eps)x}{\log x + \log(1+\eps)} 
+= \frac{(1+\eps)x}{(\log x)(1 + \log(1+\eps)/\log x)} = \frac{(1+\eps)x}{\log x} + o\left( \frac{x}{\log x} \right). \]
+Therefore, it follows that 
+\[ \pi((1+\eps)x) - \pi(x) = \frac{(1+\eps)x}{\log x} - \frac{x}{\log x} + o\left( \frac{x}{\log x} \right) = \frac{\eps x}{\log x} + o\left( \frac{x}{\log x} \right). \]
+By taking $\eps = 1$, we have 
+\begin{equation}
+    \pi(2x) - \pi(x) = \frac{x}{\log x} + o\left( \frac{x}{\log x} \right).
+\end{equation} 
+Equation (2.2) might look odd together with equation (2.1). Nonetheless, the result is 
+correct; it's just that the bounds in the notation $o$ are different. 
+\end{remark}
+
+\begin{defn}
+We define the {\bf M\"obius function} on $\N$ by 
+\[ \mu(n) = \begin{cases} 1 & \text{if } n = 1, \\ 0 & \text{ if $n$ is not squarefree,} \\ 
+(-1)^r & \text{if $n$ is a product of $r$ distinct primes.} \end{cases} \]
+\end{defn}
+For example, we have $\mu(48) = \mu(2^4 \cdot 3) = 0$ and $\mu(30) = \mu(2 \cdot 3 \cdot 5) = 
+(-1)^3 = -1$. 
+
+\begin{prop}
+We have 
+\[ \sum_{d \mid n} \mu(d) = \begin{cases} 1 & \text{if } n = 1, \\ 0 & \text{otherwise,} \end{cases} \]
+where $\sum_{d\mid n}$ means that the summation runs through the positive divisors $d$ of $n$. 
+\end{prop}
+\begin{pf}
+The result is true for $n = 1$. For $n > 1$, let $n = p_1^{a_1} \cdots p_r^{a_r}$ be the unique 
+factorization of $n$ into distinct prime numbers. Set $N = p_1 \cdots p_r$ (which is called the 
+{\bf radical} of $n$). Since $\mu(d) = 0$ when $d$ is not squarefree, we have 
+\[ \sum_{d\mid n} \mu(d) = \sum_{d\mid N} \mu(d). \]
+Note that the divisors of $N$ are in bijective correspondence with the subsets of $\{p_1, \dots, p_r\}$. 
+Since the number of $k$ element subsets is $\binom{r}{k}$ and the corresponding divisor $d$ of such 
+a set satisfies $\mu(d) = (-1)^k$, we have 
+\[ \sum_{d \mid n} \mu(d) = \sum_{d \mid N} \mu(d) = \sum_{k=0}^r \binom rk (-1)^k = (1-1)^r = 0. \qedhere \]
+\end{pf}
+
+\begin{prop}[M\"obius Inversion Formula]~
+\begin{enumerate}[(1)]
+    \item For two functions $f, g : \R^+ \to \C$, we have 
+    \[ g(x) = \sum_{1 \leq n \leq x} f(x/n) \]
+    if and only if 
+    \[ f(x) = \sum_{1 \leq n \leq x} \mu(n) g(x/n). \]
+    \item For two functions $f, g : \N \to \C$, we have 
+    \[ f(n) = \sum_{d \mid n} g(d) \]
+    if and only if 
+    \[ g(n) = \sum_{d \mid n} \mu(d) f(n/d). \]
+\end{enumerate}
+\end{prop}
+\begin{pf}
+This is on Homework 1.
+\end{pf}
+
+\subsection{The von Mangoldt Function}
+
+\begin{defn}
+We define the {\bf von Mangoldt function} on $\N$ by 
+\[ \Lambda(n) = \begin{cases} \log p & \text{if $n = p^k$ for $p$ prime and $k \in \N$,} \\ 0 & \text{otherwise.} \end{cases} \]
+Moreover, for all $x \in \R$, we define the functions 
+\begin{align*}
+    \theta(x) &= \sum_{p\leq x} \log p = \log \prod_{p \leq x} p, \\ 
+    \psi(x) &= \sum_{p^k \leq x} \log p = \sum_{n \leq x} \Lambda(n). 
+\end{align*}
+\end{defn}
+
+Notice that 
+\[ \psi(x) = \sum_{p\leq x} \left\lfloor \frac{\log x}{\log p} \right\rfloor \log p. \]
+Since $p^2 \leq x$ is equivalent to $p \leq x^{1/2}$ and $p^3 \leq x$ if and only if $p \leq x^{1/3}$, 
+we see that 
+\[ \psi(x) = \theta(x) + \theta(x^{1/2}) + \theta(x^{1/3}) + \cdots. \]
+Note that $\theta(x^{1/m}) = 0$ when $m > \frac{\log x}{\log 2}$. Therefore, we get 
+\[ \psi(x) = \sum_{k=1}^{\left\lfloor \frac{\log x}{\log 2} \right\rfloor} \theta(x^{1/k}). \]
+Observe that we have the inequality 
+\[ \theta(x) = \sum_{p\leq x} \log p \leq x \log x, \]
+so it follows that 
+\[ \sum_{k \geq 2} \theta(x^{1/k}) = O\left( x^{1/2} (\log x)^2 \right). \]
+Therefore, we obtain 
+\[ \psi(x) = \theta(x) + O\left( x^{1/2} (\log x)^2 \right) \]
+and so by Theorem 1.12, we get 
+\[ \theta(x) = \sum_{p\leq x}\log p \leq \pi(x) \log x < c_1 x \]
+for $x \geq 2$ and a constant $c_1 > 0$. Similarly, one finds that $\psi(x) < c_2x$ for $x \geq 2$
+and a positive constant $c_2$. Furthermore, from the proof of Theorem 1.12, we have $2^n \leq \binom{2n}n$
+and $\binom{2n}n \mid \prod_{p \leq 2n} p^{r_p}$, where $r_p$ is the integer satisfying 
+$p^{r_p} \leq 2n < p^{r_p+1}$. It follows that 
+\[ n\log 2 = \log(2^n) \leq \log \binom{2n}n \leq \sum_{p\leq 2n} r_p \log p \leq 
+\sum_{p \leq 2n} \left\lfloor \frac{\log(2n)}{\log p} \right\rfloor \log p \leq \psi(2n). \]
+For $x \geq 2$, choosing $n$ such that $2n \leq x < 2n+2$ gives 
+\[ \psi(x) \geq \psi(2n) \geq n\log 2 > \frac{x-2}2 \log 2. \]
+Hence, we have $\psi(x) > c_3x$ and $\theta(x) > c_4x$ for positive constants $c_3$ and $c_4$. 
+
+What is the relationship between $\theta(x)$, $\psi(x)$, and $\pi(x)$? We note that 
+\[ \theta(x) = \sum_{p \leq x} \log p \leq x \log p \leq \pi(x) \log x, \]
+so it follows that 
+\[ \pi(x) \geq \frac{\theta(x)}{\log x} > c_4 \frac{x}{\log x}. \]
+
+\begin{thm}
+We have 
+\[ \pi(x) \sim \frac{\theta(x)}{\log x} \sim \frac{\psi(x)}{\log x}. \]
+\end{thm}
+\begin{pf}
+Since $\psi(x) = \theta(x) + O(x^{1/2} (\log x)^2)$ and $\theta(x) > c_4x$, we see that $\theta(x) 
+\sim \psi(x)$. In particular, we have $\theta(x)/\log x \sim \psi(x)/\log x$, so it only 
+remains to show that $\pi(x) \sim \theta(x)/\log x$. 
+
+We have already shown that $\pi(x) \geq \theta(x) \geq \log x$, so 
+\[ \liminf_{n\to\infty} \frac{\pi(x) \log x}{\theta(x)} \geq 1. \]
+We need an upper bound for $\pi(x)$ in terms of $\theta(x)$. Note that for any $\delta > 0$, we have 
+\[ \theta(x) = \sum_{p\leq x} \log p \geq \log(x^{1-\delta}) \sum_{x^{1-\delta} \leq p \leq x} 1 
+\geq (1-\delta)(\log x)\left(\pi(x) - \pi(x^{1-\delta})\right). \]
+Since $\pi(y) \leq y$ for all real numbers $y > 0$, we get 
+\[ \theta(x) + (1-\delta)x^{1-\delta} \log x \geq (1-\delta)(\log x)\pi(x). \]
+Rearranging the above gives 
+\[ \frac{\theta(x)}{(1-\delta)\log x} + x^{1-\delta} \geq \pi(x), \]
+and therefore 
+\[ \frac{1}{1-\delta} + \frac{x^{1-\delta}\log x}{\theta(x)} \geq \frac{\pi(x)\log x}{\theta(x)}. \]
+Given $\eps > 0$, we can choose $\delta > 0$ such that $\frac{1}{1-\delta} < 1 + \frac{\eps}2$, 
+and then pick $x_0$ such that if $x > x_0$, then 
+\[ \frac{x^{1-\delta}\log x}{\theta(x)} < \frac\eps2 \] 
+since $\theta(x) > c_1x$ for $x \geq 2$. Then for all $x > x_0$, we have 
+\[ 1 \leq \frac{\pi(x) \log x}{\theta(x)} < 1 + \eps, \]
+which completes the proof.
+\end{pf}
+
+\subsection{Abel's Summation Formula}
+We will prove Abel's summation formula and give some of its
+applications.
+
+\begin{lemma}[Abel's summation formula]
+Let $\{a_n\}_{n=1}^\infty$ be a sequence of complex numbers. 
+Let $f : \{x \in \R : x \geq 1\} \to \C$ be a function. 
+For all $x \geq 1$, we define 
+\[ A(x) := \sum_{n\leq x} a_n, \]
+where the summation runs through all positive integers up to 
+$x$. If $f'$ is continuous at every $x \geq 1$, then 
+\[ \sum_{n\leq x} a_n f(n) = A(x) f(x) - \int_1^x A(u)f'(u)\dd u. \]
+\end{lemma}
+\begin{pf}
+Set $N = \lfloor x \rfloor$. Note that 
+$a_n = A(n) - A(n-1)$ for all $n \geq 2$, so we can write 
+\begin{align*}
+    \sum_{n\leq N} a_n f(n) &= A(1)f(1) + 
+    (A(2) - A(1))f(2) + \cdots + (A(N) - A(N-1)) f(N) \\
+    &= A(1)(f(1) - f(2)) + \cdots + A(N-1)(f(N-1) - f(N)) + A(N)f(N).
+\end{align*}
+Observe that if $i \in \Z^+$ and $t \in \R$ with $i \leq t < i+1$, then $A(t) = A(i)$. 
+It follows that 
+\[ A(i) (f(i) - f(i+1)) = -\int_i^{i+1} A(u) f'(u)\dd u. \]
+Therefore, we have 
+\[ \sum_{n\leq N} a_n f(n) = -\int_1^N A(u)f'(u)\dd u + 
+A(N)f(N), \]
+so the result holds when $x$ is an integer. Now, notice that 
+$A(t) = A(N)$ for all $x \geq t \geq N$, so we obtain 
+\[ \int_N^x A(u) f'(u)\dd u = A(x)(f(x) - f(N)) = 
+A(x)f(x) - A(N)f(N). \]
+Thus, the result holds for all $x \geq 1$.
+\end{pf}
+
+\begin{defn}
+Given $x \in \R$, we denote the {\bf fractional part} of 
+$x$ by $\{x\}$; that is, 
+\[ \{x\} := x - \lfloor x \rfloor. \]
+We define {\bf Euler's constant} by 
+\[ \gamma := 1 - \int_1^\infty \frac{\{t\}}{t^2}\dd t 
+= 1 - \int_1^\infty \frac{t - \lfloor t \rfloor}{t^2}\dd t. \]
+Note that $\gamma \approx 0.55721$. 
+\end{defn}
+
+This has not been proven, but it has been conjectured that 
+$\gamma$ is irrational and transcendental.
+
+\begin{thm}
+We have 
+\[ \sum_{n \leq x} \frac1n = \log x + \gamma + O
+\left( \frac1x \right). \]
+\end{thm}
+\begin{pf}
+Taking $a_n = 1$ and $f(t) = 1/t$ in Abel's summation formula,
+we have 
+\[ A(x) = \sum_{n\leq x} a_n = \sum_{n \leq x} 1 = \floor{x} \]
+so that 
+\begin{align*}
+    \sum_{n\leq x} \frac1n &= \frac{\floor{x}}{x} + \int_1^x \frac{\floor{u}}{u^2}\dd u \\
+    &= \frac{x - (x - \floor x)}{x} + \int_1^x \frac{u - (u - \floor u)}{u^2}\dd u \\
+    &= 1 + O\left(\frac1x\right) + \int_1^x \frac{{\rm d}u}u -
+    \int_1^x \frac{u - \floor u}{u^2}\dd u \\
+    &= 1 + O\left(\frac1x\right) + \log x - \left( \int_1^\infty \frac{u-\floor u}{u^2}\dd u - \int_x^\infty \frac{u-\floor u}{u^2}\dd u \right) \\
+    &= \log x + \gamma + O\left(\frac1x\right) + 
+    \int_x^\infty \frac{u-\floor u}{u^2}\dd u \\
+    &= \log x + \gamma + O\left(\frac1x\right) 
+    + O\left(\int_x^\infty \frac1{u^2}\dd u \right) \\
+    &= \log x + \gamma + O\left(\frac1x\right). \qedhere
+\end{align*}
+\end{pf}
+
+\begin{thm}
+We have 
+\[ \sum_{n \leq x} \frac{\Lambda(n)}n = \log x + O(1). \]
+\end{thm}
+\begin{pf}
+First, we apply Abel's summation formula with $a_n = 1$ 
+and $f(n) = \log n$ to get 
+\begin{align*}
+    \sum_{n\leq x} \log n
+    &= \floor x \log x - \int_1^x \frac{\floor u}u\dd u \\
+    &= (x - (x - \floor x))\log x - \int_1^x 
+    \frac{u - (u - \floor u)}u \dd u \\
+    &= x\log x + O(\log x) - (x-1) + \int_1^x \frac{u - \floor u}u\dd u \\
+    &= x\log x - x + O(\log x).
+\end{align*}
+On the other hand, we have 
+\begin{align*}
+    \sum_{n\leq x} \log n 
+    = \log(\floor{x}!) 
+    &= \sum_{p\leq x} \left( \sum_{k=1}^\infty \floor*{\frac{x}{p^k}} \right)\log p \\
+    &= \sum_{p^m \leq x} \floor*{\frac{x}{p^m}} \log p \\
+    &= \sum_{n \leq x} \floor*{\frac xn} \Lambda(n) \\
+    &= \sum_{n \leq x} \frac xn \Lambda(n) - 
+    \sum_{n\leq x} \left( \frac xn - \floor*{\frac xn} \right)
+    \Lambda(n) \\
+    &= x \sum_{n\leq x} \frac{\Lambda(n)}n - O\left( \sum_{n\leq x} \Lambda(n) \right). 
+\end{align*}
+Since $\sum_{n\leq x} \Lambda(n) = \psi(x) = O(x)$, we have 
+\[ \sum_{n\leq x} \log x = x \sum_{n \leq x} \frac{\Lambda(n)}n - O(n). \]
+By the asymptotic formula of $\sum_{n\leq x} \log n$ above, we see that 
+\[ x\log x - x + O(\log x) = x\sum_{n\leq x} \frac{\Lambda(n)}n - O(x). \]
+Rearranging and tucking some terms under $O(x)$ gives 
+\[ x \sum_{n\leq x} \frac{\Lambda(n)}n = x\log x + O(x). \]
+Finally, dividing through by $x$ gives 
+\[ \sum_{n\leq x} \frac{\Lambda(n)}n = \log x + O(1). \qedhere \]
+\end{pf}
+
+\begin{thm}
+We have
+\[ \sum_{p\leq x} \frac{\log p}p = \log x + O(1). \]
+\end{thm}
+\begin{pf}
+Note that 
+\[ \sum_{p \leq x} \frac{\log p}p 
+= \sum_{n \leq x} \frac{\Lambda(n)}n - \sum_{m\geq2} \sum_{p^m\leq x} \frac{\log p}{p^m} \\
+= \log x + O(1) - \sum_{m\geq2}\sum_{p^m\leq x}
+\frac{\log p}{p^m}. \]
+Moreover, we see that 
+\[ \sum_{m\geq2}\sum_{p^m\leq x}
+\frac{\log p}{p^m} \leq \sum_p \left( \frac1{p^2} + \frac1{p^3} + \cdots \right)\log p 
+\leq \sum_p \frac{\log p}{p(p-1)} 
+\leq \sum_{n=2}^\infty \frac{\log n}{n(n-1)} = O(1), \]
+which completes the proof.
+\end{pf}
+
+\begin{thm}[Merten]
+There exists a real number $\beta$ such that 
+\[ \sum_{p \leq x} \frac1p = \log\log x + \beta + O\left(\frac1{\log x}\right). \]
+\end{thm}
+\begin{pf}
+We apply Abel's summation formula with 
+\[ a_n = \begin{cases} \frac{\log p}p & \text{if $n = p$ for a prime $p$} \\ 0 & \text{otherwise} \end{cases} \]
+and $f(n) = 1/\log n$. Setting $A(x) = \sum_{n\leq x} a_n$, we have 
+\[ \sum_{p \leq x} \frac1p = \frac{A(x)}{\log x} + 
+\int_1^x \frac{A(u)}{u(\log u)^2}\dd u. \]
+By the preceding theorem, we have 
+\[ A(x) = \sum_{p\leq x} \frac{\log p}p = \log x + O(1), \]
+so we see that 
+\[ \sum_{p\leq x} \frac1p = 1 + O\left(\frac1{\log x}\right)
++ \int_2^x \frac{\log u + \tau(u)}{u(\log u)^2}\dd u, \]
+where $\tau(u) = A(u) - \log u = O(1)$. Therefore, we have 
+\begin{align*}
+    \sum_{p\leq x} \frac1p 
+    &= 1 + O\left( \frac1{\log x} \right) + \log\log x 
+    - \log\log 2 + \int_2^x \frac{\tau(u)}{u(\log u)^2}\dd u \\
+    &= \log\log x + 1 - \log\log 2 + \int_2^\infty 
+    \frac{\tau(u)}{u(\log u)^2}\dd u - 
+    \int_x^\infty \frac{\tau(u)}{u(\log u)^2}\dd u + 
+    O \left( \frac1{\log x} \right). 
+\end{align*}
+By setting $\beta$ to the middle terms above, we are done.
+\end{pf}
+
+In fact, we have 
+\[ \beta = \gamma + \sum_p \left[ \log \left( 1 - \frac1p \right) + \frac1p \right] \approx 0.261497, \]
+and $\beta$ is called {\bf Merten's constant}.

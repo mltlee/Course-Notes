@@ -1,0 +1,324 @@
+\newpage 
+\section{Riemann's Zeta Function and the Prime Number Theorem}
+
+\subsection{The Riemann Zeta Function}
+In order to prove the Prime Number Theorem, we need to 
+first introduce the Riemann zeta function. 
+
+\begin{defn}
+For $s \in \C$ with $\Re(s) > 1$, we define the 
+{\bf Riemann zeta function} by 
+\[ \zeta(s) := \sum_{n=1}^\infty \frac1{n^s}. \]
+We will denote $s = \sigma + it$ where $\sigma, t \in \R$. 
+\end{defn}
+
+Note that the series $\sum_{n=1}^\infty n^{-s}$ converges 
+absolutely when $\Re(s) > 1$. 
+
+Recall that the infinite product $\prod_n (1 + a_n)$ 
+converges absolutely (that is, it is finite and non-zero)
+if and only if $\sum_n |a_n|$ converges. We have the 
+{\bf Euler product representation} of $\zeta(s)$ given 
+in the following lemma. 
+
+\begin{lemma}[Euler product]
+For $s \in \C$ with $\Re(s) > 1$, we have 
+\[ \prod_p \left( 1 - \frac1{p^s} \right)^{\!-1} = 
+\sum_{n=1}^\infty \frac1{n^s}. \]
+\end{lemma}
+\begin{pf}
+Note that 
+\[ \prod_p \left( 1 - \frac1{p^s} \right)^{\!-1} = 
+\prod_p \left(1 + \frac1{p^2} + \frac1{p^3} + \cdots \right). \]
+A typical term in the sum is of the form 
+\[ \frac{1}{p_1^{\alpha_1s} \cdots p_k^{\alpha_ks}}
+= \frac{1}{(p_1^{\alpha_1} \cdots p_k^{\alpha_k})^s}. \]
+By the Fundamental Theorem of Arithmetic, every positive 
+integer can be expressed uniquely as a product of primes, 
+so the identity holds.
+\end{pf}
+
+\begin{thm}
+$\zeta(s)$ can be analytically continued to $s \in \C$ with 
+$\Re(s) > 0$ and $s \neq 1$. It is analytic except 
+at the point $s = 1$ where it has a simple pole with residue
+$1$. 
+\end{thm}
+\begin{pf}
+For $s \in \C$ with $\Re(s) > 1$, we have 
+$\zeta(s) = \sum_{n=1}^\infty n^{-s}$. By Abel's 
+summation formula with $a_n = 1$ and $f(x) = x^{-s}$, 
+we find that 
+\[ \sum_{n\leq x} \frac{1}{n^s} = \frac{\floor x}{x^s}
++ s\int_1^x \frac{\floor u}{u^{s+1}}\dd u. \]
+Letting $x \to \infty$, we obtain 
+\begin{align*}
+    \zeta(s) &= 0 + s\int_1^\infty \frac{\floor u}{u^{s+1}}\dd u \\
+    &= s \int_1^\infty \frac{u - (u - \floor u)}{u^{s+1}}\dd u \\
+    &= s \int_1^\infty \frac{u}{u^{s+1}}\dd u - 
+    s \int_1^\infty \frac{u - \floor u}{u^{s+1}}\dd u \\
+    &= s \left( \frac{u^{1-s}}{1-s} \biggr\rvert_1^\infty 
+    \right)
+    - s \int_1^\infty \frac{u - \floor u}{u^{s+1}}\dd u \\
+    &= \frac{s}{s-1} - s \int_1^\infty \frac{u - \floor u}{u^{s+1}}\dd u
+\end{align*}
+for $\Re(s) > 1$. Note that 
+\[ \int_1^\infty \frac{u - \floor u}{u^{s+1}}\dd u \]
+converges for $\Re(s) > 0$ and represents an analytic function. Therefore, we see that 
+\[ \frac{s}{s-1} - s \int_1^\infty \frac{u - \floor u}{u^{s+1}}\dd u \] 
+is an analytic function for $\Re(s) > 0$ with $s \neq 1$. 
+This gives a meromorphic continuation of $\zeta(s)$ 
+to the region $\{s \in \C : \Re(s) > 0\}$. Finally, note that 
+$\frac{s}{s-1}$ has a simple pole with residue $1$ at $s = 1$.
+\end{pf}
+
+\begin{thm}
+$\zeta(s)$ has no zeroes in the region $\{s \in \C : 
+\Re(s) \geq 1\}$. 
+\end{thm}
+\begin{pf}
+If $\Re(s) > 1$, then $\prod_p (1 - \frac1{p^s})^{-1}$ 
+converges, so $\zeta(s) \neq 0$. 
+
+It only remains to consider the case where $\Re(s) = 1$. 
+We will first do some preliminary work. 
+
+Recall that we denote $s = \sigma + it$ where $\sigma, t \in \R$. Let $\sigma > 1$. Then for all $ t \in \R$, we have 
+\[ \log^*(\zeta(\sigma + it)) = 
+\log \left( \prod_p \left(1 + \frac1{p^s}\right)^{\!-1}\right) = \sum_p \sum_{n=1}^\infty \frac1n \left( \frac1{p^{ns}} \right), \]
+where $\log$ denotes the principal branch and 
+$\log^*$ denotes some branch of the logarithm (we have to be
+careful here as we are considering complex numbers). Comparing
+the real parts of the above equality, we have 
+\[ \log|\zeta(\sigma+it)| = \sum_p \sum_{n=1}^\infty 
+\frac{p^{-\sigma n} \cos(nt \log p)}{n}, \]
+since we can write 
+\[ p^{-int} = e^{-int \log p} = \cos(-nt \log p) + 
+i \sin(-nt \log p) = \cos(nt \log p) - i\sin(nt \log p) \]
+and therefore $\Re(p^{-int}) = \cos(nt \log p)$. 
+Moreover, observe that we have the inequality 
+\begin{align*}
+    0 \leq 2(1+\cos\theta)^2 
+    &= 2(1 + 2\cos\theta + \cos^2\theta) \\
+    &= 2 + 4\cos\theta + 2\cos^2\theta \\
+    &= 3 + 4\cos\theta + (2\cos^2\theta - 1) \\
+    &= 3 + 4\cos\theta + \cos(2\theta). 
+\end{align*}
+From this, we can deduce that 
+\[ \sum_p \sum_{n=1}^\infty \frac{p^{-\sigma n}}n 
+(3 + 4\cos(nt \log p) + \cos(2nt \log p)) \geq 0. \]
+Therefore, we have 
+\[ \log|\zeta(\sigma)|^3 + \log|\zeta(\sigma+it)|^4 + 
+\log|\zeta(\sigma+2it)| \geq 0. \]
+In particular, we see that 
+\begin{equation}
+    |\zeta(\sigma)|^3 \cdot |\zeta(\sigma + it)|^4 
+\cdot |\zeta(\sigma+2it)| \geq 1
+\end{equation} 
+for $\sigma > 1$ and $t \in \R$. 
+
+Suppose now that $1 + it_0$ is a zero of $\zeta(s)$, 
+and note that $t_0 \neq 0$ as $\zeta(s)$ has a pole at 
+$s = 1$. By taking $t \to 1^+$ (that is, from the right), 
+we observe tht 
+\[ |\zeta(s)| = O((\sigma - 1)^{-1}) \]
+since $1$ is a simple pole of $\zeta(s)$. Moreover, 
+since $1 + it_0$ is a zero of $\zeta(s)$, we have 
+$|\zeta(\sigma + it_0)| = O(\sigma-1)$ as 
+$\sigma \to 1^+$. Finally, we have 
+$|\zeta(\sigma + 2it_0)| = O(1)$ as $\sigma \to 1^+$ 
+since $1 + 2it_0$ is not a simple pole of $\zeta(s)$. 
+It follows that 
+\[ |\zeta(\sigma)|^3 \cdot |\zeta(\sigma + it)|^4 
+\cdot |\zeta(\sigma + 2it)| = 
+O((\sigma - 1)^{-3}) \cdot O((\sigma - 1)^4) \cdot O(1) 
+= O(\sigma - 1). \]
+Thus, $|\zeta(s)|^3 \cdot |\zeta(\sigma+it)|^4 \cdot 
+|\zeta(\sigma + 2it)|$ tends to $0$ as $\sigma \to 1^+$. 
+But this contradicts that the lower bound we found in (3.1), 
+so we conclude that $\zeta(s)$ cannot have a zero when 
+$\Re(s) = 1$. 
+\end{pf}
+
+\subsection{Newman's Theorem}
+
+\begin{thm}[Newman]
+Let $\{a_n\}_{n=1}^\infty$ be a sequence of complex numbers with $|a_n| \leq 1$ for all $n \geq 1$. 
+Consider the series $\sum_{n=1}^\infty a_n/n^s$, which converges to an analytic function 
+$F(s)$ for $\Re(s) > 1$. If $F(s)$ can be analytically continued to $\Re(s) \geq 1$, then 
+$\sum_{n=1}^\infty a_n/n^s$ converges to $F(s)$ for $\Re(s) \geq 1$. 
+\end{thm}
+\begin{pf}
+Let $w \in \C$ with $\Re(w) \geq 1$. Then $F(z+w)$ is analytic for $\Re(z) \geq 0$. Choose 
+$R \geq 1$ and let $\delta = \delta(R) > 0$ so that $F(z+w)$ is analytic on the region 
+\[ \tilde\Gamma := \{z \in \C : \Re(z) \geq -\delta \text{ and } |z| \leq R\}. \]
+To see why such a $\delta > 0$ exists, first note that $F(z+w)$ is analytic for $\Re(z) \geq 0$. 
+Consider the line $L = \{z = iy : |y| \leq R\}$. Every point in $L$ has an open cover such that 
+$F(z+w)$ is analytic on that cover; call the union of these covers $U$. Since $L$ is compact\footnote{Recall that a set $X$ is compact if every open cover of $X$ has a finite subcover.}, there exists a finite open subcover $\tilde U$ of $U$ such that 
+$L \subseteq \tilde U \subseteq U$. Since the number of open sets in $\tilde U$ is finite, 
+it follows that such a $\delta > 0$ exists.
+
+Let $M$ denote the maximum of $|F(z+w)|$ on $\tilde \Gamma$, and let $\Gamma$ denote the contour 
+obtained by following the outside of $\tilde\Gamma$ in a counterclockwise path. Let $A$ be the 
+part of $\Gamma$ in $\Re(z) > 0$, and let $B = \Gamma \setminus A$. For $N \in \N$, consider the 
+function 
+\[ F(z+w)N^z \left( \frac1z + \frac z{R^2} \right), \]
+which is analytic on $\tilde\Gamma$ except at $z = 0$ where there is a simple pole with residue 
+$F(0+w) N^0 = F(w)$. By Cauchy's residue theorem, we obtain 
+\begin{align*}
+    2\pi i F(w) &= \int_\Gamma F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z \\
+    &= \int_A F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z + 
+    \int_B F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z. \tag{3.2} 
+\end{align*}
+Observe that $F(z+w)$ is equal to its series on $A$. We split the series as 
+\[ S_N(z+w) = \sum_{n=1}^N \frac{a_n}{n^{z+w}} \]
+and $R_N(z+w) = F(z+w) - S_N(z+w)$. Note that $S_N(z+w)$ is analytic for all $z \in \C$. Let 
+$C$ be the contour given by the path $|z| = R$ taken in the counterclockwise direction. 
+By Cauchy's residue theorem, we obtain 
+\[ 2\pi i S_N(w) = \int_C S_N(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z \]
+since the integrand has a simple pole at $z = 0$ with residue $S_N(0+w) N^0 = S_N(w)$. Note that 
+\[ C = A \cup (-A) \cup \{iR, -iR\}. \]
+Therefore, we see that 
+\[ 2\pi i S_N(w) = \int_A S_N(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z 
++ \int_{-A} S_N(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z. \]
+Consider the second integral above. Using the change of variables $z \to -z$, we find that 
+\[ \int_{-A} S_N(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z 
+= \int_A S_N(-z+w) N^{-z} \left( \frac1z + \frac z{R^2} \right) \dd z. \]
+Thus, we obtain 
+\[ 2\pi i S_N(w) = \int_A \left( S_N(z+w) N^z + S_N(-z + w) N^{-z} \right) \left( \frac1z + \frac{z}{R^2} \right)\dd z. \]
+Combining the above equality with $(3.2)$, we have 
+\begin{align*}
+    2\pi i(F(w) - S_N(w)) &= \int_A \left( R_N(z+w) N^z - S_N(-z+w) N^{-z} \right) \left( \frac1z + \frac z{R^2} \right) \dd z\\ &\hspace{1.5cm} + \int_B F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z. \tag{3.3}
+\end{align*}  
+Our goal is to show that $S_N(w)$ converges to $F(w)$ as $N \to \infty$. Write $z = x + iy$
+where $x, y \in \R$. Then for $z \in A$, we have $x > 0$ and $|z| = R$, so 
+\[ \frac1z + \frac z{R^2} = \frac{x-iy}{R^2} + \frac{x + iy}{R^2} = \frac{2x}{R^2}. \]
+Since $|n^z| = n^x$, we have 
+\[ |R_N(z+w)| \leq \sum_{n=N+1}^\infty \frac{1}{n^{\Re(z+w)}} \leq \sum_{n=N+1}^\infty 
+\frac{1}{n^{x+1}} \leq \int_N^\infty \frac{1}{u^{x+1}}\dd u = \frac{1}{xN^x}. \]
+Also, we have 
+\[ |S_N(-z+w)| \leq \sum_{n=1}^N \frac{1}{n^{-x+1}} \leq N^{x-1} + \int_1^N u^{x-1}\dd u 
+\leq N^{x-1} + \frac{N^x}{x} = N^x \left( \frac1N + \frac1x \right). \]
+Putting the above estimates together, we get 
+\begin{align*}
+    \left| \int_A \left( R_N(z+w) N^z - S_N(-z+w) N^{-z} \right) \left( \frac1z + \frac z{R^2} \right) \dd z \right| 
+    &\leq \int_A \left( \frac{1}{xN^x} N^x + N^x \left( \frac1N + \frac1x \right) N^{-x} \right) 
+    \frac{2x}{R^2}\dd z \\
+    &= \int_A \left( \frac2x + \frac1N \right) \frac{2x}{R^2}\dd z \\
+    &= \int_A \left( \frac4{R^2} + \frac{2x}{NR^2} \right)\dd z \\
+    &\leq \pi R \left( \frac4{R^2} + \frac{2}{NR} \right) \quad \text{(since $x \leq R$)} \\
+    &\leq \frac{4\pi}R + \frac{2\pi}N. 
+\end{align*}
+We now estimate the integral along $B$. We can divide $B$ into two parts; one part with $\Re(z) = 
+-\delta$, and the other with $-\delta < \Re(z) \leq 0$. For $z \in B$ with $\Re(z) = -\delta$, 
+we use the fact that $|z| \leq R$ to find that 
+\[ \left| \frac1z + \frac z{R^2} \right| = \left| \frac1z \right| \left| \frac{\bar z}{z} + 
+\frac{z\bar z}{R^2} \right| \leq \frac1\delta \left( 1 + \frac{|z|^2}{R^2} \right) \leq \frac2\delta. \]
+Since $|F(z+w)| \leq M$ for $z \in B$, we have 
+\begin{align*}
+    \left| \int_B F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z \right| 
+    &\leq \int_{-R}^R MN^{-\delta} \frac2\delta\dd z + 2 \left| \int_{-\delta}^0 MN^x \frac{2x}{R^2}\dd x \right| \\
+    &= \frac{4MR}{\delta N^\delta} + \frac{4M}{R^2} \left| \int_{-\delta}^0 xN^x \dd x \right| \\
+    &\leq \frac{4MR}{\delta N^\delta} + \frac{4M\delta}{R^2} \left( \frac1{(\log N)^2} - \frac{\delta+1}{N^\delta \log N} \right) \\
+    &\leq \frac{4MR}{\delta N^\delta} + \frac{4M\delta}{R^2(\log N)^2}. 
+\end{align*}
+Combining this estimate with $(3.2)$ and $(3.3)$ yields 
+\[ |2\pi i(F(w) - S_N(w))| \leq \frac{4\pi}R + \frac{2\pi}N + \frac{4MR}{\delta N^\delta} 
++ \frac{4M\delta}{R^2(\log N)^2}. \] 
+That is, we have 
+\[ |F(w) - S_N(w)| \leq \frac2R + \frac1N + \frac{MR}{\delta N^\delta} + \frac{M\delta}{R^2(\log N)^2}. \]
+Given $\eps > 0$, choose $R = 3/\eps$. Then for sufficiently large $N$, we have 
+\[ |F(w) - S_N(w)| < \eps. \]
+This implies that $S_N(w) \to F(w)$ as $N \to \infty$, which completes the proof. 
+\end{pf}
+
+\subsection{Revisiting the M\"obius Function}
+Recall that we defined the M\"obius function $\mu : \N \to \{-1, 0, 1\}$ by 
+\[ \mu(n) = \begin{cases} 1 & \text{if } n = 1, \\ 0 & \text{if $n$ is not squarefree,} \\ (-1)^r & \text{if $n$ is the product of $r$ distinct primes.} \end{cases} \]
+We will show on Homework 2 that for $\Re(s) > 1$, we have 
+\[ \frac1{\zeta(s)} = \prod_p \left( 1 - \frac1{p^s} \right) = \sum_{n=1}^\infty \frac{\mu(n)}{n^s}. \]
+
+\begin{thm}
+We have 
+\[ \sum_{n=1}^\infty \frac{\mu(n)}n = 0. \]
+\end{thm}
+\begin{pf}
+For all $\Re(s) > 1$, equation (3.4) holds. Moreover, we have shown that $(s-1)\zeta(s)$ is analytic 
+and non-zero in $\Re(s) \geq 1$, so $1/\zeta(s)$ is analytic on $\Re(s) \geq 1$. 
+Now, $\zeta(s)$ can be analytically continued up to $\Re(s) > 0$ and it is nonzero for $\Re(s) \geq 1$,
+so we see that the series 
+\[ \sum_{n=1}^\infty \frac{\mu(n)}{n^s} \] 
+converges to $1/\zeta(s)$ for $\Re(s) \geq 1$. In particular, it converges at $s = 1$. But 
+$\zeta(s)$ has a simple pole at $s = 1$, so $1/\zeta(1) = 0$. 
+\end{pf}
+
+\begin{thm}
+We have 
+\[ \sum_{n\leq x} \mu(n) = o(x). \]
+\end{thm}
+\begin{pf}
+Applying Abel's summation formula with $a_n = \mu(n) / n $ and $f(x) = x$, we obtain 
+\[ \sum_{n\leq x} \mu(n) = A(x)x - \int_1^x A(u)\dd u, \]
+where we hae 
+\[ A(t) = \sum_{n\leq t} \frac{\mu(n)}n. \]
+By Theorem 3.5, we know that $A(t) = o(1)$. It follows that $A(x) x = o(x)$ and 
+\[ \int_1^x A(u)\dd u = o(x), \]
+so the result holds. 
+\end{pf}
+
+\subsection{Divisor Function}
+
+\begin{defn}
+For a positive integer $n \in \N$, let $d(n)$ be the number of positive integers that 
+divide $n$. 
+\end{defn}
+
+For example, we have $d(1) = 1$, $d(4) = 3$, and $d(p) = 2$ for all primes $p$. 
+
+\begin{thm}
+We have 
+\[ \sum_{m=1}^n d(m) = \sum_{m=1}^n \floor*{\frac nm} = n\log n + (2\gamma - 1)n + O(n^{1/2}). \]
+where $\gamma$ denotes Euler's constant. 
+\end{thm}
+\begin{pf}
+Let $D_n$ be the region in the upper right-hand quadrant not containing the $x$ or $y$ axes, 
+which is under and includes the hyperbola $xy = n$. That is, 
+\[ D_n := \{(x, y) \in \R^2 : x > 0,\, y > 0,\, xy \leq n\}. \]
+Define a {\bf lattice point} to be a point in the plane with integer coordinates; that is, a point 
+$(x, y) \in \R^2$ with $x, y \in \Z$. Notice that every lattice point in $D_n$ is contained in 
+some hyperbola $xy = s$ where $s$ is an integer with $1 \leq s \leq n$. 
+
+Therefore, $\sum_{s=1}^n d(s)$ is the number of lattice points in $D_n$; that is, 
+\[ \sum_{s=1}^n d(s) = \#\{(x, y) \in \R^2 : x, y \in \N,\, xy \leq n\}. \]
+We now count the number of lattice points in a different way. Given $x \in \N$ with $1 \leq x \leq n$, 
+there are exactly $\floor{\frac xn}$ many integers $y$ such that $xy \leq n$. Thus, we see that 
+\[ \#\{(x, y) \in \R^2 : x, y \in \N,\, xy \leq n\} = \sum_{x=1}^n \floor*{\frac nx}. \]
+Observe that the number of lattice points above the line $x = y$ inside $D_n$ is equal to the number of 
+lattice points below it. Divide the lattice points in $D_n$ into three disjoint regions given by 
+\begin{align*}
+    D_{n,1} &= \{(x, y) \in \N^2 : xy \leq n,\, x < y\}, \\ 
+    D_{n,2} &= \{(x, y) \in \N^2 : xy \leq n,\, x > y\}, \\
+    D_{n,3} &= \{(x, y) \in \N^2 : xy \leq n,\, x = y\}.
+\end{align*}
+Our observation above shows that $|D_{n,1}| = |D_{n,2}|$. Suppose that $(x, y) \in D_{n,1}$. Then 
+$x^2 < xy \leq n$, which implies that $x < \sqrt n$. Moreover, for a fixed integer $x$, the number of 
+integers $y$ satisfying $xy \leq n$ and $y > x$ is $\floor{\frac nx} - \floor x$. We also see that 
+$|D_{n,3}| = \floor{\sqrt n}$, so we obtain 
+\begin{align*}
+    \sum_{x=1}^n \floor*{\frac nx} &= |D_{n,1}| + |D_{n,2}| + |D_{n,3}| \\
+    &= 2 \sum_{x=1}^{\floor{\sqrt n}} \left( \floor*{\frac nx} - \floor x \right) + \floor{\sqrt n} \\
+    &= 2 \sum_{x=1}^{\floor{\sqrt n}} \left( \frac nx - x + O(1) \right) + \floor{\sqrt n}. 
+\end{align*}
+By Theorem 2.10, we see that 
+\[ \sum_{x=1}^n \floor*{\frac nx} = 2n \left( \log\floor{\sqrt n} + \gamma + O\left( \frac1{\sqrt n} \right) \right) - \left( n + O(\sqrt n) \right) + O(\sqrt n). \]
+Note that if we use the fact that $\log\floor{\sqrt n} = \log \sqrt n + O(1)$, then the resulting 
+error term $O(n)$ will be too large. Therefore, we need a finer estimate. Indeed, since 
+$\floor{\sqrt n} = \sqrt n - \{\sqrt n\}$ where $\{t\}$ denotes the fractional part of $t$ for 
+$t \in \R$, we have 
+\begin{align*} \log \floor{\sqrt n} = \log \left( \sqrt n - \{\sqrt n\} \right) 
+&= \log \left( \sqrt n \left( 1 - \frac{\{\sqrt n\}}{\sqrt n} \right) \right) \\
+&= \log \sqrt n + \log \left( 1 - \frac{\{\sqrt n\}}{\sqrt n} \right) \\
+&= \log \sqrt n + O\left( \frac1{\sqrt n} \right). \end{align*}
+Combining this with the previous equality gives 
+\[ \sum_{x=1}^n \floor*{\frac nx} = n\log n + (2\gamma - 1)n + O(\sqrt n). \qedhere \]
+\end{pf}

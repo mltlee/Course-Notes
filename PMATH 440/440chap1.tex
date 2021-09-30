@@ -1,0 +1,348 @@
+\section{Introduction to Prime Numbers and Their Counting Function}
+
+\subsection{Primes}
+
+\begin{defn}
+A {\bf prime number} is a positive integer greater than $1$ such that its only factors are $1$ and 
+itself. We denote by ${\cal P}$ the set of all prime numbers. For a positive real number $x$, 
+we define the {\bf prime counting function} by 
+\[ \pi(x) = \#\{p \leq x : p \in {\cal P}\}, \]
+where $\#S$ denotes the cardinality of the set $S$. 
+\end{defn}
+
+We would like to know how the primes are distributed among the integers. Let $p_n$ denote the 
+$n$-th prime. Is there a formula to obtain $p_n$? Is there a polynomial $f(x) \in \Z[x]$ such that 
+$f(n) = p_n$ for all $n \in \N$? The answer to the latter question is no, due to the following result. 
+
+\begin{prop}
+There is no non-constant polynomial $f(x) \in \Z[x]$ such that $f(n)$ is prime for all $n \in \N$. 
+\end{prop}
+\begin{pf}
+Suppose such a polynomial $f(x) \in \Z[x]$ existed, and write 
+\[ f(x) = a_n x^n + \cdots + a_1 x + a_0. \]
+Let $q$ be a prime with $f(n) = q$ for some $n \in \N$. Then $q \mid f(n+kq)$ for each $k \in \N$. 
+In particular, notice that if $f(m)$ is prime for every positive integer $m$, then $f(x)$ must be 
+constant with $f(x) = q$ for some prime $q$. 
+\end{pf}
+
+\begin{remark}~
+\begin{enumerate}[(1)]
+    \item There are examples of polynomials whose initial values are surprisingly often prime. 
+    For example, the polynomial $n^2 + n + 41$ is prime for all $0 \leq n \leq 39$, and the 
+    polynomial $(n-40)^2 + (n-40) + 41$ is prime for all $0 \leq n \leq 79$. 
+    \item In the 1970s, Matijasevic proved Hilbert's tenth problem, and in the process, he was able to
+    show that tehre is a polynomial $f \in \Z[a, b, \dots, z]$ such that the set of positive 
+    values in $f(\N^{26})$ is exactly the set of primes. In 1977, he showed that only $10$ variables 
+    are needed.
+\end{enumerate}
+\end{remark}
+
+Let us instead ask a weaker question. Can we find a non-constant polynomial $f(x) \in \Z[x]$ such that 
+$f(n)$ yields a prime for infinitely many $n \in \N$? Trivially, we see that $f(x) = x+k$ works 
+for any $k \in \Z$. When the coefficient of $x$ is not equal to $1$, we have the following result, 
+which we will prove at the end of this course.
+
+\begin{thm}[Dirichlet]
+Let $k$ and $\ell$ be coprime positive integers. Then $kn+\ell$ is prime for infinitely many positive
+integers $n$. 
+\end{thm}
+
+\begin{remark}~
+\begin{enumerate}[(1)]
+    \item At the moment, there is no known polynomial of degree greater than $1$ in one variable 
+    known to take prime values infinitely often. The best result known to date is that $n^2+1$ is 
+    a product of two primes for infinitely many $n$.
+    \item If we instead consider polynomials of two variables, we can go further. It is known that 
+    an odd prime $p$ is the sum of two squares if and only if $p \equiv 1 \pmod 4$. 
+    In 1998, Friedlander and Iwaniec proved that there are infinitely many primes of the 
+    form $n^2 + m^4$. In 2001, Heath-Brown showed that there are infinitely many primes of 
+    the form $n^3 + 2m^3$. 
+\end{enumerate}
+\end{remark}
+
+\begin{thm}[Euclid]
+There are infinitely many prime numbers.
+\end{thm}
+\begin{pf}
+Assume that there are only finitely many primes, say $p_1, \dots, p_n$, and consider 
+\[ m = p_1 \cdots p_n + 1. \]
+Then $m$ can be written as a product of primes by unique factorization, and $p_k \mid m$ for some $1 \leq
+k \leq n$. 
+Hence, we see that $p_k \mid m - p_1 \cdots p_n$ and $p_k \mid 1$, which is a contradiction. 
+\end{pf}
+
+We would like to estimate the prime counting function $\pi(x)$. 
+
+\begin{prop}
+For all $n \in \N$, we have $p_n \leq 2^{2^n}$. 
+\end{prop}
+\begin{pf}
+We proceed by induction. For $n = 1$, we have $2 = p_1 \leq 2^{2^1} = 4$. Suppose the result 
+holds for all $1 \leq k \leq n$. By Euclid's argument, we obtain $p_{n+1} \leq p_1 \cdots p_n + 1$. 
+It follows from induction that 
+\[ p_{n+1} \leq 2^{2^1} 2^{2^2} \cdots 2^{2^n} + 1 \leq 2^{2^{n+1}-2} + 1 \leq 2^{2^{n+1}}, \]
+which completes the proof. 
+\end{pf}
+
+\begin{cor}
+For all $x \geq 2$, we have $\pi(x) > \log\log x$. (In this course, $\log$ denotes the natural logarithm.)
+\end{cor}
+\begin{pf}
+Let $x \geq 2$, and let $s$ be the integer satisfying 
+\[ 2^{2^s} \leq x < 2^{2^{s+1}}. \]
+By the previous proposition, we have $\pi(x) \geq s$. On the other hand, since $x < 2^{2^{s+1}}$, 
+taking logarithms yields $\log_2(\log_2 x) < s+1$, and hence 
+\[ \frac{\log(\frac{\log x}{\log 2})}{\log 2} < s+1. \]
+It follows that 
+\[ \pi(x) \geq s > \frac{\log(\frac{\log x}{\log 2})}{\log 2} - 1 \geq \log\log x. \qedhere \]
+\end{pf}
+
+There is an alternative way to prove Euclid's theorem, due to Euler, which is left as part of the 
+homework. Using the same idea, we can derive a slightly better lower bound for $\pi(x)$. 
+
+\begin{prop}
+For all $x \geq 2$, we have 
+\[ \pi(x) \geq \frac{\log\log x}{\log 2}. \]
+\end{prop}
+\begin{pf}
+Suppose that $x \geq 2$. Then we have 
+\[ 2^{\pi(x)} \geq \prod_{p\leq x} \left(1 - \frac1p\right)^{-1} = \prod_{p\leq x} \left(1 + \frac1p
++ \frac{1}{p^2} + \cdots \right) \geq \sum_{n\leq x} \frac1n \geq \int_1^{\lfloor x \rfloor + 1}
+\frac1u\dd u \geq \log x, \]
+where the product $\prod_{p\leq x}$ means that $p$ runs through all primes at most $x$, and
+$\lfloor y \rfloor$ is the greatest integer less than or equal to $y$. We will will use this 
+notation for the rest of the course. Taking logarithms yields the desired inequality.
+\end{pf}
+
+Fermat had conjectured that the numbers of the form $2^{2^n}+1$ are prime for $n \in \N$. 
+He had checked it for the values $0 \leq n \leq 4$. These are known as the {\bf Fermat numbers} and 
+are denoted by 
+\[ F_n = 2^{2^n} + 1. \] 
+In 1732, Euler showed that $641 \mid F_5$. It is also known that $F_6, \dots, F_{21}$ are composite. 
+It is quite likely that only finitely many Fermat numbers are prime. 
+
+\begin{thm}[Poly\'a]
+If $n$ and $m$ are positive integers with $1 \leq n < m$, then $(F_n, F_m) = 1$. 
+\end{thm}
+\begin{pf}
+Write $m = n+k$ with $k \geq 1$. First, we will show that $F_n \mid F_m - 2$. Observe that 
+\[ F_m - 2 = (2^{2^{n+k}} + 1) - 2 = 2^{2^{n+k}} - 1. \]
+The polynomial $x^{2^k} - 1$ is divisible by $x+1$ in $\Z[x]$. Now, letting $x = 2^{2^n}$, we get 
+\[ \frac{F_m-2}{F_n} = \frac{x^{2^k} - 1}{x+1} = x^{2^k-1} - x^{2^k-2} + \cdots - 1 \in \Z. \] 
+Hence, we have $F_n \mid F_m - 2$. Suppose now that $d \mid F_n$ and $d \mid F_m$. Then 
+$d \mid 2$ and $2 \nmid F_n$, which implies that $d = \pm1$. The result follows. 
+\end{pf}
+
+This gives yet another proof of Euclid's theorem, as well as the bound $p_n \leq 2^{2^n} + 1$. 
+
+\subsection{Elementary Approximations of $\pi(x)$}
+In 1896, Hadamand and de la Vall\'ee Poussin each proved the Prime Number Theorem independently. 
+
+\begin{thm}[Prime Number Theorem]
+We have 
+\[ \lim_{x\to\infty} \frac{\pi(x)}{x/\log x} = 1. \]
+\end{thm}
+
+This was initially conjectured by Gauss. We will prove this theorem later in the course; 
+for now, we will see how to approach this problem using elementary methods. 
+
+\begin{thm}
+For all $x \geq 2$, we have 
+\[ \pi(x) \geq \frac{\log x}{2\log 2}. \]
+Moreover, for all $n \geq 1$, we have $p_n \leq 4^n$.
+\end{thm}
+\begin{pf}
+Let $x \geq 2$ be an integer. Let $p_1, \dots, p_j$ be the primes less than or equal to $x$. 
+Note that we have $j = \pi(x)$ here. For every integer $n$ with $n \leq x$, we can write $n = n_1^2m$
+where $n_1$ is a positive integer and $m$ is squarefree. Then $m$ is of the form 
+\[ m = p_1^{\eps_1} \cdots p_j^{\eps_j}, \]
+where $\eps_i \in \{0, 1\}$ for each $1 \leq i \leq j$. We see that there are at most $2^j$ possible 
+values for $m$. Moreover, there are at most $\sqrt{x}$ possible values for $n_1$. Hence, we have 
+$2^j \sqrt{x} \geq x$, which implies that $2^j \geq \sqrt{x}$. Denote this inequality by $(\star)$. 
+Since $j = \pi(x)$, we see that 
+\[ \pi(x) \log 2 \geq \frac{\log x}2, \]
+so the first equality follows. For the second equality, take $x = p_n$ so that $\pi(p_n) = n$. 
+By $(\star)$, we obtain $2^n \geq \sqrt{p_n}$ and hence $4^n \geq p_n$. 
+\end{pf}
+
+Let $n$ be a positive integer and let $p$ be a prime. Recall that the exact power of $p$ 
+dividing $n!$ is 
+\[ \sum_{n=1}^\infty \left\lfloor \frac{n}{p^k} \right\rfloor = \sum_{n=1}^{\left\lfloor \frac{\log n}{\log p} \right\rfloor} \left\lfloor \frac{n}{p^k} \right\rfloor. \]
+
+\begin{thm}
+For all $x \geq 2$, we have 
+\[ \left( \frac{3\log 2}8 \right) \frac{x}{\log x} < \pi(x) < (6\log 2) \frac{x}{\log x}. \]
+\end{thm}
+\begin{pf}
+This argument was given by Erd\H{o}s. First, we will prove the lower bound. Note that $\binom{2n}n$ is 
+an integer, and 
+\[ \binom{2n}n = \frac{(2n)!}{(n!)^2} \; \bigg\rvert \; \prod_{p\leq 2n} p^{r_p}, \]
+where $r_p$ is an integer satisfying $p^{r_p} \leq 2n < p^{r_p+1}$. Indeed, note that 
+the exact power of $p$ dividing $(2n)!$ is 
+\[ \sum_{k=1}^{r_p} \left\lfloor \frac{2n}{p^k} \right\rfloor, \]
+and the exact power of $p$ dividing $n!$ is 
+\[ \sum_{k=1}^{r_p} \left\lfloor \frac{n}{p^k} \right\rfloor. \]
+Thus, the exact power of $p$ dividing $\binom{2n}n$ is 
+\[ \sum_{k=1}^{r_p} \left( \left\lfloor \frac{2n}{p^k} \right\rfloor -  \left\lfloor \frac{n}{p^k} \right\rfloor \right) \leq r_p, \] 
+since $\lfloor 2a \rfloor - 2\lfloor a \rfloor \leq 1$ for all $a \in \R$. In particular, we have 
+\[ \binom{2n}n \leq \prod_{p \leq 2n} p^{r_p} \leq (2n)^{\pi(2n)}. \]
+Notice that 
+\[ \binom{2n}n = \frac{2n \cdot (2n-1) \cdots (n+1)}{n \cdot (n-1) \cdots 1} = \frac{2n}n \cdots 
+\frac{n+1}1 \geq 2^n. \]
+Hence, we get $2^n \leq (2n)^{\pi(2n)}$. Now, we have 
+\[ \pi(2n) \geq \left( \frac{\log 2}2 \right) \frac{2n}{\log(2n)}. \]
+Recall that $\frac{x}{\log x}$ is increasing for $x > e$. If $x \geq 6$, choose $n \in \N$ such that 
+$3x/4 \leq 2n \leq x$. We see that 
+\[ \pi(x) \geq \pi(2n) \geq \left( \frac{\log 2}2 \right) \frac{2n}{\log(2n)} 
+\geq \left( \frac{\log 2}2 \right) \frac{\frac34x}{\log(\frac34x)} > \frac{3\log 2}8 \frac{x}{\log x}. \]
+One can manually check that the result holds for $2 \leq x \leq 6$, which finishes the proof of the lower 
+bound. 
+
+We now turn to the upper bound. Observe that 
+\[ \prod_{n < p \leq 2n} p \; \bigg\rvert \; \binom{2n}n, \]
+so by the binomial theorem, we have 
+\[ \prod_{n < p \leq 2n} p \leq \binom{2n}n \leq (1+1)^{2n} = 2^{2n}. \]
+On the other hand, notice that 
+\[ \prod_{n < p \leq 2n} p \geq n^{\pi(2n) - \pi(n)}, \]
+so it follows that 
+\[ \pi(2n) \log n - \pi(n) \log(n/2) < (\log 2) 2n + (\log 2)\pi(n) < (3\log 2)n. \]
+By taking $n = 2^k, 2^{k-1}, \dots, 4$, we obtain a telescoping collection of inequalities, given by 
+\begin{align*}
+    \pi(2^{k+1})\log2^k - \pi(2^k)\log2^{k-1} &< (3\log2)2^k, \\
+    \pi(2^k)\log2^{k-1} - \pi(2^{k-1})\log2^{k-2} &< (3\log2)2^{k-1}, \\[-0.5em]
+    &\;\;\vdots \\
+    \pi(8)\log4-\pi(4)\log2 &< (3\log2)4.
+\end{align*}
+Putting these inequalities together, we have 
+\[ \pi(2^{k+1})\log 2^k < (3\log 2)(2^k + 2^{k+1} + \cdots + 4) + \pi(4)\log2 < (3\log2)2^{k+1}, \]
+and hence 
+\[ \pi(2^{k+1}) < (3\log2) \left( \frac{2^{k+1}}{\log(2^k)} \right). \]
+If $x > e$, choose $k$ such that $2^k \leq x \leq 2^{k+1}$. Then $\pi(x) \leq \pi(2^{k+1})$, and so 
+\[ \pi(x) \leq (3\log2) \left( \frac{2^{k+1}}{\log(2^k)} \right) \leq (6\log2) \left( \frac{2^k}{\log(2^k)} \right) \leq (6\log 2) \left( \frac{x}{\log x} \right), \] 
+where in the last equality, we use the fact that $\frac{x}{\log x}$ is increasing for $x > e$. 
+The values $2 \leq x \leq e$ can be checked manually, proving the lower bound. 
+\end{pf}
+
+We should note that $\frac{3\log 2}8$ is in some sense arbitrary. In the proof, we could have picked
+$n \in \N$ such that $1 - \eps \leq 2n \leq x$ instead of $3x/4 \leq 2n \leq x$ for $\eps$ 
+arbitrarily small. However, this comes at the cost that the bound may potentially fail for small $x$,
+and there is little purpose in a better lower bound for large $x$ as it is overshadowed by the 
+Prime Number Theorem.
+
+\subsection{Bertrand's Postulate}
+In 1845, Bertrand showed that there is always a prime $p$ in the interval $[n, 2n]$ for $n \in \Z^+$
+provided that $n < 6 \cdot 10^6$, and he had conjectured that this holds for all $n \in \Z^+$. Chebyshev 
+proved that this was indeed the case in 1950. 
+Note that this is not a trivial result; it doesn't occur for free just because $\pi(x) \sim x/\log x$. 
+
+\begin{prop}
+For all $n \in \Z^+$, we have 
+\[ \prod_{p\leq n} p < 4^n. \]
+\end{prop}
+\begin{pf}
+The result is clearly true for $n = 1$ and $n = 2$. Suppose that it holds for all $1 \leq n \leq k-1$. 
+Note that we can restrict our attention to the case where $n$ is odd, because if $n$ is even 
+and $n > 2$, then 
+\[ \prod_{p \leq n} p = \prod_{p \leq n-1} p, \]
+and the result will follow by induction. Write $n = 2m+1$ for some $m \in \Z^+$, and consider 
+$\binom{2m+1}m$. In particular, we have 
+\[ \prod_{m+1<p\leq2m+1} p \; \bigg\rvert \; \binom{2m+1}m. \]
+Since $\binom{2m+1}m$ and $\binom{2m+1}{m+1}$ both appear in the binomial expansion of $(1+1)^{2m+1}$
+with $\binom{2m+1}m = \binom{2m+1}{m+1}$, we obtain 
+\[ \binom{2m+1}m \leq \frac12 (2^{2m+1}) = 4^m. \]
+By our inductive hypothesis and the previous inequality, it follows that 
+\[ \prod_{p\leq 2m+1} p = \left( \prod_{p\leq m+1} p \right) \left( \prod_{m+1 < p\leq 2m+1} p \right)
+\leq 4^{m+1} 4^m = 4^{2m+1}. \qedhere \]
+\end{pf}
+
+\begin{lemma}
+If $n \geq 3$ and $p$ is a prime with $\frac23n < p \leq n$, then $p \nmid \binom{2n}n$. 
+\end{lemma}
+\begin{pf}
+Since $n \geq 3$, we see that if $p$ is in the range $\frac23n < p \leq n$, then $p > 2$. Then 
+$p$ and $2p$ are the only multiples of $p$ at most $2n$, and so 
+\[ p^2 \; \| \; (2n)!, \]
+where we write $p^k \; \| \; b$ to mean that $p^{k+1} \nmid b$ and $p^k \mid b$. Furthermore, since 
+$\frac23n < p \leq n$, we have $p \;\|\; n!$ and hence $p^2 \;\|\; (n!)^2$. Using the identity 
+\[ \binom{2n}n = \frac{(2n)!}{(n!)^2}, \] we see that $p \nmid \binom{2n}n$. 
+\end{pf}
+
+\begin{thm}[Chebyshev]
+For every $n \in \Z^+$, there exists a prime satisfying $n < p \leq 2n$. 
+\end{thm}
+\begin{pf}
+This argument was given by Erd\H{o}s. Note that the result holds for $1 \leq n \leq 3$. Assume that the 
+result is false for some integer $n \geq 4$. By the previous lemma, every prime dividing 
+$\binom{2n}n$ is at most $\frac23n$. 
+
+Let $p$ be a prime divisor of $\binom{2n}n$ where we have $p \leq \frac23n$. Suppose that 
+$p^{\alpha_p} \;\|\; \binom{2n}n$ for some integer $\alpha_p$. Recall that in the proof of 
+Theorem 1.13, we defined $r_p$ to be the integer satisfying $p^{r_p} \leq 2n < p^{r_p+1}$. 
+Then we have $\alpha_p \leq r_p$, and hence $p^{\alpha_p} \leq p^{r_p} \leq 2n$. 
+
+If $\alpha_p \geq 2$, then $p^2 \leq p^{\alpha_p} \leq 2n$ so that $p \leq \sqrt{2n}$. By 
+Proposition 1.14, we have 
+\[ \binom{2n}n \leq \left( \prod_{\substack{p\leq\frac23n\\ \alpha_p\leq 1}} p \right) 
+\left( \prod_{\substack{p\leq\frac23n\\ \alpha_p\geq 2}} p \right) \leq 4^{2n/3} (2n)^{\pi(\sqrt{2n})}
+\leq 4^{2n/3} (2n)^{\sqrt{2n}}. \]
+Note that $\binom{2n}n$ is the largest of the $2n+1$ terms in the binomial expansion of 
+\[ (1+1)^{2n} = \binom{2n}0 + \binom{2n}1 + \cdots + \binom{2n}{2n}, \]
+so we get 
+\[ \binom{2n}n \geq \frac{2^{2n}}{2n+1}. \]
+Combining the above inequalities gives 
+\[ \frac{4^n}{2n+1} \leq \binom{2n}n \leq 4^{2n/3} (2n)^{\sqrt{2n}}, \]
+which implies that 
+\[ 4^{n/3} \leq (2n)^{\sqrt{2n}} (2n+1) < (2n)^{\sqrt{2n}+2}. \]
+One can check manually that the result holds for $4 \leq n \leq 16$, so assume that $n > 16$. Taking 
+logarithms, we find that 
+\[ \frac{n}3 \log 4 < (\sqrt{2n}+2)\log(2n) < 2\sqrt n \log(2n) < 2\sqrt n \log(n^{5/4}) < \frac52 \sqrt n \log n. \]
+Notice that $\frac{\sqrt n}{\log n}$ is increasing for 
+$n > e^2$. Putting this together with the fact that 
+\[ \frac{\sqrt{1600}}{\log 1600} \approx 5.421 > 5.410 \approx \frac{15}{2\log4}, \]
+we have $n \leq 1600$. Finally, we know that $\{2, 3, 5, 7, 13, 23, 43, 83, 163, 317, 557, 1109, 2207\}$
+are all primes, where each number in the set is the largest prime less than twice the previous one. 
+Thus, no counterexample exists, and the result holds for all $n \geq 4$.
+\end{pf}
+
+\subsection{Gaps Between Twin Primes}
+By Theorem 1.16, we have 
+\[ p_{n+1} - p_n \leq p_n \]
+as there is a prime between $p_n$ and $2p_n$. What more can we say about differences of consecutive primes?
+
+By the Prime Number Theorem, there are about $x/\log x$ primes $p$ at most $x$. Therefore, the 
+``average gap'' between primes $p$ at most $x$ is $\log x$. However, the value of $p_{n+1} - p_n$ 
+can vary widely. 
+
+Notice that for any $n \geq 2$, the numbers $n! + k$ for $2 \leq k \leq n$ are all composite. This 
+implies that 
+\[ \limsup_{n\to\infty} \;(p_{n+1} - p_n) = \infty. \]
+In 1931, Weszynthius showed that 
+\[ \limsup_{n\to\infty} \left( \frac{p_{n+1} - p_n}{\log p_n} \right) = \infty. \]
+By probabilistic reasoning, Cramer had conjectured in 1936 that 
+\[ \limsup_{n\to\infty} \left( \frac{p_{n+1} - p_n}{(\log p_n)^2} \right) \leq 1. \]
+In the 1930s, Erd\H{o}s proved that for infinitely many integers $n$, we have 
+\[ p_{n+1} - p_n > c \log p_n \frac{\log\log p_n}{(\log\log\log p_n)^2} \]
+for some positive constant $c$. In 1938, Rankin added a factor of $\log\log\log\log p_n$. 
+
+What about small gaps between consecutive primes? The famous Twin Prime Conjecture states that 
+there are infinitely many $n \in \Z^+$ such that $p_{n+1} - p_n = 2$. Equivalently, it can be stated that
+\[ \liminf_{n\to\infty} \; (p_{n+1} - p_n) = 2. \]
+If we assume that the primes are randomly distributed and an integer is prime with 
+probability $1/\log x$, then we might expect $x$ and $x+2$ to both be prime with probability 
+$1/(\log x)^2$. 
+
+Therefore, we expect about $x/(\log x)^2$ primes $p$ such that $p+2$ is also prime and $p \leq x$. 
+A more careful heuristic suggests that there are about $C x/(\log x)^2$ such primes $p$ where 
+$C > 0$ and $C \neq 1$. In the 1960s, Chen proved that there are more than $0.6x/(\log x)^2$ 
+primes $p$ with $p \leq x$ such that $p+2$ is a product of at most two primes (called a $P_2$), 
+provided that $x$ is sufficiently large. 
+
+In 2005, Goldston, Pintz, and Yildirim showed that 
+\[ \liminf_{n\to\infty} \left( \frac{p_{n+1} - p_n}{\log p_n} \right) = 0. \]
+However, this is still quite far from the Twin Prime Conjecture; the bound between consecutive primes 
+can still go to infinity. 
+
+Astoundingly, Zhang made a breakthrough in 2013 and showed that 
+\[ \liminf_{n\to\infty} \; (p_{n+1} - p_n) \leq 7 \cdot 10^7. \]
+This was independently improved by Tao and Maynard (via the Polymath Project) in the same year to get 
+\[ \liminf_{n\to\infty} \; (p_{n+1} - p_n) \leq 246. \]
