@@ -1,3 +1,4 @@
+# tex
 *.aux
 *.fdb_latexmk
 *.fls
@@ -5,3 +6,6 @@
 *.out
 *.synctex.gz
 *.toc
+
+# python
+__pycache__

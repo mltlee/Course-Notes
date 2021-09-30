@@ -252,7 +252,7 @@ $n$ is {\it probably} prime, as with the Fermat primality test.
     \State Output ``$n$ is composite'' and exit.
 \Else
     \State Compute $\left( \frac an \right)$ and $a^{(n-1)/2} \in \Z_n$. 
-    \If{$\left(\frac an \right) \not\equiv a^{(n-1)/2} \neq 1 \pmod n$} \Comment{$a$ is an Euler witness}
+    \If{$\left(\frac an \right) \not\equiv a^{(n-1)/2} \pmod n$} \Comment{$a$ is an Euler witness}
         \State Output ``$n$ is composite'' and exit. 
     \Else \Comment{$a$ is an Euler liar when $n$ is composite}
         \State $\counter \gets \counter + 1$. 
