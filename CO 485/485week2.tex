@@ -1,0 +1,361 @@
+\section{Some Number Theory}
+
+\subsection{Modular Arithmetic}
+We begin with some notation and definitions. The set of integers is denoted by $\Z$. For an 
+integer $n \geq 2$, we define the sets 
+\begin{align*}
+    \Z_n &= \{a \in \Z : 0 \leq a < n\}, \\ \Z_n^* &= \{a \in \Z_n : \gcd(a, n) = 1\}. 
+\end{align*}
+For example, we have 
+\begin{align*}
+    \Z_{15} &= \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14\}, \\
+    \Z_{15}^* &= \{1,2,4,7,8,11,13,14\},
+\end{align*}
+where we exclude all multiples of $3$ and $5$ in the latter set. 
+For $a, b \in \Z_n$, we define the operations 
+\begin{align*}
+    a \oplus b &= a + b \pmod n, \\
+    a \odot b &= a \cdot b \pmod n.
+\end{align*}
+For instance, given $n = 15$, one can check that $11 \oplus 13 = 9$ and $11 \odot 13 = 8$. 
+Most of the algebraic operations we work with in this course are modular operations, so we will simply 
+write $+$ and $\cdot$ instead of $\oplus$ and $\odot$ when it is clear from the context 
+whether $+$ and $\cdot$ are regular or modular operations. 
+Notice that when $a, b \in \Z_n$, we have $a + b \in \Z_n$ and $a \cdot b \in \Z_n$; moreover, 
+for $a, b \in \Z_n^*$, we have $a \cdot b \in \Z_n^*$. In fact, elements in $\Z_n$ and 
+$\Z_n^*$ satisfy a larger set of properties, known as the group axioms, which we will 
+formally define in the following definition.
+
+\begin{defn}
+A {\bf group} $(G, *)$ is a non-empty set $G$ together with a binary operation $*$ satisfying the 
+following properties:
+\begin{enumerate}[(1)]
+    \item $G$ is {\bf closed}: For all $a, b \in G$, we have $a * b \in G$. 
+    \item $G$ is {\bf associative}: For all $a, b, c \in G$, we have $(a * b) * c = a * (b * c)$. 
+    \item $G$ has an {\bf identity}: There exists $e \in G$ such that $a * e = e * a = a$ for all $a \in G$.
+    \item Elements in $G$ are {\bf invertible}: For all $a \in G$, there exists $a^{-1} \in G$ 
+    such that $a * a^{-1} = a^{-1} * a = e$. 
+\end{enumerate}
+\end{defn}
+
+As we noted before, $(\Z_n, +)$ is a group with identity $0$ and $(\Z_n^*, \cdot)$ is a group 
+with identity $1$. However, $\Z_n$ is not a group with respect to multiplication 
+because $0$ is not invertible, and 
+$\Z_n^*$ is not a group with respect to addition because there is no identity element $0$. 
+
+Finally, for a finite group $G$, the {\bf order} of $G$ is the number of elements in 
+$G$, and is denoted by $|G|$. 
+
+\subsection{GCD and Modular Inverses}
+Proving the existence of inverses is interesting, but what about finding the inverse of a particular
+element in a group? Finding inverses of elements in $(\Z_n, +)$ is easy: simply take the 
+additive inverse $-a \pmod n$ of $a \in \Z$. On the other hand, finding the multiplicative 
+inverse of an element in $(\Z_n^*, \cdot)$ takes some more work. In particular, we care about 
+efficient algorithms to compute modular inverses because the secret exponent $d$ in the RSA 
+encryption scheme (as in Section 1.2) is the multiplicative inverse of $e$ modulo $\phi$, where 
+$e$ is the public key exponent and $\phi$ is the secret modulus. Fortunately, modular multiplicative
+inverses can be computed using extended Euclidean type algorithms, and we describe one below. 
+
+\begin{algo}[Modular Multiplicative Inverses]~
+
+{\bf Input:} $n \geq 2$ and $a \in \Z_n^*$.
+
+{\bf Output:} $b \in \Z_n^*$ such that $a \cdot b \equiv 1 \pmod n$. \vspace{0.5em}
+
+\begin{algorithmic}[1]
+\State Set the initial state $t_a = a$, $t_n = n$, $u = [u_0, u_1] = [1, 0]$, $v = [v_0, v_1] = [0, 1]$. 
+\If{$t_n > t_a$} 
+    \State Use the division algorithm to write $t_n = qt_a + r$ for some $q \geq 0$ and $0 \leq r < t_a$.
+    \State Update the state: $t_n \gets r$, $v \gets v - q \cdot u$. 
+\ElsIf{$t_a > t_n$}
+    \State Use the division algorithm to write $t_a = qt_n + r$ for some $q \geq 0$ and $0 \leq r < t_n$.
+    \State Update the state: $t_a \gets r$, $u \gets u - q \cdot v$. 
+\EndIf 
+\If{$t_n = 1$}
+    \State Set $b = v_0 \pmod n$ and output $b$.
+\ElsIf{$t_a = 1$}
+    \State Set $b = u_0 \pmod n$ and output $b$.
+\Else
+    \State Go back to line 2.
+\EndIf
+\end{algorithmic}
+\end{algo}
+
+Notice that the input $(a, n)$ of Algorithm 2.2 assumes that $\gcd(a, n) = 1$ since $a \in \Z_n^*$. 
+Therefore, on a more general input $(a, n)$ with $a \in \Z_n$, one first has to check that 
+$\gcd(a, n) = 1$ is satisfied before Algorithm 2.2 can be run. We can address this nuisance with 
+some minor modifications to the algorithm.
+
+\begin{algo}[GCD and Modular Multiplicative Inverses]~
+
+{\bf Input:} $n \geq 2$ and $0 \neq a \in \Z_n$.
+
+{\bf Output:} $\gcd = \gcd(a, n)$, and if $\gcd = 1$, then $b \in \Z_n^*$ such that $a \cdot b \equiv 1 \pmod n$. \vspace{0.5em}
+
+\begin{algorithmic}[1]
+\State Set the initial state $t_a = a$, $t_n = n$, $u = [u_0, u_1] = [1, 0]$, $v = [v_0, v_1] = [0, 1]$. 
+\If{$t_n > t_a$} 
+    \State Use the division algorithm to write $t_n = qt_a + r$ for some $q \geq 0$ and $0 \leq r < t_a$.
+    \State Update the state: $t_n \gets r$, $v \gets v - q \cdot u$. 
+\ElsIf{$t_a > t_n$}
+    \State Use the division algorithm to write $t_a = qt_n + r$ for some $q \geq 0$ and $0 \leq r < t_n$.
+    \State Update the state: $t_a \gets r$, $u \gets u - q \cdot v$. 
+\EndIf 
+\If{$t_a = 0$}
+    \If{$t_n = 1$}
+        \State Set $\gcd = 1$, $b = v_0 \pmod n$ and output $(\gcd, b)$.
+    \Else
+        \State Set $\gcd = t_n$ and output $\gcd$. 
+    \EndIf
+\ElsIf{$t_n = 0$}
+    \If{$t_a = 1$}
+        \State Set $\gcd = 1$, $b = u_0 \pmod n$ and output $(\gcd, b)$.
+    \Else
+        \State Set $\gcd = t_a$ and output $\gcd$. 
+    \EndIf
+\Else
+    \State Go back to line 2.
+\EndIf
+\end{algorithmic}
+\end{algo}
+
+\newpage
+\begin{lemma}[Facts about Algorithm 2.3]~
+\begin{enumerate}[(1)]
+    \item Algorithm 2.3 terminates with $t_a = 0$ or $t_n = 0$. 
+    \item $\gcd(t_a, t_n)$ is invariant throughout Algorithm 2.3.
+    \item We have $u \cdot (a, n) = u_0a + u_1n = t_a$ and $v \cdot (a, n) = v_0a + v_1n = t_n$
+    throughout Algorithm 2.3. 
+\end{enumerate}
+\end{lemma}
+\begin{pf}
+We leave the proof as an exercise. 
+\end{pf}
+
+\begin{thm}[Correctness of Algorithm 2.3]
+Algorithm 2.3 terminates and its output is correct.
+\end{thm}
+\begin{pf}
+By Lemma 2.4, we know that Algorithm 2.3 terminates with $t_a = 0$ or $t_n = 0$. Assume without 
+loss of generality that it terminates with $t_a = 0$. In the beginning of the algorithm,
+we set $t_a = a$ and $t_n = n$. Since $\gcd(t_a, t_n)$ is invariant throughout the algorithm by 
+Lemma 2.4, we see that 
+\[ \gcd(a, n) = \gcd(t_a, t_n) = \gcd(0, t_n) = t_n, \]
+which shows that the first output $\gcd = t_n$ is correct. Furthermore, if $t_n = 1$ at the 
+end of the algorithm, then Lemma 2.4 shows that 
+\[ v \cdot (a, n) = v_0a + v_1n = t_n = 1, \]
+and this implies that
+\[ v_0 \cdot a \equiv 1 \pmod n. \]
+Therefore, the second output $b = v_0 \pmod n$ is also correct, completing the proof.
+\end{pf}
+
+Algorithm 2.3 can be used to calculate the public key and secret key pair $(e, d)$ in the RSA 
+encryption scheme. For a given RSA public modulus $N$ and secret modulus $\phi$, choose 
+$e \in \Z_N$ and call Algorithm 2.3 with input $a = e$ and $n = \phi$. Repeat this until 
+$\gcd = \gcd(e, \phi) = 1$ and then set the secret exponent as $d = b$, where $\gcd$ and $b$ are the 
+outputs given by Algorithm 2.3. 
+
+\subsection{Modular Exponentiation}
+Let $e$ and $n\geq 2$ be integers. Let $a \in \Z_n$. Given a base $a$ and an exponent $e$, 
+a modular exponential algorithm computes $a^e \in \Z_n$. We have already seen an application of modular
+exponential in the RSA encryption scheme; we compute $m^e \in \Z_N$ to encrypt a message $m$, 
+and compute $c^d \in \Z_N$ to decrypt a ciphertext $c$, where $e$, $d$, and $N$ are the public 
+exponent, secret exponent, and public modulus, respectively. Moreover, we will see later 
+that modular exponentiation is the main operation in several other cryptographic schemes. 
+These include Diffie-Hellman key exchange, the elliptic curve digital signature algorithm, 
+and isogeny-based cryptosystems. This gives us a lot of motivation to design and implement 
+efficient modular exponentiation algorithms. 
+
+First, we introduce some notation. We assume that exponents are positive integers unless 
+otherwise stated. 
+\begin{itemize}
+    \item We denote the {\bf binary representation} of an $\ell$-bit integer $e = \sum_{i=0}^{\ell-1} e_i 2^i$
+    where each $e_i \in \{0, 1\}$ and $e_{\ell-1} = 1$ by $(e_{\ell-1}\,e_{\ell-2}\,\cdots\,e_0)_2$. 
+    Moreover, for an $\ell$-bit integer $e$, we define 
+    \[ e[i : j]_2 := (e_i\,e_{i-1}\,\cdots\,e_j)_2 = \sum_{k=j}^i e_k 2^{k-j} \]
+    for $0 \leq j \leq i \leq \ell-1$. Note that $e[\ell-1 : 0]_2 = e$ and $e[i : i] = e_i$.
+    \item In some of the algorithms, $e$ will be represented in a more general form using a base 
+    $b \geq 2$. More specifically, we write $e = \sum_{i=0}^{\ell-1} e_i b^i$ where each 
+    $0 \leq e_i < b$ and $e_{\ell-1} \neq 0$. We call this the 
+    {\bf $b$-ary representation} of $e$, and denote it by $e = (e_{\ell-1}\,e_{\ell-2}\,\cdots\,e_0)_b$.
+    Note that the binary representation of $e$ is obtained by setting $b = 2$. 
+    \item One may further relax the condition $0 \leq e_i < b$ and allow for a more general 
+    digit set $D$ for the $e_i$. To be more specific, if $e$ can be written as 
+    \[ e = \sum_{i=0}^{\ell-1} e_i b^i \]
+    where each $e_i \in D$ for a digit set $D$, then we will still denote $e = (e_{\ell-1}\,e_{\ell-2}\,\cdots\,e_0)_b$ and extend our notation $e[i : j]_2$ to 
+    \[ e[i : j]_b = (e_i\,e_{i-1}\,\cdots\,e_j)_b = \sum_{k=j}^i e_k b^{k-j}. \]
+    If the base $b$ is clear from the context, we can drop it and simply write $e[i : j]$. 
+    \item The complexity of some algorithms will depend on the {\bf weight} of the $b$-ary 
+    representation of $e$ (the number of indices $i$ with $e_i \neq 0$), which we will denote by 
+    $\w_b(a)$. 
+    \item Digit sets may contain negative digits, and it will be convenient to denote a negative 
+    digit $-d$ by $\overline{d}$. 
+\end{itemize}
+
+\begin{exmp}
+The $2^w$-ary representations of $20771$ for $w = 1, 2, 3, 4$ are 
+\begin{align*}
+    20771 &= (1\,0\,1\,0\,0\,0\,1\,0\,0\,1\,0\,0\,0\,1\,1)_2 \\
+    &= (1\,1\,0\,1\,0\,2\,0\,3)_4 \\
+    &= (5\,0\,4\,4\,3)_8 \\
+    &= (5\,1\,2\,3)_{16}
+\end{align*}
+A binary representation of $20771$ using the digit set $D = \{0, 1, \overline1, 3, \overline3\}$ 
+and a $4$-ary representation of $20771$ using the digit set $D = \{1, \overline1, 3, \overline3\}$ are given by 
+\begin{align*}
+    20771 &= (1\,0\,0\,\overline3\,0\,0\,0\,1\,0\,0\,1\,0\,0\,0\,0\,3)_2 \\
+    &= (1\,1\,1\,\overline3\,1\,\overline1\,\overline3\,\overline1)_4.
+\end{align*}
+To obtain the binary representation, we notice that 
+\[ 20771 = 2^{15} - 3 \cdot 2^{12} + 2^8 + 2^5 + 3 \cdot 2^5. \]
+Observe that the last representation does not use any $0$ digit and maximizes the weight 
+$\w_4(e)$, whereas the second last representation is sparse with a relatively low weight $\w_2(e) = 5$.
+\end{exmp}
+
+The most widely known efficient method to perform exponentiation dates back to 200 BC and is called the 
+{\bf square and multiply method}. Brauer generalized the square and multiply method using $b = 2^w$
+representations of integers, where a set of elements $T = \{a_i = a^i : 1 \leq i < 2^w\}$ is 
+precomputed and stored. We present this method in the following algorithm. The parameter 
+$w$ used in the algorithm is also called the {\bf window size} because we iterate through $w$ 
+bits at a time and we imagine placing (and moving) a window of size $w$ on the binary 
+representation of the exponent. 
+
+\begin{algo}[$2^w$-ary Square and Multiply Method]~
+
+{\bf Input:} $w \in \Z$, $w \geq 1$, $b = 2^w$, $e = (e_{\ell-1}\,e_{\ell-2}\,\cdots\,e_0)_b$, 
+$0 \leq e_i < 2^w$, $a \in \Z_n$, $n \in \Z$, $n \geq 2$.
+
+{\bf Output:} $a^e \in \Z_n$. \vspace{0.5em}
+
+\begin{algorithmic}[1]
+\State $a_1 \gets a$, $a_i \gets a_{i-1} \cdot a$ for $2 \leq i \leq 2^w$ \Comment{we can ignore this step when $w = 1$}
+\State $t \gets 1$
+\For{$i = \ell-1$ {\bf to} 0 {\bf by} $-1$}
+    \State $t \gets t^{2^w}$ \Comment{this step requires $w$ successive squaring operations}
+    \If{$e_i \neq 0$}
+        \State $t \gets t \cdot a_{e_i}$ \Comment{the multiply step; if $w = 1$, then $a_{e_i}$ is always $a$}
+    \EndIf
+\EndFor
+\State Output $t$. 
+\end{algorithmic}
+\end{algo}
+
+\newpage
+\begin{thm}[Correctness of Algorithm 2.7]
+Algorithm 2.7 terminates and its output is correct.
+\end{thm}
+\begin{pf}
+The proof follows from induction and observing that $e[\ell-1 : 0]_b = 2^w \cdot (e[\ell-1 : 1]_b) + e_0$. 
+We leave the details as an exercise. 
+\end{pf}
+
+\subsection{Quadratic Residues}
+We now introduce quadratic residues from number theory. This will prepare us for our next 
+topics on primality testing and other cryptographic constructions such as random number generators 
+and public key encryption algorithms. 
+
+Let $p$ be an odd prime. Since the only integer $a \in \Z_p$ that does not satisfy $\gcd(a, p) = 1$ is 
+$a = 0$, we have $\Z_p^* = \{1, 2, \dots, p-1\}$ and $|\Z_p^*| = p-1$. 
+
+Recall that $\Z_p^*$ is a group under multiplication. An interesting fact in algebra states that 
+there always exists an element $g \in \Z_p^*$ such that for all $c \in \Z_p^*$, there is a unique 
+integer $1 \leq k \leq p-1$ such that $c = g^k$. In other words, for such an element $g$, we can write 
+\[ \Z_p^* = \{g^k : 1 \leq k \leq p-1\}. \]
+More generally, if a (multiplicative) group $G$ has an element such that 
+\[ G = \{g^k : 1 \leq k \leq |G|-1\}, \]
+then we call $G$ a {\bf cyclic group} generated by $g$, and we write $G = \langle g \rangle$. 
+Equivalently, we say that $g$ is a {\bf generator} of $G$. We note that a cyclic group can 
+have more than one generator, and that not every group is cyclic. Indeed, $\Z_5^* = \{1, 2, 3, 4\}$ 
+and $\Z_8^* = \{1, 3, 5, 7\}$ are both groups of order $4$; we have that $\Z_5^* = \langle 2 
+\rangle = \langle 3 \rangle$ is cyclic, whereas $\Z_8^*$ is not since $a^2 = 1$ for all $a \in \Z_8^*$. 
+
+It can be shown that $\Z_n^*$ is a cyclic group if and only if $n$ is one of $2$, $4$, $p^k$, or 
+$2p^k$ where $p$ is an odd prime and $k$ is a positive integer. 
+
+For a given positive integer $n$, Euler's totient function, denoted $\phi$, counts the number of positive
+integers $1 \leq a \leq n$ such that $\gcd(a, n) = 1$. That is, 
+\[ \phi(n) = \#\{a \in \Z : \gcd(a, n) = 1,\, 1 \leq a \leq n\}. \]
+By definition, we have $|\Z_n^*| = \phi(n)$, so it is of interest to us to compute $\phi(n)$. 
+Notice that we have the following properties:
+\begin{enumerate}[(1)]
+    \item If $p$ is a prime and $k \geq 1$ is an integer, then $\phi(p^k) = p^k - p^{k-1}$. 
+    \item If $m$ and $n$ are positive integers with $\gcd(m, n) = 1$, then 
+    $\phi(m \cdot n) = \phi(m) \phi(n)$. 
+\end{enumerate}
+In particular, for two distinct primes $p$ and $q$, we know that $|\Z_p^*| = \phi(p) = p-1$ 
+and $|\Z_q^*| = \phi(q) = q-1$. It follows that if $N = p \cdot q$, then 
+\[ |\Z_N^*| = \phi(N) = \phi(p)\phi(q) = (p-1)(q-1). \]
+This is exactly why we defined $\phi = (p-1)(q-1)$ in the RSA encryption scheme, where we have been 
+practically working with $N$. 
+
+We now recall some important definitions and facts about finite groups. 
+
+\begin{prop}[Properties of Finite Groups]
+Let $G$ be a finite group with identity $1$. 
+\begin{itemize}
+    \item For all $g \in G$, we have $g^{|G|} = 1$. 
+    \item The {\bf order} of an element $g \in G$ is the smallest positive integer $s$ such that 
+    $g^s = 1$, denoted by $\ord(g)$. 
+    \item If $g^a = 1$ for some positive integer $a$, then $\ord(g) \mid a$. In particular, we see that 
+    $\ord(g) \mid |G|$. 
+    \item If $\ord(g) = s$, then 
+    \[ \ord(g^a) = \frac{s}{\gcd(a, s)}. \]
+    In particular, we have $\ord(g) = \ord(g^a)$ if and only if $\gcd(a, \ord(g)) = 1$. 
+    \item A cyclic group $G = \langle g \rangle$ has $\phi(|G|)$ generators, and the set of 
+    generators is given by 
+    \[ \{g^a : \gcd(a, |G|) = 1\}. \]
+    \item We have $g^a = g^b$ if and only if $a \equiv b \pmod{\ord(g)}$. 
+\end{itemize}
+\end{prop}
+
+Let $p$ be a prime, and consider the linear equation 
+\[ ax + b \equiv 0 \pmod p \]
+for $a, b \in \Z_p$ with $a \neq 0$. This equation has a solution $x = -b \cdot a^{-1}$, and one can 
+show that this solution is unique. Next, consider the quadratic equation 
+\[ ax^2 + bx + c \equiv 0 \pmod p \]
+where $a, b, c \in \Z_p$ with $a \neq 0$. Then we can consider two cases: either the equation 
+has no solution in $\Z_p$ (for instance, take $p = 3$, $a = c = 1$, and $b = 0$), or 
+it has at least one solution. Suppose we are in the second case, and let $s_1$ be a solution. Then 
+we can write 
+\begin{align*}
+    ax^2 + bx + c &= (ax^2 + bx + c) - (as_1^2 + bs_1 + c) \\
+    &= a(x^2 - s_1^2) + b(x - s_1) \\
+    &= (x - s_1)(ax + as_1 + b). 
+\end{align*}
+This gives rise to another solution $s_2 = -(s_1 + ba^{-1}) \in \Z_p$ to the same equation. 
+Therefore, we can either have $0$, $1$ (when $s_1 = s_2$), or $2$ (when $s_1 \neq s_2$) solutions in 
+$\Z_p$. By setting $a = 1$, $b = 0$, and taking a non-zero $c \in \Z_p$, we conclude that 
+\[ x^2 \equiv c \pmod p \]
+has either no solution, or solution set $\{s, -s\}$ for some $s \in \Z_p^*$. Note that $s$ cannot 
+be zero, and for $p$ an odd prime, $s$ and $-s$ are pairwise distinct. This motivates the 
+definition of a quadratic residue modulo $p$. 
+
+\begin{defn}[Quadratic Residues and Non-Residues]
+Let $p$ be a prime. An element $c \in \Z_p^*$ is said to be a {\bf quadratic residue} modulo $p$ if 
+the equation 
+\[ x^2 \equiv c \pmod p \]
+as a solution in $\Z_p^*$. If $c \in \Z_p^*$ is not a quadratic residue, we call $c$ a 
+{\bf quadratic non-residue} modulo $p$. The set of all quadratic residues modulo $p$ is denoted by 
+$\QR_p$, and the set of all quadratic non-residues modulo $p$ is denoted by $\QNR_p$. 
+\end{defn}
+
+The following theorem gives two characterizations of $\QR_p$. 
+
+\begin{thm}[Characterizations of $\QR_p$]
+Let $p$ be an odd prime and let $g$ be a generator of $\Z_p^*$. Let $c = g^k$ for some $1 \leq k 
+\leq p-1$.
+\begin{enumerate}[(1)]
+    \item We have $c \in \QR_p$ if and only if $k$ is even. 
+    \item We have $c \in \QR_p$ if and only if $c^{(p-1)/2} = 1$ (Euler's criterion). 
+\end{enumerate}
+\end{thm}
+\begin{pf}
+To prove (1), suppose that $c \in \QR_p$. By definition, there exists $x \in \Z_p^*$ such that 
+$c = x^2 = g^{2\alpha}$, where the last equality follows because $g$ is a generator of 
+$\Z_p^*$. Setting $k = 2\alpha$ proves the forward direction. For the converse, let $k$ be even. 
+Then we can write $c = g^k = g^{2\alpha} = x^2$ for $x = g^\alpha$, finishing the proof of (1). 
+The proof of (2) follows from (1) and Proposition 2.9, and we leave it as an exercise.
+\end{pf}
+
+Euler's criterion in Theorem 2.11 can be used to test whether an element $c \in \Z_p^*$ 
+is in $\QR_p$ for an odd prime $p$. 

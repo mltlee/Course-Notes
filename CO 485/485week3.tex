@@ -1,0 +1,356 @@
+\section{Primality Testing}
+
+\subsection{Motivation for Primality Testing}
+The key generation algorithm in the RSA encryption scheme requires us to generate two large primes $p$
+and $q$ to form the public modulus $N = pq$. How large should these primes be? We have seen that 
+some of the currently used public key certificates have a $2048$-bit RSA modulus $N$, which would 
+require us to generate two $1024$-bit primes; we want $p$ or $q$ to be of the same size for 
+security reasons. 
+
+Suppose that we would like to generate an $\ell$-bit prime $p$. Moreover, suppose that we 
+have two magic boxes $\RNG$ and $\IsPrime$. Every time we use $\RNG$, it gives us a random bit, 
+or a sequence of random bits. We may have to initiate $\RNG$ with some (short but random) seed. 
+Therefore, using $\RNG$ nets us a random $\ell$-bit integer $p$. Next, we provide our random integer $p$
+to $\IsPrime$, which tells us $\True$ if $p$ is prime and $\False$ otherwise. We repeat this 
+process until the output of $\IsPrime$ is $\True$, as depicted in the following diagram. 
+
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQAdDuAM2C54AjCAA9gAJQByAcQC+skLNLpMufIRQAmCtTpNW7NIuUgM2PASIBmHTQYs2iTtz4DhYgJJwACgCcsALYw8sYq5upEACy2eg7sXLzAACq+rApKYWqWKDbEuvYGTgl8AGJMcMGhpqoWGsjkMQWOIIq6MFAA5vBEoDy+EAFIDSA4EEjEGSB9A+M0o0iak9ODiNojY4iRS-0ra-OIVtszm3Mb5EcrAKynQ3b6zVw4MCI4wBXt6ZSyQA
+\begin{tikzcd}
+{} \arrow[r, "\text{seed}"] & {\fbox{\RNG}} \arrow[r] & p \arrow[r] & {\fbox{\IsPrime}} \arrow[d] \arrow[r] & \sf{True} \\
+                            &                           &             & \sf{False} \arrow[llu]                  &          
+\end{tikzcd}
+\end{center}
+
+Defining the number of primes not exceeding $L$ as $\pi(L)$ and assuming that the primes are 
+randomly distributed in any given interval, we would expect to query $\IsPrime$ about 
+$2^{\ell-1}/(\pi(2^\ell) - \pi(2^{\ell-1}))$ times before we have an affirmative answer on the primality
+of $p$. The Prime Number Theorem tells us that $\pi(L) \approx L/\ln L$, so we would expect to 
+try approximately $\ln 2^\ell$ random integers before obtaining a prime $p$. In particular, 
+this means that we would run $710$ primality tests before generating a $1024$-bit prime. We can 
+reduce this number in half by trying only the odd numbers, but it is still critical that we find 
+efficient implementations of $\RNG$ and $\IsPrime$. This week, we will focus on $\IsPrime$. 
+
+\subsection{A Basic Primality Test}
+Let $n$ be a positive integer. If $n$ is prime, then it only has the factors $1$ and $n$, which we call 
+the trivial factors of $n$. On the other hand, if $n$ is composite, then it has factors 
+$n_1 \leq n_2$ with $n_1 \leq \sqrt n$. In other words, a positive integer $n \geq 2$ is prime if and 
+only if it is not divisible by any integer between $2$ and $\sqrt n$. 
+
+This observation gives us a basic primality testing algorithm. For an integer $n \geq 2$ as input, 
+compute $n \pmod k$ for all integers $2 \leq k \leq \sqrt n$. If no such $k$ exists or 
+$n \pmod k$ is non-zero for all $k$, then output $\True$; otherwise, there is some $k$ such that 
+$n \pmod k$ is zero, in which case we output $\False$. 
+
+This algorithm can be very quick to identify $n$ as a composite number if $n$ has a small divisor. 
+However, what if our input $n$ is composite with only two prime divisors $p \approx q$? 
+What if $n$ is prime (which is exactly what we are trying to determine)? In such cases, 
+we would have to compute $n \pmod k$ approximately $\sqrt n$ times. To generate a 
+$1024$-bit prime, we would need to run the Euclidean division algorithm about $2^{512}$ times. 
+If we run this algorithm on a $4.7$ GHz computer and assume that Euclidean division can be 
+computed in $1$ clock cycle, then we would expect to wait $2^{512}/(4.7 \times 10^9)$ seconds, 
+or about $10^{137}$ years. This is clearly infeasible for our purposes. Fortunately, 
+more efficient primality testing algorithms exist. 
+
+\subsection{Fermat Primality Test}
+Let $n \geq 2$ be a positive integer. If we can find an integer $1 \leq a \leq n-1$ such that 
+$\gcd(a, n) > 1$, then we are guaranteed that $n$ is composite. However, what if the integer 
+$1 \leq a \leq n-1$ satisfies $\gcd(a, n) = 1$? Then we either have $a^{n-1} \not\equiv 1 \pmod n$ 
+or $a^{n-1} \equiv 1 \pmod n$. In the first case, we can conclude that $n$ is composite because 
+if $n$ were prime, then $a^{n-1} \equiv 1 \pmod n$ for all $1 \leq a \leq n-1$ by Fermat's Little 
+Theorem. However, in the second case, we cannot deduce whether $n$ is composite or prime. 
+For example, we have $2^{340} \equiv 1 \pmod{341}$, but $n = 341 = 11 \cdot 31$ is not prime. 
+This discussion motivates the definition of a Fermat witness and Fermat liar for the compositeness of $n$.
+
+\begin{defn}
+Let $n \geq 2$ and $1 \leq a \leq n-1$ be positive integers.
+\begin{itemize}
+    \item The integer $a$ is said to be a {\bf Fermat witness} for the compositeness of $n$ if it satisfies
+    $\gcd(a, n) = 1$ and $a^{n-1} \not\equiv 1 \pmod n$. 
+    \item The integer $a$ is said to be a {\bf Fermat liar} for the compositeness of $n$ if it satisfies 
+    $\gcd(a, n) = 1$ and $a^{n-1} \equiv 1 \pmod n$. 
+\end{itemize}
+\end{defn}
+
+We saw that $a = 2$ is a Fermat liar for the compositeness of $n = 341$ since $\gcd(2, 341) = 1$
+and $2^{340} \equiv 1 \pmod{341}$. On the other hand, $a = 3$ is a Fermat witness for the compositeness
+of $n = 341$ since $\gcd(3, 341) = 1$ and $3^{340} \equiv 56 \not\equiv 1 \pmod{341}$. 
+
+We are now ready to present the Fermat primality test, where we hope that the number of Fermat liars 
+is relatively low so that we can quickly find a Fermat witness for a composite integer $n$. 
+If we cannot find a Fermat witness for the compositeness of $n$ after $r$ iterations, 
+then we will conclude that $n$ is {\it probably} prime. We cannot say for sure that $n$ is prime 
+since it is possible that $n$ is composite but no Fermat witness is found within $r$ iterations.
+
+\begin{algo}[Fermat Primality Test]~
+
+{\bf Input:} A positive integer $n \geq 2$ and a positive integer $r$. 
+
+{\bf Output:} One of ``$n$ is composite'' or ``$n$ is probably prime''; the success probability is controlled by the input parameter $r$, the number of iterations. \vspace{0.5em}
+
+\begin{algorithmic}[1]
+\State $\counter \gets 1$. 
+\State Pick a random integer $1 < a < n-1$. 
+\State Compute $\gcd = \gcd(a, n)$. 
+\If{$\gcd > 1$}
+    \State Output ``$n$ is composite'' and exit.
+\Else
+    \State Compute $a^{n-1} \in \Z_n$. 
+    \If{$a^{n-1} \neq 1$} \Comment{$a$ is a Fermat witness}
+        \State Output ``$n$ is composite'' and exit. 
+    \Else \Comment{$a$ is a Fermat liar when $n$ is composite}
+        \State $\counter \gets \counter + 1$. 
+        \If{$\counter = r$} \Comment{after $r$ iterations, bet that $n$ is prime}
+            \State Output ``$n$ is probably prime'' and exit.
+        \Else 
+            \State Go back to line 2. 
+        \EndIf 
+    \EndIf
+\EndIf
+\end{algorithmic}
+\end{algo}
+
+It is clear that if the input $n$ to the Fermat primality test is prime, then the output 
+will always be ``$n$ is probably prime'', as expected. Moreover, if the Fermat primality test 
+outputs ``$n$ is composite'', then $n$ is always composite. However, as we noted above, the Fermat 
+primality test can output ``$n$ is probably prime'' even when $n$ is composite. Ideally, we want 
+to ensure that when the input $n$ is composite, then the probability that the algorithm will 
+output ``$n$ is probably prime'' is small. This probably heavily depends on the density of Fermat 
+witnesses for a composite number $n$. The good news is that the existence of a Fermat witness for a 
+composite $n$ implies that at least half of the elements in $\Z_n^*$ are Fermat witnesses, as we 
+shall see in the following theorem.
+
+\begin{thm}
+Let $n$ be a positive integer for which there is at least one Fermat witness. Then at least 
+half of the elements in $\Z_n^* = \{a \in \Z_n : \gcd(a, n) = 1\}$ are Fermat witnesses. 
+\end{thm}
+\begin{pf}
+Let $a \in \Z_n^*$ be a Fermat witness for the compositeness of $n$. If there is no Fermat liar in 
+$\Z_n^*$, then the result holds trivially. Now, let $b_i \in \Z_n^*$ be pairwise distinct 
+Fermat liars for $1 \leq i \leq s$. It suffices to show that $ab_i$ are pairwise distinct 
+Fermat witnesses. First, note that $ab_i \in \Z_n^*$ since $\Z_n^*$ is a multiplicative group. 
+Moreover, the $ab_i$ are pairwise distinct because $ab_i \equiv ab_j \pmod n$ would imply that 
+$b_i \equiv b_j \pmod n$ by multiplying both sides by $a^{-1} \in \Z_n$. Finally, we have 
+\[ (ab_i)^{n-1} \equiv a^{n-1} b_i^{n-1} \equiv a^{n-1} \not\equiv 1 \pmod n, \]
+so $ab_i$ is a Fermat witness, finishing the proof. 
+\end{pf}
+
+The above theorem implies that if there is at least one Fermat witness for a composite $n$, then 
+the Fermat primality test would fail with probability at most $1/2^r$. This is because for 
+composite $n$, the probability that $\gcd(a, n) = 1$ and that $a$ is not a Fermat witness is at 
+most $1/2$. 
+
+Unfortunately, there are composite numbers $n$ with no Fermat witnesses. 
+In other words, $a^{n-1} \equiv 1 \pmod n$ holds for all $a \in \Z_n^*$. Such an integer $n$ 
+is known as a \href{https://en.wikipedia.org/wiki/Carmichael_number}{Carmichael number}, with the smallest one being $561$. There are 
+infinitely many Carmichael numbers, and the number of Carmichael numbers less than $n$ is 
+estimated to be about $n^{2/7}$ for sufficiently large $n$. In particular, the Fermat primality 
+test will fail to output the correct answer unless we happen to choose $1 < a < n-1$ with 
+$\gcd(a, n) > 1$ in one of the iterations. 
+
+\subsection{Solovay-Strassen Primality Test}
+The Fermat primality test utilizes the key equality $a^{n-1} \equiv \pmod n$ which holds for all $a \in 
+\Z_n^*$ when $n$ is prime. We observed a similar property, namely Euler's criterion in Proposition 2.11,
+which states that if $n$ is an odd prime, then $a \in \QR_n$ if and only if $a^{(n-1)/2} = 1$. 
+As one might guess, the Solovay-Strassen primality test will follow a similar approach to the 
+Fermat primality test; repetitive computations of $a^{(n-2)} = 1$ for randomly chosen 
+$a \in \Z_n^*$ will help determine if $n$ is prime or composite. Before describing the 
+Solovay-Strassen primality test, we will first introduce some more definitions and algorithms 
+building on our previous discussion of quadratic residues. 
+
+\begin{defn}[Legendre symbol]
+Let $p$ be an odd prime and let $a \geq 0$ be an integer. The {\bf Legendre symbol} 
+$(\frac ap)$ is defined as 
+\[ \left( \frac ap \right) = \begin{cases} 0 & \text{if $a \equiv 0 \pmod p$,} \\ 1 & \text{if $a \in \QR_p$,} \\ -1 & \text{if $a \in \QNR_p$.} \end{cases} \]
+\end{defn}
+
+\begin{thm}
+If $p$ is an odd prime, then for all integers $a \geq 0$, we have 
+\[ \left( \frac ap \right) \equiv a^{(p-1)/2} \pmod p. \]
+\end{thm}
+\begin{pf}
+If $p$ divides $a$, then $a \equiv 0 \pmod p$, so $a^{(p-1)/2} \equiv 0 \pmod p$ and 
+$(\frac ap) = 0$ by the definition of the Legendre symbol. Next, assume that $\gcd(a, p) = 1$. 
+If $a \in \QR_p$, then $(\frac ap) = 1$ by definition, and $a^{(p-1)/2} \equiv 1 \pmod p$ 
+by Euler's criterion. Suppose now that $a \in \QNR_p$ so that $(\frac ap) = -1$. By Proposition 
+2.9, we can write $a^{p-1} \equiv 1 \pmod p$, so $a^{(p-1)/2}$ is a solution to $x^2 \equiv 1 
+\pmod p$. The only two solutions to this equation are $\pm1$ as we discussed in Section 2.4. 
+Since $a \in \QNR_p$, it follows from Euler's criterion that $a^{(p-1)/2} \equiv -1 \pmod p$,
+completing the proof.
+\end{pf}
+
+Note that the above theorem gives us an efficient algorithm to compute the Legendre symbol. 
+Now, we generalize the Legendre symbol to the Jacobi symbol $\left(\frac an\right)$ for all odd positive integers 
+$n$, and present efficient algorithms to compute it. This is critical for the Solovay-Strassen 
+primality test as we will declare $n$ to be composite if we can find $a \in \Z_n$ such that 
+$\gcd(a, n) > 1$ or $\left(\frac an\right) \not\equiv a^{(n-1)/2} \pmod n$. 
+
+\begin{defn}[Jacobi symbol]
+Let $n$ be an odd positive integer with unique prime factorization given by 
+\[ n = \prod_{i=1}^k p_i^{e_i} \]
+where $p_i$ is a prime and $e_i \geq 1$ is an integer for all $1 \leq i \leq k$. 
+For an integer $a \geq 0$, the {\bf Jacobi symbol} $\left(\frac an\right)$ is defined by 
+\[ \left( \frac an \right) = \prod_{i=1}^k \left( \frac a{p_i} \right)^{\!e_i}, \]
+where $(\frac a{p_i})$ denotes the Legendre symbol as defined above. 
+\end{defn}
+
+We noted earlier that we will declare $n$ to be composite if we can find $a \in \Z_n$ such that 
+$\left(\frac an\right) \not\equiv a^{(n-1)/2} \pmod n$ in the Solovay-Strassen primality test. We already 
+know how to compute $a^{(n-1)/2} \pmod p$ and $(\frac ap)$ efficiently for a prime $p$, and 
+the definition of the Jacobi symbol offers an efficient way to compute $\left(\frac an\right)$. 
+However, this method is not useful to us because we are trying to determine if $n$ is prime, 
+whence we do not know the prime factorization of $n$. Computation number theory comes in 
+handy here, and some facts about the Jacobi symbol will help us to compute the Jacobi symbol
+$\left(\frac an\right)$ efficiently without needing to factor $n$.
+
+\begin{prop}
+Let $m$ and $n$ be odd positive integers. For all integers $a, b \geq 0$, we have the following properties:
+\begin{enumerate}[(1)]
+    \item $\left(\frac an\right) = 0$ if and only if $\gcd(a, n) > 1$. 
+    \item $\left(\frac {ab}n\right) = \left(\frac an\right)\left(\frac bn\right)$. 
+    \item If $a \equiv b \pmod n$, then $\left(\frac an\right) = \left(\frac bn\right)$. 
+    \item $\left(\frac1n\right) = 1$. 
+    \item $\left(\frac2n\right) = (-1)^{(n^2-1)/8} = \begin{cases} 1 & \text{if } n \equiv \pm1 \pmod 8, \\ -1 & \text{if } n \equiv \pm3 \pmod 8. \end{cases}$
+    \item $\left(\frac mn\right) = \left(\frac nm\right) (-1)^{((m-1)/2)((n-1)/2)} = \begin{cases} -\left(\frac nm\right) & \text{if } m\equiv n \equiv 3 \pmod 4, \\ \left(\frac nm\right) & \text{otherwise.} \end{cases}$
+\end{enumerate}
+\end{prop}
+
+\begin{exmp}
+We can use the above facts to compute $\left(\frac{123}{5472940991761}\right)$. Indeed, we have 
+\begin{align*}
+    \left( \frac{123}{5472940991761} \right) &= 
+    \left( \frac{5472940991761}{123} \right) = \left( \frac{70}{123} \right) 
+    = \left( \frac{2}{123} \right) \left( \frac{35}{123} \right) = -\left( \frac{35}{123} \right) \\
+    &= \left( \frac{123}{35} \right) = \left( \frac{18}{35} \right) = \left( \frac{2}{35} \right)
+    \left( \frac{9}{35} \right) = -\left( \frac{9}{35} \right) \\
+    &= -\left( \frac{35}{9} \right) = -\left( \frac{8}{9} \right) = -\left( \frac{2}{9} \right)^{\!3}
+    \left( \frac{1}{9} \right) = -\left( \frac{1}{9} \right) = -1. 
+\end{align*}
+\end{exmp}
+
+We now have all the computational tools we need for presenting the Solovay-Strassen primality test. 
+Due to Theorem 3.5, we hope to quickly find an integer $a$ such that $\left(\frac an \right) 
+\not\equiv a^{(n-1)/2} \pmod n$ for composite $n$. This is because if $n$ were prime, then
+for all $a \geq 0$, we would have $\left( \frac an \right) \equiv a^{(n-1)/2} \pmod n$.
+We call such an integer $a$ an Euler witness for 
+the compositeness of $n$, as it certifies that $n$ is composite. If we do not find an Euler 
+witness for the compositeness of $n$ after $r$ iterations, then we will conclude that 
+$n$ is {\it probably} prime, as with the Fermat primality test. 
+
+\newpage 
+\begin{algo}[Solovay-Strassen Primality Test]~
+
+{\bf Input:} A positive odd integer $n \geq 3$ and a positive integer $r$. 
+
+{\bf Output:} One of ``$n$ is composite'' or ``$n$ is probably prime''; the success probability is controlled by the input parameter $r$, the number of iterations. \vspace{0.5em}
+
+\begin{algorithmic}[1]
+\State $\counter \gets 1$. 
+\State Pick a random integer $1 < a < n-1$. 
+\State Compute $\gcd = \gcd(a, n)$. 
+\If{$\gcd > 1$}
+    \State Output ``$n$ is composite'' and exit.
+\Else
+    \State Compute $\left( \frac an \right)$ and $a^{(n-1)/2} \in \Z_n$. 
+    \If{$\left(\frac an \right) \not\equiv a^{(n-1)/2} \neq 1 \pmod n$} \Comment{$a$ is an Euler witness}
+        \State Output ``$n$ is composite'' and exit. 
+    \Else \Comment{$a$ is an Euler liar when $n$ is composite}
+        \State $\counter \gets \counter + 1$. 
+        \If{$\counter = r$} \Comment{after $r$ iterations, bet that $n$ is prime}
+            \State Output ``$n$ is probably prime'' and exit.
+        \Else 
+            \State Go back to line 2. 
+        \EndIf 
+    \EndIf
+\EndIf
+\end{algorithmic}
+\end{algo}
+
+\begin{defn}
+Let $n \geq 3$ be an odd positive composite number. An integer $1 \leq a \leq n-1$ is called an 
+{\bf Euler-Jacobi witness} for the compositeness of $n$ if it satisfies $\gcd(a, n) = 1$ and 
+$\left( \frac an \right) \not\equiv a^{(n-1)/2} \pmod n$. Otherwise, $a$ is called an 
+{\bf Euler-Jacobi liar} if it satisfies $\gcd(a, n) = 1$ and $\left( \frac an \right) 
+\equiv a^{(n-1)/2} \pmod n$. 
+\end{defn}
+
+\begin{thm}[Density of Euler-Jacobi witnesses]
+Let $n$ be an odd positive composite integer. Then at least half of the elements in $\Z_n^* 
+= \{a \in \Z_n : \gcd(a, n) = 1\}$ are Euler-Jacobi witnesses.
+\end{thm}
+\begin{pf}
+We leave the proof as an exercise. Show that the Euler-Jacobi liars
+form a proper subgroup of $\Z_n^*$, and use the fact that the order of a subgroup divides the order 
+of the group. 
+\end{pf}
+
+The above theorem implies that the Solovay-Strassen primality test will fail to output the 
+correct result with probability at most $1/2^r$ since the probability that $a \in \Z_n^*$ 
+is not an Euler-Jacobi witness per iteration is at most $1/2$ for composite $n$. 
+
+We note that Theorem 3.11 is stronger than its analogous statement in Theorem 3.3 in the sense that
+the number of Euler-Jacobi witnesses is bounded by $|\Z_n^*|/2$ without needing to assume the 
+existence of an Euler-Jacobi witness. 
+
+\subsection{Miller-Rabin Primality Test}
+
+In this section, we present the Miller-Rabin primality test, where we introduce the notions of a Miller-Rabin witness and a Miller-Rabin liar. The Miller-Rabin primality test is more advantageous than the Solovay-Strassen primality test because the number of Miller-Rabin liars in $\Z_n^*$ is bounded by $(n-1)/4$, and the set of Euler-Jacobi witnesses is a subset of 
+the Miller-Rabin witnesses. In particular, the wrong output is provided with probability at most 
+$1/4^r$ in the case where the input $n$ is composite, where $r$ is the number of iterations. 
+The Miller-Rabin primality test is widely used in practice as it is one of the simplest and 
+fastest tests, while being more accurate than the Fermat and Solovay-Strassen primality tests. 
+
+\begin{thm}
+Let $p$ be an odd prime. Let $s, d \in \Z_n^*$ be elements such that $d$ is odd and 
+$p - 1 = 2^s d$ with $s \geq 1$. For every $a \in \Z_p^*$, we either have 
+\begin{enumerate}[(i)]
+    \item $a^d \equiv 1 \pmod p$, or 
+    \item $a^{2^td} \equiv -1 \pmod p$ for some $0 \leq t \leq s-1$. 
+\end{enumerate}
+\end{thm}
+\begin{pf}
+By Fermat's little theorem, we have $a^{p-1} \equiv a^{2^sd} \equiv 1 \pmod p$. Therefore, 
+$a^{2^{s-1}d}$ satisfies the equation $x^2 \equiv 1 \pmod p$, which has exactly two roots 
+$\pm1 \pmod p$. In other words, we either have $a^{2^{s-1}d} \equiv -1 \pmod p$ or 
+$a^{2^{s-1}d} \equiv 1 \pmod p$. In the first case, we are done as (ii) holds. 
+In the second case, we have $a^{2^{s-1}d} \equiv 1 \pmod p$, and if $s = 1$, then we are done as 
+(i) holds. If $s > 1$, we can repeat the same process and either obtain $a^{2^td} \equiv -1 \pmod p$
+for some $0 \leq t \leq s-1$ along the way, or we would have to have $a^d \equiv 1 \pmod p$, 
+which completes the proof. 
+\end{pf}
+
+\begin{defn}
+Let $n$ be an odd positive composite integer such that $n-1=2^sd$ for some positive integer $s$ and an odd integer $d$. An element $a\in \Z_n^*$ is called a {\bf Miller-Rabin witness} for the compositeness of $n$ if it satisfies
+\begin{enumerate}[(i)]
+    \item $a^d \not\equiv 1 \pmod n$, and 
+    \item $a^{2^td} \not\equiv -1 \pmod n$ for all $0 \leq t \leq s-1$. 
+\end{enumerate}
+Otherwise, $a$ is called a {\bf Miller-Rabin liar} for the compositeness of $n$. 
+\end{defn}
+
+We now present the Miller-Rabin primality test, where we hope to quickly find a Miller-Rabin 
+witness for a composite input $n$. 
+
+\begin{algo}[Miller-Rabin Primality Test]~
+
+{\bf Input:} A positive odd integer $n \geq 3$ and a positive integer $r$. 
+
+{\bf Output:} One of ``$n$ is composite'' or ``$n$ is probably prime''; the success probability is controlled by the input parameter $r$, the number of iterations. \vspace{0.5em}
+
+\begin{algorithmic}[1]
+\For{$\counter = 0$ \textbf{to} $r - 1$} \Comment{at most $r$ iterations}
+    \State Pick a random integer $1 < a < n-1$. 
+    \State Compute $\gcd = \gcd(a, n)$. 
+    \If{$\gcd > 1$}
+        \State Output ``$n$ is composite'' and exit.
+    \Else
+        \State Write $n - 1 = 2^s d$ such that $s \geq 1$ and $d$ is odd.
+        \State Compute $b \equiv a^d \pmod n$. 
+        \If{$b \not\equiv 1 \pmod n$ {\bf and} $b^{2^t} \not\equiv -1 \pmod n$ {\bf for all} $0 \leq t \leq s-1$}
+            \State Output ``$n$ is composite'' and exit. 
+        \EndIf 
+    \EndIf
+\EndFor 
+\State Output ``$n$ is probably prime''. 
+\end{algorithmic}
+\end{algo}

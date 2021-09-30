@@ -1,0 +1,122 @@
+\section{Introduction}
+
+\subsection{What is Cryptography?}
+Cryptography is the science of securing information and communication in the presence of attackers. As an example, cryptography helps clients do online banking safely. In a typical online banking application, clients are connected to their banks through a wireless channel which can be observed or controlled by attackers. In particular, we assume that attackers can read, modify, delete exchanged messages, and inject new messages into the channel. How can we secure a channel between two parties if they have never met before?
+
+This scenario motivates the fundamental goals of cryptography.
+\begin{itemize}
+    \item The first goal is {\bf confidentiality}. Confidentiality assures that only authorized parties can access or see the data. Attackers should not be able to extract the real content of the data even though they can read or steal packages exchanged in the channel. We would like to keep our banking passwords to ourselves.
+    \item The second goal is {\bf message authentication}. Message authentication, also known as data origin authentication, assures that parties can verify the source of the received messages. When we receive a message, which is claimed to be sent from our bank, we have to make sure it has indeed been sent from our bank.
+    \item The third goal is {\bf data integrity}. Data integrity assures that data cannot be altered by unauthorized or unknown means. When we are willing to pay 1,500 CAD for a new laptop, and commit to this transaction at a time, we have to make sure that this transaction cannot be modified as a 15,000 CAD worth transaction at a later time.
+    \item Finally, the fourth goal is {\bf non-repudiation} which prevents communicating parties from falsely denying their actions. Once we commit to a 1,500 CAD transaction, then we should not be able to break our commitment.
+\end{itemize}
+
+There is a variety of cryptographic techniques that help achieve the fundamental goals of cryptography. As a high-level overview, encryption algorithms help achieve confidentiality; digital signature schemes help achieve authentication and non-repudiation; message authentication codes help achieve data integrity.
+
+{\bf Public key cryptography.} Now, let’s go back to our online banking scenario. Before the communication between the client and the bank starts, the bank generates a public key, secret key pair $(\PubKey, \SecKey)$. The key $\PubKey$ is public in the sense that it is known to everyone including attackers. The key $\SecKey$ is secret in the sense the bank is the only party that knows it. After the bank generates its key pair $(\PubKey, \SecKey)$, the bank visits a certification authority. The certification authority issues a certificate to validate the public key $\PubKey$, and its ownership by the bank.
+
+One can view the public key certificate of a website by clicking on the lock icon displayed on the 
+web browser. This should display a certificate viewer, where one can click on the ``Details'' tab. 
+The certificate includes information about the website, the certification authority (also known as the verifier), the validity period of the certificate, the website’s public key, and the certification authority’s signature. The public key and the signature are long sequences of hexadecimal characters.
+Of course, we do not see any trace of the secret key in the certificate.
+
+For a concrete example, the Bank of Canada is using the RSA public key cryptosystem, and its public key consists of two integers $N$ and $e$, which are called the {\bf public modulus} and the {\bf public exponent}, respectively. The certificate encodes these two integers (see \href{https://en.wikipedia.org/wiki/ASN.1}{ASN.1}), and displays them using hexadecimal (base-16) representation. For decoding, one can copy and paste the encoded public key to an ASN.1 decoder. For instance, this \href{https://lapo.it/asn1js/}{ASN.1 JavaScript decoder} can be used to decode the hexadecimal and integer values of $N$ and $e$.
+
+\begin{exercise*}
+Find the public key modulus and exponent of the \href{https://uwaterloo.ca/}{University of Waterloo} and \href{google.ca}{google.ca}.
+\end{exercise*}
+
+We should note two important properties of the Bank of Canada’s public key values. 
+Notice that $N$ is a 2048-bit composite integer, which is supposed to be very hard to factor; 
+moreover, $e=2^{16}+1$ is a relatively small integer with Hamming weight 2. The first property assures the security of the system, and the second property is for efficient implementation of the protocol. We will explain these in more detail when we cover the RSA cryptosystem.
+
+Now that we know more about public key certificates, we can summarize the sequence of steps for turning a wireless {\bf insecure} communication channel into a secure channel between a client and her bank.
+\begin{enumerate}
+    \item {\bf Public key generation.} The bank generates a public key and secret key pair.
+
+    \item {\bf Signature generation.} Certificate authority issues a certificate to the bank, validating the public key and its ownership by the bank.
+
+    \item {\bf Signature verification.} The client obtains the bank’s certificate, and verifies the certification authority’s signature on the bank’s certificate. In other words, the client authenticates the bank.
+
+    \item {\bf Random number generation.} The client creates a random secret session key $K$.
+
+    \item {\bf Public key encryption.} The client encrypts $K$ using the bank’s public key $\PubKey$, and sends this encrypted key to the bank.
+
+    \item {\bf Public key decryption.} The bank decrypts the client’s ciphertext using its private key $\SecKey$, and recovers the session key $K$.
+
+    \item {\bf Symmetric key cryptography.} The client and the bank use the shared secret key $K$ to secure and authenticate their communication, using symmetric key cryptography.
+
+    \item {\bf Efficiency and security.} Presumably, the steps above can be performed efficiently and that attackers cannot gather any useful information about the secret key $K$, and that the communication channel stays secure.
+\end{enumerate}
+
+In this course, we will cover these steps in detail with the exception of symmetric key cryptography. 
+One can read Chapter 1.1 and Chapter 1.7 in \href{https://link-springer-com.proxy.lib.uwaterloo.ca/book/10.1007/978-1-4939-1711-2}{An Introduction to Mathematical Cryptography} and Chapter 1.5 in \href{https://www-taylorfrancis-com.proxy.lib.uwaterloo.ca/books/mono/10.1201/9780429466335/handbook-applied-cryptography-alfred-menezes-paul-van-oorschot-scott-vanstone}{Handbook of Applied Cryptography} 
+for introductory level texts on symmetric key cryptography.
+
+\subsection{The RSA Cryptosystem}
+
+\href{https://en.wikipedia.org/wiki/RSA_(cryptosystem)}{RSA} is a public key cryptosystem invented by Ron Rivest, Adi Shamir, and Leonard Adleman, and published in 1978. The RSA cryptosystem offers a public key encryption scheme and a digital signature scheme.
+
+{\bf The RSA encryption scheme.} The RSA public key encryption scheme consists of three algorithms.
+\begin{enumerate}
+    \item {\bf Key generation.} The purpose of this algorithm is to generate a public key and secret key pair. The public key is a pair of integers
+    \[ \PubKey = [N, e], \]
+    where $N = p\cdot q$ is a product of two randomly chosen distinct primes $p$ and $q$, and 
+    $e \in (1, (p-1)(q-1))$ such that
+    \[ \gcd(e, (p-1)(q-1)) = 1. \]
+    For ease of notation, we define $\phi = (p-1)(q-1)$ so that $\gcd(e, \phi) = 1$. As mentioned in 
+    Section 1.1, $N$ and $e$ are also called the {\bf public modulus} and the {\bf public 
+    exponent}, respectively. The secret key is a tuple of integers 
+    \[ \SecKey = [p, q, d], \]
+    where $p$ and $q$ are as chosen before, and $d$ is the multiplicative inverse of 
+    $e$ modulo $\phi$. That is, 
+    \[ e \cdot d \equiv 1 \pmod \phi. \]
+    The integer $d$ is also known as the {\bf secret exponent}.
+    
+    \newpage
+    {\sc Example.} The bank chooses two distinct 8-bit random primes $p = 233$ and $q = 211$. 
+    Therefore, $N = p \cdot q = 49163$ and $\phi = (p-1)(q-1) = 48720$. Next, the bank 
+    chooses $e = 20771$ (one can verify that $\gcd(e, \phi) = 1$). This choice of $e$ fixes 
+    $d = 36971$ since $e$ and $d$ must satisfy $e \cdot d \equiv 1 \pmod \phi$. Therefore, the bank has 
+    a public key and secret pair given by 
+    \begin{align*}
+        \PubKey &= [N, e] = [49163, 20771], \\
+        \SecKey &= [p, q, d] = [233, 211, 36971].
+    \end{align*}
+    
+    {\sc Question.} How do you choose a fixed-length prime number at random? How do you compute modular multiplicative inverses? Are these methods efficient? What does efficient mean?
+    
+    \item {\bf Encryption algorithm.} Let $\Z_N$ denote the set of integers modulo $N$. 
+    For a given public key $\PubKey = [N, e]$, the encryption algorithm takes as input a message 
+    $m$ from the message space $\Z_N$, and outputs the ciphertext $c = m^e \pmod N$ in the 
+    ciphertext space $\Z_N$. We can denote this process by 
+    \begin{align*}
+        \Enc_{N,e} : \Z_N &\to \Z_N \\
+        m &\mapsto c = m^e \pmod N,
+    \end{align*}
+    or simply by $\Enc(m) = m^e \mod N$ when $N$ and $e$ are clear from the context.
+    
+    {\sc Example.} The client obtains the bank’s public key $\PubKey = [N,e] = [49163,20771]$, 
+    and encrypts her \href{https://en.wikipedia.org/wiki/Card_security_code}{Card Security Code (CSC)} $m=123$ by 
+    \[ c = m^e \pmod N = 123^{20771} \pmod {49163} = 37917. \]
+    
+    {\sc Question.} How do you (efficiently) perform modular exponentiation?
+    
+    \item {\bf Decryption algorithm.} For a given public modulus $N$ and the secret exponent $d$, the decryption algorithm takes as input a ciphertext $c$ from the ciphertext space $\Z_N$, 
+    and outputs the message $m = c^d \pmod N \in \Z_N$. We can denote this process by 
+    \begin{align*}
+        \Dec_{N,d} : \Z_N &\to \Z_N \\
+        c &\mapsto m = c^d \pmod N,
+    \end{align*}
+    or simply by $\Dec(c) = c^d \pmod N$ when $N$ and $d$ are clear from the context.
+    
+    {\sc Remark.} Note that $p$ and $q$ are implicit in the decryption algorithm above. However, as we will see later, one can explicitly use them for a more efficient decryption algorithm.
+    
+    It should now be clear why $N$, $e$, and $d$ are called the public modulus, public exponent, and secret exponent, respectively.
+    
+    {\sc Example.} The bank receives the ciphertext $c=37917$ from the client, and uses its secret key to decrypt with 
+    \[ m = c^d \pmod N = 37917^{36971} \pmod {49163} = 123. \]
+    Observe that the bank succesfully recovered the client's CSC. 
+    
+    {\sc Question.} Can you guarantee that the RSA decryption algorithm will always work correctly and recover the original message? Is the RSA encryption scheme secure? What does it mean for a public key encryption scheme to be secure?
+\end{enumerate}

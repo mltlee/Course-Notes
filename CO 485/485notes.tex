@@ -1,0 +1,189 @@
+\documentclass[10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[shortlabels]{enumitem}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{bold-extra}
+\usepackage{color}   
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{wrapfig}
+\usepackage{cutwin}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{algpseudocode}
+
+% some useful math commands
+\newcommand{\eps}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\F}{\mathbb{F}}
+
+\newcommand{\PubKey}{{\sf PubKey}}
+\newcommand{\SecKey}{{\sf SecKey}}
+\newcommand{\Enc}{{\sf Enc}}
+\newcommand{\Dec}{{\sf Dec}}
+\newcommand{\ord}{{\sf ord}}
+\newcommand{\w}{{\sf w}}
+\newcommand{\QR}{{\sf QR}}
+\newcommand{\QNR}{{\sf QNR}}
+\newcommand{\RNG}{{\sf RNG}}
+\newcommand{\IsPrime}{{\sf IsPrime}}
+\newcommand{\True}{{\sf True}}
+\newcommand{\False}{{\sf False}}
+\newcommand{\counter}{{\sf counter}}
+\newcommand{\FW}{{\sf FW}}
+\newcommand{\EJW}{{\sf EJW}}
+\newcommand{\MRW}{{\sf MRW}}
+
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\PV}{PV}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\Res}{Res}
+
+\newcommand{\suchthat}{\;\ifnum\currentgrouptype=16 \;\middle|\;\else\mid\fi\;}
+
+% title formatting
+\newcommand{\newtitle}[4]{
+  \begin{center}
+	\huge{\textbf{\textsc{#1 Course Notes}}}
+    
+	\large{\sc #2}
+    
+	{\sc #3 \textbullet\, #4 \textbullet\, University of Waterloo}
+	\normalsize\vspace{1cm}\hrule
+  \end{center}
+}
+
+% for theorems
+\newtheoremstyle{newstyle}      
+{} %Aboveskip 
+{-0.25pt} %Below skip
+{\mdseries} %Body font e.g.\mdseries,\bfseries,\scshape,\itshape
+{} %Indent
+{\scshape} %Head font e.g.\bfseries,\scshape,\itshape
+{.} %Punctuation afer theorem header
+{ } %Space after theorem header
+{} %Heading
+
+\theoremstyle{newstyle}
+
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+\newtheorem*{exercise*}{Exercise}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{remark*}{Remark}
+\newtheorem*{exmp*}{Example}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{notation*}{Notation}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{axiom}[thm]{Axiom}
+\newtheorem{notation}[thm]{Notation}
+\newtheorem{exercise}[thm]{Exercise}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{algo}[thm]{Algorithm}
+
+% new proof environment
+\makeatletter
+\newenvironment{pf}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep0\p@\relax
+  \trivlist
+  \item[\hskip\labelsep\scshape
+  #1\@addpunct{.}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+% 1-inch margins
+\topmargin 0pt
+\advance \topmargin by -\headheight
+\advance \topmargin by -\headsep
+\textheight 8.9in
+\oddsidemargin 0pt
+\evensidemargin \oddsidemargin
+\marginparwidth 0.5in
+\textwidth 6.5in
+
+\parindent 0in
+\parskip 1.5ex
+
+\setlist[itemize]{topsep=0pt}
+\setlist[enumerate]{topsep=0pt}
+
+% hyperlinks
+\hypersetup{
+  colorlinks=true, 
+  linktoc=all,     % table of contents is clickable  
+  allcolors=blue  % all hyperlink colours
+}
+
+% table of contents
+\addto\captionsenglish{
+  \renewcommand{\contentsname}%
+    {Table of Contents}%
+}
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\cftsetindents{section}{0em}{2em}
+
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\lhead{CO 485: Fall 2021}
+\fancyhead[R]{Table of Contents}
+%\headrule
+\fancyfoot[R]{{\small Page \thepage\ of \pageref*{LastPage}}}
+}
+
+% headers and footers
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{#1}}
+\lhead{CO 485: Fall 2021}
+\cfoot{}
+\setlength\headheight{14pt}
+
+%\setcounter{section}{-1}
+
+\begin{document}
+
+\pagestyle{fancy}
+\newtitle{CO 485}{The Mathematics of Public Key Cryptography}{Koray Karabina}{Fall 2021}
+\rhead{Table of Contents}
+\rfoot{{\small Page \thepage\ of \pageref*{LastPage}}}
+
+\tableofcontents
+\vspace{1cm}\hrule
+\fancyhead[R]{\nouppercase\rightmark}
+\newpage 
+\fancyhead[R]{Week \thesection: \nouppercase\leftmark}
+
+\input{485week1.tex}\newpage 
+\input{485week2.tex}\newpage 
+\input{485week3.tex}
+
+\end{document}
