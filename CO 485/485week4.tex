@@ -1,0 +1,175 @@
+\section{Integer Factorization}
+
+\subsection{Motivation for Integer Factorization}
+So far, we have described and implemented efficient algorithms for generating
+primes, finding modular inverses, and performing modular exponentiation. 
+Therefore, we should now be convined of the efficiency of the RSA key generation,
+encryption, and decryption operations. However, we have not discussed the 
+security of the RSA encryption scheme. An adversary may adapt the following 
+obvious attack strategy:
+\begin{enumerate}
+    \item Factor the RSA public modulus $N = pq$. 
+    \item Once $p$ and $q$ are known, compute $\phi = (p-1)(q-1)$. 
+    \item Recover the secret exponent $d$ by computing the multiplicative inverse
+    of $e$ modulo $\phi$. 
+    \item Run the decryption algorithm $\Dec(c) = c^d \pmod N$. 
+\end{enumerate}
+Thus, the security of RSA requires integer factorization to be hard, at least 
+in the case where an RSA public key modulus is of the form $N = pq$ for 
+two distinct primes $p$ and $q$. 
+
+{\bf Question.} Why must $p$ and $q$ be distinct primes in RSA? We also noted 
+that RSA primes $p$ and $q$ should be of the same bit-length; that is, 
+$p \approx q$. Why is this the case?
+
+We will describe some integer factorization algorithms and study their efficiency.
+This will give us a better sense of the security of RSA, and it might suggest 
+some useful criterion in selecting the RSA primes $p$ and $q$. 
+
+\subsection{Problem Definition and a Naive Strategy}
+An integer factorization algorithm $\IntFac$ takes a positive integer $N$ as input,
+and outputs pairs of primes and positive integers $(p_i, e_i)$ for $m \geq 1$ 
+and $i = 1, \dots, m$ such that 
+\[ N = \prod_{i=1}^m p_i^{e_i}. \]
+A factor finding algorithm $\FindFac$ takes a positive integer $N$ as input. 
+When $N$ is composite, $\FindFac$ outputs two nontrivial factors $(n_1, n_2)$ of 
+$N$; that is, $1 < n_1, n_2 < N$ such that $N = n_1n_2$. When $N$ is prime, 
+$\FindFac$ outputs $(N, 1)$. 
+
+Clearly, an efficient $\IntFac$ yields an efficient $\FindFac$. Conversely, using
+$\FindFac$ recursively yields an efficient $\IntFac$. Therefore, we can restrict
+our attention to $\FindFac$. For future reference, we note that the binary 
+representation of an integer $N$ can be provided as input to factor finding 
+or integer factorization algorithms, so we say that the input size is $\log_2 N$. 
+
+The naive primality testing algorithm in Section 3.2 gives us a naive factor 
+finding algorithm. Given an integer $N \geq 2$ as input, compute $N \pmod n$
+for all integers $2 \leq n \leq \sqrt N$. If the interval $[2, \sqrt N]$ is 
+nonempty and there is some $n$ such that $N \equiv 0 \pmod n$, then output 
+$(n, N/n)$; otherwise, output $(N, 1)$. Notice that the first case occurs 
+if and only if $N$ is composite, and the second case occurs if and only if 
+$N$ is prime. For integers of the form $N = pq$ 
+with $p \approx q \approx \sqrt N$, this algorithm would need to perform 
+about $\sqrt N$ integer divisions before finding a prime factor of $N$. 
+The computational complexity of the integer division operation can be 
+estimated as $O((\log_2 N)^3)$, which is a polynomial function of the input 
+size $\log_2 N$. However, the number of steps $O(\sqrt N)$ is an exponential 
+function of the input size, so it would not be feasible to factor commonly 
+deployed $2048$-bit RSA moduli using this approach. 
+
+\begin{exercise}
+    Suppose an adversary is trying to factor the $2048$-bit modulus $N$ given by 
+    \begin{align*}
+        & 1657149945513071402293947654868380061019592336471239267077249436980938246913984 \\
+        & 6854681124400407952376248085771857669845180280490445594743703975014171144934137 \\
+        & 5462712148346840472922092817238029652927492096334047197925289116709232599596512 \\
+        & 4538882325103423547556039562732521789245444030511675452311827273389674765661319 \\ 
+        & 7555763157125477797269745933804235191987174701777001730108824080893548375470164 \\ 
+        & 8289813375824384456296476311382985828848739394326260608105080229109327176724351 \\ 
+        & 6845013339095555938796687460497979761890329264690895603572561138043479640686906 \\ 
+        & 8286050343393050137892902130389456325438296565890634899457077249
+    \end{align*}
+    using the naive strategy as described above. The adversary knows that $N$ 
+    is a product of two $1024$-bit distinct primes, and the adversary has access
+    to a computing resource that can perform $10^{18}$ long divisions per second. 
+    Estimate the time the adversary needs to factor $N$.
+\end{exercise}
+
+\subsection{Pollard's $p-1$ Algorithm}
+Let $N$ be a positive composite integer with a prime factor $p$ such that 
+\[ p-1 = \prod_{i=1}^m p_i^{e_i} \] 
+where $e_i \geq 1$ is an integer and $p_i$ is prime for all $i = 1, \dots, m$, and 
+\[ p_1^{e_1} < p_2^{e_2} < \cdots < p_m^{e_m} < B \] 
+for some integer $B \in \Z$. Now, let $a \in \Z$. If we are lucky and find that 
+$\gcd(a, p) = p$, then we are already done finding a nontrivial factor of $N$. 
+Therefore, we assume that $\gcd(a, p) = 1$. The above conditions imply that 
+$(p-1) \mid B!$ and it follows from Fermat's little theorem that 
+\[ a^{B!} \equiv 1 \pmod p, \] 
+or equivalently $p \mid (a^{B!} - 1)$, and that $\gcd(a^{B!} - 1, N) > 1$. 
+This gives us some hope of finding a nontrivial factor of $N$. One 
+initial concern might be that $a^{B!}$ is potentially a very large number 
+to the extent that we cannot efficiently handle it. This can be addressed by 
+observing that $\gcd(a^{B!}-1, N) = \gcd(a^{B!}-1 \pmod N, N)$. Therefore, 
+we can simply work with numbers in $\Z_N$. Moreover, we can find
+$a^{B!} \pmod N$ with $B-1$ successive modular exponentiations by computing 
+\[ a^{B!} \text{ mod $N$} = ((((a \text{ mod $N$})^2 \text{ mod $N$})^3
+\text{ mod $N$})^4 \;\cdots)^B \text{ mod $N$}. \] 
+Since all of the exponents are bounded by $B$, each modular exponentiation 
+requires at most $\log_2 B$ (modular) multiplications and $\log_2 B$ 
+(modular) squarings. Finally, using bit-level computational complexity 
+estimates $O((\log_2 N)^2)$ and $O((\log_2 N)^3)$ for modular multiplication 
+and greatest common divisor finding operations respectively, we estimate 
+the number of bit operations for computing $\gcd(a^{B!}-1, N)$ to be 
+$O(B\log_2 B (\log_2 N)^2 + (\log_2 N)^3)$. 
+
+In particular, if $B$ is a polynomial function of the input size 
+$\log_2 N$, then $\gcd(a^{B!} - 1, N)$ can be computed in polynomial time. 
+There is still a possibility that the algorithm may fail to reveal a 
+nontrivial factor of $N$. Failure can occur when $B$ is not large enough, or the 
+above condition is not satisfied for any prime factor $p$ of $N$; in such 
+cases, we have $\gcd(a^{B!} - 1, N) = 1$. Another failure case occurs when 
+the above condition is satisfied for all primes $p$ dividing $N$, and 
+we have $\gcd(a^{B!} - 1, N) = N$.  
+
+Finally, we present Pollard's $p-1$ algorithm, which takes integers $N$ and 
+$B$ as input. It either outputs a nontrivial factor of $N$, or fails to find 
+one and exits. Moreover, we will assume that the input $N$ is odd, because 
+it is easy to extract the highest power of $2$ dividing $N$. 
+
+\begin{algo}[Pollard's $p-1$ Algorithm]~
+
+    {\bf Input:} A odd positive integer $N \geq 3$ and a positive integer $B$. 
+    
+    {\bf Output:} A nontrivial factor of $N$, or a failure message. \vspace{0.5em}
+    
+    \begin{algorithmic}[1]
+        \State Set $a \gets 2$. \Comment{note that $\gcd(a, N) = 1$}
+        \For{$i = 2$ \textbf{to} $B$} 
+            \State $a \gets a^j \pmod N$.
+        \EndFor 
+        \State $n \gets \gcd(a - 1, N)$. 
+        \If{$1 < n < N$}
+            \State Output ``$n$ is a nontrivial factor of $N$'' and exit. 
+        \Else 
+            \State Output ``Failed to find a nontrivial factor of $N$'' and exit.
+        \EndIf 
+    \end{algorithmic}
+\end{algo}
+
+\begin{exmp}
+    Let $N = 159890872984562826587452273352244481949$ and $B = 256$ be given 
+    as input to Pollard's $p-1$ algorithm. For $a = 2$, we find that 
+    \[ p = \gcd(a^{B!} - 1, N) = 1460742484010232525119 \] 
+    is the $71$-bit nontrivial factor of $N$. We can also verify that 
+    $q = N/p = 109458631302081571$ is the second prime factor of $N$. The 
+    algorithm worked as expected because $p$ is a prime such that the 
+    largest prime power that divides 
+    \[ p - 1 = 2 \cdot 163 \cdot 181 \cdot 197 \cdot 199 \cdot 211 \cdot 223 
+    \cdot 233 \cdot 239 \cdot 241 \] 
+    is bounded above by $B = 256$. Moreover, note that $q$ is a prime such that 
+    \[ q - 1 = 2 \cdot 3^2 \cdot 5 \cdot 239 \cdot 84979 \cdot 59882233. \] 
+    In particular, it is divisible by at least one prime power greater than 
+    $B = 256$.  
+\end{exmp}
+
+{\bf Question.} What is the smallest value of $B$ for which Pollard's $p-1$ 
+algorithm would successfully output a nontrivial factor of $N$ in Example 4.3?
+What is the smallest value of $B$ for which Pollard's $p-1$ 
+algorithm would fail to output a nontrivial factor of $N$ in Example 4.3? 
+
+\begin{exercise}
+    Is it possible to factor the $2048$-bit RSA modulus $N$ given by 
+    \begin{align*}
+        & 1657149945513071402293947654868380061019592336471239267077249436980938246913984 \\
+        & 6854681124400407952376248085771857669845180280490445594743703975014171144934137 \\
+        & 5462712148346840472922092817238029652927492096334047197925289116709232599596512 \\
+        & 4538882325103423547556039562732521789245444030511675452311827273389674765661319 \\ 
+        & 7555763157125477797269745933804235191987174701777001730108824080893548375470164 \\ 
+        & 8289813375824384456296476311382985828848739394326260608105080229109327176724351 \\ 
+        & 6845013339095555938796687460497979761890329264690895603572561138043479640686906 \\ 
+        & 8286050343393050137892902130389456325438296565890634899457077249
+    \end{align*}
+    using Pollard's $p-1$ algorithm? If so, what parameter $B$ did you choose? 
+    How do you compare the efficiency of Pollard's $p-1$ algorithm to the 
+    naive strategy in this case?
+\end{exercise}
