@@ -1,0 +1,446 @@
+\section{September 8, 2021}
+
+We begin the course by recalling Cayley's theorem, a famous result from group theory. It states that 
+every finite group $G$ embeds (there exists an injective homomorphism) into a symmetric group $S_n$. 
+The proof is simple: let $G$ act on itself by left multiplication, and show that this gives an 
+embedding of $G$ into $S_n$ where $n = |G|$. This result is simple, but it allows us to understand 
+finite groups as subgroups of symmetric groups, where one has many tools to use. 
+
+In representation theory, one seeks to understand groups in terms of maps into general linear groups 
+$\GL_n(F)$, where $F$ is a field. This is generally more desirable than an embedding into 
+a symmetric group, as we obtain the full power of linear algebra at our disposal. We will consider 
+all homomorphisms (not just injective ones) from groups to general linear groups, and such 
+homomorphisms are called {\bf representations} of our group. First, we show that 
+every finite field embeds into $\GL_n(F)$ for some field $F$.
+
+\begin{prop}
+Let $F$ be a field. Every finite group embeds into $\GL_n(F)$ for some $n \geq 1$. 
+\end{prop}
+\begin{pf}
+Let $G$ be a finite group. By Cayley's theorem, we have an embedding $G \hookrightarrow S_n$ 
+where $n = |G|$. Hence, it suffices to show that $S_n$ embeds into $\GL_n(F)$. Define 
+$\varphi : S_n \to \GL_n(F)$ by $\psi(\sigma) = P_\sigma$, where $P_\sigma$ denotes the permutation matrix. Notice that for $\sigma_1, \sigma_2 \in S_n$, we have $\varphi(\sigma_1\sigma_2) 
+= P_{\sigma_1\sigma_2} = P_{\sigma_1}P_{\sigma_2} = \varphi(\sigma_1\sigma_2)$, so $\varphi$ is a 
+group homomorphism. One can also check that if $\varphi(\sigma) = I$, the identity matrix, then 
+$\sigma$ must be the identity permutation, so $\varphi$ is injective.
+\end{pf}
+
+It turns out that this result is not true for infinite groups in general. 
+
+\begin{exmp}
+Let $G$ be the group consisting of bijective maps from $\Z^+$ to itself such that $f$ fixes all
+but finitely integers. We claim that there does not exist a field $F$ and $n \geq 1$ such that 
+$G$ embeds into $\GL_n(F)$. 
+
+\begin{pf} 
+First, we note the following fact from linear algebra.
+
+{\sc Fact 1.} If $A$ and $B$ are commuting diagonalizable matrices, then they are simultaneously 
+diagonalizable. That is, there is a common change of basis that makes both matrices diagonalizable.
+This result also extends to families of commuting diagonalizable matrices. 
+
+Now, we denote by $(i, j)$ the bijective mapping from $\Z^+$ to itself which swaps $i$ and $j$ 
+and fixes all other integers. Consider the permutations $(1, 2)$, $(3, 4)$, $(5, 6)$, and so on. 
+Note that they pairwise commute. Suppose that there exists an injective homomorphism 
+$\varphi: G \to \GL_n(F)$ for some $n \geq 1$ and a field $F$. Let $A_1 = \varphi(1, 2)$, 
+$A_2 = \varphi(3, 4)$, and so on. Observe that we have 
+\[ \varphi((i, i+1)^2) = \varphi(\id) = I, \]
+which implies that $A_1^2 = A_2^2 = \cdots = I$. We now recall another fact from linear algebra. 
+
+{\sc Fact 2.} If the minimal polynomial of a matrix has distinct roots over the (algebraically closed) field $F$, then the matrix is diagonalizable. 
+
+We see from above that the minimal polynomial of the $A_i$ must divide $x^2 - 1$, since 
+$A_i^2 - I = 0$. As $x^2 - 1$ has distinct roots, it follows from Fact 2 that all the $A_i$ are diagonalizable. Moreover, by Fact 1, we can assume after a change of basis that each $A_i$ is of the form 
+\[ A_i = \begin{pmatrix} \eps_{1,i} & & 0 \\ & \ddots & \\ 0 & & \eps_{n,i} \end{pmatrix} \]
+where $\eps_{1,i}, \dots, \eps_{n,i} \in \{\pm 1\}$. Now we have a problem: there are only 
+$2^n$ such matrices of the above form, and infinitely many positive integers. Thus, there 
+exist positive integers $i < j$ such that $\varphi(A_i) = \varphi(A_j)$, so 
+$\varphi$ is not injective, and this yields our contradiction.
+
+Note that this argument needs an adjustment for an algebraically closed field of characteristic $2$, 
+since $x^2 - 1 = (x - 1)^2$ does not have distinct roots. 
+In such a case, we can proceed in the same way, except we use distinct $3$-cycles instead of $2$-cycles.
+\end{pf}
+\end{exmp}
+
+We now turn to the notion of a group algebra.
+
+\begin{defn}
+The {\bf group algebra} of the group $G$ over the field $k$ is defined by 
+\[ k[G] = \left\{ \sum_{g\in G} \alpha_g \cdot g : \alpha_g \in k,\, \alpha_g = 0 \text{ for all but 
+finitely many $g$} \right\}. \]
+\end{defn}
+
+We note that $k[G]$ is a ring with a natural addition, and multiplication given by 
+\[ \left( \sum_{g\in G} \alpha_g \cdot g \right) \left( \sum_{h \in G} \beta_h \cdot h \right) 
+= \sum_{y \in G} \left( \sum_{(g, h) : gh = y} \alpha_j \cdot \beta_h \right) \cdot y. \]
+Notice that the inner sum is finite because by definition, there are only finitely many 
+non-zero $\alpha_g$ and $\beta_h$. 
+
+\begin{remark}
+We call $k[G]$ a group {\it algebra} because we have a ``copy'' of $k$ in $k[G]$ given by 
+$\lambda \mapsto \lambda \cdot 1_G$ for elements $\lambda \in k$, with $\lambda \cdot g = g 
+\cdot \lambda$ for all $g \in G$. We see that $k[G]$ is a $k$-vector space of dimension $|G|$. 
+\end{remark}
+
+\begin{exercise}
+Show that $\C[S_3] \cong \C \times \C \times M_2(\C)$. Fun fact: using the naive approach 
+to multiply matrices takes $O(n^3)$ operations, but applying this fact reduces the time complexity to 
+$O(n^{2.373})$. 
+\end{exercise}
+
+We now prove a version of Cayley's theorem for group algebras. 
+
+\begin{prop}
+Let $G$ be a finite group with $n = |G|$. Then $G$ embeds into $\GL_n(k[G])$. 
+\end{prop}
+\begin{pf}
+Let $G$ act on $k[G]$ by left multiplication. That is, for $g \in G$, define 
+\[ L_g : k[G] \to k[G] : \sum_{h\in G} \alpha_h \cdot h \mapsto \sum_{h\in G} \alpha_h \cdot (g \cdot h). \]
+Observe that for $g_1, g_2 \in G$, we have 
+\[ L_{g_1} \circ L_{g_2}(x) = L_{g_1}(L_{g_2}(x)) = L_{g_1}(g_2 \cdot x) = g_1 \cdot (g_2 \cdot x)
+= (g_1 \cdot g_2) \cdot x = L_{g_1g_2}(x). \] 
+For the second equality, we can think of $G$ as sitting inside $k[G]$ by identifying 
+$g \in G$ with $1 \cdot g \in k[G]$, so we simply have multiplication in the group algebra. 
+Hence, we see that the map $L : G \to \GL_n(k[G]) : g \mapsto L_g$ is a group homomorphism. Finally, if 
+$L_g$ is the identity matrix, then $g \cdot x = x$ for all $x \in k[G]$. This implies that 
+$g \cdot 1 = 1$ and so $g = 1$, so $\ker L = \{1\}$. Thus, $L$ is injective and is the desired embedding.
+\end{pf}
+
+Later in the course, we will prove the following important theorem. In short, it states that if 
+$G$ is a finite group and $k$ is an algebraically closed field of characteristic zero, then $k[G]$ is
+isomorphic to a finite direct product of matrix rings over $k$. The isomorphism and these matrix rings
+will completely determine the representation of the group $G$. 
+
+\begin{thm}
+Let $G$ be a finite group and let $k$ be an algebraically closed field of characteristic zero. 
+Then we have 
+\[ k[G] \cong \prod_{i=1}^s M_{n_i}(k), \]
+where
+\begin{enumerate}[(1)]
+    \item $s$ is the number of conjugacy classes of $G$;
+    \item $n_1^2 + n_2^2 + \cdots + n_s^2 = |G|$;
+    \item $|\{i : n_i = 1\}| = |G/G'|$, where $G'$ denotes the commutator subgroup; and 
+    \item $n_i \mid |G|$ for all $1 \leq i \leq s$. 
+\end{enumerate}
+\end{thm}
+
+As a corollary of this theorem, one can prove Exercise 1.5 by noting that $\C[S_3]$ has three 
+conjugacy classes: $\{(1)\}$, $\{(12), (13), (23)\}$, and $\{(123), (132)\}$. 
+
+To finish off the lecture, we give one more interesting linear algebra fact. 
+
+{\sc Fact.} If $q = p^j$ where $p$ is prime and $j \geq 1$, then 
+\[ \lvert\GL_n(\F_q)\rvert = \prod_{i=0}^{n-1} (q^n - q^i). \]
+It is not hard to see why. Let $A$ be an invertible $n \times n$ matrix, and note that $A$ must 
+have linearly independent columns. For the first column, say $v_1$, we have 
+$q^n - 1$ choices as we can pick any vector except the zero vector. For the second column, 
+we can choose any vector except those in the span of $v_1$, which yields $q^n - q$ choices. 
+One can repeat this argument to obtain the result. 
+
+\section{September 10, 2021}
+
+Recall that for a ring $R$, the {\bf center} of $R$ is the set 
+\[ Z(R) = \{z \in R : zr = rz \text{ for all } r \in R\}. \]
+Note that $Z(R)$ is a commutative subring of $R$. We can also write $[z, r] = 0$ to 
+denote that $zr = rz$. 
+
+\begin{defn}
+Let $k$ be a field. We say that $R$ is a {\bf $k$-algebra} if 
+\begin{enumerate}[(a)]
+    \item $R$ is a ring; and 
+    \item there exists a homomorphism $\phi : k \to Z(R)$ sending $1_k$ to $1_R$ (we assume that $\phi$ is injective).
+\end{enumerate}
+\end{defn}
+
+Notice that if we identify $k$ with $\phi(k) \subseteq R$, we have a ``copy'' of $k$ in $R$. This 
+means that $R$ is a $k$-vector space in addition to being a ring. 
+
+\begin{defn}
+Let $k$ be a field, and let $R$ and $S$ be $k$-algebras.
+A {\bf $k$-algebra homomorphism} is a ring homomorphism $\psi : R \to S$ such that $\psi(\lambda) = \lambda$ for all 
+$\lambda \in k$. 
+\end{defn}
+
+We also have the notion of a module. A module over a ring is a generalization of a 
+vector space over a field. 
+
+\begin{defn}
+A {\bf (left) $R$-module $M$} is an abelian group $(M, +)$ equipped with a map 
+\[ \cdot : R \times M \to M \] 
+such that for all $r, s \in R$ and $m, n \in M$, we have 
+\begin{enumerate}[(a)]
+    \item $(r + s) \cdot m = r \cdot m + s \cdot m$; 
+    \item $r \cdot (m + n) = r \cdot m + r \cdot n$;
+    \item $(r \cdot s) \cdot m = r \cdot (s \cdot m)$; and 
+    \item $1 \cdot m = m$.
+\end{enumerate}
+\end{defn}
+
+\begin{exmp}
+Let $R = M_n(\C)$ and $M = \C^{n \times 1}$, the set of column vectors of length $n$. One can check that 
+$M$ is a (left) $R$-module equipped with the operation of matrix-vector multiplication.
+\end{exmp}
+
+\begin{exmp}
+Left ideals are $R$-modules by left multiplication. In particular, $R$ itself is a left $R$-module. If 
+$L$ is a left ideal of $R$ (and we write $L \trianglelefteq_\ell R$), then $L$ is a 
+submodule of $R$ as a left $R$-module.
+\end{exmp}
+
+\begin{remark}
+If $M_1$ and $M_2$ are $R$-modules, we define the set 
+\[ \Hom_R(M_1, M_2) = \{f : M_1 \to M_2 \mid f \text{ is $R$-linear}\}. \]
+That is, we have $f(r \cdot m_1 + m_2) = r \cdot f(m_1) + f(m_2)$ for all $r \in R$ and $m_1, m_2 \in M_1$. 
+In the case that $M_1 = M_2 = M$, we write 
+\[ \Hom_R(M_1, M_2) = \End_R(M), \]
+the endomorphisms from $M$ to itself. Note that $\End_R(M)$ is a ring with composition as 
+the multiplication operation, as the set of linear transformations from a vector space to itself 
+forms a ring. 
+\end{remark}
+
+{\sc Fact.} If $R$ is a $k$-algebra and $M$ is a left $R$-module, then $M$ is a $k$-vector space. 
+
+In a sense, this is clear. We know that $M$ already has scalar multiplication by $R$, and we have a 
+copy of $k$ sitting inside of $R$, so if we restrict $R$ to $k$, we obtain scalar multiplication by $k$.
+
+\begin{defn}
+A left $R$-module $M$ is {\bf simple} if $M \neq (0)$, and $(0)$ and $M$ are the only submodules of $M$.
+\end{defn}
+
+\begin{exmp}
+Let $R = \Z$ and $M = \Z/p\Z$ for a prime $p$. Suppose that $N \subseteq M$ is a submodule with 
+$N \neq (0)$. Then there exists $i \in \{1, \dots, p-1\}$ such that the coset $[i]_p$ is in $N$. 
+But this implies that $[i]_p^{-1} \cdot [i]_p = [1]_p \in N$. It follows that $N = \Z/p\Z$ and hence 
+$M$ is simple. 
+\end{exmp}
+
+\begin{exercise}
+Let $R = M_n(\C)$ and $M = \C^{n\times 1}$. Show that $M$ is simple. (Hint: If we are given a 
+non-zero vector, then we can extend it to a basis, and we can always find a linear transformation to 
+send a basis wherever we like.)
+\end{exercise}
+
+\begin{defn}
+A left ideal $L$ of $R$ is a {\bf maximal left ideal} if 
+\begin{enumerate}[(a)]
+    \item $L \subsetneq R$; and
+    \item there does not exist a left ideal $L'$ such that $L \subsetneq L' \subsetneq R$. 
+\end{enumerate} 
+\end{defn}
+
+\begin{exercise}
+Let $R$ be a non-zero ring (that is, $0_R \neq 1_R$). If $L$ is a proper left ideal of $R$, then 
+there exists a maximal left ideal $M$ such that $L \subseteq M$. In particular, taking 
+$L = (0)$ shows that a maximal left ideal always exists. 
+\end{exercise}
+
+{\sc Fact.} If $R$ is a ring and $M$ is a simple left $R$-module, then $M$ is isomorphic to 
+$R/L$ (as $R$-modules), where $L$ is a maximal left ideal. 
+
+We give a sketch of the proof of this fact. First, pick $m_0 \in M \setminus \{0\}$. Consider 
+$R$ as a left $R$-module over itself (by left multiplication), and define 
+\begin{align*}
+    \Phi : R &\to M \\ r &\mapsto r \cdot m_0. 
+\end{align*}
+\begin{enumerate}[(1)]
+    \item Check that $\Phi$ is an $R$-module homomorphism. 
+    \item Show that $\ker\Phi = L$ is a left ideal.
+    \item Show that $\im\Phi$ is a non-zero submodule of $M$, and hence must be equal to $M$ 
+    (as $M$ is simple).
+\end{enumerate}
+By the first isomorphism theorem, it follows that $R/\ker\Phi = R/L$ is isomorphic to $M = \im\Phi$. 
+
+Finally, why must $L$ be maximal? Similarly to the correspondence for groups and rings, we also have 
+correspondence for modules. Indeed, for a module $M$ and a submodule $N \trianglelefteq M$, there 
+is a bijection between the submodules of $M/N$ and the submodules of $M$ that contain $N$. 
+
+We have the canonical projection 
+\begin{align*}
+    \pi : M &\to M/N \\ m &\mapsto m + N.
+\end{align*} 
+For a submodule $Q$ of $M/N$, notice that 
+\[ \pi^{-1}(Q) = \{m \in M : \pi(m) \in Q\} \] 
+is a submodule of $M$ which contains $N$, since 
+\[ N = \pi^{-1}(0) \subseteq \pi^{-1}(Q). \]
+Now, there is a correspondence between submodules of $M$ and the left ideals of $R$ containing $L$. 
+Since $M$ is simple, it has two submodules. Thus, there are two left ideals of $R$ containing $L$, namely $L$ and $R$. Therefore, there is no ideal $L'$ such that $L \subsetneq L' \subsetneq R$, so $L$ is 
+maximal.
+
+As a corollary of the above fact, we obtain the following. 
+
+\begin{cor}
+If $R$ is a finite dimensional $k$-algebra and $M$ is a simple left $R$-module, then $M$ is a 
+finite dimensional $k$-vector space.
+\end{cor}
+
+\begin{pf}
+We showed that there was a surjection $\Phi : R \to M : r \mapsto r \cdot m_0$
+for $m_0 \neq 0$. The fact that $\Phi$ is an $R$-module homomorphism implies that it is $k$-linear, 
+as there is a copy of $k$ sitting inside of $R$. Since $R$ is finite dimensional, it follows that 
+$M$ is also finite dimensional.
+\end{pf}
+
+For the remainder of this lecture, we will turn to proving Schur's lemma. 
+
+\begin{defn}
+A {\bf division ring} $\Delta$ is a ring in which every non-zero element $a \in \Delta$ 
+has a multiplicative inverse $b \in \Delta$ (that is, $ab = ba = 1$).
+\end{defn}
+
+\begin{exmp}
+Consider the quaternions 
+\[ \mathbb{H} = \{a + ib + jc + kd : a, b, c, d \in \R\} \]
+with properties 
+$i^2 = j^2 = k^2 = 1$, $ij = k$, and $ji = -k$. Check that $\mathbb{H}$ is a division ring, 
+but not a field.
+\end{exmp}
+
+\begin{thm}[Schur's lemma]
+Let $R$ be a ring and let $M$ be a simple left $R$-module. Then $\End_R(M)$ is a division ring.
+\end{thm}
+\begin{pf}
+We already know that $\End_R(M)$ is a ring, so we only need to show that every non-zero element 
+has an inverse. Let $0 \neq f \in \End_R(M)$, which is a linear map $f : M \to M$. Notice that 
+$\ker f$ is a submodule of $M$. Since $M$ is simple, $\ker f$ is either $(0)$ or $M$. The latter 
+is impossible as this would mean that $f = 0$, so we have $\ker f = (0)$, so $f$ is injective. 
+Similarly, $\im f$ is a submodule of $M$ and $\im f \neq (0)$ since $f \neq 0$, so 
+$\im f = M$ since $M$ is simple. This shows that $f$ is surjective. Therefore, $f$ has a 
+set theoretic inverse $g$. We now show that $g \in \End_R(M)$; that is, 
+\[ g(r \cdot m_1 + m_2) = r \cdot g(m_1) + g(m_2) \]
+for all $r \in R$ and $m_1, m_2 \in M$. But $f$ is bijective, so this is equivalent to showing that 
+\[ f(g(r \cdot m_1 + m_2)) = f(r \cdot g(m_1) + g(m_2)). \]
+This is indeed the case; we have 
+\[ f(g(r \cdot m_1 + m_2)) = r \cdot m_1 + m_2 = r \cdot f \circ g(m_1) + f \circ g(m_2) = f(r \cdot g(m_1) + g(m_2)). \qedhere \]
+\end{pf}
+
+\section{September 13, 2021}
+Recall the setting from before: we had a ring $R$, a simple left $R$-module $M$,
+and $\Delta := \End_R(M)$, which we showed was a division ring. 
+
+\begin{prop}~
+\begin{enumerate}[(a)]
+    \item If $R$ is a $k$-algebra for a field $k$, then $\Delta := \End_R(M)$ is also a $k$-algebra. 
+    \item If $k$ is algebraically closed and $R$ is a finite-dimensional $k$-algebra, then $\Delta 
+    \cong k$. 
+\end{enumerate}
+\end{prop}
+\begin{pf}~
+\begin{enumerate}[(a)]
+    \item For each $\lambda \in k$, define the map 
+    \begin{align*}
+        \Phi_\lambda : M &\to M, \\ \lambda &\mapsto \lambda \cdot m. 
+    \end{align*}
+    By $\lambda \cdot m$, we mean that we have a copy $k \subseteq Z(R) \subseteq R$, and $M$ 
+    is an $R$-module and hence a $k$-vector space. Note that 
+    \begin{align*}
+        \Phi_\lambda(r \cdot m_1 + m_2) &= \lambda \cdot (r \cdot m_1 + m_2) \\
+        &= \lambda \cdot r \cdot m_1 + \lambda \cdot m_2 \\
+        &= r \cdot \lambda \cdot m_1 + \lambda \cdot m_2 & (\text{since $k \subseteq Z(R)$}) \\
+        &= r \cdot \Phi_\lambda(m_1) + \Phi_\lambda(m_2).
+    \end{align*}
+    Therefore, $\Phi_\lambda$ is $R$-linear and so $\Phi_\lambda \in \End_R(M)$. However, it is not 
+    enough to show that each $\Phi_\lambda$ is in $\Delta = \End_R(M)$. We also require that our map 
+    $\lambda \mapsto \Phi_\lambda$ is a map $k \to Z(\Delta)$; in other words, we also need 
+    $\Phi_\lambda \in Z(\Delta)$. Let $\psi \in \Delta$, and observe that 
+    \[ \Phi_\lambda \circ \psi(m) = \lambda \cdot \psi(m) = \psi(\lambda \cdot m) = \psi \circ 
+    \Phi_\lambda(m), \]
+    where the second equality is because the $R$-linearity of $\psi$ implies $k$-linearity.
+    
+    \item Recall that if $R$ is a finite dimensional $k$-algebra, then $M$ is a finite dimensional 
+    $k$-vector space (see Corollary 2.12). Suppose that $\dim_k M =: n < \infty$. Then we have 
+    \begin{align*}
+        \Delta = \End_R(M) &\subseteq \End_k(M) & (\text{$R$-linearity imposes more conditions than 
+        $k$-linearity}) \\
+        &\cong\End_k(k^n) & (\text{$M$ is an $n$-dimensional $k$-vector space}) \\
+        &\cong M_n(k) & (\text{$k$-linear maps $k^n \to k^n$ are the $n \times n$ matrices})
+    \end{align*}
+    and thus $\dim_k \Delta = m \leq n^2 < \infty$ for some $m \in \Z$. 
+    
+    We now show that $\Delta \cong k$. Indeed, pick $a \in \Delta$. Notice that $a$ commutes 
+    with all elements of $k$ since $k \subseteq Z(\Delta)$, where we can identify $k$ with the set 
+    $\{\Phi_\lambda : \lambda \in k\}$. Consider 
+    \[ k \subseteq k(a) \subseteq \Delta, \]
+    where $k(a)$ is the field formed from adjoining $a$ to $k$; it is a field because $\Delta$ 
+    is a division ring and hence $a$ is invertible. Thus, $\dim_k k(a) \leq \dim_k \Delta = m < \infty$. 
+    Therefore, $\{1, a, a^2, \dots, a^m\}$ is a linearly dependent set over $k$, so there 
+    exist elements $c_0, c_1, \dots, c_m \in k$, not all zero, such that 
+    \[ c_0 + c_1a + \cdots + c_m a^m = 0. \]
+    But $k$ is algebraically closed, so $a \in k$. This implies that $\Delta \subseteq k$, and hence 
+    $\Delta \cong k$. \qedhere 
+\end{enumerate}
+\end{pf}
+
+\begin{exercise}
+Let $\Delta$ be a division ring and let $M$ be a left $\Delta$-module. Then $M$ has a basis 
+$B \subseteq M$. That is, there do not exist $\delta_1, \dots, \delta_m \in \Delta$ such that 
+\[ \delta_1 b_1 + \cdots + \delta_m b_m = 0 \]
+for distinct $b_1, \dots, b_m \in B$, and for all $m \in M$, we can write 
+\[ m = \sum_{b \in B} \delta_b b \]
+where $\delta_b = 0$ for all but finitely many $b \in B$. (Hint: Use Zorn's lemma.)
+\end{exercise}
+
+For this reason, instead of calling it a left $\Delta$-module, we can call it a 
+{\bf left $\Delta$-vector space}.  
+
+\begin{remark}
+Let $R$ be a ring, let $M$ be a simple left $R$-module, and let $\Delta = \End_R(M)$. Then $M$ 
+is a left $\Delta$-vector space. 
+\end{remark}
+\begin{pf}
+Recall that $\delta \in \Delta$ is an $R$-linear map from $M$ to itself. We can consider the operation 
+\begin{align*}
+    \Delta \times M &\to M, \\
+    (\delta, m) &\mapsto \delta \cdot m := \delta(m). 
+\end{align*}
+It is straightforward to see that 
+\begin{itemize}
+    \item $(\delta_1 + \delta_2) \cdot m = \delta_1 \cdot m + \delta_2 \cdot m$, 
+    \item $\delta \cdot (m_1 + m_2) = \delta \cdot m_1 + \delta \cdot m_2$, 
+    \item $\delta \cdot (\delta \cdot m) = (\delta_1 \cdot \delta_2) \cdot m$, and 
+    \item $\id \cdot \,m = m$,
+\end{itemize} so $M$ is a left $\Delta$-vector space. 
+\end{pf}
+
+\begin{exmp}
+Let $R = M_n(\C)$ and recall that $M = \C^{n\times 1}$ is a simple left $R$-module. We have 
+\[ \Delta = \C = \{\Phi_\lambda : \lambda \in \C\}, \]
+where each $\Phi_\lambda(m) = \lambda \cdot m$ for each $\lambda \in \C$. One can show that 
+$\Phi(Av) = A \cdot \Phi(v)$ for all $A \in M_n(\C)$ and $v \in \C^{n\times 1}$ only when 
+$\Phi = \Phi_\lambda$ for some $\lambda \in \C$. 
+\end{exmp}
+
+We now state the Jacobson Density Theorem, which we will prove in the next lecture. 
+
+\begin{thm}[Jacobson Density Theorem]
+Let $R$ be a ring, let $M$ be a simple left $R$-module, and let $\Delta = \End_R(M)$. Then we have a 
+ring $\End_\Delta(M)$ and a map 
+\begin{align*}
+    \Phi : R &\to \End_\Delta(M) \\
+    r &\mapsto \Phi_r : M \to M \\
+    & \hspace{1.33cm} m \mapsto r \cdot m.
+\end{align*}
+Moreover, we have the following properties. 
+\begin{enumerate}[(1)]
+    \item The map $\Phi$ is a ring homomorphism and if $R$ is a $k$-algebra, then $\Phi$ is a 
+    $k$-algebra homomorphism.
+    \item The kernel of $\Phi$ is the annihilator of $M$; that is, 
+    \[ \ker\Phi = \{r \in R : r \cdot m = 0 \text{ for all } m \in M\}. \]
+    \item {\bf Density:} If $m_1, \dots, m_n \in M$ are left linearly independent over $\Delta$ and 
+    $w_1, \dots, w_n \in M$ are arbitrary elements, then there exists $r \in R$ such that 
+    \[ \Phi_r(m_i) = w_i \]
+    for all $1 \leq i \leq n$ (in particular, we can send finite linear combinations wherever we like).
+\end{enumerate}
+\end{thm}
+
+For now, let's see why the maps $\Phi_r$ are $\Delta$-linear so that $\Phi_r \in \End_\Delta(M)$
+for each $r \in R$. 
+Let $\delta \in \Delta$ and $m_1, m_2 \in M$. Then we have 
+\begin{align*}
+    \Phi_r(\delta \cdot m_1 + m_2) &= r \cdot (\delta \cdot m_1 + m_2) \\
+    &= r \cdot (\delta \cdot m_1) + r \cdot m_2 & (\text{multiplication by $R$ is linear}) \\
+    &= r \cdot \delta(m_1) + r \cdot m_2 & (\text{we have $\delta \in \Delta$}) \\
+    &= \delta(r \cdot m_1) + r \cdot m_2 & (\text{$\delta$ is an $R$-linear map}) \\
+    &= \delta \cdot \Phi_r(m_1 ) + \Phi_r(m_2),
+\end{align*}
+so $\Phi_r$ is $\Delta$-linear as desired. 

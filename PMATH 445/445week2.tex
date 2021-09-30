@@ -1,0 +1,370 @@
+\section{September 15, 2021}
+
+We now prove the Jacobson Density Theorem, which we stated in the previous lecture. Recall that 
+$R$ is a ring, $M$ is a simple left $R$-module, and $\Delta = \End_R(M)$. We already showed that 
+$\End_\Delta(M)$ is a ring, and we defined the map 
+\begin{align*}
+    \Phi : R &\to \End_\Delta(M) \\
+    r &\mapsto \Phi_r : M \to M \\
+    & \hspace{1.33cm} m \mapsto r \cdot m.
+\end{align*}
+
+{\sc Proof of the Jacobson Density Theorem.}
+\begin{enumerate}[(1)]
+    \item First, observe that for all $r_1, r_2 \in R$ and $m \in M$, we have
+    \begin{align*}
+        \Phi(r_1r_2)(m) &= \Phi_{r_1r_2}(m) \\
+        &= (r_1 \cdot r_2) \cdot m \\
+        &= r_1 \cdot (r_2 \cdot m) \\
+        &= r_1 \cdot \Phi_{r_2}(m) \\
+        &= \Phi_{r_1} \circ \Phi_{r_2}(m) \\
+        &= \Phi(r_1) \circ \Phi(r_2)(m).
+    \end{align*}
+    Similarly, one can show that $\Phi(r_1 + r_2) = \Phi(r_1) + \Phi(r_2)$ and $\Phi(1) = \id_M$, so 
+    $\Phi$ is a ring homomorphism. Moreover, if $R$ is a $k$-algebra, then we can identify 
+    $k$ with the set $\{\Phi_\lambda : \lambda \in k\}$, so we have a copy of $k$ in $Z(\Delta)$. 
+    
+    \item Notice that 
+    \begin{align*}
+        r \in \ker\Phi &\iff \Phi_r : M \to M \text{ is the zero map} \\
+        &\iff \Phi_r(m) = 0 \text{ for all $m \in M$} \\
+        &\iff r \cdot m = 0 \text{ for all $m \in M$,}
+    \end{align*}
+    where the last equivalence follows since we defined $\Phi_r$ to be left multiplication by $r$.
+    
+    \item We will proceed by induction on $n$. For $n = 1$, linear independence just means that 
+    $m_1 \neq 0$. For arbitrary $w_1 \in R$, we need to show that there exists $r \in R$ such that 
+    $\Phi_r(m_1) = r \cdot m_1 = w_1$. Let 
+    \[ N = \{s \cdot m_1 : s \in R\} \subseteq M, \]
+    which is an $R$-submodule of $M$. Notice that $N \neq (0)$ since $m_1 \neq 0$. Since $M$ is 
+    simple, we must have $N = M$. In particular, we see that $w_1 \in N$, so there exists 
+    $r \in R$ such that $r \cdot m_1 = w_1$. 
+    
+    Assume the result holds for $1 \leq k \leq n-1$ where $n \geq 2$. Let $m_1, \dots, m_n$ be 
+    linearly independent over $\Delta$, and let $w_1, \dots, w_n \in M$ be arbitrary. We wish to find 
+    $r \in R$ such that $r \cdot m_i = w_i$ for all $1 \leq i \leq n$. 
+    
+    By the induction hypothesis, there exists $a \in R$ such that 
+    \[ a \cdot m_i = w_i \]
+    for all $1 \leq i \leq n-1$. However, we don't know that $a \cdot m_n = w_n$, so we will set 
+    $a \cdot m_n =: w \in M$. 
+    
+    {\sc Claim.} There exists $r \in R$ such that 
+    \[ r \cdot m_1 = \cdots = r \cdot m_{n-1} = 0 \]
+    and $r \cdot m_n =: w' \neq 0$. 
+    
+    To complete the proof, it is enough to prove this claim. To see why, suppose we know the claim holds. 
+    We know from the base case 
+    that we can send $w'$ wherever we like; in particular, there exists $b \in R$ such that 
+    $b \cdot w' = w_n - w$. Notice that we have 
+    \[ (a + b \cdot r) \cdot m_i = \begin{cases}
+    w_i & \text{if $1 \leq i \leq n-1$,} \\ w + (w_n - w) & \text{if $i = n$.} \end{cases} \]
+    Thus, choosing $a + b \cdot r \in R$ does the trick.
+    
+    {\sc Proof of Claim.} Suppose that no such $r \in R$ exists. In particular, if 
+    \[ r \cdot m_1 = \cdots = r \cdot m_{n-1} = 0, \]
+    then this will force $r \cdot m_n = 0$ as well. For $a_1, \dots, a_{n-1} \in M$, we know by the induction hypothesis that there exists 
+    $s \in R$ such that 
+    \[ s \cdot m_i = a_i \]
+    for all $1 \leq i \leq n-1$. We can define the map $\theta : M^{n-1} \to M$ by 
+    \begin{align*}
+        \theta(a_1, \dots, a_{n-1}) = s \cdot m_n. 
+    \end{align*}  
+    Is this well-defined? We know such an $s$ exists, but we aren't guaranteed that it is unique. 
+    Suppose that $s_1, s_2 \in R$ are such that 
+    \[ a_i = s_1 \cdot m_i = s_2 \cdot m_i \]
+    for all $1 \leq i \leq n-1$. Then 
+    \[ (s_1 - s_2) \cdot m_i = a_i - a_i = 0 \] 
+    for all 
+    $1 \leq i \leq n-1$, and by our assumption above, we obtain 
+    \[ (s_1 - s_2) \cdot m_n = 0. \]
+    This means that $s_1 \cdot m_n = s_2 \cdot m_n$, so even if the choice of $s$ is not unique, the 
+    map $\theta$ is well-defined. We now show that $\theta$ is $R$-linear. For $b \in R$, we have 
+    \begin{align*}
+        \theta(b \cdot (a_1, \dots, a_n)) 
+        &= \theta(b \cdot (s \cdot m_1, \dots, s \cdot m_{n-1})) \\
+        &= \theta(b \cdot s \cdot (m_1, \dots, m_{n-1})) \\
+        &= (b \cdot s) \cdot m_n \\
+        &= b \cdot (s \cdot m_n) \\
+        &= b \cdot \theta(s \cdot (m_1, \dots, m_{n-1})) \\
+        &= b \cdot \theta(a_1, \dots, a_{n-1}).
+    \end{align*}
+    Addition follows from the module structure, and we leave it as an exercise.
+    
+    For $1 \leq j \leq n-1$, we define the canonical inclusion maps 
+    \begin{align*}
+        i_j : M &\to M^{n-1} \\
+        m &\mapsto (0, \dots, 0, m, 0, \dots, 0),
+    \end{align*}
+    where $m$ is placed in the $j$-th coordinate. It is easy to see that the $i_j$ are $R$-linear. 
+    We have 
+    \[ M \xrightarrow{i_j} M^{n-1} \xrightarrow{\theta} M \]
+    where $i_j$ and $\theta$ are both $R$-linear, so we have 
+    \[ \delta_j := \theta \circ i_j \in \Delta = \End_R(M). \]
+    Now, we obtain 
+    \begin{align*}
+        \delta_1 \cdot m_1 + \cdots + \delta_{n-1} \cdot m_{n-1} 
+        &= \delta_1(m_1) + \cdots + \delta_{n-1}(m_{n-1}) \\
+        &= \theta \circ i_1(m_1) + \cdots + \theta \circ i_{n-1}(m_{n-1}) \\
+        &= \theta(i_1(m_1) + \cdots + i_{n-1}(m_{n-1})) \\
+        &= \theta(m_1, \dots, m_{n-1}) \\
+        &= \theta(1 \cdot m_1, \dots, 1 \cdot m_{n-1}) \\
+        &= 1 \cdot m_n \\
+        &= m_n.
+    \end{align*}
+    This implies that $m_1, \dots, m_n$ are left linearly dependent over $\Delta$, which is a contradiction.
+    Therefore, the claim holds, 
+    and the result follows by induction. \qed
+    
+\end{enumerate}
+
+\section{September 17, 2021}
+
+Note that if $M$ is finite-dimensional as a $\Delta$-vector space, then the map $\Phi$ from the 
+Jacobson Density Theorem is surjective. To see why, take a basis $\{m_1, \dots, m_n\}$ for $M$ as a 
+$\Delta$-vector space. If $f \in \End_\Delta(M)$, there exist elements $w_1, \dots, w_n \in M$ 
+such that $f(m_i) = w_i$ for all $1 \leq i \leq n$. But by the Jacobson Density Theorem, there
+exists $r \in R$ such that $r \cdot m_i = w_i$ for all $1 \leq i \leq n$. 
+Note that a linear transformation is completely 
+determined by where the basis is sent, so $f = \Phi_r$. 
+
+Recall that by (2) in the Jacobson Density Theorem, we have 
+\[ \ker \Phi = \Ann_R(M) := \{r \in R : r \cdot m = 0 \text{ for all } m \in M\}. \]
+
+\begin{defn}
+A left $R$-module $M$ is called {\bf faithful} if $\Ann_R(M) = (0)$. 
+\end{defn}
+
+From above, we see that $M$ is faithful if and only if $\Phi$ is injective. 
+
+\begin{defn}
+A ring $R$ is said to be {\bf primitive} if it has a faithful simple module.
+\end{defn}
+
+Putting our above observations together, we obtain the following result. 
+
+\begin{cor}
+If $R$ has a faithful simple left $R$-module $M$ such that $\dim_\Delta M < \infty$ where 
+$\Delta = \End_R(M)$, then the map 
+\[ \Phi : R \to \End_\Delta(M) \]
+from the Jacobson Density Theorem is an isomorphism. 
+\end{cor}
+\begin{pf}
+The assumption $\dim_\Delta(M) < \infty$ gives surjectivity, and since $M$ is faithful, 
+$\Phi$ is also injective.
+\end{pf}
+
+\begin{cor}
+If $k$ is an algebraically closed field, $R$ is a finite-dimensional $k$-algebra, and $M$ is a 
+faithful simple left $R$-module, then $R \cong M_n(k)$ where $n = \dim_k(M)$. 
+\end{cor}
+\begin{pf}
+By Proposition 3.1, we know that $\Delta = \End_R(M) \cong k$. Moreover, we showed that 
+$\dim_k M = n < \infty$ in Corollary 2.12. Therefore, we see that 
+\begin{align*}
+    R &\cong \End_\Delta(M) & \text{(by Corollary 5.3)} \\
+    &\cong \End_k(M) & \text{(since $\Delta \cong k$)} \\
+    &\cong \End_k(k^n) & \text{($M$ is an $n$-dimensional $k$-vector space)} \\
+    &\cong M_n(k) & \text{($k$-linear maps $k^n \to k^n$ are the $n \times n$ matrices)} 
+\end{align*}
+which completes the proof.
+\end{pf}
+
+\begin{defn}
+Let $R$ be a ring. We say that $R$ is {\bf left Artinian} if every descending chain of left ideals of $R$
+terminates. That is, for a chain of left ideals 
+\[ L_1 \supseteq L_2 \supseteq L_3 \supseteq \cdots \]
+of $R$, there exists $n \geq 1$ such that $L_n = L_m$ for all $m \geq n$. 
+\end{defn}
+
+\begin{exmp}~
+\begin{enumerate}[(1)]
+    \item We see that $\Z$ is not left Artinian since we can take the chain of ideals 
+    \[ 2\Z \supsetneq 4\Z \supsetneq 8\Z \supsetneq \cdots. \]
+    \item Intuitively, $M_n(\C)$ is left Artinian since it is an $n^2$-dimensional $\C$-vector space, so
+    for a chain of ideals
+    \[ L_1 \supsetneq L_2 \supsetneq L_3 \supsetneq \cdots, \]
+    the dimension must eventually decrease, so the chain terminates.
+    \item Similarly, $\Z/6000\Z$ is left Artinian as it only has finitely many subsets, so the 
+    sizes of the ideals in a descending chain must decrease. 
+\end{enumerate}
+\end{exmp}
+
+We can generalize our observations from the previous example. We leave the proof as an exercise.
+
+\begin{remark}~
+\begin{enumerate}[(1)]
+    \item If $R$ is a finite-dimensional $k$-algebra, then $R$ is left Artinian.
+    \item If $R$ is a finite ring, then $R$ is left Artinian.
+\end{enumerate}
+\end{remark}
+
+\begin{defn}
+Let $R$ be a ring. Let $I$ be a two-sided ideal of $R$. We say that $I$ is a {\bf nil ideal} 
+if for every $x \in I$,  there exists $n = n(x) \geq 1$ such that $x^n = 0$ (that is, 
+every element in $I$ is nilpotent). 
+\end{defn}
+
+\begin{exmp}~
+\begin{enumerate}[(1)]
+    \item Let $R$ be any ring. Then $(0)$ is a nil ideal. 
+    \item Let $R = \Z/2\Z$. Then $I = 6R = \{[0]_R, [6]_R\}$ is a nil ideal since 
+    $[0]_R^1 = [0]_R$ and $[6]_R^2 = [36]_R = [0]_R$. 
+    \item Let $R$ be the ring of $2 \times 2$ upper triangular matrices over $\C$; that is, 
+    \[ R = \left\{ \begin{pmatrix} a&b\\0&c \end{pmatrix} : a, b,c \in \C \right\} \subseteq M_2(\C). \]
+    Then one can check that 
+    \[ I = \left\{ \begin{pmatrix} 0&\alpha\\0&0 \end{pmatrix} : \alpha \in \C \right\} \]
+    is an ideal of $R$, and that it is a nil ideal (by squaring). 
+\end{enumerate}
+\end{exmp}
+
+We now state the Artin-Wedderburn Theorem and give some remarks. 
+
+\begin{thm}[Artin-Wedderburn]
+Let $R$ be a left Artinian ring. If $R$ has no non-zero nil ideals, then there exists $s \geq 1$, 
+division rings $D_1, \dots, D_s$, and integers $n_1, \dots, n_s \geq 1$ such that 
+\[ R \cong M_{n_1}(D_1) \times \cdots \times M_{n_s}(D_s). \]
+\end{thm}
+
+\begin{remark}~
+\begin{enumerate}[(1)]
+    \item If $k$ is an algebraically closed field and $R$ is a finite-dimensional $k$-algebra, then 
+    \[ R \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k). \]
+    \item By using Exercise 3 on Assignment 1, we see that if $R$ is also finite, then 
+    \[ R \cong M_{n_1}(\F_{q_1}) \times \cdots \times M_{n_s}(\F_{q_s}). \]
+    This can be observed by noting that if $R$ is finite, then the division rings must also be finite. 
+    \item If $R$ is also commutative, then 
+    \[ R \cong F_1 \times \cdots \times F_s \]
+    for fields $F_1, \dots, F_s$. This is because commutativity forces the matrix rings to be 
+    $1 \times 1$. Moreover, the division rings must also be commutative, and so they are fields.
+\end{enumerate}
+\end{remark}
+
+We finish the lecture by giving one last definition. 
+
+\begin{defn}
+Let $R$ be a ring. Then a proper two-sided ideal $P$ is called a {\bf prime ideal} if whenever $a, b \in R$
+are such that $aRb = \{arb : r \in R\} \subseteq P$, we either have $a \in P$ or $b \in P$.
+We say that $R$ is a {\bf prime ring} if $(0)$ is a prime ideal of $R$. 
+\end{defn}
+
+\begin{exmp}
+Observe that $p\Z$ for a prime $p$ is a prime ideal of $\Z$. Indeed, if $a, b \in \Z$ are such that 
+$a\Z b = ab\Z \subseteq p\Z$, then $p \mid ab$. This occurs if and only if $p \mid a$ or $p \mid b$, 
+or equivalently, $a \in p\Z$ or $b = p\Z$. In fact, $\Z$ is a prime ring as it has $(0)$ as a prime 
+ideal. 
+\end{exmp}
+
+\section{September 20, 2021}
+
+When $R$ is commutative, notice that $R$ is prime if and only if $R$ is an integral domain. 
+Indeed, observe that 
+\begin{align*}
+    R \text{ is prime} &\iff aRb = (0) \text{ implies } a = 0 \text{ or } b = 0 \\
+    &\iff abR = (0) \text{ implies } a = 0 \text{ or } b = 0 \\
+    &\iff ab \cdot 1 = 0 \text{ implies } a = 0 \text{ or } b = 0 \\
+    &\iff ab = 0 \text{ implies } a = 0 \text{ or } b = 0 \\
+    &\iff R \text{ is an integral domain.}
+\end{align*}
+Being prime can be thought of as an extension of being an integral domain in the case where $R$ 
+is not a commutative ring. 
+
+\begin{defn}
+A ring $R$ is {\bf simple} if $(0)$ and $R$ are its only two-sided ideals.
+\end{defn}
+
+\begin{prop}
+If $R$ is a simple ring, then $R$ is prime. 
+\end{prop}
+\begin{pf}
+Let $R$ be simple. Suppose that $aRb = (0)$ with $a \neq 0$ and $b \neq 0$. Since $a \neq 0$, the 
+two-sided ideal 
+\[ RaR := \{u_1av_1 + \cdots + u_sav_s : s \geq 0,\, u_i, \dots, u_s, v_1, \dots, v_s \in R\} \]
+is equal to $R$ by the simplicity of $R$. In particular, there exists $s \geq 1$ and 
+$u_s, v_1, \dots, v_s \in R$ such that 
+\begin{equation}
+    1 = u_1av_1 + \cdots + u_sav_s. 
+\end{equation}
+Similarly, there exists $t \geq 1$ and $y_1, \dots, y_t, z_1, \dots, z_t \in R$ such that 
+\begin{equation}
+    1 = y_1bz_1 + \cdots + y_taz_t. 
+\end{equation}
+Multiplying equations (6.1) and (6.2) together gives 
+\[ 1 \cdot 1 = (u_1av_1 + \cdots + u_sav_s)(y_1bz_1 + \cdots + y_taz_t) 
+= \sum_{i=1}^s \sum_{j=1}^t u_i(av_iy_jb)z_j = 0, \]
+where the last equality is because $aRb = (0)$ and thus $av_iy_jb = 0$ for any $1 \leq i \leq s$ 
+and $1 \leq j \leq t$. 
+\end{pf}
+
+\begin{prop}
+Let $D$ be a division ring and let $n \geq 1$. Then $M_n(D)$ is simple and hence prime. 
+\end{prop}
+\begin{pf}
+Let $I$ be a non-zero ideal of $M_n(D)$. We want to show that $I = M_n(D)$. Since $I$ is 
+non-zero, there exists a matrix 
+\[ x = \begin{pmatrix} a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{n1} & \cdots & a_{nn} \end{pmatrix} \in I \]
+with each $a_{ij} \in D$ and $a_{i_0j_0} \neq 0$ for some $1 \leq i_0, j_0 \leq n$. For all 
+$1 \leq i, j \leq n$, let $e_{ij}$ be the matrix where the $(i,j)$-th entry is $1$ and all other entries
+are $0$. Then we find that 
+\[ e_{ii_0}xe_{j_0j} = a_{i_0j_0}e_{ij} \in I. \]
+Since $D$ is a division ring, we know that $a_{i_0j_0}$ has an inverse. It follows that 
+\[ \begin{pmatrix} a_{i_0j_0}^{-1} & & 0 \\ & \ddots \\ 0 & & a_{i_0j_0}^{-1} \end{pmatrix} a_{i_0j_0} e_{ij} = e_{ij} \in I \]
+for all $1 \leq i, j \leq n$. In particular, we obtain 
+\[ e_{11} + \cdots + e_{nn} = 1 \in I, \]
+so we conclude that $I = M_n(D)$ and hence $M_n(D)$ is simple. 
+\end{pf}
+
+We now prove a nice characterization of left Artinian rings. 
+
+\begin{prop}
+Let $R$ be a ring. Then $R$ is left Artinian if and only if whenever $S$ is a non-empty collection 
+of left ideals of $R$, then $S$ has a minimal element with respect to inclusion. 
+\end{prop}
+\begin{pf}
+For the forward direction, suppose that $R$ is left Artinian. Let $S$ be a non-empty collection of 
+left ideals of $R$. Pick $L_1 \in S$. If $L_1$ is minimal, we are done. Otherwise, we can pick $L_2 
+\in S$ such that $L_2 \subsetneq L_1$. We can continue this process, and since $R$ is left 
+Artinian, this terminates at some step $L_n$ as we cannot have an infinite strictly descending chain.
+
+For the converse, assume that for every non-empty collection $S$ of left ideals of $R$, then 
+$S$ has a minimal element with respect to inclusion. Let $L_1 \supseteq L_2 \supseteq \cdots$ 
+be a descending chain of left ideals of $R$. Let $S = \{L_1, L_2, \dots\}$. By assumption, there 
+exists $n \geq 1$ such that $L_n$ is a minimal element of $S$. In particular, we have 
+$L_n = L_m$ for all $m \geq n$, so $R$ is left Artinian.
+\end{pf}
+
+The next theorem will be a key step towards proving the Artin-Wedderburn theorem.
+
+\begin{thm}
+Let $R$ be a prime left Artinian ring. Then $R \cong M_n(D)$ for some $n \geq 1$ and division ring 
+$D$. (In fact, the converse is also true.)
+\end{thm}
+\begin{pf}
+Let $S = \{Ru : u \in R,\, u \neq 0\}$ be a collection of left ideals of $R$. Note that $S$ 
+is non-empty since $R \cdot 1 = R \in S$. Then there exists a minimal element in $S$ by Proposition 
+6.4, say $Rb$ for some $b \in R$. Notice that $Rb$ is a left $R$-module (since 
+left ideals are left $R$-modules). 
+
+First, we show that $M = Rb$ is simple. If $N \subsetneq M = Rb$ is a proper left ideal with 
+$N \neq (0)$, then there exists $u \neq 0$ in $N$ such that 
+\[ (0) \subsetneq Ru \subsetneq N \subsetneq M. \]
+But we assumed that $M = Rb$ was minimal in $S$, which is a contradiction. 
+
+Next, we show that $M = Rb$ is faithful; that is, $\Ann_R(M) = (0)$. Suppose there exists 
+$a \neq 0$ in $\Ann_R(M)$. Then we have $aM = (0)$ and hence $aRb = (0)$. Since $R$ is prime,
+it must be that $a = 0$ or $b = 0$. But we assumed that $a \neq 0$ and $b \neq 0$, so this is 
+a contradiction. 
+
+Now, we show that $\dim_\Delta M < \infty$ where $\Delta = \End_R(M)$. Suppose to the contrary 
+that $M$ were an infinite-dimensional left $\Delta$-vector space. Then there exist elements 
+$m_1, m_2, \dots \in M$ that are $\Delta$-linearly independent. By the Jacobson Density Theorem, 
+for every $n \geq 1$, there exists $r_n \in R$ such that 
+\[ r_nm_1 = r_nm_2 = \cdots = r_nm_{n-1} = 0 \]
+and $r_nm_n \neq 0$. Define the left ideal 
+\[ L_i = \{r \in R : rm_1 = rm_2 = \cdots = rm_i = 0\} \]
+for all $i \geq 1$. Notice that $L_1 \supseteq L_2 \supseteq \cdots$ and $r_n \in L_{n+1} \setminus L_n$,
+which implies that these are proper containments. But this is an infinite descending chain of 
+left ideals, which contradicts the fact that $R$ is left Artinian. 
+
+In the next lecture, we will finish off the proof of this theorem.
+\end{pf}
