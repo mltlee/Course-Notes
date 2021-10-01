@@ -209,7 +209,6 @@ For this reason, we call $G/G'$ the {\bf abelianization} of $G$.
     $\Phi \circ \pi = \phi$. 
 
     \begin{center}
-        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAHEQBfU9TXfIRRkATFVqMWbdgHp2Acm68QGbHgJER5cfWatEIAILdxMKAHN4RUADMAThAC2SMiBwQkWiXrYAdX2gAFlhKtg7OiK7uSACM1LpSBv5oIdQMdABGMAwACvzqQiB2WOaBOKEg9k6x1NGIXgxYYPogUBA4OGYg8ZIt-jnB3SDpWbn5gmzFpeVcFFxAA
         \begin{tikzcd}
             G \arrow[rr, "\phi"] \arrow[dd, "\pi"'] &  & A \\
                                                     &  &   \\
@@ -218,3 +217,168 @@ For this reason, we call $G/G'$ the {\bf abelianization} of $G$.
     \end{center}
 \end{exercise}
 
+\section{October 1, 2021}
+There is a similar notion of abelianization for rings. Let $R$ 
+be a ring. The {\bf commutator ideal} $[R, R]$ is the smallest ideal 
+containing all elements of the form $ab - ba$ where $a, b \in R$. 
+We can also think of $[R, R]$ as the intersection of all two-sided ideals 
+$J$ such that $ab - ba \in J$ for all $a, b \in R$. 
+
+\begin{remark}~
+    \begin{enumerate}[(1)]
+        \item Note that $R/[R, R]$ is commutative because for all $a, b \in R$, 
+        we have 
+        \begin{align*}
+            (a + [R, R])(b + [R, R]) 
+            &= ab + [R, R] \\ 
+            &= ab + (ba - ab) + [R, R] \\
+            &= ba + [R, R] \\
+            &= (b + [R, R])(a + [R, R]).
+        \end{align*}
+        \item We also have a universal property here; if $R$ is a ring, 
+        $C$ is a commutative ring, $\phi : R \to C$ is a ring homomorphism, 
+        and $\pi : R \to R/[R, R]$ is the canonical quotient map, then 
+        there exists a unique ring homomorphism $\Phi : R/[R, R] \to C$ 
+        such that $\Phi \circ \pi = \phi$. 
+        \begin{center}
+            \begin{tikzcd}
+                R \arrow[rr, "\phi"] \arrow[dd, "\pi"']  &  & C \\
+                                                        &  &   \\
+                {R/[R, R]} \arrow[rruu, "\Phi"', dotted] &  &  
+            \end{tikzcd}
+        \end{center}
+    \end{enumerate}
+\end{remark}
+
+In Assignment 3, we will prove the following results. 
+\begin{enumerate}[(1)]
+    \item If $k$ is a field and $G$ is a group, then there is a 
+    $k$-algebra homomorphism 
+    \[ k[G]/[k[G], k[G]] \cong k[G/G']. \] 
+    Said another way, the abelianization of the group algebra is isomorphic 
+    to the group algebra of the abelianization. 
+    \item If $R = M_{n_1}(k) \times \cdots \times M_{n_s}(k)$, then 
+    \[ R/[R, R] \cong k^t, \] 
+    where $t = \#\{i : n_i = 1\}$. 
+\end{enumerate}
+
+As an immediate consequence of these results, we have the following 
+corollary. 
+
+\begin{cor}
+    If $k[G] \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k)$, then 
+    $|G/G'| = \#\{i : n_i = 1\}$. 
+\end{cor}
+\begin{pf}
+    Since $k[G]$ and $M_{n_1}(k) \times \cdots \times M_{n_s}(k)$ 
+    are isomorphic, so are their abelianizations. It follows that there 
+    is a $k$-algebra homomorphism 
+    \[ k[G/G'] \cong k^t \] 
+    where $t = \#\{i : n_i = 1\}$. By looking at the dimensions, we see that 
+    \[ |G/G'| = \dim_k k[G/G'] = \dim_k k^t = t = \#\{i : n_i = 1\}. 
+    \qedhere \] 
+\end{pf}
+
+\begin{exmp}
+    Let's look at $\C[S_4]$. Recall that the conjugacy classes of $S_n$ 
+    are just sets of permutations with the same disjoint cycle structure. 
+    For $n = 4$, the conjugacy classes are 
+    \[ [(1)(2)(3)(4)], [(12)(3)(4)], [(12)(34)], [(123)(4)], [(1234)]. \] 
+    Notice that we can think of these are 
+    \[ 1+1+1+1=4,\; 2+1+1=4,\; 2+2=4,\; 3+1=4,\; 4=4. \] 
+    In particular, there is a bijective correspondence between the conjugacy 
+    classes of $S_n$ and the partitions of $n$. 
+
+    We can look at the sizes of the conjugacy classes. We have 
+    \begin{align*} 
+        \#[(1)(2)(3)(4)] = 1, \\ 
+        \#[(1)(2)(34)] = 6, \\
+        \#[(1)(234)] = 8, \\
+        \#[(1234)] = 6, \\
+        \#[(12)(34)] = 3. 
+    \end{align*}
+    Since there are $5$ conjugacy classes of $S_4$, we have 
+    \[ \C[S_4] \cong M_{n_1}(\C) \times \cdots \times M_{n_5}(\C) \] 
+    for some integers $n_1, \dots, n_5 \geq 1$. 
+
+    We claim that $S'_4 = A_4$. First, note that $S'_4 \subseteq A_4$ 
+    since $S'_4/A_4$ is abelian. Now, notice that 
+    \[ (123) = (12)(13)(12)(13) = (12)(13)(12)^{-1}(13)^{-1} \in S'_4. \] 
+    Therefore, every $3$-cycle is in $S'_4$ as normal subgroups 
+    are unions of conjugacy classes. Hence, we see that 
+    \[ |S'_4| \geq 9 = \#[(1)(234)] + \#[(1)(2)(3)(4)]. \] 
+    Since $|S'_4| \mid |S_4| = 24$ by Lagrange's theorem, we obtain 
+    $|S'_4| = 12$, and so $S'_4 = A_4$. From this, we have  
+    \[ \#\{i : n_i = 1\} = |S_4/S'_4| = |S_4/A_4| = 2. \] 
+    Now, we have $n_3, n_4, n_5 \geq 2$ with $n_3^2 + n_4^2 + n_5^2 = 22$. 
+    The only solution to this is $2^2 + 3^2 + 3^2 = 22$, so we conclude that 
+    \[ \C[S_4] \cong \C \times \C \times M_2(\C) \times M_3(\C) \times M_3(\C). \] 
+\end{exmp}
+
+\begin{exmp}
+    If $A$ is abelian with $|A| = n$, then $|A/A'| = n$ so that 
+    $\#\{i : n_i = 1\} = n$. It follows that 
+    \[ \C[A] \cong \C^n. \] 
+    We can give an alternate argument: if we had $n_i \geq 2$ for some 
+    $i = 1, \dots, s$, then the product of matrix rings is no longer 
+    commutative, which is a contradiction since $\C[A]$ is commutative. 
+\end{exmp}
+
+\begin{exmp}
+    Let $D_5$ be the dihedral group of order $10$. We can write 
+    \[ D_5 = \langle x, y : x^2 = 1,\, y^5 = 1,\, xyx = y^{-1} \rangle. \] 
+    We have an isomorphism 
+    \[ \C(D_5) \cong M_{n_1}(\C) \times \cdots \times M_{n_s}(\C) \] 
+    for some $s \geq 1$ and integers $n_1, \dots, n_s \geq 1$. 
+    Notice that 
+    \[ 10 = 1^2 + 3^2 = 1^2 + 1^2 + 2^2 + 2^2 = \underbrace{1^2 + \cdots + 1^2}_{6} \,+\, 2^2 
+    = \underbrace{1^2 + \cdots + 1^2}_{10}. \] 
+    One can check that $D_5$ has $4$ conjugacy classes. Therefore, only the 
+    choice $10 = 1^2 + 1^2 + 2^2 + 2^2$ works, and we must have 
+    \[ \C(D_5) \cong \C \times \C \times M_2(\C) \times M_2(\C). \] 
+\end{exmp}
+
+Let's now study representations. Let $G$ be a group and 
+let $k$ be an algebraically closed field such that $\ch(k) \nmid |G|$. 
+A {\bf representation} of $G$ is a group homomorphism 
+\[ \rho : G \to \GL_n(k). \]
+
+\begin{remark}
+    The group homomorphism $\rho : G \to \GL_n(k)$ extends to a $k$-algebra 
+    homomorphism 
+    \[ \tilde\rho : k[G] \to M_n(k). \] 
+    Conversely, if $\phi : k[G] \to M_n(k)$ is a $k$-algebra homomorphism, then
+    $\phi$ restricted to $G$ is a map  
+    \[ \phi|_G : G \to \GL_n(k). \] 
+    This is because $\phi(1) = I$, so for any $g \in G$, we have 
+    \[ \phi(g) \cdot \phi(g)^{-1} = \phi(g \cdot g^{-1}) = \phi(1) = I. \] 
+    Thus, $\phi(g)$ must be an invertible matrix. Moreover, $\tilde\rho|_G 
+    = \rho$. 
+\end{remark}
+
+\begin{remark}
+    If $\phi : k[G] \to M_n(k)$ is a $k$-algebra homomorphism, then 
+    \[ V = k^{n\times 1} = \left\{ \begin{pmatrix} a_1 \\ \vdots \\ a_n
+    \end{pmatrix} : a_1, \dots, a_n \in k \right\} \] 
+    can be given a left $k[G]$-module structure with the rule 
+    \[ r \cdot v := \Phi(r) \cdot v \] 
+    for $r \in k[G]$ and $v \in V$. 
+\end{remark} 
+
+Notice that if $V$ is a $k[G]$-module, then we have a $k$-algebra homomorphism
+\[ \Psi : k[G] \to \End_k(V) \] 
+where we send each $g \in G$ to the map 
+\begin{align*} L_g : V &\to V \\ v &\mapsto g\cdot v \end{align*}
+and extend linearly over $k$. In particular, 
+\[ \Psi|_G : G \to \GL(V) \cong \GL_n(k), \] 
+where $\GL(V)$ denotes the invertible linear transformations over $M$. 
+For this reason, if $V$ is a $k[G]$-module, we will call $V$ a 
+{\bf representation} of $G$. 
+
+\begin{defn}~
+    \begin{enumerate}[(1)]
+        \item If $V$ is a simple $k[G]$-module, we say that $V$ is {\bf irreducible}.
+        \item If $W \subseteq V$ is a $k[G]$-submodule of $V$, we say that $W$ is a 
+        {\bf subrepresentation} of $G$. 
+    \end{enumerate}
+\end{defn}
