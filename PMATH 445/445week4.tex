@@ -1,0 +1,220 @@
+\section{September 29, 2021}
+By Corollary 9.5, we know that if $k$ is algebraically closed, $G$ 
+is a finite group, and $\ch(k) \nmid |G|$, then 
+\[ k[G] \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k) \] 
+for some $s \geq 1$ and integers $n_1, \dots, n_s \geq 1$. 
+This will be our setting for this lecture, and
+we'll derive more properties about the choice of $s \geq 1$ and the integers 
+$n_1, \dots, n_s \geq 1$. 
+
+\begin{thm}
+    We have $|G| = n_1^2 + \cdots + n_s^2$. 
+\end{thm}
+\begin{pf}
+    The isomorphism in Corollary 9.5 is a $k$-algebra isomorphism, so we 
+    find that 
+    \begin{align*}
+        |G| &= \dim_k k[G] \\
+        &= \dim_k M_{n_1}(k) \times \cdots \times M_{n_s}(k) \\
+        &= \dim_k M_{n_1}(k) + \cdots + \dim_k M_{n_s}(k) \\
+        &= n_1^2 + \cdots + n_s^2. \qedhere 
+    \end{align*}
+\end{pf}
+
+Next, we'll work towards showing that $s$ is the number of conjugacy classes of $G$.
+
+\begin{remark}
+    If $R$ is a $k$-algebra, then $Z(R)$ is also a $k$-algebra. Indeed, we have
+    an embedding $k \hookrightarrow Z(R) \subseteq R$ which sends $1_k$ 
+    to $1_R$, and this also gives us an embedding $k \hookrightarrow 
+    Z(Z(R)) = Z(R)$. 
+\end{remark}
+
+\begin{remark}
+    If $T_1, \dots, T_s$ are rings, then 
+    \[ Z(T_1 \times \cdots \times T_s) = Z(T_1) \times \cdots \times Z(T_s). \]
+\end{remark}
+
+\begin{prop}
+    We have $Z(M_n(k)) = kI_n = \{\lambda I_n : \lambda \in k\}$. 
+\end{prop}
+\begin{pf}
+    We'll give two proofs: an elementary one, and a high level one. 
+
+    For the elementary proof, suppose that $(a_{ij}) \in Z(M_n(k))$. 
+    Then observe that 
+    \begin{align*} 
+         \begin{pmatrix} 
+            a_{11} & 0 & \cdots & 0 \\ 
+            a_{21} & 0 & \cdots & 0 \\ 
+            \vdots & \vdots & \ddots & \vdots \\ 
+            a_{n1} & 0 & \cdots & 0 
+        \end{pmatrix} &= \begin{pmatrix}
+            a_{11} & \cdots & a_{1n} \\ 
+            \vdots & \ddots & \vdots \\
+            a_{n1} & \cdots & a_{nn} 
+        \end{pmatrix} \begin{pmatrix} 
+            1 & 0 & \cdots & 0 \\ 
+            0 & 0 & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & 0
+        \end{pmatrix} \\ &= \begin{pmatrix} 
+            1 & 0 & \cdots & 0 \\ 
+            0 & 0 & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & 0
+        \end{pmatrix} \begin{pmatrix}
+            a_{11} & \cdots & a_{1n} \\ 
+            \vdots & \ddots & \vdots \\
+            a_{n1} & \cdots & a_{nn} 
+        \end{pmatrix} \\ &= \begin{pmatrix}
+            a_{11} & a_{12} & \cdots & a_{1n} \\
+            0 & 0 & \cdots & 0 \\ 
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & 0
+        \end{pmatrix}. 
+    \end{align*}
+    In particular, we have $a_{21} = \cdots = a_{n1} = 0$ and 
+    $a_{12} = \cdots = a_{1n} = 0$, which shows that 
+    \[ A = \left(\begin{array}{@{}c|ccc@{}}
+        a_{11} & 0 & \cdots & 0 \\\hline
+        0 \\
+        \vdots & & A' & \\
+        0 
+      \end{array}\right) \]
+    for some smaller matrix $A'$. The argument follows inductively. 
+
+    For a high level proof (where $k$ is algebraically closed), take 
+    $R = M_n(k)$ and consider the simple left $R$-module
+    \[ M = k^{n\times 1} = \left\{ \begin{pmatrix} \lambda_1 \\ \vdots \\ 
+        \lambda_n \end{pmatrix} : \lambda_1, \dots, \lambda_n \in k \right\}. \] 
+    We have shown that $\Delta = \End_R(M) \cong k$
+    by identifying each $\lambda \in k$ with the map 
+    \begin{align*}
+        \Phi_\lambda : M &\to M \\ v &\mapsto \lambda \cdot v. 
+    \end{align*} 
+    Now, if $A \in Z(M_n(k))$, then the map 
+    \begin{align*} f : M &\to M \\ v &\mapsto Av \end{align*}
+    is $R$-linear; indeed, for $B \in M_n(k) = R$ and $v_1, v_2 \in M$, we have 
+    \begin{align*} 
+        f(Bv_1 + v_2) &= A(Bv_1 + v_2) \\ 
+        &= ABv_1 + Av_2 \\
+        &= BAv_1 + Av_2 \\ 
+        &= Bf(v_1) + f(v_2).
+    \end{align*}
+    In particular, we see that $f \in \Delta$, so $f = \Phi_\gamma$ for some 
+    $\gamma \in k$. Then $f(v) = Av = \gamma v$ for all $v \in M$, which 
+    implies that $A = \gamma I$. 
+\end{pf}
+
+Combining Proposition 10.4 with Remark 10.3, we see that 
+\begin{align*}
+    Z(M_{n_1}(k) \times M_{n_s}(k)) 
+    &= Z(M_{n_1}(k)) \times \cdots \times Z(M_{n_s}(k)) \\
+    &= \{(\lambda_1 I_{n_1}, \dots, \lambda_s I_{n_s}) : 
+    (\lambda_1, \dots, \lambda_s) \in k^s\}. 
+\end{align*}
+In particular, we have 
+$\dim_k Z(k[G]) = \dim_k Z(M_{n_1}(k) \times \cdots \times M_{n_s}(k)) = s$.
+
+\begin{defn}
+    We say that a function $\alpha : G \to k$ is a {\bf class function} if 
+    $\alpha$ is constant when restricted to each conjugacy class of $G$. 
+\end{defn} 
+
+\begin{lemma}
+    Let $\alpha : G \to k$ be a function. Then $z := \sum_{g \in G} 
+    \alpha(g) g$ is central in $k[G]$ if and only if $\alpha$ is a 
+    class function. 
+\end{lemma}
+\begin{pf}
+    Note that $z \in \sum_{g \in G} \alpha(g)g$ is in $Z(k[G])$ if and only if 
+    $xz = zx$ for all $x \in G$; the backwards direction here is because $G$ 
+    forms a basis for $k[G]$. This occurs if and only if 
+    $z = x^{-1}zx$ for all $x \in G$ by rearranging. Now, this is 
+    equivalent to 
+    \[ \sum_{g \in G} \alpha(g)g = x^{-1} \left( \sum_{g \in G}
+    \alpha(g)g \right) x = \sum_{g \in G} \alpha(g)x^{-1}gx
+    = \sum_{h \in G} \alpha(xhx^{-1}) h \] 
+    holding for all $x \in G$, where the last equality follows from 
+    making the substitution $h = x^{-1}gx$. This is true if and only if 
+    the coefficient of the left-hand side is the same as the 
+    coefficient of the right-hand side. That is, $\alpha(h) = 
+    \alpha(xhx^{-1})$ for all $h \in G$ and $x \in G$, and this is exactly 
+    the definition of a class function. 
+\end{pf}
+
+Let $G$ be a finite group, and let ${\cal C}_1, 
+\dots, {\cal C}_s$ be the conjugacy classes of $G$. For $i = 1, \dots, s$, 
+observe that 
+\[ \alpha(g) = \begin{cases} 1 & \text{if } g \in {\cal C}_i \\ 
+    0 & \text{if } g \notin {\cal C}_i \end{cases} \]
+is a class function. Then the elements 
+\[ z_i = \sum_{g \in G} \alpha(g) g = \sum_{g \in {\cal C}_i} g \] 
+for $i = 1, \dots, s$ are central by Lemma 10.6. 
+
+\begin{prop}
+    Let $G$ be a finite group with conjugacy classes ${\cal C}_1, 
+    \dots, {\cal C}_s$. Then the elements 
+    \[ z_i := \sum_{g \in {\cal C}_i} g \] 
+    for $i = 1, \dots, s$ form a basis for $Z(k[G])$. 
+\end{prop} 
+\begin{pf}
+    We have already seen that the $z_i$ are central. To show 
+    linear independence, suppose that 
+    \[ c_1 z_1 + \cdots + c_s z_s = 0, \] 
+    where we take $0$ to mean $\sum_{g \in G} 0 \cdot g$ in $k[G]$. 
+    If $g \in {\cal C}_i$, then the coefficient of $g$ on the left-hand 
+    side is $c_i$. But the coefficient on the right-hand side is 
+    always $0$, so $c_1 = \cdots = c_s = 0$. To see that 
+    $\{z_1, \dots, z_s\}$ spans $Z(k[G])$, recall that 
+    $z \in \sum_{g \in G} \alpha(g)g \in Z(k[G])$ if and only if 
+    $\alpha$ is a class function. Let $\beta_i$ be the unique value 
+    of $\alpha$ on ${\cal C}_i$. Then we see that 
+    \[ z = \sum_{g \in G} \alpha(g)g = \sum_{i=1}^s \sum_{g \in {\cal C}_i} 
+    \alpha(g)g = \sum_{i=1}^s \beta_i \sum_{g \in {\cal C}_i} g 
+    = \sum_{i=1}^s \beta_i z_i, \] 
+    so we can write $z$ as a linear combination of the $z_i$, completing the 
+    proof. 
+\end{pf}
+
+\begin{thm}
+    In the setting of Corollary 9.5, $s$ is the number of conjugacy 
+    classes of $G$. 
+\end{thm} 
+\begin{pf}
+    We previously showed that $\dim_k Z(k[G]) = \dim_k Z(M_{n_1}(k) \times 
+    \cdots \times M_{n_s}(k)) = s$. Proposition 10.7 tells us that 
+    $\dim_k Z(k[G])$ is the number of conjugacy classes of $G$. 
+\end{pf} 
+
+For the remainder of the lecture, we recall the abelianization of a group $G$.
+We denote by $G'$ the commutator (or derived) subgroup of $G$, which is the 
+smallest subgroup of $G$ which contains all elements of the form 
+$ghg^{-1}h^{-1}$ with $g, h \in G$ (which we call commutators). 
+
+Note that $G/G'$ is abelian. Indeed, take $g, h \in G$ so that 
+$gG', hG' \in G/G'$. Observe that 
+\[ (h^{-1})(g^{-1})(h^{-1})^{-1}(g^{-1})^{-1} = 
+    h^{-1}g^{-1}hg \in G', \] 
+so we have 
+\[ (gG')(hG') = ghG' = gh(h^{-1}g^{-1}hg)G' = hgG' = (hG')(gG'). \]
+For this reason, we call $G/G'$ the {\bf abelianization} of $G$. 
+
+\begin{exercise}
+    Show that $G/G'$ has the universal property that if $A$ is abelian 
+    group, $\phi : G \to A$ is a group homomorphism, and $\pi 
+    : G \to G/G'$ is the canonical quotient map, then there is a 
+    unique group homomorphism $\Phi : G/G' \to A$ such that 
+    $\Phi \circ \pi = \phi$. 
+
+    \begin{center}
+        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAHEQBfU9TXfIRRkATFVqMWbdgHp2Acm68QGbHgJER5cfWatEIAILdxMKAHN4RUADMAThAC2SMiBwQkWiXrYAdX2gAFlhKtg7OiK7uSACM1LpSBv5oIdQMdABGMAwACvzqQiB2WOaBOKEg9k6x1NGIXgxYYPogUBA4OGYg8ZIt-jnB3SDpWbn5gmzFpeVcFFxAA
+        \begin{tikzcd}
+            G \arrow[rr, "\phi"] \arrow[dd, "\pi"'] &  & A \\
+                                                    &  &   \\
+            G/G' \arrow[rruu, "\Phi"', dotted]      &  &  
+        \end{tikzcd}
+    \end{center}
+\end{exercise}
+
