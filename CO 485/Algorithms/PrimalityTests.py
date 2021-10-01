@@ -30,10 +30,10 @@ def SolovayStrassen(n, r):
 def MillerRabin(n, r):
     d = n - 1
     s = 0
-    while n % 2 == 0:
-        if n == 0:
+    while d % 2 == 0:
+        if d == 0:
             break
-        d = d / 2
+        d = int(d / 2)
         s = s + 1
     for i in range(r):
         a = random.randint(2, n-2)
