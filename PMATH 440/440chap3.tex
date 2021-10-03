@@ -322,3 +322,136 @@ $t \in \R$, we have
 Combining this with the previous equality gives 
 \[ \sum_{x=1}^n \floor*{\frac nx} = n\log n + (2\gamma - 1)n + O(\sqrt n). \qedhere \]
 \end{pf}
+
+\subsection{The Prime Number Theorem}
+We now have everything we need to prove the Prime Number Theorem. 
+
+\begin{thm}[Prime Number Theorem] 
+    We have 
+    \[ \pi(x) \sim \frac{x}{\log x}. \] 
+\end{thm}
+\begin{pf}
+    In Theorem 2.7, we showed that 
+    \[ \pi(x) \sim \frac{\psi(x)}{\log x}. \] 
+    Therefore, it suffices to show that $\psi(x) \sim x$. Define the function 
+    \[ F(x) = \sum_{n\leq x} \left( \psi\left( \frac xn \right) - \floor*{\frac xn}
+    + 2\gamma \right), \] 
+    where $\gamma$ denotes Euler's constant. By the M\"obius inversion formula 
+    (Proposition 2.5), we have 
+    \[ \psi(x) - \floor{x} + 2\gamma = \sum_{n\leq x} \mu(n) F\left( \frac xn \right). \] 
+    In particular, we get 
+    \[ \psi(x) = x + O(1) + \sum_{n \leq x} \mu(n) F\left( \frac xn \right). \] 
+    Now, it is enough to show that $\sum_{n\leq x} \mu(n) F(x/n) = o(x)$. First, 
+    we will estimate $F(x)$. Observe that 
+    \[ F(x) = \sum_{n\leq x} \psi\left( \frac xn \right) - \sum_{n \leq x} 
+    \floor*{\frac xn} + 2\gamma\floor{x}. \tag{3.4} \]
+    Looking at the first sum in $(3.4)$, we have 
+    \begin{align*}
+        \sum_{n\leq x} \psi\left( \frac xn \right) 
+        &= \sum_{n \leq x} \sum_{m \leq \frac xn} \Lambda(m) \\
+        &= \sum_{n \leq x} \Lambda(n) \sum_{m\leq \frac xn} 1 \\
+        &= \sum_{n \leq x} \Lambda(n) \floor*{\frac xn} \\
+        &= \sum_{p^k \leq x} \log p \floor*{\frac x{p^k}} \\ 
+        &= \sum_{p \leq x} \left( \floor*{\frac xp} + \floor*{\frac x{p^2}} 
+        + \cdots + \floor*{\frac x{p^k}} \right) \quad \text{(where $p^k\;\|\;\floor{x}$)} \\
+        &= \log(\floor{x}!) = \sum_{n \leq x} \log n. 
+    \end{align*}
+    In the proof of Theorem 2.11, we showed that 
+    \[ \sum_{n\leq x} \log n = x\log x - x + O(\log x). \] 
+    Hence, we obtain 
+    \[ \sum_{n\leq x} \psi\left( \frac xn \right) = x\log x - x + O(\log x). \tag{3.5} \] 
+    Moreover, by Theorem 3.9, we have 
+    \[ \sum_{n=1}^{\floor{x}} \floor*{\frac{\floor x}n} = \floor{x}\log\floor{x} 
+    + (2\gamma - 1)\floor{x} + O(x^{1/2}). \] 
+    For all $y \in \R$, notice that $\floor{y} \leq y \leq \floor{y}+1$. In particular, 
+    we obtain the inequalities 
+    \[ \sum_{n=1}^{\floor{x}} \floor*{\frac{\floor{x}}n} \leq 
+    \sum_{n=1}^{\floor{x}} \floor*{\frac{x}n} \leq 
+    \sum_{n=1}^{\floor{x}+1} \floor*{\frac{\floor{x}+1}n}, \] 
+    and it follows that 
+    \[ \sum_{n=1}^{\floor{x}} \floor*{\frac{x}{n}} = x\log x + (2\gamma - 1) 
+    + O(x^{1/2}). \tag{3.6} \] 
+    Combining equations $(3.4)$, $(3.5)$, and $(3.6)$ gives 
+    \[ F(x) = (x\log x - x + O(\log x)) - (x\log x + (2\gamma-1)x + O(x^{1/2})) 
+    + (2\gamma x + O(1)) = O(x^{1/2}). \] 
+    Therefore, there exists a positive constant $c > 0$ such that 
+    \[ |F(x)| \leq cx^{1/2} \] 
+    for all $x \geq 1$. If $t > 1$ is an integer, then 
+    \begin{align*}
+        \left| \sum_{n\leq \frac xt} \mu(n) F\left( \frac xn \right) \right| 
+        &\leq \sum_{n\leq \frac xt} \left| F\left( \frac xn \right) \right| \\ 
+        &\leq \sum_{n\leq \frac xt} c\left( \frac xn \right)^{\!1/2} \\
+        &\leq cx^{1/2} \left( 1 + \int_1^{x/t} \frac{1}{u^{1/2}}\dd u \right) \\
+        &= cx^{1/2} \left(1 + 2 \left( \frac xt \right)^{\!1/2} - 2 \right) \\ 
+        &\leq 2 \cdot \frac{cx}{t^{1/2}}. \tag{3.7}
+    \end{align*}
+    Observe that $F$ is a step function. That is, if $a$ is an integer and 
+    $a \leq x < a + 1$, then $F(x) = F(a)$. Therefore, we have 
+    \[ \sum_{\frac xt < n \leq x} \mu(n) F\left(\frac xn \right) 
+    = F(1) \sum_{\frac x2 < n \leq x} \mu(n) + F(2) \sum_{\frac x3 < n \leq 
+    \frac x2} \mu(n) + \cdots + F(t-1) \sum_{\frac xt < n \leq \frac{x}{t-1}} \mu(n). \] 
+    We see that 
+    \begin{align*}
+        \left| \sum_{\frac xt < n \leq x} \mu(n) F\left(\frac xn \right) \right| 
+        &\leq |F(1)| \left| \sum_{\frac x2 < n \leq x} \mu(n) \right| + 
+        |F(2)| \left| \sum_{\frac x3 < n \leq \frac x2} \mu(n) \right| + \cdots + 
+        |F(t-1)| \left| \sum_{\frac xt < n \leq \frac{x}{t-1}} \mu(n) \right| \\ 
+        &\leq (|F(1)| + \cdots + |F(t-1)|) \max_{2\leq i \leq t} 
+        \left| \sum_{\frac xi < n \leq \frac{x}{i-1}} \mu(n) \right| \\ 
+        &\leq \left( \sum_{i=1}^t ci^{1/2} \right) \max_{2\leq i \leq t} 
+        \left| \sum_{\frac xi < n \leq \frac{x}{i-1}} \mu(n) \right|. 
+    \end{align*}
+    Notice that 
+    \[ \sum_{\frac xi < n \leq \frac{x}{i-1}} \mu(n) = 
+    \sum_{n \leq \frac{x}{i-1}} \mu(n) - \sum_{\frac{x}{i} < n} \mu(n) = o(x), \] 
+    so we obtain 
+    \[ \left| \sum_{\frac xt < n \leq x} \mu(n) F\left( \frac xn \right) \right| 
+    = o(t^{3/2}x). \] 
+    By Theorem 3.7, we have $\sum_{n\leq x} \mu(n) = o(x)$. Hence, 
+    for any $\eps > 0$, we can find sufficiently large $x$ such that 
+    \[ -\eps x \leq \sum_{n\leq x} \mu(n) \leq \eps x. \] 
+    In particular, when $x$ is sufficiently large, we get 
+    \[ -\frac{\eps x}{i-1} - \frac{\eps x}{i} 
+    \leq \sum_{\frac{x}{i} < n \leq \frac{x}{i-1}} \mu(n) 
+    \leq \frac{\eps x}{i-1} + \frac{\eps x}{i}. \] 
+    For any given $\eps > 0$, choose $t = t(\eps)$ such that 
+    \[ \frac{2c}{t^{1/2}} < \frac{\eps}2. \] 
+    By equation $(3.7)$, we have 
+    \[ \left| \sum_{n\leq \frac{x}{t}} \mu(n) F\left( \frac xn \right) \right| 
+    \leq 2 \cdot \frac{cx}{t^{1/2}} < \frac{\eps}2 x. \tag{3.8} \] 
+    For fixed $\eps > 0$ and $t$ as above, we can choose $x$ sufficiently large 
+    so that $o(xt^{3/2}) \leq \eps x/2$. Indeed, we have 
+    $2c/t^{1/2} < \eps/2$ if and only if $t > (4c)^2/\eps^2$. In particular, 
+    we have $t = A^2\eps^{-2}$ for some $A > 4c$, and we can pick $x$ large 
+    enough so that 
+    \[ o(x) \leq \frac{\eps^4}{2A^3}x. \] 
+    Then we get 
+    \[ o(xt^{3/2}) \leq \frac{\eps^4}{2A^3} x \cdot A^3\eps^{-3} = \frac{\eps}2 x. \] 
+    It follows that 
+    \[ \left| \sum_{\frac xt < n \leq x} \mu(n) F\left( \frac xn \right) \right| < 
+    \frac{\eps}2. \tag{3.9} \] 
+    Combining inequalities $(3.8)$ and $(3.9)$ yields 
+    \[ \left| \sum_{n\leq x} \mu(n) F\left( \frac xn \right) \right| = o(x), \] 
+    which completes the proof. 
+\end{pf}
+
+\begin{remark}~
+    \begin{enumerate}[(1)]
+        \item In 1896, Hadamard and de la Vall\'ee Poussin proved the Prime 
+        Number Theorem independently. Consider the logarithmic integral 
+        \[ \Li(x) = \int_2^x \frac{1}{\log t}\dd t \sim \frac{x}{\log x} 
+        \sum_{k=0}^\infty \frac{k!}{(\log x)^k}. \] 
+        In 1899, de la Vall\'ee Poussin proved that as $x \to \infty$, there 
+        exists some $a > 0$ such that 
+        \[ \pi(x) = \Li(x) + O(xe^{-a\sqrt{\log x}}). \]
+        \item The main ingredient of our proof of the Prime Number Theorem is the 
+        fact that $\sum_{n\leq x} \mu(n) = o(x)$, which is a consequence of the 
+        analytic continuation and non-vanishing of $\zeta(s)$ at $\Re(s) = 1$. 
+        The {\bf Riemann hypothesis}, proposed by Riemann in 1859, states that 
+        the non-trivial zeros of $\zeta(s)$ all have real part $1/2$. 
+        (The trivial zeros of $\zeta(s)$ are of the form $2n$ for $n \in \Z$ and 
+        $n < 0$; these can be obtained by functional equations.) In 1901, Helge von 
+        Koch proved that the Riemann hypothesis is true if and only if 
+        \[ \pi(x) = \Li(x) + O(\sqrt x \log x). \] 
+    \end{enumerate}
+\end{remark}

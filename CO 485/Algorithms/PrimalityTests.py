@@ -2,30 +2,52 @@ import random
 import GCD
 import Jacobi
 
-def Fermat(n, r):
+def Fermat(n, r, details = False):
+    if details:
+        print("n = {}, r = {}".format(n, r))
     for i in range(r):
         a = random.randint(2, n-2)
         gcd = GCD.GCD(a, n)
+        if details:
+            print()
+            print("Iteration {}: a = {} selected".format(i+1, a))
+            print("---------------------------------")
+            print("gcd(a, n) = {}".format(gcd))
         if gcd > 1:
-            return "n = {} is composite: gcd(a, n) > 1 where a = {} and n = {}".format(n, a, n)
+            print("n = {} is composite: gcd(a, n) > 1 where a = {} and n = {}".format(n, a, n))
+            return
         else:
             t = pow(a, n-1, n)
+            print("a^(n-1) = {}".format(t))
             if t != 1:
-                return "n = {} is composite: Fermat witness a = {} for the compositeness of n = {}".format(n, a, n)
-    return "n = {} is probably prime: no Fermat witness found in r = {} iterations".format(n, r)
+                print("n = {} is composite: Fermat witness a = {} for the compositeness of n = {}".format(n, a, n))
+                return
+    print()
+    print("n = {} is probably prime: no Fermat witness found in r = {} iterations".format(n, r))
 
-def SolovayStrassen(n, r):
+def SolovayStrassen(n, r, details = False):
+    if details:
+        print("n = {}, r = {}".format(n, r))
     for i in range(r):
         a = random.randint(2, n-2)
         gcd = GCD.GCD(a, n)
+        if details:
+            print()
+            print("Iteration {}: a = {} selected".format(i+1, a))
+            print("---------------------------------")
+            print("gcd(a, n) = {}".format(gcd))
         if gcd > 1:
-            return "n = {} is composite: gcd(a, n) > 1 where a = {} and n = {}".format(n, a, n)
+            print("n = {} is composite: gcd(a, n) > 1 where a = {} and n = {}".format(n, a, n))
+            return
         else:
             t = pow(a, int((n-1)/2), n)
             jacobi = Jacobi.Jacobi(a, n) % n
+            print("a^((n-1)/2) = {}, (a/n) = {}".format(t, jacobi))
             if t != jacobi:
-                return "n = {} is composite: Euler-Jacobi witness a = {} for the compositeness of n = {}".format(n, a, n)
-    return "n = {} is probably prime: no Euler-Jacobi witness found in r = {} iterations".format(n, r)
+                print("n = {} is composite: Euler-Jacobi witness a = {} for the compositeness of n = {}".format(n, a, n))
+                return
+    print()
+    print("n = {} is probably prime: no Euler-Jacobi witness found in r = {} iterations".format(n, r))
 
 def MillerRabin(n, r, details = False):
     d = n - 1
@@ -36,16 +58,16 @@ def MillerRabin(n, r, details = False):
         d = int(d / 2)
         s = s + 1
     if details:
-        print()
-        print("Input n = {}, r = {}".format(n, r))
+        print("n = {}, r = {}".format(n, r))
         print("n - 1 = 2^s * d where s = {}, d = {}".format(s, d))
     for i in range(r):
         a = random.randint(2, n-2)
+        gcd = GCD.GCD(a, n)
         if details:
             print()
             print("Iteration {}: a = {} selected".format(i+1, a))
             print("---------------------------------")
-        gcd = GCD.GCD(a, n)
+            print("gcd(a, n) = {}".format(gcd))
         if gcd > 1:
             print("n = {} is composite: gcd(a, n) > 1 where a = {} and n = {}".format(n, a, n))
             return 
@@ -72,7 +94,6 @@ def MillerRabin(n, r, details = False):
                     continue 
                 if details:
                     print("None of these are congruent to -1 mod n")
-                print()
                 print("n = {} is composite: Miller-Rabin witness a = {} for the compositeness of n = {}".format(n, a, n))
                 return 
     print()
