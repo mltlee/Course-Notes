@@ -1,0 +1,232 @@
+\section{Divisor Counting Functions}\label{sec:4}
+
+\subsection{Asymptotic Formulas for Divisor Counting Functions}\label{subsec:4.1}
+
+\begin{defn}\label{def:4.1}
+    For a positive integer $n \in \N$, we denote by $\Omega(n)$ the number 
+    of prime factors of $n$ counted with multiplicity, and $\omega(n)$ the 
+    number of distinct prime factors of $n$. 
+\end{defn}
+
+For example, if $n = 2^{10} \cdot 3^2 \cdot 7$, then $\Omega(n) = 10 + 2 + 1
+= 13$ and $\omega(n) = 3$. 
+
+\begin{defn}\label{def:4.2}
+    Let $k \in \N$. For each real number $x \in \R$, we define $\tau_k(x)$ 
+    to be the number of positive integer with $n \leq x$ and $\Omega(n) = k$. 
+    That is, 
+    \[ \tau_k(x) = \#\{n \leq x : \Omega(n) = k\}. \] 
+    Furthermore, we let $\pi_k(x)$ be the number of positive integers 
+    $n$ with $n \leq x$ and $\omega(n) = \Omega(n) = k$. That is, 
+    \[ \pi_k(x) = \#\{n \leq x : \omega(n) = \Omega(n) = k\}. \] 
+    In particular, $\pi_k(x)$ counts the positive integers $n$ up to $x$ 
+    which are squarefree and have $k$ prime factors. Note that 
+    $\pi(x) = \pi_1(x) = \tau_1(x)$. 
+\end{defn}
+
+\begin{thm}[Landau, 1900]\label{thm:4.3} 
+    Let $k \in \N$ be a positive integer. Then 
+    \[ \pi_k(x) \sim \tau_k(x) \sim \frac{1}{(k-1)!} \frac{x}{\log x} 
+    (\log \log x)^{k-1}. \] 
+\end{thm}
+\begin{pf}
+    We first introduce the functions 
+    \begin{align*} 
+        L_k(x) &= \sum_{p_1\cdots p_k \leq x}{\vphantom{\sum}}^{\hspace{-2.5ex}*} \hspace{1.5ex} \frac{1}{p_1 \cdots p_k}, & 
+        \Pi_k(x) &= \sum_{p_1\cdots p_k \leq x}{\vphantom{\sum}}^{\hspace{-2.5ex}*} \hspace{1.5ex} 1, &
+        \Theta_k(x) &= \sum_{p_1\cdots p_k \leq x}{\vphantom{\sum}}^{\hspace{-2.5ex}*} \hspace{1.5ex} \log(p_1 \dots p_k), 
+    \end{align*}
+    where the $*$ means that the sum is taken over all $k$-tuples of 
+    primes $(p_1, \dots, p_k)$ with $p_1 \cdots p_k \leq x$. Note that 
+    different $k$-tuples can correspond to the same product $p_1 \cdots p_k$. 
+
+    For each positive integer $n \geq 1$, we let $c_n = c_n(k)$ denote the number 
+    of $k$-tuples $(p_1, \dots, p_k)$ such that $p_1 \cdots p_k = n$. 
+    Observe that 
+    \begin{align*}
+        \Pi_k(x) &= \sum_{n\leq x} c_n, \\ 
+        \Theta_k(x) &= \sum_{n\leq x} c_n \log n.
+    \end{align*}
+    Moreover, we have 
+    \[ c_n = \begin{cases} 
+        0 & \text{ if $n$ is not a product of $k$ primes,} \\
+        k! & \text{ if $n$ is squarefree and $\omega(n) = \Omega(n) = k$.} 
+    \end{cases} \] 
+    We also see that $0 < c_n < k!$ if $\Omega(n) = k$ but $n$ is not squarefree. 
+    Therefore, we obtain the inequalities 
+    \[ k!\pi_k(x) \leq \Pi_k(x) \leq k!\tau_k(x). \tag{4.1}\label{eq:4.1} \] 
+    For $k \geq 2$, note that the number of positive integers up to $x$ with 
+    $k$ prime factors and divisible by the square of some prime is 
+    $\tau_k(x) - \pi_k(x)$. Therefore, we have 
+    \[ \tau_k(x) - \pi_k(x) = 
+    \sum_{\substack{p_1\cdots p_k \leq x \\ p_i = p_j \text{ for some } i \neq j}}
+    {\vphantom{\sum}}^{\hspace{-6.5ex}*} \hspace{5.5ex} 1 
+    \leq \binom{k}{2} \sum_{p_1\cdots p_k \leq x}
+    {\vphantom{\sum}}^{\hspace{-2.5ex}*} \hspace{1.5ex} 1 
+    = \binom{k}{2} \Pi_{k-1}(x). \]
+    {\sc Claim.} We have 
+    \[ \Pi_k(x) \sim k \frac{x(\log \log x)^{k-1}}{\log x}. \] 
+    {\sc Proof of Claim.} Applying Abel's summation formula with $a_n = c_n$ 
+    and $f(u) = \log u$, we have 
+    \[ \Theta_k(x) = \sum_{n \leq x} c_n \log n = \Pi_k(x) \log x 
+    + \int_1^x \frac{\Pi_k(u)}{u}\dd u. \] 
+    Observe that 
+    \[ \Pi_k(x) \leq k!\tau_k(x) \leq k!x, \] 
+    so $\Pi_k(u) = O(u)$, and hence 
+    \[ \Theta_k(x) = \Pi_k(x) \log x + O(x). \] 
+    Thus, it suffices to show that for all $k \in \N$, we have 
+    \[ \Theta_k(x) \sim kx(\log \log x)^{k-1}. \tag{4.2}\label{eq:4.2} \] 
+    We'll proceed by induction on $k$. This will be somewhat similar to the 
+    proof of the Prime Number Theorem, but with the weighting function 
+    $\log(p_1 \cdots p_k)$ on the $k$-tuple $(p_1, \dots, p_k)$. 
+
+    For $k = 1$, we have $\Theta_1(x) = \theta(x) \sim x$ by Theorem~\ref{thm:2.7}
+    and the Prime Number Theorem. Assume now that $\Theta_k(x) 
+    \sim kx(\log \log x)^{k-1}$ for some $k \geq 1$. We'll prove the result for 
+    $\Theta_{k+1}(x)$. First, note that 
+    \[ \left( \sum_{p \leq x^{1/k}} \frac{1}{p} \right)^{\!k} 
+    \leq L_k(x) \leq \left( \sum_{p \leq x} \frac{1}{p}\right)^{\!k} \] 
+    for all $k \geq 1$. By Theorem~\ref{thm:2.13}, we have 
+    \begin{align*} 
+        \left( \sum_{p \leq x^{1/k}} \frac{1}{p} \right)^{\!k} &\sim 
+        \left(\log \log (x^{1/k})\right)^k, \\ 
+        \left( \sum_{p \leq x} \frac{1}{p}\right)^{\!k} &\sim 
+        (\log \log x)^k. 
+    \end{align*}
+    Notice that 
+    \[ \left( \log\log(x^{1/k}) \right)^{\!k} = 
+    (\log\log x - \log k)^k \sim (\log\log x)^{k}, \] 
+    so $L_k \sim (\log\log x)^k$. Therefore, we have 
+    \[ \Theta_{k+1}(x) - (k+1)(\log\log x)^k = \Theta_{k+1}(x) 
+    - (k+1)xL_k(x) + o\left( x(\log\log x)^k \right). \] 
+    Note that 
+    \begin{align*} 
+        k\Theta_{k+1}(x) &= \sum_{p_1\cdots p_{k+1} \leq x}
+        {\vphantom{\sum}}^{\hspace{-3.5ex}*} \hspace{2.5ex}
+        k \cdot \log(p_1 \cdots p_{k+1}) \\ 
+        &= \sum_{p_1\cdots p_{k+1} \leq x}
+        {\vphantom{\sum}}^{\hspace{-3.5ex}*} \hspace{2.5ex}
+        \left( \log(p_2 \cdots p_{k+1}) + \log(p_1p_3 \cdots p_{k+1}) 
+        + \cdots + \log(p_1 \cdots p_k) \right) \\ 
+        &= (k+1) \sum_{p_1 \leq x} \sum_{p_2\cdots p_{k+1} \leq x/p_1}
+        {\vphantom{\sum}}^{\hspace{-5ex}*} \hspace{4ex} 
+        \log(p_2 \cdots p_{k+1}) \\ 
+        &= (k+1) \sum_{p_1 \leq x} \Theta_k \left( \frac{x}{p_1} \right). 
+    \end{align*}
+    Since $L_0(x) = 1$ and 
+    \[ L_k(x) = \sum_{p_1\cdots p_k \leq x}
+    {\vphantom{\sum}}^{\hspace{-2.5ex}*} \hspace{1.5ex} 
+    \frac{1}{p_1 \cdots p_k} = \sum_{p_1 \leq x} \frac{1}{p_1} L_{k-1} 
+    \left( \frac{x}{p_1} \right), \] 
+    it follows that 
+    \begin{align*}
+        \Theta_{k+1}(x) - (k+1)xL_k(x) 
+        &= (k+1) \sum_{p_1 \leq x} \left( \frac{1}{k} \Theta_k \left( \frac{x}{p_1} \right) 
+        - \frac{x}{p_1} L_{k-1} \left( \frac{x}{p_1} \right) \right) \\ 
+        &= \frac{k+1}{k} \sum_{p_1 \leq x} \left( \Theta_k \left( \frac{x}{p_1} \right) 
+        - k \frac{x}{p_1} L_{k-1} \left( \frac{x}{p_1} \right) \right). 
+    \end{align*}
+    By the induction hypothesis, we have 
+    \[ \Theta_k(y) - kyL_{k-1}(y) = o(y(\log \log y)^{k-1}). \] 
+    Given $\eps > 0$, there exists $x_0 = x_0(\eps, k)$ such that for all 
+    $y > x_0$, we have 
+    \[ |\Theta_k(y) - kyL_{k-1}(y)| \leq \eps y(\log \log y)^{k-1}. \] 
+    Furthermore, there exists a positive constant $c = c(\eps, k) > 0$ such 
+    that for all $y \leq x_0$, we have 
+    \[ |\Theta_k(y) - kyL_{k-1}(y)| \leq c. \] 
+    Note that $x/p_1 > x_0$ implies that $p_1 < x/x_0$, so for sufficiently 
+    large $x$, we obtain 
+    \begin{align*} 
+        |\Theta_{k+1}(x) - (k+1)xL_k(x)| 
+        & \leq \frac{k+1}{k} \left( \sum_{\frac{x}{x_0} < p_1 \leq x} c 
+        + \sum_{p_1 \leq \frac{x}{x_0}} \eps \frac{x}{p_1} \left( 
+        \log\log \frac{x}{p_1} \right)^{\!k-1} \right) \\
+        & \leq 2cx + 2\eps x(\log \log x)^{k-1} \sum_{p_1 \leq \frac{x}{x_0}} 
+        \frac{1}{p_1} \\ 
+        & \leq 2cx + 4\eps x (\log \log x)^k < 5\eps x(\log \log x)^k, 
+    \end{align*}
+    where the second last inequality comes from choosing $x$ large enough 
+    so that 
+    \[ \sum_{p\leq x} \frac{1}{p} \leq 2\log\log x. \] 
+    Therefore, we see that 
+    \[ \Theta_{k+1}(x) - (k+1)xL_k(x) = o\left( x(\log\log x)^k \right). \] 
+    We conclude that 
+    \[ \Theta_{k+1}(x) \sim (k+1) x(\log\log x)^k, \] 
+    which proves the claim. \hfill$\blacksquare$
+
+    From equation $\eqref{eq:4.1}$ and the claim, we have 
+    \[ \pi_k(x) \leq \frac{1}{k!} \Pi_k(x) \sim 
+    \frac{1}{(k-1)!} \frac{x}{\log x} (\log\log x)^{k-1}. \] 
+    Moreover, combining equations $\eqref{eq:4.1}$ and 
+    $\eqref{eq:4.2}$ with the claim yields 
+    \[ \pi_k(x) = \tau_k(x) + O(\Pi_{k-1}(x)) 
+    \geq \frac{1}{k!} \Pi_k(x) + O(\Pi_{k-1}(x)) 
+    \sim \frac{1}{(k-1)!} \frac{x}{\log x} (\log \log x)^{k-1}. \] 
+    In particular, we get 
+    \[ \pi_k(x) \sim \tau_k(x) \sim \frac{1}{(k-1)!} \frac{x}{\log x} 
+    (\log\log x)^{k-1}, \] 
+    which finishes the proof of the theorem. 
+\end{pf}
+
+\subsection{Summatory Functions for $\omega(n)$ and $\Omega(n)$}\label{subsec:4.2} 
+Let's now consider the averages of $\omega(n)$ and $\Omega(n)$. 
+
+\begin{thm}\label{thm:4.4}
+    We have 
+    \begin{align*}
+        \sum_{n\leq x} \omega(n) &= x\log\log x + \beta x + o(x), \\ 
+        \sum_{n\leq x} \Omega(n) &= x\log\log x + \tilde\beta x + o(x), 
+    \end{align*}
+    where $\beta$ is Merten's constant as in Theorem~\ref{thm:2.13} and 
+    \[ \tilde\beta = \beta + \sum_p \frac{1}{p(p-1)}. \] 
+\end{thm}
+\begin{pf}
+    Set $S_1 = S_1(x) = \sum_{n\leq x} \omega(n)$. Then we have 
+    \[ S_1 = \sum_{n\leq x} \sum_{p\mid n} 1 = \sum_{p\leq x} \floor*{\frac{x}{p}}. \] 
+    By Theorem~\ref{thm:2.13}, we obtain 
+    \begin{align*} 
+        S_1 &= \sum_{p\leq x} \floor*{\frac{x}{p}} \\
+        &= x \sum_{p\leq x} \frac{1}{p} + O(\pi(x)) \\
+        &= x(\log\log x + \beta + o(1)) + O(\pi(x)) \\
+        &= x\log\log x + x\beta + o(x), 
+    \end{align*}
+    where the last equality follows from the Prime Number Theorem. 
+
+    On the other hand, if we set $S_2 = S_2(x) = \sum_{n\leq x} \Omega(n)$, then 
+    \[ S_2 - S_1 = \sum_{p^m \leq x,\, m \geq 2} \floor*{\frac{x}{p^m}} 
+    = \sum_{p^m \leq x,\, m\geq 2} \frac{x}{p^m} + 
+    O \left( \sum_{p^m \leq x,\, m \geq 2} 1 \right). \] 
+    Note that $2^m \leq p^m \leq x$, so $m \leq \frac{\log x}{\log 2}$. 
+    Moreover, $p^2 \leq p^m \leq x$ implies that $p \leq x^{1/2}$. Therefore, 
+    we have 
+    \[ S_2 - S_1 = \sum_{p^m \leq x,\, m\geq 2} \frac{x}{p^m} + 
+    O(x^{1/2} \log x) = x \left( \sum_p \left( \frac{1}{p^2} + 
+    \frac{1}{p^3} + \cdots \right) - \sum_{p^m \geq x} \frac{1}{p^m} \right) 
+    + O(x^{1/2} \log x). \] 
+    Observe that 
+    \begin{align*}
+        \sum_{\substack{p^m > x \\ m \geq x}} \frac{1}{p^m} 
+        &\leq \sum_{\substack{p^m > x \\ m \geq 2 \\ 2\,\mid\,n}} \frac{1}{p^m} 
+        + \sum_{\substack{p^m > x \\ m \geq 2 \\ 2\,\nmid\,n}} \frac{1}{p^m} \\
+        &\leq \sum_{n^2 > x} \frac{1}{n^2} + \sum_{\substack{p^m > x \\ 
+        m \geq 2 \\ 2\,\mid\,m \\ p \leq \sqrt{x}}} \frac{1}{p^m} 
+        + \sum_{\substack{p^m > x \\ 
+        m \geq 2 \\ 2\,\mid\,m \\ p > \sqrt{x}}} \frac{1}{p^m}. 
+    \end{align*}
+    Notice that if $p \leq \sqrt{x}$, then since $p^m > x$, we get 
+    $p^{m-1} > x/p > \sqrt{x}$. On the other hand, if $p > \sqrt{x}$, then 
+    $p^{m-1} > \sqrt{x}$. Hence, we get 
+    \begin{align*} 
+        \sum_{\substack{p^m > x \\ m \geq 2}} \frac{1}{p^m} 
+        &\leq \sum_{n^2 > x} \frac{1}{n^2} + 2 \sum_{\substack{p^{m-1} > \sqrt{x}
+        \\ m \geq 2 \\ 2\,\mid\,m}} \frac{1}{p^{m-1}} \\
+        &\leq \sum_{n^2 > x} \frac{1}{n^2} + 2 \sum_{m^2 > \sqrt{x}} \frac{1}{m^2} \\ 
+        &\leq 3 \sum_{k > \sqrt[4]{x}} \frac{1}{k^2} = O\left( \frac{1}{\sqrt[4]{x}} \right). 
+    \end{align*}
+    Therefore, we have 
+    \[ S_2 - S_1 = x \left( \sum_p \frac{1}{p(p-1)} + o(1) \right) 
+    + O(x^{1/2} \log x) = x \sum_p \frac{1}{p(p-1)} + o(x). \] 
+    Together with our estimate of $S_1$, we see that 
+    \[ S_2 = x\log\log x = x \left( \beta + \sum_p \frac{1}{p(p-1)} \right) 
+    + o(x). \qedhere \] 
+\end{pf}

@@ -1,11 +1,10 @@
-\newpage 
-\section{Riemann's Zeta Function and the Prime Number Theorem}
+\section{Riemann's Zeta Function and the Prime Number Theorem}\label{sec:3}
 
-\subsection{The Riemann Zeta Function}
+\subsection{The Riemann Zeta Function}\label{subsec:3.1}
 In order to prove the Prime Number Theorem, we need to 
 first introduce the Riemann zeta function. 
 
-\begin{defn}
+\begin{defn}\label{def:3.1}
 For $s \in \C$ with $\Re(s) > 1$, we define the 
 {\bf Riemann zeta function} by 
 \[ \zeta(s) := \sum_{n=1}^\infty \frac1{n^s}. \]
@@ -21,7 +20,7 @@ if and only if $\sum_n |a_n|$ converges. We have the
 {\bf Euler product representation} of $\zeta(s)$ given 
 in the following lemma. 
 
-\begin{lemma}[Euler product]
+\begin{lemma}[Euler product]\label{lemma:3.2}
 For $s \in \C$ with $\Re(s) > 1$, we have 
 \[ \prod_p \left( 1 - \frac1{p^s} \right)^{\!-1} = 
 \sum_{n=1}^\infty \frac1{n^s}. \]
@@ -38,7 +37,7 @@ integer can be expressed uniquely as a product of primes,
 so the identity holds.
 \end{pf}
 
-\begin{thm}
+\begin{thm}\label{thm:3.3}
 $\zeta(s)$ can be analytically continued to $s \in \C$ with 
 $\Re(s) > 0$ and $s \neq 1$. It is analytic except 
 at the point $s = 1$ where it has a simple pole with residue
@@ -72,7 +71,7 @@ to the region $\{s \in \C : \Re(s) > 0\}$. Finally, note that
 $\frac{s}{s-1}$ has a simple pole with residue $1$ at $s = 1$.
 \end{pf}
 
-\begin{thm}
+\begin{thm}\label{thm:3.4}
 $\zeta(s)$ has no zeroes in the region $\{s \in \C : 
 \Re(s) \geq 1\}$. 
 \end{thm}
@@ -113,7 +112,7 @@ Therefore, we have
 In particular, we see that 
 \begin{equation}
     |\zeta(\sigma)|^3 \cdot |\zeta(\sigma + it)|^4 
-\cdot |\zeta(\sigma+2it)| \geq 1
+    \cdot |\zeta(\sigma+2it)| \geq 1 \label{eq:3.1}
 \end{equation} 
 for $\sigma > 1$ and $t \in \R$. 
 
@@ -135,14 +134,14 @@ O((\sigma - 1)^{-3}) \cdot O((\sigma - 1)^4) \cdot O(1)
 = O(\sigma - 1). \]
 Thus, $|\zeta(s)|^3 \cdot |\zeta(\sigma+it)|^4 \cdot 
 |\zeta(\sigma + 2it)|$ tends to $0$ as $\sigma \to 1^+$. 
-But this contradicts that the lower bound we found in (3.1), 
+But this contradicts that the lower bound we found in (\eqref{eq:3.1}), 
 so we conclude that $\zeta(s)$ cannot have a zero when 
 $\Re(s) = 1$. 
 \end{pf}
 
-\subsection{Newman's Theorem}
+\subsection{Newman's Theorem}\label{subsec:3.2}
 
-\begin{thm}[Newman]
+\begin{thm}[Newman]\label{thm:3.5}
 Let $\{a_n\}_{n=1}^\infty$ be a sequence of complex numbers with $|a_n| \leq 1$ for all $n \geq 1$. 
 Consider the series $\sum_{n=1}^\infty a_n/n^s$, which converges to an analytic function 
 $F(s)$ for $\Re(s) > 1$. If $F(s)$ can be analytically continued to $\Re(s) \geq 1$, then 
@@ -168,7 +167,7 @@ $F(0+w) N^0 = F(w)$. By Cauchy's residue theorem, we obtain
 \begin{align*}
     2\pi i F(w) &= \int_\Gamma F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z \\
     &= \int_A F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z + 
-    \int_B F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z. \tag{3.2} 
+    \int_B F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z. \tag{3.2}\label{eq:3.2} 
 \end{align*}
 Observe that $F(z+w)$ is equal to its series on $A$. We split the series as 
 \[ S_N(z+w) = \sum_{n=1}^N \frac{a_n}{n^{z+w}} \]
@@ -186,9 +185,13 @@ Consider the second integral above. Using the change of variables $z \to -z$, we
 = \int_A S_N(-z+w) N^{-z} \left( \frac1z + \frac z{R^2} \right) \dd z. \]
 Thus, we obtain 
 \[ 2\pi i S_N(w) = \int_A \left( S_N(z+w) N^z + S_N(-z + w) N^{-z} \right) \left( \frac1z + \frac{z}{R^2} \right)\dd z. \]
-Combining the above equality with $(3.2)$, we have 
+Combining the above equality with $\eqref{eq:3.2}$, we have 
 \begin{align*}
-    2\pi i(F(w) - S_N(w)) &= \int_A \left( R_N(z+w) N^z - S_N(-z+w) N^{-z} \right) \left( \frac1z + \frac z{R^2} \right) \dd z\\ &\hspace{1.5cm} + \int_B F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z. \tag{3.3}
+    2\pi i(F(w) - S_N(w)) 
+    &= \int_A \left( R_N(z+w) N^z - S_N(-z+w) N^{-z} \right) 
+    \left( \frac1z + \frac z{R^2} \right) \dd z \\ 
+    &\hspace{1.5cm} + \int_B F(z+w) N^z \left( \frac1z + \frac z{R^2} \right)\dd z. 
+    \tag{3.3}\label{eq:3.3}
 \end{align*}  
 Our goal is to show that $S_N(w)$ converges to $F(w)$ as $N \to \infty$. Write $z = x + iy$
 where $x, y \in \R$. Then for $z \in A$, we have $x > 0$ and $|z| = R$, so 
@@ -222,7 +225,7 @@ Since $|F(z+w)| \leq M$ for $z \in B$, we have
     &\leq \frac{4MR}{\delta N^\delta} + \frac{4M\delta}{R^2} \left( \frac1{(\log N)^2} - \frac{\delta+1}{N^\delta \log N} \right) \\
     &\leq \frac{4MR}{\delta N^\delta} + \frac{4M\delta}{R^2(\log N)^2}. 
 \end{align*}
-Combining this estimate with $(3.2)$ and $(3.3)$ yields 
+Combining this estimate with $\eqref{eq:3.2}$ and $\eqref{eq:3.3}$ yields 
 \[ |2\pi i(F(w) - S_N(w))| \leq \frac{4\pi}R + \frac{2\pi}N + \frac{4MR}{\delta N^\delta} 
 + \frac{4M\delta}{R^2(\log N)^2}. \] 
 That is, we have 
@@ -232,13 +235,13 @@ Given $\eps > 0$, choose $R = 3/\eps$. Then for sufficiently large $N$, we have
 This implies that $S_N(w) \to F(w)$ as $N \to \infty$, which completes the proof. 
 \end{pf}
 
-\subsection{Revisiting the M\"obius Function}
+\subsection{Revisiting the M\"obius Function}\label{subsec:3.3}
 Recall that we defined the M\"obius function $\mu : \N \to \{-1, 0, 1\}$ by 
 \[ \mu(n) = \begin{cases} 1 & \text{if } n = 1, \\ 0 & \text{if $n$ is not squarefree,} \\ (-1)^r & \text{if $n$ is the product of $r$ distinct primes.} \end{cases} \]
 We will show on Homework 2 that for $\Re(s) > 1$, we have 
 \[ \frac1{\zeta(s)} = \prod_p \left( 1 - \frac1{p^s} \right) = \sum_{n=1}^\infty \frac{\mu(n)}{n^s}. \]
 
-\begin{thm}
+\begin{thm}\label{thm:3.6}
 We have 
 \[ \sum_{n=1}^\infty \frac{\mu(n)}n = 0. \]
 \end{thm}
@@ -252,7 +255,7 @@ converges to $1/\zeta(s)$ for $\Re(s) \geq 1$. In particular, it converges at $s
 $\zeta(s)$ has a simple pole at $s = 1$, so $1/\zeta(1) = 0$. 
 \end{pf}
 
-\begin{thm}
+\begin{thm}\label{thm:3.7}
 We have 
 \[ \sum_{n\leq x} \mu(n) = o(x). \]
 \end{thm}
@@ -261,21 +264,21 @@ Applying Abel's summation formula with $a_n = \mu(n) / n $ and $f(x) = x$, we ob
 \[ \sum_{n\leq x} \mu(n) = A(x)x - \int_1^x A(u)\dd u, \]
 where we hae 
 \[ A(t) = \sum_{n\leq t} \frac{\mu(n)}n. \]
-By Theorem 3.5, we know that $A(t) = o(1)$. It follows that $A(x) x = o(x)$ and 
+By Theorem~\ref{thm:3.5}, we know that $A(t) = o(1)$. It follows that $A(x) x = o(x)$ and 
 \[ \int_1^x A(u)\dd u = o(x), \]
 so the result holds. 
 \end{pf}
 
-\subsection{Divisor Function}
+\subsection{Divisor Function}\label{subsec:3.4}
 
-\begin{defn}
+\begin{defn}\label{def:3.8}
 For a positive integer $n \in \N$, let $d(n)$ be the number of positive integers that 
 divide $n$. 
 \end{defn}
 
 For example, we have $d(1) = 1$, $d(4) = 3$, and $d(p) = 2$ for all primes $p$. 
 
-\begin{thm}
+\begin{thm}\label{thm:3.9}
 We have 
 \[ \sum_{m=1}^n d(m) = \sum_{m=1}^n \floor*{\frac nm} = n\log n + (2\gamma - 1)n + O(n^{1/2}). \]
 where $\gamma$ denotes Euler's constant. 
@@ -309,7 +312,7 @@ $|D_{n,3}| = \floor{\sqrt n}$, so we obtain
     &= 2 \sum_{x=1}^{\floor{\sqrt n}} \left( \floor*{\frac nx} - \floor x \right) + \floor{\sqrt n} \\
     &= 2 \sum_{x=1}^{\floor{\sqrt n}} \left( \frac nx - x + O(1) \right) + \floor{\sqrt n}. 
 \end{align*}
-By Theorem 2.10, we see that 
+By Theorem~\ref{thm:2.10}, we see that 
 \[ \sum_{x=1}^n \floor*{\frac nx} = 2n \left( \log\floor{\sqrt n} + \gamma + O\left( \frac1{\sqrt n} \right) \right) - \left( n + O(\sqrt n) \right) + O(\sqrt n). \]
 Note that if we use the fact that $\log\floor{\sqrt n} = \log \sqrt n + O(1)$, then the resulting 
 error term $O(n)$ will be too large. Therefore, we need a finer estimate. Indeed, since 
@@ -323,29 +326,29 @@ Combining this with the previous equality gives
 \[ \sum_{x=1}^n \floor*{\frac nx} = n\log n + (2\gamma - 1)n + O(\sqrt n). \qedhere \]
 \end{pf}
 
-\subsection{The Prime Number Theorem}
+\subsection{The Prime Number Theorem}\label{subsec:3.5}
 We now have everything we need to prove the Prime Number Theorem. 
 
-\begin{thm}[Prime Number Theorem] 
+\begin{thm}[Prime Number Theorem]\label{thm:3.10}
     We have 
     \[ \pi(x) \sim \frac{x}{\log x}. \] 
 \end{thm}
 \begin{pf}
-    In Theorem 2.7, we showed that 
+    In Theorem~\ref{thm:2.7}, we showed that 
     \[ \pi(x) \sim \frac{\psi(x)}{\log x}. \] 
     Therefore, it suffices to show that $\psi(x) \sim x$. Define the function 
     \[ F(x) = \sum_{n\leq x} \left( \psi\left( \frac xn \right) - \floor*{\frac xn}
     + 2\gamma \right), \] 
     where $\gamma$ denotes Euler's constant. By the M\"obius inversion formula 
-    (Proposition 2.5), we have 
+    (Proposition~\ref{prop:2.5}), we have 
     \[ \psi(x) - \floor{x} + 2\gamma = \sum_{n\leq x} \mu(n) F\left( \frac xn \right). \] 
     In particular, we get 
     \[ \psi(x) = x + O(1) + \sum_{n \leq x} \mu(n) F\left( \frac xn \right). \] 
     Now, it is enough to show that $\sum_{n\leq x} \mu(n) F(x/n) = o(x)$. First, 
     we will estimate $F(x)$. Observe that 
     \[ F(x) = \sum_{n\leq x} \psi\left( \frac xn \right) - \sum_{n \leq x} 
-    \floor*{\frac xn} + 2\gamma\floor{x}. \tag{3.4} \]
-    Looking at the first sum in $(3.4)$, we have 
+    \floor*{\frac xn} + 2\gamma\floor{x}. \tag{3.4}\label{eq:3.4} \]
+    Looking at the first sum in $\eqref{eq:3.4}$, we have 
     \begin{align*}
         \sum_{n\leq x} \psi\left( \frac xn \right) 
         &= \sum_{n \leq x} \sum_{m \leq \frac xn} \Lambda(m) \\
@@ -356,11 +359,11 @@ We now have everything we need to prove the Prime Number Theorem.
         + \cdots + \floor*{\frac x{p^k}} \right) \quad \text{(where $p^k\;\|\;\floor{x}$)} \\
         &= \log(\floor{x}!) = \sum_{n \leq x} \log n. 
     \end{align*}
-    In the proof of Theorem 2.11, we showed that 
+    In the proof of Theorem~\ref{thm:2.11}, we showed that 
     \[ \sum_{n\leq x} \log n = x\log x - x + O(\log x). \] 
     Hence, we obtain 
-    \[ \sum_{n\leq x} \psi\left( \frac xn \right) = x\log x - x + O(\log x). \tag{3.5} \] 
-    Moreover, by Theorem 3.9, we have 
+    \[ \sum_{n\leq x} \psi\left( \frac xn \right) = x\log x - x + O(\log x). \tag{3.5}\label{eq:3.5} \] 
+    Moreover, by Theorem~\ref{thm:3.9}, we have 
     \[ \sum_{n=1}^{\floor{x}} \floor*{\frac{\floor x}n} = \floor{x}\log\floor{x} 
     + (2\gamma - 1)\floor{x} + O(x^{1/2}). \] 
     For all $y \in \R$, notice that $\floor{y} \leq y \leq \floor{y}+1$. In particular, 
@@ -370,8 +373,8 @@ We now have everything we need to prove the Prime Number Theorem.
     \sum_{n=1}^{\floor{x}+1} \floor*{\frac{\floor{x}+1}n}, \] 
     and it follows that 
     \[ \sum_{n=1}^{\floor{x}} \floor*{\frac{x}{n}} = x\log x + (2\gamma - 1) 
-    + O(x^{1/2}). \tag{3.6} \] 
-    Combining equations $(3.4)$, $(3.5)$, and $(3.6)$ gives 
+    + O(x^{1/2}). \tag{3.6}\label{eq:3.6} \] 
+    Combining equations $\eqref{eq:3.4}$, $\eqref{eq:3.5}$, and $\eqref{eq:3.6}$ gives 
     \[ F(x) = (x\log x - x + O(\log x)) - (x\log x + (2\gamma-1)x + O(x^{1/2})) 
     + (2\gamma x + O(1)) = O(x^{1/2}). \] 
     Therefore, there exists a positive constant $c > 0$ such that 
@@ -383,7 +386,7 @@ We now have everything we need to prove the Prime Number Theorem.
         &\leq \sum_{n\leq \frac xt} c\left( \frac xn \right)^{\!1/2} \\
         &\leq cx^{1/2} \left( 1 + \int_1^{x/t} \frac{1}{u^{1/2}}\dd u \right) \\
         &= cx^{1/2} \left(1 + 2 \left( \frac xt \right)^{\!1/2} - 2 \right) \\ 
-        &\leq 2 \cdot \frac{cx}{t^{1/2}}. \tag{3.7}
+        &\leq 2 \cdot \frac{cx}{t^{1/2}}. \tag{3.7}\label{eq:3.7}
     \end{align*}
     Observe that $F$ is a step function. That is, if $a$ is an integer and 
     $a \leq x < a + 1$, then $F(x) = F(a)$. Therefore, we have 
@@ -407,7 +410,7 @@ We now have everything we need to prove the Prime Number Theorem.
     so we obtain 
     \[ \left| \sum_{\frac xt < n \leq x} \mu(n) F\left( \frac xn \right) \right| 
     = o(t^{3/2}x). \] 
-    By Theorem 3.7, we have $\sum_{n\leq x} \mu(n) = o(x)$. Hence, 
+    By Theorem~\ref{thm:3.7}, we have $\sum_{n\leq x} \mu(n) = o(x)$. Hence, 
     for any $\eps > 0$, we can find sufficiently large $x$ such that 
     \[ -\eps x \leq \sum_{n\leq x} \mu(n) \leq \eps x. \] 
     In particular, when $x$ is sufficiently large, we get 
@@ -416,9 +419,9 @@ We now have everything we need to prove the Prime Number Theorem.
     \leq \frac{\eps x}{i-1} + \frac{\eps x}{i}. \] 
     For any given $\eps > 0$, choose $t = t(\eps)$ such that 
     \[ \frac{2c}{t^{1/2}} < \frac{\eps}2. \] 
-    By equation $(3.7)$, we have 
+    By equation $\eqref{eq:3.7}$, we have 
     \[ \left| \sum_{n\leq \frac{x}{t}} \mu(n) F\left( \frac xn \right) \right| 
-    \leq 2 \cdot \frac{cx}{t^{1/2}} < \frac{\eps}2 x. \tag{3.8} \] 
+    \leq 2 \cdot \frac{cx}{t^{1/2}} < \frac{\eps}2 x. \tag{3.8}\label{eq:3.8} \] 
     For fixed $\eps > 0$ and $t$ as above, we can choose $x$ sufficiently large 
     so that $o(xt^{3/2}) \leq \eps x/2$. Indeed, we have 
     $2c/t^{1/2} < \eps/2$ if and only if $t > (4c)^2/\eps^2$. In particular, 
@@ -429,13 +432,13 @@ We now have everything we need to prove the Prime Number Theorem.
     \[ o(xt^{3/2}) \leq \frac{\eps^4}{2A^3} x \cdot A^3\eps^{-3} = \frac{\eps}2 x. \] 
     It follows that 
     \[ \left| \sum_{\frac xt < n \leq x} \mu(n) F\left( \frac xn \right) \right| < 
-    \frac{\eps}2. \tag{3.9} \] 
-    Combining inequalities $(3.8)$ and $(3.9)$ yields 
+    \frac{\eps}2. \tag{3.9}\label{eq:3.9} \] 
+    Combining inequalities $\eqref{eq:3.8}$ and $\eqref{eq:3.9}$ yields 
     \[ \left| \sum_{n\leq x} \mu(n) F\left( \frac xn \right) \right| = o(x), \] 
     which completes the proof. 
 \end{pf}
 
-\begin{remark}~
+\begin{remark}\label{remark:3.11}~
     \begin{enumerate}[(1)]
         \item In 1896, Hadamard and de la Vall\'ee Poussin proved the Prime 
         Number Theorem independently. Consider the logarithmic integral 
