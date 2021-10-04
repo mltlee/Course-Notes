@@ -81,9 +81,10 @@ Let $N$ be a positive composite integer with a prime factor $p$ such that
 where $e_i \geq 1$ is an integer and $p_i$ is prime for all $i = 1, \dots, m$, and 
 \[ p_1^{e_1} < p_2^{e_2} < \cdots < p_m^{e_m} \leq B \] 
 for some integer $B \in \Z$. Now, let $a \in \Z$. If we are lucky and find that 
-$\gcd(a, p) = p$, then we are already done finding a nontrivial factor of $N$. 
-Therefore, we assume that $\gcd(a, p) = 1$. The above conditions imply that 
-$(p-1) \mid B!$ and it follows from Fermat's little theorem that 
+$\gcd(a, N) = p$, then we are already done finding a nontrivial factor of $N$. 
+Therefore, we assume that $\gcd(a, N) = 1$, and hence $\gcd(a, p) = 1$. 
+The above conditions imply that $(p-1) \mid B!$ and it follows from Fermat's 
+little theorem that 
 \[ a^{B!} \equiv 1 \pmod p, \] 
 or equivalently $p \mid (a^{B!} - 1)$, and that $\gcd(a^{B!} - 1, N) > 1$. 
 This gives us some hope of finding a nontrivial factor of $N$. One 
