@@ -174,3 +174,160 @@ algorithm would fail to output a nontrivial factor of $N$ in Example 4.3?
     How do you compare the efficiency of Pollard's $p-1$ algorithm to the 
     naive strategy in this case?
 \end{exercise}
+
+\subsection{Random Squares Algorithm}
+Consider the $160$-bit integer 
+\[ N = 922610576830596284853741260709758510725457815261, \] 
+which has been carefully generated so that Pollard's $p-1$ algorithm fails to 
+find a nontrivial factor of $N$. Suppose that we are lucky and discover an 
+integer 
+\[ x = 197192464917820788181655076611186929519317134193 \] 
+whose square modulo $N$ is a perfect square over the integers; indeed, we can 
+write 
+\[ x^2 \equiv 123160136679264019196490652341114889 \equiv 
+31^2 \cdot 223^2 \cdot 239^2 \cdot 587^2 \cdot 613^2 \cdot 719^2 \cdot 821^2
+\pmod N. \] 
+Using the difference of squares formula, we can set 
+$y = 31 \cdot 223 \cdot 239 \cdot 587 \cdot 613 \cdot 719 \cdot 821$ 
+and rewrite the above equality as 
+\[ x^2 - y^2 \equiv (x-y)(x+y) \equiv 0 \pmod N. \] 
+In other words, we have $N \mid (x-y)(x+y)$, and there is a good chance 
+for $\gcd(x-y, N)$ to yield a nontrivial factor of $N$. We can easily check 
+that this is the case, and we recover 
+\[ p = \gcd(x-y, N) = 815825200225639959767099 \] 
+as one of the (prime) factors of $N$. We can also verify that 
+$q = N/p = 1130892471298290066461639$ is prime, so we can factor 
+\[ N = pq = 815825200225639959767099 \cdot 1130892471298290066461639 \] 
+as the product of two prime numbers. 
+
+In factoring $N$ above, we were lucky several times. 
+\begin{enumerate}[(1)]
+    \item In particular, $x^2 \pmod N$ was a perfect square. We will see later 
+    that finding such an $x$ is closely related to discovering numbers 
+    $x_i \in \Z$ such that $x_i^2 \pmod N$ is a $B$-smooth integer; that is, 
+    all the prme divisors of $x_i^2 \pmod N$ are bounded by $B$. We see that 
+    there is a tradeoff here: the probability that a uniformly and randomly 
+    chosen number in $\Z_N$ is $B$-smooth increases as $B$ gets larger, 
+    but verifying that a number is $B$-smooth and combining $B$-smooth 
+    integers to get our desired $x$ becomes more difficult.
+    \item After identifying $x$ and $y$ such that $x^2 \equiv y^2 \pmod N$, 
+    we saw that $\gcd(x-y, N)$ corresponded to a nontrivial factor of $N$. 
+    In our case, $N$ was an RSA modulus, and by the Chinese remainder theorem, 
+    there are actually $4$ integers $X$, namely $X \in \{x, N-x, y, N-y\}$, 
+    that satisfy $x^2 \equiv y^2 \pmod N$; only two of these yield 
+    nontrivial factors of $N$. 
+\end{enumerate}
+
+\begin{exercise}
+    Suppose that $N = pq$ for distinct primes $p$ and $q$. Moreover, suppose 
+    that $x^2 \equiv y^2 \pmod N$ and $\gcd(x-y, N) = p$ as above. Can you 
+    determine $\gcd(X-y, N)$ for $X \in \{N-x, y, N-y\}$?
+\end{exercise}
+
+Before we describe the random squares algorithm, let's build some 
+intuition about it. First, even though factoring is a hard problem in 
+general, notice that we can efficiently factor $B$-smooth integers if 
+$B$ is relatively small. For an integer $B \geq 2$, define the set 
+$\FB(B)$ to be the set of all primes at most $B$. That is, 
+\[ \FB(B) := \{p_i : p_i \leq B,\, p_i \text{prime},\, i = 1, \dots, \pi(B)\}. \] 
+We call $\FB(B)$ the {\bf factor basis} of $B$. For example, we have 
+$\FB(3) = \FB(4) = \{2, 3\}$ with $\pi(3) = \pi(4) = 2$, and 
+$\FB(32) = \{2, 3, 5, 7, 11, 13, 17, 19, 23, 29\}$ with $\pi(32) = 10$. 
+Now, given an $\ell$-bit integer $Z$, we can conclude whether or not 
+$Z$ is $B$-smooth after performing at most $\ell \cdot \pi(B)$ long divisions. 
+Moreover, in the case that $Z$ is $B$-smooth, keeping track of the 
+(repeated) prime divisors of $Z$ in $\FB(B)$ reveals the factorization of 
+$Z$ with respect to $\FB(B)$. 
+
+Clearly, the overall complexity of the random squared factoring algorithm 
+will depend heavily on the choice of $B$. We will explicitly analyze this later. 
+For now, let's assume that we have fixed some $B$ such that there is a reasonable 
+chance for randomly and uniformly chosen integers $\Z_N$ to be $B$-smooth. 
+We will describe how to construct an integer $x \in \Z_N$ such that 
+$x^2 \equiv y^2 \pmod N$ for some $y$. We first select $x_i \in \Z_N$ 
+uniformly at random, until $x_i^2 \pmod N$ is $B$-smooth. Then, we can write 
+\[ x_i^2 \text{ (mod $N$)} = \prod_{j=1}^{\pi(B)} p_j^{e_{ij}} \] 
+where each $e_{ij} \geq 0$, and we associate each $i$ with a row vector 
+\[ e_i = [e_{i1}, e_{i2}, \dots, e_{i\pi(B)}]. \] 
+We define a $T \times \pi(B)$ matrix of exponents $M$, where the $i$-th 
+row of $M$ is $e_i$. We also define $M_2$ to be the $T \times \pi(B)$ 
+boolean matrix obtained from reducing every entry in $M$ modulo $2$. 
+Note that for sufficiently large $T$, we will find a subset $I \subseteq 
+\{1, \dots, T\}$ of indices such that the rows of $M_2$ corresponding to 
+$I$ are linearly dependent modulo $2$; that is, 
+\[ \sum_{i \in I} e_i \equiv [0, 0, \dots, 0] \pmod 2, \] 
+or equivalently, 
+\[ \sum_{i \in I} e_i = 2 \cdot [v_1, v_2, \dots, v_{\pi(B)}] \] 
+for some integers $v_1, \dots, v_{\pi(B)} \geq 0$. By the definition of 
+$e_i$, we conclude that 
+\[ \prod_{i \in I} x_i^2 \equiv 
+\left( \prod_{j=1}^{\pi(B)} p_j^{v_j} \right)^{\!2} \pmod N. \] 
+In particular, setting $x = \prod_{i \in I} x_i$ and 
+$y = \prod_{j=1}^{\pi(B)} p_j^{v_j}$ gives us $x^2 \equiv y^2 \pmod N$. 
+
+\begin{exercise}
+    Estimate how large $T$ should be so that the rows of $M_2$ are linearly 
+    dependent. 
+\end{exercise}
+
+\begin{exmp}
+    Let $N = 765481$ be a $20$-bit RSA modulus. We set $B = 32$, so we have 
+    $\pi(B) = 10$ and 
+    \[ \FB(B) = \{2, 3, 5, 7, 11, 13, 17, 19, 23, 29\}. \] 
+    We randomly select values 
+    \[ x_1 = 242630,\
+    x_2 = 437699,\
+    x_3 = 608349,\
+    x_4 = 143044,\
+    x_5 = 673821,\
+    x_6 = 487625,\
+    x_7 = 311049, \] 
+    and we determine that 
+    \begin{align*}
+        M &= \begin{pmatrix}
+            0&0&1&1&0&0&1&0&0&0\\
+            0&0&0&1&1&0&2&1&0&0\\
+            1&3&4&0&0&0&0&1&0&0\\
+            1&0&0&0&1&0&0&1&1&1\\
+            0&3&3&1&0&0&1&0&0&0\\
+            3&0&4&0&2&0&0&0&0&0\\
+            4&1&0&0&0&0&0&0&0&2
+        \end{pmatrix}, &  
+        M_2 &= \begin{pmatrix}
+            0&0&1&1&0&0&1&0&0&0\\
+            0&0&0&1&1&0&0&1&0&0\\
+            1&1&0&0&0&0&0&1&0&0\\
+            1&0&0&0&1&0&0&1&1&1\\
+            0&1&1&1&0&0&1&0&0&0\\
+            1&0&0&0&0&0&0&0&0&0\\
+            0&1&0&0&0&0&0&0&0&0
+        \end{pmatrix}. 
+    \end{align*}
+    This yields a linearly dependent set of row vectors in $M_2$ with 
+    indices $I = \{1, 5, 7\}$. More precisely, we have 
+    \[ \sum_{i\in\{1, 5, 7\}} e_i = [4, 4, 4, 2, 0, 0, 2, 0, 0, 2] 
+    = 2 \cdot [2, 2, 2, 1, 0, 0, 1, 0, 0, 1]. \] 
+    Therefore, we set 
+    \begin{align*} 
+        x &= x_1x_5x_7 \text{ (mod $N$)} = 654980, \\ 
+        y &= 2^2 \cdot 3^2 \cdot 5^2 \cdot 7^1 \cdot 11^0 \cdot 13^0 
+        \cdot 17^1 \cdot 19^0 \cdot 23^0 \cdot 29^1 \text{ (mod $N$)} 
+        = 43976, 
+    \end{align*}
+    which satisfy $x^2 \equiv y^2 \pmod N$. Finally, we verify that 
+    $p = \gcd(x-y, N) = \gcd(611004, 765481) = 863$ is a prime divisor of $N$. 
+    Since $N$ is given to be an RSA modulus, we find that $q = N/p = 887$ is 
+    the second prime factor of $N = pq$. 
+\end{exmp}
+
+\begin{remark}~
+    \begin{enumerate}[(1)]
+        \item A linearly dependent subset of rows in $M_2$ can be identified 
+        using linear algebra. 
+        \item We noted that the $x_i \in \Z_N$ were chosen at random. In the 
+        previous example, we chose them such that $x_i \geq \sqrt N$ 
+        in order to perform at least one modular reduction when computing 
+        $x_i^2 \pmod N$, and to avoid trivial relations. In fact, there 
+        are better ways to choose the $x_i \in \Z_N$, which we will discuss later. 
+    \end{enumerate}
+\end{remark}
