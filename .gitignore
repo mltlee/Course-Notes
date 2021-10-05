@@ -7,5 +7,11 @@
 *.synctex.gz
 *.toc
 
+# bib auxiliary files
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+
 # python
 __pycache__

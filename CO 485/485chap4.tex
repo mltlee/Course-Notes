@@ -99,7 +99,7 @@ Since all of the exponents are bounded by $B$, each modular exponentiation
 requires at most $\log_2 B$ (modular) multiplications and $\log_2 B$ 
 (modular) squarings. Finally, using bit-level computational complexity 
 estimates $O((\log_2 N)^2)$ and $O((\log_2 N)^3)$ for modular multiplication 
-and greatest common divisor finding operations respectively, we estimate 
+and GCD finding operations respectively, we estimate 
 the number of bit operations for computing $\gcd(a^{B!}-1, N)$ to be 
 $O(B\log_2 B (\log_2 N)^2 + (\log_2 N)^3)$. 
 
@@ -331,3 +331,123 @@ $y = \prod_{j=1}^{\pi(B)} p_j^{v_j}$ gives us $x^2 \equiv y^2 \pmod N$.
         are better ways to choose the $x_i \in \Z_N$, which we will discuss later. 
     \end{enumerate}
 \end{remark}
+
+Now, we're ready to describe the random squares algorithm and analyze it more 
+formally. 
+
+\begin{algo}[Random Squares Algorithm]~
+
+    {\bf Input:} A odd positive integer $N \geq 3$ and a positive integer $B$. 
+    
+    {\bf Output:} A nontrivial factor of $N$, or a failure message. \vspace{0.5em}
+    
+    \begin{algorithmic}[1]
+        \State Set $\FB = \{p_1, p_2, \dots, p_{\pi(B)}\}$ as the factor 
+        basis of all primes at most $B$. 
+        \State Set an empty matrix $M$, which will eventually be a $T \times 
+        \pi(B)$ matrix. 
+        \State Set $i \gets 1$ and $T \gets \pi(B) + 1$. 
+        \State 
+        \State \textsc{Relation generation stage.} 
+        \Indent
+            \State Select $\sqrt{N} \leq x_i \leq N-1$ uniformly at random. 
+            \If{\textbf{$x_i^2 \pmod N$ is $B$-smooth}}
+                \State Write $x_i^2 \pmod N = \prod_{j=1}^{\pi(B)} p_j^{e_{ij}}$ 
+                for some $e_{ij} \geq 0$. 
+                \State Set $e_i = [e_{i1}, e_{i2}, \dots, e_{i\pi(B)}]$ and append 
+                $e_i$ as the $i$-th row of $M$.
+                \State $i \gets i+1$. 
+            \EndIf 
+            \If{\textbf{$M$ has reached $T$ rows}} 
+                \State Exit the relation generation stage. 
+            \Else
+                \State Go back to line 5. 
+            \EndIf
+        \EndIndent 
+        \State 
+        \State \textsc{Linear algebra stage.} 
+        \Indent 
+            \State Compute $M_2 = M \pmod 2$. 
+            \State Use linear algebra to find $I \subseteq \{1, \dots, T\}$ 
+            so the rows of $M_2$ corresponding to $I$ are linearly 
+            dependent. 
+            \State Determine integers $v_1, \dots, v_{\pi(B)} \geq 0$ such that 
+            $\sum_{i \in I} e_i = 2 \cdot [v_1, v_2, \dots, v_{\pi(B)}]$. 
+            \State Set $x = \prod_{i\in I} x_i$ and $y = \prod_{j=1}^{\pi(B)} 
+            p_j^{v_j}$. 
+        \EndIndent
+        \State 
+        \State \textsc{Factor finding stage.} 
+        \Indent 
+            \State Compute $n = \gcd(x-y, N)$. 
+            \If{$1 < n < N$}
+                \State Output ``$n$ is a nontrivial factor of $N$''.
+            \Else 
+                \State Output ``Failed to find a nontrivial factor of $N$''. 
+            \EndIf 
+        \EndIndent
+    \end{algorithmic}
+\end{algo}
+
+In order to understand the computational complexity of the random squares 
+algorithm, we will analyze the relation generation stage and linear algebra 
+stage separately. 
+
+{\bf Relation generation stage.} Let $\Psi(N, B)$ denote the number of 
+$B$-smooth integers in $[1, N]$. In our analysis, we will assume that the 
+probability of a randomly and uniformly chosen integer in $[1, N]$ being 
+$B$-smooth is $\Psi(N, B)/N$. In \cite{CANFIELD19831}, it was discovered that 
+\[ \Psi(N,B)/N \approx 1/u^u, \] 
+where $u = \ln N/\ln B$. This means that we need to try approximately $u^u$ 
+times before $x_i^2 \pmod N$ is $B$-smooth in the relation generation stage. 
+As we discussed before, we can check whether an integer is $B$-smooth or 
+not after performing at most $\pi(B) (\log_2 N)$ long divisions, or equivalently, 
+$\pi(B) (\log_2 N)^3$ bit operations. Therefore, the complexity of generating 
+a single relation is about $u^u \pi(B) (\log_2 B)^3$. Since we need to generate 
+$T \approx \pi(B)$ relations, the complexity of the relation generation stage 
+altogether is 
+\[ u^u \pi(B)^2 (\log_2 N)^3. \] 
+{\bf Linear algebra stage.} Given a $T \times \pi(B)$ matrix $M$, the boolean 
+matrix $M_2 = M \pmod 2$ can be determined by checking the last bit of the 
+entries of $M$. Therefore, we estimate the cost of this step to be $\pi(B) 
+\cdot T$ bit operations. Then, a linearly dependent subset of rows in $M_2$ 
+can be determined by running the Gaussin elimination method in $\Z_2$. 
+For each column in $M_2$, we perform at most $T$ binary vector additions 
+of dimension $\pi(B)$, or equivalently, $\pi(B) \cdot T$ bit operations. 
+Since we have $\pi(B)$ columns to trace and $T \approx \pi(B)$, we estimate 
+the bit-level complexity of the linear algebra stage to be 
+\[ \pi(B)^2 + \pi(B)^3. \] 
+Finally, the factor finding stage requires a GCD computation whose bit-level 
+complexity can be estimated as $(\log_2 N)^3$. The overall complexity of the 
+random squares algorithm is thus 
+\[ u^u \pi(B)^2 (\log_2 N)^3 + \pi(B)^2 + \pi(B)^3 + (\log_2 N)^3 
+\leq 4u^u B^3 (\log_2 N)^3. \] 
+We focus our attention towards minimizing the function $u^u B^3$. The calculus 
+details of optimizing this function are quite tedious; let's take a shortcut 
+and try 
+\[ \ln B = c\sqrt{\ln N \ln\ln N}. \] 
+for some constant $c$. Then $B = \exp(c\sqrt{\ln N \ln\ln N})$, which implies that 
+\[ u = \frac{\ln N}{\ln B} = \frac{\ln N}{c\sqrt{\ln N \ln\ln N}} = 
+\frac{\sqrt{\ln N}}{c\sqrt{\ln \ln N}}. \] 
+This gives 
+\[ \ln u = \frac12 \ln\ln N - \left( \ln c + \frac12 \ln\ln\ln N \right) 
+= \left( \frac12 + o(1) \right) \ln\ln N, \] 
+and hence 
+\[ u\ln u = \left( \frac1{2c} + o(1) \right) \sqrt{\ln N \ln\ln N}. \] 
+Finally, we see that 
+\[ u^u = \exp\left( \left( \frac1{2c} + o(1) \right) \sqrt{\ln N \ln\ln N} \right). \] 
+Therefore, the complexity of the random squares algorithm is bounded by 
+\[ \exp\left((C + o(1)) \sqrt{\ln N \ln\ln N}\right) \] 
+for some constant $C$. In fact, using the above estimates more precisely in the 
+actual algorithm cost function, we can get the more accurate bound of 
+\[ O \left( \exp\left(\left( \max \left( 2c + \frac{1}{2c}, 3c \right) + o(1) \right) 
+\sqrt{\ln N \ln\ln N} \right) (\log_2 N)^3 \right), \] 
+which is minimized when $c = 1/2$. Thus, we can refine our estimate to 
+\[ O \left( \exp\left( (2 + o(1)) \sqrt{ \ln N \ln\ln N} \right) (\log_2 N)^3 \right). \] 
+
+\begin{exercise}
+    Our complexity analysis of the random squares algorithm implicitly 
+    assumes that $\gcd(x-y, N)$ is always a nontrivial factor of $N$, 
+    which as we discussed before, does not have to be the case in general. 
+    What is the impact of removing this assumption from our complexity analysis? 
+\end{exercise}

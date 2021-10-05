@@ -20,6 +20,9 @@
 \usepackage{xcolor}
 \usepackage{microtype}
 \usepackage{algpseudocode}
+\usepackage{biblatex}
+
+\addbibresource{485sample.bib}
 
 % some useful math commands
 \newcommand{\eps}{\varepsilon}
@@ -51,7 +54,6 @@
 \newcommand{\FindFac}{{\sf FindFac}}
 \newcommand{\FB}{{\sf FB}}
 
-
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\id}{id}
 \DeclareMathOperator{\Arg}{Arg}
@@ -61,7 +63,9 @@
 \DeclareMathOperator{\csch}{csch}
 \DeclareMathOperator{\Res}{Res}
 
-\newcommand{\suchthat}{\;\ifnum\currentgrouptype=16 \;\middle|\;\else\mid\fi\;}
+\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
+\algtext*{Indent}
+\algtext*{EndIndent}
 
 % title formatting
 \newcommand{\newtitle}[4]{
@@ -189,6 +193,9 @@
 \input{485chap1.tex}\newpage 
 \input{485chap2.tex}\newpage 
 \input{485chap3.tex}\newpage
-\input{485chap4.tex}
+\input{485chap4.tex}\newpage 
+
+\printbibliography
+\fancyhead[R]{\nouppercase\leftmark}
 
 \end{document}

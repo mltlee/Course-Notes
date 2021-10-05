@@ -180,7 +180,7 @@ otherwise stated.
     {\bf $b$-ary representation} of $e$, and denote it by $e = (e_{\ell-1}\,e_{\ell-2}\,\cdots\,e_0)_b$.
     Note that the binary representation of $e$ is obtained by setting $b = 2$. 
     \item One may further relax the condition $0 \leq e_i < b$ and allow for a more general 
-    digit set $D$ for the $e_i$. To be more specific, if $e$ can be written as 
+    digit set $D$ for the $e_i$ \cite{10.1145/322344.322355}. To be more specific, if $e$ can be written as 
     \[ e = \sum_{i=0}^{\ell-1} e_i b^i \]
     where each $e_i \in D$ for a digit set $D$, then we will still denote $e = (e_{\ell-1}\,e_{\ell-2}\,\cdots\,e_0)_b$ and extend our notation $e[i : j]_2$ to 
     \[ e[i : j]_b = (e_i\,e_{i-1}\,\cdots\,e_j)_b = \sum_{k=j}^i e_k b^{k-j}. \]
@@ -213,7 +213,7 @@ $\w_4(e)$, whereas the second last representation is sparse with a relatively lo
 \end{exmp}
 
 The most widely known efficient method to perform exponentiation dates back to 200 BC and is called the 
-{\bf square and multiply method}. Brauer generalized the square and multiply method using $b = 2^w$
+{\bf square and multiply method}. Brauer \cite{bams/1183502136} generalized the square and multiply method using $b = 2^w$
 representations of integers, where a set of elements $T = \{a_i = a^i : 1 \leq i < 2^w\}$ is 
 precomputed and stored. We present this method in the following algorithm. The parameter 
 $w$ used in the algorithm is also called the {\bf window size} because we iterate through $w$ 
