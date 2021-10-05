@@ -375,10 +375,68 @@ where $\GL(V)$ denotes the invertible linear transformations over $M$.
 For this reason, if $V$ is a $k[G]$-module, we will call $V$ a 
 {\bf representation} of $G$. 
 
-\begin{defn}~
+\section{October 4, 2021}
+We'll first make some definitions. 
+
+\begin{defn} Let $V$ and $W$ be $k[G]$-modules; that is, they are 
+    representations of $G$. 
     \begin{enumerate}[(1)]
-        \item If $V$ is a simple $k[G]$-module, we say that $V$ is {\bf irreducible}.
+        \item If $V$ is simple, we say that $V$ is a {\bf irreducible representation}.
         \item If $W \subseteq V$ is a $k[G]$-submodule of $V$, we say that $W$ is a 
         {\bf subrepresentation} of $G$. 
+        \item We call two representations $V$ and $W$ {\bf equivalent} if 
+        $V \cong W$ as left $k[G]$-modules. 
+        \item We say that $V$ is {\bf decomposable} if $V = V_1 \oplus V_2$, 
+        where $V_1$ and $V_2$ are proper submodules of $V$. 
     \end{enumerate}
 \end{defn}
+
+Let's define what a direct sum is. First, let $M$ be an $R$-module. 
+If $M_1$ and $M_2$ are submodules of $M$, then 
+\[ M_1 + M_2 = \{m_1 + m_2 : m_1 \in M_1,\, m_2 \in M_2\} \subseteq M. \] 
+More generally, if we have a family $(M_\alpha)_\alpha \in X$ of submodules of 
+$M$, then 
+\[ \sum_{\alpha \in X} M_\alpha = \left\{ \sum_{\alpha \in X} m_\alpha : 
+m_\alpha \in M_\alpha, \text{ $m_\alpha = 0$ for all but finitely many 
+$\alpha$}\right\} \subseteq M. \] 
+Then, we call $\sum_{\alpha \in X} M_\alpha \subseteq M$ 
+{\bf direct} when $\sum_{\alpha \in X} m_\alpha = 0$ if and only if 
+$m_\alpha = 0$ for all $\alpha \in X$. In the case where 
+$\sum_{\alpha \in X} M_\alpha$ is a direct sum, we write 
+\[ \bigoplus_{\alpha \in X} M_\alpha := \sum_{\alpha \in X} M_\alpha. \] 
+
+\begin{remark}
+    Let $M$ be an $R$-modules, and let $M_1$ and $M_2$ be submodules of $M$. 
+    Then $M_1 + M_2$ is a direct sum if and only if $M_1 \cap M_2 = (0)$. 
+\end{remark} 
+
+\begin{exmp}
+    Let $V$ be a vector space over a field $k$, and let $v_1, v_2 \in V 
+    \setminus \{0\}$. Consider the submodules $V_1 = \{\lambda v_1 : \lambda 
+    \in k\}$ and $V_2 = \{\lambda v_2 : \lambda \in k\}$. Then $V_1 + V_2$ is a 
+    direct sum if and only if $v_1$ and $v_2$ are linearly independent. 
+\end{exmp}
+
+We'll study some module theory for the group algebra $k[G]$. Let 
+$k$ be an algebraically closed field such that $\ch(k) \nmid |G|$. 
+
+Later, we will prove the following theorem. 
+
+\begin{thm}
+    Suppose that 
+    \[ k[G] \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k), \] 
+    where $s$ is the number of conjugacy classes of $G$. 
+    \begin{enumerate}[(1)]
+        \item Up to isomorphism, $k[G]$ has $s$ pairwise non-isomorphic 
+        simple left modules $V_1, \dots, V_s$ (that is, $s$ pairwise 
+        inequivalent irreducible representations). 
+        \item Every $k[G]$-module decomposes as a direct sum of copies of 
+        $V_1, \dots, V_s$. 
+        \item {\bf Uniqueness:} If $V_1^{a_1} \oplus V_2^{a_2} \oplus 
+        \cdots \oplus V_s^{a_s} \cong V_1^{b_1} \oplus V_2^{b_2} \oplus 
+        \cdots \oplus V_s^{b_s}$, then $a_i = b_i$ for all 
+        $i = 1, \dots, s$.\footnote[1]{When $V$ is a $k[G]$-module 
+        and $a \geq 1$, we have $V^a := V \oplus \cdots \oplus V$ 
+        ($a$ times).}
+    \end{enumerate}
+\end{thm}
