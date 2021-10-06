@@ -5,7 +5,7 @@ Cryptography is the science of securing information and communication in the pre
 
 This scenario motivates the fundamental goals of cryptography.
 \begin{itemize}
-    \item The first goal is {\bf confidentiality}. Confidentiality assures that only authorized parties can access or see the data. Attackers should not be able to extract the real content of the data even though they can read or steal packages exchanged in the channel. We would like to keep our banking passwords to ourselves.
+    \item The first goal is {\bf confidentiality}. Confidentiality ensures that only authorized parties can access or see the data. Attackers should not be able to extract the real content of the data even though they can read or steal packages exchanged in the channel. We would like to keep our banking passwords to ourselves.
     \item The second goal is {\bf message authentication}. Message authentication, also known as data origin authentication, assures that parties can verify the source of the received messages. When we receive a message, which is claimed to be sent from our bank, we have to make sure it has indeed been sent from our bank.
     \item The third goal is {\bf data integrity}. Data integrity assures that data cannot be altered by unauthorized or unknown means. When we are willing to pay 1,500 CAD for a new laptop, and commit to this transaction at a time, we have to make sure that this transaction cannot be modified as a 15,000 CAD worth transaction at a later time.
     \item Finally, the fourth goal is {\bf non-repudiation} which prevents communicating parties from falsely denying their actions. Once we commit to a 1,500 CAD transaction, then we should not be able to break our commitment.
@@ -116,7 +116,7 @@ for introductory level texts on symmetric key cryptography.
     
     {\sc Example.} The bank receives the ciphertext $c=37917$ from the client, and uses its secret key to decrypt with 
     \[ m = c^d \pmod N = 37917^{36971} \pmod {49163} = 123. \]
-    Observe that the bank succesfully recovered the client's CSC. 
+    Observe that the bank successfully recovered the client's CSC. 
     
     {\sc Question.} Can you guarantee that the RSA decryption algorithm will always work correctly and recover the original message? Is the RSA encryption scheme secure? What does it mean for a public key encryption scheme to be secure?
 \end{enumerate}
