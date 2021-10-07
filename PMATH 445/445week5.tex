@@ -1,0 +1,138 @@
+\section{October 6, 2021}
+Last time, we were looking at a ring 
+\[ R = M_{n_1}(k) \times \cdots \times M_{n_s}(k). \] 
+We saw that $V_i = k^{n_i \times 1}$ is a left $R$-module with the action 
+\[ (A_1, \dots, A_s) \cdot v := A_i v \in V_i \] 
+for $(A_1, \dots, A_s) \in R$ and $v \in V_i$. Moreover, $V_i$ is a 
+simple left $R$-module with $V_i \ncong V_j$ when $i \neq j$. 
+
+Now, we observe that 
+\begin{align*} 
+    \Ann_R(V_i) &= \{(A_1, \dots, A_{i-1}, 0, A_{i+1}, \dots, A_s) : 
+    A_j \in M_{n_j}(k)\} \\
+    &= M_{n_1}(k) \times \cdots \times M_{n_{i-1}}(k) \times \{0\} 
+    \times M_{n_{i+1}}(k) \times \cdots \times M_{n_s}(k). 
+\end{align*} 
+In particular, if $i \neq j$, then $\Ann_R(V_i) \ncong \Ann_R(V_j)$. 
+Assignment 3 Question 2 then gives us another proof of the fact that 
+$V_i \ncong V_j$. 
+
+\begin{notation} 
+    If $R$ is a ring, we will write ${}_R R$ to mean $R$ considered as a left 
+    $R$-module. (Similarly, the notation $R_R$ means $R$ taken as a right 
+    $R$-module.)
+\end{notation}
+
+Let $A, B \in M_n(k)$. We can think of $B$ as $n$ columns concatenated 
+with each other. In particular, if $v_1, \dots, v_n$ are the columns of $B$, 
+then the columns of $AB$ are given by $Av_1, \dots, Av_n$. 
+Therefore, if $R = M_n(k)$ and $V = k^{n \times 1}$, then 
+\[ {}_R R \cong \underbrace{V \oplus \cdots \oplus V}_{n} \] 
+with the $R$-module isomorphism 
+\[ B \mapsto (v_1, \dots, v_n), \] 
+where as before, $v_1, \dots, v_n$ are the columns of $B$. 
+
+More generally, if $R = M_{n_1}(k) \times \cdots \times M_{n_s}(k)$ and 
+$V_i = k^{n_i \times 1}$, then we have 
+\[ (A_1, \dots, A_s) \cdot v = A_i v \] 
+for $(A_1, \dots, A_s) \in R$ and $v \in V_i$, so we see that 
+\[ {}_R R \cong \underbrace{V_1 \oplus \cdots \oplus V_1}_{n_1} 
+\oplus \underbrace{V_2 \oplus \cdots \oplus V_2}_{n_2} \oplus \cdots 
+\oplus \underbrace{V_s \oplus \cdots \oplus V_s}_{n_s} \] 
+with the explicit $R$-module isomorphism 
+\[ (B_1, \dots, B_s) \in {}_R R \mapsto 
+(\underbrace{v_{11}, \dots, v_{1n_1}}_{\in V_1^{n_1}}, 
+\dots, \underbrace{v_{s1}, \dots, v_{sn_s}}_{\in V_s^{n_s}}), \] 
+where $v_{i1}, \dots, v_{in_i}$ are the columns of $B_i$ for each 
+$i = 1, \dots, s$. Indeed, we can see that this is an $R$-module isomorphism 
+because for $(A_1, \dots, A_s) \in R$ and $(B_1, \dots, B_s) \in {}_R R$, the 
+columns of $A_i B_i$ are $Av_{i1}, \dots, Av_{in_i}$, and on the other hand, 
+we have 
+\[ (A_1, \dots, A_s) \cdot (v_{11}, \dots, v_{1n_1}, \dots, 
+v_{s1}, \dots, v_{sn_s}) = 
+(\underbrace{A_1 v_{11}, \dots, A_1 v_{1n_1}}_{A_1B_1}, 
+\dots, \underbrace{A_s v_{s1}, \dots, A_s v_{sn_s}}_{A_sB_s}). \] 
+From this discussion, we obtain the key fact that if $R = M_{n_1}(k) \times \cdots \times 
+M_{n_s}(k)$ and $V_i = k^{n_i \times 1}$, then 
+\[ {}_R R \cong V_1^{n_1} \oplus \cdots \oplus V_s^{n_s} \] 
+as $R$-modules. Now, we are almost in the position to finish proving Theorem 12.4.
+
+\begin{remark} Let $N$ and $M_\alpha$ for $\alpha \in X$ be left $R$-modules. 
+    \begin{enumerate}[(1)]
+        \item From Exercise 4 on Assignment 2, we have 
+        \[ \Hom_R \left( \bigoplus_{\alpha \in X} M_\alpha, N \right) 
+        \cong \prod_{\alpha \in X} \Hom_R(M_\alpha, N). \] 
+        \item If $N \neq (0)$ is a left $R$-module, then 
+        \[ \Hom_R(R, N) \neq (0). \] 
+        Notice that for all $n \in N$, there exists a map 
+        \begin{align*} \varphi_n : {}_R R &\to N \\ r &\mapsto r \cdot n. \end{align*} 
+        For $a \in R$ and $r \in {}_R R$, we have $\varphi_n(ar) = ar \cdot n 
+        = a \cdot (rn) = a \cdot \varphi_n(r)$, so $\varphi_n$ is $R$-linear. 
+        Moreover, when $n \neq 0$, we have $\varphi_n(1) = n \neq 0$, so 
+        $\varphi_n \neq 0$. 
+    \end{enumerate}
+\end{remark}
+
+\begin{exercise}
+    Define the map 
+    \begin{align*} 
+        e : \Hom_R({}_R R, N) &\to N \\ \varphi &\mapsto \varphi(1). 
+    \end{align*}
+    If $R$ is commutative, show that $e$ is an isomorphism of $R$-modules. 
+\end{exercise}
+
+Now, we can prove part (1) of Theorem 12.4. 
+
+\begin{thm}
+    Let $R \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k)$ and $V_i 
+    \cong k^{n_i \times 1}$. If $N$ is a simple left $R$-mdoule, then there 
+    exists some $i = 1, \dots, s$ such that $N \cong V_i$ as $R$-modules. 
+    In particular, $R$ has exactly $s$ simple left $R$-modules up to 
+    isomorphism. 
+\end{thm}
+\begin{pf}
+    Let $N$ be a simple $R$-module. Then we have 
+    \[ \Hom_R({}_R R, N) \neq (0) \] 
+    since $N \neq (0)$. In particular, we obtain 
+    \[ \Hom_R({}_R R, N) \cong \Hom_R(V_1^{n_1} \oplus \cdots \oplus V_s^{n_s}, 
+    N) \cong \prod_{i=1}^s \Hom_R(V_i, N)^{n_i}. \] 
+    Since $\Hom_R({}_R R, N) \neq (0)$, there exists $i = 1, \dots, s$ 
+    such that $\Hom_R(V_i, N) \neq (0)$. Therefore, there exists a 
+    nonzero $R$-modulo homomorphism $f : V_i \to N$. Now, $V_i$ is simple, 
+    and since $\ker(f)$ is a submodule of $V_i$, we either have $\ker(f) 
+    = (0)$ or $\ker(f) = V_i$. But $f$ is nonzero, so we have $\ker(f) = V_i$. 
+    Similarly, $\im(f)$ is a submodule of $N$. Again, $f$ is nonzero, so 
+    $\im(f) \neq (0)$, and since $N$ is simple, $\im(f) = N$. 
+
+    As in the proof of Schur's lemma (Theorem 2.15), the set theoretic 
+    inverse of $f$ is an $R$-module homomorphism with $f \circ f^{-1} 
+    = \id_N$ and $f^{-1} \circ f = \id_{V_i}$. Therefore, $f : V_i \to N$ is 
+    an $R$-module isomorphism. 
+\end{pf}
+
+Towards proving (2) of Theorem 12.4, we'll first prove the following fact. 
+
+\begin{prop}
+    Every $R$-module $M$ satisfies 
+    \[ M \cong R^{\oplus X}/L \] 
+    where $R^{\oplus X} = \bigoplus_{x \in X} R$, and $L$ is a submodule of 
+    $R^{\oplus X}$. 
+\end{prop}
+\begin{pf}
+    For each $m \in M$, we will define a formal symbol $e_m$. 
+    (We can think of this as a vector $e_m = (0, \dots, 0, 1, 0, \dots, 0)$ 
+    where $1$ is in the $m$-th position, but this choice doesn't always work.)
+    Define an $R$-module homomorphism $\Psi : \bigoplus_{m \in M} Re_m \to M$ by 
+    \[ \sum_{m \in M} r_m e_m \mapsto \sum_{m \in M} r_m \cdot m. \] 
+    We note that these must be finite sums in order to make sense. When $r \in R$, 
+    we have 
+    \[ \Psi\left(r \cdot \sum_{m \in M} r_m e_m \right) 
+        = \Psi\left( \sum_{m \in M} r \cdot r_m e_m \right) 
+        = \sum_{m \in M} r \cdot r_m \cdot m 
+        = r \cdot \sum_{m \in M} r_m \cdot m 
+        = r \cdot \Psi \left( \sum_{m \in M} r_m e_m \right). \] 
+    Therefore, $\Psi$ is $R$-linear. Moreover, $\Psi(1 \cdot e_m) = m$, so 
+    $\Psi$ is onto. Let $L = \ker\Psi$. By the first isomorphism theorem, 
+    we obtain $\bigoplus_{m \in M} Re_m/L \cong \im\Psi = M$, 
+    and we can take  $\bigoplus_{m \in M} Re_m$ as $R^{\oplus X}$. 
+\end{pf}

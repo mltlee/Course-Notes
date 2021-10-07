@@ -420,7 +420,7 @@ $\sum_{\alpha \in X} M_\alpha$ is a direct sum, we write
 We'll study some module theory for the group algebra $k[G]$. Let 
 $k$ be an algebraically closed field such that $\ch(k) \nmid |G|$. 
 
-Later, we will prove the following theorem. 
+In the next few lectures, we will work towards proving the following theorem. 
 
 \begin{thm}
     Suppose that 
@@ -440,3 +440,108 @@ Later, we will prove the following theorem.
         ($a$ times).}
     \end{enumerate}
 \end{thm}
+
+What is the significance of this theorem? First, let's ask what the $V_i$'s are. 
+We know that 
+\[ k[G] \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k), \] 
+and for each $i = 1, \dots, s$, we have the projection 
+\[ \pi_i : M_{n_1}(k) \times \cdots \times M_{n_s}(k) \to M_{n_i}(k). \] 
+Note that $M_{n_i}(k)$ has the module $V_i \cong k^{n_i \times 1}$. Now, if 
+$V$ is a representation of $G$ which looks like 
+\[ V = V_{i_1} \oplus \cdots \oplus V_{i_q}, \] 
+we recall that $k[G]$ acting on $V$ gives us a representation 
+\[ \rho : G \to \GL(V) \] 
+given by $\rho(g)(v) := g \cdot v$. Now, what's the significance of the 
+decomposition of $V$ above? Suppose for simplicity that we had 
+$V = W_1 \oplus W_2$, where $W_1$ and $W_2$ are $k[G]$-submodules of $V$. 
+Let $\{v_1, \dots, v_d\}$ be a basis for $W_1$, and let 
+$\{v_{d+1}, \dots, v_n\}$ be a basis for $W_2$. Then we have 
+\[ \rho(g)(v_j) = g \cdot v_j = \begin{cases} 
+    a_{1j}v_1 + \cdots + a_{d_j} v_d, & \text{if $j \leq d$,} \\ 
+    a_{(d+1)_j} v_{d+1} + \cdots + a_{n_j} v_n, & \text{if $d + 1 \leq j \leq n$.}
+\end{cases} \] 
+In particular, by setting ${\cal B} = \{v_1, \dots, v_n\}$, we see that 
+\[ [\rho(g)]_{\cal B} = \left(\begin{array}{@{}c|c@{}}
+    A_1 & 0 \\\hline
+    0 & A_2 
+  \end{array}\right), \]
+where $A_1$ is a $d \times d$ matrix and $A_2$ is an $(n-d) \times (n-d)$ matrix.
+Therefore, the importance of the theorem is that if we are given a finite-dimensional 
+representation, we can uniquely write it as a block diagonal matrix 
+(up to ordering of the blocks), where the blocks are representations coming 
+from the irreducibles $V_i \cong k^{n \times 1}$. Therefore, if we understand 
+irreducibles, then we understand every representation. 
+
+First, in order to understand $k[G]$, we looked at Artinian rings with no 
+nonzero nil ideals. Now that we understand $k[G]$, our main goal is to understand 
+representations. Our discussion above shows that it suffices to understand 
+the simples $V_i \cong k^{n \times 1}$. We will use character theory to do so, 
+which we will get to soon, and we'll understand everything. 
+
+Due to the isomorphism 
+\[ k[G] \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k), \] 
+we can just think of $k[G]$ as a product of matrix rings. Therefore, it suffices 
+to understand the left modules of $M_{n_1}(k) \times \cdots \times 
+M_{n_s}(k)$ to know the left modules of $k[G]$. Let $R$ and $S$ be rings 
+with an isomorphism $\phi : R \to S$. If we have an $R$-module $M$, 
+we obtain an $S$-module by taking 
+\[ s \cdot m := \phi^{-1}(s) \cdot m. \] 
+Conversely, if $N$ is a left $S$-module, then we can give it an $R$-module 
+structure by 
+\[ r \cdot n = \phi(r) \cdot n. \] 
+That is, the isomorphism $\phi$ is just a way of relabelling these elements. 
+
+\begin{lemma}
+    Let $R = M_{n_1}(k) \times \cdots \times M_{n_s}(k)$, and let 
+    $V_i = k^{n_i \times 1}$ for each $i = 1, \dots, s$. For each 
+    $i = 1, \dots, s$ we define 
+    \[ (A_1, \dots, A_i, \dots, A_s) \cdot v := A_i v \] 
+    where $(A_1, A_2, \dots, A_s) \in R$ and $v \in V_i$. 
+    Then $V_i$ is a simple left $R$-module, and if $i \neq j$, then 
+    $V_i \ncong V_j$. 
+\end{lemma}
+\begin{pf}
+    If $(A_1, \dots, A_s), (B_1, \dots, B_s) \in R$ and $v \in V_i$, then 
+    \begin{align*} 
+        (A_1, \dots, A_i, \dots, A_s) \cdot (B_1, \dots, B_i, \dots, B_s) \cdot v 
+        &= (A_1B_1, \dots, A_iB_i, \dots, A_sB_s) v \\ 
+        &= A_iB_i v \\ 
+        &= A_i(B_i v) \\ 
+        &= (A_1, \dots, A_s) [(B_1, \dots, B_s) \cdot v] 
+    \end{align*} 
+    Therefore, $V_i$ is a left $R$-module; the other properties come for free 
+    since $V_i$ is already a module over $M_{n_i}(k)$, and hence it is an abelian 
+    group. 
+
+    Why is $V_i$ simple as an $R$-module? Notice that it suffices to show that 
+    if $v_1 \in V_i \setminus \{0\}$ and $v_2 \in V_i$, then there exists 
+    $r \in R$ such that $r \cdot v_1 = v_2$. Indeed, if $V_i$ is simple, then 
+    the only submodules are $(0)$ and $V_i$ itself. If we have a nonzero 
+    element of $V_i$, then it should generate all of $V_i$. 
+
+    We already know that $V_i$ is a simple $M_{n_i}(k)$-module. Therefore, 
+    there exists $A \in M_{n_i}(k)$ such that $Av_1 = v_2$. Let 
+    $r = (0, \dots, 0, A, 0, \dots, 0)$, where $A$ is located at the 
+    $i$-th coordinate. Then $r \cdot v_1 = v_2$, so $V_i$ is a simple 
+    left $R$-module. 
+
+    Next, we show that if $i \neq j$, then $V_i \ncong V_j$ as left $R$-modules. 
+    Suppose that we have an $R$-linear isomorphism $f : V_i \to V_j$. 
+    If $v \in V_i$, then 
+    \[ f((0, \dots, 0, I, 0, \dots, 0) \cdot v) = f(0 \cdot v) = 0 \in V_j, \] 
+    where $I$ is in the $j$-th position, and the $i$-th position is one of the 
+    zeros. Since $f$ is $R$-linear, then 
+    \[ f((0, \dots, 0, I, 0, \dots, 0) \cdot v) = (0, \dots, 0, I, 0, \dots, 0)
+    \cdot f(v) = I \cdot f(v) = f(v). \] 
+    This means that $f$ is identically zero, contradicting the fact that 
+    it is an isomorphism from $V_i$ to $V_j$. 
+\end{pf}
+
+\begin{remark}
+    In fact, we have shown that if $i \neq j$, then 
+    \[ \Hom_R(V_i, V_j) = \{0\}. \] 
+    When $i = j$, we have $\Hom_R(V_i, V_j) = \End_R(V_i)$. In the case that 
+    $k$ is algebraically closed and $R$ is a finite-dimensional $k$-algebra, 
+    we have $\End_R(V_i) \cong k$ by Proposition 3.1, since $V_i$ is a simple 
+    left $R$-module. 
+\end{remark}
