@@ -1,8 +1,7 @@
 import GCD
 
 # N is assumed odd
-def Pollard(N, B, details = False):
-    a = 2
+def Pollard(N, B, a = 2, details = False):
     if details: 
         print("N = {}, B = {}, a = {}".format(N, B, a))
     for i in range(2, B+1):
