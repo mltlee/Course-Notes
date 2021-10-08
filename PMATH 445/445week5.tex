@@ -136,3 +136,139 @@ Towards proving (2) of Theorem 12.4, we'll first prove the following fact.
     we obtain $\bigoplus_{m \in M} Re_m/L \cong \im\Psi = M$, 
     and we can take  $\bigoplus_{m \in M} Re_m$ as $R^{\oplus X}$. 
 \end{pf}
+
+\section{October 8, 2021}
+
+\begin{defn}
+    Let $R$ be a ring. We say that a left $R$-module $M$ is {\bf semisimple} 
+    of $M$ can be written as the direct sum of simple submodules. We say that 
+    $R$ is a {\bf (left) semisimple ring} if every left $R$-module is semisimple.
+\end{defn}
+
+\begin{exmp}
+    An example of a non-semisimple ring is $\Z$. The simple modules are 
+    isomorphic to $\Z/p\Z$ for primes $p$, and we notice that 
+    $\Z/4\Z$ cannot be written as the direct sum of simple submodules. 
+\end{exmp}
+
+\begin{exmp}
+    Let $k$ be a field. A $k$-module is simply a vector space, and a 
+    submodule is a subspace. In particular, a simple $k$-module $V$ is a vector 
+    space whose only subspaces are $(0)$ and $V$ itself. Therefore, $V$ 
+    is a simple $k$-module if and only if $\dim_k V = 1$. Now, if 
+    $W$ is a $k$-vector space, then we can write 
+    \[ W = \bigoplus_{\alpha \in {\cal B}} kv_\alpha, \] 
+    since every vector space has a basis ${\cal B}$. Hence, $k$ is a semisimple ring. 
+\end{exmp}
+
+Notice that the fact that every vector space has a basis relies on Zorn's lemma. 
+The following theorem generalizes this example, and at some point, we'll have to use 
+Zorn's lemma to prove it. 
+
+\begin{thm}
+    Let $R$ be a ring. Then $R$ is a (left) semisimple ring if and only if 
+    ${}_R R$ is a semisimple $R$-module. 
+\end{thm}
+
+To prove this, we'll use the following lemma. 
+
+\begin{lemma}
+    Let $R$ be a ring. 
+    \begin{enumerate}[(1)]
+        \item If $\{M_\alpha\}_{\alpha \in X}$ is a family of left $R$-modules 
+        where each $M_\alpha$ is semisimple, then $\bigoplus_{\alpha \in X} 
+        M_\alpha$ is semisimple. 
+        \item If $M$ is a semisimple left $R$-module and $L \trianglelefteq M$ 
+        is a submodule of $M$, then $M/L$ is also semisimple. 
+    \end{enumerate}
+\end{lemma}
+
+First, we'll show that Theorem 14.4 easily follows from Lemma 14.5. 
+
+{\sc Proof of Theorem 14.4.} $(\Rightarrow)$ If every left $R$-module is semisimple, 
+then certainly ${}_R R$ is semisimple. 
+
+$(\Leftarrow)$ Let $M$ be a left $R$-module. We saw in Proposition 13.5 that 
+$M \cong R^{\oplus X}/L$ where $L \trianglelefteq \bigoplus_{x \in X} R$. 
+If ${}_R R$ is semisimple, then 
+\[ \bigoplus_{x \in X} {}_R R = \bigoplus_{x \in X} R \] 
+is semisimple by taking $M_\alpha = {}_R R$ for each $\alpha \in X$ and 
+applying (1) of Lemma 14.5. It follows from (2) that $M \cong 
+\bigoplus_{x \in X} R/L$ is semisimple. \qed 
+
+Now, it only remains to prove Lemma 14.5. 
+
+{\sc Proof of Lemma 14.5.}~
+\begin{enumerate}[(1)]
+    \item Write each $M_\alpha$ as a direct sum of simple $R$-modules 
+    \[ M_\alpha = \bigoplus_{\beta \in X_\alpha} V_{\alpha, \beta}. \] 
+    It follows that 
+    \[ \bigoplus_{\alpha \in X} M_\alpha 
+    = \bigoplus_{\alpha \in X} \bigoplus_{\beta \in X_\alpha} V_{\alpha, \beta}
+    = \bigoplus_{(\alpha, \beta)\,:\,\alpha\in X,\,\beta \in X_\alpha} 
+    V_{\alpha, \beta} \] 
+    is the direct sum of simple modules, so it is semisimple. 
+    
+    \item Since $M$ is semisimple, we can write 
+    \[ M = \bigoplus_{\alpha \in X} V_\alpha, \] 
+    where each $V_\alpha$ is simple. Let $\pi : M \to M/L$ be the canonical 
+    projection. Consider $\pi(V_\alpha) \subseteq M/L$. We claim that 
+    either $\pi(V_\alpha) \cong V_\alpha$ or $\pi(V_\alpha) = (0)$. 
+    First, we restrict $\pi$ to $V_\alpha$ to obtain the map 
+    \[ \pi|_{V_\alpha} : V_\alpha \to \pi(V_\alpha), \] 
+    which is a surjective $R$-module homomorphism. Since $\ker(\pi|_{V_\alpha})$ 
+    is a submodule of $V_\alpha$, we either have $\ker(\pi|_{V_\alpha}) = (0)$ 
+    or $\ker(\pi|_{V_\alpha}) = V_\alpha$ by the simplicity of $V_\alpha$. 
+    In the first case, $\pi|_{V_\alpha}$ is a bijection, so $\pi(V_\alpha) 
+    \cong V_\alpha$. In the second case, we obtain $\pi(V_\alpha) = (0)$. 
+
+    Let $Y = \{\alpha \in X : \pi(V_\alpha) \cong V_\alpha\} \subseteq X$. 
+    We claim that 
+    \[ M/L = \sum_{\alpha \in Y} \pi(V_\alpha). \] 
+    Since $\pi : M \to M/L$ is onto and $M = \sum_{\alpha \in X} V_\alpha$, we have 
+    \[ M/L = \pi(M) = \pi\left( \sum_{\alpha \in X} V_\alpha \right) 
+    = \sum_{\alpha \in X} \pi(V_\alpha) = \sum_{\alpha \in Y} \pi(V_\alpha), \] 
+    where the last equality is because $\pi(V_\alpha) = (0)$ for all 
+    $\alpha \in X \setminus Y$, which contributes nothing to the sum. 
+
+    Note that the above sum is not necessarily a direct sum. This is where 
+    we'll use Zorn's lemma to show that it is isomorphic to a direct sum of 
+    simples. Let 
+    \[ {\cal S} = \left\{Z \subseteq Y : \sum_{\alpha \in Z} \pi(V_\alpha) 
+    \text{ is a direct sum} \right\}. \] 
+    First, we note that ${\cal S} \neq \varnothing$ since empty sums are 
+    by definition direct sums, so $\varnothing \in {\cal S}$. Let 
+    $\{Z_\gamma\}_{\gamma \in \Gamma}$ be a chain in ${\cal S}$ ordered by 
+    inclusion, where $\Gamma$ is a totally ordered set. We must show that 
+    \[ Z := \bigcup_{\gamma \in \Gamma} Z_\gamma \in {\cal S}, \] 
+    which will be an upper bound in the chain, in which case we can apply 
+    Zorn's lemma to ${\cal S}$. So suppose towards a contradiction that 
+    $Z \notin {\cal S}$. Then the sum $\sum_{\alpha \in Z} \pi(V_\alpha)$ 
+    is not a direct sum. Therefore, there is a finite set of elements 
+    $\alpha_1, \dots, \alpha_s \in Z$ such that 
+    \[ \pi(V_{\alpha_1}) + \cdots + \pi(V_{\alpha_s}) \] 
+    is not direct. There exists some $\gamma \in \Gamma$ such that 
+    $\alpha_1, \dots, \alpha_s \in Z_\gamma$, which would imply that 
+    $\sum_{\alpha \in Z_\gamma} \pi(V_\alpha)$ is not a direct sum, a contradiction. 
+    Therefore, $Z \in {\cal S}$, and by Zorn's lemma, there exists a maximal 
+    element $Y_0 \in {\cal S}$ with $Y_0 \subseteq Y$. 
+
+    Finally, we'll show that $N = \sum_{\alpha \in Y_0} \pi(V_\alpha)$ is 
+    direct and equal to $M/L$. The fact that it is direct is immediate since 
+    $Y_0 \in {\cal S}$. Recall that 
+    \[ M/L = \sum_{\alpha \in Y} \pi(V_\alpha). \] 
+    If $\pi(V_\alpha) \subseteq N$ for all $\alpha \in Y$, we have 
+    $\sum_{\alpha \in Y} \pi(V_\alpha) \subseteq N$. This gives $M/L \subseteq N$, 
+    and hence $N = M/L$. Therefore, it is enough to show that $\pi(V_\alpha) 
+    \subseteq N$ for any $\alpha \in Y$. Suppose that this was not the case, 
+    so $\pi(V_{\alpha_0}) \not\subseteq N$ for some $\alpha_0 \in Y$. 
+    We will show that 
+    \[ \pi(V_{\alpha_0}) + \bigoplus_{\alpha \in Y_0} \pi(V_\alpha) \] 
+    is a direct sum, which will give a contradiction as $\{\alpha_0\} 
+    \cup Y_0 \in {\cal S}$ contradicts the maximality of $Y_0$ in ${\cal S}$. 
+    Note that $\pi(V_{\alpha_0})$ is simple. If $\pi(V_{\alpha_0}) = (0)$, then 
+    $\pi(V_{\alpha_0}) + \bigoplus_{\alpha \in Y_0} \pi(V_\alpha)$ is a direct 
+    sum. Otherwise, $\pi(V_{\alpha_0})$ is already in 
+    $\bigoplus_{\alpha \in Y_0} \pi(V_\alpha)$, which means that 
+    $\pi(V_\alpha) \subseteq N$, a contradiction. \qed 
+\end{enumerate}
