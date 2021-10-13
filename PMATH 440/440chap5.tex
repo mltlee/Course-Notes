@@ -39,6 +39,9 @@ obtain the following corollary.
 \end{cor}
 
 \begin{thm}[Wilson]\label{thm:5.4}
+    If $p$ is a prme, then $(p-1)! \equiv -1 \pmod p$. 
+\end{thm}
+\begin{pf}
     Consider the element $x^{p-1} - 1 \in (\Z/p\Z)[x]$. By Fermat's little theorem 
     and using the fact that $\Z/p\Z$ is a field, this factors as 
     \[ x^{p-1} - 1 \equiv (x-1)(x-2) \cdots (x-(p-1)) \pmod p \] 
@@ -48,4 +51,4 @@ obtain the following corollary.
     Therefore, we have $-1 \equiv (-1)^{p-1} (p-1)! \pmod p$. When $p = 2$, 
     the result holds since $-1 \equiv 1 \pmod 2$; otherwise, $p$ is odd, 
     so $-1 \equiv (p-1)! \pmod p$ as required. 
-\end{thm}
+\end{pf}
