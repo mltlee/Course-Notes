@@ -230,3 +230,245 @@ Let's now consider the averages of $\omega(n)$ and $\Omega(n)$.
     \[ S_2 = x\log\log x + x \left( \beta + \sum_p \frac{1}{p(p-1)} \right) 
     + o(x). \qedhere \] 
 \end{pf}
+
+\subsection{Asymptotic Density and Normal Order}\label{subsec:4.3} 
+
+\begin{defn}\label{def:4.5}
+    Let $A$ be a subset of $\N$. For any $n \in \N$, we set $A(n) 
+    = \{1, \dots, n\} \cap A$. We define the {\bf upper asymptotic density}
+    of $A$ by 
+    \[ \bar{d}(A) := \limsup_{n\to\infty} \frac{|A(n)|}{n}. \] 
+    Similarly, we define the {\bf lower asymptotic density} of $A$ to be 
+    \[ \underline{d}(A) := \liminf_{n\to\infty} \frac{|A(n)|}{n}. \] 
+    We say that $A$ has {\bf asymptotic density} $d(A)$ when 
+    $\bar{d}(A) = \underline{d}(A)$, in which case we set $d(A)$ to be 
+    this common value. 
+\end{defn}
+
+\begin{exmp}\label{exmp:4.6}~
+    \begin{enumerate}[(1)]
+        \item When $A$ is the set of all primes, we have 
+        $d(A) = \bar{d}(A) = \underline{d}(A) = 0$. 
+        \item For $A = \{n \in \N : n \equiv 0 \pmod 5\}$, we have 
+        $d(A) = \bar{d}(A) = \underline{d}(A) = 1/5$.
+        \item For $A = \{n \in \N : n \neq k^2 + 1 \text{ for any } k \in \Z\}$, 
+        we have $d(A) = \bar{d}(A) = \underline{d}(A) = 1$.
+        \item Let $A = \{a \in \N : (2k)! < a < (2k+1)! \text{ for some } k \in \Z\}$. 
+        Notice that for $n = (2k+1)!$, any $a \in \N$ satisfying $(2k)! < a < 
+        (2k+1)!$ is included in $A(n)$. Therefore, we have 
+        \[ 1 \geq \frac{|A((2k+1)!)|}{(2k+1)!} \geq \frac{(2k+1)! - (2k)!}{(2k+1)!} 
+        = \frac{2k}{2k+1}. \] 
+        By taking $k \to \infty$, we see that 
+        \[ \frac{|A((2k+1)!)|}{(2k+1)!} \to 1, \] 
+        and hence $\bar{d}(A) = 1$. On the other hand, when $n = (2k)!$, then only 
+        $a \in \N$ such that $a < (2k-1)!$ are included in $A(n)$. Thus, we have 
+        \[ 0 \leq \frac{|A((2k)!)|}{(2k)!} \leq \frac{(2k-1)!}{(2k)!} = \frac{1}{2k}. \] 
+        As $k \to \infty$, we have 
+        \[ \frac{|A((2k)!)|}{(2k)!} \to 0, \] 
+        and hence $\underline{d}(A) = 0$.
+    \end{enumerate} 
+\end{exmp}
+
+\begin{defn}\label{def:4.7}
+    Let $f(n)$ and $F(n)$ be functions from $\N$ to $\R$. 
+    \begin{itemize}
+        \item We say that $f(n)$ has {\bf normal order} $F(n)$ if for every 
+        $\eps > 0$, the set 
+        \[ A(\eps) = \{n \in \N : (1-\eps)F(n) < f(n) < (1+\eps)F(n)\} \] 
+        has the property that $d(A(\eps)) = 1$. Equivalently, if $B(\eps) 
+        = \N \setminus A(\eps)$, then $d(B(\eps)) = 0$. 
+        \item We say that $f(n)$ has {\bf average order} $F(n)$ if 
+        \[ \sum_{j=1}^n f(j) \sim \sum_{j=1}^n F(j). \] 
+    \end{itemize}
+\end{defn}
+
+\begin{exmp}\label{exmp:4.8}~
+    \begin{enumerate}[(1)]
+        \item If we define 
+        \[ f(n) = \begin{cases} 1 & \text{if $n \neq k!$ for any $k \in \N$,} \\ 
+            n & \text{if $n = k!$ for some $k \in \N$,} \end{cases} \] 
+        then $f$ has normal order $1$ but not average order $1$. 
+        \item If we define 
+        \[ f(n) = \begin{cases} 2 & \text{if $n \equiv 1 \pmod 2$,} \\ 
+            0 & \text{if $n \equiv 0 \pmod 2$,} \end{cases} \] 
+        then $f$ has average order $1$ but not normal order $1$. 
+        \item If we define 
+        \[ f(n) = \begin{cases}
+            \log n + (\log n)^{1/2} & \text{if $n \equiv 1 \pmod 2$,} \\ 
+            \log n - (\log n)^{1/2} & \text{if $n \equiv 0 \pmod 2$,} \\ 
+        \end{cases} \] 
+        then $f$ has both normal and average order $\log n$.
+    \end{enumerate}
+\end{exmp}
+
+\begin{thm}\label{thm:4.9}
+    Both $\omega(n)$ and $\Omega(n)$ have average order $\log\log n$. 
+\end{thm}
+\begin{pf}
+    First, note that 
+    \begin{align*} 
+        \sum_{n\leq x} \log\log n 
+        &= \sum_{x^{1/2}<n\leq x} \log\log n + \sum_{n\leq x^{1/2}} \log\log n \\
+        &= \sum_{x^{1/2}<n\leq x} \log\log n + O(x^{1/2}\log \log x). 
+    \end{align*}
+    Moreover, we have 
+    \[ \sum_{x^{1/2} < n \leq x} \log\log n \leq \log\log x  
+    \sum_{x^{1/2} < n \leq x} 1 = x\log\log x + O(x^{1/2}\log\log x). \] 
+    Also, we have the lower bound 
+    \[ \sum_{x^{1/2} < n \leq x} \log\log n \geq (\log\log x - \log 2) 
+    \sum_{x^{1/2} < n \leq x} 1 = x\log\log x + O(x^{1/2}\log\log x). \] 
+    It follows that 
+    \[ \sum_{n\leq x} \log\log n = x\log\log x + O(x^{1/2}\log\log x). \] 
+    Combining this estimate with Theorem~\ref{thm:4.4} shows that 
+    $\omega(n)$ and $\Omega(n)$ both have average order $\log\log n$. 
+\end{pf}
+
+\subsection{Normal Order of $\omega(n)$ and $\Omega(n)$}\label{subsec:4.4}
+We have shown that $\omega(n)$ and $\Omega(n)$ have average order $\log\log n$. 
+In this section, we'll work towards proving that they have normal order $\log\log n$. 
+
+\begin{thm}\label{thm:4.10}
+    Let $\delta > 0$. The number of positive integers $n \leq x$ satisfying 
+    \[ |f(n) - \log\log n| > (\log\log n)^{\frac12+\delta} \] 
+    is $o(x)$, where $f(n) = \omega(n)$ or $f(n) = \Omega(n)$. In particular, 
+    both $\omega(n)$ and $\Omega(n)$ have normal order $\log\log n$. 
+\end{thm}
+\begin{pf}
+    It is enough to prove that the number of positive integers $n \leq x$ with 
+    \[ |f(n) - \log\log x| > (\log\log x)^{\frac12+\delta} \] 
+    is $o(x)$, because for $x^{1/e} \leq n \leq x$, we have 
+    \[ \log\log x \geq \log\log n \geq \log\left(\frac{\log x}e\right) = 
+    \log\log x - 1. \] 
+    In other words, we can replace $\log\log n$ in the statement of the theorem 
+    with $\log\log x$. 
+
+    Moreover, we can restrict our attention to the case where $f(n) = \omega(n)$, 
+    because by Theorem~\ref{thm:4.4}, we have 
+    \[ \sum_{n\leq x} (\Omega(n) - \omega(n)) = O(x). \] 
+    Thus, the number of integers $n \leq x$ for which $\Omega(n) - \omega(n) 
+    > (\log\log n)^{1/2}$ is $o(x)$. 
+
+    {\sc Claim.} We have 
+    \begin{align*}
+        \sum_{n\leq x} \omega(n)^2 = x(\log\log x)^2 + O(x\log\log x), \\ 
+        \sum_{n\leq x} (\omega(n) - \log\log x)^2 = O(x\log\log x). 
+    \end{align*}
+
+    {\sc Proof of Claim.} For each $n \leq x$, consider the ordered pairs 
+    $(p, q)$ where $p$ and $q$ are distinct prime factors of $n$. There are 
+    $\omega(n)$ choices for $p$ and $\omega(n) - 1$ choices for $q$, which gives 
+    \[ \omega(n)(\omega(n) - 1) = \sum_{\substack{pq\,\mid\,n \\ p \neq q}} 1 
+    = \sum_{pq\,\mid\,n} 1 - \sum_{p^2\,\mid\,n} 1. \] 
+    Therefore, we have 
+    \begin{align*} 
+        \sum_{n\leq x} \omega(n)^2 - \sum_{n\leq x} \omega(n) 
+        &= \sum_{n\leq x} \omega(n)(\omega(n) - 1) \\ 
+        &= \sum_{n\leq x} \left( \sum_{pq\,\mid\,n} 1 - \sum_{p^2\,\mid\,n} 1 \right) \\
+        &= \sum_{pq \leq x} \floor*{\frac{x}{pq}} - \sum_{p^2 \leq x} \floor*{\frac{x}{p^2}}.
+    \end{align*}
+    Observe that 
+    \begin{align*} 
+        \sum_{p^2 \leq x} \floor*{\frac{x}{p^2}} 
+        \leq x \sum_{p^2 \leq x} \frac{1}{p^2} = O(x), \\ 
+        \sum_{pq \leq x} \floor*{\frac{x}{pq}} 
+        = \sum_{pq \leq x} \frac{x}{pq} + O(x), 
+    \end{align*}
+    which implies that 
+    \[ \sum_{n\leq x} \omega(n)^2 - \sum_{n\leq x} \omega(n) 
+    = \sum_{pq\leq x} \frac{x}{pq} + O(x). \tag{4.3}\label{eq:4.3} \] 
+    Next, note that 
+    \[ \left( \sum_{p\leq x^{1/2}} \frac1p \right)^{\!2} 
+    - \left( \sum_{p\leq x} \frac1{p^2} \right) 
+    \leq \sum_{pq\leq x} \frac{1}{pq} 
+    \leq \left( \sum_{p\leq x} \frac1p \right)^{\!2}. \] 
+    Furthermore, Merten's theorem (Theorem~\ref{thm:2.13}) tells us that 
+    \[ \left( \sum_{p\leq x} \frac1p \right)^{\!2} = (\log\log x)^2 
+    + O(\log\log x), \] 
+    so it follows that 
+    \[ \left( \sum_{p\leq x^{1/2}} \frac1p \right)^{\!2} 
+    = \left(\log\log x^{1/2} + O(1)\right)^2 
+    = (\log\log x - \log 2 + O(1))^2 
+    = (\log\log x)^2 + O(\log\log x). \] 
+    Thus, we obtain 
+    \[ \sum_{pq\leq x} \frac{1}{pq} = (\log\log x)^2 + O(\log\log x). 
+    \tag{4.4}\label{eq:4.4} \] 
+    By Theorem~\ref{thm:4.4}, we get 
+    \[ \sum_{n\leq x} \omega(n) = O(x\log\log x). \tag{4.5}\label{eq:4.5} \] 
+    Combining equations $\eqref{eq:4.3}$, $\eqref{eq:4.4}$, and $\eqref{eq:4.5}$ 
+    together yields 
+    \[ \sum_{n\leq x} \omega(n)^2 = x(\log\log x)^2 + O(x\log\log x), \] 
+    which proves the first equality. Now, we have 
+    \begin{align*}
+        \sum_{n\leq x} (\omega(n) - \log\log x)^2 
+        &= \sum_{n\leq x} \omega(n)^2 - 2\sum_{n\leq x} \omega(n)\log\log x 
+        + \sum_{n\leq x} (\log\log x)^2 \\ 
+        &= x(\log\log x)^2 + O(x\log\log x) - 2\log\log x \sum_{n\leq x} \omega(n)
+        + \floor{x} (\log\log x)^2 \\ 
+        &= x(\log\log x)^2 + O(x\log\log x) - 2x(\log\log x)^2 + O(\log\log x) \\
+        &\qquad + x(\log\log x)^2 + O((\log\log x)^2) \\ 
+        &= O(x\log\log x), 
+    \end{align*}
+    where the second last equality follows from Theorem~\ref{thm:4.4}. This 
+    finishes the proof of the claim. \hfill $\blacksquare$ 
+
+    Finally, as we stated in the beginning of the proof, it suffices to show that 
+    \[ E(x) := \#\{n \leq x : |\omega(n) - \log\log x| > (\log\log x)^{\frac12+\delta}\} \] 
+    is $o(x)$. By the claim, we have 
+    \[ E(x) \cdot (\log\log x)^{1+2\delta} 
+    \leq \sum_{n\leq x} (\omega(n) - \log\log x)^2 = O(x\log\log x). \] 
+    It follows that 
+    \[ E(x) = O\left( \frac{x\log\log x}{(\log\log x)^{1+2\delta}} 
+    \right) = o(x). \qedhere \] 
+\end{pf}
+
+\begin{remark}\label{remark:4.11}
+    Since the average order of $\omega(n)$ is $\log\log n$, which is asymptotic 
+    to $\log\log x$ for ``almost all'' $n$ (namely, all except $o(x)$ 
+    many $n \leq x$), we can view the sum 
+    \[ \frac1x \sum_{n\leq x} (\omega(n) - \log\log x)^2 \] 
+    as the variance of $\omega(n)$; that is, the squares of the standard deviation. 
+    In Homework 3, we will show that 
+    \[ \sum_{n\leq x} (\omega(n) - \log\log x)^2 \sim x\log\log x, \] 
+    which implies that the standard deviation of $\omega(n)$ is about 
+    $\sqrt{\log\log n}$. Now, consider the term 
+    \[ \frac{\omega(n) - \log\log n}{\sqrt{\log\log n}}. \] 
+    In 1934, Erd\H{o}s and Kac proved (without knowing probability theory) that 
+    \[ \lim_{x\to\infty} \frac1x \#\left\{ n\leq x : \frac{\omega(n) - 
+    \log\log n}{\sqrt{\log\log n}} \leq \gamma \right\} = G(\gamma), \] 
+    where we define 
+    \[ G(\gamma) := \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\gamma} e^{-t^2/2}\dd t \] 
+    to be the Gaussian normal distribution. This results forms a foundation 
+    of probabilistic number theory. 
+\end{remark}
+
+Recall that for all $n \in \N$, the divisor function $d(n)$ gives the number of 
+positive divisors of $n$. In particular, if we have $n = p_1^{a_1} \cdots p_r^{a_r}$
+where $a_1, \dots, a_r \in \N$ and $p_1, \dots, p_r$ are distinct primes, then
+\begin{align*} 
+    \omega(n) &= r, \\ 
+    \Omega(n) &= a_1 + \cdots + a_r, \\ 
+    d(n) &= (a_1 + 1) \cdots (a_r + 1). 
+\end{align*}
+
+\begin{thm}\label{thm:4.12} 
+    Given $\eps > 0$, define the set 
+    \[ S(\eps) = \{n \in \N : 2^{(1-\eps)\log\log n} < d(n) < 2^{(1+\eps)\log\log n} \}. \] 
+    Then $S(\eps)$ has asymptotic density $1$. 
+\end{thm}
+\begin{pf}
+    Note that for any $a \in \N$, we have 
+    \[ 2 \leq a + 1 \leq 2^a. \] 
+    In particular, we get 
+    \[ 2^{\omega(n)} \leq d(n) \leq 2^{\Omega(n)}, \] 
+    and the result follows from Theorem~\ref{thm:4.10}. 
+\end{pf}
+
+\begin{remark}\label{remark:4.13}
+    We saw in Theorem~\ref{thm:3.9} that 
+    \[ \sum_{n\leq x} d(n) \sim x\log x \sim \sum_{n\leq x}\log n. \] 
+    Therefore, the average order of $d(n)$ is $\log n$. However, using 
+    Theorem~\ref{thm:4.12}, one can show that for almost all $n \in \N$, the 
+    divisor function $d(n)$ satisfies 
+    \[ (\log n)^{\log 2 - \eps} < d(n) < (\log n)^{\log 2 + \eps} \] 
+    for any $\eps > 0$. 
+\end{remark}

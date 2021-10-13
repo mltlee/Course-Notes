@@ -1,0 +1,51 @@
+\section{Quadratic Reciprocity}\label{sec:5}
+
+\subsection{Euler's Totient Function}\label{subsec:5.1}
+
+\begin{defn}\label{def:5.1}
+    For $n \in \N$, we define {\bf Euler's totient function} $\phi(n)$ to be 
+    the number of integers $m$ such that $1 \leq m \leq n$ and $\gcd(m, n) = 1$. 
+    That is, we have 
+    \[ \phi(n) = \#\{1 \leq m \leq n : \gcd(m, n) = 1\}. \] 
+    A {\bf reduced residue system modulo $n$} is a subset $R \subseteq \Z$ such that 
+    \begin{enumerate}[(i)]
+        \item $\gcd(r, n) = 1$ for each $r \in R$; 
+        \item $R$ contains $\phi(n)$ elements; and 
+        \item no two elements of $R$ are congruent modulo $n$. 
+    \end{enumerate}
+\end{defn}
+
+\begin{thm}\label{thm:5.2}
+    Let $a, n \in \N$ with $\gcd(a, n) = 1$. Then 
+    \[ a^{\phi(n)} \equiv 1 \pmod n. \] 
+\end{thm}
+\begin{pf}
+    Let $\{c_1, \dots, c_{\phi(n)}\}$ be a reduced residue system modulo $n$. 
+    Since $\gcd(a, n) = 1$, $\{ac_1, \dots, ac_{\phi(n)}\}$ is also a 
+    reduced residue system modulo $n$. Hence, we have 
+    \[ c_1 \cdots c_{\phi(n)} \equiv ac_1 \cdots ac_{\phi(n)} \pmod n. \] 
+    In particular, we see that 
+    \[ c_1 \cdots c_{\phi(n)} \equiv a^{\phi(n)} c_1 \cdots c_{\phi(n)} \pmod n. \] 
+    Since $c_1, \dots, c_{\phi(n)}$ are all coprime with $n$, it follows that 
+    \[ a^{\phi(n)} \equiv 1 \pmod n. \qedhere \] 
+\end{pf}
+
+Notice that when $p$ is prime, we have $\phi(p) = p-1$, so we immediately 
+obtain the following corollary. 
+
+\begin{cor}[Fermat's little theorem]\label{cor:5.3}
+    Let $p$ be a prime. For any $a \in \Z$ with $p \nmid a$, we have 
+    \[ a^{p-1} \equiv 1 \pmod p. \] 
+\end{cor}
+
+\begin{thm}[Wilson]\label{thm:5.4}
+    Consider the element $x^{p-1} - 1 \in (\Z/p\Z)[x]$. By Fermat's little theorem 
+    and using the fact that $\Z/p\Z$ is a field, this factors as 
+    \[ x^{p-1} - 1 \equiv (x-1)(x-2) \cdots (x-(p-1)) \pmod p \] 
+    in $(\Z/p\Z)[x]$, as $1, 2, \dots, p-1$ are all roots. Looking at the constant 
+    coefficient, we find that 
+    \[ -1 \equiv (-1)(-2) \cdots (-(p-1)) \pmod p. \] 
+    Therefore, we have $-1 \equiv (-1)^{p-1} (p-1)! \pmod p$. When $p = 2$, 
+    the result holds since $-1 \equiv 1 \pmod 2$; otherwise, $p$ is odd, 
+    so $-1 \equiv (p-1)! \pmod p$ as required. 
+\end{thm}
