@@ -69,7 +69,7 @@ For example, if $n = 2^{10} \cdot 3^2 \cdot 7$, then $\Omega(n) = 10 + 2 + 1
     {\sc Proof of Claim.} Applying Abel's summation formula with $a_n = c_n$ 
     and $f(u) = \log u$, we have 
     \[ \Theta_k(x) = \sum_{n \leq x} c_n \log n = \Pi_k(x) \log x 
-    + \int_1^x \frac{\Pi_k(u)}{u}\dd u. \] 
+    - \int_1^x \frac{\Pi_k(u)}{u}\dd u. \] 
     Observe that 
     \[ \Pi_k(x) \leq k!\tau_k(x) \leq k!x, \] 
     so $\Pi_k(u) = O(u)$, and hence 
@@ -437,7 +437,7 @@ In this section, we'll work towards proving that they have normal order $\log\lo
     \log\log n}{\sqrt{\log\log n}} \leq \gamma \right\} = G(\gamma), \] 
     where we define 
     \[ G(\gamma) := \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\gamma} e^{-t^2/2}\dd t \] 
-    to be the Gaussian normal distribution. This results forms a foundation 
+    to be the Gaussian normal distribution. This result forms a foundation 
     of probabilistic number theory. 
 \end{remark}
 
