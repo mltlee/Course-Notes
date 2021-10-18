@@ -85,7 +85,7 @@ Now, we can prove part (1) of Theorem 12.4.
 
 \begin{thm}
     Let $R \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k)$ and $V_i 
-    \cong k^{n_i \times 1}$. If $N$ is a simple left $R$-mdoule, then there 
+    \cong k^{n_i \times 1}$. If $N$ is a simple left $R$-module, then there 
     exists some $i = 1, \dots, s$ such that $N \cong V_i$ as $R$-modules. 
     In particular, $R$ has exactly $s$ simple left $R$-modules up to 
     isomorphism. 
@@ -272,3 +272,177 @@ Now, it only remains to prove Lemma 14.5.
     $\bigoplus_{\alpha \in Y_0} \pi(V_\alpha)$, which means that 
     $\pi(V_{\alpha_0}) \subseteq N$, a contradiction. \qed 
 \end{enumerate}
+
+\section{October 18, 2021}
+We were looking at rings of the form 
+\[ R \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k). \] 
+So far, we have shown the following facts. 
+\begin{itemize}
+    \item Up to isomorphism of $R$-modules, $R$ has exactly $s$ simple left 
+    $R$-modules $V_1, \dots, V_s$. 
+    \item We have the decomposition ${}_R R \cong V_1^{n_1} \oplus \cdots 
+    \oplus V_s^{n_s}$. 
+    \item The ring $R$ is semisimple; that is, every $R$-module can be 
+    written as the direct sum of simple submodules. 
+\end{itemize}
+
+Observe that we have (2) of Theorem 12.4, because we already know that 
+\[ k[G] \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k) \] 
+where $s$ is the number of conjugacy classes of $G$ so that $k[G]$ is a 
+semisimple ring. It only remains to prove (3), the uniqueness part.
+That is, if $V_1^{a_1} \oplus \cdots \oplus V_s^{a_s} \cong V_1^{b_1} 
+\oplus \cdots \oplus V_s^{b_s}$ is an $R$-module isomorphism, then 
+$a_i = b_i$ for all $i = 1, \dots, s$. First, we will make a remark. 
+
+\begin{remark}
+    If $R$ is a $k$-algebra and $M$ and $N$ are left $R$-modules, then 
+    $\Hom_R(M, N)$ is a $k$-vector space. Indeed, for a homomorphism 
+    $\Phi : M \to N$ and $\lambda \in k$, we can define scalar multiplication by 
+    \[ (\lambda \cdot \Phi)(m) := \lambda \cdot \Phi(m). \] 
+    Note that this only works because $k$ is central; in the general case where 
+    $R$ is not a $k$-algebra, we can only say that $\Hom_R(M, N)$ is an abelian 
+    group. 
+\end{remark}
+
+{\sc Proof of uniqueness.} Suppose that 
+\[ f : V_1^{a_1} \oplus \cdots \oplus V_s^{a_s} \to V_1^{b_1} \oplus \cdots 
+\oplus V_s^{b_s} \] 
+is an $R$-module isomorphism. Then for each $i = 1, \dots, s$, we have 
+\[ \Hom_R(V_1^{a_1} \oplus \cdots \oplus V_s^{a_s}, V_i) 
+\cong \Hom_R(V_1^{b_1} \oplus \cdots \oplus V_s^{b_s}, V_i) \] 
+as $k$-vector spaces. Looking at the left-hand side, we have 
+\[ \Hom_R(V_1^{a_1} \oplus \cdots \oplus V_s^{a_s}, V_i) 
+\cong \prod_{j=1}^s \Hom_R(V_j, V_i) \cong \Hom_R(V_i, V_i)^{a_i} \cong k^{a_i}, \] 
+where the first isomorphism is due to (1) of Remark 13.2, and the second isomorphism
+is because 
+\[ \Hom_R(V_j, V_i) = \begin{cases} (0) & \text{if } j \neq i, \\ 
+    k & \text{if } j = i. \end{cases} \] 
+Similarly, we find that 
+\[ \Hom_R(V_1^{b_1} \oplus \cdots \oplus V_s^{b_s}, V_i) \cong k^{b_i}. \] 
+This gives $k^{a_i} \cong k^{b_i}$, and hence $a_i = b_i$ for all $i = 1, \dots, s$. \qed
+
+Now, we're ready to move on to character theory. Recall that in our 
+usual setting, we have a finite group $G$ and an algebraically closed field 
+$k$ such that $\ch(k) \nmid |G|$. Let $V$ be a finite-dimensional $k[G]$-module. 
+Then $k[G]$ has $s$ pairwise non-isomorphic $k[G]$-modules $V_1, \dots, V_s$, 
+where $s$ is the number of conjugacy classes of $G$. Then $V$ gives us a 
+group homomorphism 
+\[ \rho_V : G \to \GL(V) \cong \GL_n(k) \] 
+where $n = \dim_k(V)$, with the rule 
+\[ \rho_V(g)(v) := g \cdot v. \] 
+Recall that linear maps $T : V \to V$ have a trace $\Tr(T)$. 
+
+\begin{remark}
+    If $\{v_1, \dots, v_n\}$ is a basis for $V$, then we can write 
+    \begin{align*} 
+        Tv_j &= \sum_{i=1}^n a_{ij} v_i, & \Tr(T) &= \sum_{i=1}^n a_{ii}. 
+    \end{align*}
+\end{remark}
+
+\begin{defn}
+    We define the {\bf character} of $V$ as the map $\chi_V : G \to k$
+    given the rule 
+    \[ \chi_V(g) := \Tr(\rho_V(g)). \] 
+\end{defn}
+
+\begin{exmp}
+    Let $G = S_3$, and let $V = \C e_1 \oplus \C e_2 \oplus \C e_3$, which is a 
+    $3$-dimensional vector space. We can give $V$ a structure as a 
+    $\C[S_3]$-module by the action 
+    \[ \sigma \cdot e_j = e_{\sigma(j)}, \] 
+    and hence 
+    \[ \sigma(\alpha e_1 + \beta e_2 + \gamma e_3) = \alpha e_{\sigma(1)} 
+    + \beta e_{\sigma(2)} + \gamma e_{\sigma(3)}. \] 
+    In particular, we are taking the usual action of $S_3$ on $\{1, 2, 3\}$, and 
+    we're extending it to a vector space. Now, we'll determine the representation
+    $\rho_V : G \to \GL_3(\C) \cong \GL(V)$. We have 
+    \begin{align*}
+        \rho_V(\id) &= \begin{pmatrix} 1&0&0\\0&1&0\\0&0&1 \end{pmatrix}, & 
+        \rho_V((12)) &= \begin{pmatrix} 0&1&0\\1&0&0\\0&0&1 \end{pmatrix}, & 
+        \rho_V((13)) &= \begin{pmatrix} 0&0&1\\0&1&0\\1&0&0 \end{pmatrix}, \\ 
+        \rho_V((23)) &= \begin{pmatrix} 1&0&0\\0&0&1\\0&1&0 \end{pmatrix}, &
+        \rho_V((123)) &= \begin{pmatrix} 0&0&1\\1&0&0\\0&1&0 \end{pmatrix}, &
+        \rho_V((132)) &= \begin{pmatrix} 0&1&0\\0&0&1\\1&0&0 \end{pmatrix}.
+    \end{align*}
+    Now, we can take a look at the character $\chi_V : G \to \C$; we see that 
+    \begin{align*}
+        \chi_V(\id) &= 3, & \chi_V((12)) &= 1, & \chi_V((13)) &= 1, \\ 
+        \chi_V((23)) &= 1, & \chi_V((123)) &= 0, & \chi_V((132)) &= 0. 
+    \end{align*}
+    Observe that $\chi_V(\sigma)$ gives us the number of fixed points of 
+    $\sigma \in S_3$. Moreover, if $\chi_V(\sigma) = \chi_V(\tau)$, then 
+    $\sigma$ and $\tau$ are in the same conjugacy class. 
+\end{exmp}
+
+Recall that $f : G \to k$ is a class function if it is constant when restricted 
+to conjugacy classes; that is, $f(xgx^{-1}) = f(g)$ for all $g, x \in G$. 
+
+\begin{thm}
+    Let $V$ be a finite-dimensional $k[G]$-module. Then $\chi_V : G \to k$ is a 
+    class function. 
+\end{thm}
+\begin{pf}
+    Since $\rho_V : G \to \GL(V)$ is a group homomorphism, we have 
+    \[ \rho_V(xgx^{-1}) = \rho_V(x) \rho_V(g) \rho_V(x)^{-1}. \] 
+    It follows that 
+    \[ \Tr(\rho_V(xgx^{-1})) = \Tr(\rho_V(x) \rho_V(g) \rho_V(x)^{-1}) 
+    = \Tr(\rho_V(g)), \] 
+    where the last equality is because similar matrices preserve trace. 
+    In particular, we have $\chi_V(xgx^{-1}) = \chi_V(g)$ for all $g, x \in G$, 
+    so $\chi_V$ is a class function. 
+\end{pf}
+
+\begin{remark}~
+    \begin{enumerate}[(1)]
+        \item If $V \cong W$ as $k[G]$-modules, then $\chi_V = \chi_W$. 
+        (In fact, in the case that $V$ and $W$ are finite-dimensional, the 
+        converse is also true.)
+        \item If $W_1$ and $W_2$ are $k[G]$-modules, then 
+        $\chi_{W_1\oplus W_2} = \chi_{W_1} + \chi_{W_2}$. By induction, we 
+        also see that if $W_1, \dots, W_r$ are $k[G]$-modules, then 
+        \[ \chi_{W_1 \oplus \cdots \oplus W_r} = \sum_{i=1}^r \chi_{W_i}. \] 
+    \end{enumerate}
+\end{remark}
+\begin{pf}~
+    \begin{enumerate}[(1)]
+        \item Let $f : V \to W$ be a $k[G]$-module isomorphism. Let 
+        $\{v_1, \dots, v_n\}$ be a basis for $V$ as a $k$-vector space. Then 
+        \[ \chi_V(g) = \Tr(a_{ij}) = a_{11} + a_{22} + \cdots + a_{nn}, \] 
+        where $g \cdot v_j = \sum_{i=1}^n a_{ij} v_i$. Notice that 
+        $\{f(v_1), \dots, f(v_n)\}$ is a basis for $W$ as a $k$-vector space, 
+        and $f$ is $k[G]$-linear, so 
+        \[ g \cdot f(v_j) = f(g \cdot v_j) = f \left( \sum_{i=1}^n 
+        a_{ij} v_i \right) = \sum_{i=1}^n a_{ij} f(v_i). \] 
+        Now, we see that $\chi_W(g) = \Tr(a_{ij}) = a_{11} + \cdots + a_{nn} 
+        = \chi_V(g)$. 
+        \item Write $W = W_1 \oplus W_2$. Let $\{v_1, \dots, v_m\}$ be a basis 
+        for $W_1$, and let $\{v_{m+1}, \dots, v_n\}$ be a basis for $W_2$. 
+        Observe that 
+        \[ \rho_W(g)(v_i) = \begin{cases} \rho_{W_1}(g)(v_i) & \text{if } 
+            i = 1, \dots, m, \\ \rho_{W_2}(g)(v_i) & \text{if } i = 
+            m+1, \dots, n. \end{cases} \] 
+        Then with respect to the basis $\{v_1, \dots, v_n\}$, we have 
+        \[ \rho_W(g) = \left(\begin{array}{@{}c|c@{}}
+            \rho_{W_1}(g) & 0 \\\hline
+            0 & \rho_{W_2}(g)
+          \end{array}\right). \]
+        In particular, we find that $\chi_W(g) = \chi_{W_1}(g) + \chi_{W_2}(g)$. 
+        \qedhere 
+    \end{enumerate}
+\end{pf}
+
+These results are important to us because if $V$ is a finite-dimensional 
+$k[G]$-module, then $V$ decomposes as 
+\[ V \cong V_1^{a_1} \oplus \cdots \oplus V_s^{a_s}, \] 
+where each $a_i \geq 0$, $V_1, \dots, V_s$ are simple modules, and $s$ 
+is the number of conjugacy classes of $G$. Then 
+\[ \chi_V = a_1 \chi_{V_1} + a_2 \chi_{V_2} + \cdots + a_s \chi_{V_s}. \] 
+Moreover, if $V = {}_{k[G]} k[G]$, then we have seen that 
+\[ V \cong V_1^{n_1} \oplus \cdots \oplus V_s^{n_s}, \] 
+where $k[G] \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k)$. Recall that 
+\[ \chi_V(g) = \begin{cases} |G| & \text{if } g = 1, \\ 0 & \text{if } g \neq 1, 
+\end{cases} \] 
+which gives us the nice fact that if $k[G] \cong M_{n_1}(k) \times \cdots \times 
+M_{n_s}(k)$, then 
+\[ \left( \sum_{i=1}^s n_i \chi_{V_i} \right)(g) = \sum_{i=1}^s n_i \chi_{V_i}(g) 
+= \begin{cases} |G| & \text{if } g = 1, \\ 0 & \text{if } g \neq 1. \end{cases} \]

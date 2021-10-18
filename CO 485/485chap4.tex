@@ -426,7 +426,7 @@ We focus our attention towards minimizing the function $u^u B^3$. The calculus
 details of optimizing this function are quite tedious; let's take a shortcut 
 and try 
 \[ \ln B = c\sqrt{\ln N \ln\ln N}. \] 
-for some constant $c$. Then $B = \exp(c\sqrt{\ln N \ln\ln N})$, which implies that 
+for some constant $c$. Then $B = e^{c\sqrt{\ln N \ln\ln N}}$, which implies that 
 \[ u = \frac{\ln N}{\ln B} = \frac{\ln N}{c\sqrt{\ln N \ln\ln N}} = 
 \frac{\sqrt{\ln N}}{c\sqrt{\ln \ln N}}. \] 
 This gives 
@@ -435,15 +435,17 @@ This gives
 and hence 
 \[ u\ln u = \left( \frac1{2c} + o(1) \right) \sqrt{\ln N \ln\ln N}. \] 
 Finally, we see that 
-\[ u^u = \exp\left( \left( \frac1{2c} + o(1) \right) \sqrt{\ln N \ln\ln N} \right). \] 
+\[ u^u = e^{(\frac1{2c} + o(1)) \sqrt{\ln N \ln\ln N}}. \] 
 Therefore, the complexity of the random squares algorithm is bounded by 
-\[ \exp\left((C + o(1)) \sqrt{\ln N \ln\ln N}\right) \] 
+$e^{(C + o(1)) \sqrt{\ln N \ln\ln N}}$
 for some constant $C$. In fact, using the above estimates more precisely in the 
 actual algorithm cost function, we can get the more accurate bound of 
-\[ O \left( \exp\left(\left( \max \left( 2c + \frac{1}{2c}, 3c \right) + o(1) \right) 
-\sqrt{\ln N \ln\ln N} \right) (\log_2 N)^3 \right), \] 
+$O(e^{(\max(2c + \frac{1}{2c},\,3c) + o(1)) \sqrt{\ln N \ln\ln N}} (\log_2 N)^3)$,
 which is minimized when $c = 1/2$. Thus, we can refine our estimate to 
-\[ O \left( \exp\left( (2 + o(1)) \sqrt{ \ln N \ln\ln N} \right) (\log_2 N)^3 \right). \] 
+$O( e^{(2 + o(1)) \sqrt{ \ln N \ln\ln N}} (\log_2 N)^3)$. 
+Furthermore, since 
+\[ (\log_2 N)^3 = e^{3\ln(\log_2 N)} = e^{o(1) \sqrt{\ln N \ln\ln N}}, \] 
+we can write our estimate as $O(e^{(2+o(1))\sqrt{\ln N \ln\ln N}})$. 
 
 \begin{exercise}
     Our complexity analysis of the random squares algorithm implicitly 
@@ -451,3 +453,127 @@ which is minimized when $c = 1/2$. Thus, we can refine our estimate to
     which as we discussed before, does not have to be the case in general. 
     What is the impact of removing this assumption from our complexity analysis? 
 \end{exercise}
+
+\subsection{The $L$-function and Some Number Theory Facts}
+We estimated the complexity of the random squares algorithm as 
+$O(e^{(2+o(1))\sqrt{\ln N \ln\ln N}})$. To ease our notation, we will introduce 
+the $L$-function. 
+
+\begin{defn}
+    For real numbers $0 \leq \alpha \leq 1$ and $c > 0$, we define the 
+    {\bf $L$-function} as 
+    \[ L_N[\alpha, c] = e^{(c+o(1))(\ln N)^{\alpha}(\ln\ln N)^{1-\alpha}}. \] 
+\end{defn}
+
+In particular, the complexity of the random squares algorithm can be written as 
+$L[1/2, 2]$. More generally, 
+\begin{itemize}
+    \item $L_N[0, c]$ captures complexities polynomial in $\log_2 N$; 
+    \item $L_N[1, c]$ captures complexities exponential in $\log_2 N$; and 
+    \item for $0 < \alpha < 1$, $L_N[\alpha, c]$ captures complexities 
+    subexponential in $\log_2 N$. 
+\end{itemize}
+
+We define $\Omega(n)$ as the total number of prime factors (with multiplicity) 
+of an integer $n \geq 2$. That is, if $n = \prod_{i=1}^s p_i^{\alpha_i}$, then 
+$\Omega(n) = \sum_{i=1}^s \alpha_i$. In our estimate of the complexity of 
+checking whether an integer is $B$-smooth, we used the upper bound 
+$\Omega(n) \leq \log_2 N$. Note that this upper bound is attained when 
+$n = 2^{\alpha}$. For general $n$, we have 
+\[ \sum_{x\leq n} \Omega(x) = n\ln\ln n + Cx + o(x), \] 
+where $C$ is some constant, yielding the approximation 
+\[ \Omega(N) \approx \ln\ln N. \tag{4.1} \] 
+Another useful and related formula is 
+\[ \sum_{p\leq x} \frac1p = \ln\ln x + Dx + o(1), \] 
+where $D$ is a constant.\footnote[1]{In fact, $D$ is known as Merten's constant, and 
+$C$ above is $D + \sum_p 1/[p(p-1)]$.} This gives another approximation 
+\[ \sum_{p\leq x} \frac1p \approx \ln\ln x. \tag{4.2} \] 
+We refer to Chapter XXII in \cite{bams/1183493592} for the proofs of these facts.
+
+\subsection{The Quadratic Sieve Algorithm and its Complexity}
+It turns out that the random squares algorithm can be significantly sped up if 
+
+\begin{enumerate}[(1)]
+    \item the $x^2 \pmod N$ are carefully chosen rather than at random; 
+    \item a sieving method is applied to identify smooth integers among 
+    $x^2 \pmod N$; and 
+    \item optimized algorithms are used at the linear algebra stage. 
+\end{enumerate}
+
+The resulting algorithm is called the quadratic sieve algorithm, whose 
+complexity for finding a factor of $N$ can be estimated as 
+$O(e^{(1+o(1))\sqrt{\ln N \ln\ln N}})$; see \cite{Pomerance96atale} for the 
+full proof. We will briefly explain the details of each step below. 
+
+First of all, rather than choosing $\sqrt N < x < N$ at random and checking 
+whether $x^2 \pmod N$ is $B$-smooth as in the random squares algorithm, the 
+quadratic sieve algorithm identifies $B$-smooth integers among 
+\[ q(w) = (w + \lfloor N \rfloor)^2 - N, \] 
+for positive integers $w$ until sufficiently many relations are generated. 
+One immediate improvement to notice here is that running into a smooth integer 
+is more likely simply because the pool consists of integers roughly the same 
+size as $\sqrt N$, rather than $N$. More significantly, the quadratic sieve 
+algorithm avoids exhaustively dividing each $q(w)$ by each prime $p \in \FB(B)$; 
+instead, it performs division operations only on the integers that are likely 
+to be $B$-smooth. We now make two observations. 
+
+\begin{enumerate}[(1)]
+    \item Let $p$ be an odd prime. If $N \in \QR_p$, then the solution set 
+    of the quadratic equation $q(x) \equiv 0 \pmod p$ is 
+    $\{\pm\alpha - \lfloor N \rfloor \pmod p\}$, where $\alpha^2 \equiv N \pmod p$. 
+    Note that $\alpha$ can be efficiently determined. In the case that 
+    $p \equiv 3 \pmod 4$ and $N \in \QR_p$, then one can set $\alpha = 
+    N^{(p+1)/4}$ because we have 
+    \[ \alpha^2 \equiv \left( N^{(p+1)/4} \right)^{\!2} \equiv N^{(p-1)/2} N 
+    \equiv \left( \frac{N}{p} \right) N \equiv N \pmod p, \] 
+    as required. For the more involved case where $p \equiv 1 \pmod 4$, see the 
+    \href{https://en.wikipedia.org/wiki/Tonelli%E2%80%93Shanks_algorithm}
+    {Tonelli-Shanks algorithm}. The case where $p = 2$ is trivial. 
+    \item For a prime $p$, let $w \in \Z$ satisfy $q(w) \equiv 0 \pmod p$. 
+    Then for all $k \geq 0$, we have $q(w + kp) \equiv 0 \pmod p$. 
+\end{enumerate}
+
+We now describe the steps of the quadratic sieve algorithm. 
+\begin{enumerate}
+    \item Choose $B = e^{c\sqrt{\ln N \ln\ln N}}$ for some $c > 0$ and define 
+    $u = \ln\sqrt N / \ln B$ so that $\Phi(\sqrt N, B) \approx 1/u^u$. 
+    \item Let $p_i \in \FB(B)$. If $\gcd(p_i, N) > 1$, then output $p_i$ 
+    as a nontrivial factor of $N$. Otherwise, and if $N \in \QR_{p_i}$, then 
+    find $w_{i,1}, w_{i,2} \in \Z_{p_i}^*$ satisfying $q(w_{i,1}) \equiv 
+    q(w_{i,2}) \equiv 0 \pmod{p_i}$. Note that when $p_i = 2$, we have 
+    $w_{i,1} = w_{i,2}$. 
+    \item Let $X_1 = \max_i q(w_{i,j})$ and choose an integer $X_2 > X_1$ such that 
+    $X = X_2 - X_1 \approx \pi(B) u^u$. Note that $X_1 = N^{1/2 + o(1)}$, and that 
+    the number of $B$-smooth integers in the interval $[X_1, X_2]$ can be estimated 
+    as $X/u^u \approx \pi(B)$. 
+    \item Initialize an empty table $T$ indexed by the integers from $X_1$ to $X_2$. 
+    \item For each $p_i \in \FB(B)$ with $N \in \QR_{p_i}$ and each $j = 1,2$, 
+    iterate through integers $k$ such that $z = q(w_{i,j} + kp_i)$ and $X_1 
+    \leq z \leq X_2$. If $T[z]$ is empty, then initialize $T[z] \gets z$. Then, 
+    determine the largest $\alpha_i \geq 1$ such that $p^{\alpha_i} \mid z$ 
+    and update $T[z] \gets T[z]/p_i^{\alpha_i}$. Associate the pair $[p_i, \alpha_i]$
+    to the index $z$. 
+    \item At the end of the process, declare each $X_1 \leq z \leq X_2$ with 
+    $T[z] = 1$ as a $B$-smooth integer and output the corresponding relation 
+    $z = \prod_{i=1}^{\pi(B)} p_i^{\alpha_i}$. By construction, we would expect 
+    to find approximately $\pi(B)$ relations, and by (4.2), the total 
+    number of iterations can be estimated to be 
+    \[ \sum_{p\leq B} \frac{X}{p} \approx X \ln\ln B \approx \pi(B) u^u \ln\ln B. \] 
+    Moreover, we expect to perform about $\Omega(\sqrt N) \approx \ln\ln \sqrt N$ 
+    by our estimate in (4.1). As a result, a total of approximately $\pi(B)$ 
+    relations can be explicitly identified and the complexity of this relation 
+    collection stage can be estimated as $\pi(B) u^u \ln\ln B \ln\ln \sqrt N$.
+    \item If sufficiently many relations (approximately $\pi(B)$) are collected, 
+    then proceed to the linear algebra stage, and then to the factor finding 
+    stage, as before. The linear algebra benefits from dealing with sparse 
+    and boolean matrices; the complexity can be estimated as $\pi(B)^{2+o(1)}$ 
+    rather than $\pi(B)^3$ by using Block-Lanczos or Block-Wiedemann type algorithms. 
+\end{enumerate}
+
+Finally, adapting our complexity analysis arguments above for the random squares 
+algorithm to the quadratic sieve algorithm, we can deduce the estimate 
+\[ Bu^u e^{o(1) \sqrt{\ln N \ln\ln N}} + B^2, \] 
+where $B = e^{c\sqrt{\ln N \ln \ln N}}$ and $u^u \approx e^{(\frac{1}{4c} + o(1))
+\sqrt{\ln N \ln\ln N}}$, which is optimized when $c = 1/2$ and yields the complexity 
+estimate 
+\[ L[1/2, 1] = e^{(1+o(1))\sqrt{\ln N \ln\ln N}}. \] 
