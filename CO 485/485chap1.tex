@@ -23,7 +23,7 @@ Of course, we do not see any trace of the secret key in the certificate.
 For a concrete example, the Bank of Canada is using the RSA public key cryptosystem, and its public key consists of two integers $N$ and $e$, which are called the {\bf public modulus} and the {\bf public exponent}, respectively. The certificate encodes these two integers (see \href{https://en.wikipedia.org/wiki/ASN.1}{ASN.1}), and displays them using hexadecimal (base-16) representation. For decoding, one can copy and paste the encoded public key to an ASN.1 decoder. For instance, this \href{https://lapo.it/asn1js/}{ASN.1 JavaScript decoder} can be used to decode the hexadecimal and integer values of $N$ and $e$.
 
 \begin{exercise*}
-Find the public key modulus and exponent of the \href{https://uwaterloo.ca/}{University of Waterloo} and \href{google.ca}{google.ca}.
+Find the public key modulus and exponent of the \href{https://uwaterloo.ca/}{University of Waterloo} and \href{https://google.ca}{google.ca}.
 \end{exercise*}
 
 We should note two important properties of the Bank of Canada’s public key values. 
