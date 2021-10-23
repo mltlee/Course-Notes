@@ -1,0 +1,351 @@
+\section{October 20, 2021}
+Let $G$ be a finite group, and let $k$ be an algebraically closed field with 
+$\ch(k) \nmid |G|$. Then 
+\[ k[G] \cong \prod_{i=1}^s M_{n_i}(k) \] 
+as $k$-algebras, where $s$ is the number of conjugacy classes of $G$, and 
+$\sum_{i=1}^s n_i^2 = |G|$. Moreover, $k[G]$ has $s$ pairwise non-isomorphic 
+simple modules (or irreducible representations) $V_1, \dots, V_s$, with 
+$V_i \cong k^{n_i\times 1}$. 
+
+Moreover, every left $k[G]$-module $V$ decomposes as 
+\[ V \cong V_1^{a_1} \oplus \cdots \oplus V_s^{a_s}, \] 
+and this decomposition is unique. We also have a representation 
+\[ \rho_V : G \to \GL(V), \] 
+which gives rise to the character $\chi_V : G \to k$ of $V$, with the formula 
+\[ \chi_V = \sum_{i=1}^s a_i \chi_{V_i}. \] 
+Notice that $\chi_V(1) = \Tr(\rho_V(1)) = \Tr(I_n) = n = \dim_k(V)$, so 
+by taking the module $L = {}_{k[G]} k[G]$, we have 
+\[ \chi_L = \sum_{i=1}^s n_i \chi_{V_i}, \] 
+and for $g \in G$, we saw in the previous lecture that  
+\[ \chi_L(g) = \begin{cases} 
+    |G| & \text{if $g = 1$,} \\ 
+    0 & \text{if $g \neq 1$.}
+\end{cases} \] 
+What are the irreducible representations of a finite abelian group $G$? 
+Assume that $|G| = n$, and $k$ is an algebraically closed field with $\ch(k) 
+\nmid n$. We see that $k[G] \cong k^n$, which implies that there are $n$ 
+inequivalent irreducible representations. Now, since $G$ is abelian, we can write 
+\[ G \cong C_{d_1} \times C_{d_2} \times \cdots \times C_{d_r}, \] 
+where $C_j$ denotes the cyclic group of order $j$. We can think of this as 
+\[ G \cong \langle x_1 \mid x_1^{d_1} = 1 \rangle \times \cdots \times 
+\langle x_r \mid x_r^{d_r} = 1 \rangle. \] 
+We know all simple $k[G]$-modules are one-dimensional as $k$-vector spaces. 
+In particular, if $V$ is simple, then 
+\[ \rho_V : G \to \GL_1(k) \cong k^* = k \setminus \{0\}. \] 
+This means that if $\rho_V(x_i) = \omega_i \in k^*$, then 
+\[ 1 = \rho_V(1) = \rho_V(x_i^{d_i}) = \omega_i^{d_i}. \] 
+That is, each $\omega_i$ is a $d_i$-th root of unity, so there are 
+$d_1\cdots d_r = |G|$ choices for $\rho_V$. On the other hand, we already know 
+that there are $d_1 \cdots d_r$ pairwise inequivalent irreducible representations,
+so these are in fact all of them. In this case, notice that $\chi_V = \rho_V$. 
+
+\begin{exmp}
+    Suppose that $G_1 = C_2 \times C_2 = \langle x \mid x^2 = 1 \rangle 
+    \times \langle y \mid y^2 = 1 \rangle$ and $G_2 = C_4 = \langle z \mid 
+    z^4 = 1 \rangle$. We compute the character tables of $G_1$ and $G_2$; 
+    namely, the characters of the representations. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|}
+            \hline
+            G_1    & 1 & x  & y  & xy \\ \hline
+            \chi_1 & 1 & 1  & 1  & 1  \\ \hline
+            \chi_2 & 1 & 1  & -1 & -1 \\ \hline
+            \chi_3 & 1 & -1 & 1  & -1 \\ \hline
+            \chi_4 & 1 & -1 & -1 & 1  \\ \hline
+        \end{array} & & 
+        \begin{array}{|c|c|c|c|c|}
+            \hline
+            G_2    & 1 & z  & z^2  & z^3 \\ \hline
+            \chi_1 & 1 & 1  & 1    & 1  \\ \hline
+            \chi_2 & 1 & i  & -1   & -i \\ \hline
+            \chi_3 & 1 & -1 & 1    & -1 \\ \hline
+            \chi_4 & 1 & -i & -1   & -i  \\ \hline
+        \end{array} 
+    \end{align*}
+\end{exmp}
+
+\begin{exmp}
+    Let $G = S_3$ and $k = \C$. We recall that $\C[S_3] \cong \C \times 
+    \C \times M_2(\C)$. Then $S_3$ has three pairwise inequivalent irreducible 
+    representations, and these have dimensions $1$, $1$, and $2$ 
+    respectively. Moreover, recall that for a finite-dimensional 
+    $k[G]$-module $V$, its character $\chi_V : G \to k$ is a class function. 
+    Therefore, to compute the character table of $S_3$, it suffices to 
+    consider the values of the characters on each conjugacy class. 
+
+    First, the identity element is always sent to the dimension of the 
+    representation, so we obtain $\chi_1(\id) = \chi_2(\id) = 1$ and 
+    $\chi_3(\id) = 2$. Since $(12)^2 = \id$, we have $\chi_i((12))^2 
+    = \chi_i(\id) = 1$ for $i \in \{1, 2\}$, yielding 
+    $\chi_1((12)) = 1$ and $\chi_2((12)) = -1$. 
+
+    Next, recall from Assignment 3 Question 1 that the one-dimensional 
+    irreducible representations come from $G/G'$. More precisely, if 
+    $V$ is a simple one-dimensional $k[G]$-module, then we obtain the following 
+    commutative diagram, where we note that $k^*$ is an abelian group. 
+    \begin{center}
+        \begin{tikzcd}
+            G \arrow[rr, "\rho_V"] \arrow[dd, "\pi"']  &  & \GL(V) \cong k^* \\
+                                                    &  &   \\
+            {G/G'} \arrow[rruu, "\tilde\rho_V"', dotted] &  &  
+        \end{tikzcd}
+    \end{center}
+    In our case, we have $S'_3 = A_3$ and $S_3/A_3 = C_2$, which gives us 
+    the following diagram. 
+    \begin{center}
+        \begin{tikzcd}
+            G \arrow[rr, "\rho_V"] \arrow[dd, "\pi"']  &  & \GL(V) \cong k^* \\
+                                                    &  &   \\
+            C_2 \arrow[rruu, "\tilde\rho_V"', dotted] &  &  
+        \end{tikzcd}
+    \end{center}
+    In particular, everything in $A_3$ has to be in the kernel and
+    gets sent to $1$, so $\chi_1((123)) = \chi_2((123)) = 1$. 
+    The last row is more difficult to find directly. However, if we know 
+    everything in the character table except for the last row, then there's an 
+    easy way to compute it. Let 
+    \[ \chi_L = \chi_1 + \chi_2 + 2\chi_3. \] 
+    We recall that $\chi_L(\sigma) = 0$ for all $\sigma \neq \id$; in particular, 
+    we have $\chi_L((12)) = \chi_L((123)) = 0$. This gives 
+    \[ \chi_1((12)) + \chi_2((12)) + 2\chi_3((12)) = 0, \] 
+    and rearranging this, we obtain 
+    \[ \chi_3((12)) = -\frac12(\chi_1((12)) + \chi_2((12)) 
+    = -\frac12(1 + (-1)) = 0. \] 
+    Similarly, we find that $\chi_3((123)) = -1$, so we have now completed the 
+    character table of $S_3$. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|}
+            \hline
+            S_3    & [\id] & [(12)] & [(123)] \\ \hline
+            \chi_1 & 1     & 1      & 1       \\ \hline
+            \chi_2 & 1     & -1     & 1       \\ \hline
+            \chi_3 & 2     & 0      & -1      \\ \hline
+        \end{array} 
+    \end{align*}
+\end{exmp}
+
+\begin{remark}
+    Notice that for the $\C[S_3]$-module $V = \C^{3\times1}$ given the permutation 
+    representation, $\chi_V(\sigma)$ gives the number of fixed points of 
+    $\sigma \in S_3$. Then we have $\chi_V(\id) = 3$, $\chi_V((12)) = 1$, and 
+    $\chi_V((123)) = 0$, so we find that $\chi_V = \chi_1 + \chi_3$ simply from 
+    the character table. 
+\end{remark}
+
+\begin{exmp}
+    Let $G = Q_8 = \{\pm1, \pm i, \pm j, \pm k\}$, where $ij = k$ and 
+    $i^2 = j^2 = k^2 = -1$. Recall that 
+    \[ \C[Q_8] \cong \C^4 \times M_2(\C), \] 
+    so $Q_8$ has five conjugacy classes; they are $\{1\}$, $\{-1\}$, 
+    $\{i, -i\}$, $\{j, -j\}$, and $\{k, -k\}$. Observe that $Q'_8 = \{\pm1\}$, 
+    which implies that 
+    \[ Q_8/Q'_8 = \langle i, j \mid i^2 = j^2 = 1,\, ij = ji 
+    \rangle \cong C_2 \times C_2 . \] 
+    Now, the first four rows of the character table are easy to compute, 
+    as well as the first column. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|}
+            \hline
+            Q_8    & [1] & [-1] & [i] & [j] & [k] = [ij] \\ \hline
+            \chi_1 & 1   & 1    & 1   & 1   & 1          \\ \hline
+            \chi_2 & 1   & 1    & 1   & -1  & -1         \\ \hline
+            \chi_3 & 1   & 1    & -1  & 1   & -1         \\ \hline
+            \chi_4 & 1   & 1    & -1  & -1  & 1          \\ \hline
+            \chi_5 & 2   & *    & *   & *   & *          \\ \hline 
+        \end{array} 
+    \end{align*}
+    To obtain the last row, we apply the same trick as the previous example; 
+    we set 
+    \[ \chi_L = \chi_1 + \chi_2 + \chi_3 + \chi_4 + 2\chi_5 \] 
+    and use the fact that $\chi_L(g) = 0$ when $g \neq 1$. This will finish 
+    the character table.
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|}
+            \hline
+            Q_8    & [1] & [-1] & [i] & [j] & [k] = [ij] \\ \hline
+            \chi_1 & 1   & 1    & 1   & 1   & 1          \\ \hline
+            \chi_2 & 1   & 1    & 1   & -1  & -1         \\ \hline
+            \chi_3 & 1   & 1    & -1  & 1   & -1         \\ \hline
+            \chi_4 & 1   & 1    & -1  & -1  & 1          \\ \hline
+            \chi_5 & 2   & -2   & 0   & 0   & 0          \\ \hline 
+        \end{array} 
+    \end{align*} 
+\end{exmp}
+
+We will soon see the interesting fact that if $G$ is a group and 
+$\Phi, \Psi : G \to \C$ are maps, then we can define an ``inner product'' by 
+\[ \langle \Phi, \Psi \rangle_G = \frac{1}{|G|} \sum_{g \in G} \Phi(g) 
+\Psi(g^{-1}). \] 
+Note that this is not actually an inner product, as it fails to satisfy 
+some properties. However, we see that it is $\C$-bilinear; indeed, for 
+$\lambda \in \C$, we have 
+\[ \langle \Phi_1 + \lambda\Phi_2, \Psi \rangle_G = 
+\frac{1}{|G|} \sum_{g \in G} (\Phi_1(g) + \lambda\Phi_2(g)) \Psi(g^{-1}) 
+= \langle \Phi_1, \Psi \rangle_G + \lambda \langle \Phi_2, \Psi \rangle_G, \] 
+and the other direction can be checked similarly. Moreover, 
+$\langle \cdot, \cdot \rangle_G$ is symmetric, since 
+\[ \langle \Phi, \Psi \rangle_G = \frac1{|G|} \sum_{g\in G} 
+\Phi(g) \Psi(g^{-1}) = \frac1{|G|} \sum_{x\in G} \Phi(x^{-1}) \Psi(x) 
+= \langle \Psi, \Phi \rangle_G, \] 
+where in the second equality, we used the substitution $x = g^{-1}$. 
+
+Next time, we'll see that characters are orthonormal with respect to this 
+``inner product''. 
+
+\section{October 22, 2021}
+For this part of the course, we'll be working over $\C$. Last time, 
+for a pair of maps $\Phi, \Psi : G \to \C$, we defined the ``inner product''
+\[ \langle \Phi, \Psi \rangle_G = \frac{1}{|G|} \sum_{g \in G} \Phi(g) 
+\Psi(g^{-1}), \] 
+and saw that this was $\C$-bilinear and symmetric. We now make an important 
+remark towards showing that $\langle \cdot, \cdot \rangle_G$ is a 
+true inner product when working with characters. 
+
+\begin{remark}
+    If $\chi$ is a character, then $\chi(g^{-1}) = \overline{\chi(g)}$. 
+\end{remark}
+\begin{pf}
+    We have $\chi(g) = \Tr(\rho(g))$ where $\rho : G \to \GL_n(\C)$ is a 
+    representation. Let $g \in G$. Notice that $\rho(g)$ is triangularizable, 
+    so 
+    \[ S^{-1}\rho(g)S = \begin{pmatrix}
+        \lambda_1 & & * \\ & \ddots & \\ 0 & & \lambda_n 
+    \end{pmatrix}, \] 
+    where $\lambda_1, \dots, \lambda_n$ are the eigenvalues of $\rho(g)$. 
+    Since $G$ is finite, there exists an integer $d \geq 1$ such that $g^d = 1$. 
+    Then, we can write 
+    \[ \rho(g)^d = \rho(g^d) = \rho(1) = I, \] 
+    which implies that 
+    \[ (S^{-1}\rho(g)S)^d = (S^{-1}\rho(g)S)(S^{-1}\rho(g)S)\cdots 
+    (S^{-1}\rho(g)S) = S^{-1}\rho(g)^d S = S^{-1}IS = I. \] 
+    Therefore, we find that 
+    \[ \begin{pmatrix}
+        \lambda_1^d & & * \\ & \ddots & \\ 0 & & \lambda_n^d 
+    \end{pmatrix} = I. \] 
+    In particular, $\lambda_1, \dots, \lambda_n$ are $d$-th roots of unity. 
+    Since $\rho(g^{-1})$ is the inverse of $\rho(g)$, we have 
+    \[ \rho(g^{-1}) = \begin{pmatrix}
+        \lambda_1^{-1} & & * \\ & \ddots & \\ 0 & & \lambda_n^{-1} 
+    \end{pmatrix}. \] 
+    Finally, it follows that 
+    \[ \chi(g^{-1}) = \Tr(\rho(g^{-1})) = \lambda_1^{-1} + \cdots + \lambda_n^{-1}
+    = \overline{\lambda_1} + \cdots + \overline{\lambda_n} = \overline{\chi(g)}. 
+    \qedhere \] 
+\end{pf}
+
+Let ${\cal C}_1, \dots, {\cal C}_s$ be the conjugacy classes of $G$, and let 
+$g_i$ be a representative of ${\cal C}_i$ for each $i = 1, \dots, s$. 
+If $\chi_1$ and $\chi_2$ are characters, then 
+\begin{align*}
+    \langle \chi_1, \chi_2 \rangle_G 
+    &= \frac1{|G|} \sum_{g\in G} \chi_1(g) \chi_2(g^{-1}) \\ 
+    &= \frac1{|G|} \sum_{g\in G} \chi_1(g) \overline{chi_2(g)} \\ 
+    &= \frac1{|G|} \sum_{i=1}^s \sum_{h\in{\cal C}_i} \chi_1(h) \overline{\chi_2(h)} \\
+    &= \frac1{|G|} \sum_{i=1}^s |{\cal C}_i| \chi_1(g_i) \overline{\chi_2(g_i)},
+\end{align*}
+where the last equality follows since $\chi_1$ and $\chi_2$ are class functions. 
+
+We'll now show that if $V_1, \dots, V_s$ are the inequivalent irreducible 
+representations of $G$ with $\chi_i = \chi_{V_i}$, then $\langle \chi_i, 
+\chi_j \rangle_G = \delta_{ij}$, where $\delta_{ij}$ denotes the Kronecker delta. 
+
+First, we will consider an averaging trick. Let $G$ be a finite group, and let 
+$k$ be an algebraically closed field such that $\ch(k) \nmid |G|$. Let 
+$V$ and $W$ be $k[G]$-modules. If $T : V \to W$ is a $k$-linear transformation, 
+we can define a map $\hat T : V \to W$ where for $v \in V$, we have 
+\[ \hat T(v) = \frac1{|G|} \sum_{g \in G} g \cdot T(g^{-1} \cdot v). \] 
+This makes sense because $T(g^{-1} \cdot v) \in W$. 
+
+\begin{thm}
+    If $T : V \to W$ is $k$-linear, then $\hat T : V \to W$ as above is 
+    $k[G]$-linear. 
+\end{thm}
+\begin{pf}
+    It suffices to show that $\hat T(h \cdot v) = h \cdot \hat T(v)$ for all 
+    $h, v \in V$, because every element in $k[G]$ is a linear combination of 
+    elements in $G$. By a direct computation, we have 
+    \begin{align*}
+        \hat T(h \cdot v) 
+        &= \frac1{|G|} \sum_{g\in G} g \cdot T(g^{-1} \cdot (h \cdot v)) \\ 
+        &= \frac1{|G|} \sum_{g\in G} g \cdot T((g^{-1} \cdot h) \cdot v) \\ 
+        &= \frac1{|G|} \sum_{x\in G} h \cdot x \cdot T(x^{-1} \cdot v) 
+        \quad \text{(substitute $x = h^{-1}g$)} \\ 
+        &= h \cdot \frac1{|G|} \sum_{x\in G} x \cdot T(x^{-1} \cdot v) 
+        = h \cdot \hat T(v). \qedhere 
+    \end{align*}. 
+\end{pf}
+
+We now return to working over $\C$, and look at some consequences of the previous 
+result. 
+
+If $V$ and $W$ are non-isomorphic simple $\C[G]$-modules and $T : V \to W$ 
+is $\C$-linear, then $\hat T \equiv 0$ since $\Hom_{\C[G]}(V, W) = (0)$. 
+On the other hand, recall that 
+\[ \Hom_{\C[G]}(V, V) = \End_{\C[G]}(V) = \C \] 
+by Schur's lemma. This implies that if $T : V \to V$ is $\C$-linear, then 
+$\hat T : V \to V$ is just scalar multiplication by some $\lambda \in \C$. 
+That is, for all $v \in V$, we have 
+\[ \hat T(v) = \lambda v. \] 
+We now determine what $\lambda$ is. Let $L_g : V \to V$ be the map given by 
+$L_g(v) = g \cdot v$. Then 
+\begin{align*}
+    \Tr(\hat T) 
+    &= \Tr\left( \frac1{|G|} \sum_{g\in G} L_g \circ T \circ L_g^{-1} \right) \\
+    &= \frac1{|G|} \sum_{g\in G} \Tr(L_g \circ T \circ L_g^{-1}) \\ 
+    &= \frac1{|G|} \sum_{g\in G} \Tr(T) = \Tr(T). 
+\end{align*}
+On the other hand, we already know that $\Tr(\hat T) = \lambda \cdot \dim V$, so 
+\[ \lambda = \frac{\Tr(T)}{\dim V}. \] 
+Let $V$ and $W$ be two simple non-isomorphic $\C[G]$-modules with bases 
+$\{v_1, \dots, v_m\}$ and $\{w_1, \dots, w_n\}$ respectively. Then, we obtain 
+representations 
+\begin{align*}
+    \rho_1 &: G \to \GL_m(\C) \cong \GL(V), \\ 
+    \rho_2 &: G \to \GL_n(\C) \cong \GL(W). 
+\end{align*}
+Note that if we want to find the matrix of a linear transformation, we pick 
+our basis, and to get the $j$-th column, we apply the transformation 
+to the $j$-th element of our basis. In particular, we find that 
+\begin{align*}
+    \rho_1(g) \cdot v_j &= \sum_{i=1}^m \rho_1(g)_{ij} \cdot v_i, & 
+    \rho_2(g) \cdot w_j &= \sum_{i=1}^n \rho_2(g)_{ij} \cdot w_i. 
+\end{align*}
+Notice that we can view $\rho_1(g) = (\rho_1(g))_{ij}$ and 
+$\rho_2(g) = (\rho_2(g))_{ij}$ as functions from $G$ to $\C$ 
+by looking at their $(i, j)$-th entries. 
+
+\begin{thm}
+    For all $1 \leq i, j \leq m$ and $1 \leq p, q \leq n$, we have 
+    $\langle (\rho_1)_{ij}, (\rho_2)_{pq} \rangle_G = 0$. 
+\end{thm}
+\begin{pf}
+    Fix some $1 \leq i \leq m$ and $1 \leq q \leq n$. Define a linear 
+    transformation $T : V \to W$ by $T(v_i) = w_q$, and $T(v_k) = 0$
+    whenever $k \neq i$. Then $\hat T \equiv 0$ since $V$ and $W$ 
+    are non-isomorphic simple modules. For all $1 \leq j \leq m$, we have 
+    \[ 0 = \hat T(v_j) = \frac1{|G|} \sum_{g \in G} g \cdot T(g^{-1} \cdot v_j) 
+    = \frac1{|G|} \sum_{g\in G} \rho_2(g) \cdot T(\rho_1(g^{-1}) \cdot v_j). \]
+    By definition, we have 
+    \[ \rho_1(g^{-1}) \cdot v_j = \sum_{k=1}^m \rho_1(g^{-1})_{kj} \cdot v_k, \] 
+    which gives us 
+    \begin{align*}
+        T(\rho_1(g^{-1}) \cdot v_j) 
+        &= T \left( \sum_{k=1}^m \rho_1(g^{-1})_{kj} \cdot v_k \right) 
+        = \rho_1(g^{-1})_{ij} \cdot T(v_i) 
+        = \rho_1(g^{-1})_{ij} \cdot w_q, 
+    \end{align*}
+    where the second equality comes from throwing everything away except when 
+    $k = i$. Finally, we obtain 
+    \begin{align*}
+        0 &= \frac1{|G|} \sum_{g\in G} \rho_2(g) \cdot T(\rho_1(g) \cdot v_j) \\ 
+        &= \frac1{|G|} \sum_{g\in G} \rho_1(g^{-1})_{ij} \cdot \rho_2(g) \cdot w_q \\
+        &= \frac1{|G|} \sum_{g\in G} \rho_1(g^{-1})_{ij} 
+           \left[ \sum_{k=1}^n \rho_2(g)_{kq} \cdot w_k \right] \\
+        &= \frac1{|G|} \sum_{g\in G} \rho_1(g^{-1})_{ij} \cdot \rho_2(g)_{pq} \\ 
+        &= \langle (\rho_2)_{pq}, (\rho_1)_{ij} \rangle_G 
+        = \langle (\rho_1)_{ij}, (\rho_2)_{pq} \rangle_G.
+    \end{align*}
+    Since $1 \leq i, j \leq m$ and $1 \leq p, q, \leq n$ were arbitrary, we 
+    are done. 
+\end{pf}
+
