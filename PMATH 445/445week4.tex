@@ -7,9 +7,9 @@ This will be our setting for this lecture, and
 we'll derive more properties about the choice of $s \geq 1$ and the integers 
 $n_1, \dots, n_s \geq 1$. 
 
-\begin{thm}
+\begin{theo}{}
     We have $|G| = n_1^2 + \cdots + n_s^2$. 
-\end{thm}
+\end{theo}
 \begin{pf}
     The isomorphism in Corollary 9.5 is a $k$-algebra isomorphism, so we 
     find that 
@@ -23,19 +23,19 @@ $n_1, \dots, n_s \geq 1$.
 
 Next, we'll work towards showing that $s$ is the number of conjugacy classes of $G$.
 
-\begin{remark}
+\begin{remark}{}
     If $R$ is a $k$-algebra, then $Z(R)$ is also a $k$-algebra. Indeed, we have
     an embedding $k \hookrightarrow Z(R) \subseteq R$ which sends $1_k$ 
     to $1_R$, and this also gives us an embedding $k \hookrightarrow 
     Z(Z(R)) = Z(R)$. 
 \end{remark}
 
-\begin{remark}
+\begin{remark}{}
     If $T_1, \dots, T_s$ are rings, then 
     \[ Z(T_1 \times \cdots \times T_s) = Z(T_1) \times \cdots \times Z(T_s). \]
 \end{remark}
 
-\begin{prop}
+\begin{prop}{}
     We have $Z(M_n(k)) = kI_n = \{\lambda I_n : \lambda \in k\}$. 
 \end{prop}
 \begin{pf}
@@ -117,12 +117,12 @@ Combining Proposition 10.4 with Remark 10.3, we see that
 In particular, we have 
 $\dim_k Z(k[G]) = \dim_k Z(M_{n_1}(k) \times \cdots \times M_{n_s}(k)) = s$.
 
-\begin{defn}
+\begin{defn}{}
     We say that a function $\alpha : G \to k$ is a {\bf class function} if 
     $\alpha$ is constant when restricted to each conjugacy class of $G$. 
 \end{defn} 
 
-\begin{lemma}
+\begin{lemma}{}
     Let $\alpha : G \to k$ be a function. Then $z := \sum_{g \in G} 
     \alpha(g) g$ is central in $k[G]$ if and only if $\alpha$ is a 
     class function. 
@@ -153,7 +153,7 @@ is a class function. Then the elements
 \[ z_i = \sum_{g \in G} \alpha(g) g = \sum_{g \in {\cal C}_i} g \] 
 for $i = 1, \dots, s$ are central by Lemma 10.6. 
 
-\begin{prop}
+\begin{prop}{}
     Let $G$ be a finite group with conjugacy classes ${\cal C}_1, 
     \dots, {\cal C}_s$. Then the elements 
     \[ z_i := \sum_{g \in {\cal C}_i} g \] 
@@ -178,10 +178,10 @@ for $i = 1, \dots, s$ are central by Lemma 10.6.
     proof. 
 \end{pf}
 
-\begin{thm}
+\begin{theo}{}
     In the setting of Corollary 9.5, $s$ is the number of conjugacy 
     classes of $G$. 
-\end{thm} 
+\end{theo} 
 \begin{pf}
     We previously showed that $\dim_k Z(k[G]) = \dim_k Z(M_{n_1}(k) \times 
     \cdots \times M_{n_s}(k)) = s$. Proposition 10.7 tells us that 
@@ -201,7 +201,7 @@ so we have
 \[ (gG')(hG') = ghG' = gh(h^{-1}g^{-1}hg)G' = hgG' = (hG')(gG'). \]
 For this reason, we call $G/G'$ the {\bf abelianization} of $G$. 
 
-\begin{exercise}
+\begin{exercise}{}
     Show that $G/G'$ has the universal property that if $A$ is abelian 
     group, $\phi : G \to A$ is a group homomorphism, and $\pi 
     : G \to G/G'$ is the canonical quotient map, then there is a 
@@ -224,7 +224,7 @@ containing all elements of the form $ab - ba$ where $a, b \in R$.
 We can also think of $[R, R]$ as the intersection of all two-sided ideals 
 $J$ such that $ab - ba \in J$ for all $a, b \in R$. 
 
-\begin{remark}~
+\begin{remark}{}
     \begin{enumerate}[(1)]
         \item Note that $R/[R, R]$ is commutative because for all $a, b \in R$, 
         we have 
@@ -265,7 +265,7 @@ In Assignment 3, we will prove the following results.
 As an immediate consequence of these results, we have the following 
 corollary. 
 
-\begin{cor}
+\begin{cor}{}
     If $k[G] \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k)$, then 
     $|G/G'| = \#\{i : n_i = 1\}$. 
 \end{cor}
@@ -279,7 +279,7 @@ corollary.
     \qedhere \] 
 \end{pf}
 
-\begin{exmp}
+\begin{exmp}{}
     Let's look at $\C[S_4]$. Recall that the conjugacy classes of $S_n$ 
     are just sets of permutations with the same disjoint cycle structure. 
     For $n = 4$, the conjugacy classes are 
@@ -315,7 +315,7 @@ corollary.
     \[ \C[S_4] \cong \C \times \C \times M_2(\C) \times M_3(\C) \times M_3(\C). \] 
 \end{exmp}
 
-\begin{exmp}
+\begin{exmp}{}
     If $A$ is abelian with $|A| = n$, then $|A/A'| = n$ so that 
     $\#\{i : n_i = 1\} = n$. It follows that 
     \[ \C[A] \cong \C^n. \] 
@@ -324,7 +324,7 @@ corollary.
     commutative, which is a contradiction since $\C[A]$ is commutative. 
 \end{exmp}
 
-\begin{exmp}
+\begin{exmp}{}
     Let $D_5$ be the dihedral group of order $10$. We can write 
     \[ D_5 = \langle x, y : x^2 = 1,\, y^5 = 1,\, xyx = y^{-1} \rangle. \] 
     We have an isomorphism 
@@ -343,7 +343,7 @@ let $k$ be an algebraically closed field such that $\ch(k) \nmid |G|$.
 A {\bf representation} of $G$ is a group homomorphism 
 \[ \rho : G \to \GL_n(k). \]
 
-\begin{remark}
+\begin{remark}{}
     The group homomorphism $\rho : G \to \GL_n(k)$ extends to a $k$-algebra 
     homomorphism 
     \[ \tilde\rho : k[G] \to M_n(k). \] 
@@ -356,7 +356,7 @@ A {\bf representation} of $G$ is a group homomorphism
     = \rho$. 
 \end{remark}
 
-\begin{remark}
+\begin{remark}{}
     If $\phi : k[G] \to M_n(k)$ is a $k$-algebra homomorphism, then 
     \[ V = k^{n\times 1} = \left\{ \begin{pmatrix} a_1 \\ \vdots \\ a_n
     \end{pmatrix} : a_1, \dots, a_n \in k \right\} \] 
@@ -378,7 +378,8 @@ For this reason, if $V$ is a $k[G]$-module, we will call $V$ a
 \section{October 4, 2021}
 We'll first make some definitions. 
 
-\begin{defn} Let $V$ and $W$ be $k[G]$-modules; that is, they are 
+\begin{defn}{} 
+    Let $V$ and $W$ be $k[G]$-modules; that is, they are 
     representations of $G$. 
     \begin{enumerate}[(1)]
         \item If $V$ is simple, we say that $V$ is a {\bf irreducible representation}.
@@ -405,12 +406,12 @@ $m_\alpha = 0$ for all $\alpha \in X$. In the case where
 $\sum_{\alpha \in X} M_\alpha$ is a direct sum, we write 
 \[ \bigoplus_{\alpha \in X} M_\alpha := \sum_{\alpha \in X} M_\alpha. \] 
 
-\begin{remark}
+\begin{remark}{}
     Let $M$ be an $R$-modules, and let $M_1$ and $M_2$ be submodules of $M$. 
     Then $M_1 + M_2$ is a direct sum if and only if $M_1 \cap M_2 = (0)$. 
 \end{remark} 
 
-\begin{exmp}
+\begin{exmp}{}
     Let $V$ be a vector space over a field $k$, and let $v_1, v_2 \in V 
     \setminus \{0\}$. Consider the submodules $V_1 = \{\lambda v_1 : \lambda 
     \in k\}$ and $V_2 = \{\lambda v_2 : \lambda \in k\}$. Then $V_1 + V_2$ is a 
@@ -422,7 +423,7 @@ $k$ be an algebraically closed field such that $\ch(k) \nmid |G|$.
 
 In the next few lectures, we will work towards proving the following theorem. 
 
-\begin{thm}
+\begin{theo}{}
     Suppose that 
     \[ k[G] \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k), \] 
     where $s$ is the number of conjugacy classes of $G$. 
@@ -435,11 +436,10 @@ In the next few lectures, we will work towards proving the following theorem.
         \item {\bf Uniqueness:} If $V_1^{a_1} \oplus V_2^{a_2} \oplus 
         \cdots \oplus V_s^{a_s} \cong V_1^{b_1} \oplus V_2^{b_2} \oplus 
         \cdots \oplus V_s^{b_s}$, then $a_i = b_i$ for all 
-        $i = 1, \dots, s$.\footnote[1]{When $V$ is a $k[G]$-module 
-        and $a \geq 1$, we have $V^a := V \oplus \cdots \oplus V$ 
-        ($a$ times).}
+        $i = 1, \dots, s$, where by $V^a$, we mean $V^a := 
+        V \oplus \cdots \oplus V$ ($a$ times).
     \end{enumerate}
-\end{thm}
+\end{theo}
 
 What is the significance of this theorem? First, let's ask what the $V_i$'s are. 
 We know that 
@@ -491,7 +491,7 @@ structure by
 \[ r \cdot n = \phi(r) \cdot n. \] 
 That is, the isomorphism $\phi$ is just a way of relabelling these elements. 
 
-\begin{lemma}
+\begin{lemma}{}
     Let $R = M_{n_1}(k) \times \cdots \times M_{n_s}(k)$, and let 
     $V_i = k^{n_i \times 1}$ for each $i = 1, \dots, s$. For each 
     $i = 1, \dots, s$ we define 
@@ -537,7 +537,7 @@ That is, the isomorphism $\phi$ is just a way of relabelling these elements.
     it is an isomorphism from $V_i$ to $V_j$. 
 \end{pf}
 
-\begin{remark}
+\begin{remark}{}
     In fact, we have shown that if $i \neq j$, then 
     \[ \Hom_R(V_i, V_j) = \{0\}. \] 
     When $i = j$, we have $\Hom_R(V_i, V_j) = \End_R(V_i)$. In the case that 

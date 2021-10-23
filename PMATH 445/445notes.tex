@@ -21,6 +21,7 @@
 \usepackage{microtype}
 \usepackage{titlesec}
 \usepackage{tikz-cd}
+\usepackage[framemethod=TikZ]{mdframed}
 
 \numberwithin{equation}{section}
 
@@ -57,40 +58,197 @@
   \end{center}
 }
 
-% for theorems
-\newtheoremstyle{newstyle}      
-{} %Aboveskip 
-{-0.25pt} %Below skip
-{\mdseries} %Body font e.g.\mdseries,\bfseries,\scshape,\itshape
-{} %Indent
-{\scshape} %Head font e.g.\bfseries,\scshape,\itshape
-{.} %Punctuation afer theorem header
-{ } %Space after theorem header
-{} %Heading
+\newcounter{theo}[section]\setcounter{theo}{0}
+\renewcommand{\thetheo}{\arabic{section}.\arabic{theo}}
+\newenvironment{theo}[2][]{%
+\refstepcounter{theo}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=blue!20]
+{\strut {\sc Theorem~\thetheo}};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=blue!20]
+{\strut {\sc Theorem~\thetheo:~#1}};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=blue!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[nobreak=true]\relax%
+\label{#2}}{\end{mdframed}}
 
-\theoremstyle{newstyle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Definition
+\newenvironment{defn}[2][]{%
+\refstepcounter{theo}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=yellow!20]
+{\strut {\sc Definition~\thetheo}};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=yellow!20]
+{\strut {\sc Definition~\thetheo:~#1}};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=yellow!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[nobreak=true]\relax%
+\label{#2}}{\end{mdframed}}
 
-\newtheorem*{prop*}{Proposition}
-\newtheorem*{cor*}{Corollary}
-\newtheorem*{exercise*}{Exercise}
-\newtheorem*{lemma*}{Lemma}
-\newtheorem*{remark*}{Remark}
-\newtheorem*{exmp*}{Example}
-\newtheorem*{defn*}{Definition}
-\newtheorem*{thm*}{Theorem}
-\newtheorem*{notation*}{Notation}
-\newtheorem{thm}{Theorem}[section]
-\newtheorem{fact}[thm]{Fact}
-\newtheorem{cor}[thm]{Corollary}
-\newtheorem{lemma}[thm]{Lemma}
-\newtheorem{remark}[thm]{Remark}
-\newtheorem{prop}[thm]{Proposition}
-\newtheorem{defn}[thm]{Definition}
-\newtheorem{claim}[thm]{Claim}
-\newtheorem{axiom}[thm]{Axiom}
-\newtheorem{notation}[thm]{Notation}
-\newtheorem{exercise}[thm]{Exercise}
-\newtheorem{exmp}[thm]{Example}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Example
+\newenvironment{exmp}[2][]{%
+\refstepcounter{theo}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=cyan!20]
+{\strut {\sc Example~\thetheo}};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=cyan!20]
+{\strut {\sc Example~\thetheo:~#1}};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=cyan!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[]\relax%
+\label{#2}}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Corollary
+\newenvironment{cor}[2][]{%
+\refstepcounter{theo}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=lime!20]
+{\strut {\sc Corollary~\thetheo}};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=lime!20]
+{\strut {\sc Corollary~\thetheo:~#1}};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=lime!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[nobreak=true]\relax%
+\label{#2}}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Remark
+\newenvironment{remark}[2][]{%
+\refstepcounter{theo}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=orange!20]
+{\strut {\sc Remark~\thetheo}};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=orange!20]
+{\strut {\sc Remark~\thetheo:~#1}};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=orange!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[nobreak=true]\relax%
+\label{#2}}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Exercise
+\newenvironment{exercise}[2][]{%
+\refstepcounter{theo}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=pink!20]
+{\strut {\sc Exercise~\thetheo}};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=pink!20]
+{\strut {\sc Exercise~\thetheo:~#1}};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=pink!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[nobreak=true]\relax%
+\label{#2}}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Lemma
+\newenvironment{lemma}[2][]{%
+\refstepcounter{theo}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=green!20]
+{\strut {\sc Lemma~\thetheo}};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=green!20]
+{\strut {\sc Lemma~\thetheo:~#1}};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=green!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[nobreak=true]\relax%
+\label{#2}}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Proposition
+\newenvironment{prop}[2][]{%
+\refstepcounter{theo}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=purple!20]
+{\strut {\sc Proposition~\thetheo}};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=purple!20]
+{\strut {\sc Proposition~\thetheo:~#1}};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=purple!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[nobreak=true]\relax%
+\label{#2}}{\end{mdframed}}
 
 % new proof environment
 \makeatletter

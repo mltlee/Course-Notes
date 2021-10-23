@@ -13,7 +13,7 @@ all homomorphisms (not just injective ones) from groups to general linear groups
 homomorphisms are called {\bf representations} of our group. First, we show that 
 every finite field embeds into $\GL_n(F)$ for some field $F$.
 
-\begin{prop}
+\begin{prop}{}
 Let $F$ be a field. Every finite group embeds into $\GL_n(F)$ for some $n \geq 1$. 
 \end{prop}
 \begin{pf}
@@ -27,11 +27,11 @@ $\sigma$ must be the identity permutation, so $\varphi$ is injective.
 
 It turns out that this result is not true for infinite groups in general. 
 
-\begin{exmp}
+\begin{exmp}{}
 Let $G$ be the group consisting of bijective maps from $\Z^+$ to itself such that $f$ fixes all
-but finitely integers. We claim that there does not exist a field $F$ and $n \geq 1$ such that 
+but finitely integers. There does not exist a field $F$ and $n \geq 1$ such that 
 $G$ embeds into $\GL_n(F)$. 
-
+\end{exmp}
 \begin{pf} 
 First, we note the following fact from linear algebra.
 
@@ -61,11 +61,10 @@ Note that this argument needs an adjustment for an algebraically closed field of
 since $x^2 - 1 = (x - 1)^2$ does not have distinct roots. 
 In such a case, we can proceed in the same way, except we use distinct $3$-cycles instead of $2$-cycles.
 \end{pf}
-\end{exmp}
 
 We now turn to the notion of a group algebra.
 
-\begin{defn}
+\begin{defn}{}
 The {\bf group algebra} of the group $G$ over the field $k$ is defined by 
 \[ k[G] = \left\{ \sum_{g\in G} \alpha_g \cdot g : \alpha_g \in k,\, \alpha_g = 0 \text{ for all but 
 finitely many $g$} \right\}. \]
@@ -77,13 +76,13 @@ We note that $k[G]$ is a ring with a natural addition, and multiplication given 
 Notice that the inner sum is finite because by definition, there are only finitely many 
 non-zero $\alpha_g$ and $\beta_h$. 
 
-\begin{remark}
+\begin{remark}{}
 We call $k[G]$ a group {\it algebra} because we have a ``copy'' of $k$ in $k[G]$ given by 
 $\lambda \mapsto \lambda \cdot 1_G$ for elements $\lambda \in k$, with $\lambda \cdot g = g 
 \cdot \lambda$ for all $g \in G$. We see that $k[G]$ is a $k$-vector space of dimension $|G|$. 
 \end{remark}
 
-\begin{exercise}
+\begin{exercise}{}
 Show that $\C[S_3] \cong \C \times \C \times M_2(\C)$. Fun fact: using the naive approach 
 to multiply matrices takes $O(n^3)$ operations, but applying this fact reduces the time complexity to 
 $O(n^{2.373})$. 
@@ -91,7 +90,7 @@ $O(n^{2.373})$.
 
 We now prove a version of Cayley's theorem for group algebras. 
 
-\begin{prop}
+\begin{prop}{}
 Let $G$ be a finite group with $n = |G|$. Then $G$ embeds into $\GL_n(k[G])$. 
 \end{prop}
 \begin{pf}
@@ -112,7 +111,7 @@ $G$ is a finite group and $k$ is an algebraically closed field of characteristic
 isomorphic to a finite direct product of matrix rings over $k$. The isomorphism and these matrix rings
 will completely determine the representation of the group $G$. 
 
-\begin{thm}
+\begin{theo}{}
 Let $G$ be a finite group and let $k$ be an algebraically closed field of characteristic zero. 
 Then we have 
 \[ k[G] \cong \prod_{i=1}^s M_{n_i}(k), \]
@@ -123,7 +122,7 @@ where
     \item $|\{i : n_i = 1\}| = |G/G'|$, where $G'$ denotes the commutator subgroup; and 
     \item $n_i \mid |G|$ for all $1 \leq i \leq s$. 
 \end{enumerate}
-\end{thm}
+\end{theo}
 
 As a corollary of this theorem, one can prove Exercise 1.5 by noting that $\C[S_3]$ has three 
 conjugacy classes: $\{(1)\}$, $\{(12), (13), (23)\}$, and $\{(123), (132)\}$. 
@@ -145,7 +144,7 @@ Recall that for a ring $R$, the {\bf center} of $R$ is the set
 Note that $Z(R)$ is a commutative subring of $R$. We can also write $[z, r] = 0$ to 
 denote that $zr = rz$. 
 
-\begin{defn}
+\begin{defn}{}
 Let $k$ be a field. We say that $R$ is a {\bf $k$-algebra} if 
 \begin{enumerate}[(a)]
     \item $R$ is a ring; and 
@@ -156,7 +155,7 @@ Let $k$ be a field. We say that $R$ is a {\bf $k$-algebra} if
 Notice that if we identify $k$ with $\phi(k) \subseteq R$, we have a ``copy'' of $k$ in $R$. This 
 means that $R$ is a $k$-vector space in addition to being a ring. 
 
-\begin{defn}
+\begin{defn}{}
 Let $k$ be a field, and let $R$ and $S$ be $k$-algebras.
 A {\bf $k$-algebra homomorphism} is a ring homomorphism $\psi : R \to S$ such that $\psi(\lambda) = \lambda$ for all 
 $\lambda \in k$. 
@@ -165,7 +164,7 @@ $\lambda \in k$.
 We also have the notion of a module. A module over a ring is a generalization of a 
 vector space over a field. 
 
-\begin{defn}
+\begin{defn}{}
 A {\bf (left) $R$-module $M$} is an abelian group $(M, +)$ equipped with a map 
 \[ \cdot : R \times M \to M \] 
 such that for all $r, s \in R$ and $m, n \in M$, we have 
@@ -177,18 +176,18 @@ such that for all $r, s \in R$ and $m, n \in M$, we have
 \end{enumerate}
 \end{defn}
 
-\begin{exmp}
+\begin{exmp}{}
 Let $R = M_n(\C)$ and $M = \C^{n \times 1}$, the set of column vectors of length $n$. One can check that 
 $M$ is a (left) $R$-module equipped with the operation of matrix-vector multiplication.
 \end{exmp}
 
-\begin{exmp}
+\begin{exmp}{}
 Left ideals are $R$-modules by left multiplication. In particular, $R$ itself is a left $R$-module. If 
 $L$ is a left ideal of $R$ (and we write $L \trianglelefteq_\ell R$), then $L$ is a 
 submodule of $R$ as a left $R$-module.
 \end{exmp}
 
-\begin{remark}
+\begin{remark}{}
 If $M_1$ and $M_2$ are $R$-modules, we define the set 
 \[ \Hom_R(M_1, M_2) = \{f : M_1 \to M_2 \mid f \text{ is $R$-linear}\}. \]
 That is, we have $f(r \cdot m_1 + m_2) = r \cdot f(m_1) + f(m_2)$ for all $r \in R$ and $m_1, m_2 \in M_1$. 
@@ -204,24 +203,24 @@ forms a ring.
 In a sense, this is clear. We know that $M$ already has scalar multiplication by $R$, and we have a 
 copy of $k$ sitting inside of $R$, so if we restrict $R$ to $k$, we obtain scalar multiplication by $k$.
 
-\begin{defn}
+\begin{defn}{}
 A left $R$-module $M$ is {\bf simple} if $M \neq (0)$, and $(0)$ and $M$ are the only submodules of $M$.
 \end{defn}
 
-\begin{exmp}
+\begin{exmp}{}
 Let $R = \Z$ and $M = \Z/p\Z$ for a prime $p$. Suppose that $N \subseteq M$ is a submodule with 
 $N \neq (0)$. Then there exists $i \in \{1, \dots, p-1\}$ such that the coset $[i]_p$ is in $N$. 
 But this implies that $[i]_p^{-1} \cdot [i]_p = [1]_p \in N$. It follows that $N = \Z/p\Z$ and hence 
 $M$ is simple. 
 \end{exmp}
 
-\begin{exercise}
+\begin{exercise}{}
 Let $R = M_n(\C)$ and $M = \C^{n\times 1}$. Show that $M$ is simple. (Hint: If we are given a 
 non-zero vector, then we can extend it to a basis, and we can always find a linear transformation to 
 send a basis wherever we like.)
 \end{exercise}
 
-\begin{defn}
+\begin{defn}{}
 A left ideal $L$ of $R$ is a {\bf maximal left ideal} if 
 \begin{enumerate}[(a)]
     \item $L \subsetneq R$; and
@@ -229,7 +228,7 @@ A left ideal $L$ of $R$ is a {\bf maximal left ideal} if
 \end{enumerate} 
 \end{defn}
 
-\begin{exercise}
+\begin{exercise}{}
 Let $R$ be a non-zero ring (that is, $0_R \neq 1_R$). If $L$ is a proper left ideal of $R$, then 
 there exists a maximal left ideal $M$ such that $L \subseteq M$. In particular, taking 
 $L = (0)$ shows that a maximal left ideal always exists. 
@@ -269,7 +268,7 @@ maximal.
 
 As a corollary of the above fact, we obtain the following. 
 
-\begin{cor}
+\begin{cor}{}
 If $R$ is a finite dimensional $k$-algebra and $M$ is a simple left $R$-module, then $M$ is a 
 finite dimensional $k$-vector space.
 \end{cor}
@@ -283,12 +282,12 @@ $M$ is also finite dimensional.
 
 For the remainder of this lecture, we will turn to proving Schur's lemma. 
 
-\begin{defn}
+\begin{defn}{}
 A {\bf division ring} $\Delta$ is a ring in which every non-zero element $a \in \Delta$ 
 has a multiplicative inverse $b \in \Delta$ (that is, $ab = ba = 1$).
 \end{defn}
 
-\begin{exmp}
+\begin{exmp}{}
 Consider the quaternions 
 \[ \mathbb{H} = \{a + ib + jc + kd : a, b, c, d \in \R\} \]
 with properties 
@@ -296,9 +295,9 @@ $i^2 = j^2 = k^2 = 1$, $ij = k$, and $ji = -k$. Check that $\mathbb{H}$ is a div
 but not a field.
 \end{exmp}
 
-\begin{thm}[Schur's lemma]
+\begin{theo}[Schur's lemma]{}
 Let $R$ be a ring and let $M$ be a simple left $R$-module. Then $\End_R(M)$ is a division ring.
-\end{thm}
+\end{theo}
 \begin{pf}
 We already know that $\End_R(M)$ is a ring, so we only need to show that every non-zero element 
 has an inverse. Let $0 \neq f \in \End_R(M)$, which is a linear map $f : M \to M$. Notice that 
@@ -318,7 +317,7 @@ This is indeed the case; we have
 Recall the setting from before: we had a ring $R$, a simple left $R$-module $M$,
 and $\Delta := \End_R(M)$, which we showed was a division ring. 
 
-\begin{prop}~
+\begin{prop}{}
 \begin{enumerate}[(a)]
     \item If $R$ is a $k$-algebra for a field $k$, then $\Delta := \End_R(M)$ is also a $k$-algebra. 
     \item If $k$ is algebraically closed and $R$ is a finite-dimensional $k$-algebra, then $\Delta 
@@ -371,7 +370,7 @@ and $\Delta := \End_R(M)$, which we showed was a division ring.
 \end{enumerate}
 \end{pf}
 
-\begin{exercise}
+\begin{exercise}{}
 Let $\Delta$ be a division ring and let $M$ be a left $\Delta$-module. Then $M$ has a basis 
 $B \subseteq M$. That is, there do not exist $\delta_1, \dots, \delta_m \in \Delta$ such that 
 \[ \delta_1 b_1 + \cdots + \delta_m b_m = 0 \]
@@ -383,7 +382,7 @@ where $\delta_b = 0$ for all but finitely many $b \in B$. (Hint: Use Zorn's lemm
 For this reason, instead of calling it a left $\Delta$-module, we can call it a 
 {\bf left $\Delta$-vector space}.  
 
-\begin{remark}
+\begin{remark}{}
 Let $R$ be a ring, let $M$ be a simple left $R$-module, and let $\Delta = \End_R(M)$. Then $M$ 
 is a left $\Delta$-vector space. 
 \end{remark}
@@ -402,7 +401,7 @@ It is straightforward to see that
 \end{itemize} so $M$ is a left $\Delta$-vector space. 
 \end{pf}
 
-\begin{exmp}
+\begin{exmp}{}
 Let $R = M_n(\C)$ and recall that $M = \C^{n\times 1}$ is a simple left $R$-module. We have 
 \[ \Delta = \C = \{\Phi_\lambda : \lambda \in \C\}, \]
 where each $\Phi_\lambda(m) = \lambda \cdot m$ for each $\lambda \in \C$. One can show that 
@@ -412,7 +411,7 @@ $\Phi = \Phi_\lambda$ for some $\lambda \in \C$.
 
 We now state the Jacobson Density Theorem, which we will prove in the next lecture. 
 
-\begin{thm}[Jacobson Density Theorem]
+\begin{theo}[Jacobson Density Theorem]{}
 Let $R$ be a ring, let $M$ be a simple left $R$-module, and let $\Delta = \End_R(M)$. Then we have a 
 ring $\End_\Delta(M)$ and a map 
 \begin{align*}
@@ -431,7 +430,7 @@ Moreover, we have the following properties.
     \[ \Phi_r(m_i) = w_i \]
     for all $1 \leq i \leq n$ (in particular, we can send finite linear combinations wherever we like).
 \end{enumerate}
-\end{thm}
+\end{theo}
 
 For now, let's see why the maps $\Phi_r$ are $\Delta$-linear so that $\Phi_r \in \End_\Delta(M)$
 for each $r \in R$. 

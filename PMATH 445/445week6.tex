@@ -39,7 +39,7 @@ $d_1\cdots d_r = |G|$ choices for $\rho_V$. On the other hand, we already know
 that there are $d_1 \cdots d_r$ pairwise inequivalent irreducible representations,
 so these are in fact all of them. In this case, notice that $\chi_V = \rho_V$. 
 
-\begin{exmp}
+\begin{exmp}{}
     Suppose that $G_1 = C_2 \times C_2 = \langle x \mid x^2 = 1 \rangle 
     \times \langle y \mid y^2 = 1 \rangle$ and $G_2 = C_4 = \langle z \mid 
     z^4 = 1 \rangle$. We compute the character tables of $G_1$ and $G_2$; 
@@ -64,7 +64,7 @@ so these are in fact all of them. In this case, notice that $\chi_V = \rho_V$.
     \end{align*}
 \end{exmp}
 
-\begin{exmp}
+\begin{exmp}{}
     Let $G = S_3$ and $k = \C$. We recall that $\C[S_3] \cong \C \times 
     \C \times M_2(\C)$. Then $S_3$ has three pairwise inequivalent irreducible 
     representations, and these have dimensions $1$, $1$, and $2$ 
@@ -124,7 +124,7 @@ so these are in fact all of them. In this case, notice that $\chi_V = \rho_V$.
     \end{align*}
 \end{exmp}
 
-\begin{remark}
+\begin{remark}{}
     Notice that for the $\C[S_3]$-module $V = \C^{3\times1}$ given the permutation 
     representation, $\chi_V(\sigma)$ gives the number of fixed points of 
     $\sigma \in S_3$. Then we have $\chi_V(\id) = 3$, $\chi_V((12)) = 1$, and 
@@ -132,7 +132,7 @@ so these are in fact all of them. In this case, notice that $\chi_V = \rho_V$.
     the character table. 
 \end{remark}
 
-\begin{exmp}
+\begin{exmp}{}
     Let $G = Q_8 = \{\pm1, \pm i, \pm j, \pm k\}$, where $ij = k$ and 
     $i^2 = j^2 = k^2 = -1$. Recall that 
     \[ \C[Q_8] \cong \C^4 \times M_2(\C), \] 
@@ -201,7 +201,7 @@ and saw that this was $\C$-bilinear and symmetric. We now make an important
 remark towards showing that $\langle \cdot, \cdot \rangle_G$ is a 
 true inner product when working with characters. 
 
-\begin{remark}
+\begin{remark}{}
     If $\chi$ is a character, then $\chi(g^{-1}) = \overline{\chi(g)}$. 
 \end{remark}
 \begin{pf}
@@ -256,10 +256,10 @@ we can define a map $\hat T : V \to W$ where for $v \in V$, we have
 \[ \hat T(v) = \frac1{|G|} \sum_{g \in G} g \cdot T(g^{-1} \cdot v). \] 
 This makes sense because $T(g^{-1} \cdot v) \in W$. 
 
-\begin{thm}
+\begin{theo}{}
     If $T : V \to W$ is $k$-linear, then $\hat T : V \to W$ as above is 
     $k[G]$-linear. 
-\end{thm}
+\end{theo}
 \begin{pf}
     It suffices to show that $\hat T(h \cdot v) = h \cdot \hat T(v)$ for all 
     $h, v \in V$, because every element in $k[G]$ is a linear combination of 
@@ -314,10 +314,10 @@ Notice that we can view $\rho_1(g) = (\rho_1(g))_{ij}$ and
 $\rho_2(g) = (\rho_2(g))_{ij}$ as functions from $G$ to $\C$ 
 by looking at their $(i, j)$-th entries. 
 
-\begin{thm}
+\begin{theo}{}
     For all $1 \leq i, j \leq m$ and $1 \leq p, q \leq n$, we have 
     $\langle (\rho_1)_{ij}, (\rho_2)_{pq} \rangle_G = 0$. 
-\end{thm}
+\end{theo}
 \begin{pf}
     Fix some $1 \leq i \leq m$ and $1 \leq q \leq n$. Define a linear 
     transformation $T : V \to W$ by $T(v_i) = w_q$, and $T(v_k) = 0$
@@ -348,4 +348,3 @@ by looking at their $(i, j)$-th entries.
     Since $1 \leq i, j \leq m$ and $1 \leq p, q, \leq n$ were arbitrary, we 
     are done. 
 \end{pf}
-

@@ -131,19 +131,19 @@ determined by where the basis is sent, so $f = \Phi_r$.
 Recall that by (2) in the Jacobson Density Theorem, we have 
 \[ \ker \Phi = \Ann_R(M) := \{r \in R : r \cdot m = 0 \text{ for all } m \in M\}. \]
 
-\begin{defn}
+\begin{defn}{}
 A left $R$-module $M$ is called {\bf faithful} if $\Ann_R(M) = (0)$. 
 \end{defn}
 
 From above, we see that $M$ is faithful if and only if $\Phi$ is injective. 
 
-\begin{defn}
+\begin{defn}{}
 A ring $R$ is said to be {\bf primitive} if it has a faithful simple module.
 \end{defn}
 
 Putting our above observations together, we obtain the following result. 
 
-\begin{cor}
+\begin{cor}{}
 If $R$ has a faithful simple left $R$-module $M$ such that $\dim_\Delta M < \infty$ where 
 $\Delta = \End_R(M)$, then the map 
 \[ \Phi : R \to \End_\Delta(M) \]
@@ -154,7 +154,7 @@ The assumption $\dim_\Delta(M) < \infty$ gives surjectivity, and since $M$ is fa
 $\Phi$ is also injective.
 \end{pf}
 
-\begin{cor}
+\begin{cor}{}
 If $k$ is an algebraically closed field, $R$ is a finite-dimensional $k$-algebra, and $M$ is a 
 faithful simple left $R$-module, then $R \cong M_n(k)$ where $n = \dim_k(M)$. 
 \end{cor}
@@ -170,14 +170,14 @@ $\dim_k M = n < \infty$ in Corollary 2.12. Therefore, we see that
 which completes the proof.
 \end{pf}
 
-\begin{defn}
+\begin{defn}{}
 Let $R$ be a ring. We say that $R$ is {\bf left Artinian} if every descending chain of left ideals of $R$
 terminates. That is, for a chain of left ideals 
 \[ L_1 \supseteq L_2 \supseteq L_3 \supseteq \cdots \]
 of $R$, there exists $n \geq 1$ such that $L_n = L_m$ for all $m \geq n$. 
 \end{defn}
 
-\begin{exmp}~
+\begin{exmp}{}
 \begin{enumerate}[(1)]
     \item We see that $\Z$ is not left Artinian since we can take the chain of ideals 
     \[ 2\Z \supsetneq 4\Z \supsetneq 8\Z \supsetneq \cdots. \]
@@ -192,20 +192,20 @@ of $R$, there exists $n \geq 1$ such that $L_n = L_m$ for all $m \geq n$.
 
 We can generalize our observations from the previous example. We leave the proof as an exercise.
 
-\begin{remark}~
+\begin{remark}{}
 \begin{enumerate}[(1)]
     \item If $R$ is a finite-dimensional $k$-algebra, then $R$ is left Artinian.
     \item If $R$ is a finite ring, then $R$ is left Artinian.
 \end{enumerate}
 \end{remark}
 
-\begin{defn}
+\begin{defn}{}
 Let $R$ be a ring. Let $I$ be a two-sided ideal of $R$. We say that $I$ is a {\bf nil ideal} 
 if for every $x \in I$,  there exists $n = n(x) \geq 1$ such that $x^n = 0$ (that is, 
 every element in $I$ is nilpotent). 
 \end{defn}
 
-\begin{exmp}~
+\begin{exmp}{}
 \begin{enumerate}[(1)]
     \item Let $R$ be any ring. Then $(0)$ is a nil ideal. 
     \item Let $R = \Z/2\Z$. Then $I = 6R = \{[0]_R, [6]_R\}$ is a nil ideal since 
@@ -220,13 +220,13 @@ every element in $I$ is nilpotent).
 
 We now state the Artin-Wedderburn Theorem and give some remarks. 
 
-\begin{thm}[Artin-Wedderburn]
+\begin{theo}[Artin-Wedderburn]{}
 Let $R$ be a left Artinian ring. If $R$ has no non-zero nil ideals, then there exists $s \geq 1$, 
 division rings $D_1, \dots, D_s$, and integers $n_1, \dots, n_s \geq 1$ such that 
 \[ R \cong M_{n_1}(D_1) \times \cdots \times M_{n_s}(D_s). \]
-\end{thm}
+\end{theo}
 
-\begin{remark}~
+\begin{remark}{}
 \begin{enumerate}[(1)]
     \item If $k$ is an algebraically closed field and $R$ is a finite-dimensional $k$-algebra, then 
     \[ R \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k). \]
@@ -242,13 +242,13 @@ division rings $D_1, \dots, D_s$, and integers $n_1, \dots, n_s \geq 1$ such tha
 
 We finish the lecture by giving one last definition. 
 
-\begin{defn}
+\begin{defn}{}
 Let $R$ be a ring. Then a proper two-sided ideal $P$ is called a {\bf prime ideal} if whenever $a, b \in R$
 are such that $aRb = \{arb : r \in R\} \subseteq P$, we either have $a \in P$ or $b \in P$.
 We say that $R$ is a {\bf prime ring} if $(0)$ is a prime ideal of $R$. 
 \end{defn}
 
-\begin{exmp}
+\begin{exmp}{}
 Observe that $p\Z$ for a prime $p$ is a prime ideal of $\Z$. Indeed, if $a, b \in \Z$ are such that 
 $a\Z b = ab\Z \subseteq p\Z$, then $p \mid ab$. This occurs if and only if $p \mid a$ or $p \mid b$, 
 or equivalently, $a \in p\Z$ or $b = p\Z$. In fact, $\Z$ is a prime ring as it has $(0)$ as a prime 
@@ -269,11 +269,11 @@ Indeed, observe that
 Being prime can be thought of as an extension of being an integral domain in the case where $R$ 
 is not a commutative ring. 
 
-\begin{defn}
+\begin{defn}{}
 A ring $R$ is {\bf simple} if $(0)$ and $R$ are its only two-sided ideals.
 \end{defn}
 
-\begin{prop}
+\begin{prop}{}
 If $R$ is a simple ring, then $R$ is prime. 
 \end{prop}
 \begin{pf}
@@ -296,7 +296,7 @@ where the last equality is because $aRb = (0)$ and thus $av_iy_jb = 0$ for any $
 and $1 \leq j \leq t$. 
 \end{pf}
 
-\begin{prop}
+\begin{prop}{}
 Let $D$ be a division ring and let $n \geq 1$. Then $M_n(D)$ is simple and hence prime. 
 \end{prop}
 \begin{pf}
@@ -316,7 +316,7 @@ so we conclude that $I = M_n(D)$ and hence $M_n(D)$ is simple.
 
 We now prove a nice characterization of left Artinian rings. 
 
-\begin{prop}
+\begin{prop}{}
 Let $R$ be a ring. Then $R$ is left Artinian if and only if whenever $S$ is a non-empty collection 
 of left ideals of $R$, then $S$ has a minimal element with respect to inclusion. 
 \end{prop}
@@ -335,10 +335,10 @@ $L_n = L_m$ for all $m \geq n$, so $R$ is left Artinian.
 
 The next theorem will be a key step towards proving the Artin-Wedderburn theorem.
 
-\begin{thm}
+\begin{theo}{}
 Let $R$ be a prime left Artinian ring. Then $R \cong M_n(D)$ for some $n \geq 1$ and division ring 
 $D$. (In fact, the converse is also true.)
-\end{thm}
+\end{theo}
 \begin{pf}
 Let $S = \{Ru : u \in R,\, u \neq 0\}$ be a collection of left ideals of $R$. Note that $S$ 
 is non-empty since $R \cdot 1 = R \in S$. Then there exists a minimal element in $S$ by Proposition 

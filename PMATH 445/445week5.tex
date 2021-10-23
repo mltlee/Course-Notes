@@ -17,11 +17,11 @@ In particular, if $i \neq j$, then $\Ann_R(V_i) \ncong \Ann_R(V_j)$.
 Assignment 3 Question 2 then gives us another proof of the fact that 
 $V_i \ncong V_j$. 
 
-\begin{notation} 
+\begin{defn}{}
     If $R$ is a ring, we will write ${}_R R$ to mean $R$ considered as a left 
     $R$-module. (Similarly, the notation $R_R$ means $R$ taken as a right 
     $R$-module.)
-\end{notation}
+\end{defn}
 
 Let $A, B \in M_n(k)$. We can think of $B$ as $n$ columns concatenated 
 with each other. In particular, if $v_1, \dots, v_n$ are the columns of $B$, 
@@ -57,7 +57,7 @@ M_{n_s}(k)$ and $V_i = k^{n_i \times 1}$, then
 \[ {}_R R \cong V_1^{n_1} \oplus \cdots \oplus V_s^{n_s} \] 
 as $R$-modules. Now, we are almost in the position to finish proving Theorem 12.4.
 
-\begin{remark} Let $N$ and $M_\alpha$ for $\alpha \in X$ be left $R$-modules. 
+\begin{remark}{} Let $N$ and $M_\alpha$ for $\alpha \in X$ be left $R$-modules. 
     \begin{enumerate}[(1)]
         \item From Exercise 4 on Assignment 2, we have 
         \[ \Hom_R \left( \bigoplus_{\alpha \in X} M_\alpha, N \right) 
@@ -73,7 +73,7 @@ as $R$-modules. Now, we are almost in the position to finish proving Theorem 12.
     \end{enumerate}
 \end{remark}
 
-\begin{exercise}
+\begin{exercise}{}
     Define the map 
     \begin{align*} 
         e : \Hom_R({}_R R, N) &\to N \\ \varphi &\mapsto \varphi(1). 
@@ -83,13 +83,13 @@ as $R$-modules. Now, we are almost in the position to finish proving Theorem 12.
 
 Now, we can prove part (1) of Theorem 12.4. 
 
-\begin{thm}
+\begin{theo}{}
     Let $R \cong M_{n_1}(k) \times \cdots \times M_{n_s}(k)$ and $V_i 
     \cong k^{n_i \times 1}$. If $N$ is a simple left $R$-module, then there 
     exists some $i = 1, \dots, s$ such that $N \cong V_i$ as $R$-modules. 
     In particular, $R$ has exactly $s$ simple left $R$-modules up to 
     isomorphism. 
-\end{thm}
+\end{theo}
 \begin{pf}
     Let $N$ be a simple $R$-module. Then we have 
     \[ \Hom_R({}_R R, N) \neq (0) \] 
@@ -112,7 +112,7 @@ Now, we can prove part (1) of Theorem 12.4.
 
 Towards proving (2) of Theorem 12.4, we'll first prove the following fact. 
 
-\begin{prop}
+\begin{prop}{}
     Every $R$-module $M$ satisfies 
     \[ M \cong R^{\oplus X}/L \] 
     where $R^{\oplus X} = \bigoplus_{x \in X} R$, and $L$ is a submodule of 
@@ -139,19 +139,19 @@ Towards proving (2) of Theorem 12.4, we'll first prove the following fact.
 
 \section{October 8, 2021}
 
-\begin{defn}
+\begin{defn}{}
     Let $R$ be a ring. We say that a left $R$-module $M$ is {\bf semisimple} 
     of $M$ can be written as the direct sum of simple submodules. We say that 
     $R$ is a {\bf (left) semisimple ring} if every left $R$-module is semisimple.
 \end{defn}
 
-\begin{exmp}
+\begin{exmp}{}
     An example of a non-semisimple ring is $\Z$. The simple modules are 
     isomorphic to $\Z/p\Z$ for primes $p$, and we notice that 
     $\Z/4\Z$ cannot be written as the direct sum of simple submodules. 
 \end{exmp}
 
-\begin{exmp}
+\begin{exmp}{}
     Let $k$ be a field. A $k$-module is simply a vector space, and a 
     submodule is a subspace. In particular, a simple $k$-module $V$ is a vector 
     space whose only subspaces are $(0)$ and $V$ itself. Therefore, $V$ 
@@ -165,14 +165,14 @@ Notice that the fact that every vector space has a basis relies on Zorn's lemma.
 The following theorem generalizes this example, and at some point, we'll have to use 
 Zorn's lemma to prove it. 
 
-\begin{thm}
+\begin{theo}{}
     Let $R$ be a ring. Then $R$ is a (left) semisimple ring if and only if 
     ${}_R R$ is a semisimple $R$-module. 
-\end{thm}
+\end{theo}
 
 To prove this, we'll use the following lemma. 
 
-\begin{lemma}
+\begin{lemma}{}
     Let $R$ be a ring. 
     \begin{enumerate}[(1)]
         \item If $\{M_\alpha\}_{\alpha \in X}$ is a family of left $R$-modules 
@@ -294,7 +294,7 @@ That is, if $V_1^{a_1} \oplus \cdots \oplus V_s^{a_s} \cong V_1^{b_1}
 \oplus \cdots \oplus V_s^{b_s}$ is an $R$-module isomorphism, then 
 $a_i = b_i$ for all $i = 1, \dots, s$. First, we will make a remark. 
 
-\begin{remark}
+\begin{remark}{}
     If $R$ is a $k$-algebra and $M$ and $N$ are left $R$-modules, then 
     $\Hom_R(M, N)$ is a $k$-vector space. Indeed, for a homomorphism 
     $\Phi : M \to N$ and $\lambda \in k$, we can define scalar multiplication by 
@@ -332,20 +332,20 @@ where $n = \dim_k(V)$, with the rule
 \[ \rho_V(g)(v) := g \cdot v. \] 
 Recall that linear maps $T : V \to V$ have a trace $\Tr(T)$. 
 
-\begin{remark}
+\begin{remark}{}
     If $\{v_1, \dots, v_n\}$ is a basis for $V$, then we can write 
     \begin{align*} 
         Tv_j &= \sum_{i=1}^n a_{ij} v_i, & \Tr(T) &= \sum_{i=1}^n a_{ii}. 
     \end{align*}
 \end{remark}
 
-\begin{defn}
+\begin{defn}{}
     We define the {\bf character} of $V$ as the map $\chi_V : G \to k$
     given the rule 
     \[ \chi_V(g) := \Tr(\rho_V(g)). \] 
 \end{defn}
 
-\begin{exmp}
+\begin{exmp}{}
     Let $G = S_3$, and let $V = \C e_1 \oplus \C e_2 \oplus \C e_3$, which is a 
     $3$-dimensional vector space. We can give $V$ a structure as a 
     $\C[S_3]$-module by the action 
@@ -377,10 +377,10 @@ Recall that linear maps $T : V \to V$ have a trace $\Tr(T)$.
 Recall that $f : G \to k$ is a class function if it is constant when restricted 
 to conjugacy classes; that is, $f(xgx^{-1}) = f(g)$ for all $g, x \in G$. 
 
-\begin{thm}
+\begin{theo}{}
     Let $V$ be a finite-dimensional $k[G]$-module. Then $\chi_V : G \to k$ is a 
     class function. 
-\end{thm}
+\end{theo}
 \begin{pf}
     Since $\rho_V : G \to \GL(V)$ is a group homomorphism, we have 
     \[ \rho_V(xgx^{-1}) = \rho_V(x) \rho_V(g) \rho_V(x)^{-1}. \] 
@@ -392,7 +392,7 @@ to conjugacy classes; that is, $f(xgx^{-1}) = f(g)$ for all $g, x \in G$.
     so $\chi_V$ is a class function. 
 \end{pf}
 
-\begin{remark}~
+\begin{remark}{}
     \begin{enumerate}[(1)]
         \item If $V \cong W$ as $k[G]$-modules, then $\chi_V = \chi_W$. 
         (In fact, in the case that $V$ and $W$ are finite-dimensional, the 
