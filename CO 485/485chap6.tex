@@ -129,18 +129,17 @@ $g^\beta$. Then the two computational problems $\BreakDH$ (breaking the DH
 key exchange protocol) and $\CDH$ are equivalent in the sense that any algorithm 
 that can solve one of the two problems can be converted to another algorithm 
 (in polynomial time of the input size) that solves the other problem. We denote this 
-by $\BreakDH \equiv_p \CDH$, where the subscript $p$ emphasizes the polynomial 
-time reduction between the two problems. 
+by $\BreakDH \equiv \CDH$. 
 
 More generally, let $P_1$ and $P_2$ be two computational problems. 
 \begin{enumerate}[(1)]
-    \item We write $P_1 \leq_p P_2$ if $P_1$ can be reduced to $P_2$. We say that 
+    \item We write $P_1 \leq P_2$ if $P_1$ can be reduced to $P_2$. We say that 
           $P_1$ is not harder than $P_2$, or $P_2$ is not easier than $P_1$. 
-    \item We write $P_1 \equiv_p P_2$ if $P_1 \leq_p P_2$ and $P_2 \leq_p P_1$. 
+    \item We write $P_1 \equiv P_2$ if $P_1 \leq P_2$ and $P_2 \leq P_1$. 
           We say that $P_1$ and $P_2$ are equivalently hard. 
 \end{enumerate}
 
-For example, we can easily deduce that $\BreakDH \equiv_p \CDH \equiv_p \DLP$. 
+For example, we can easily deduce that $\BreakDH \equiv \CDH \leq \DLP$. 
 As a result, it is of great importance to us to study algorithms that solve 
 $\CDH$ or $\DLP$ to get a sense of the security of DH key exchange. 
 
@@ -166,3 +165,31 @@ The ElGamal public key encryption scheme consists of the following three algorit
           ciphertext space $G \times G$, and outputs the message 
           \[ m = c_2 \cdot c_1^{-x} \in G. \] 
 \end{enumerate}
+
+\subsection{The Security of the ElGamal Encryption Scheme}
+An adversary may capture the public key $[G, n, g, h = g^x]$ of a user $A$ 
+and a ciphertext $[c_1, c_2] = [g^r, m \cdot h^r]$ generated using $A$'s public 
+key. Note that the adversary does not know $r$ and the secret key $x$ of $A$. 
+The adversary may try to attack the ElGamal encryption scheme by trying to 
+decrypt the ciphertext $[c_1, c_2]$ and recovering the message $m \in G$. 
+We denote this computational problem by $\BreakElGamal$. An interesting 
+result tells us that $\BreakElGamal$ and $\CDH$ are equivalently hard. 
+We give a brief sketch of the proof. 
+
+To see that $\BreakElGamal \leq \CDH$, suppose we are given an instance 
+of $\BreakElGamal$, say 
+\[ I = \{[G, n, g, h = g^x], [c_1 = g^r, c_2 = m \cdot h^r]\}. \] 
+Moreover, assume that we have access to an oracle ${\cal O}_{\CDH}$ that solves 
+$\CDH$ instances. Given our instance $I$ of $\BreakElGamal$, we first create 
+a $\CDH$ instance $J = [G, n, g, c_1 = g^r, h = g^x]$, and query the 
+oracle ${\cal O}_{\CDH}$ with $J$. This returns $g^{rx}$, which we can use 
+to recover the message $m = c_2/g^{rx}$. 
+
+For the direction $\CDH \leq \BreakElGamal$, suppose that we are given an 
+instance of $\CDH$, say $I = [G, n, g, g^\alpha, g^\beta]$. Assume also that 
+we have access to an oracle ${\cal O}_{\BreakElGamal}$ that solves 
+$\BreakElGamal$ instances. Given our instance $I$ of $\CDH$, we create an 
+$\BreakElGamal$ instance 
+\[ J = \{[G, n, g, h = g^\alpha], [c_1 = g^\beta, c_2 = 1]\}, \] 
+and query ${\cal O}_{\BreakElGamal}$ using $J$. This returns $c_2c_1^{-\alpha} 
+= g^{-\alpha\beta}$, so we can recover $g^{\alpha\beta} = (c_2c_1^{-\alpha})^{-1}$. 
