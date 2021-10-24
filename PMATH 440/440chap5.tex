@@ -53,3 +53,316 @@ obtain the following corollary.
     the result holds since $-1 \equiv 1 \pmod 2$; otherwise, $p$ is odd, 
     so $-1 \equiv (p-1)! \pmod p$ as required. 
 \end{pf}
+
+\subsection{Quadratic Residues}\label{subsec:5.2}
+
+\vspace{2ex}
+\begin{defn}{def:5.5}
+    Let $p$ be a prime. A nonzero integer $a$ coprime to $p$ that is congruent 
+    to a square modulo $p$ is called a {\bf quadratic residue modulo $p$} 
+    (or $\QR$ for short). If not, then $a$ is said to be a {\bf quadratic 
+    nonresidue modulo $p$} (or $\NR$ for short). Moreover, we define the 
+    Legendre symbol $(\frac ap)$ by 
+    \[ \left( \frac ap \right) = \begin{cases} 1 & \text{if } 
+        x^2 \equiv a \pmod p \text{ has a solution,} \\ 
+        -1 & \text{if } x^2 \equiv a \pmod p \text{ has no solution.} \end{cases} \]
+    In other words, if $(\frac ap) = 1$, then $a$ is a quadratic residue; otherwise, 
+    it is a quadratic nonresidue. 
+\end{defn}
+
+\begin{remark}{remark:5.6}
+    Let $p$ be an odd prime. Then there are exactly $(p-1)/2$ quadratic residues 
+    modulo $p$, and exactly $(p-1)/2$ quadratic nonresidues modulo $p$.
+\end{remark}
+\begin{pf}
+    The quadratic residues modulo $p$ are given by 
+    \[ 1^2, 2^2, \dots, \left(\frac{p-1}2\right)^{\!2} \pmod p. \] 
+    To see that there are exactly $(p-1)/2$ of them, it suffices to show that these 
+    are all different modulo $p$. Indeed, suppose that $1 \leq b_2 \leq b_1 
+    \leq (p-1)/2$ with $b_1^2 \equiv b_2^2 \pmod p$. Then we have 
+    \[ (b_1 - b_2)(b_1 + b_2) \equiv 0 \pmod p, \] 
+    or equivalently, $p \mid (b_1 - b_2)(b_1 + b_2)$. Since $p$ is prime, 
+    at least one of $(b_1 - b_2)$ or $(b_1 + b_2)$ must be divisible by $p$. 
+    Note that 
+    \[ 2 = 1 + 1 \leq b_1 + b_2 \leq \frac{p-1}2 + \frac{p-1}2 = p-1, \] 
+    so $p \nmid (b_1 + b_2)$, and hence $p \mid (b_1 - b_2)$. But 
+    we know that $0 \leq b_1 - b_2 \leq (p-1)/2 < p$, so $b_1 = b_2$.
+\end{pf}
+
+We now consider the products between quadratic residues and nonresidues modulo $p$, 
+and derive a nice property about the product of Legendre symbols. 
+
+\newpage 
+\begin{lemma}{lemma:5.7} 
+    If $a_1$ and $a_2$ are quadratic residues modulo $p$, then so is $a_1a_2$. 
+\end{lemma}
+\begin{pf}
+    Suppose that $b_1^2 \equiv a_1 \pmod p$ and $b_2^2 \equiv a_2 \pmod p$. Then 
+    we obtain 
+    \[ (b_1b_2)^2 \equiv b_1^2 b_2^2 \equiv a_1a_2 \pmod p. \qedhere \] 
+\end{pf}
+
+\begin{lemma}{lemma:5.8}
+    If $a_1$ is a quadratic residue and $a_2$ is a quadratic nonresidue modulo $p$, 
+    then $a_1a_2$ is a quadratic nonresidue modulo $p$. 
+\end{lemma}
+\begin{pf}
+    Suppose that $b_1^2 \equiv a_1 \pmod p$. Taking the inverse, we have 
+    \[ (b_1^{-1})^2 \equiv a_1^{-1} \pmod p. \] 
+    Now, if $a_1a_2$ were a quadratic residue modulo $p$, then there would exist 
+    an integer $b$ such that 
+    \[ b^2 \equiv a_1a_2 \pmod p. \] 
+    Multiplying these equations together gives 
+    \[ (bb_1^{-1})^2 \equiv a_1a_2 \cdot a_1^{-1} \equiv a_2 \pmod p, \] 
+    contradicting our assumption that $a_2$ is a quadratic nonresidue modulo $p$. 
+\end{pf}
+
+\begin{theo}[Quadratic residue multiplication rules]{thm:5.9}
+    Let $p$ be an odd prime. Then 
+    \begin{enumerate}[(i)]
+        \item $\QR \times \QR = \QR$; 
+        \item $\QR \times \NR = \NR$; and 
+        \item $\NR \times \NR = \QR$. 
+    \end{enumerate}
+    In particular, if $p$ is an odd prime and $a, b \in (\Z/p\Z)^*$, then 
+    \[ \left( \frac{ab}p \right) = \left( \frac ap \right) \left( \frac bp \right). \]
+\end{theo}
+\begin{pf}
+    We have already proved (i) and (ii) from Lemma~\ref{lemma:5.7} and 
+    Lemma~\ref{lemma:5.8}. Let $A$ be the subset of $(\Z/p\Z)^*$ of quadratic 
+    residues, and let $B$ be the subset of $(\Z/p\Z)^*$ of quadratic nonresidues. 
+    We know that $A \cap B = \varnothing$ and $A \cup B = (\Z/p\Z)^*$. 
+    Moreover, from Remark~\ref{remark:5.6}, we have $|A| = |B| = (p-1)/2$. 
+    Notice that if $c$ is a quadratic nonresidue, then 
+    \[ c \cdot (\Z/p\Z)^* = (\Z/p\Z)^*. \] 
+    Since $\QR \times \NR = \NR$, we see that multiplication by $c$ sends $A$ 
+    to $B$, which is a surjective map by counting numbers. In particular, 
+    we find that 
+    \[ c \cdot B = c \cdot ((\Z/p\Z)^* \setminus A) = (c \cdot (\Z/p\Z)^*) 
+    \setminus (c \cdot A) = (\Z/p\Z)^* \setminus B = A, \] 
+    and hence $\NR \times \NR = \QR$, proving (iii). 
+\end{pf}
+
+\subsection{Special Cases of Quadratic Reciprocity}\label{subsec:5.3}
+
+\vspace{2ex}
+\begin{theo}[Euler's criterion]{thm:5.10}
+    Let $p$ be an odd prime, and let $a \in (\Z/p\Z)^*$. Then 
+    \[ a^{(p-1)/2} \equiv \left( \frac ap \right) \pmod p. \] 
+\end{theo}
+\begin{pf}
+    If $a$ is a quadratic residue modulo $p$, say $a \equiv b^2 \pmod p$, then 
+    Fermat's little theorem tells us that 
+    \[ a^{(p-1)/2} \equiv (b^2)^{(p-1)/2} \equiv b^{p-1} \equiv 1 \equiv 
+    \left( \frac ap \right) \pmod p. \] 
+    Next, consider the congruence 
+    \[ X^{(p-1)/2} - 1 \equiv 0 \pmod p. \] 
+    We just showed that every quadratic residue modulo $p$ is a solution to this 
+    congruence, and we know that there are exactly $(p-1)/2$ of them by 
+    Remark~\ref{remark:5.6}. Moreover, $X^{(p-1)/2} - 1 \equiv 0 \pmod p$ 
+    has at most $(p-1)/2$ distinct solutions since $(\Z/p\Z)^*$ is a field. 
+    Therefore, there is a correspondence between the solutions of 
+    $X^{(p-1)/2} - 1 \equiv 0 \pmod p$ and the quadratic residues modulo $p$. 
+
+    Now, let $a$ be a quadratic nonresidue modulo $p$. Then Fermat's little 
+    theorem tells us that $a^{p-1} \equiv 1 \pmod p$, and hence 
+    \[ 0 \equiv a^{p-1} - 1 \equiv \left( a^{(p-1)/2} - 1 \right) 
+    \left( a^{(p-1)/2} + 1 \right) \pmod p. \] 
+    The first factor is not $0$ modulo $p$ because the solutions of $X^{(p-1)/2}
+    - 1 \equiv 0 \pmod p$ are precisely the quadratic residues modulo $p$. 
+    Therefore, we have $a^{(p-1)/2} + 1 \equiv 0 \pmod p$, and so 
+    \[ a^{(p-1)/2} \equiv -1 \equiv \left( \frac ap \right) \pmod p. \qedhere \] 
+\end{pf}
+
+We can use Euler's criterion to compute some Legendre symbols. 
+
+\begin{theo}[Quadratic reciprocity I]{thm:5.11}
+    Let $p$ be an odd prime. Then 
+    \[ \left( \frac{-1}p \right) = \begin{cases}
+        1 & \text{if } p \equiv 1 \pmod 4, \\ 
+        -1 & \text{if } p \equiv 3 \pmod 4. 
+    \end{cases} \] 
+\end{theo}
+\begin{pf}
+    By Euler's criterion, we have 
+    \[ (-1)^{(p-1)/2} \equiv \left( \frac{-1}p \right) \pmod p. \] 
+    Suppose that $p \equiv 1 \pmod 4$. Then $p = 4k+1$ for some integer $k$, and 
+    we see that 
+    \[ (-1)^{(p-1)/2} = (-1)^{(4k+1-1)/2} = (-1)^{2k} = 1, \] 
+    which gives us 
+    \[ \left( \frac{-1}p \right) = 1. \] 
+    On the other hand, when $p \equiv 3 \pmod 4$ so that $p = 4k+3$ for some 
+    integer $k$, then 
+    \[ (-1)^{(p-1)/2} = (-1)^{(4k+3-1)/2} = (-1)^{2k+1} = -1, \] 
+    and it follows that 
+    \[ \left( \frac{-1}p \right) = -1. \qedhere \] 
+\end{pf}
+
+To go further, we first require another tool. 
+
+\begin{theo}[Gauss' lemma]{thm:5.12}
+    Let $p$ be an odd prime, and let $a$ be an integer coprime to $p$. 
+    Take the numbers $a, 2a, \dots, [(p-1)/2]a$ and reduce each of them modulo $p$
+    to get numbers lying between $-(p-1)/2$ and $(p-1)/2$. If $s$ is the number 
+    of resulting residues less than $0$, then 
+    \[ \left( \frac ap \right) = (-1)^s. \] 
+\end{theo}
+\begin{pf}
+    For each $1 \leq i \leq (p-1)/2$, let $u_i$ be an integer such that 
+    $ia \equiv u_i \pmod p$ and $-(p-1)/2 \leq u_i \leq (p-1)/2$. Note that $s$ 
+    is the number of elements in $u_1, \dots, u_{(p-1)/2}$ less than $0$. 
+
+    We claim that 
+    \[ \{|u_1|, |u_2|, \dots, |u_{(p-1)/2}|\} = \{1, 2, \dots, p-1\}. \] 
+    It is sufficient to show that no two of the integers in the first set are 
+    congruent modulo $p$, as there are exactly $(p-1)/2$ elements in the set, 
+    and they are all positive integers not exceeding $(p-1)/2$. Suppose that 
+    $|u_i| = |u_j|$. If $u_i = u_j$, then $ia \equiv ja \pmod p$, which implies 
+    that $i = j$ since $\gcd(a, p) = 1$ and $1 \leq i, j \leq (p-1)/2$. 
+    On the other hand, if $u_i = -u_j$, then $ia \equiv -ja \pmod p$. 
+    This implies that $(i+j)a \equiv 0 \pmod p$ and hence 
+    \[ i + j \equiv 0 \pmod p \] 
+    since $\gcd(a, p) = 1$. Since $1 \leq i, j \leq (p-1)/2$, we have 
+    $2 \leq i+j \leq p-1$. But there is no number congruent to $0$ modulo $p$ 
+    in this range, so this scenario is impossible. This proves our claim. 
+
+    Finally, we find that 
+    \[ a^{(p-1)/2} \prod_{i=1}^{(p-1)/2} i 
+    \equiv \prod_{i=1}^{(p-1)/2} ia 
+    \equiv \prod_{i=1}^{(p-1)/2} u_i 
+    \equiv (-1)^s \prod_{i=1}^{(p-1)/2} i \pmod p, \] 
+    where the third congruence follows from the claim. This implies that 
+    \[ \left( \frac ap \right) \equiv a^{(p-1)/2} \equiv (-1)^s \pmod p. \qedhere \] 
+\end{pf}
+
+Now, we can compute $(\frac2p)$. 
+
+\begin{theo}[Quadratic reciprocity II]{thm:5.13}
+    Let $p$ be an odd prime. Then 
+    \[ \left( \frac2p \right) = (-1)^{(p^2-1)/8} = \begin{cases} 
+        1 & \text{if } p \equiv \pm1 \pmod 8, \\ 
+        -1 & \text{if } p \equiv \pm3 \pmod 8. 
+    \end{cases} \] 
+\end{theo}
+\begin{pf}
+    From Gauss' lemma (Theorem~\ref{thm:5.12}), we only need to find the amount 
+    of numbers $s$ from the list 
+    \[ 1\cdot 2,\,2\cdot 2,\,3 \cdot 2, \dots, \left( \frac{p-1}2 \right) \cdot 2 \] 
+    which are greater than $p/2$. Note that for $1 \leq j \leq (p-1)/2$, the 
+    integer $2j$ is less than $p/2$ when $j \leq p/4$. Hence, there are 
+    $\floor{p/4}$ integers in the set less than $p/2$. Consequently, there are 
+    \[ s = \frac{p-1}2 - \floor*{\frac p4} \] 
+    of them greater than $p/2$. In particular, we find that 
+    \[ \left( \frac2p \right) = (-1)^{\frac{p-1}2 - \floor{p/4}}. \] 
+    To finish the proof, it remains to show that 
+    \[ \frac{p-1}2 - \floor*{\frac p4} \equiv \frac{p^2 - 1}8 \pmod 2. \] 
+    We can verify this case by case. 
+    \begin{itemize}
+        \item If $p \equiv \pm1 \pmod 8$, then $p = 8k\pm 1$ for some integer $k$. 
+        We have 
+        \[ \frac{p-1}2 - \floor*{\frac p4} = \frac{(8k\pm 1) - 1}2 
+        - \floor*{\frac{8k\pm 1}4} = \frac{-1\pm 1}2 + 4k + \floor*{2k \pm \frac14}. \] 
+        If we choose the $+$ sign, we obtain 
+        \[ \frac{p-1}2 - \floor*{\frac p4} \equiv \frac{-1 + 1}2 + 
+        \floor*{2k + \frac14} \equiv 0 + 2k \equiv 0 \pmod 2, \] 
+        whereas if we choose the $-$ sign, we get 
+        \[ \frac{p-1}2 - \floor*{\frac p4} \equiv \frac{-1-1}2 + 
+        \floor*{2k - \frac14} \equiv -1 + 2k - 1 \equiv 0 \pmod 2. \] 
+        On the other hand, we have 
+        \[ \frac{p^2-1}8 \equiv \frac{(8k\pm 1)^2 - 1}8 \equiv 
+        \frac{64k^2 \pm 16k + 1 - 1}8 \equiv 8k^2 \pm 2k \equiv 0 \pmod 2, \] 
+        which proves this case. 
+        \item If $p \equiv \pm3 \pmod 8$, then $p = 8k\pm 3$ for some integer $k$. 
+        Then, we see that 
+        \[ \frac{p-1}2 - \floor*{\frac p4} = \frac{(8k\pm 3) - 1}2 
+        - \floor*{\frac{8k\pm 3}4} = \frac{-1\pm 3}2 + 4k + \floor*{2k \pm \frac34}. \]
+        Choosing $+$ gives 
+        \[ \frac{p-1}2 - \floor*{\frac p4} \equiv \frac{-1 + 3}2 + 
+        \floor*{2k + \frac34} \equiv -1 + 2k \equiv 1 \pmod 2, \] 
+        while choosing $-$ gives 
+        \[ \frac{p-1}2 - \floor*{\frac p4} \equiv \frac{-1-3}2 + 
+        \floor*{2k - \frac34} \equiv -2 + 2k - 1 \equiv 1 \pmod 2. \]
+        Moreover, we have 
+        \[ \frac{p^2-1}8 \equiv \frac{(8k\pm 3)^2 - 1}8 \equiv 
+        \frac{64k^2 \pm 48k + 9 - 1}8 \equiv 8k^2 \pm 6k + 1 \equiv 1 \pmod 2, \] 
+        which completes the proof of the theorem. \qedhere 
+    \end{itemize}
+\end{pf}
+
+\subsection{The Law of Quadratic Reciprocity}\label{subsec:5.4}
+
+\vspace{2ex}
+\begin{theo}[Law of quadratic reciprocity]{thm:5.14}
+    Let $p$ and $q$ be odd primes. Then 
+    \[ \left( \frac pq \right) \left( \frac qp \right) = (-1)^{\frac{p-1}2 \frac{q-1}2}. \] 
+    In particular, we have 
+    \[ \left( \frac pq \right) = \begin{cases}
+        \left(\dfrac qp \right) & \text{if $p \equiv 1$ (mod $4$) or $q \equiv 1$ (mod $4$),} \\[2ex]
+        -\left(\dfrac qp \right) & \text{if $p \equiv q \equiv 3$ (mod $4$).} 
+    \end{cases} \] 
+\end{theo}
+
+There are many ways to prove this famous theorem. We will take an approach that is 
+not the fastest, but is easy to understand. First, we require the following lemma. 
+
+\begin{lemma}{lemma:5.15}
+    Let $p$ be an odd prime, and let $a$ be an odd integer such that $a \nmid p$. 
+    Then we have 
+    \[ \left( \frac ap \right) = (-1)^{T(a, p)}, \] 
+    where we define $T(a, p)$ to be 
+    \[ T(a, p) = \sum_{j=1}^{(p-1)/2} \floor*{\frac{ja}{p}}. \] 
+\end{lemma}
+\begin{pf}
+    Consider the reduced residues of $a, 2a, \dots, [(p-1)/2]a$ lying between 
+    $-(p-1)/2$ and $(p-1)/2$; let $u_1, \dots, u_s$ be those less than $0$, 
+    and $v_1, \dots, v_t$ be those greater than $0$. The division algorithm 
+    tells us that 
+    \[ ja = p\floor*{\frac{ja}{p}} + r, \] 
+    where the remainder $r$ is either in the form $p + u_j$ or $v_j$. By 
+    adding these $(p-1)/2$ equations, we obtain 
+    \[ \sum_{j=1}^{(p-1)/2} ja = \sum_{j=1}^{(p-1)/2} p\floor*{\frac{ja}{p}} 
+    + \sum_{j=1}^s (p + u_j) + \sum_{j=1}^t v_j. \tag{5.1}\label{eq:5.1} \] 
+    In the proof of Gauss' lemma (Theorem~\ref{thm:5.12}), we saw that the integers 
+    \[ -u_1, -u_2, \dots, -u_s, v_1, \dots, v_t \] 
+    are precisely the integers $1, 2, \dots, (p-1)/2$. Therefore, we have 
+    \[ \sum_{j=1}^{(p-1)/2} j = -\sum_{j=1}^s u_j + \sum_{j=1}^t v_j. 
+    \tag{5.2}\label{eq:5.2} \] 
+    Subtracting $\eqref{eq:5.2}$ from $\eqref{eq:5.1}$, we find that 
+    \[ \sum_{j=1}^{(p-1)/2} ja - \sum_{j=1}^{(p-1)/2} j 
+    = \sum_{j=1}^{(p-1)/2} p\floor*{\frac{ja}{p}} + ps + 2 \sum_{j=1}^s u_j. \] 
+    Using the definition of $T(a, p)$, we get 
+    \[ (a-1) \sum_{j=1}^{(p-1)/2} j = pT(a, p) + ps + 2\sum_{j=1}^s u_j. 
+    \tag{5.3}\label{eq:5.3} \] 
+    Reducing equation $\eqref{eq:5.3}$ modulo $2$ yields $0 \equiv T(a, p) 
+    + s \pmod 2$, and hence $T(a, p) \equiv s \pmod 2$ since $s$ and 
+    $-s$ have the same parity. In particular, we conclude that 
+    \[ \left( \frac ap \right) = (-1)^s = (-1)^{T(a, p)}. \qedhere \] 
+\end{pf}
+
+Now, we are ready to prove our main theorem. 
+
+{\sc Proof of Theorem 5.14.} Consider the pairs of integers $(x, y)$ with 
+$1 \leq x \leq (p-1)/2$ and $1 \leq y \leq (q-1)/2$. There are 
+$(p-1)/2 \cdot (q-1)/2$ such pairs. Note that none of these pairs satisfy 
+$qx = py$ since this would imply that $p \mid x$ and $y \mid q$, which is absurd. 
+We divide these $(p-1)/2 \cdot (q-1)/2$ pairs into two groups, depending 
+on the relative sizes of $qx$ and $py$. 
+
+The pairs of integers $(x, y)$ satisfying $qx > py$ are precisely those 
+with $1 \leq x \leq (p-1)/2$ and $1 \leq y \leq qx/p$. Hence, for fixed 
+$1 \leq x \leq (p-1)/2$, there are $\floor{qx/p}$ possible values of $y$, so 
+the number of pairs $(x, y)$ satisfying $qx > py$ is 
+\[ \sum_{j=1}^{(p-1)/2} \floor*{\frac{qj}{p}}. \] 
+Similarly, the pairs of integers $(x, y)$ satisfying $qx < py$ are precisely 
+those with $1 \leq y \leq (q-1)/2$ and $1 \leq x \leq py/q$. For fixed 
+$1 \leq y \leq (q-1)/2$, there are $\floor{py/q}$ possible values of $x$, 
+so the number of pairs $(x, y)$ satisfying $qx < py$ is 
+\[ \sum_{j=1}^{(q-1)/2} \floor*{\frac{pj}{q}}. \] 
+Consequently, we find that 
+\[ \frac{p-1}2 \frac{q-1}2 = \sum_{j=1}^{(p-1)/2} \floor*{\frac{qj}{p}} 
++ \sum_{j=1}^{(q-1)/2} \floor*{\frac{pj}{q}} = T(q, p) + T(p, q). \] 
+It follows from Lemma~\ref{lemma:5.15} that 
+\[ (-1)^{\frac{p-1}2 \frac{q-1}2} = (-1)^{T(q, p) + T(p, q)} = 
+(-1)^{T(q, p)} \cdot (-1)^{T(p, q)} = \left( \frac qp \right) \left( \frac pq 
+\right), \] 
+which completes the proof. \qed 

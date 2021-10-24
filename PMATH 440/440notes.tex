@@ -48,6 +48,8 @@
 \DeclareMathOperator{\csch}{csch}
 \DeclareMathOperator{\Res}{Res}
 \DeclareMathOperator{\Li}{Li}
+\DeclareMathOperator{\QR}{QR}
+\DeclareMathOperator{\NR}{NR}
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
@@ -65,17 +67,6 @@
 	\normalsize\vspace{1cm}\hrule
   \end{center}
 }
-
-% for theorems
-\newtheoremstyle{newstyle}      
-{} %Aboveskip 
-{-0.25pt} %Below skip
-{\mdseries} %Body font e.g.\mdseries,\bfseries,\scshape,\itshape
-{} %Indent
-{\scshape} %Head font e.g.\bfseries,\scshape,\itshape
-{.} %Punctuation afer theorem header
-{ } %Space after theorem header
-{} %Heading
 
 \newcounter{theo}[section]\setcounter{theo}{0}
 \renewcommand{\thetheo}{\arabic{section}.\arabic{theo}}
@@ -298,11 +289,13 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \setlist[itemize]{topsep=0pt}
 \setlist[enumerate]{topsep=0pt}
 
+\newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
+
 % hyperlinks
 \hypersetup{
   colorlinks=true, 
   linktoc=all,     % table of contents is clickable  
-  allcolors=black  % all hyperlink colours
+  allcolors=red    % all hyperlink colours
 }
 
 % table of contents
