@@ -2,7 +2,8 @@
 
 \subsection{The M\"obius Function}\label{subsec:2.1}
 
-\begin{defn}\label{def:2.1}
+\vspace{2ex}
+\begin{defn}{def:2.1}
 Let $f$ and $g$ be functions from $\N$ or $\R^+$ to $\R$, and suppose that $g$ maps to $\R^+$. 
 \begin{enumerate}[(1)]
     \item We write $f = O(g)$ if there exist constants $c_1, c_2 > 0$ such that for all $x > c_1$, 
@@ -17,7 +18,7 @@ By the Prime Number Theorem, we have $\pi(x) \sim x/\log x$, or equivalently,
 \begin{equation}
     \pi(x) = \frac{x}{\log x} + o\left( \frac{x}{\log x} \right). \label{eq:2.1}
 \end{equation}
-\begin{remark}\label{remark:2.2}
+\begin{remark}{remark:2.2}
 Let $\eps > 0$. Then the number of primes in the interval $[x, (1+\eps)x]$ is 
 \[ \pi((1+\eps)x) - \pi(x) = \frac{(1+\eps)x}{\log((1+\eps)x)} - \frac{x}{\log x} + o\left( \frac{x}{\log x} \right). \]
 Notice that 
@@ -33,7 +34,7 @@ Equation (\ref{eq:2.2}) might look odd together with equation (\ref{eq:2.1}). No
 correct; it's just that the bounds in the notation $o$ are different. 
 \end{remark}
 
-\begin{defn}\label{def:2.3}
+\begin{defn}{def:2.3}
 We define the {\bf M\"obius function} on $\N$ by 
 \[ \mu(n) = \begin{cases} 1 & \text{if } n = 1, \\ 0 & \text{ if $n$ is not squarefree,} \\ 
 (-1)^r & \text{if $n$ is a product of $r$ distinct primes.} \end{cases} \]
@@ -41,7 +42,7 @@ We define the {\bf M\"obius function} on $\N$ by
 For example, we have $\mu(48) = \mu(2^4 \cdot 3) = 0$ and $\mu(30) = \mu(2 \cdot 3 \cdot 5) = 
 (-1)^3 = -1$. 
 
-\begin{prop}\label{prop:2.4}
+\begin{prop}{prop:2.4}
 We have 
 \[ \sum_{d \mid n} \mu(d) = \begin{cases} 1 & \text{if } n = 1, \\ 0 & \text{otherwise,} \end{cases} \]
 where $\sum_{d\mid n}$ means that the summation runs through the positive divisors $d$ of $n$. 
@@ -57,7 +58,7 @@ a set satisfies $\mu(d) = (-1)^k$, we have
 \[ \sum_{d \mid n} \mu(d) = \sum_{d \mid N} \mu(d) = \sum_{k=0}^r \binom rk (-1)^k = (1-1)^r = 0. \qedhere \]
 \end{pf}
 
-\begin{prop}[M\"obius Inversion Formula]\label{prop:2.5}~
+\begin{prop}[M\"obius Inversion Formula]{prop:2.5}
 \begin{enumerate}[(1)]
     \item For two functions $f, g : \R^+ \to \C$, we have 
     \[ g(x) = \sum_{1 \leq n \leq x} f(x/n) \]
@@ -73,9 +74,11 @@ a set satisfies $\mu(d) = (-1)^k$, we have
 This is on Homework 1.
 \end{pf}
 
+\newpage 
 \subsection{The von Mangoldt Function}\label{subsec:2.2}
 
-\begin{defn}\label{def:2.6}
+\vspace{2ex}
+\begin{defn}{def:2.6}
 We define the {\bf von Mangoldt function} on $\N$ by 
 \[ \Lambda(n) = \begin{cases} \log p & \text{if $n = p^k$ for $p$ prime and $k \in \N$,} \\ 0 & \text{otherwise.} \end{cases} \]
 Moreover, for all $x \in \R$, we define the functions 
@@ -115,10 +118,10 @@ What is the relationship between $\theta(x)$, $\psi(x)$, and $\pi(x)$? We note t
 so it follows that 
 \[ \pi(x) \geq \frac{\theta(x)}{\log x} > c_4 \frac{x}{\log x}. \]
 
-\begin{thm}\label{thm:2.7}
+\begin{theo}{thm:2.7}
 We have 
 \[ \pi(x) \sim \frac{\theta(x)}{\log x} \sim \frac{\psi(x)}{\log x}. \]
-\end{thm}
+\end{theo}
 \begin{pf}
 Since $\psi(x) = \theta(x) + O(x^{1/2} (\log x)^2)$ and $\theta(x) > c_4x$, we see that $\theta(x) 
 \sim \psi(x)$. In particular, we have $\theta(x)/\log x \sim \psi(x)/\log x$, so it only 
@@ -147,7 +150,7 @@ which completes the proof.
 We will prove Abel's summation formula and give some of its
 applications.
 
-\begin{lemma}[Abel's summation formula]\label{lemma:2.8}
+\begin{lemma}[Abel's summation formula]{lemma:2.8}
 Let $\{a_n\}_{n=1}^\infty$ be a sequence of complex numbers. 
 Let $f : \{x \in \R : x \geq 1\} \to \C$ be a function. 
 For all $x \geq 1$, we define 
@@ -177,7 +180,7 @@ A(x)f(x) - A(N)f(N). \]
 Thus, the result holds for all $x \geq 1$.
 \end{pf}
 
-\begin{defn}\label{def:2.9}
+\begin{defn}{def:2.9}
 Given $x \in \R$, we denote the {\bf fractional part} of 
 $x$ by $\{x\}$; that is, 
 \[ \{x\} := x - \lfloor x \rfloor. \]
@@ -190,11 +193,11 @@ Note that $\gamma \approx 0.55721$.
 This has not been proven, but it has been conjectured that 
 $\gamma$ is irrational and transcendental.
 
-\begin{thm}\label{thm:2.10}
+\begin{theo}{thm:2.10}
 We have 
 \[ \sum_{n \leq x} \frac1n = \log x + \gamma + O
 \left( \frac1x \right). \]
-\end{thm}
+\end{theo}
 \begin{pf}
 Taking $a_n = 1$ and $f(t) = 1/t$ in Abel's summation formula,
 we have 
@@ -214,10 +217,10 @@ so that
 \end{align*}
 \end{pf}
 
-\begin{thm}\label{thm:2.11}
+\begin{theo}{thm:2.11}
 We have 
 \[ \sum_{n \leq x} \frac{\Lambda(n)}n = \log x + O(1). \]
-\end{thm}
+\end{theo}
 \begin{pf}
 First, we apply Abel's summation formula with $a_n = 1$ 
 and $f(n) = \log n$ to get 
@@ -251,10 +254,10 @@ Finally, dividing through by $x$ gives
 \[ \sum_{n\leq x} \frac{\Lambda(n)}n = \log x + O(1). \qedhere \]
 \end{pf}
 
-\begin{thm}\label{thm:2.12}
+\begin{theo}{thm:2.12}
 We have
 \[ \sum_{p\leq x} \frac{\log p}p = \log x + O(1). \]
-\end{thm}
+\end{theo}
 \begin{pf}
 Note that 
 \[ \sum_{p \leq x} \frac{\log p}p 
@@ -269,10 +272,10 @@ Moreover, we see that
 which completes the proof.
 \end{pf}
 
-\begin{thm}[Merten]\label{thm:2.13}
+\begin{theo}[Merten]{thm:2.13}
 There exists a real number $\beta$ such that 
 \[ \sum_{p \leq x} \frac1p = \log\log x + \beta + O\left(\frac1{\log x}\right). \]
-\end{thm}
+\end{theo}
 \begin{pf}
 We apply Abel's summation formula with 
 \[ a_n = \begin{cases} \frac{\log p}p & \text{if $n = p$ for a prime $p$} \\ 0 & \text{otherwise} \end{cases} \]

@@ -2,7 +2,8 @@
 
 \subsection{Primes}\label{subsec:1.1}
 
-\begin{defn}\label{def:1.1}
+\vspace{2ex}
+\begin{defn}{def:1.1}
 A {\bf prime number} is a positive integer greater than $1$ such that its only factors are $1$ and 
 itself. We denote by ${\cal P}$ the set of all prime numbers. For a positive real number $x$, 
 we define the {\bf prime counting function} by 
@@ -14,7 +15,7 @@ We would like to know how the primes are distributed among the integers. Let $p_
 $n$-th prime. Is there a formula to obtain $p_n$? Is there a polynomial $f(x) \in \Z[x]$ such that 
 $f(n) = p_n$ for all $n \in \N$? The answer to the latter question is no, due to the following result. 
 
-\begin{prop}\label{prop:1.2}
+\begin{prop}{prop:1.2}
 There is no non-constant polynomial $f(x) \in \Z[x]$ such that $f(n)$ is prime for all $n \in \N$. 
 \end{prop}
 \begin{pf}
@@ -25,7 +26,7 @@ In particular, notice that if $f(m)$ is prime for every positive integer $m$, th
 constant with $f(x) = q$ for some prime $q$. 
 \end{pf}
 
-\begin{remark}\label{remark:1.3}~
+\begin{remark}{remark:1.3}
 \begin{enumerate}[(1)]
     \item There are examples of polynomials whose initial values are surprisingly often prime. 
     For example, the polynomial $n^2 + n + 41$ is prime for all $0 \leq n \leq 39$, and the 
@@ -42,12 +43,12 @@ $f(n)$ yields a prime for infinitely many $n \in \N$? Trivially, we see that $f(
 for any $k \in \Z$. When the coefficient of $x$ is not equal to $1$, we have the following result, 
 which we will prove at the end of this course.
 
-\begin{thm}[Dirichlet]\label{thm:1.4}
+\begin{theo}[Dirichlet]{thm:1.4}
 Let $k$ and $\ell$ be coprime positive integers. Then $kn+\ell$ is prime for infinitely many positive
 integers $n$. 
-\end{thm}
+\end{theo}
 
-\begin{remark}\label{remark:1.5}~
+\begin{remark}{remark:1.5}
 \begin{enumerate}[(1)]
     \item At the moment, there is no known polynomial of degree greater than $1$ in one variable 
     known to take prime values infinitely often. The best result known to date is that $n^2+1$ is 
@@ -60,9 +61,9 @@ integers $n$.
 \end{enumerate}
 \end{remark}
 
-\begin{thm}[Euclid]\label{thm:1.6}
+\begin{theo}[Euclid]{thm:1.6}
 There are infinitely many prime numbers.
-\end{thm}
+\end{theo}
 \begin{pf}
 Assume that there are only finitely many primes, say $p_1, \dots, p_n$, and consider 
 \[ m = p_1 \cdots p_n + 1. \]
@@ -73,7 +74,7 @@ Hence, we see that $p_k \mid m - p_1 \cdots p_n$ and $p_k \mid 1$, which is a co
 
 We would like to estimate the prime counting function $\pi(x)$. 
 
-\begin{prop}\label{prop:1.7}
+\begin{prop}{prop:1.7}
 For all $n \in \N$, we have $p_n \leq 2^{2^n}$. 
 \end{prop}
 \begin{pf}
@@ -84,7 +85,7 @@ It follows from induction that
 which completes the proof. 
 \end{pf}
 
-\begin{cor}\label{cor:1.8}
+\begin{cor}{cor:1.8}
 For all $x \geq 2$, we have $\pi(x) > \log\log x$. (In this course, $\log$ denotes the natural logarithm.)
 \end{cor}
 \begin{pf}
@@ -100,7 +101,7 @@ It follows that
 There is an alternative way to prove Euclid's theorem, due to Euler, which is left as part of the 
 homework. Using the same idea, we can derive a slightly better lower bound for $\pi(x)$. 
 
-\begin{prop}\label{prop:1.9}
+\begin{prop}{prop:1.9}
 For all $x \geq 2$, we have 
 \[ \pi(x) \geq \frac{\log\log x}{\log 2}. \]
 \end{prop}
@@ -121,9 +122,9 @@ are denoted by
 In 1732, Euler showed that $641 \mid F_5$. It is also known that $F_6, \dots, F_{21}$ are composite. 
 It is quite likely that only finitely many Fermat numbers are prime. 
 
-\begin{thm}[Poly\'a]\label{thm:1.10}
+\begin{theo}[Poly\'a]{thm:1.10}
 If $n$ and $m$ are positive integers with $1 \leq n < m$, then $(F_n, F_m) = 1$. 
-\end{thm}
+\end{theo}
 \begin{pf}
 Write $m = n+k$ with $k \geq 1$. First, we will show that $F_n \mid F_m - 2$. Observe that 
 \[ F_m - 2 = (2^{2^{n+k}} + 1) - 2 = 2^{2^{n+k}} - 1. \]
@@ -138,19 +139,19 @@ This gives yet another proof of Euclid's theorem, as well as the bound $p_n \leq
 \subsection{Elementary Approximations of $\pi(x)$}\label{subsec:1.2}
 In 1896, Hadamard and de la Vall\'ee Poussin each proved the Prime Number Theorem independently. 
 
-\begin{thm}[Prime Number Theorem]\label{thm:1.11}
+\begin{theo}[Prime Number Theorem]{thm:1.11}
 We have 
 \[ \lim_{x\to\infty} \frac{\pi(x)}{x/\log x} = 1. \]
-\end{thm}
+\end{theo}
 
 This was initially conjectured by Gauss. We will prove this theorem later in the course; 
 for now, we will see how to approach this problem using elementary methods. 
 
-\begin{thm}\label{thm:1.12}
+\begin{theo}{thm:1.12}
 For all $x \geq 2$, we have 
 \[ \pi(x) \geq \frac{\log x}{2\log 2}. \]
 Moreover, for all $n \geq 1$, we have $p_n \leq 4^n$.
-\end{thm}
+\end{theo}
 \begin{pf}
 Let $x \geq 2$ be an integer. Let $p_1, \dots, p_j$ be the primes less than or equal to $x$. 
 Note that we have $j = \pi(x)$ here. For every integer $n$ with $n \leq x$, we can write $n = n_1^2m$
@@ -169,10 +170,10 @@ Let $n$ be a positive integer and let $p$ be a prime. Recall that the exact powe
 dividing $n!$ is 
 \[ \sum_{n=1}^\infty \left\lfloor \frac{n}{p^k} \right\rfloor = \sum_{n=1}^{\left\lfloor \frac{\log n}{\log p} \right\rfloor} \left\lfloor \frac{n}{p^k} \right\rfloor. \]
 
-\begin{thm}\label{thm:1.13}
+\begin{theo}{thm:1.13}
 For all $x \geq 2$, we have 
 \[ \left( \frac{3\log 2}8 \right) \frac{x}{\log x} < \pi(x) < (6\log 2) \frac{x}{\log x}. \]
-\end{thm}
+\end{theo}
 \begin{pf}
 This argument was given by Erd\H{o}s. First, we will prove the lower bound. Note that $\binom{2n}n$ is 
 an integer, and 
@@ -235,7 +236,7 @@ provided that $n < 6 \cdot 10^6$, and he had conjectured that this holds for all
 proved that this was indeed the case in 1950. 
 Note that this is not a trivial result; it doesn't occur for free just because $\pi(x) \sim x/\log x$. 
 
-\begin{prop}\label{prop:1.14}
+\begin{prop}{prop:1.14}
 For all $n \in \Z^+$, we have 
 \[ \prod_{p\leq n} p < 4^n. \]
 \end{prop}
@@ -255,7 +256,7 @@ By our inductive hypothesis and the previous inequality, it follows that
 \leq 4^{m+1} 4^m = 4^{2m+1}. \qedhere \]
 \end{pf}
 
-\begin{lemma}\label{lemma:1.15}
+\begin{lemma}{lemma:1.15}
 If $n \geq 3$ and $p$ is a prime with $\frac23n < p \leq n$, then $p \nmid \binom{2n}n$. 
 \end{lemma}
 \begin{pf}
@@ -267,9 +268,9 @@ $\frac23n < p \leq n$, we have $p \;\|\; n!$ and hence $p^2 \;\|\; (n!)^2$. Usin
 \[ \binom{2n}n = \frac{(2n)!}{(n!)^2}, \] we see that $p \nmid \binom{2n}n$. 
 \end{pf}
 
-\begin{thm}[Chebyshev]\label{thm:1.16}
+\begin{theo}[Chebyshev]{thm:1.16}
 For every $n \in \Z^+$, there exists a prime satisfying $n < p \leq 2n$. 
-\end{thm}
+\end{theo}
 \begin{pf}
 This argument was given by Erd\H{o}s. Note that the result holds for $1 \leq n \leq 3$. Assume that the 
 result is false for some integer $n \geq 4$. By Lemma~\ref{lemma:1.15}, every prime dividing 

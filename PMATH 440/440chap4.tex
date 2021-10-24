@@ -2,7 +2,8 @@
 
 \subsection{Asymptotic Formulas for Divisor Counting Functions}\label{subsec:4.1}
 
-\begin{defn}\label{def:4.1}
+\vspace{2ex}
+\begin{defn}{def:4.1}
     For a positive integer $n \in \N$, we denote by $\Omega(n)$ the number 
     of prime factors of $n$ counted with multiplicity, and $\omega(n)$ the 
     number of distinct prime factors of $n$. 
@@ -11,7 +12,7 @@
 For example, if $n = 2^{10} \cdot 3^2 \cdot 7$, then $\Omega(n) = 10 + 2 + 1
 = 13$ and $\omega(n) = 3$. 
 
-\begin{defn}\label{def:4.2}
+\begin{defn}{def:4.2}
     Let $k \in \N$. For each real number $x \in \R$, we define $\tau_k(x)$ 
     to be the number of positive integer with $n \leq x$ and $\Omega(n) = k$. 
     That is, 
@@ -24,11 +25,11 @@ For example, if $n = 2^{10} \cdot 3^2 \cdot 7$, then $\Omega(n) = 10 + 2 + 1
     $\pi(x) = \pi_1(x) = \tau_1(x)$. 
 \end{defn}
 
-\begin{thm}[Landau, 1900]\label{thm:4.3} 
+\begin{theo}[Landau, 1900]{thm:4.3} 
     Let $k \in \N$ be a positive integer. Then 
     \[ \pi_k(x) \sim \tau_k(x) \sim \frac{1}{(k-1)!} \frac{x}{\log x} 
     (\log \log x)^{k-1}. \] 
-\end{thm}
+\end{theo}
 \begin{pf}
     We first introduce the functions 
     \begin{align*} 
@@ -171,7 +172,7 @@ For example, if $n = 2^{10} \cdot 3^2 \cdot 7$, then $\Omega(n) = 10 + 2 + 1
 \subsection{Summatory Functions for $\omega(n)$ and $\Omega(n)$}\label{subsec:4.2} 
 Let's now consider the averages of $\omega(n)$ and $\Omega(n)$. 
 
-\begin{thm}\label{thm:4.4}
+\begin{theo}{thm:4.4}
     We have 
     \begin{align*}
         \sum_{n\leq x} \omega(n) &= x\log\log x + \beta x + o(x), \\ 
@@ -179,7 +180,7 @@ Let's now consider the averages of $\omega(n)$ and $\Omega(n)$.
     \end{align*}
     where $\beta$ is Merten's constant as in Theorem~\ref{thm:2.13} and 
     \[ \tilde\beta = \beta + \sum_p \frac{1}{p(p-1)}. \] 
-\end{thm}
+\end{theo}
 \begin{pf}
     Set $S_1 = S_1(x) = \sum_{n\leq x} \omega(n)$. Then we have 
     \[ S_1 = \sum_{n\leq x} \sum_{p\mid n} 1 = \sum_{p\leq x} \floor*{\frac{x}{p}}. \] 
@@ -207,8 +208,8 @@ Let's now consider the averages of $\omega(n)$ and $\Omega(n)$.
     \begin{align*}
         \sum_{\substack{p^m > x \\ m \geq x}} \frac{1}{p^m} 
         &\leq \sum_{\substack{p^m > x \\ m \geq 2 \\ 2\,\mid\,n}} \frac{1}{p^m} 
-        + \sum_{\substack{p^m > x \\ m \geq 2 \\ 2\,\nmid\,n}} \frac{1}{p^m} \\
-        &\leq \sum_{n^2 > x} \frac{1}{n^2} + \sum_{\substack{p^m > x \\ 
+        + \sum_{\substack{p^m > x \\ m \geq 2 \\ 2\,\nmid\,n}} \frac{1}{p^m} 
+        \leq \sum_{n^2 > x} \frac{1}{n^2} + \sum_{\substack{p^m > x \\
         m \geq 2 \\ 2\,\mid\,m \\ p \leq \sqrt{x}}} \frac{1}{p^m} 
         + \sum_{\substack{p^m > x \\ 
         m \geq 2 \\ 2\,\mid\,m \\ p > \sqrt{x}}} \frac{1}{p^m}. 
@@ -219,9 +220,9 @@ Let's now consider the averages of $\omega(n)$ and $\Omega(n)$.
     \begin{align*} 
         \sum_{\substack{p^m > x \\ m \geq 2}} \frac{1}{p^m} 
         &\leq \sum_{n^2 > x} \frac{1}{n^2} + 2 \sum_{\substack{p^{m-1} > \sqrt{x}
-        \\ m \geq 2 \\ 2\,\mid\,m}} \frac{1}{p^{m-1}} \\
-        &\leq \sum_{n^2 > x} \frac{1}{n^2} + 2 \sum_{m^2 > \sqrt{x}} \frac{1}{m^2} \\ 
-        &\leq 3 \sum_{k > \sqrt[4]{x}} \frac{1}{k^2} = O\left( \frac{1}{\sqrt[4]{x}} \right). 
+        \\ m \geq 2 \\ 2\,\mid\,m}} \frac{1}{p^{m-1}} 
+        \leq \sum_{n^2 > x} \frac{1}{n^2} + 2 \sum_{m^2 > \sqrt{x}} \frac{1}{m^2}  
+        \leq 3 \sum_{k > \sqrt[4]{x}} \frac{1}{k^2} = O\left( \frac{1}{\sqrt[4]{x}} \right). 
     \end{align*}
     Therefore, we have 
     \[ S_2 - S_1 = x \left( \sum_p \frac{1}{p(p-1)} + o(1) \right) 
@@ -233,7 +234,8 @@ Let's now consider the averages of $\omega(n)$ and $\Omega(n)$.
 
 \subsection{Asymptotic Density and Normal Order}\label{subsec:4.3} 
 
-\begin{defn}\label{def:4.5}
+\vspace{2ex}
+\begin{defn}{def:4.5}
     Let $A$ be a subset of $\N$. For any $n \in \N$, we set $A(n) 
     = \{1, \dots, n\} \cap A$. We define the {\bf upper asymptotic density}
     of $A$ by 
@@ -245,7 +247,10 @@ Let's now consider the averages of $\omega(n)$ and $\Omega(n)$.
     this common value. 
 \end{defn}
 
-\begin{exmp}\label{exmp:4.6}~
+Now, let's look at some simple examples of asymptotic density of subsets 
+$A \subseteq \N$. 
+
+\begin{exmp}{exmp:4.6}
     \begin{enumerate}[(1)]
         \item When $A$ is the set of all primes, we have 
         $d(A) = \bar{d}(A) = \underline{d}(A) = 0$. 
@@ -269,7 +274,10 @@ Let's now consider the averages of $\omega(n)$ and $\Omega(n)$.
     \end{enumerate} 
 \end{exmp}
 
-\begin{defn}\label{def:4.7}
+From asymptotic density, we can define normal order. 
+Moreover, we will define average order. 
+
+\begin{defn}{def:4.7}
     Let $f(n)$ and $F(n)$ be functions from $\N$ to $\R$. 
     \begin{itemize}
         \item We say that $f(n)$ has {\bf normal order} $F(n)$ if for every 
@@ -282,7 +290,10 @@ Let's now consider the averages of $\omega(n)$ and $\Omega(n)$.
     \end{itemize}
 \end{defn}
 
-\begin{exmp}\label{exmp:4.8}~
+These definitions seem rather abstract, so let's look at some examples of normal 
+and average order. It's not too difficult to check the details. 
+
+\begin{exmp}{exmp:4.8}
     \begin{enumerate}[(1)]
         \item If we define 
         \[ f(n) = \begin{cases} 1 & \text{if $n \neq k!$ for any $k \in \N$,} \\ 
@@ -301,9 +312,9 @@ Let's now consider the averages of $\omega(n)$ and $\Omega(n)$.
     \end{enumerate}
 \end{exmp}
 
-\begin{thm}\label{thm:4.9}
+\begin{theo}{thm:4.9}
     Both $\omega(n)$ and $\Omega(n)$ have average order $\log\log n$. 
-\end{thm}
+\end{theo}
 \begin{pf}
     First, note that 
     \begin{align*} 
@@ -327,12 +338,12 @@ Let's now consider the averages of $\omega(n)$ and $\Omega(n)$.
 We have shown that $\omega(n)$ and $\Omega(n)$ have average order $\log\log n$. 
 In this section, we'll work towards proving that they have normal order $\log\log n$. 
 
-\begin{thm}\label{thm:4.10}
+\begin{theo}{thm:4.10}
     Let $\delta > 0$. The number of positive integers $n \leq x$ satisfying 
     \[ |f(n) - \log\log n| > (\log\log n)^{\frac12+\delta} \] 
     is $o(x)$, where $f(n) = \omega(n)$ or $f(n) = \Omega(n)$. In particular, 
     both $\omega(n)$ and $\Omega(n)$ have normal order $\log\log n$. 
-\end{thm}
+\end{theo}
 \begin{pf}
     It is enough to prove that the number of positive integers $n \leq x$ with 
     \[ |f(n) - \log\log x| > (\log\log x)^{\frac12+\delta} \] 
@@ -421,7 +432,7 @@ In this section, we'll work towards proving that they have normal order $\log\lo
     \right) = o(x). \qedhere \] 
 \end{pf}
 
-\begin{remark}\label{remark:4.11}
+\begin{remark}{remark:4.11}
     Since the average order of $\omega(n)$ is $\log\log n$, which is asymptotic 
     to $\log\log x$ for ``almost all'' $n$ (namely, all except $o(x)$ 
     many $n \leq x$), we can view the sum 
@@ -450,11 +461,11 @@ where $a_1, \dots, a_r \in \N$ and $p_1, \dots, p_r$ are distinct primes, then
     d(n) &= (a_1 + 1) \cdots (a_r + 1). 
 \end{align*}
 
-\begin{thm}\label{thm:4.12} 
+\begin{theo}{thm:4.12} 
     Given $\eps > 0$, define the set 
     \[ S(\eps) = \{n \in \N : 2^{(1-\eps)\log\log n} < d(n) < 2^{(1+\eps)\log\log n} \}. \] 
     Then $S(\eps)$ has asymptotic density $1$. 
-\end{thm}
+\end{theo}
 \begin{pf}
     Note that for any $a \in \N$, we have 
     \[ 2 \leq a + 1 \leq 2^a. \] 
@@ -463,7 +474,7 @@ where $a_1, \dots, a_r \in \N$ and $p_1, \dots, p_r$ are distinct primes, then
     and the result follows from Theorem~\ref{thm:4.10}. 
 \end{pf}
 
-\begin{remark}\label{remark:4.13}
+\begin{remark}{remark:4.13}
     We saw in Theorem~\ref{thm:3.9} that 
     \[ \sum_{n\leq x} d(n) \sim x\log x \sim \sum_{n\leq x}\log n. \] 
     Therefore, the average order of $d(n)$ is $\log n$. However, using 

@@ -4,7 +4,7 @@
 In order to prove the Prime Number Theorem, we need to 
 first introduce the Riemann zeta function. 
 
-\begin{defn}\label{def:3.1}
+\begin{defn}{def:3.1}
 For $s \in \C$ with $\Re(s) > 1$, we define the 
 {\bf Riemann zeta function} by 
 \[ \zeta(s) := \sum_{n=1}^\infty \frac1{n^s}. \]
@@ -20,7 +20,7 @@ if and only if $\sum_n |a_n|$ converges. We have the
 {\bf Euler product representation} of $\zeta(s)$ given 
 in the following lemma. 
 
-\begin{lemma}[Euler product]\label{lemma:3.2}
+\begin{lemma}[Euler product]{lemma:3.2}
 For $s \in \C$ with $\Re(s) > 1$, we have 
 \[ \prod_p \left( 1 - \frac1{p^s} \right)^{\!-1} = 
 \sum_{n=1}^\infty \frac1{n^s}. \]
@@ -37,12 +37,12 @@ integer can be expressed uniquely as a product of primes,
 so the identity holds.
 \end{pf}
 
-\begin{thm}\label{thm:3.3}
+\begin{theo}{thm:3.3}
 $\zeta(s)$ can be analytically continued to $s \in \C$ with 
 $\Re(s) > 0$ and $s \neq 1$. It is analytic except 
 at the point $s = 1$ where it has a simple pole with residue
 $1$. 
-\end{thm}
+\end{theo}
 \begin{pf}
 For $s \in \C$ with $\Re(s) > 1$, we have 
 $\zeta(s) = \sum_{n=1}^\infty n^{-s}$. By Abel's 
@@ -71,10 +71,10 @@ to the region $\{s \in \C : \Re(s) > 0\}$. Finally, note that
 $\frac{s}{s-1}$ has a simple pole with residue $1$ at $s = 1$.
 \end{pf}
 
-\begin{thm}\label{thm:3.4}
+\begin{theo}{thm:3.4}
 $\zeta(s)$ has no zeroes in the region $\{s \in \C : 
 \Re(s) \geq 1\}$. 
-\end{thm}
+\end{theo}
 \begin{pf}
 If $\Re(s) > 1$, then $\prod_p (1 - \frac1{p^s})^{-1}$ 
 converges, so $\zeta(s) \neq 0$. 
@@ -141,12 +141,13 @@ $\Re(s) = 1$.
 
 \subsection{Newman's Theorem}\label{subsec:3.2}
 
-\begin{thm}[Newman]\label{thm:3.5}
+\vspace{2ex}
+\begin{theo}[Newman]{thm:3.5}
 Let $\{a_n\}_{n=1}^\infty$ be a sequence of complex numbers with $|a_n| \leq 1$ for all $n \geq 1$. 
 Consider the series $\sum_{n=1}^\infty a_n/n^s$, which converges to an analytic function 
 $F(s)$ for $\Re(s) > 1$. If $F(s)$ can be analytically continued to $\Re(s) \geq 1$, then 
 $\sum_{n=1}^\infty a_n/n^s$ converges to $F(s)$ for $\Re(s) \geq 1$. 
-\end{thm}
+\end{theo}
 \begin{pf}
 Let $w \in \C$ with $\Re(w) \geq 1$. Then $F(z+w)$ is analytic for $\Re(z) \geq 0$. Choose 
 $R \geq 1$ and let $\delta = \delta(R) > 0$ so that $F(z+w)$ is analytic on the region 
@@ -241,10 +242,10 @@ Recall that we defined the M\"obius function $\mu : \N \to \{-1, 0, 1\}$ by
 We will show on Homework 2 that for $\Re(s) > 1$, we have 
 \[ \frac1{\zeta(s)} = \prod_p \left( 1 - \frac1{p^s} \right) = \sum_{n=1}^\infty \frac{\mu(n)}{n^s}. \]
 
-\begin{thm}\label{thm:3.6}
+\begin{theo}{thm:3.6}
 We have 
 \[ \sum_{n=1}^\infty \frac{\mu(n)}n = 0. \]
-\end{thm}
+\end{theo}
 \begin{pf}
 For all $\Re(s) > 1$, equation (3.4) holds. Moreover, we have shown that $(s-1)\zeta(s)$ is analytic 
 and non-zero in $\Re(s) \geq 1$, so $1/\zeta(s)$ is analytic on $\Re(s) \geq 1$. 
@@ -255,10 +256,10 @@ converges to $1/\zeta(s)$ for $\Re(s) \geq 1$. In particular, it converges at $s
 $\zeta(s)$ has a simple pole at $s = 1$, so $1/\zeta(1) = 0$. 
 \end{pf}
 
-\begin{thm}\label{thm:3.7}
+\begin{theo}{thm:3.7}
 We have 
 \[ \sum_{n\leq x} \mu(n) = o(x). \]
-\end{thm}
+\end{theo}
 \begin{pf}
 Applying Abel's summation formula with $a_n = \mu(n) / n $ and $f(x) = x$, we obtain 
 \[ \sum_{n\leq x} \mu(n) = A(x)x - \int_1^x A(u)\dd u, \]
@@ -271,18 +272,19 @@ so the result holds.
 
 \subsection{Divisor Function}\label{subsec:3.4}
 
-\begin{defn}\label{def:3.8}
+\vspace{2ex}
+\begin{defn}{def:3.8}
 For a positive integer $n \in \N$, let $d(n)$ be the number of positive integers that 
 divide $n$. 
 \end{defn}
 
 For example, we have $d(1) = 1$, $d(4) = 3$, and $d(p) = 2$ for all primes $p$. 
 
-\begin{thm}\label{thm:3.9}
+\begin{theo}{thm:3.9}
 We have 
 \[ \sum_{m=1}^n d(m) = \sum_{m=1}^n \floor*{\frac nm} = n\log n + (2\gamma - 1)n + O(n^{1/2}). \]
 where $\gamma$ denotes Euler's constant. 
-\end{thm}
+\end{theo}
 \begin{pf}
 Let $D_n$ be the region in the upper right-hand quadrant not containing the $x$ or $y$ axes, 
 which is under and includes the hyperbola $xy = n$. That is, 
@@ -329,10 +331,10 @@ Combining this with the previous equality gives
 \subsection{The Prime Number Theorem}\label{subsec:3.5}
 We now have everything we need to prove the Prime Number Theorem. 
 
-\begin{thm}[Prime Number Theorem]\label{thm:3.10}
+\begin{theo}[Prime Number Theorem]{thm:3.10}
     We have 
     \[ \pi(x) \sim \frac{x}{\log x}. \] 
-\end{thm}
+\end{theo}
 \begin{pf}
     In Theorem~\ref{thm:2.7}, we showed that 
     \[ \pi(x) \sim \frac{\psi(x)}{\log x}. \] 
@@ -351,7 +353,7 @@ We now have everything we need to prove the Prime Number Theorem.
     Looking at the first sum in $\eqref{eq:3.4}$, we have 
     \begin{align*}
         \sum_{n\leq x} \psi\left( \frac xn \right) 
-        &= \sum_{n \leq x} \sum_{m \leq \frac xn} \Lambda(m) \\
+        = \sum_{n \leq x} \sum_{m \leq \frac xn} \Lambda(m) 
         &= \sum_{n \leq x} \Lambda(n) \sum_{m\leq \frac xn} 1 \\
         &= \sum_{n \leq x} \Lambda(n) \floor*{\frac xn} \\
         &= \sum_{p^k \leq x} \log p \floor*{\frac x{p^k}} \\ 
@@ -377,8 +379,7 @@ We now have everything we need to prove the Prime Number Theorem.
     Combining equations $\eqref{eq:3.4}$, $\eqref{eq:3.5}$, and $\eqref{eq:3.6}$ gives 
     \[ F(x) = (x\log x - x + O(\log x)) - (x\log x + (2\gamma-1)x + O(x^{1/2})) 
     + (2\gamma x + O(1)) = O(x^{1/2}). \] 
-    Therefore, there exists a positive constant $c > 0$ such that 
-    \[ |F(x)| \leq cx^{1/2} \] 
+    Hence, there exists a positive constant $c > 0$ such that $|F(x)| \leq cx^{1/2}$
     for all $x \geq 1$. If $t > 1$ is an integer, then 
     \begin{align*}
         \left| \sum_{n\leq \frac xt} \mu(n) F\left( \frac xn \right) \right| 
@@ -438,7 +439,7 @@ We now have everything we need to prove the Prime Number Theorem.
     which completes the proof. 
 \end{pf}
 
-\begin{remark}\label{remark:3.11}~
+\begin{remark}{remark:3.11}
     \begin{enumerate}[(1)]
         \item In 1896, Hadamard and de la Vall\'ee Poussin proved the Prime 
         Number Theorem independently. Consider the logarithmic integral 

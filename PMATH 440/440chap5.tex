@@ -2,7 +2,8 @@
 
 \subsection{Euler's Totient Function}\label{subsec:5.1}
 
-\begin{defn}\label{def:5.1}
+\vspace{2ex}
+\begin{defn}{def:5.1}
     For $n \in \N$, we define {\bf Euler's totient function} $\phi(n)$ to be 
     the number of integers $m$ such that $1 \leq m \leq n$ and $\gcd(m, n) = 1$. 
     That is, we have 
@@ -15,10 +16,10 @@
     \end{enumerate}
 \end{defn}
 
-\begin{thm}\label{thm:5.2}
+\begin{theo}{thm:5.2}
     Let $a, n \in \N$ with $\gcd(a, n) = 1$. Then 
     \[ a^{\phi(n)} \equiv 1 \pmod n. \] 
-\end{thm}
+\end{theo}
 \begin{pf}
     Let $\{c_1, \dots, c_{\phi(n)}\}$ be a reduced residue system modulo $n$. 
     Since $\gcd(a, n) = 1$, $\{ac_1, \dots, ac_{\phi(n)}\}$ is also a 
@@ -33,14 +34,14 @@
 Notice that when $p$ is prime, we have $\phi(p) = p-1$, so we immediately 
 obtain the following corollary. 
 
-\begin{cor}[Fermat's little theorem]\label{cor:5.3}
+\begin{cor}[Fermat's little theorem]{cor:5.3}
     Let $p$ be a prime. For any $a \in \Z$ with $p \nmid a$, we have 
     \[ a^{p-1} \equiv 1 \pmod p. \] 
 \end{cor}
 
-\begin{thm}[Wilson]\label{thm:5.4}
+\begin{theo}[Wilson's theorem]{thm:5.4}
     If $p$ is a prime, then $(p-1)! \equiv -1 \pmod p$. 
-\end{thm}
+\end{theo}
 \begin{pf}
     Consider the element $x^{p-1} - 1 \in (\Z/p\Z)[x]$. By Fermat's little theorem 
     and using the fact that $\Z/p\Z$ is a field, this factors as 
