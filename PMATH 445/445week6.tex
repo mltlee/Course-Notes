@@ -189,10 +189,10 @@ $\langle \cdot, \cdot \rangle_G$ is symmetric, since
 = \langle \Psi, \Phi \rangle_G, \] 
 where in the second equality, we used the substitution $x = g^{-1}$. 
 
-Next time, we'll see that characters are orthonormal with respect to this 
-``inner product''. 
+In the following lectures, we'll see that characters are orthonormal with respect 
+to this ``inner product''. 
 
-\section{Orthonormality of characters over ``inner product'' (10/22/2021)}
+\section{Orthogonality of characters over ``inner product'' (10/22/2021)}
 For this part of the course, we'll be working over $\C$. Last time, 
 for a pair of maps $\Phi, \Psi : G \to \C$, we defined the ``inner product''
 \[ \langle \Phi, \Psi \rangle_G = \frac{1}{|G|} \sum_{g \in G} \Phi(g) 
@@ -345,6 +345,160 @@ by looking at their $(i, j)$-th entries.
         &= \langle (\rho_2)_{pq}, (\rho_1)_{ij} \rangle_G 
         = \langle (\rho_1)_{ij}, (\rho_2)_{pq} \rangle_G.
     \end{align*}
-    Since $1 \leq i, j \leq m$ and $1 \leq p, q, \leq n$ were arbitrary, we 
+    Since $1 \leq i, j \leq m$ and $1 \leq p, q \leq n$ were arbitrary, we 
     are done. 
 \end{pf}
+
+Now, we can show that the characters are orthonormal. 
+
+\begin{cor}{}
+    If $V$ and $W$ are non-isomorphic simple $\C[G]$-modules, then 
+    $\langle \chi_V, \chi_W \rangle = 0$. 
+\end{cor}
+\begin{pf}
+    Suppose that $\dim V = m$ and $\dim W = n$. Then we obtain representations
+    \begin{align*}
+        \rho_1 &: G \to \GL(V) \cong \GL_m(\C), \\ 
+        \rho_2 &: G \to \GL(W) \cong \GL_n(\C). 
+    \end{align*} 
+    We can write these in matrix form as 
+    \begin{align*}
+        \rho_1(g) &= \left((\rho_1)_{ij}(g)\right)_{1\leq i,j\leq m}, \\ 
+        \rho_2(g) &= \left((\rho_2)_{ij}(g)\right)_{1\leq i,j \leq n}.  
+    \end{align*}
+    By Theorem 17.3, we have $\langle (\rho_1)_{ij}, (\rho_2)_{pq} \rangle = 0$
+    for all $1 \leq i, j \leq m$ and $1 \leq p, q \leq n$. Notice that 
+    \begin{align*}
+        \chi_V(g) &= \Tr(\rho_1(g)) = \sum_{i=1}^m (\rho_1)_{ii}(g), \\ 
+        \chi_W(g) &= \Tr(\rho_2(g)) = \sum_{j=1}^n (\rho_2)_{jj}(g), 
+    \end{align*}
+    and it follows from the bilinearity of our ``inner product'' that 
+    \[ \langle \chi_V, \chi_W \rangle_G = \left\langle \sum_{i=1}^m 
+    (\rho_1)_{ii}, \sum_{j=1}^n (\rho_2)_{jj} \right\rangle_{\!\!G} = 0. \qedhere \] 
+\end{pf}
+
+\section{Orthonormality of characters over ``inner product'' (10/25/2021)}
+Let ${\cal C}_1, \dots, {\cal C}_s$ be the conjugacy classes of $G$, and let 
+$g_i, \dots, g_s$ be representatives of the conjugacy classes. We showed 
+that for characters $\chi$ and $\chi'$, we have 
+\[ \langle \chi, \chi' \rangle_G = \frac1{|G|} \sum_{i=1}^s |{\cal C}_i| 
+\chi(g_i) \overline{\chi'(g_i)}. \] 
+Now, for general class functions $\Theta, \Omega : G \to \C$, we define 
+\[ \langle \Theta, \Omega \rangle_G = \frac1{|G|} \sum_{i=1}^s |{\cal C}_i| 
+\Theta(g_i) \overline{\Omega(g_i)}. \] 
+This definition turns the space of $\C$-valued class functions into a complex 
+inner product space; we notice that 
+\[ \langle \Theta, \Theta \rangle_G = \frac1{|G|} \sum_{i=1}^s |{\cal C}_i|
+|\Theta(g_i)|^2 \geq 0. \] 
+We'll show that if $\chi_1, \dots, \chi_s$ are the inequivalent irreducible 
+characters, then $\chi_1, \dots, \chi_s$ forms an orthonormal basis for the 
+$\C$-valued class functions. 
+
+First, we observe that given a class function $\Theta : G \to \C$, we have 
+an element given by $(\Theta(g_1), \dots, \Theta(g_s)) \in \C^s$. In 
+particular, this gives us a bijection between the $\C$-valued class functions 
+and $\C^s$, since we can define a class function $\Theta : G \to \C$ 
+by picking $s$ values in $\C$ and assigning them to the representatives
+$g_1, \dots, g_s$. Therefore, the space of $\C$-valued class functions 
+is $s$-dimensional. 
+
+Notice that Corollary 17.4 already shows orthogonality. Let $V$ 
+be a simple $\C[G]$-module with a representation
+\[ \rho : G \to \GL(V) \cong \GL_n(\C), \] 
+where $V$ has basis $\{v_1, \dots, v_n\}$. Then we have $\rho(g) \cdot v_j 
+= \sum_{i=1}^n \rho_{ij}(g) \cdot v_i$, where 
+\[ \rho(g) = \begin{pmatrix}
+    \rho_{11}(g) & \cdots & \rho_{1n}(g) \\ 
+    \vdots & \ddots & \vdots \\ 
+    \rho_{n1}(g) & \cdots & \rho_{nn}(g) 
+\end{pmatrix}. \] 
+
+\begin{lemma}{}
+    For all $1 \leq i, j, s, t \leq n$, we have 
+    \[ \langle \rho_{ij}, \rho_{st} \rangle_G = \frac1{\dim V} \delta_{it} 
+    \delta_{js} = \frac1n \delta_{it} \delta_{js}, \] 
+    where $\delta_{ij}$ denotes the Kronecker delta. 
+\end{lemma}
+
+With the lemma, we can immediately prove orthonormality! Let $\chi = 
+\Tr(\rho)$, so $\chi(g) = \rho_{11}(g) + \cdots + \rho_{nn}(g)$. Then we find that 
+\[ \langle \chi, \chi \rangle_G = \langle \rho_{11} + \cdots + \rho_{nn}, 
+\rho_{11} + \cdots + \rho_{nn} \rangle_G = \sum_{i=1}^n \sum_{j=1}^n 
+\langle \rho_{ii}, \rho_{jj} \rangle_G. \] 
+Lemma 18.1 tells us that 
+\[ \langle \rho_{ii}, \rho_{jj} \rangle_G = \begin{cases} 
+    0 & \text{if } i \neq j, \\ 
+    1/n & \text{if } i = j. 
+\end{cases} \] 
+It follows that 
+\[ \langle \chi, \chi \rangle_G = \sum_{i=1}^n \langle \rho_{ii}, \rho_{ii} 
+\rangle_G = \sum_{i=1}^n \frac1n = 1. \] 
+Recall that if $T : V \to V$ is $\C$-linear, then we defined 
+\[ \hat T(v) = \frac1{|G|} \sum_{g \in G} g \cdot T(g^{-1} \cdot v), \] 
+which we showed was $\C[G]$-linear. Moreover, when $V$ is simple, we showed 
+that $\hat T(v) = \lambda v$, where $\lambda = \Tr(T)/\dim V$. We 
+now prove Lemma 18.1. 
+
+{\sc Proof of Lemma 18.1.} Fix a basis $\{v_1, \dots, v_n\}$ for $V$. 
+By definition, we know that 
+\[ \rho(g) \cdot v_j = \sum_{i=1}^n \rho_{ij}(g) \cdot v_i, \] 
+where $\rho(g)$ denotes the linear transformation, and $\rho_{ij}(g) \in \C$ 
+is an entry of the matrix. Let $T : V \to V$ be the $\C$-linear transformation 
+defined by 
+\[ T(v_k) = \begin{cases} 
+    v_t & \text{if } k = i, \\ 
+    0 & \text{if } k \neq i. 
+\end{cases} \] 
+Note that $\Tr(T) = \delta_{it}$, which means that 
+\[ \hat T(v) = \frac{\delta_{it}}{n} \] 
+for all $v \in V$, where $n = \dim V$. In particular, notice that 
+\begin{equation}
+    \frac{\delta_{it}}{n} \cdot v_j = \hat T(v_j) = \frac1{|G|} \sum_{g \in G} 
+    \rho(g) \cdot T(\rho(g^{-1}) \cdot v_j). 
+\end{equation}
+We can write 
+\[ T(\rho(g^{-1}) \cdot v_j) = T \left( \sum_{k=1}^n \rho(g^{-1})_{kj} \cdot v_k 
+\right) = T(\rho(g^{-1})_{ij} \cdot v_i) = \rho(g^{-1})_{ij} \cdot v_t, \] 
+since we can throw out the terms where $k \neq i$. Following from 
+equation (18.1), we get 
+\begin{align*}
+    \frac{\delta_{it}}{n} \cdot v_j 
+    &= \frac1{|G|} \sum_{g \in G} \rho(g) \cdot T(\rho(g^{-1}) \cdot v_j) \\ 
+    &= \frac1{|G|} \sum_{g \in G} \rho(g) \cdot (\rho(g^{-1})_{ij} \cdot v_t) \\ 
+    &= \frac1{|G|} \sum_{g \in G} \rho(g)_{ij}^{-1} \cdot (\rho(g) \cdot v_t) \\ 
+    &= \frac1{|G|} \sum_{g \in G} \rho(g)_{ij}^{-1} \left( \sum_{\ell=1}^n 
+       \rho(g)_{\ell t} \cdot v_\ell \right) \\ 
+    &= \sum_{\ell=1}^n \left( \frac1{|G|} \sum_{g \in G} \rho(g)_{ij}^{-1} 
+       \cdot \rho(g)_{\ell t} \right) \cdot v_\ell \\ 
+    &= \sum_{\ell=1}^n \langle \rho_{\ell t}, \rho_{ij} \rangle_G \cdot v_\ell. 
+\end{align*}
+Now, we compare the coefficients. When $\ell \neq j$, the coefficient of 
+$v_\ell$ on the left-hand side is $0$, whereas it is $\langle \rho_{\ell t}, 
+\rho_{ij} \rangle_G$ on the right-hand side. When $\ell = j$, the coefficients
+of $v_\ell$ are $\delta_{it}/n$ and $\langle \rho_{jt}, \rho_{ij} \rangle_G$ 
+on the left-hand side and right-hand side, respectively. We conclude that 
+\[ \langle \rho_{ij}, \rho_{\ell t} \rangle_G = \langle \rho_{\ell t}, 
+\rho_{ij} \rangle_G = \delta_{\ell j} \cdot \frac{\delta_{it}}{n}, \] 
+which completes the proof of the lemma. \qed 
+
+\begin{theo}{}
+    If $\chi_1, \dots, \chi_s$ are the inequivalent irreducible characters, then 
+    $\chi_1, \dots, \chi_s$ forms an orthonormal basis for the space of 
+    $\C$-valued class functions. 
+\end{theo}
+\begin{pf}
+    Notice that $\langle \chi_i, \chi_j \rangle_G = \delta_{ij}$ for all 
+    $1 \leq i, j \leq s$. Therefore, $\chi_1, \dots, \chi_s$ are linearly 
+    independent as the space of $\C$-valued class functions is $s$-dimensional. 
+    Moreover, $\chi_1, \dots, \chi_s$ spans, so they form an orthonormal basis. 
+\end{pf}
+
+What is the significance of this result? Recall that if $V$ is a representation
+of $G$, then it can be decomposed as 
+\[ V \cong V_1^{a_1} \oplus \cdots \oplus V_s^{a_s}, \] 
+where $V_1, \dots, V_s$ are simples. Letting $\chi_i = \chi_{V_i}$, 
+we have the formula 
+\[ \chi_V = a_1 \chi_1 + \cdots + a_s \chi_s. \] 
+In particular, notice that by orthonormality, we have 
+\[ \langle \chi_V, \chi_i \rangle_G = \langle a_1\chi_1 + \cdots + a_s\chi_s, 
+\chi_i \rangle_G = \langle a_i \chi_i, \chi_i \rangle_G = a_i \|\chi_i\|^2 = a_i. \] 

@@ -1,0 +1,355 @@
+\section{Character tables of $S_4$ and $S_5$ (10/27/2021)}
+Recall that we can write $\C[G] \cong M_{n_i}(\C) \times \cdots \times M_{n_s}(\C)$, 
+where $s$ is the number of conjugacy classes of $G$. Then, we obtain $s$ 
+irreducible characters $\chi_1, \dots, \chi_s$, with 
+\[ \chi_i(1) = n_i, \] 
+where we call $n_i$ the degree of $\chi_i$ for each $i = 1, \dots, s$. We also saw 
+that 
+\[ \delta_{ij} = \langle \chi_i, \chi_j \rangle_G = \frac1{|G|} \sum_{g\in G} 
+\chi_i(g) \overline{\chi_j(g)}. \] 
+For a $\C[G]$-module $V \cong V_1^{a_1} \oplus \cdots \oplus V_s^{a_s}$, we have 
+the formula 
+\[ \chi_V = a_1 \chi_i + \cdots + a_s \chi_s, \] 
+where $\chi_i = \chi_{V_i}$ for all $i = 1, \dots, s$. We saw that this gives 
+$a_i = \langle \chi_V, \chi_i \rangle_G$ by orthonormality. In particular, we 
+find that 
+\[ \langle \chi_V, \chi_V \rangle_G = \sum_{i=1}^s a_i^2 \|\chi_i\|^2 = 
+\sum_{i=1}^s a_i^2. \] 
+Let's use our results to find the character tables of $S_4$ and $S_5$. 
+
+\begin{exmp}{}
+    To find the character table of $S_4$, we first recall that 
+    $\C[S_4] \cong \C \times \C \times M_2(\C) \times M_3(\C) \times M_3(\C)$, 
+    which we determined in Example 11.3. We also saw that the $5$ conjugacy 
+    classes and their sizes were 
+    \begin{align*} 
+        \#[\id] &= 1, \\ 
+        \#[(12)] &= 6, \\
+        \#[(123)] &= 8, \\
+        \#[(1234)] &= 6, \\
+        \#[(12)(34)] &= 3. 
+    \end{align*}
+    Since $S'_4 = A_4$, we have $S_4/S'_4 = S_4/A_4 \cong C_2$, so we can immediately 
+    determine the degree $1$ characters, as well as the first column as we 
+    know the degrees of all the characters. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|}
+            \hline
+            S_4    & \overset{1}{[\id]} & \overset{6}{[(12)]} & \overset{8}{[(123)]} & \overset{6}{[(1234)]} & \overset{3}{[(12)(34)]} \\ \hline
+            \chi_1 & 1                  & 1                   & 1                    & 1                     & 1                       \\ \hline
+            \chi_2 & 1                  & -1                  & 1                    & -1                    & 1                       \\ \hline
+            \chi_3 & 2                  & *                   & *                    & *                     & *                       \\ \hline
+            \chi_4 & 3                  & *                   & *                    & *                     & *                       \\ \hline
+            \chi_5 & 3                  & *                   & *                    & *                     & *                       \\ \hline
+        \end{array} 
+    \end{align*}
+    To compute the rest of the character table, we'll usually find a nice 
+    representation of the group in practice. Consider the permutation representation
+    $P : S_4 \to \GL_4(\C)$ given by 
+    \[ P(\sigma)e_j = e_{\sigma(j)}. \] 
+    Recall that $\chi_P(\sigma)$ is the number of fixed points of $\sigma \in S_4$. 
+    For now, let's add $\chi_P$ to the character table. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|}
+            \hline
+            S_4    & \overset{1}{[\id]} & \overset{6}{[(12)]} & \overset{8}{[(123)]} & \overset{6}{[(1234)]} & \overset{3}{[(12)(34)]} \\ \hline
+            \chi_1 & 1                  & 1                   & 1                    & 1                     & 1                       \\ \hline
+            \chi_2 & 1                  & -1                  & 1                    & -1                    & 1                       \\ \hline
+            \chi_3 & 2                  & *                   & *                    & *                     & *                       \\ \hline
+            \chi_4 & 3                  & *                   & *                    & *                     & *                       \\ \hline
+            \chi_5 & 3                  & *                   & *                    & *                     & *                       \\ \hline
+            \chi_P & 4                  & 2                   & 1                    & 0                     & 0                       \\ \hline 
+        \end{array} 
+    \end{align*}
+    By Exercise 5 in Homework 3, we find that 
+    \[ \langle \chi_P, \chi_P \rangle = \frac1{4!} \sum_{\sigma \in S_4} 
+    \fix(\sigma)^2 = \frac1{24} (1 \cdot 4^2 + 6 \cdot 2^2 + 8 \cdot 1^2 + 6 
+    \cdot 0^2 + 3 \cdot 0^2) = 2, \] 
+    where $\fix(\sigma)$ denotes the number of fixed points of $\sigma$. 
+    In particular, we see that $\chi_P$ is not an irreducible character, 
+    but recalling the formula 
+    \[ \langle \chi_V, \chi_V \rangle = \sum_{i=1}^s a_i^2, \] 
+    we see that $\chi_P$ can be decomposed as the sum of two irreducible components. 
+    Now, looking at $\langle \chi_P, \chi_1 \rangle$, we obtain 
+    \[ \langle \chi_P, \chi_1 \rangle = \frac1{24} (4 \cdot 1 \cdot 1 
+    + 2 \cdot 1 \cdot 6 + 1 \cdot 1 \cdot 8) = 1. \] 
+    This means that $\chi_P = \chi_1 + \chi$, where $\chi$ is some irreducible 
+    character. In other words, $\chi_P - \chi_1$ is an irreducible character. 
+    Notice that $\chi_P(\id) - \chi_1(\id) = 4 - 1 = 3$, so this character is 
+    one of $\chi_4$ or $\chi_5$. Let's say we have $\chi_4 = \chi_P - \chi_1$, since we 
+    can just flip the rows if necessary. This allows us to fill out another row in 
+    the character table. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|}
+            \hline
+            S_4    & \overset{1}{[\id]} & \overset{6}{[(12)]} & \overset{8}{[(123)]} & \overset{6}{[(1234)]} & \overset{3}{[(12)(34)]} \\ \hline
+            \chi_1 & 1                  & 1                   & 1                    & 1                     & 1                       \\ \hline
+            \chi_2 & 1                  & -1                  & 1                    & -1                    & 1                       \\ \hline
+            \chi_3 & 2                  & *                   & *                    & *                     & *                       \\ \hline
+            \chi_4 & 3                  & 1                   & 0                    & -1                    & -1                      \\ \hline
+            \chi_5 & 3                  & *                   & *                    & *                     & *                       \\ \hline
+            \chi_P & 4                  & 2                   & 1                    & 0                     & 0                       \\ \hline 
+        \end{array} 
+    \end{align*}
+    On Question 1 of Homework 4, we will show that if $\chi$ is a degree $1$ 
+    character and for each $d \geq 1$, we let $X_d$ be the set of irreducible 
+    characters of degree $d$, then multiplication by $\chi$ permutes $X_d$ 
+    for all $d \geq 1$. 
+
+    In particular, since $\chi_2$ is a degree $1$ character, we can multiply 
+    $\chi_4$ with $\chi_2$ to obtain the other degree $3$ character 
+    $\chi_5 = \chi_4 \cdot \chi_2$, as multiplication by $\chi_2$ permutes 
+    $X_3 = \{\chi_4, \chi_5\}$. Similarly, if we multiply $\chi_5$ with 
+    $\chi_2$, we again obtain $\chi_4$. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|}
+            \hline
+            S_4    & \overset{1}{[\id]} & \overset{6}{[(12)]} & \overset{8}{[(123)]} & \overset{6}{[(1234)]} & \overset{3}{[(12)(34)]} \\ \hline
+            \chi_1 & 1                  & 1                   & 1                    & 1                     & 1                       \\ \hline
+            \chi_2 & 1                  & -1                  & 1                    & -1                    & 1                       \\ \hline
+            \chi_3 & 2                  & *                   & *                    & *                     & *                       \\ \hline
+            \chi_4 & 3                  & 1                   & 0                    & -1                    & -1                      \\ \hline
+            \chi_5 & 3                  & -1                  & 0                    & 1                     & -1                      \\ \hline
+            \chi_P & 4                  & 2                   & 1                    & 0                     & 0                       \\ \hline 
+        \end{array} 
+    \end{align*}
+    What happens if we do this with $\chi_3$? We have $X_2 = \{\chi_3\}$, 
+    and we know that multiplication by $\chi_2$ must permute $X_2$, so that 
+    $\chi_3 \cdot \chi_2 = \chi_3$. This tells us that 
+    $\chi_3((12)) = \chi_3((1234)) = 0$, since $\chi_2((12)) = \chi_2((1234)) 
+    = -1$. Let's now try to find the remaining entries in the row. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|}
+            \hline
+            S_4    & \overset{1}{[\id]} & \overset{6}{[(12)]} & \overset{8}{[(123)]} & \overset{6}{[(1234)]} & \overset{3}{[(12)(34)]} \\ \hline
+            \chi_1 & 1                  & 1                   & 1                    & 1                     & 1                       \\ \hline
+            \chi_2 & 1                  & -1                  & 1                    & -1                    & 1                       \\ \hline
+            \chi_3 & 2                  & 0                   & a                    & 0                     & b                       \\ \hline
+            \chi_4 & 3                  & 1                   & 0                    & -1                    & -1                      \\ \hline
+            \chi_5 & 3                  & -1                  & 0                    & 1                     & -1                      \\ \hline
+            \chi_P & 4                  & 2                   & 1                    & 0                     & 0                       \\ \hline 
+        \end{array} 
+    \end{align*}
+    We take the inner product of $\chi_3$ with some of the other irreducible 
+    characters. Observe that 
+    \begin{align*}
+        0 &= \langle \chi_3, \chi_1 \rangle = \frac1{24}(2 \cdot 1 \cdot 1 
+        + a \cdot 1 \cdot 8 + b \cdot 1 \cdot 3) = \frac1{24}(2 + 8a + 3b), \\ 
+        0 &= \langle \chi_3, \chi_4 \rangle = \frac1{24}(2 \cdot 3 \cdot 1 
+        + a \cdot 0 \cdot 8 + b \cdot (-1) \cdot 3) = \frac1{24}(6 - 3b). 
+    \end{align*}
+    Solving this yields $a = 2$ and $b = -1$, so we have now completed 
+    the character table of $S_4$. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|}
+            \hline
+            S_4    & \overset{1}{[\id]} & \overset{6}{[(12)]} & \overset{8}{[(123)]} & \overset{6}{[(1234)]} & \overset{3}{[(12)(34)]} \\ \hline
+            \chi_1 & 1                  & 1                   & 1                    & 1                     & 1                       \\ \hline
+            \chi_2 & 1                  & -1                  & 1                    & -1                    & 1                       \\ \hline
+            \chi_3 & 2                  & 0                   & 2                    & 0                     & -1                      \\ \hline
+            \chi_4 & 3                  & 1                   & 0                    & -1                    & -1                      \\ \hline
+            \chi_5 & 3                  & -1                  & 0                    & 1                     & -1                      \\ \hline
+        \end{array} 
+    \end{align*}
+\end{exmp}
+
+\begin{exmp}{}
+    Let's now find the character table of $S_5$. Note that $S_5$ has $7$ 
+    conjugacy classes; their sizes are 
+    \begin{align*}
+        \#[\id] &= 1, \\ 
+        \#[(12)] &= 10, \\ 
+        \#[(123)] &= 20, \\ 
+        \#[(1234)] &= 30, \\ 
+        \#[(12345)] &= 24, \\ 
+        \#[(12)(34)] &= 15, \\ 
+        \#[(12)(345)] &= 20. 
+    \end{align*}
+    These sizes can be determined using Exercise 6 of Homework 3. This states that 
+    if $\sigma \in S_n$ has disjoint cycle structure with $\lambda_i \geq 0$ 
+    $i$-cycles for $i = 1, \dots, n$ (so that $\sum_{i=1}^n i\lambda_i = n$), 
+    then the conjugacy class of $\sigma$ has size 
+    \[ \frac{n!}{\prod_{i=1}^n \lambda_i! i^{\lambda_i}}. \] 
+
+    \newpage
+    Now, we recall that $S'_5 = A_5$, so $S_5/S'_5 = S_5/A_5 \cong C_2$. 
+    Then the odd cycles get sent to $-1$ and the even cycles get sent to 
+    $1$, so we obtain the first two rows of the character table. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|c|c|}
+            \hline
+            S_5    & \overset{1}{[\id]} & \overset{10}{[(12)]} & \overset{20}{[(123)]} & \overset{30}{[(1234)]} & \overset{24}{[(12345)]} & \overset{15}{[(12)(34)]} & \overset{20}{[(12)(345)]} \\ \hline
+            \chi_1 & 1                  & 1                    & 1                     & 1                      & 1                       & 1                        & 1                         \\ \hline
+            \chi_2 & 1                  & -1                   & 1                     & -1                     & 1                       & 1                        & -1                        \\ \hline
+            \chi_3 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_4 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_5 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_6 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_7 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline 
+        \end{array} 
+    \end{align*}
+    Take the permutation representation $P : S_5 \to \GL_5(\C)$ given by 
+    \[ P(\sigma)e_j = e_{\sigma(j)}. \] 
+    Again, $\chi_P(\sigma)$ gives the number of fixed points of $\sigma$, so 
+    let's add $\chi_P$ to the character table for now. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|c|c|}
+            \hline
+            S_5    & \overset{1}{[\id]} & \overset{10}{[(12)]} & \overset{20}{[(123)]} & \overset{30}{[(1234)]} & \overset{24}{[(12345)]} & \overset{15}{[(12)(34)]} & \overset{20}{[(12)(345)]} \\ \hline
+            \chi_1 & 1                  & 1                    & 1                     & 1                      & 1                       & 1                        & 1                         \\ \hline
+            \chi_2 & 1                  & -1                   & 1                     & -1                     & 1                       & 1                        & -1                        \\ \hline
+            \chi_3 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_4 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_5 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_6 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_7 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_P & 5                  & 3                    & 2                     & 1                      & 0                       & 1                        & 0                         \\ \hline 
+        \end{array} 
+    \end{align*}
+    By Exercise 5 of Homework 3, we have 
+    \[ \langle \chi_P, \chi_P \rangle = \frac1{5!} \sum_{\sigma \in S_5} 
+    \fix(\sigma)^2 = 2. \] 
+    We compute that 
+    \[ \langle \chi_P, \chi_1 \rangle = \frac1{5!} 
+    (5 \cdot 1 \cdot 1 + 3 \cdot 1 \cdot 10 + 2 \cdot 1 \cdot 20 + 1 \cdot 1 \cdot 30
+    + 1 \cdot 1 \cdot 15) = 1. \] 
+    As in the previous example, this tells us that $\chi_P - \chi_1$ is an 
+    irreducible character. Since $\chi_P(\id) - \chi_1(\id) = 5 - 1 = 4$, 
+    we obtain an irreducible character $\chi_3 = \chi_P - \chi_1$ of degree $4$.
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|c|c|}
+            \hline
+            S_5    & \overset{1}{[\id]} & \overset{10}{[(12)]} & \overset{20}{[(123)]} & \overset{30}{[(1234)]} & \overset{24}{[(12345)]} & \overset{15}{[(12)(34)]} & \overset{20}{[(12)(345)]} \\ \hline
+            \chi_1 & 1                  & 1                    & 1                     & 1                      & 1                       & 1                        & 1                         \\ \hline
+            \chi_2 & 1                  & -1                   & 1                     & -1                     & 1                       & 1                        & -1                        \\ \hline
+            \chi_3 & 4                  & 2                    & 1                     & 0                      & -1                      & 0                        & -1                        \\ \hline
+            \chi_4 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_5 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_6 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_7 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_P & 5                  & 3                    & 2                     & 1                      & 0                       & 1                        & 0                         \\ \hline 
+        \end{array} 
+    \end{align*}
+    We can also take $\chi_4 = \chi_3 \cdot \chi_2$ to get another irreducible 
+    character. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|c|c|}
+            \hline
+            S_5    & \overset{1}{[\id]} & \overset{10}{[(12)]} & \overset{20}{[(123)]} & \overset{30}{[(1234)]} & \overset{24}{[(12345)]} & \overset{15}{[(12)(34)]} & \overset{20}{[(12)(345)]} \\ \hline
+            \chi_1 & 1                  & 1                    & 1                     & 1                      & 1                       & 1                        & 1                         \\ \hline
+            \chi_2 & 1                  & -1                   & 1                     & -1                     & 1                       & 1                        & -1                        \\ \hline
+            \chi_3 & 4                  & 2                    & 1                     & 0                      & -1                      & 0                        & -1                        \\ \hline
+            \chi_4 & 4                  & -2                   & 1                     & 0                      & -1                      & 0                        & 1                         \\ \hline
+            \chi_5 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_6 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_7 & *                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_P & 5                  & 3                    & 2                     & 1                      & 0                       & 1                        & 0                         \\ \hline 
+        \end{array} 
+    \end{align*}
+    Now, let $a = \chi_5(\id)$, $b = \chi_6(\id)$, and $c = \chi_7(\id)$. 
+    Then we know that 
+    \[ 1^2 + 1^2 + 4^2 + 4^2 + a^2 + b^2 + c^2 = 120, \] 
+    or equivalently, 
+    \[ a^2 + b^2 + c^2 = 86. \] 
+    Therefore, we have $2 \leq a, b, c \leq 9$, and we can deduce that 
+    $(a, b, c) = (5, 5, 6)$. We have $X_6 = \{\chi_7\}$, and since $\chi_2$ 
+    is of degree $1$, we have $\chi_7 \cdot \chi_2 = \chi_7$, which tells us 
+    that $\chi_7((12)) = \chi((1234)) = \chi((12)(345)) = 0$, since 
+    their counterparts in $\chi_2$ are equal to $-1$. We can now fill out 
+    the first column and some of the entries of $\chi_7$. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|c|c|}
+            \hline
+            S_5    & \overset{1}{[\id]} & \overset{10}{[(12)]} & \overset{20}{[(123)]} & \overset{30}{[(1234)]} & \overset{24}{[(12345)]} & \overset{15}{[(12)(34)]} & \overset{20}{[(12)(345)]} \\ \hline
+            \chi_1 & 1                  & 1                    & 1                     & 1                      & 1                       & 1                        & 1                         \\ \hline
+            \chi_2 & 1                  & -1                   & 1                     & -1                     & 1                       & 1                        & -1                        \\ \hline
+            \chi_3 & 4                  & 2                    & 1                     & 0                      & -1                      & 0                        & -1                        \\ \hline
+            \chi_4 & 4                  & -2                   & 1                     & 0                      & -1                      & 0                        & 1                         \\ \hline
+            \chi_5 & 5                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_6 & 5                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_7 & 6                  & 0                    & *                     & 0                      & *                       & *                        & 0                         \\ \hline
+            \chi_P & 5                  & 3                    & 2                     & 1                      & 0                       & 1                        & 0                         \\ \hline 
+        \end{array} 
+    \end{align*}
+    Observe that $S_5$ acts on the subsets of size $2$; namely 
+    $\{\{i, j\} : i, j \in \{1, 2, 3, 4, 5\}\}$. There are $\binom{5}{2} = 10$ 
+    such subsets. Instead of considering the permutation representation 
+    $P : S_5 \to \GL_5(\C)$, we have another representation 
+    $Q : S_5 \to \GL_{10}(\C)$ where from the basis $\{e_{\{i,j\}} : 
+    i, j \in \{1, 2, 3, 4, 5\}\}$, we define 
+    \[ \sigma \cdot e_{\{i,j\}} = e_{\sigma(i)\sigma(j)}. \] 
+    Let's now determine $\chi_Q$. This time, $\chi_Q(\sigma)$ is the number of sets 
+    of size two that are fixed by $\sigma$. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|c|c|}
+            \hline
+            S_5    & \overset{1}{[\id]} & \overset{10}{[(12)]} & \overset{20}{[(123)]} & \overset{30}{[(1234)]} & \overset{24}{[(12345)]} & \overset{15}{[(12)(34)]} & \overset{20}{[(12)(345)]} \\ \hline
+            \chi_1 & 1                  & 1                    & 1                     & 1                      & 1                       & 1                        & 1                         \\ \hline
+            \chi_2 & 1                  & -1                   & 1                     & -1                     & 1                       & 1                        & -1                        \\ \hline
+            \chi_3 & 4                  & 2                    & 1                     & 0                      & -1                      & 0                        & -1                        \\ \hline
+            \chi_4 & 4                  & -2                   & 1                     & 0                      & -1                      & 0                        & 1                         \\ \hline
+            \chi_5 & 5                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_6 & 5                  & *                    & *                     & *                      & *                       & *                        & *                         \\ \hline
+            \chi_7 & 6                  & 0                    & *                     & 0                      & *                       & *                        & 0                         \\ \hline
+            \chi_Q & 10                 & 4                    & 1                     & 0                      & 0                       & 2                        & 1                         \\ \hline 
+        \end{array} 
+    \end{align*}
+    For example, note that $(12) \cdot e_{\{1,2\}} 
+    = e_{\{1,2\}}$, because the set $\{2, 1\}$ is the same as the set $\{1, 2\}$. 
+    Then, we see that the basis elements fixed by $(12)$ are $e_{\{1,2\}}$, 
+    $e_{\{3,4\}}$, $e_{\{3,5\}}$, and $e_{\{4,5\}}$, so $\chi_Q((12)) = 4$. 
+    The other values of $\chi_Q$ can be found similarly. We now compute that 
+    \[ \langle \chi_Q, \chi_Q \rangle = \frac1{5!}(1 \cdot 10^2 
+    + 10 \cdot 4^2 + 20 \cdot 1^2 + 15 \cdot 2^2 + 20 \cdot 1^2) = 3. \] 
+    Therefore, $\chi_Q$ is the sum of $3$ distinct irreducible characters. 
+    We find that 
+    \begin{align*}
+        \langle \chi_Q, \chi_1 \rangle &= \frac1{5!}(10 \cdot 1 \cdot 1 
+        + 4 \cdot 1 \cdot 10 + 1 \cdot 1 \cdot 20 + 2 \cdot 1 \cdot 15 
+        + 1 \cdot 1 \cdot 20) = 1, \\ 
+        \langle \chi_Q, \chi_3 \rangle &= \frac1{5!}(10 \cdot 4 \cdot 1 
+        + 4 \cdot 2 \cdot 10 + 1 \cdot 1 \cdot 20 + 1 \cdot (-1) \cdot 20) = 1. 
+    \end{align*}
+    Hence, $\chi_Q - \chi_1 - \chi_3$ is an irreducible character. 
+    Note that $\chi_Q(\id) - \chi_1(\id) - \chi_3(\id) = 10 - 1 - 4 = 5$, and 
+    since $\chi_5(\id) = 5$, we can set $\chi_5 = \chi_Q - \chi_1 - \chi_3$. 
+    Then, $X_5 = \{\chi_5, \chi_6\}$, and since $\chi_2$ is a degree $1$ 
+    character, it must permute $X_5$, so we can set $\chi_6 = \chi_5 \cdot \chi_2$. 
+    This completes two more rows of the character table. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|c|c|}
+            \hline
+            S_5    & \overset{1}{[\id]} & \overset{10}{[(12)]} & \overset{20}{[(123)]} & \overset{30}{[(1234)]} & \overset{24}{[(12345)]} & \overset{15}{[(12)(34)]} & \overset{20}{[(12)(345)]} \\ \hline
+            \chi_1 & 1                  & 1                    & 1                     & 1                      & 1                       & 1                        & 1                         \\ \hline
+            \chi_2 & 1                  & -1                   & 1                     & -1                     & 1                       & 1                        & -1                        \\ \hline
+            \chi_3 & 4                  & 2                    & 1                     & 0                      & -1                      & 0                        & -1                        \\ \hline
+            \chi_4 & 4                  & -2                   & 1                     & 0                      & -1                      & 0                        & 1                         \\ \hline
+            \chi_5 & 5                  & 1                    & -1                    & -1                     & 0                       & 1                        & 1                         \\ \hline
+            \chi_6 & 5                  & -1                   & -1                    & 1                      & 0                       & 1                        & -1                        \\ \hline
+            \chi_7 & 6                  & 0                    & d                     & 0                      & e                       & f                        & 0                         \\ \hline
+            \chi_Q & 10                 & 4                    & 1                     & 0                      & 0                       & 2                        & 1                         \\ \hline 
+        \end{array} 
+    \end{align*}
+    Finally, let's compute $\chi_7$ by determining $d = \chi_7((123))$, 
+    $e = \chi_7((12345))$, and $f = \chi_7((12)(34))$. We have 
+    \begin{align*}
+        0 &= \langle \chi_7, \chi_5 \rangle = \frac1{5!}(30 - 20d + 15f), \\ 
+        0 &= \langle \chi_7, \chi_3 \rangle = \frac1{5!}(24 + 20d - 24e), \\ 
+        0 &= \langle \chi_7, \chi_1 \rangle = \frac1{5!}(6 + 20d + 24e + 15f).
+    \end{align*}
+    This is a system of $3$ equations and $3$ unknowns; solving it yields 
+    $(d, e, f) = (0, 1, -2)$, completing the character table of $S_5$. 
+    \begin{align*}
+        \begin{array}{|c|c|c|c|c|c|c|c|}
+            \hline
+            S_5    & \overset{1}{[\id]} & \overset{10}{[(12)]} & \overset{20}{[(123)]} & \overset{30}{[(1234)]} & \overset{24}{[(12345)]} & \overset{15}{[(12)(34)]} & \overset{20}{[(12)(345)]} \\ \hline
+            \chi_1 & 1                  & 1                    & 1                     & 1                      & 1                       & 1                        & 1                         \\ \hline
+            \chi_2 & 1                  & -1                   & 1                     & -1                     & 1                       & 1                        & -1                        \\ \hline
+            \chi_3 & 4                  & 2                    & 1                     & 0                      & -1                      & 0                        & -1                        \\ \hline
+            \chi_4 & 4                  & -2                   & 1                     & 0                      & -1                      & 0                        & 1                         \\ \hline
+            \chi_5 & 5                  & 1                    & -1                    & -1                     & 0                       & 1                        & 1                         \\ \hline
+            \chi_6 & 5                  & -1                   & -1                    & 1                      & 0                       & 1                        & -1                        \\ \hline
+            \chi_7 & 6                  & 0                    & 0                     & 0                      & 1                       & -2                       & 0                         \\ \hline
+        \end{array} 
+    \end{align*}
+\end{exmp}
