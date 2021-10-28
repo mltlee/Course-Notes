@@ -21,12 +21,13 @@ several (public key) cryptographic schemes that are built on such groups. We
 will also present several algorithms for solving $\DLP$, discuss their 
 implementations, and analyze their complexities. 
 
+\subsection{Cryptographic Applications of the Discrete Logarithm Problem}
 The security of the RSA encryption scheme relies heavily on the fact that integer 
 factorization is a hard computational problem. We will now give some cryptographic
 applications whose security relies on the fact that $\DLP$ (in the underlying 
 group) is a hard computational problem. 
 
-\subsection{Diffie-Hellman Key Exchange}
+\subsubsection{Diffie-Hellman Key Exchange}
 As we discussed in the beginning of the course, public key encryption can be 
 utilized so that two parties (such as a client and a bank) can exchange a 
 cryptographic key over an insecure channel, and then use their shared secret 
@@ -75,7 +76,7 @@ We depict the above steps in the following figure.
     \end{tikzcd}
 \end{center}
 
-\subsection{The Security of Diffie-Hellman Key Exchange}
+\subsubsection{The Security of Diffie-Hellman Key Exchange}
 
 {\bf Active adversaries.} The basic DH scheme as presented in the previous 
 section is insecure against active adversaries who may transmit, alter, or delete 
@@ -143,7 +144,7 @@ For example, we can easily deduce that $\BreakDH \equiv \CDH \leq \DLP$.
 As a result, it is of great importance to us to study algorithms that solve 
 $\CDH$ or $\DLP$ to get a sense of the security of DH key exchange. 
 
-\subsection{ElGamal Public Key Encryption Scheme}
+\subsubsection{ElGamal Public Key Encryption Scheme}
 The ElGamal public key encryption scheme consists of the following three algorithms. 
 
 \begin{enumerate}
@@ -166,7 +167,7 @@ The ElGamal public key encryption scheme consists of the following three algorit
           \[ m = c_2 \cdot c_1^{-x} \in G. \] 
 \end{enumerate}
 
-\subsection{The Security of the ElGamal Encryption Scheme}
+\subsubsection{The Security of the ElGamal Encryption Scheme}
 An adversary may capture the public key $[G, n, g, h = g^x]$ of a user $A$ 
 and a ciphertext $[c_1, c_2] = [g^r, m \cdot h^r]$ generated using $A$'s public 
 key. Note that the adversary does not know $r$ and the secret key $x$ of $A$. 
@@ -193,3 +194,116 @@ $\BreakElGamal$ instance
 \[ J = \{[G, n, g, h = g^\alpha], [c_1 = g^\beta, c_2 = 1]\}, \] 
 and query ${\cal O}_{\BreakElGamal}$ using $J$. This returns $c_2c_1^{-\alpha} 
 = g^{-\alpha\beta}$, so we can recover $g^{\alpha\beta} = (c_2c_1^{-\alpha})^{-1}$. 
+
+\subsection{Algorithms for the Discrete Logarithm Problem}
+As we have seen in the previous sections, one way to break the security of the 
+Diffie-Hellman key exchange protocol and the ElGamal encryption scheme is to solve 
+the discrete logarithm problem. In this section, we describe some algorithms to 
+solve $\DLP$, and study their efficiency. This will give us a better sense of the 
+security of discrete logarithm based cryptographic schemes, and might suggest some 
+important criterion for selecting the underlying groups and their parameters.
+
+\subsubsection{Exhaustive Search and Shanks' Baby-Step-Giant-Step Algorithms}
+A naive way to solve $\DLP$ in $G$ would be to exhaustively search for $\alpha
+\in [1, n]$ such that $g^\alpha = h$. This algorithm would require us to perform 
+$O(n)$ group exponentiations and equality checks of group elements, which is 
+exponential in the size of the input $O(\log_2 n)$.
+
+Shanks' baby-step-giant-step algorithm offers a quadratic speedup over the 
+exhaustive search algorithm; it requires $O(\sqrt{n})$ group exponentiations 
+and equality checks of group elements, as well as storing $O(\sqrt{n})$ 
+group elements in a table. It is based on the observation that for 
+$m = \lfloor{\sqrt n}\rfloor$, one can write 
+\[ g^\alpha = g^{i+jm} = h, \] 
+for some integers $i, j \in [1, m]$, which is equivalent to saying that 
+\[ g^i = hg_m^j \] 
+where $g_m = g^{-m}$. In the algorithm, one computes and stores a list of 
+values $g^i$ (baby steps of length $1$) for $i = 0, \dots, m$. Then, one 
+computes $g_m^j$ for $j = 0, 1, \dots, m$ until $hg_m^j$ (giant steps of 
+length $m$) matches one of the values $g^i$, where $g_m = g^{-m}$ as before. 
+Once a match is found, the algorithm outputs $\alpha = i + jm$. This 
+requires $O(\sqrt n)$ group exponentiations and table lookups, in addition 
+to storing $O(\sqrt n)$ group elements. 
+
+\subsubsection{Pollard's $\rho$-algorithm}
+Suppose we are trying to compute the discrete logarithm of $h = g^\alpha$ 
+with respect to a generator $g \in G$. Let $x_i = g^{m_i} h^{n_i}$ for some 
+$m_i, n_i \in \Z$. Suppose that we are lucky and find two distinct indices 
+$i$ and $j$ such that $x_i = x_j$. That is, we have $g^{m_i} h^{n_i} 
+= g^{m_j} h^{n_j}$. This would imply that $g^{m_i-m_j} = h^{n_j-n_i}$, and hence 
+\[ m_i - m_j \equiv \alpha(n_j - n_i) \pmod n, \] 
+where $n$ is the order of $G$. Assuming that $(n_j - n_i)$ is coprime with $n$, 
+we can recover $\alpha \in [1, n]$ by taking 
+\[ \alpha \equiv (m_i - m_j)(n_j - n_i)^{-1} \pmod n. \] 
+We can select the pairs $(m_i, n_i)$ for integers $i \geq 1$ independently at 
+random from $[1, n] \times [1, n]$, and hope to find a collision (or repetition) 
+among the values of $x_i = g^{m_i} h^{n_i}$. By the birthday paradox, we would expect 
+to compute and store about $O(\sqrt n)$ instances of $x_i$ before finding a 
+collision. This idea yields a $\DLP$ solver whose computational and storage 
+complexities are similar to Shanks' baby-step-giant-step algorithm. Next, 
+we will describe how to reduce the memory capacity of the algorithm from 
+$O(\sqrt n)$ to $O(1)$. 
+
+Start with $m_0 = n_0 = 1$ so that $x_0 = g^{m_0} h^{n_0} = 1$. Furthermore, 
+suppose that $G$ is partitioned into three subsets of almost equal size; that is, 
+$G = S_1 \cup S_2 \cup S_3$ with each $|S_i| \approx |G|/3$. Define a function 
+$F : G \times \Z_n \times \Z_n \to G \times \Z_n \times \Z_n$ by 
+\begin{align*}
+      (x_i, m_i, n_i) \mapsto \begin{cases}
+            (hx_i, m_i, n_i+1) & \text{if } x_i \in S_1, \\ 
+            (x_i^2, 2m_i, 2n_i) & \text{if } x_i \in S_2, \\ 
+            (gx_i, m_i+1, n_i) & \text{if } x_i \in S_3. 
+      \end{cases}
+\end{align*}
+Notice that $F$ induces another function $f : G \to G$ such that $x_0 = 1$ and 
+$x_{i+1} = f(x_i)$. Assuming that $f$ leads to a random walk $x_0, x_1, x_2, \dots$ 
+in $G$, we expect (based on the birthday paradox) that there exist two indices 
+$i$ and $j = i+\lambda$ such that $x_i = x_j = x_{i+\lambda}$ for some 
+$j = O(\sqrt n)$. 
+\begin{center}
+      \begin{tikzpicture}[]
+            \draw (0,0) to[out=90, in=180] (2,5) to[out=0, in=90] (3, 4) 
+                  to[out=-90, in=0] (2, 3) to[out=180, in=-45] (0.25, 3.5);
+            \draw[fill=black] (0,0) circle (0.05cm);
+            \draw(-0.1,0) node[left]{$x_0$} (0, 0);
+            \draw[fill=black] (0, 0.75) circle (0.05cm);
+            \draw(-0.1,0.75) node[left]{$x_1$} (0, 0.75);
+            \draw[fill=black] (0, 1.5) circle (0.05cm);
+            \draw(-0.1,1.5) node[left]{$x_2$} (0, 1.5);
+            \draw[fill=black] (0.06, 2.5) circle (0.05cm);
+            \draw(-0.04,2.5) node[left]{\rotatebox[origin=c]{85}{$\cdots$}} (0.06, 2.5);
+            \draw(0.15, 3.5) node[left]{$x_i = x_j = x_{i+\lambda}$} (0.25, 3.5);
+            \draw[fill=black] (0.25, 3.5) circle (0.05cm);
+            \draw[fill=black] (0.55, 4.2) circle (0.05cm);
+            \draw[fill=black] (1, 4.7) circle (0.05cm);
+            \draw[fill=black] (2, 5) circle (0.05cm);
+            \draw(2,5.1) node[above]{$\cdots$} (2, 5);
+            \draw[fill=black] (3, 4) circle (0.05cm);
+            \draw[fill=black] (2.5, 3.15) circle (0.05cm);
+            \draw(2.5,3.05) node[below]{\rotatebox[origin=c]{15}{$\cdots$}} (2.5, 3.15);
+            \draw[fill=black] (1.75, 3) circle (0.05cm);
+            \draw(1.75, 2.9) node[below]{$x_{j-2}$} (1.75, 3);
+            \draw[fill=black] (0.9, 3.1) circle (0.05cm);
+            \draw(0.9, 3) node[below]{$x_{j-1}$} (0.9, 3.1);
+      \end{tikzpicture}
+\end{center}
+Then we would have 
+\[ x_i = x_{i+\lambda} = x_{2i+\lambda} = x_{3i+\lambda} = \cdots, \]
+meaning that $x_{i'} = x_{j'}$ for all $i', j' \in \Z$ with $j' - i' \equiv 0 \pmod 
+\lambda$ and $i' > i$. In particular, we have $x_{i'} = x_{2i'}$ for all 
+$i' \equiv 0 \pmod \lambda$ and $i' > i$. Now, since one of the integers $i'$ 
+in $\{i, i+1, \dots, j-1\}$ must be divisible by $\lambda$, we can get to 
+$x_{i'} = x_{2i'}$ by simply evaluating $f$ and checking the equality of 
+group elements after at most $j = i+\lambda$ steps. Namely, we are comparing 
+\begin{itemize}
+      \item $x_1$ and $x_2$, where $x_1 = f(x_0)$ and $x_2 = f(x_1)$; 
+      \item $x_3$ and $x_4$, where $x_3 = f(x_2)$ and $x_4 = f(x_3) = f(f(x_2))$;
+      \item $\cdots$
+      \item $x_{i'-1}$ and $x_{2i'-2}$, where $x_{i'-1} = f(x_{i'-2})$ and 
+            $x_{2i'-2} = f(x_{2i'-3}) = f(f(x_{2i'-4}))$; 
+      \item $x_{i'}$ and $x_{2i'}$, where $x_{i'} = f(x_{i'-1})$ and 
+            $x_{2i'} = f(x_{2i'-1}) = f(f(x_{2i'-2}))$. 
+\end{itemize}
+We would expect to identify a collision of group elements within $O(\sqrt n)$ 
+steps and $O(1)$ memory, which can be used to recover $\alpha \in [1, n]$ 
+such that $g^\alpha = h$. 
