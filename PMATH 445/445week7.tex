@@ -353,3 +353,194 @@ Let's use our results to find the character tables of $S_4$ and $S_5$.
         \end{array} 
     \end{align*}
 \end{exmp}
+
+\section{Algebraic numbers and algebraic integers (10/29/2021)}
+Write $\C[G] \cong M_{n_1}(\C) \times \cdots \times M_{n_s}(\C)$, and let 
+$\chi_1, \dots, \chi_s$ be the irreducible characters. We have $\chi_i(1_G) 
+= n_i$, which is the degree of $\chi_i$. Moreover, since $\langle \chi_i, 
+\chi_j \rangle = \delta_{ij}$, we know that $\|\chi\|^2 = 1$ if and only if 
+$\chi$ is irreducible. In particular, if the character $\chi = a_1 \chi_1 
++ \cdots + a_s \chi_s$ is irreducible, then 
+\[ \|\chi\|^2 = a_1^2 + \cdots + a_s^2 = 1 \] 
+implies that there is a unique $1 \leq j \leq s$ such that $a_j = 1$ and $a_i = 0$ 
+for all $i \neq j$. Hence, $\|\chi\|^2 = 1$ if and only if $\chi = \chi_j$ for some 
+$1 \leq j \leq s$. Today, we'll introduce the algebraic integers, which will help 
+us to prove the last part of the big theorem, which states that $n_i \mid |G|$ for all 
+$1 \leq i \leq s$. 
+
+\begin{defn}{}
+    We define the {\bf algebraic numbers} $\A \subseteq \C$ to be the set 
+    \[ \A = \{\alpha \in \C : P(\alpha) = 0 \text{ for some monic polynomial }
+    P(x) \in \Z[x]\}. \] 
+\end{defn}
+
+\begin{exmp}{}
+    \begin{enumerate}[(1)]
+        \item Observe that $\Z \subseteq \A$, since for any $n \in \Z$, the 
+              polynomial $P(x) = x - n$ has $n$ as a root. 
+        \item If $\alpha \in \Q$, then $\beta = e^{\pi i\alpha} \in \A$. Indeed, 
+              write $\alpha = a/b$ for some $a, b \in \Z$ with $b \neq 0$. 
+              Taking the polynomial $P(x) = x^{2b-1}$, we have $P(\beta) = 
+              (e^{\pi ia/b})^{2b} - 1 = e^{2\pi ia} - 1 = 0$. 
+        \item Let $a \in \Z$ and $b \in \Z^+$. Then $\alpha = \sqrt[b]{a} \in 
+              \A$ by taking $P(x) = x^b - a \in \Z[x]$. 
+    \end{enumerate}
+\end{exmp}
+
+\begin{lemma}{}
+    We have $\A \cap \Q = \Z$. 
+\end{lemma}
+\begin{pf}
+    Exercise 1 of Homework 4 shows that $\Z \subseteq \A \cap \Q$. Next, 
+    we clearly have $\alpha = 0 \in \Z$. Suppose that we have a 
+    nonzero $\alpha = a/b$ with $\gcd(a, b) = 1$ and $b > 0$ which is a root 
+    of the monic polynomial 
+    \[ x^n + c_{n-1} x^{n-1} + \cdots + c_1 x + c_0 \in \Z[x]. \] 
+    Moreover, we can assume that $c_0 \neq 0$, for otherwise we could just 
+    reduce the degree of the polynomial. Then by the rational roots theorem, 
+    we obtain $b \mid 1$ and $a \mid c_0$, which implies that $\alpha = 
+    a/b \in \Z$. Therefore, we conclude that $\A \cap \Q = \Z$. 
+\end{pf}
+
+This statement is very simple, but it has some very powerful consequences. 
+Recall that a finitely generated $\Z$-submodule of $(\C, +)$ is given by 
+all elements of the form 
+\[ \{n_1 \lambda_1 + \cdots + n_p \lambda_p : n_1, \dots, n_p \in \Z\} \] 
+for some fixed $\lambda_1, \dots, \lambda_p \in \C$. For example, we have 
+$\Z[i] = \{a + bi : a, b \in \Z\}$ by choosing $\lambda_1 = 1$ and $\lambda_2 = i$.
+We'll now prove some characterizations of algebraic numbers.  
+
+\begin{theo}{}
+    Let $\alpha \in \C$. The following are equivalent: 
+    \begin{enumerate}[(1)]
+        \item $\alpha \in \A$. 
+        \item There exists a nonzero finitely generated $\Z$-submodule $M$ of 
+              $\C$ such that $\alpha M \subseteq M$. 
+        \item There exists $p \geq 1$ and $\lambda_1, \dots, \lambda_p \in 
+              \C \setminus \{0\}$ such that $\alpha \lambda_i \in 
+              \Z\lambda_1 + \cdots + \Z\lambda_p$ for all $i = 1, \dots, p$. 
+    \end{enumerate}
+\end{theo}
+\begin{pf}
+    (1) $\Rightarrow$ (2). If $\alpha \in \A$, then there exists $n \geq 1$ 
+    and $c_0, \dots, c_{n-1} \in \Z$ such that 
+    \begin{equation}
+        \alpha^n + c_{n-1} \alpha^{n-1} + \cdots + c_1 \alpha + c_0 = 0. 
+    \end{equation}
+    Let $M = \Z + \Z\alpha + \Z\alpha^2 + \cdots + \Z\alpha^{n-1}$. This is a 
+    finitely generated $\Z$-submodule, and $M \neq (0)$ since $1 \in M$. 
+    Now, we claim that $\alpha M \subseteq M$. To this end, suppose that 
+    $a_0 + a_1 \alpha + \cdots + a_{n-1} \alpha^{n-1} \in M$. Then we have 
+    \begin{align*}
+        \alpha (a_0 + a_1 \alpha + \cdots + a_{n-1} \alpha^{n-1}) 
+        &= a_0 \alpha + a_1 \alpha^2 + \cdots + a_{n-2} \alpha^{n-1} 
+        + a_{n-1} \alpha^n \\ 
+        &= a_0 \alpha + a_1 \alpha^2 + \cdots + a_{n-2} \alpha^{n-1} 
+        + a_{n-1} (- c_{n-1} \alpha^{n-1} - \cdots - c_1 \alpha - c_0) \\ 
+        &= -a_{n-1} c_0 + (a_0 - a_{n-1} c_1) \alpha + \cdots + 
+        (a_{n-2} - a_{n-1} c_{n-1}) \alpha^{n-1},
+    \end{align*}
+    where the last equality follows from equation (20.1).
+    We see that $\alpha(a_0 + a_1 \alpha + \cdots + a_{n-1}) \in M$, so 
+    $\alpha M \subseteq M$. 
+
+    (2) $\Rightarrow$ (3). Suppose there exists a nonzero finitely generated 
+    $\Z$-submodule $M$ of $\C$ such that $\alpha M \subseteq M$. Then we can 
+    pick $\lambda_1, \dots, \lambda_p \in \C \setminus \{0\}$ such that 
+    $M = \Z\lambda_1 + \cdots + \Z\lambda_p$. Since $\alpha M \subseteq M$,
+    this implies that $\alpha \lambda_i \in M$ for each $i = 1, \dots, p$. 
+
+    (3) $\Rightarrow$ (1). Suppose there exists $p \geq 1$ and $\lambda_1, 
+    \dots, \lambda_p \in \C \setminus \{0\}$ such that 
+    $\alpha\lambda_i \in \Z\lambda_i + \cdots + \Z\lambda_p$ for all $i = 
+    1, \dots, p$. Then for $j = 1, \dots, p$, we can pick $a_{j1}, \dots, 
+    a_{jp} \in \Z$ such that 
+    \[ \alpha\lambda_i = a_{j1} \lambda_1 + \cdots + a_{jp} \lambda_p. \] 
+    We can write this as a matrix equation to get 
+    \[ \alpha \begin{pmatrix}
+        \lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_p 
+    \end{pmatrix} = \begin{pmatrix}
+        a_{11} & a_{12} & \cdots & a_{1p} \\ 
+        a_{21} & a_{22} & \cdots & a_{2p} \\
+        \vdots & \vdots & \ddots & \vdots \\ 
+        a_{p1} & a_{p2} & \cdots & a_{pp}
+    \end{pmatrix} \begin{pmatrix}
+        \lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_p 
+    \end{pmatrix}. \] 
+    Set $v = (\lambda_1, \dots, \lambda_p)^T$, and notice that $v \neq 0$ 
+    since $\lambda_1, \dots, \lambda_p \in \C \setminus \{0\}$. 
+    Moreover, set $A$ to be the matrix above, and observe that $A \in M_p(\Z)$. 
+    Now, we have $\alpha v = Av$, so $\alpha$ is an eigenvalue of $A$. Hence, 
+    $\alpha$ is a root of the characteristic polynomial of $A$. That is, for 
+    \[ P_A(x) = \det(xI - A) = \det \begin{pmatrix}
+        x - a_{11} & \cdots & -a_{1p} \\ 
+        \vdots & \ddots & \vdots \\ 
+        -a_{p1} & \cdots & x - a_{pp}
+    \end{pmatrix}, \] 
+    we have $P_A(\alpha) = 0$. Note that $A \in M_p(\Z)$, so $P_A(x)$ is a 
+    monic polynomial in $\Z[x]$. It follows that $\alpha \in \A$. \qedhere 
+\end{pf}
+
+\begin{theo}{}
+    The algebraic integers $\A$ form a subring of $\C$. 
+\end{theo}
+\begin{pf}
+    It suffices to show that $\A$ is closed under addition and multiplication, 
+    and that $-1 \in \A$; this last condition assures that we have additive inverses. 
+
+    We have already seen that $\Z \subseteq \A$, so $-1 \in \A$. Let 
+    $\alpha, \beta \in \A$. We assume that $\alpha$ and $\beta$ are both 
+    nonzero, as the result is trivial otherwise. We want to show that 
+    $\alpha + \beta$ and $\alpha\beta$ are in $\A$. By definition, we have 
+    \begin{align*}
+        \alpha^n + c_{n-1} \alpha^{n-1} + \cdots + c_1 \alpha + c_0 = 0, \\ 
+        \beta^m + d_{m-1} \beta^{m-1} + \cdots + d_1 \beta + d_0 = 0,
+    \end{align*}
+    for some $c_0, \dots, c_{n-1}, d_0, \dots, d_{n-1} \in \Z$. Let 
+    \[ M = \sum_{i=0}^{n-1} \sum_{j=0}^{m-1} \Z\alpha^i\beta^j, \] 
+    which is a finitely generated $\Z$-submodule of $\C$, and $M \neq (0)$ since 
+    $1 \in M$. Now, we claim that $\alpha M \subseteq M$ and $\beta M \subseteq M$. 
+    It suffices to show that $\beta (\alpha^i \beta^j)$ and $\alpha (\alpha^i 
+    \beta^j)$ are in $M$ for all $0 \leq i \leq n-1$ and $0 \leq j \leq m-1$. 
+
+    We will consider $\alpha(\alpha^i \beta^j)$. When $0 \leq i \leq n-2$, we have 
+    $\alpha (\alpha^i \beta^j) = \alpha^{i+1} \beta^j \in M$, since 
+    $0 \leq i+1 \leq n-1$. Otherwise, we have $i = n-1$, in which case 
+    \[ \alpha(\alpha^{n-1}\beta^j) = \alpha^n \beta^j = 
+    (-c_{n-1} \alpha^{n-1} - \cdots - c_1 \alpha- c_0) \beta^j
+    \in M. \] 
+    This implies that $\alpha M \subseteq M$, and a similar argument shows that 
+    $\beta M \subseteq M$. Now, observe that 
+    \[ (\alpha + \beta)M \subseteq \alpha M + \beta M \subseteq M + M = M, \] 
+    and similarly, we know from our work above that 
+    \[ (\alpha \beta) M = \alpha(\beta M) \subseteq \alpha M \subseteq M. \] 
+    It follows from Theorem 20.4 that $\alpha + \beta$ and $\alpha\beta$ are in $\A$.
+\end{pf}
+
+\begin{remark}{}
+    Note that $\A$ is not a field, since $2 \in \A$ but $1/2 \notin \A$. 
+\end{remark}
+
+Now, we'll prove an interesting corollary of the fact that $\A$ is a subring of $\C$.
+
+\begin{cor}{}
+    If $\alpha \in \Q$ and $\tan(\pi\alpha) \in \Q$, then $\tan(\pi\alpha) 
+    \in \{0, 1, -1\}$. 
+\end{cor}
+\begin{pf}
+    Recall that $\tan^2(x) + 1 = 1/\cos^2(x)$. Therefore, if $\tan(\pi\alpha) 
+    \in \Q$, then we have $\tan^2(\pi\alpha) + 1 = 1/\cos^2(\pi\alpha) \in \Q$ as 
+    well. This implies that $4\cos^2(\pi\alpha) \in \Q$. Now, notice that 
+    \[ 4\cos^2(\pi\alpha) = (2 \cos(\pi\alpha))^2 = (e^{i\pi\alpha} + 
+    e^{-i\pi\alpha})^2. \] 
+    In particular, since $e^{i\pi\alpha}$ and $e^{-i\pi\alpha}$ are both 
+    algebraic numbers (as we saw in Example 20.2), this shows that 
+    $4\cos^2(\pi\alpha) \in \Q \cap \A = \Z$. Now, we know that 
+    $4\cos^2(\pi\alpha) \in \{0, 1, 2, 3, 4\}$. Taking the inverses and 
+    multiplying by $4$, we find that $1/\cos^2(\pi\alpha) \in \{4, 2, 4/3, 1\}$. 
+    Finally, we have 
+    \[ \tan^2(\pi\alpha) = \frac{1}{\cos^2(\pi\alpha)} - 1 \in 
+    \left\{3, 1, \frac13, 0\right\}. \]  
+    But we assumed that $\tan(\pi\alpha) \in \Q$, so the only possibilities are 
+    $\tan(\pi\alpha) \in \{0, 1, -1\}$, as desired. 
+\end{pf}
