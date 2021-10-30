@@ -307,3 +307,173 @@ group elements after at most $j = i+\lambda$ steps. Namely, we are comparing
 We would expect to identify a collision of group elements within $O(\sqrt n)$ 
 steps and $O(1)$ memory, which can be used to recover $\alpha \in [1, n]$ 
 such that $g^\alpha = h$. 
+
+\subsubsection{The Pohlig-Hellman Algorithm}
+Let $G$ be a finite group with generator $g \in G$ and $\ord(g) = |G| = n$. 
+Given $h \in G$, we want to find $\alpha \in [1, n]$ such that $g^\alpha = h$. 
+Notice that $g^n = 1 = g^0$, so we may equivalently assume that $\alpha 
+\in [0, n-1]$. 
+
+Suppose that $n = \prod_{i=1}^k p_i^{e_i}$. The Pohlig-Hellman algorithm 
+\cite{1055817} solves $\DLP$ by first solving $\DLP$ in the subgroups of $G$ 
+of order $p_i^{e_i}$, and then combines these solutions using the Chinese 
+remainder theorem. We now give the details of the algorithm. 
+
+Write $n = p_i^{e_i} r_i$, and define $G_i$ to be the subgroup of $G$ of order 
+$p_i^{e_i}$. Moreover, set $g_i = g^{r_i}$, $h_i = h^{r_i}$, and 
+$\alpha_i = \alpha \pmod{p_i^{e_i}}$. Observe that $g^\alpha = h$ implies 
+$(g^\alpha)^{r_i} = h^{r_i}$, and hence 
+\[ (g_i)^{\alpha_i} = (g_i)^\alpha = h_i, \] 
+where the first equality is because $g_i$ is an element of order $p_i^{e_i}$. 
+In the Pohlig-Hellman algorithm, one computes $g_i$ and $h_i$, and solves the 
+discrete logarithm $\alpha_i$ of $h_i$ with respect to $g_i$ for each 
+$i = 1, \dots, k$. By the Chinese remainder theorem, we can recover the unique 
+solution $\alpha \in [0, n-1]$ such that $\alpha \equiv \alpha_i 
+\pmod{p_i^{e_i}}$ for all $i = 1, \dots, k$. More precisely, we have 
+\[ \alpha = \sum_{i=1}^k \alpha_i \theta_i \theta'_i, \] 
+where $\theta_i = n/p_i^{e_i}$ and $\theta'_i = \theta_i^{-1} \pmod{p_i^{e_i}}$. 
+
+\newpage 
+Consequently, we can estimate the cost of the Pohlig-Hellman algorithm as 
+\[ \sum_{i=1}^k (C(\DLP)_i + 2C(\EXP)_i) + C_k(\CRT) = 
+O \left( \sum_{i=1}^k \sqrt{p_i^{e_i}} (\log_2 n)^2 \right) + 
+O(k(\log_2 n)^3) + O(k(\log_2 n)^2), \] 
+where $C(\DLP)_i$ is the bit complexity of solving $\DLP$ in $G_i$, 
+$C(\EXP)_i = O((\log_2 n)^3)$ is the bit complexity of performing exponentiation 
+by $r_i$ in $G_i$, and $C_k(\CRT) = O((\log_2 n)^2)$ is the bit complexity of 
+applying the Chinese remainder theorem. If we use Pollard's $\rho$-algorithm 
+to solve $\DLP$ in each $G_i$, then we can estimate that 
+\[ C(\DLP)_i = O\left( \sqrt{p_i^{e_i}} (\log_2 n)^2 \right). \] 
+Notice that if $n$ is prime, then the Pohlig-Hellman approach offers no advantage 
+over Pollard's $\rho$-algorithm since both their bit complexities become 
+$O(\sqrt n (\log_2 n)^2)$. However, when $n$ is smooth and can be written as 
+the product of small prime powers, then Pohlig-Hellman outperforms Pollard's 
+$\rho$-algorithm.
+
+{\bf Solving $\DLP$ in groups of order a prime power.} Now, we present 
+an alternative method to Pollard's $\rho$-algorithm for solving $\DLP$ in the 
+case that we are working with a cyclic group with order a prime power. 
+Let $G_{p,e}$ be a cyclic group of order $p^e$, where $p$ is a prime power and 
+$e \geq 1$ is an integer. This method is more efficient than Pollard's 
+$\rho$-algorithm when $e \geq 2$, and can be used to solve $\DLP$ in each $G_i$ 
+in the Pohlig-Hellman algorithm. 
+
+Given a generator $\rho$ of $G_{p,e}$ and $\gamma \in G$, we want to find 
+$\beta \in [0, p^e - 1]$ such that $\rho^\beta = \gamma$. First, we write 
+$\beta = \sum_{i=0}^{e-1} d_i p^i$, and define 
+\[ \gamma_j = \rho^{\sum_{i=j}^{e-1} d_j p^j} \] 
+for each $j = 0, 1, \dots, e-1$. Note that $\gamma_0 = \gamma$ and 
+\begin{equation} \gamma_{j+1} = \gamma_j \rho^{-d_j p^j} \end{equation}
+for $j = 0, 1, \dots, e-2$. Since the order of $\rho$ is $p^e$, we have 
+\[ \gamma_j^{p^{e-1-j}} = \left( \rho^{p^{e-1}} \right)^{d_j}. \] 
+Hence, we can recover $d_j$ by solving the discrete logarithm of 
+$\gamma_j^{p^{e-1-j}}$ in $G_{p,1} = \langle \rho^{p^{e-1}} \rangle$. In order 
+to recover $\beta = \sum_{i=0}^{e-1} d_i p^i$, we start with $\gamma_0 = \gamma$,
+and compute $\bar\gamma_0 = \gamma_0^{p^{e-1}}$ and $\bar\rho = 
+\rho^{p^{e-1}}$. We can then recover $d_0$ as the \\[4pt] discrete logarithm of 
+$\bar\gamma_0$ in $G_{p,1} = \langle \bar\rho \rangle$. For $j = 1, \dots, p-1$, 
+we then compute $\gamma_j$ using the relation in $(6.1)$. We can then obtain 
+$d_j$ as the discrete logarithm of $\bar\gamma_j = \gamma_j^{p^{e-1-j}}$ in 
+$G_{p,1} = \langle \bar\rho \rangle$. Once $d_0, d_1, \dots, d_{e-1}$ are 
+all known, we can determine $\beta = \sum_{i=0}^{e-1} d_i p^i$. 
+
+Note that if a table $T$ of elements is precomputed and stored with $T[j] 
+= \rho^{-p^j}$ for $0 \leq j \leq p-1$, then we can discuss the complexity of 
+the process as below. 
+\begin{enumerate}
+      \item We compute $\gamma_j$ for $j = 0, 1, \dots, e-1$ using $(6.1)$ 
+            and the lookup table $T$ via 
+            \[ \gamma_j = \gamma_{j-1} T[j-1]^D \] 
+            for some $0 \leq D \leq p-1$. The estimated cost (number of group 
+            operations) is $O(e\log_2 p)$. 
+      \item We compute $\bar\gamma_j$ for $j = 0, 1, \dots, e-1$. This gives a 
+            total of 
+            \[ (e-1) + (e-2) + \cdots + 1 + \frac{(e-1)e}2 \] 
+            group exponentiation operations in $G_{p,e}$. The estimated cost is 
+            $O(e^2\log_2 p)$. 
+      \item To recover $d_j$ for $j = 0, 1, \dots, e-1$, we use Pollard's 
+            $\rho$-algorithm to solve the discrete logarithm of $\bar\gamma_j$ 
+            in $G_{p,1} = \langle \bar\rho \rangle$. The estimated cost is 
+            $O(e\sqrt p)$. 
+\end{enumerate}
+The total number of group operations required for solving $\DLP$ in $G_{p,e}$ 
+with this approach is estimated as $O(e\sqrt p)$, which is better than the 
+$O(\sqrt{p^e})$ estimate for Pollard's $\rho$-algorithm when $e \geq 2$. 
+
+\subsubsection{The Index Calculus Algorithm}
+The $\DLP$ solvers we have covered so far are general purpose algorithms in the 
+sense that they do not rely on any algebraic property of the underlying group 
+other than the ability to efficiently perform group operations. The index calculus 
+method is a special purpose algorithm and it exploits algebraic properties of the 
+group. In this way, we obtain better $\DLP$ solvers for certain groups. However, 
+the tradeoff is that there are groups that index calculus does not seem to apply.
+We present the index calculus algorithm to solve $\DLP$ in $\Z_p^*$, where 
+$p$ is prime. We describe it right away because it resembles the 
+random squares factor finding algorithm. 
+
+\begin{algo}[Index Calculus Algorithm]~
+
+      {\bf Input:} A prime $p$, a generator $g$ of $\Z_p^*$, and $h \in \Z_p^*$. 
+      
+      {\bf Output:} An integer $\alpha \in [0, p-1]$ such that $g^\alpha = h$.
+
+      \begin{enumerate}[1.]
+            \item Set $\FB = \{p_1, p_2, \dots, p_{\pi(B)}\}$ as the factor basis 
+                  consisting of all primes less than or equal to $B$. 
+            \item Set an empty matrix $M$, which will eventually be a $T \times 
+                  \pi(B)$ matrix. 
+            \item Set $i \gets 1$ and $T = \pi(B) + 10$. 
+            \item Assume that $d_j \in [0, p-1]$ is the discrete logarithm 
+                  of $p_j \in \Z_p^*$ with respect to $g$; that is, $g^{d_j} = p_j$.
+            \item {\bf Relation generation stage.} 
+                  \begin{itemize}
+                        \item Select $1 \leq x_i \leq p-2$ uniformly at random. 
+                        \item {\bf if $g^{x_i} \pmod p$ is $B$-smooth:}
+                              \begin{itemize}
+                                    \item Write $g^{x_i} \pmod p = \prod_{j=1}^{\pi(B)} p_j^{e_ij}$, create the 
+                                          vector $e_i = [e_{i1}, e_{i2}, \dots, e_{i\pi(B)}]$ with $e_{ij} \geq 0$, 
+                                          and append $e_i$ as the $i$-th row of $M$. 
+                                    \item Update $i \gets i+1$. 
+                              \end{itemize}
+                        \item {\bf if $M$ has reached $T$ rows:} 
+                              \begin{itemize}
+                                    \item Exit the relation generation stage. 
+                              \end{itemize}
+                        \item {\bf else:} 
+                              \begin{itemize}
+                                    \item Go back to step $5$. 
+                              \end{itemize}
+                  \end{itemize}
+            \item {\bf Linear algebra stage.} 
+                  \begin{itemize}
+                        \item Note that $g^{x_i} \pmod p = \prod_{i=1}^{\pi(B)} p_j^{e_{ij}}$ and $p_j = g^{d_j}$ 
+                              implies that $x_i \equiv \sum_{j=1}^{\pi(B)} e_{ij} d_j \pmod{p-1}$. 
+                        \item Compute $M_{p-1} = M \pmod{p-1}$. 
+                        \item Set a column vector of values $x = [x_1, \dots, x_T]^T$, and set a column vector of 
+                              variables $d = [d_1, \dots, d_{\pi(B)}]^T$. 
+                        \item Use linear algebra to solve the linear system of equations $M_{p-1}d = x$ modulo $p-1$. 
+                        \item Determine integers $v_1, \dots, v_{\pi(B)}$ such that $\sum_{i\in I} e_i = 2 \cdot 
+                              [v_1, v_2, \dots, v_{\pi(B)}]$. 
+                        \item Set $x = \prod_{i\in I} x_i$ and $y = \prod_{j=1}^{\pi(B)} p_j^{v_j}$. 
+                  \end{itemize}
+            \item {\bf Discrete logarithm finding stage.} 
+                  \begin{itemize}
+                        \item Select $1 \leq y \leq p-2$ uniformly at random and compute $hg^y \pmod p$. 
+                        \item {\bf if $hg^y \pmod p$ is $B$-smooth:} 
+                              \begin{itemize}
+                                    \item Write $hg^y \pmod p = \prod_{j=1}^{\pi(B)} p_j^{e_j}$. 
+                                    \item Note that $hg^y \pmod p = \prod_{j=1}^{\pi(B)} p_j^{e_j}$ and $p_j = g^{d_j}$ 
+                                          implies that $\alpha + y \equiv \sum_{j=1}^{\pi(B)} e_j d_j \pmod{p-1}$. 
+                                    \item Output $\alpha = \sum_{j=1}^{\pi(B)} e_j d_j - y \pmod{p-1}$. 
+                              \end{itemize}
+                        \item {\bf else:}
+                              \begin{itemize}
+                                    \item Go back to step $7$. 
+                              \end{itemize}
+                  \end{itemize}
+      \end{enumerate}
+\end{algo}
+
+The complexity analysis of the index calculus algorithm is similar to that of 
+the random squares factor finding algorithm, which gives us a subexponential 
+runtime of $L_p[1/2, 2] = e^{(2+o(1))\sqrt{\ln p \ln\ln p}}$. 
