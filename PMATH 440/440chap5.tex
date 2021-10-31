@@ -16,7 +16,7 @@
     \end{enumerate}
 \end{defn}
 
-\begin{theo}{thm:5.2}
+\begin{theo}[Euler]{thm:5.2}
     Let $a, n \in \N$ with $\gcd(a, n) = 1$. Then 
     \[ a^{\phi(n)} \equiv 1 \pmod n. \] 
 \end{theo}
@@ -176,7 +176,7 @@ and derive a nice property about the product of Legendre symbols.
 
 We can use Euler's criterion to compute some Legendre symbols. 
 
-\begin{theo}[Quadratic reciprocity I]{thm:5.11}
+\begin{theo}[Quadratic Reciprocity I]{thm:5.11}
     Let $p$ be an odd prime. Then 
     \[ \left( \frac{-1}p \right) = \begin{cases}
         1 & \text{if } p \equiv 1 \pmod 4, \\ 
@@ -237,7 +237,7 @@ To go further, we first require another tool.
 
 Now, we can compute $(\frac2p)$. 
 
-\begin{theo}[Quadratic reciprocity II]{thm:5.13}
+\begin{theo}[Quadratic Reciprocity II]{thm:5.13}
     Let $p$ be an odd prime. Then 
     \[ \left( \frac2p \right) = (-1)^{(p^2-1)/8} = \begin{cases} 
         1 & \text{if } p \equiv \pm1 \pmod 8, \\ 
@@ -292,7 +292,7 @@ Now, we can compute $(\frac2p)$.
 \subsection{The Law of Quadratic Reciprocity}\label{subsec:5.4}
 
 \vspace{2ex}
-\begin{theo}[Law of quadratic reciprocity]{thm:5.14}
+\begin{theo}[Law of Quadratic Reciprocity]{thm:5.14}
     Let $p$ and $q$ be odd primes. Then 
     \[ \left( \frac pq \right) \left( \frac qp \right) = (-1)^{\frac{p-1}2 \frac{q-1}2}. \] 
     In particular, we have 
@@ -366,3 +366,119 @@ It follows from Lemma~\ref{lemma:5.15} that
 (-1)^{T(q, p)} \cdot (-1)^{T(p, q)} = \left( \frac qp \right) \left( \frac pq 
 \right), \] 
 which completes the proof. \qed 
+
+\subsection{The Jacobi Symbol}\label{subsec:5.5}
+We now give a generalization of the Legendre symbol to all odd positive integers 
+instead of only odd primes, called the Jacobi symbol. The Jacobi symbol also 
+shares many of the properties of the Legendre symbol, and we will leave the 
+proof of these as homework. 
+
+\begin{defn}{def:5.16}
+    Let $a \in \Z$, and let $n \in \N$ be odd. Let $n = p_1^{\alpha_1} 
+    p_2^{\alpha_2} \cdots p_k^{\alpha_k}$ be the prime factorization of $n$. 
+    We define the {\bf Jacobi symbol} $(\frac{a}{n})$ to be 
+    \[ \left( \frac{a}{n} \right) := \left( \frac{a}{p_1} \right)^{\!\alpha_1} 
+    \left( \frac{a}{p_2} \right)^{\!\alpha_2} \cdots 
+    \left( \frac{a}{p_k} \right)^{\!\alpha_k}. \] 
+\end{defn}
+
+\begin{theo}[Generalized Law of Quadratic Reciprocity]{thm:5.17}
+    Let $a, b \in \N$ be odd with $\gcd(a, b) = 1$. Then we have 
+    \begin{enumerate}[(1)]
+        \item $\left( \dfrac{-1}{b} \right) = \begin{cases} 
+            1 & \text{if } b \equiv 1 \pmod 4, \\ 
+            -1 & \text{if } b \equiv 3 \pmod 4; 
+        \end{cases}$ 
+        \item $\left( \dfrac{2}{b} \right) = \begin{cases} 
+            1 & \text{if } b \equiv \pm1 \pmod 8, \\ 
+            -1 & \text{if } b \equiv \pm3 \pmod 8; 
+        \end{cases}$
+        \item $\left( \dfrac{a}{b} \right) = \begin{cases}
+            \left(\dfrac ba \right) & \text{if $a \equiv 1$ (mod $4$) or $b \equiv 1$ (mod $4$),} \\[2ex]
+            -\left(\dfrac ba \right) & \text{if $a \equiv b \equiv 3$ (mod $4$).} 
+        \end{cases}$
+    \end{enumerate}
+\end{theo}
+\begin{pf}
+    This is Question 1 of Homework 4.
+\end{pf}
+
+To end off the chapter, we give some examples of computing Legendre symbols, 
+as well as some applications. 
+
+\begin{exmp}{exmp:5.18}
+    Consider the Legendre symbol $(\frac{13}{17})$. By the Law of Quadratic 
+    Reciprocity (Theorem~\ref{thm:5.14}), we have 
+    \[ \left( \frac{13}{17} \right) = \left( \frac{17}{13} \right) 
+    (-1)^{(17-1)(13-1)/4} = \left( \frac{17}{13} \right) 
+    = \left( \frac{4}{13} \right) = 1. \] 
+\end{exmp}
+
+\begin{exmp}{exmp:5.19}
+    Let's compute $(\frac{713}{1009})$. Note that $1009$ is prime and $713 
+    = 23 \cdot 31$, so Theorem~\ref{thm:5.9} tells us that 
+    \[ \left( \frac{713}{1009} \right) = \left( \frac{23}{1009} \right) 
+    \left( \frac{31}{1009} \right). \] 
+    By the Law of Quadratic Reciprocity (Theorem~\ref{thm:5.14}), we find that 
+    $(\frac{23}{1009}) = (\frac{1009}{23}) = (\frac{20}{23})$ and 
+    $(\frac{31}{1009}) = (\frac{1009}{31}) = (\frac{17}{31})$. Then, we see that 
+    \[ \left( \frac{20}{23} \right) = \left( \frac{4}{23} \right) 
+    \left( \frac{5}{23} \right) = \left( \frac{5}{23} \right) = 
+    \left( \frac{23}{5} \right) = \left( \frac{3}{5} \right) = -1. \] 
+    On the other hand, we have 
+    \[ \left( \frac{17}{31} \right) = \left( \frac{31}{17} \right) = 
+    \left( \frac{14}{17} \right) = \left( \frac{2}{17} \right) 
+    \left( \frac{7}{17} \right) = \left( \frac{7}{17} \right) = 
+    \left( \frac{17}{7} \right) = \left( \frac{3}{7} \right) = -1, \] 
+    where the third last equality above comes from Quadratic Reciprocity II 
+    (Theorem~\ref{thm:5.13}). Putting these together, we obtain 
+    \[ \left( \frac{713}{1009} \right) = \left( \frac{23}{1009} \right) 
+    \left( \frac{31}{1009} \right) = -1 \cdot -1 = 1. \] 
+\end{exmp}
+
+\begin{exmp}{exmp:5.20}
+    Note that $5$ is a quadratic residue for all primes $p$ of the form $10k \pm 1$, 
+    whereas it is a quadratic nonresidue for all primes $p$ of the form $10k \pm 3$. 
+    This is because we have 
+    \[ \left( \frac{5}{p} \right) = \left( \frac{p}{5} \right) \] 
+    by the Law of Quadratic Reciprocity (Theorem~\ref{thm:5.14}); we see that 
+    $\pm1$ are quadratic residues modulo $5$, while $\pm3$ are not. 
+\end{exmp}
+
+\begin{exmp}{exmp:5.21}
+    The equation $x^4 - 17y^4 = 2\omega^2$ has no solution in the integers. 
+
+    Suppose towards a contradiction that an integer solution exists. We may 
+    assume without loss of generality that $x$ is coprime with $y$, and hence 
+    $x$ is coprime with $\omega$. If $p$ is an odd prime that divides $\omega$, then 
+    \[ \left( \frac{17}{p} \right) = 1 \] 
+    since $x^4 \equiv 17y^4 \pmod p$. Alternatively, by the Law of Quadratic 
+    Reciprocity (Theorem~\ref{thm:5.14}), we obtain 
+    \[ \left( \frac{17}{p} \right) = \left( \frac{p}{17} \right) 
+    (-1)^{(17-1)(p-1)/4} = 1, \] 
+    so $p$ is a quadratic residue of $17$. Furthermore, we have $(\frac{2}{17}) 
+    = (-1)^{(17^2-1)/8} = 1$. In particular, every prime factor $p$ of 
+    $\omega$ is a quadratic residue modulo $17$, so $\omega \equiv t^2 \pmod{17}$ 
+    for some integer $t$. Then $x^4 \equiv 2t^4 \pmod{17}$, and it follows that 
+    there exists an integer $r$ such that $r^4 \equiv 2 \pmod{17}$. But the 
+    order of $2$ modulo $17$ is $8$, so no such $r$ exists. This is a contradiction, 
+    so the equation has no solution in the integers. 
+\end{exmp}
+
+\begin{exmp}{exmp:5.22}
+    We can check if the congruence $3x^2 - 7x - 42 \equiv 0 \pmod{391}$ has a solution. 
+
+    Note that $391 = 17 \cdot 23$. Multiplying the above equation by $12$, we find that 
+    \[ 36x^2 - 84x - 516 \equiv 0 \pmod{391}. \] 
+    By completing the square, we see that  
+    \[ (6x - 7)^2 \equiv 516 + 49 \equiv 565 \pmod{391}. \] 
+    This is now equivalent to solving $x^2 \equiv 174 \pmod{391}$. Notice that 
+    $x^2 \equiv 174 \equiv 4 \pmod{17}$, which has the solution $x = 2$. 
+    On the other hand, we have $x^2 \equiv 174 \equiv 13 \pmod{23}$. We compute 
+    \[ \left( \frac{13}{23} \right) = \left( \frac{23}{13} \right) = 
+    \left( \frac{10}{13} \right) = \left( \frac{2}{13} \right) 
+    \left( \frac{5}{13} \right) = -\left( \frac{5}{13} \right) = 
+    -\left( \frac{13}{5} \right) = -\left(\frac{3}{5} \right) = 1. \] 
+    Then $x^2 \equiv 13 \pmod{23}$ has a solution, so it follows from the 
+    Chinese remainder theorem that the original congruence has a solution. 
+\end{exmp}

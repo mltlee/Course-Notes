@@ -1,0 +1,350 @@
+\section{Primitive Roots}\label{sec:6}
+
+\subsection{Cyclicity of $(\Z/p\Z)^*$}\label{subsec:6.1}
+Recall that for $a, b \in \Z$, we can find $x, y \in \Z$ such that $ax + by = 
+\gcd(a, b)$ using the Euclidean algorithm. 
+
+\begin{theo}[Chinese remainder theorem]{thm:6.1}
+    Let $m_1, \dots, m_t \in \N$ with $\gcd(m_i, m_j) = 1$ whenever $i \neq j$, 
+    and set $m = m_1 \cdots m_t$. Let $b_1, \dots, b_t \in \Z$. Then the simultaneous 
+    congruences 
+    \begin{align*}
+        x &\equiv b_1 \pmod{m_1}, \\ 
+        x &\equiv b_2 \pmod{m_2}, \\ 
+          &\qquad\quad\, \vdots \\ 
+        x &\equiv b_t \pmod{m_t}
+    \end{align*}
+    has a unique solution modulo $m$. 
+\end{theo}
+
+\begin{theo}{thm:6.2}
+    Let $m_1, \dots, m_t \in \N$ with $\gcd(m_i, m_j) = 1$ whenever $i \neq j$, 
+    and set $m = m_1 \cdots m_t$. Then we have the ring isomorphism 
+    \[ \Z/m\Z \cong \Z/m_1\Z \times \cdots \times \Z/m_t\Z, \] 
+    as well as the group isomorphism
+    \[ (\Z/m\Z)^* \cong (\Z/m_1\Z)^* \times \cdots \times (\Z/m_t\Z)^*. \] 
+\end{theo}
+\begin{pf}
+    Let $\psi : \Z \to \Z/m_1\Z \times \cdots \times \Z/m_t\Z$ be defined by 
+    \[ \psi(n) = (n+m_1\Z, \dots, n+m_t\Z). \] 
+    It is readily checked that $\psi$ is a ring homomorphism. By the Chinese 
+    remainder theorem, $\psi$ is surjective and $\ker\psi = m\Z$. It follows 
+    from the first isomorphism theorem that 
+    \[ \Z/m\Z \cong \Z/m_1\Z \times \cdots \times \Z/m_t\Z. \] 
+    On the other hand, if we define $\lambda : (\Z/m\Z)^* \to
+    (\Z/m_1\Z)^* \times \cdots \times (\Z/m_t\Z)^*$ by 
+    \[ \lambda(n + m\Z) = (n+m_1\Z, \dots, n+m_t\Z), \] 
+    then $\lambda$ is a group homomorphism, and it is bijective by the Chinese 
+    remainder theorem. 
+\end{pf}
+
+\begin{cor}{cor:6.3}
+    Let $m_1, \dots, m_t$ be pairwise coprime positive integers. Set 
+    $m = m_1 \cdots m_t$. Then 
+    \[ \phi(m) = \phi(m_1) \cdots \phi(m_t). \] 
+\end{cor}
+\begin{pf}
+    Recall that $\phi(m) = |(\Z/m\Z)^*|$, and 
+    \[ \phi(m_1) \cdots \phi(m_t) = |(\Z/m_1\Z)^*| \cdots |(\Z/m_t\Z)^*| 
+    = |(\Z/m_1\Z)^* \times \cdots \times (\Z/m_t\Z)^*|. \] 
+    The result follows from Theorem~\ref{thm:6.2}. 
+\end{pf}
+
+\begin{cor}{cor:6.4}
+    Let $m = p_1^{a_1} \cdots p_t^{a_t}$, where $p_1, \dots, p_t$ are distinct 
+    primes and $a_1, \dots, a_t$ are positive integers. Then 
+    \[ \phi(m) = m \cdot \prod_{i=1}^t \left( 1 - \frac{1}{p_i} \right). \] 
+\end{cor}
+\begin{pf}
+    Select $m_i = p_i^{a_i}$ for $i = 1, \dots, t$ in Corollary~\ref{cor:6.3}. 
+    Observe that 
+    \[ \phi(p_i^{a_i}) = p_i^{a_i} - p_i^{a_i-1} = p_i^{a_i} \left( 1 - 
+    \frac{1}{p_i} \right). \] 
+    It follows that 
+    \[ \phi(m) = \phi(p_1^{a_1}) \cdots \phi(p_t^{a_t}) = 
+    p_1^{a_1} \cdots p_t^{a_t} \left( 1 - \frac{1}{p_1} \right) 
+    \cdots \left( 1 - \frac{1}{p_t} \right) = m \cdot \prod_{i=1}^t 
+    \left( 1 - \frac{1}{p_i} \right). \qedhere \] 
+\end{pf}
+
+\begin{prop}{prop:6.5} 
+    Let $p$ be prime. If $d \mid (p-1)$, then $x^d \equiv 1 \pmod p$ has exactly 
+    $d$ solutions modulo $p$. 
+\end{prop}
+\begin{pf}
+    Write $p-1 = dk$ for some integer $k$. Then we have 
+    \[ \frac{x^{p-1}-1}{x^d-1} = \frac{(x^d)^k-1}{x^d-1} = (x^d)^{k-1} 
+    + \cdots + x^d + 1 = g(x) \in (\Z/p\Z)[x]. \] 
+    By Fermat's little theorem (Corollary~\ref{cor:5.3}), $x^{p-1}-1$ has 
+    $p-1$ distinct roots in $\Z/p\Z$. Since $\Z/p\Z$ is a field, any 
+    polynomial of degree $n$ in $(\Z/p\Z)[x]$ has at most $n$ roots. In particular, 
+    $(x^d-1)g(x)$ factors into linear polynomials in $(\Z/p\Z)[x]$, and the 
+    result follows. 
+\end{pf}
+
+\begin{theo}{thm:6.6}
+    If $p$ is a prime, then $(\Z/p\Z)^*$ is a cyclic group. 
+\end{theo}
+\begin{pf}
+    For each divisor $d$ of $p-1$, let $\lambda(d)$ denote the number of elements 
+    in $(\Z/p\Z)^*$ of order $d$. By Proposition~\ref{prop:6.5}, there are 
+    exactly $d$ elements of $(\Z/p\Z)^*$ whose order divides $d$, so we obtain 
+    \[ d = \sum_{c\mid d} \lambda(c). \] 
+    By the M\"obius inversion formula (Proposition~\ref{prop:2.5}), we have 
+    \[ \lambda(d) = \sum_{c\mid d} \mu(c) \frac{d}{c} = d \cdot \sum_{c \mid d}
+    \frac{\mu(c)}{c} = d \cdot \prod_{p\mid d} \left( 1 - \frac{1}{p} \right) 
+    = \phi(d), \] 
+    where the final equality follows from Corollary~\ref{cor:6.4}. Hence, there 
+    are $\phi(p-1)$ elements of $(\Z/p\Z)^*$ of order $p-1$, so 
+    $(\Z/p\Z)^*$ is cyclic. 
+\end{pf}
+
+\subsection{Primitive Roots: The Prime Power Case}
+
+\vspace{2ex}
+\begin{defn}{defn:6.7}
+    Let $n \in \Z^+$, and let $a \in \Z$. We say that $a$ is a {\bf primitive 
+    root} modulo $n$ if $a + n\Z$ generates $(\Z/n\Z)^*$. 
+\end{defn}
+
+\begin{remark}{remark:6.8}
+    \begin{enumerate}[(1)]
+        \item For any prime $p$, we saw that $(\Z/p\Z)^*$ is cyclic by 
+              Theorem~\ref{thm:6.6}, so there exists a primitive root modulo $p$; 
+              in fact, there are $\phi(p-1)$ of them. 
+
+              Artin conjectured that if $a$ is a positive integer that is not 
+              a perfect square, then $a$ is a primitive root modulo $p$ for 
+              infinitely many primes $p$. This conjecture is still open, but 
+              it can be deduced from the generalized Riemann hypothesis by 
+              the work of Hooley. 
+        \item Why do we require that $a$ is not a perfect square? Note that if 
+              $p$ is an odd prime, then $p-1$ is even. We want $a$ to have order 
+              $p-1$. Assume that $a = k^2$ for some integer $k$, and that 
+              $a$ is a primitive root modulo $p$. Then there exists an integer 
+              $i$ such that $a^i \equiv k \pmod p$. We see that $a^{2i} \equiv a 
+              \pmod p$, and hence $a^{2i-1} \equiv 1 \pmod p$. Since the 
+              order of $a$ is $p-1$, we have $(p-1) \mid (2i-1)$. But 
+              $p-1$ is even and $2i-1$ is odd, which is a contradiction. 
+        \item Observe that $2$ is a primitive root modulo $5$, but $2$ is not 
+              a primitive root modulo $7$ since $2^3 \equiv 1 \pmod 7$. In 
+              general $(\Z/n\Z)^*$ is not cyclic, as primitive roots might not 
+              exist modulo $n$. For example, $(\Z/8\Z)^* = \{[1], [3], [5], [7]\}$ 
+              with $1^2 \equiv 3^2 \equiv 5^2 \equiv 7^2 \equiv 1 \pmod 8$, 
+              so this group is not cyclic. 
+    \end{enumerate}
+\end{remark}
+
+\begin{prop}{prop:6.9}
+    Let $p$ be prime, and let $\ell$ be a positive integer. If $a \equiv b 
+    \pmod{p^\ell}$, then 
+    \[ a^p \equiv b^p \pmod{p^{\ell+1}}. \] 
+\end{prop}
+\begin{pf}
+    Write $a = b + cp^\ell$ for some $c \in \Z$. Then we have 
+    \[ a^p = (b + cp^\ell)^p = b^p + \binom{p}{1} b^{p-1} cp^\ell + 
+    \binom{p}{2} b^{p-2} (cp^\ell)^2 + \cdots + \binom{p}{p} (cp^\ell)^p, \] 
+    so $a^p \equiv b^p \pmod{p^{\ell+1}}$, since $2\ell \geq \ell+1$. 
+\end{pf}
+
+\begin{prop}{prop:6.10}
+    If $\ell \geq 2$ is an integer and $p$ is an odd prime, then for any 
+    $a \in \Z$, we have 
+    \[ (1+ap)^{p^{\ell-2}} \equiv 1 + ap^{\ell-1} \pmod{p^\ell}. \] 
+\end{prop}
+\begin{pf}
+    We proceed by induction on $\ell$. The result is clear for $\ell = 2$. 
+    Suppose the result holds for some integer $\ell \geq 2$. We prove it for 
+    $\ell + 1$. 
+
+    By Proposition~\ref{prop:6.9} and our inductive hypothesis, we have 
+    \[ (1 + ap)^{p^{\ell-1}} \equiv (1 + ap^{\ell-1})^p 
+    \equiv 1 + \binom{p}{1} ap^{\ell-1} + \binom{p}{2} (ap^{\ell-1})^2 
+    + \cdots + \binom{p}{p} (ap^{\ell-1})^p \pmod{p^{\ell+1}}. \] 
+    Since $\ell \geq 2$ implies $2(\ell-1) + 1 \leq 3(\ell-1) \leq k(\ell-1)$, 
+    we see that $p^{2(\ell-1)+1}$ divides $(ap^{\ell-1})^k$ for $k = 3, \dots, p$. 
+    Furthermore, $p^{2(\ell-1)+1}$ divides $\binom{p}{2}(ap^{\ell-1})^2$ since 
+    \[ \binom{p}{2} (ap^{\ell-1})^2 = \frac{p(p-1)}2 (ap^{\ell-1})^2 
+    = \frac{p-1}2 a^2 p^{2\ell-1}. \] 
+    Note that $(p-1)/2$ is an integer since $p$ is odd. Hence, $p^{2(\ell-1)+1}$ 
+    divides the sum 
+    \[ \binom{p}{2} (ap^{\ell-1})^2 + \cdots + \binom{p}{p} (ap^{\ell-1})^p 
+    \pmod{p^{\ell+1}}. \] 
+    Now, since $\ell \geq 2$ implies $2(\ell-1) + 1 \geq \ell+1$ and $p$ is odd, 
+    we have 
+    \[ 1 + \binom{p}{1} ap^{\ell-1} + \binom{p}{2} (ap^{\ell-1})^2 
+    + \cdots + \binom{p}{p} (ap^{\ell-1})^p \equiv 1 + \binom{p}{1} ap^{\ell-1}
+    \equiv 1 + ap^\ell \pmod{p^{\ell+1}}. \] 
+    The result holds for all integers $\ell \geq 2$ by induction. 
+\end{pf}
+
+\begin{prop}{prop:6.11}
+    Let $p$ be an odd prime, $\ell$ be a positive integer, and $a$ be an integer 
+    coprime with $p$. Then $1 + ap$ has order $p^{\ell-1}$ in $(\Z/p^\ell\Z)^*$. 
+\end{prop}
+\begin{pf}
+    By Proposition~\ref{prop:6.10}, we have 
+    \[ (1+ap)^{p^{\ell-2}} \equiv 1 + ap^{\ell-1} \pmod{p^\ell}. \] 
+    Since $a$ is coprime with $p$, we see that 
+    \[ (1+ap)^{p^{\ell-2}} \not\equiv 1 \pmod{p^\ell}. \] 
+    Applying Proposition~\ref{prop:6.10} again, we have 
+    \[ (1+ap)^{p^{\ell-1}} \equiv 1 + ap^\ell \pmod{p^{\ell+1}}, \] 
+    which implies that 
+    \[ (1+ap)^{p^{\ell-1}} \equiv 1 \pmod{p^\ell}. \] 
+    Thus, $1 + ap$ has order $p^{\ell-1}$ in $(\Z/p^\ell\Z)^*$. 
+\end{pf}
+
+\begin{theo}{thm:6.12}
+    Let $p$ be an odd prime, and $\ell$ be a positive integer. Then 
+    $(\Z/p^\ell\Z)^*$ is cyclic group. 
+\end{theo}
+\begin{pf}
+    Since $(\Z/p\Z)^*$ is cyclic by Theorem~\ref{thm:6.6}, there is a primitive 
+    root $g$ modulo $p$. If $g^{p-1} \equiv 1 \pmod{p^2}$, then 
+    \[ (g+p)^{p-1} \equiv g^{p-1} + \binom{p-1}{1} g^{p-2}p + \binom{p-1}{2} 
+    g^{p-3}p^2 + \cdots + \binom{p}{p} p^{p-1} \equiv 1 + \binom{p-1}{1} 
+    g^{p-2}p \pmod{p^2}, \] 
+    so $(g+p)^{p-1} \not\equiv 1 \pmod{p^2}$. In particular, at least one of 
+    $g^{p-1}$ and $(g+p)^{p-1}$ is not congruent to $1$ modulo $p^2$. 
+    Without loss of generality, we assume that $g^{p-1} \not\equiv 1 \pmod{p^2}$. 
+    We claim that $g$ is a primitive root modulo $p^\ell$, and it will follow that 
+    $(\Z/p^\ell\Z)^*$ is cyclic. 
+
+    Suppose that $g$ has order $m$ in $(\Z/p^\ell\Z)^*$. By Euler's theorem 
+    (Theorem~\ref{thm:5.2}), we have 
+    \[ g^{\phi(p^\ell)} \equiv 1 \pmod{p^\ell}, \] 
+    and hence $m \mid (p^\ell - p^{\ell-1}) = (p-1)p^{\ell-1}$. Write 
+    $m = dp^s$ where $d \mid (p-1)$ and $0 \leq s \leq \ell-1$. By Fermat's 
+    little theorem (Corollary~\ref{cor:5.3}), we have $g^p \equiv g \pmod p$. 
+    Provided that $s \neq 0$, we have 
+    \[ g^{p^s} \equiv g \pmod p. \] 
+    However, we have $g^m \equiv 1 \pmod{p^\ell}$, so $g^m \equiv 1 \pmod p$, 
+    which implies that $g^d \equiv 1 \pmod p$ as well. Since $g$ is a 
+    primitive root modulo $p$, we see that $(p-1) \mid d$. Then $d = p-1$,
+    so $m = (p-1)p^s$. Since $g^{p-1} \not\equiv 1 \pmod{p^2}$ and 
+    $g^{p-1} \equiv 1 \pmod p$, there exists an integer $a$ coprime with $p$ 
+    such that $g^{p-1} \equiv 1 + ap \pmod{p^2}$. By Proposition~\ref{prop:6.11}, 
+    $1 + ap$ has order $p^{\ell-1}$ in $(\Z/p\Z)^*$. Then $g$ has order 
+    $(p-1)p^\ell$ in $(\Z/p^\ell\Z)^*$, so $g$ is a primitive root of $p^\ell$. 
+\end{pf}
+
+\subsection{Primitive Roots: The General Case}
+
+\vspace{2ex}
+\begin{theo}{thm:6.13}
+    If $\ell = 1, 2$, then $(\Z/2^\ell\Z)^*$ is cyclic. For $\ell \geq 3$, 
+    we have the group isomorphism 
+    \[ (\Z/2^\ell\Z)^* \cong \Z/2\Z \times \Z/2^{\ell-2}\Z. \] 
+    In particular, we can write 
+    \[ (\Z/2^\ell\Z)^* = \{(-1)^a 5^b + 2^\ell\Z : a \in \{0, 1\},\, 
+    b \in \{0, \dots, 2^{\ell-2}-1\}\}. \] 
+\end{theo}
+\begin{pf} 
+    It is clear that $(\Z/2\Z)^*$ and $(\Z/4\Z)^*$ are cyclic. Suppose that $\ell 
+    \geq 3$. We claim that 
+    \begin{equation}\label{eq:6.1}
+        5^{2^{\ell-3}} \equiv 1 + 2^{\ell-1} \pmod{2^\ell}. 
+    \end{equation}
+    We proceed by induction on $\ell$. For $\ell = 3$, we have $5 \equiv 
+    1 + 2^2 \pmod{2^3}$. Assume that $\eqref{eq:6.1}$ holds for some $\ell \geq 3$. 
+    Note that $(1 + 2^{\ell-1})^2 = 1 + 2^\ell + 2^{2(\ell-1)}$ and 
+    $2(\ell-1) \geq \ell+1$ for $\ell \geq 3$. By the induction hypothesis, 
+    we know that $5^{2^{\ell-3}} = 1 + 2^{\ell-1} + k2^\ell$ for some $k \in \Z$. 
+    It follows that 
+    \begin{align*}
+        5^{2^{\ell-2}} 
+        &= (1 + 2^{\ell-1} + k2^\ell)^2 \\ 
+        &= 1 + (2^{\ell-1})^2 + (k2^\ell)^2 + 2 \cdot 2^{\ell-1} + 2 \cdot k2^\ell 
+        + 2 \cdot 2^{\ell-1} \cdot k2^\ell \\ 
+        &= 1 + 2^\ell + k2^{\ell+1} + 2^{2\ell-2} + k2^{2\ell} + k^2 2^{2\ell}. 
+    \end{align*}
+    Since $2\ell - 2 \geq \ell + 1$ for $\ell \geq 3$, we see that 
+    \[ 5^{2^{\ell-2}} \equiv 1 + 2^\ell \pmod{2^{\ell+1}}, \] 
+    which completes the induction. In particular, we have $5^{2^{\ell-3}} 
+    \not\equiv 1 \pmod{2^\ell}$ and $5^{2^{\ell-2}} \equiv 1 \pmod{2^\ell}$, 
+    so $5$ has order $2^{\ell-2}$ in $(\Z/2^\ell\Z)^*$. 
+
+    We now show that the numbers $(-1)^a 5^b$ with $a \in \{0, 1\}$ and 
+    $b \in \{0, \dots, 2^{\ell-2} - 1\}$ are distinct modulo $2^\ell$ for 
+    $\ell \geq 3$. Suppose that 
+    \[ (-1)^{a_1} 5^{b_1} \equiv (-1)^{a_2} 5^{b_2} \pmod{2^\ell} \] 
+    for some $a_1, a_2 \in \{0, 1\}$ and $b_1, b_2 \in \{0, \dots, 2^{\ell-2} - 1\}$. 
+    Then, we obtain 
+    \[ (-1)^{a_1} 5^{b_1} \equiv (-1)^{a_2} 5^{b_2} \pmod 4. \] 
+    Since $5 \equiv 1 \pmod 4$, we have 
+    \[ (-1)^{a_1} \equiv (-1)^{a_2} \pmod{4}, \] 
+    which implies that $a_1 = a_2$. On the other hand, we get 
+    \[ 5^{b_1} \equiv 5^{b_2} \pmod{2^\ell}, \] 
+    and since $5$ has order $2^{\ell-2}$ with $b_1, b_2 \in \{0, \dots, 
+    2^{\ell-2}-1\}$, we have $b_1 = b_2$. 
+\end{pf}
+
+\begin{theo}{thm:6.14}
+    The only positive integers that have primitive roots are $1$, $2$, 
+    $4$, $p^a$, or $2p^a$, where $p$ is prime and $a$ is a positive integer. 
+\end{theo}
+\begin{pf}
+    Let $n = 2^{\ell_0} p_1^{\ell_1} \cdots p_r^{\ell_r}$, where $p_1, \dots, p_r$ 
+    are distinct odd primes and $\ell_0, \dots, \ell_r$ are non-negative integers. 
+    We have shown in Theorem~\ref{thm:6.2} that 
+    \[ (\Z/n\Z)^* \cong (\Z/2^{\ell_0}\Z)^* \times (\Z/p_1^{\ell_1}\Z)^* 
+    \times \cdots \times (\Z/p_r^{\ell_r}\Z)^*. \] 
+    By Theorem~\ref{thm:6.12}, $(\Z/p_i^{\ell_i}\Z)^*$ is cyclic for all 
+    $i = 1, \dots, r$. Moreover, by Theorem~\ref{thm:6.13}, $(\Z/2^{\ell_0}\Z)^*$ 
+    is cyclic for $0 \leq \ell_0 \leq 2$ and is isomorphic to 
+    $\Z/2\Z \times \Z/2^{\ell_0-2}\Z$ for $\ell \geq 3$. Hence, the order 
+    of any element of $\Z/n\Z$ is a divisor of 
+    $\lambda(n) = \lcm(b, \phi(p_1^{\ell_1}), \dots, \phi(p_r^{\ell_r}))$, 
+    where we define 
+    \[ b = \begin{cases} 
+        \phi(2^{\ell_0}) & \text{if } 0 \leq \ell_0 \leq 2, \\ 
+        \phi(2^{\ell_0})/2 & \text{if } \ell \geq 3.
+    \end{cases} \] 
+    It is clear that $\lambda(n) < \phi(2^{\ell_0}) \phi(p_1^{\ell_1}) 
+    \cdots \phi(p_r^{\ell_r})$ except in the cases where $n$ is of the form 
+    $1$, $2$, $4$, $p^a$, or $2p^a$ where $p$ is a prime and $a$ is a positive 
+    integer. 
+\end{pf}
+
+\begin{defn}{defn:6.15}
+    Write $n = 2^{\ell_0} p_1^{\ell_1} \cdots p_r^{\ell_r}$, where 
+    $p_1, \dots, p_r$ are distinct odd primes and $\ell_0, \ell_1, \dots, 
+    \ell_r$ are non-negative integers. If we define 
+    \[ b = \begin{cases} 
+        \phi(2^{\ell_0}) & \text{if } 0 \leq \ell_0 \leq 2, \\ 
+        \phi(2^{\ell_0})/2 & \text{if } \ell \geq 3,
+    \end{cases} \]
+    then $\lambda(n) = \lcm(b, \phi(p_1^{\ell_1}), \dots, \phi(p_r^{\ell_r}))$ 
+    is called the {\bf universal exponent} of $n$. 
+\end{defn}
+
+\begin{theo}{thm:6.16}
+    Let $n$ be a positive integer, and let $\lambda(n)$ be the universal 
+    exponent of $n$. Then for any integer $a$ coprime with $n$, we have 
+    \[ a^{\lambda(n)} \equiv 1 \pmod n. \] 
+\end{theo}
+\begin{pf}
+    This follows from Theorem~\ref{thm:6.14}. 
+\end{pf}
+
+This theorem gives us a strengthening of Euler's theorem (Theorem~\ref{thm:5.2}). 
+Given a prime $p$, one can ask what an upper bound is for the smallest positive 
+integer $a$ which is a primitive root modulo $p$. Hua proved that 
+\[ a < 2^{\omega(p-1)+1} \sqrt{p}. \] 
+
+\begin{theo}{thm:6.17}
+    If $p$ is a prime of the form $4q+1$ where $q$ is an odd prime, then $2$ is a 
+    primitive root modulo $p$. 
+\end{theo}
+\begin{pf}
+    Let $t$ be the order of $2$ modulo $p$. By Fermat's little theorem 
+    (Corollary~\ref{cor:5.3}), we have $t \mid (p-1)$ and hence $t \mid 4q$.
+    By Theorem~\ref{thm:6.14}, $t$ is one of $1$, $2$, $4$, $2q$, or $4q$. 
+    Note that $p = 13$ or $p > 20$, so $t$ cannot be $1$, $2$, or $4$. 
+    Furthermore, by Euler's criterion (Theorem~\ref{thm:5.10}), we have 
+    \[ 2^{(p-1)/2} \equiv 2^{2q} \equiv \left( \frac{2}{p} \right) \pmod p. \] 
+    But we have 
+    \[ \left( \frac{2}{p} \right) = (-1)^{(p^2-1)/8} = (-1)^{[(4q)^2+8q]/8}
+    = (-1)^q = -1. \] 
+    Then $t$ cannot be $q$ or $2q$, so we must have $t = 4q = p-1$, as required. 
+\end{pf}
