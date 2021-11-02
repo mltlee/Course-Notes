@@ -209,7 +209,7 @@ true inner product when working with characters.
     representation. Let $g \in G$. Notice that $\rho(g)$ is triangularizable, 
     so 
     \[ S^{-1}\rho(g)S = \begin{pmatrix}
-        \lambda_1 & &   \\ & \ddots & \\ 0 & & \lambda_n 
+        \lambda_1 & & * \\ & \ddots & \\ 0 & & \lambda_n 
     \end{pmatrix}, \] 
     where $\lambda_1, \dots, \lambda_n$ are the eigenvalues of $\rho(g)$. 
     Since $G$ is finite, there exists an integer $d \geq 1$ such that $g^d = 1$. 
@@ -220,12 +220,12 @@ true inner product when working with characters.
     (S^{-1}\rho(g)S) = S^{-1}\rho(g)^d S = S^{-1}IS = I. \] 
     Therefore, we find that 
     \[ \begin{pmatrix}
-        \lambda_1^d & &   \\ & \ddots & \\ 0 & & \lambda_n^d 
+        \lambda_1^d & & * \\ & \ddots & \\ 0 & & \lambda_n^d 
     \end{pmatrix} = I. \] 
     In particular, $\lambda_1, \dots, \lambda_n$ are $d$-th roots of unity. 
     Since $\rho(g^{-1})$ is the inverse of $\rho(g)$, we have 
     \[ \rho(g^{-1}) = \begin{pmatrix}
-        \lambda_1^{-1} & &   \\ & \ddots & \\ 0 & & \lambda_n^{-1} 
+        \lambda_1^{-1} & & * \\ & \ddots & \\ 0 & & \lambda_n^{-1} 
     \end{pmatrix}. \] 
     Finally, it follows that 
     \[ \chi(g^{-1}) = \Tr(\rho(g^{-1})) = \lambda_1^{-1} + \cdots + \lambda_n^{-1}

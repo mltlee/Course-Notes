@@ -544,3 +544,101 @@ Now, we'll prove an interesting corollary of the fact that $\A$ is a subring of 
     But we assumed that $\tan(\pi\alpha) \in \Q$, so the only possibilities are 
     $\tan(\pi\alpha) \in \{0, 1, -1\}$, as desired. 
 \end{pf}
+
+\section{Degree of irreps divide order of the group (11/01/2021)} 
+Let $G$ be a finite group. Let $\rho : \C[G] \to M_{n_1}(\C) \times \cdots 
+\times M_{n_s}(\C)$ be a $\C$-algebra isomorphism. Then, we have the following 
+commutative diagram. 
+\begin{center}
+    \begin{tikzcd}
+        {\C[G]} \arrow[rr, "\rho"] \arrow[rrdd, "\rho_i = \pi_i \circ\,\rho"'] &  & M_{n_1}(\C) \times \cdots \times M_{n_s}(\C) \arrow[dd, "\pi_i"] \\
+                                                                            &  &                                                                  \\
+                                                                            &  & M_{n_i}(\C)                                                     
+    \end{tikzcd}
+\end{center}
+Then, we obtain characters $\chi_i(g) = \Tr(\rho_i(g))$. We also have $\C[G]$-modules 
+$V_i = \C^{n_i \times 1}$ with the action $g \cdot v = \rho_i(g) \cdot v$. 
+Our goal in this lecture is to prove that $n_i \mid |G|$ for each $i = 1, \dots, s$, 
+where $\chi_i(1_G) = n_i$ is the degree of the character. Note that 
+$\rho_i(1_G) = I_{n_i}$. 
+
+\begin{lemma}{}
+    Let ${\cal C}$ be a conjugacy class of $G$, and let $g \in {\cal C}$. Then 
+    for all $i = 1, \dots, s$, we have 
+    \[ \frac{|{\cal C}|\chi_i(g)}{n_i} \in \A. \] 
+\end{lemma}
+\begin{pf}
+    Let ${\cal C}_1, \dots, {\cal C}_s$ be the conjugacy classes of $G$. 
+    Recall from Proposition 10.7 that a basis for $Z(\C[G])$ is given by 
+    $z_1, \dots, z_s$, where 
+    \[ z_p = \sum_{h \in {\cal C}_p} h. \] 
+    Let $M = \Z z_1 + \cdots + \Z z_s \subseteq Z(\C[G])$. We claim that 
+    $z_p M \subseteq M$ for all $p = 1, \dots, s$. 
+
+    It suffices to show that $z_p z_j \in M$ for all $p = 1, \dots, s$ and 
+    $j = 1, \dots, s$, as every element in $M$ can be written as a linear 
+    combination of $z_1, \dots, z_s$. In particular, notice that 
+    \[ z_p(c_1z_1 + \cdots + c_sz_s) = c_1z_pz_1 + \cdots + c_sz_pz_s \in M. \] 
+    Notice that $z_p z_j \in Z(\C[G])$, so we have 
+    \begin{equation} z_p z_j = \sum_{k=1}^s \lambda_{p,j,k} z_k \end{equation}
+    for some $\lambda_{p,j,k} \in \C$. In order to show that $z_p z_j \in M$, 
+    we require that $\lambda_{p,j,k} \in \Z$ for all $k = 1, \dots, s$. 
+    Pick $h \in {\cal C}_k$ and consider the coefficient of $h$ in $(21.1)$. 
+    On the right hand side, it is simply $\lambda_{p,j,k}$. On the left 
+    hand side, note that 
+    \[ z_p z_j = \left( \sum_{h' \in {\cal C}_p} h' \right) \left( \sum_{h'' \in 
+    {\cal C}_j} h'' \right), \] 
+    so the coefficient of $h$ is $\#\{(h', h'') \in {\cal C}_p \times {\cal C}_j : 
+    h' \cdot h'' = h\} \in \Z_{\geq 0}$. This proves the claim. 
+
+    Now, consider the diagram above, and note that $\rho_i$ is surjective. Since 
+    $z_j$ is central in $\C[G]$, we see that $\rho_i(z_j) \in Z(M_{n_i}(\C))$. 
+    By surjectivity of $\rho_i$, it follows that $\rho_i(z_j) = 
+    \gamma_{i,j} \in \C$; that is, $\rho_i(z_j)$ is a scalar matrix. Next, 
+    define 
+    \[ M_i = \Z\gamma_{i,1} + \cdots \Z\gamma_{i,s} \subseteq \C, \] 
+    which is a finitely generated $\Z$-submodule of $\C$ with $M_i \neq (0)$. 
+    Notice that $M_i = \rho_i(M)$ by construction after identifying the 
+    scalar matrices $\C \cdot I_{n_i}$ with $\C$. Now, since $z_j M \subseteq M$ 
+    by our claim, we obtain $\rho_i(z_j) \rho_i(M) \subseteq \rho_i(M)$, so 
+    \[ \gamma_{i,j} M_i \subseteq M_i \] 
+    after identification. Hence, for all $1 \leq i, j \leq s$, we get 
+    $\gamma_{i,j} \in \A$. Next, let ${\cal C} = {\cal C}_j$ be a conjugacy class 
+    and $g \in {\cal C}$. Note that 
+    \[ \gamma_{i,j} I_{n_i} = \rho_i(z_j) = \rho_i \left( \sum_{h \in {\cal C}_j} h 
+    \right) = \sum_{h \in {\cal C}_j} \rho_i(h). \] 
+    Taking the trace of both sides yields 
+    \[ \gamma_{i,j} \cdot n_i = \Tr(\gamma_{i,j} I_{n_i}) = 
+    \Tr\left( \sum_{h\in {\cal C}_j} \rho_i(h) \right) = \sum_{h \in {\cal C}_j} 
+    \chi_i(h) = |{\cal C}| \chi_i(g), \] 
+    where the last equality is because $\chi_i$ is a class function. It follows that 
+    \[ \frac{|{\cal C}| \chi_i(g)}{n_i} = \gamma_{i,j} \in \A. \qedhere \] 
+\end{pf}
+
+\begin{theo}{}
+    Let $G$ be a finite group. If $\chi_i$ is an irreducible character with 
+    degree $n_i$, then $n_i \mid |G|$. 
+\end{theo}
+\begin{pf}
+    We always have a trivial irreducible character with $\chi(h) = 1$ for all 
+    $h \in G$. Without loss of generality, suppose that $\chi_1$ is the trivial 
+    representation, which has degree $n_1 = 1$, in which case the result 
+    clearly holds. 
+
+    It suffices to consider the case where $i > 1$. Let ${\cal C}_1, \dots, 
+    {\cal C}_s$ be the conjugacy classes of $G$. For each $j = 1, \dots, 
+    s$, pick a representative $g_j \in {\cal C}_j$. Then we have 
+    \[ 1 = \langle \chi_i, \chi_i \rangle = 
+    \frac1{|G|} \sum_{j=1}^s |{\cal C}_j| \chi_i(g_j) \overline{\chi_i(g_j)} = 
+    \frac{n_i}{|G|} \sum_{j=1}^s \frac{|{\cal C}_j| \chi_i(g_j)}{n_i} 
+    \cdot \overline{\chi_i(g_j)}. \] 
+    By Lemma 21.1, each $|{\cal C}_j|\chi_i(g_j)/n_i$ is in $\A$. Moreover, 
+    we have shown that $\rho_i(g)$ is triangularizable with roots of 
+    unity $\omega_1, \dots, \omega_{n_i}$ along the diagonal, so 
+    \[ \overline{\chi_i(g_j)} = \overline{\omega_1} + \cdots + \overline{\omega_{n_i}} 
+    \in \A. \] 
+    In particular, we see that 
+    \[ 1 = \frac{n_i}{|G|} \cdot \alpha \] 
+    where $\alpha \in \A$. Rearranging gives $|G|/n_i = \alpha$. Observe that 
+    $|G|/n_i \in \Q \cap \A = \Z$, so $n_i \mid |G|$. 
+\end{pf}
