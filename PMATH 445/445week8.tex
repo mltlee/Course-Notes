@@ -1,0 +1,119 @@
+\section{Burnside's theorem (11/03/2021)} 
+The fact that the degrees of the irreducible characters divide the order of 
+the group has some very powerful consequences. The Feit-Thompson theorem 
+states that every group of odd order is solvable. We'll focus on Burnside's 
+theorem, which gives the weaker statement that every group of order 
+$p^a q^b$ is solvable, where $p$ and $q$ are distinct primes and $a, b \in \Z^+$. 
+The proofs of these theorems are very difficult (if not impossible) without 
+using character theory, and we'll use it to make our lives easier. 
+First, let's recall what it means for a group to be solvable. 
+
+\begin{defn}{}
+    A group $G$ is {\bf solvable} if there exists a tower 
+    \[ G = G_0 \supseteq G_1 \supseteq G_2 \supseteq \cdots \supseteq G_m = \{1\} \] 
+    such that $G_{i+1} \trianglelefteq G_i$ and $G_i/G_{i+1}$ is abelian for 
+    all $0 \leq i \leq m-1$. 
+\end{defn}
+
+Towards the proof of Burnside's theorem, we'll first prove some intermediate results. 
+
+\begin{lemma}{}
+    Let $\chi$ be an irreducible character of degree $n \geq 2$. If $\chi(g)/n 
+    \in \A$ for some $g \in G$, then $\chi(g) = 0$. 
+\end{lemma}
+
+We leave the proof of this lemma for the next lecture. For the moment, we 
+will use this lemma to prove the following theorem. 
+
+\begin{theo}{}
+    Let $G$ be a non-abelian finite group. Suppose that $G$ has a conjugacy 
+    class of size $p^a$ where $p$ is a prime and $a \in \Z^+$. Then $G$ is 
+    not simple. 
+\end{theo}
+\begin{pf}
+    Suppose by way of contradiction that there exists a non-abelian finite 
+    simple group $G$ with an element $g \in G$ such that the conjugacy class 
+    ${\cal C} = {\cal C}(g)$ containing $g$ has size $p^a$, where $p$ is prime and 
+    $a \in \Z^+$. Since $G$ is non-abelian and simple, we have $G' = G$. 
+    Indeed, note that $G' \trianglelefteq G$. By simplicity, we either 
+    have $G' = G$ or $G' = \{1\}$. But $G$ is non-abelian, so we must be in the first 
+    case. This means that $G$ has one inequivalent irreducible representation 
+    of degree $1$ since $|G/G'| = |G/G| = 1$. The only irreducible character 
+    of degree $1$ is the trivial character $\chi$ with $\chi(h) = 1$ for all $h \in G$.
+
+    Let $\chi_1, \dots, \chi_s$ be the irreducible characters of $G$. Without 
+    loss of generality, we may assume that $\chi_1$ is the trivial character. 
+    Notice that if $n_1, \dots, n_s$ are the degrees of $\chi_1, \dots, \chi_s$ 
+    respectively, then $n_1 = 1$ and $n_i > 1$ for $i = 2, \dots, s$. Recall 
+    that we have $g \in G$ such that $|{\cal C}| = |{\cal C}(g)| = p^a$, 
+    where $p$ is prime and $a \in \Z^+$. This implies that $g \neq 1$, for 
+    otherwise its conjugacy class would have size $1$. Now, if $L$ is the 
+    left regular representation of $G$, then $\chi_L(g) = 0$. This implies that 
+    \[ 0 = \chi_L(g) = \sum_{i=1}^s n_i \chi_i(g) 
+    = \chi_1(g) + \sum_{\substack{i\geq 2 \\ p\,\mid\,n_i}} n_i \chi_i(g) 
+    + \sum_{\substack{i\geq 2 \\ p\,\nmid\,n_i}} n_i \chi_i(g). \]
+    {\sc Claim.} For $i \geq 2$, if $p \nmid n_i$, then $\chi_i(g) = 0$. 
+
+    {\sc Proof of Claim.} We know that $\chi_i(g) \in \A$. We have also showed 
+    in Lemma 21.1 that 
+    \[ \frac{p^a \chi_i(g)}{n_i} = \frac{|{\cal C}(g)| \chi_i(g)}{n_i} \in \A. \] 
+    Since $p \nmid n_i$, we have $\gcd(p^a, n_i) = 1$. Therefore, there 
+    exist $c, d \in \Z$ such that $cp^a + dn_i = 1$. We find that 
+    \[ \frac{\chi_i(g)}{n_i} = \frac{cp^a + dn_i}{n_i} \chi_i(g) 
+    = \frac{cp^a \chi_i(g)}{n_i} + d\chi_i(g) \in \A. \] 
+    By Lemma 22.2, we obtain $\chi_i(g) = 0$. \hfill$\blacksquare$ 
+
+    Now, writing $n_i = pn'_i$ for each $i \geq 2$ with $p \mid n_i$, we have 
+    \[ 0 = \chi_1(g) + \sum_{\substack{i\geq 2 \\ p\,\mid\,n_i}} n_i \chi_i(g) 
+    + \sum_{\substack{i\geq 2 \\ p\,\nmid\,n_i}} n_i \chi_i(g) 
+    = \chi_1(g) + p \sum_{\substack{i\geq 2 \\ p\,\mid\,n_i}} n'_i \chi_i(g). \] 
+    Let $\alpha$ denote the sum in the above equation, and note that $\alpha \in \A$. 
+    Then $1 + p\alpha = 0$, which implies that $\alpha = -1/p$. But this is a 
+    contradiction since $\Q \cap \A = \Z$, but $-1/p \notin \Z$. 
+\end{pf}
+
+We can now prove Burnside's theorem. First, we'll recall some facts from group theory. 
+\begin{enumerate}[(1)]
+    \item Let $N \trianglelefteq G$. Then $G$ is solvable if and only if 
+          $N$ and $G/N$ are both solvable. 
+    \item Let $G$ be a group of order $q^b c$ where $q$ is prime, $b \in \Z^+$, 
+          and $q \nmid c$. Then by the first Sylow theorem, $G$ has a subgroup 
+          $Q$ of order $q^b$. 
+    \item If $G$ is a group of order $q^b$ where $q$ is prime and $b \in \Z^+$, 
+          then $G$ has a non-trivial center by the class equation. 
+    \item If $g \in G$ and ${\cal C}(g)$ is the conjugacy class of $g$, then 
+          $|{\cal C}(g)| = |G|/|C(g)|$, where $C(g) = \{h \in G : hg = gh\}$ 
+          is the centralizer of $g$. 
+\end{enumerate}
+
+\begin{theo}[Burnside's theorem]{}
+    Let $G$ be a group of order $p^a q^b$ where $p$ and $q$ are distinct primes 
+    and $a, b \in \Z^+$. Then $G$ is solvable. 
+\end{theo}
+\begin{pf}
+    Suppose the result is not true. Let $G$ be a minimal counterexample; that is, 
+    $G$ is a group of order $p^a q^b$ where $p$ and $q$ are distinct primes and 
+    $a, b \in \Z^+$, and $G$ has minimal size with respect to this property. 
+
+    {\sc Claim.} $G$ is a non-abelian simple group.  
+
+    {\sc Proof of Claim.} Note that $G$ is non-abelian since if $G$ were 
+    abelian, then it would be solvable. Assume that $G$ is not simple. 
+    Then there exists a non-trivial proper normal subgroup $N$ of $G$. 
+    Then $G/N$ and $N$ are both smaller than $G$ and their sizes divide $p^a q^b$. 
+    By minimality, $N$ and $G/N$ are solvable, so $G$ is also solvable by (1), a 
+    contradiction. \hfill$\blacksquare$ 
+
+    Pick a subgroup $Q \leq G$ with $|Q| = q^b$, which exists by (2). Moreover, 
+    we can choose $z \neq 1$ such that $z \in Z(Q)$, which exists since 
+    $Q$ has non-trivial center by (3). Then $Q \subseteq C(z) \subseteq G$, 
+    so $|C(z)| = p^c q^b$ where $c \in \{0, \dots, a\}$. By (4), it follows that 
+    \[ |{\cal C}(z)| = \frac{|G|}{|C(z)|} = \frac{p^a q^b}{p^c q^b} = p^{a-c}. \] 
+    If $c < a$, then $G$ is not simple by Theorem 22.3 since $G$ 
+    is non-abelian and $|{\cal C}(z)|$ is a conjugacy class with size which is a 
+    prime power, contradicting our claim. So $c = a$, which gives $|{\cal C}(z)| 
+    = 1$. But this means that $C(z) = G$. Moreover, $z$ is central, which gives 
+    $\{1\} \neq Z(G) \trianglelefteq G$. Since $G$ is simple, we must have 
+    $Z(G) = G$. This would mean that $G$ is abelian, once again contradicting 
+    our claim. Therefore, no counterexample exists, so the result holds. 
+\end{pf}
