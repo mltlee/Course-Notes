@@ -117,3 +117,107 @@ We can now prove Burnside's theorem. First, we'll recall some facts from group t
     $Z(G) = G$. This would mean that $G$ is abelian, once again contradicting 
     our claim. Therefore, no counterexample exists, so the result holds. 
 \end{pf}
+
+\section{Galois theory (11/05/2021)}
+Let $F$ be a field of characteristic $0$, and let $p(x) = x^n + a_{n-1} x^{n-1} 
++ \cdots + a_1 x + a_0 \in F[x]$ be a monic polynomial with roots $\alpha_1, 
+\dots, \alpha_n \in \overline{F}$. Let $K = \{p(\alpha_1, \dots, \alpha_n) : 
+p(x_1, \dots, x_n) \in F[x_1, \dots, x_n]\}$. Notice that $K$ is a subring of 
+$\overline{F}$, because we may consider the surjective $F$-algebra homomorphism 
+\begin{align*}
+    \varphi : F[x_1, \dots, x_n] &\mapsto \overline{F}, \\ 
+    p(x_1, \dots, x_n) &\mapsto p(\alpha_1, \dots, \alpha_n), 
+\end{align*}
+whose image is $K$ by definition. Note that $\dim_F K < \infty$ since $K$ 
+is spanned by $S = \{\alpha_1^{i_1} \cdots \alpha_n^{i_n} : 0 \leq i_1, \dots, 
+i_n \leq n\}$. To see this, let $V$ be the $F$-vector subspace of $K$ spanned 
+by $S$. If $V \subsetneq K$, then there exists a polynomial $p(x_1, \dots, x_n) 
+\in F[x_1, \dots, x_n]$ such that $p(\alpha_1, \dots, \alpha_n) \notin V$. 
+Pick such a $p$ of smallest degree lexicographically; that is, 
+$x_1^{i_1} \cdots x_n^{i_n} <_{\textrm{lex}} x_1^{j_1} \cdots x_n^{j_n}$ if for some 
+$1 \leq m \leq n$, we have $i_k = j_k$ for all $0 \leq k < m$, and 
+$i_m < j_m$. Note that this is a total ordering. 
+
+We claim that all monomials of $p$ have degree less than $n$. Suppose we had 
+some $x_1^{i_1} \cdots x_s^{i_s} \cdots x_n^{i_n}$ with $i_s \geq n$. Recall 
+that $\alpha_s$ is a root of $p$, so we have 
+\[ \alpha_s^n + a_{n-1} \alpha_s^{n-1} + \cdots + a_1 \alpha_s + a_0 = 0. \] 
+Rearranging the above equation and multiplying by $\alpha_s^{i_n-n}$ gives 
+\[ \alpha_s^{i_n} = -a_{n-1} \alpha_s^{i_n-1} - \cdots - a_0 \alpha_s^{i_n-n}. \] 
+From this, it follows that 
+\[ \alpha_1^{i_1} \cdots \alpha_s^{i_s} \cdots \alpha_n^{i_n} 
+= -a_{n-1} \alpha_1^{i_1} \cdots \alpha_s^{i_n-1} \cdots \alpha_n^{i_n} 
+- \cdots - a_0 \alpha_1^{i_1} \cdots \alpha_s^{i_n-n} \cdots \alpha_n^{i_n}. \] 
+We can repeat this with all other monomials to reach a contradiction. 
+
+Note that $K$ is a field. Indeed, we have $K \subseteq \overline{F}$, so $K$ is 
+an integral domain. Moreover, we showed that $\dim_F K < \infty$. Therefore, 
+if $a \in K \setminus \{0\}$, then the map $L_a : K \to K$ given by 
+$L_a(x) = ax$ is $K$-linear and onto. Since $L_a$ is onto, there exists $b \in K$ 
+such that $L_a(b) = 1$, so $ab = ba = 1$. We call $K$ the splitting field
+of $p(x) = x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0 = (x - \alpha_1) 
+\cdots (x- \alpha_n)$. By construction, it is the smallest field extension of $F$
+containing all the roots of $p(x) \in F[x]$. 
+
+Recall that the Galois group $\Gal(K/F)$ is the set of all $F$-algebra 
+automorphisms $\sigma : K \to K$ with $\sigma|_F = \id_F$ together with the 
+operation of composition. 
+
+\begin{remark}{}
+    $\Gal(K/F)$ embeds into $S_n$. To see why, if $\sigma \in \Gal(K/F)$, then 
+    $\sigma$ is uniquely determined by the values $\sigma(\alpha_1), \dots, 
+    \sigma(\alpha_n)$. Now, we see that $\sigma$ permutes $\alpha_1, \dots, 
+    \alpha_n$ because if $p(\alpha) = 0$ for some $\alpha \in K$, then 
+    \[ \alpha^n + a_{n-1} \alpha^{n-1} + \cdots + a_1 \alpha + a_0 = 0. \] 
+    Since $\sigma$ is $F$-linear, we obtain 
+    \begin{align*}
+        p(\sigma(\alpha)) 
+        &= \sigma(\alpha)^n + a_{n-1} \sigma(\alpha)^{n-1} + \cdots + a_1 \sigma(\alpha) + a_0 \\
+        &= \sigma(\alpha^n + a_{n-1} \alpha^{n-1} + \cdots + a_1 \alpha + a_0) \\
+        &= \sigma(0) = 0. 
+    \end{align*}
+\end{remark}
+
+Now, let $G = \Gal(K/F)$. The fundamental theorem of Galois theory tells us that 
+if we are given a subgroup $\{\id\} \subseteq H \subseteq G$, then 
+$K^H = \{a \in K : \tau(a) = a \text{ for all } \tau \in H\}$ forms a field, 
+and the converse is also true. Moreover, we have $H_1 \subseteq H_2$ if and only if 
+$K^{H_1} \supseteq K^{H_2}$; that is, this correspondence is inclusion-reversing. 
+In particular, notice that $K^G = \{a \in K : \sigma(a) = a \text{ for all } 
+\sigma \in \Gal(K/F)\} = F$. 
+
+\begin{theo}{}
+    Consider the polynomial 
+    \[ p(x) = x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0 = 
+    (x - \alpha_1) \cdots (x - \alpha_n) \in \Z[x]. \] 
+    If $|\alpha_i| \leq 1$ for all $i = 1, \dots, n$, then each $\alpha_i$ is 
+    either $0$ or a root of unity. 
+\end{theo}
+\begin{pf}
+    First, note that $\alpha_1, \dots, \alpha_n \in \A$. Let $K$ be the splitting 
+    field of $p(x) \in F[x]$, and let $G = \Gal(K/\Q)$. For $j \in \Z^+$, define 
+    the polynomial 
+    \[ p_j(x) = (x - \alpha_1^j) \cdots (x - \alpha_n^j). \] 
+    Note that $p_j(x) \in \Q[x]$. Indeed, if $\sigma \in \Gal(K/\Q)$, then 
+    by $K$-linearity, we obtain 
+    \[ \sigma(p_j(x)) = \sigma((x - \alpha_1^j) \cdots (x - \alpha_n^j)) 
+    = (x - \sigma(\alpha_1^j)) \cdots (x - \sigma(\alpha_n^j)) = p_j(x). \] 
+    This holds for all $\sigma \in \Gal(K/\Q)$. The coefficients of $p_j(x)$ 
+    are all in $K^G = \Q$ (where this equality holds by the fundamental 
+    theorem of Galois theory). It follows that $p_j(x) \in \Z[x]$ since 
+    $\alpha_1, \dots, \alpha_n \in \A$, and so the coefficients are in 
+    $\A \cap \Q = \Z$. 
+
+    Now, write 
+    \[ p_j(x) = x^n + a_{n-1,j} x^{n-1} + \cdots + a_{1,j} x + a_{0,j} \in \Z[x]. \] 
+    We claim that $|a_{n,j}| \leq \binom{n}{k}$. Indeed, by expanding out 
+    our original definition of $p_j(x)$, we have 
+    \[ p_j(x) = x^n - (\alpha_1^j + \cdots + \alpha_n^j) x^{n-1} + \cdots 
+    + (-1)^k \left( \sum_{1\leq i_1 < \cdots < i_k \leq n} \alpha_{i_1}^j \cdots 
+    \alpha_{i_k}^j \right) x^{n-k} + \cdots. \]
+    Then we have 
+    \[ a_{n-k,j} = (-1)^k \sum_{1\leq i_1 < \cdots < i_k \leq n} \alpha_{i_1}^j \cdots 
+    \alpha_{i_k}^j, \] 
+    and since $|\alpha_i| \leq 1$ for all $i = 1, \dots, n$, it follows that 
+    $|a_{n-k,j}| \leq \binom{n}{k}$. 
+\end{pf}
