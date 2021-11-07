@@ -1,0 +1,303 @@
+\section{$L$-functions and Dirichlet's Theorem}\label{sec:7}
+
+\subsection{Some Results on Primes in Arithmetic Progressions}\label{subsec:7.1}
+Let $k$ and $\ell$ be coprime positive integers. Recall that Dirichlet's theorem 
+asserts that $kn + \ell$ is prime for infinitely many integers $n$. For many 
+pairs $(k, \ell)$, this result can be proved using elementary means. However, 
+this is hard to prove generally, and we'll require more tools to do so. 
+
+For example, consider the pair $(k, \ell) = (4, 3)$. Suppose that there are only 
+finitely many primes $p_1, \dots, p_k$ of the form $4n + 3$. Then $4p_1 
+\cdots p_k + 3$ must be divisible by a prime of the form $4n + 3$, since a product 
+of primes congruent to $1$ modulo $4$ can only yield numbers congruent to 
+$1$ modulo $4$. Notice that such a prime cannot be any of $p_1, \dots, p_k$, 
+which is a contradiction. 
+
+The following result is Dirichlet's theorem in the case where $k$ is an 
+arbitrary positive integer and $\ell = 1$. 
+
+\begin{theo}{thm:7.1} 
+    Let $n \in \Z^+$. There are infinitely many primes congruent to $1$ modulo $n$.
+\end{theo}
+\begin{pf}
+    This proof is due to Birkhoff and Vandiver (1904). Let $a > 2$ be an integer, 
+    and consider the $n$-th cyclotomic polynomial
+    \[ \Phi_n(x) = \prod_{\substack{1\leq j \leq n \\ \gcd(j, n) = 1}} 
+    (x - \zeta_n^j), \] 
+    where $\zeta_n = e^{2\pi i/n}$. We know that $\Phi_n(x) \in \Z[x]$ is irreducible, 
+    and $x^n - 1 = \prod_{d\mid n} \Phi_d(x)$. We now consider $\Phi_n(x)$ 
+    evaluated at $a$. 
+
+    {\sc Claim.} If $p$ is a prime dividing $\Phi_n(a)$, then $p \mid n$ or 
+    $p \equiv 1 \pmod n$. 
+
+    {\sc Proof of Claim.} Since $x^n - 1 = \prod_{d\mid n} \Phi_d(x)$, we have 
+    $p \mid a^n - 1$. We consider two cases. 
+
+    First, if $p \nmid a^d - 1$ for all proper divisors $d$ of $n$, then the order of 
+    $a$ modulo $p$ must be $n$. By Fermat's little theorem (Corollary~\ref{cor:5.3}), 
+    we have $n \mid (p-1)$, so $p \equiv 1 \pmod n$. 
+
+    Suppose there is a proper divisor $d$ of $n$ such that $p \mid a^d - 1$. Since 
+    $p \mid \Phi_n(a)$, we obtain $p \mid (a^n - 1)/(a^d - 1)$. Notice that 
+    \[ a^n = \left( 1 + (a^d - 1) \right)^{n/d} = 1 + \frac{n}{d} (a^d - 1) 
+    + \binom{n/d}{2} (a^d - 1)^2 + \binom{n/d}{3} (a^d - 1)^3 + \cdots, \] 
+    so it follows that 
+    \[ \frac{a^n - 1}{a^d - 1} = \frac{n}{d} + \binom{n/d}{2} (a^d - 1) 
+    + \binom{n/d}{3} (a^d - 1)^2 + \cdots. \] 
+    Since $p \mid (a^n-1)/(a^d-1)$ and $p \mid (a^d-1)$, we get $p \mid n/d$ as well. 
+    Therefore, we have $p \mid n$ as required. \hfill$\blacksquare$ 
+
+    Now, assume that there are only finitely many primes $p_1, \dots, p_k$ 
+    congruent to $1$ modulo $n$. The $n$-th cyclotomic polynomial is of the form 
+    \[ \Phi_n(x) = x^{\phi(n)} + \cdots \pm 1. \] 
+    Let $m$ be an integer. We see that $\Phi_n(np_1 \cdots p_k m)$ is not divisible 
+    by $p_i$ for $i = 1, \dots, k$ and is coprime with $n$. Notice that for sufficiently 
+    large $m$, we have $\Phi_n(np_1 \cdots p_km) \geq 2$. In particular, 
+    $\Phi_n(np_1 \cdots p_km)$ has a prime divisor congruent to $1$ modulo $n$ 
+    which is not in the set $\{p_1, \dots, p_k\}$, which is a contradiction. 
+\end{pf}
+
+\newpage 
+\subsection{Characters}\label{subsec:7.2}
+
+\vspace{2ex}
+\begin{defn}{def:7.2}
+    Let $G$ be a finite abelian group. A {\bf character} of $G$ is a homomorphism 
+    $\chi : G \to \C^*$. Note that the set of characters of $G$ forms a group 
+    under the operation $(\chi_1 \cdot \chi_2)(g) = \chi_1(g) \chi_2(g)$. 
+    We call this group the {\bf dual group} of $G$, and denote it by $\hat G$. 
+    The identity of $\hat G$ is the character $\chi_0$ with $\chi_0(g) = 1$
+    for all $g \in G$. We call $\chi_0$ the {\bf principal character}. 
+\end{defn}
+
+Notice that if $|G| = n$, then $g^n = e$ for all $g \in G$. In particular, we see that 
+$(\chi(g))^n = \chi(g^n) = \chi(e) = 1$, so $\chi(g)$ is an $n$-th root of unity 
+for all $g \in G$. 
+
+\begin{theo}{thm:7.3}
+    Let $G$ be a finite abelian group. 
+    \begin{enumerate}[(1)]
+        \item The order of $\hat G$ is equal to the order of $G$. 
+        \item The dual group $\hat G$ is isomorphic to $G$. 
+        \item We have the formulas 
+        \begin{align*}
+            \sum_{\chi\in\hat G} \chi(g) = \begin{cases}
+                |G| & \text{if } g = e, \\ 
+                0 & \text{otherwise;}
+            \end{cases} \\ 
+            \sum_{g\in G} \chi(g) = \begin{cases} 
+                |G| & \text{if } \chi = \chi_0, \\ 
+                0 & \text{otherwise.}
+            \end{cases}
+        \end{align*}
+    \end{enumerate}
+\end{theo}
+\begin{pf}~
+    \begin{enumerate}[(1)]
+        \item Recall that a finite abelian group is the direct product of cyclic 
+        groups. Hence, there exist elements $g_1, \dots, g_r \in G$ and 
+        $h_1 \cdots h_r \in \N$ with $h_1 \cdots h_r = |G|$ such that 
+        every element $g \in G$ has a unique representation $g = g_1^{a_1} 
+        \cdots g_r^{a_r}$ with $1 \leq a_i \leq h_i$, and $g_i^{h_i} = e$ for 
+        $i = 1, \dots, r$. 
+
+        Any character $\chi$ is uniquely determined by its action on 
+        $g_1, \dots, g_r$. Since $g_i^{h_i} = e$, we have $(\chi(g_i))^{h_1} = 1$, 
+        which shows that $\chi(g_i)$ is an $h_i$-th root of unity. Hence, there are 
+        at most $h_1 \cdots h_r$ characters. 
+
+        On the other hand, there are at least $h_1 \cdots h_r$ characters because 
+        if $\omega_i$ is an $h_i$-th root of unity, then we may define $\chi(g_i)
+        = \omega_i$ for $i = 1, \dots, r$ and extend multiplicatively to $G$. 
+        We conclude that $|\hat G| = |G|$. 
+
+        \item For each $i = 1, \dots, r$, let $\chi_i$ be the character 
+        which sends $g_i$ to $e^{2\pi i/h_i}$ and $g_j$ to $1$ when $j \neq i$. 
+        Define $\phi : G \to \hat G$ by 
+        \[ \phi(g_1^{a_1} \cdots g_r^{a_r}) = \chi_1^{a_1} \cdots \chi_r^{a_r}. \] 
+        Notice that $\phi$ is a homomorphism. We see that $\phi$ is injective 
+        because for $j = 1, \dots, r$, we have 
+        \[ (\chi_1^{a_1} \cdots \chi_r^{a_r})(g_j) = e^{2\pi ia_j/h_j} \] 
+        Since $G$ is finite and $|\hat G| = |G|$ by (1), 
+        we see that $\phi$ is also surjective. Therefore, we have $\hat G \cong G$. 
+
+        \item Let $S(g) = \sum_{\chi\in\hat G} \chi(g)$. Notice that 
+        $\chi(e) = 1$ for all $\chi \in \hat G$, so we obtain $S(g) = |\hat G| = |G|$. 
+
+        Assume now that $g \neq e$. Then there exists a character $\chi_1 \in \hat G$ 
+        such that $\chi_1(g) \neq 1$. Now, we have 
+        \[ S(g) = \sum_{\chi \in \hat G} \chi(g) = \sum_{\chi \in \hat G} (\chi_1\chi)(g) 
+        = \chi_1(g) \sum_{\chi\in\hat G} \chi(g) = \chi_1(g) S(g). \] 
+        Since $\chi_1(g) \neq 1$, we must have $S(g) = 0$. 
+        \newpage 
+        On the other hand, let $T(\chi) = \sum_{g \in G} \chi(g)$. Notice that $\chi_0(g) 
+        = 1$ for all $g \in G$, so $T(\chi_0) = |G|$. 
+        
+        If $\chi \neq \chi_0$, then there exists $g_1 \in G$ such that $\chi(g_1) 
+        \neq 1$. We have 
+        \[ T(\chi) = \sum_{g \in G} \chi(g) = \sum_{g \in G} \chi(g_1g) = 
+        \chi(g_1) \sum_{g \in G} \chi(g) = \chi(g_1) T(\chi). \] 
+        Since $\chi(g_1) \neq 1$, it follows that $T(\chi) = 0$. \qedhere 
+    \end{enumerate}
+\end{pf}
+
+\subsection{Dirichlet Characters}\label{subsec:7.3}
+
+\vspace{2ex}
+\begin{defn}{def:7.4}
+    Let $k \in \Z^+$, and denote $(\Z/k\Z)^*$ by $G(k)$. Let $\chi$ be a character 
+    on $G(k)$. We can associate $\chi$ with a map $\Z \to \C^*$, which we also 
+    call $\chi$, by setting 
+    \[ \chi(a) = \begin{cases} 
+        \chi([a]) & \text{if } [a] \in G(k), \\ 
+        0 & \text{if } [a] \notin G(k), 
+    \end{cases} \] 
+    where $[a]$ denotes the conjugacy class of $a$. We call $\chi$ a 
+    {\bf character modulo $k$}. 
+\end{defn}
+
+\begin{theo}{thm:7.5}
+    Let $k \in \Z^+$, and let $\chi$ be a character modulo $k$. 
+    \begin{enumerate}[(1)]
+        \item If $\gcd(n, k) = 1$, then $\chi(n)$ is a $\phi(k)$-th root of unity. 
+        \item We have $\chi(mn) = \chi(m)\chi(n)$; that is, $\chi$ is completely 
+        multiplicative. 
+        \item We have $\chi(n+k) = n$ for all $n \in \Z$; that is, $\chi$ is 
+        periodic with period $k$. 
+        \item We have the formulas 
+        \begin{align*}
+            \sum_{n=1}^k \chi(n) &= \begin{cases}
+                \phi(k) & \text{if } \chi = \chi_0, \\ 
+                0 & \text{otherwise;}
+            \end{cases} \\ 
+            \sum_{\chi} \chi(n) &= \begin{cases} 
+                \phi(k) & \text{if } n \equiv 1 \text{ (mod $k$)}, \\ 
+                0 & \text{otherwise,}
+            \end{cases}
+        \end{align*}
+        where the second sum runs through all characters modulo $k$. 
+        \item Let $\overline\chi$ be the conjugate character of $\chi$ with $\overline\chi(n) 
+        = \overline{\chi(n)}$ for all $n \in \Z$. Let $\chi'$ be a character modulo 
+        $k$. Then we have the formulas 
+        \begin{align*}
+            \sum_{\chi\in\hat G(k)} \chi(n) \overline\chi(m) &= \begin{cases}
+                \phi(k) & \text{if } n \equiv m \text{ (mod $k$) and } \gcd(n, k) = 1, \\ 
+                0 & \text{otherwise;}
+            \end{cases} \\ 
+            \sum_{n=1}^k \chi(n) \chi'(n) &= \begin{cases} 
+                \phi(k) & \text{if } \chi' = \overline\chi, \\ 
+                0 & \text{otherwise.}
+            \end{cases}
+        \end{align*}
+    \end{enumerate}
+\end{theo}
+\newpage 
+\begin{pf}
+    Properties (1) to (4) either follow from definitions or Theorem~\ref{thm:7.3}. 
+    Note that $\overline\chi(m) \chi(m) = 1 = \chi(m^{-1}) \chi(m)$, 
+    where $m^{-1}$ denotes the multiplicative inverse of $m$ in $G(k)$. Therefore, 
+    we have $\overline\chi(m) = \chi(m^{-1})$. It follows that 
+    \[ \sum_{\chi\in\hat G(k)} \chi(n) \overline\chi(m) 
+    = \sum_{\chi\in\hat G(k)} \chi(n) \chi(m^{-1}) 
+    = \sum_{\chi\in\hat G(k)} \chi(nm^{-1}). \] 
+    By (4), the last sum is $\phi(k)$ if $nm^{-1} \equiv 1 \pmod k$, or equivalently 
+    $n \equiv m \pmod k$, and the sum is $0$ otherwise. This gives us the first 
+    equation in (5). Moreover, note that if $\chi' = \overline\chi$, then 
+    $\chi\chi' = \chi_0$. Otherwise, $\chi\chi'$ is a non-principal character, 
+    so the second equation in (5) follows from (4). 
+\end{pf}
+
+We now describe the group of characters modulo $k$. By the multiplicative property 
+of characters, it is enough to discuss the characters modulo $p^a$ where $p$ is 
+prime and $a \in \Z^+$. First, assume that $p$ is an odd prime. Let $g$ be a 
+primitive root modulo $p^a$. If $n$ is coprime with $p$, then there is a unique 
+integer $1 \leq \nu \leq \phi(p^a)$ such that $n \equiv g^\nu \pmod{p^a}$. 
+For each integer $1 \leq b \leq \phi(p^a)$, we define the character $\chi^b$ by 
+\[ \chi^b(a) = \exp\left( \frac{2\pi ib\nu}{\phi(p^a)} \right). \] 
+In this way, we get $\phi(p^a)$ different characters modulo $p^a$, so this is the 
+complete list. Now, let $k = 2^a$. If $a = 1$, then we simply have the principal 
+character. For $a = 2$, we have the principal character together with the character 
+$\chi_4$ given by 
+\[ \chi_4(n) = \begin{cases}
+    1 & \text{if } n \equiv 1 \text{ (mod $4$),} \\ 
+    -1 & \text{if } n \equiv -1 \text{ (mod $4$),} \\ 
+    0 & \text{otherwise.}
+\end{cases} \] 
+If $a \geq 3$, then $(\Z/2^a\Z)^*$ is not cyclic by Theorem~\ref{thm:6.13}. 
+Moreover, we saw in the proof of that theorem that for any odd integer $n$, 
+there is a unique pair of integers $(x, y)$ with $x \in \{0, 1\}$ and 
+$y \in \{0, \dots, 2^{a-2}-1\}$ such that 
+\[ n \equiv (-1)^x 5^y \pmod{2^a}. \] 
+For $c, d \in \Z$ with $c \in \{0, 1\}$ and $d \in \{0, \dots, 2^{a-2}-1\}$, we define 
+\[ \chi_{2^a}^{c,d}(n) = \begin{cases}
+    \exp(\frac{2\pi icx}2 + \frac{2\pi idy}{2^{a-2}}) & \text{if } n \equiv 1 
+    \text{ (mod $2$),} \\ 
+    0 & \text{otherwise.} 
+\end{cases} \] 
+We obtain $\phi(2^a)$ different characters modulo $2^a$, giving us the complete list. 
+
+\subsection{Dirichlet $L$-functions}\label{subsec:7.4}
+The Riemann zeta function was a powerful tool for studying the prime counting 
+function $\pi(x)$. This suggests that it might be helpful to introduce complex 
+functions in order to understand the primes in arithmetic progressions. 
+
+\begin{defn}{def:7.6}
+    Let $k \in \Z^+$, and let $\chi$ be a character modulo $k$. For $\Re(s) > 1$, 
+    we define the {\bf Dirichlet $L$-function} by 
+    \[ L(s, \chi) = \sum_{n=1}^\infty \frac{\chi(n)}{n^s}. \] 
+\end{defn}
+
+As with the Riemann zeta function, we can establish the analytic continuation of 
+$L(s, \chi)$ up to $\Re(s) > 0$. 
+
+\begin{theo}{thm:7.7}
+    The function $L(s, \chi)$ can be analytically continued to $\Re(s) > 0$ except 
+    when $\chi$ is the principal character. If $\chi_0$ is the principal character 
+    modulo $k$, then $L(s, \chi_0)$ can be analytically continued to $\Re(s) > 0$ 
+    except at the point $s = 1$, where we have a simple pole with residue $\phi(k)/k$.  
+\end{theo}
+\begin{pf}
+    Let $A(x) = \sum_{n\leq x} \chi(n)$. By (4) of Theorem~\ref{thm:7.5}, we see that 
+    \[ A(x) = \begin{cases}
+        \floor{\frac{x}{k}} \phi(k) + T(x) & \text{if } \chi = \chi_0, \\ 
+        \floor{\frac{x}{k}} 0 + T(x) & \text{if } \chi \neq \chi_0,
+    \end{cases} \]
+    where $|T(x)| < \phi(k)$. It follows that 
+    \[ A(x) = E(\chi) \frac{\phi(k)x}{k} + R(x), \] 
+    with $|R(x)| < 2\phi(k)$ and 
+    \[ E(\chi) = \begin{cases}
+        1 & \text{if } \chi = \chi_0, \\ 
+        0 & \text{if } \chi \neq \chi_0.
+    \end{cases} \]
+    Let $f(n) = 1/n^s$. By Abel's summation formula (Lemma~\ref{lemma:2.8}), we have 
+    \begin{align*}
+        \sum_{n\leq x} \frac{\chi(n)}{n^s} 
+        &= \frac{A(x)}{x^s} + s \int_1^x \frac{A(u)}{u^{s+1}}\dd u \\ 
+        &= E(\chi) \frac{\phi(k)}{k} \frac{1}{x^{s-1}} + \frac{R(x)}{x^s} 
+        + sE(\chi) \frac{\phi(k)}{k} \left( \frac{-u^{-s+1}}{s-1} \bigg|_1^x \right)
+        + s \int_1^x \frac{R(u)}{u^{s+1}}\dd u \\ 
+        &= E(\chi) \frac{\phi(k)}{k} \left( x^{1-s} + \frac{s}{1-s} (x^{1-s} - 1) 
+        \right) + \frac{R(x)}{x^s} + s \int_1^x \frac{R(u)}{u^{s+1}}\dd u.  
+    \end{align*}
+    We now consider two cases. 
+    \begin{itemize}
+        \item If $\chi \neq \chi_0$, then $E(\chi) = 0$. We see from above that 
+        \[ \sum_{n\leq x} \frac{\chi(n)}{n^s} = \frac{R(x)}{x^s} + s \int_1^x 
+        \frac{R(u)}{u^{s+1}}\dd u. \] 
+        We have $|R(x)| < 2\phi(k)$, so by letting $x \to \infty$, we see that 
+        \[ L(s, \chi) = s \int_1^\infty \frac{R(u)}{u^{s+1}}. \] 
+        This integral converges for $\Re(s) > 0$, so $L(s, \chi)$ has an 
+        analytic continuation to $\Re(s) > 0$. 
+        \item Note that $E(\chi_0) = 1$. By the above equation, we have 
+        \[ \sum_{n\leq x} \frac{\chi_0(n)}{n^s} = \frac{\phi(k)}{k} \left( x^{1-s} + 
+        \frac{s}{1-s} (x^{1-s} - 1) \right) + \frac{R(x)}{x^s} + s \int_1^x 
+        \frac{R(u)}{u^{s+1}}\dd u. \]
+        Since $|R(x)| < 2\phi(k)$, letting $x \to \infty$ again gives 
+        \[ L(s, \chi_0) = \frac{\phi(k)}{k} \frac{s}{s-1} + s \int_1^\infty 
+        \frac{R(u)}{u^{s+1}}. \] 
+        The integral converges for $\Re(s) > 0$, so $L(s, \chi_0)$ has an an analytic 
+        continuation to $\Re(s) > 0$, except at the simple pole $s = 1$ with 
+        residue $\phi(k)/k$. \qedhere 
+    \end{itemize}
+\end{pf}
