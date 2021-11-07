@@ -1,0 +1,3795 @@
+\documentclass[10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[shortlabels]{enumitem}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{bold-extra}
+\usepackage{color}   
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{wrapfig}
+\usepackage{cutwin}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{multicol}
+\usepackage{microtype}
+
+% some useful math commands
+\newcommand{\eps}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\F}{\mathbb{F}}
+
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\Sets}{Sets}
+\DeclareMathOperator{\Ord}{Ord}
+\DeclareMathOperator{\Card}{Card}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Th}{Th}
+\DeclareMathOperator{\qfTh}{qfTh}
+\DeclareMathOperator{\ACF}{ACF}
+\DeclareMathOperator{\DLO}{DLO}
+\DeclareMathOperator{\trdeg}{trdeg}
+\DeclareMathOperator{\alg}{alg}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\ch}{char}
+
+% title formatting
+\newcommand{\newtitle}[4]{
+  \begin{center}
+	\huge{\textbf{\textsc{#1 Course Notes}}}
+    
+	\large{\sc #2}
+    
+	{\sc #3 \textbullet\, #4 \textbullet\, University of Waterloo}
+	\normalsize\vspace{1cm}\hrule
+  \end{center}
+}
+
+% for theorems
+\newtheoremstyle{newstyle}      
+{} %Aboveskip 
+{-0.25pt} %Below skip
+{\mdseries} %Body font e.g.\mdseries,\bfseries,\scshape,\itshape
+{} %Indent
+{\scshape} %Head font e.g.\bfseries,\scshape,\itshape
+{.} %Punctuation afer theorem header
+{ } %Space after theorem header
+{} %Heading
+
+\theoremstyle{newstyle}
+
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+\newtheorem*{exercise*}{Exercise}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{remark*}{Remark}
+\newtheorem*{exmp*}{Example}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{notation*}{Notation}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{axiom}[thm]{Axiom}
+\newtheorem{notation}[thm]{Notation}
+\newtheorem{exercise}[thm]{Exercise}
+\newtheorem{exmp}[thm]{Example}
+
+% new proof environment
+\makeatletter
+\newenvironment{pf}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep0\p@\relax
+  \trivlist
+  \item[\hskip\labelsep\scshape
+  #1\@addpunct{.}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+% 1-inch margins
+\topmargin 0pt
+\advance \topmargin by -\headheight
+\advance \topmargin by -\headsep
+\textheight 8.9in
+\oddsidemargin 0pt
+\evensidemargin \oddsidemargin
+\marginparwidth 0.5in
+\textwidth 6.5in
+
+% \renewcommand{\headrulewidth}{0pt}
+% \renewcommand{\footrulewidth}{0.4pt}
+
+\parindent 0in
+\parskip 1.5ex
+
+\setlist[itemize]{topsep=0pt}
+\setlist[enumerate]{topsep=0pt}
+
+% hyperlinks
+\hypersetup{
+  colorlinks=true, 
+  linktoc=all,     % table of contents is clickable  
+  allcolors=black  % all hyperlink colours
+}
+
+% table of contents
+\addto\captionsenglish{
+  \renewcommand{\contentsname}%
+    {\LARGE Table of Contents}%
+}
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\cftsetindents{section}{0em}{2em}
+
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\lhead{PMATH 433: Fall 2020}
+\fancyhead[R]{Table of Contents}
+%\headrule
+\fancyfoot[R]{{\small Page \thepage\ of \pageref*{LastPage}}}
+}
+
+% headers and footers
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{#1}}
+\lhead{PMATH 433: Fall 2020}
+\cfoot{}
+\setlength\headheight{14pt}
+
+\begin{document}
+
+\pagestyle{fancy}
+\newtitle{PMATH 433}{Set Theory and Model Theory}{Rahim Moosa}{Fall 2020}
+\rhead{Table of Contents}
+\rfoot{{\small Page \thepage\ of \pageref*{LastPage}}}
+
+\tableofcontents
+\vspace{1cm}\hrule
+
+\newpage 
+\fancyhead[R]{Lecture \thesection: \leftmark}
+\addcontentsline{toc}{section}{{\bf \large Part 1: Set Theory}}
+\thispagestyle{empty}
+\hspace{0pt}\vfill
+\begin{center} 
+\LARGE{{\bf Part 1}} \\\vspace{0.5cm}
+\LARGE{\bf Set Theory}
+\end{center}
+\vfill\hspace{0pt}
+\newpage 
+
+\section{First axioms}
+
+We use the natural numbers $0, 1, 2, \dots$ to "count" finite sets. We may 
+\begin{itemize}
+    \item enumerate, list, and order, or
+    \item measure size.
+\end{itemize}
+Our aim is to develop ordinals and cardinals to do this work for arbitrary (possibly infinite) sets. 
+
+We start by building the set of natural numbers. First, start with the undefined notions of a set, and 
+membership. We would like to define 
+\begin{align*} 
+0 &:= \varnothing \\ 
+1 &:= \{0\} \\ 
+2 &:= \{0, 1\}
+\end{align*}
+and more generally, $n+1 = S(n) := n \cup \{n\}$, where $S(n)$ is said to be the successor of $n$. 
+
+Without any assumptions, these may not exist. We require some axioms. 
+
+\begin{axiom}[Emptyset] 
+There exists a set which has no members, called the empty set, and is denoted by $\varnothing$. 
+\end{axiom}
+
+To produce $1$ from $0$, we need to know that if $x$ is a set, then so is $\{x\}$. 
+
+\begin{axiom}[Pairset] 
+Given sets $x, y$, there is a set, denoted by $\{x, y\}$, with the property that its only members 
+are $x$ and $y$. That is, $t \in \{x, y\}$ if and only if $t = x \text{ or } t = y$.
+\end{axiom}
+
+Note that if $x = y$, then $t \in \{x, y\}$ if and only if $t=x$. To conclude that $\{x, y\} = \{x\}$, we 
+require the following axiom. 
+
+\begin{axiom}[Extension] 
+For any two sets $x$ and $y$, $x = y$ if and only if $x$ and $y$ have the same members. 
+\end{axiom}
+
+For the general case, from $n$ to get $S(n) = n \cup \{n\}$, we need the next axiom. 
+
+\begin{axiom}[Unionset] 
+Given a set $x$, there exists a set denoted by $\bigcup x$, whose members are precisely the members of 
+the members of $x$. That is, $t \in \bigcup x$ if and only if $t \in y$ for some $y \in x$. 
+\end{axiom} 
+
+Then we can write $S(n) = \bigcup \{n, \{n\}\}$, since $t \in S(n)$ if and only if $t \in n$ or 
+$t = n$. Hence if $n$ exists, then by pairset (twice) and unionset, $S(n)$ exists. 
+With these four axioms, we can now prove that every natural number exists. 
+
+What about the set of {\it all} natural numbers? Why don't we simply add an axiom saying that 
+there is a set whose elements are precisely the natural numbers? 
+
+For example, we could write: "There exists a set $N$ such that $t \in N$ if and only if 
+$t = 0$ or $t = 1$ or $t = 2$ or $\cdots$."
+However, the right-hand side is not a {\bf definite condition} on $t$. 
+
+\begin{defn}[Definite conditions and operations] 
+If $x, y$ are sets or indeterminates standing for sets, then $x \in y$ and $x = y$ are 
+definite (binary) conditions. If $P$ and $Q$ are definite conditions, then 
+\begin{itemize} 
+\item "not $P$", denoted $\neg P$, 
+\item "$P$ and $Q$", denoted $P \wedge Q$, 
+\item "$P$ or $Q$", denoted $P \vee Q$, 
+\item "for all $x$, $P$", denoted $\forall x, P$, and 
+\item "there exists $x$, $P$", denoted $\exists x, P$, 
+\end{itemize} 
+are all definite conditions. Only conditions arising as above in finitely many steps are definite conditions.
+We say an operation $H(x)$ is definite if the condition $y = H(x)$ is definite. 
+\end{defn}
+
+We want our existence axioms to be of the form: "There exists a set $N$ such that $t \in N$ 
+if and only if $P(t)$," where $P$ is a definite condition. 
+
+\newpage\section{The set of natural numbers} 
+
+Observe that we can rewrite our axioms as definite conditions as follows. 
+
+\begin{axiom}[Emptyset] 
+There exists a set $\varnothing$ satisfying $\neg \exists y, y \in \varnothing$. 
+\end{axiom}
+
+\begin{axiom}[Pairset] 
+Given two sets $x, y$, there is a set $\{x, y\}$ satisfying 
+\[ \forall t \, (t \in \{x, y\} \leftrightarrow ((t=x) \vee (t=y))). \]
+\end{axiom}
+Note that "if $P$ then $Q$", denoted $P \to Q$, is definite, as it can be expressed as 
+$\neg P \vee Q$. 
+
+\begin{axiom}[Unionset] 
+If $x$ is a set, then there exists a set $\bigcup x$ satisfying 
+\[ \forall t \, (t \in \textstyle\bigcup x \leftrightarrow \exists y \, ((y \in x) \wedge (t \in y))). \] 
+\end{axiom}
+
+Of course, it is easy to see that the extension axiom is definite, so we simply restate it here. 
+
+\begin{axiom}[Extension] 
+For any two sets $x$ and $y$, $x = y$ if and only if $x$ and $y$ have the same members. 
+\end{axiom}
+
+Now, we introduce new axioms. 
+
+\begin{axiom}[Infinity] 
+There exists a set $I$ that contains $0$ and is preserved by the successor function. That is, 
+$I$ satisfies 
+\[ (0 \in I) \wedge (\forall x \, (x \in I \to S(x) \in I)). \] 
+\end{axiom}
+
+Observe that we can express the condition $S(x) \in I$ as 
+\[ \exists y \, ((y \in I) \wedge \forall t \, ((t \in y) \leftrightarrow ((t \in x) \vee (t = x)))), \] 
+where we have $y = S(x)$. Hence, the infinity axiom is also definite. 
+
+Note that the set $I$ from the infinity axiom is not uniquely determined. Certainly, every 
+natural number is in $I$, but there is no reason why $I$ cannot contain other elements. 
+
+We will call a set $I$ {\bf inductive} if it contains $0$ and is closed under the successor function $S$. 
+We want to find the "smallest" inductive set.
+Intuitively, if $I$ is a fixed inductive set, then 
+\[ \textstyle\bigcap \{J \subseteq I : J \text{ is inductive}\} \] 
+is the set of all natural numbers. However, in order for this set to exist, we require more axioms, and we need to be able to take intersections of sets.
+
+\begin{defn} 
+Let $x, y$ be sets. We write $x \subseteq y$ to say that every member of $x$ is a member of $y$. 
+That is, 
+\[ \forall t \, (t \in x \to t \in y). \] 
+\end{defn} 
+
+\begin{axiom}[Powerset] 
+Given a set $x$, there exists a set ${\cal P}(x)$ satisfying 
+\[ \forall t \, (t \in {\cal P}(x) \leftrightarrow \underbrace{\forall y \, (y \in t \to y \in x)}_{t \subseteq x}). \]
+\end{axiom}
+
+\begin{axiom}[Bounded Separation] 
+Suppose $x$ is a set and $P$ is a definite condition. Then there exists a set $y$ satisfying 
+\[ \forall t \, (t \in y \leftrightarrow ((t \in x) \wedge P(t))). \] 
+\end{axiom}
+We denote the above set as $y = \{t \in x \mid P(t)\} \subseteq x$. 
+
+Note that $P$ must be definite. Moreover, the set is bounded, in the sense that we must start with 
+a set $x$ as a domain. 
+
+If we were allowed unbounded separation, then we could consider the set $R = \{t : t \notin t\}$. 
+Observe that if $R \in R$, then $R \notin R$, and if $R \notin R$, then $R \in R$. Hence, 
+$R$ does not exist as a set. This is called {\bf Russell's paradox}. 
+
+\begin{exercise} 
+Show that, given a non-empty set $x$, there exists 
+a set $\bigcap x$ satisfying 
+\[ \forall t \, (t \in \textstyle\bigcap x \leftrightarrow \forall y \, (y \in x \to t \in y)). \] 
+What happens if $x = \varnothing$?
+\end{exercise}
+
+We can now construct the set of natural numbers $\omega$. 
+
+\begin{defn}[Set of Natural Numbers] 
+Fix an inductive set $I$. Then the set of natural numbers $\omega$ is given by 
+\[ \omega := \textstyle\bigcap \{J \in {\cal P}(I) \mid 
+(0 \in J) \wedge \forall t \, (t \in J \to S(t) \in J)\}. \] 
+\end{defn}
+
+\begin{exercise}
+Prove that $\omega$ does not depend on the inductive set $I$.
+\end{exercise}
+
+Finally, we list an axiom which we will use later. 
+
+\begin{axiom}[Replacement] 
+Suppose $P$ is a definite binary condition such that for every set $x$, there is a unique set $y$ 
+such that $P(x, y)$. Given any set $A$, there exists a set $B$ with the property 
+\[ y \in B \iff \exists x \, ((x \in A) \wedge P(x, y)). \] 
+We can say this as "the image of a set under a definite operation exists as a set". 
+\end{axiom} 
+
+These eight axioms, together with "regularity" which says that every set has a 
+$\in$-minimum element, form the axiom system known as 
+Zermelo-Fraenkel set theory, denoted by {\bf ZF}. We won't assume regularity in this course. 
+
+\newpage\section{Classes and definite operators} 
+
+\begin{defn}[Class] 
+A {\bf class} is a collection of sets satisfying some definite property. We can apply unbounded 
+separation to get a class. If $P$ is a definite condition, then 
+$[[ z : P(z)]]$ is a class. 
+\end{defn}
+
+\begin{remark}~  
+\begin{enumerate}
+    \item All sets are classes. If $x$ is a set, then $x = [[t : t \in x]]$. 
+    \item Some classes are sets. For example, $[[z : z \in \omega]] = \omega$. 
+    \item Not all classes are sets. Consider $R = [[t : t \notin t]]$. We showed earlier that 
+    this Russell class is not a set. 
+\end{enumerate}  
+\end{remark}
+
+\begin{defn}[Proper Class] 
+A {\bf proper class} is a class that is not a set. 
+\end{defn} 
+
+\begin{exmp} 
+The universal class $U = [[t : t = t]]$ is not a set. Indeed, if $U$ were a set, then 
+$R = \{t \in U : t \notin t\}$ would be a set by bounded separation, a contradiction.
+\end{exmp}
+
+We say that two classes are equal if and only if they have the same members. 
+
+Note that membership is a binary relation between a set and a class. Consider $x \in y$, and 
+note that $x$ must be a set, and $y$ must be a class. It does not make sense to talk about a 
+class being a member of another class. 
+
+\begin{defn}[Ordered Pair] 
+Given sets $x, y$, we define the ordered pair 
+\[ (x, y) := \{\{x\}, \{x,y\}\}. \] 
+This exists by the pairset axiom, and is an element of ${\cal P(P}(X \cup Y))$, where 
+$x \in X$ and $y \in Y$.
+\end{defn}
+
+\begin{exercise}
+Show that with this definition, we have the property that $(x, y) = (x', y')$ if and only if 
+$x = x'$ and $y = y'$.
+\end{exercise}
+
+\begin{defn}[Cartesian Product] 
+Suppose $X, Y$ are classes. The {\bf Cartesian product} is defined as 
+\[ X \times Y := [[ z : z = (x, y) \text{ for some } x \in X,\, y \in Y]]. \] 
+\end{defn} 
+
+Note that $X \times Y$ is also a class. Indeed, if $X = [[x : P(x)]]$ and 
+$Y = [[y : Q(y)]]$, then we can write 
+\[ X \times Y = [[ z \mid \exists x \, \exists y \, (P(x) \wedge Q(y) \wedge z = (x, y)) ]], \] 
+which is a definite condition. 
+
+Also note that if $X, Y$ are sets, then so is $X \times Y$, since 
+${\cal P(P}(X \cup Y))$ is a set by the powerset axiom, and we have 
+\[ X \times Y = \{z \in {\cal P(P}(X \cup Y)) : z = (x, y) \text{ for some } x \in X,\, y \in Y\}. \] 
+By bounded separation, this shows that $X \times Y$ is indeed a set. 
+
+Given classes $X, Y$ by definite operation $f : X \to Y$, we mean a subclass 
+$\Gamma(f) \subseteq X \times Y$ such that for all $x \in X$, there is a unique $y \in Y$ 
+such that $(x, y) \in \Gamma(f)$. 
+We are identifying the operation $f$ with its graph $\Gamma(f)$. In a sense, this is a 
+"vertical line test". 
+We often write $f(x) = y$ instead of $(x, y) \in \Gamma(f)$. 
+
+\begin{exmp} 
+Let $S : \Sets \to \Sets$ be the successor function, where $\Sets$ is the class of all sets, 
+namely $[[z : z = z]]$. Then we can write 
+\[ \Gamma(S) = [[z \mid z = (x, y) \wedge \forall t \, (t \in y \leftrightarrow (t \in x) 
+\vee (t = x)) ]], \] 
+and we have that $\Gamma(S) \subseteq \Sets \times \Sets$ is a subclass that satisfies the 
+"vertical line test". Thus, $S$ is a definite operation. 
+\end{exmp}
+
+\begin{remark} 
+Suppose $X$ and $Y$ are sets and $f : X \to Y$ is a definite operation. Then $\Gamma(f) \subseteq X \times Y$ is a subset. In fact, if $B$ is a set and $A$ is a class with $A \subseteq B$, then $A$ is a set. 
+\begin{pf}
+We have $A = [[z \mid P(z)]]$ with $P$ definite, and $A = \{z \in B \mid P(z)\}$. Apply bounded 
+separation.
+\end{pf}
+\end{remark} 
+
+Finally, we restate the replacement axiom using the language of classes. 
+
+\begin{axiom}[Replacement] 
+Let $\Sets$ be the class of all sets. Suppose $f : \Sets \to \Sets$ is a definite operation and 
+$A \in \Sets$. Then there exists a set $B$ satisfying 
+\[ \forall t \, (t \in B \leftrightarrow \exists a \, ((a \in A) \wedge (\underbrace{t = f(a)}_{(a, t) \in \Gamma(f)}))). \] 
+\end{axiom}
+
+\newpage\section{Ordering the natural numbers}
+
+\begin{thm}[Induction Principle] 
+Suppose that $J \subseteq \omega$ is such that $0 \in J$ and if $x \in J$ then $S(x) \in J$. 
+Then $J = \omega$. 
+\end{thm}
+\begin{pf}
+By assumption, $J \subseteq \omega$. But by definition of $\omega$, we have $\omega \subseteq J$.
+\end{pf}
+
+\begin{lemma}
+Suppose $n \in \omega$. 
+\begin{enumerate}[(a)]
+    \item If $x \in n$, then $x \in \omega$. That is, every element of $\omega$ is a subset of 
+    $\omega$. 
+    \item If $x \in n$, then $x \subseteq n$. 
+    \item We have $n \notin n$. 
+    \item Either $n = 0$ or $0 \in n$. 
+    \item If $x \in n$, then either $S(x) \in n$ or $S(x) = n$.
+\end{enumerate} 
+\end{lemma} 
+\begin{pf}
+We prove parts (a) and (b). The proofs of the other properties are similar. 
+\begin{enumerate}[(a)]
+    \item Let $J := \{n \in \omega : n \subseteq \omega\}$. We want to show that $J = \omega$. 
+    Clearly, $0 \in J$ since $\varnothing \subseteq A$ for all sets $A$. Now, suppose $n \in J$. 
+    We have $S(n) = n \cup \{n\} \in \omega$. Since $n \subseteq \omega$ and $n \in \omega$, 
+    it follows that $S(n) \subseteq \omega$. By the induction principle, $J = \omega$. 
+    \item Let $J := \{n \in \omega: \forall x \, (x \in n \to x \subseteq n)\}$. As before, we want 
+    $J = \omega$. We have $0 \in J$ since there are no elements in $\varnothing$, and hence 
+    $\forall x \, (x \in \varnothing \to x \subseteq \varnothing)$ holds vacuously. 
+    Suppose $n \in J$. Consider $S(n) = n \cup \{n\}$. Note that $n \in S(n)$ and $n \subseteq S(n)$. 
+    Let $x \in S(n)$. If $x = n$, then $x \subseteq S(n)$. Otherwise, we have $x \in n$, in which 
+    case $x \subseteq n$ since $n \in J$, and hence $x \subseteq S(n)$. Thus, $S(n) \in J$, 
+    and so $J = \omega$ by induction. \qedhere
+\end{enumerate} 
+\end{pf}
+
+\begin{defn}[Strict Partial Ordering] 
+A {\bf strict partial ordering} on a set $E$ is a binary relation $R$ on $E$ satisfying: 
+\begin{enumerate}[(i)]
+    \item {\bf antireflexivity:} $\neg \, x R x$ for any $x \in E$. 
+    \item {\bf antisymmetry:} If $xRy$ and $yRx$, then $x = y$. 
+    \item {\bf transitivity:} If $xRy$ and $yRz$, then $xRz$.
+\end{enumerate} 
+\end{defn}
+
+\begin{prop} 
+$\in$ is a strict partial ordering on $\omega$. 
+\end{prop}
+\begin{pf}
+Observe that part (c) of Lemma 4.2 is precisely antireflexivity. 
+
+Suppose $n, m \in \omega$ are such that $n \in m$ and $m \in n$. By part (b) of Lemma 4.2, 
+we have $n \subseteq m$ and $m \subseteq n$, and hence $n = m$. 
+
+Finally, suppose $\ell, m, n \in \omega$ are such that $\ell \in m$ and $m \in n$. 
+Then $m \subseteq n$ again by part (b) of Lemma 4.2, and thus 
+$\ell \in n$.
+\end{pf}
+
+\begin{defn}[Linear Ordering] 
+A strict partial ordering $R$ on $E$ is said to be {\bf linear} (or {\bf total}) if whenever 
+$x, y \in E$, we either have $xRy$ or $yRx$ or $x = y$. 
+\end{defn} 
+
+\begin{prop}
+$(\omega, \in)$ is a linear ordering.
+\end{prop}
+\begin{pf}
+Fix $n \in \omega$. Consider 
+\[ J := n \cup \{m \in \omega : n \in m\} \cup \{n\}. \] 
+We want to show that $J = \omega$. Note that $J \subseteq \omega$ since $n \subseteq \omega$ by 
+part (a) of Lemma 4.2. 
+
+Observe that if $n = 0$, then we may simply use part (d) of Lemma 4.2, 
+so we may assume $n \neq 0$. Then by (d) of Lemma 4.2 again, we must have $0 \in n$, so $0 \in J$. 
+
+Suppose $m \in J$. If $m \in n$, then by part (e) of Lemma 4.2, either $S(m) \in n$ or $S(m) = n$. 
+In either case, we see that $S(m) \in J$. If $n \in m$, then $n \in S(m)$, so $S(m) \in J$. 
+Finally, if $m = n$, then $n \in S(n) = S(m)$, and thus $S(m) \in J$. 
+
+Therefore, we may conclude that $J$ is inductive, and so $J = \omega$, as required.
+\end{pf}
+
+%  
+\newpage\section{Ordinals} 
+
+\begin{defn}[Well-Ordering] 
+A strict linear ordering $(E, <)$ is a {\bf well-ordering} if every non-empty subset of $E$ has a 
+least element.
+\end{defn}
+
+\begin{prop}
+$(\omega, \in)$ is a well-ordering.
+\end{prop}
+\begin{pf}
+Suppose that $X \subseteq \omega$ has no $\in$-least element. We will show that $X = \varnothing$. 
+Consider 
+\[ J := \{n \in \omega : S(n) \cap X = \varnothing\} \subseteq \omega. \] 
+We claim that $J = \omega$. First, we show that $0 \in J$. Suppose not. Then 
+$S(0) \in X \neq \varnothing$, and since $0$ is the only element in $S(0)$, it must be that 
+$0 \in X$. But $0$ is $\in$-least in $\omega$ by Lemma 4.2 part (d), and hence 
+$0$ is $\in$-least in $X$, a contradiction. 
+
+Now, fix $n \in J$. Consider $S(S(n)) \cap X$. Since $n \in J$, we see that $S(n) \cap X = \varnothing$. 
+If $S(n) \in X$, then $S(n)$ is $\in$-least in $X$, so we must have $S(n) \notin X$. 
+So $S(S(n)) \cap X = \varnothing$, and thus $S(n) \in J$, which proves our claim. 
+
+Let $n \in \omega$. Then $n \in J$, so we have that $S(n) \cap X = \varnothing$. But 
+$n \in S(n)$, which implies that $n \notin X$. Since this holds for arbitrary $n \in \omega$, 
+it must be that $X = \varnothing$. 
+\end{pf}
+
+\begin{defn}[Ordinal]
+An {\bf ordinal} is a set $\alpha$ such that 
+\begin{enumerate}[(i)]
+    \item if $x \in \alpha$, then $x \subseteq \alpha$, and 
+    \item $(\alpha, \in)$ is a well-ordering.
+\end{enumerate} 
+We denote by $\Ord$ the class of all ordinals. Later, we will show that $\Ord$ is a proper class.
+\end{defn} 
+
+\begin{exercise}
+Verify that $\Ord$ is indeed a class. That is, show that being an ordinal is a definite condition.
+\end{exercise}
+
+\begin{exmp}~ 
+\begin{enumerate}[(a)]
+    \item By Lemma 4.2 (a) and Proposition 5.2, $\omega$ is an ordinal.
+    \item Every natural number is an ordinal. These are said to be {\bf finite ordinals}. Indeed, fix
+    $n \in \omega$. By Lemma 4.2 (a), 
+    we have $n \subseteq \omega$, so $(n, \in\hspace{-0.85ex}|_n)$ is a well-ordering, so (ii) holds. 
+    Moreover, (i) holds by Lemma 4.2 (b). 
+\end{enumerate} 
+\end{exmp}
+
+\begin{exercise}
+Prove that not every subset of $\omega$ is a natural number. This will show that the 
+converse of (i) in the definition of an ordinal does not necessarily hold. 
+\end{exercise}
+
+When working with elements of an ordinal, we will sometimes write $x < y$ instead of $x \in y$. 
+
+\begin{lemma}
+Suppose $\alpha, \beta \in \Ord$, where $\alpha \subseteq \beta$ with $\alpha \neq \beta$. 
+Then $\alpha \in \beta$. 
+\end{lemma}
+\begin{pf}
+Assume that $\alpha \subseteq \beta$ and $\alpha \neq \beta$, where $\alpha, \beta \in \Ord$. 
+Let $D = \beta \setminus \alpha = \{x \in \beta : x \notin \alpha\}$. Note that 
+$D \neq \varnothing$ as $\alpha \neq \beta$. Let $d \in D$ be least. We will show that $\alpha = d$. 
+
+Note that by construction, we have $\alpha \subseteq \beta$, and moreover, $d \subseteq \beta$, 
+since $d \in \beta$ and $\beta$ is an ordinal. 
+
+Suppose that we did not have $d \subseteq \alpha$. Then there is an element $x \in d \setminus \alpha$. 
+Then $x < d$ and $x \in d \setminus \alpha \subseteq \beta \setminus \alpha = D$, contradicting the 
+fact that $d$ is least in $D$. So $d \subseteq \alpha$. 
+
+On the other hand, let $x \in \alpha$. Since $x, d \in \beta$ and $\beta$ is an ordinal, 
+we either have $x < d$ or $d < x$ or $x = d$. First, notice that we cannot have $x = d$, 
+since $x \in \alpha$ but $d \in \beta \setminus \alpha$. Also observe that if 
+$d < x$, then together with $x \in \alpha$, noting that $\alpha$ is an ordinal, 
+it follows from property (i) of the definition of an ordinal that 
+$d \in \alpha$, a contradiction. Therefore, we must have $x < d$, so $\alpha \subseteq d$. 
+
+Thus, we have shown that $\alpha = d$, so $\alpha \in D$, and thus $\alpha \in \beta$.
+\end{pf}
+
+%  
+\newpage\section{Ordering the ordinals} 
+
+\begin{prop}~ 
+\begin{enumerate}[(a)]
+    \item Every member of an ordinal is an ordinal.
+    \item No ordinal is a member of itself.
+    \item If $\alpha \in \Ord$, then $S(\alpha) \in \Ord$.
+    \item If $\alpha, \beta \in \Ord$, then $\alpha \cap \beta \in \Ord$.
+\end{enumerate} 
+\end{prop}
+\begin{pf} 
+We prove (a) and (b), and leave (c) and (d) as exercises. 
+\begin{enumerate}[(a)]
+    \item Suppose $\alpha \in \Ord$ and $z \in \alpha$. Let $x \in z$ and suppose $y \in x$. 
+    Since $z \in \alpha$, we have $z \subseteq \alpha$, which implies that $x \in \alpha$. 
+    Then, since $x \in \alpha$, we get $x \subseteq \alpha$, and so $y \in \alpha$. 
+    So $x, y, z \in \alpha$, and $(\alpha, \in)$ is a strict well-ordering. Therefore, 
+    by transitivity, $y \in z$, and hence $x \subseteq z$. Since $z \subseteq \alpha$, 
+    it follows that $(z, \in)$ is a strict well-ordering as $(\alpha, \in)$ is. 
+    Thus, $z \in \Ord$. 
+    \item Suppose $\alpha \in \Ord$. Then $(\alpha, \in)$ is a strict well-ordering. 
+    If $\alpha \in \alpha$, then by antireflexivity of $(\alpha, \in)$, we get 
+    $\alpha \notin \alpha$, a contradiction. \qedhere
+\end{enumerate} 
+\end{pf}
+
+\begin{prop}~ 
+\begin{enumerate}[(a)]
+    \item If $\alpha, \beta \in \Ord$, then either $\alpha = \beta$ or $\alpha \in \beta$ or 
+    $\beta \in \alpha$. 
+    \item If $E \subseteq \Ord$ is a set of ordinals, then $(E, \in)$ is a strict well-ordering. 
+    \item If $E \subseteq \Ord$ is a set of ordinals, then its supremum $\sup E := \bigcup E$ 
+    is an ordinal. 
+    \item $\Ord$ is a proper class.
+\end{enumerate} 
+\end{prop}
+\begin{pf}~ 
+\begin{enumerate}[(a)]
+    \item Let $\alpha, \beta \in \Ord$. Note that $\alpha \cap \beta \in \Ord$ by Proposition 6.1 part (d), and $\alpha \cap \beta \subseteq \alpha$. Suppose $\alpha \cap \beta \neq \alpha$. Then 
+    by Lemma 5.7, we get $\alpha \cap \beta \in \alpha$. Similarly, if $\alpha \cap \beta \neq 
+    \beta$, then $\alpha \cap \beta \in \beta$. Together, these imply that 
+    $\alpha \cap \beta \in \alpha \cap \beta$, but this is a contradiction with Proposition 6.1 part (b), 
+    since $\alpha \cap \beta$ is an ordinal.
+    
+    Thus, we must have $\alpha \cap \beta = \alpha$ or $\alpha \cap \beta = \beta$. 
+    If $\alpha \cap \beta = \alpha$, then $\alpha \subseteq \beta$, so either $\alpha = \beta$ or $\alpha \subsetneq \beta$, in which case Lemma 5.7 implies that $\alpha \in \beta$. On the other hand, if 
+    $\alpha \cap \beta = \beta$, then $\beta \subseteq \alpha$, which tells us either 
+    $\beta = \alpha$ or $\beta \subsetneq \alpha$. In the latter case, Lemma 5.7 gives $\beta \in \alpha$.
+    
+    \item Suppose $E \subseteq \Ord$ is a set of ordinals. Consider $(E, \in)$. 
+    \begin{itemize}
+        \item Antireflexivity: Proposition 6.1 part (b). 
+        \item Antisymmetry: Suppose $\alpha, \beta \in E$ are such that $\alpha \in \beta$ and 
+        $\beta \in \alpha$. Then $\alpha \subseteq \beta$ and $\beta \subseteq \alpha$, so 
+        $\alpha = \beta$. 
+        \item Transitivity: Suppose $\alpha, \beta, \gamma \in E$, where $\alpha \in \beta$ and 
+        $\beta \in \gamma$. Then $\beta \subseteq \gamma$, so $\alpha \in \gamma$. 
+        \item Linearity: Proposition 6.2 part (a). 
+        \item Well-ordered: Suppose $A \subseteq E$ where $A \neq \varnothing$. Let 
+        $\alpha \in A$. If $\alpha \cap A = \varnothing$, then $\alpha$ is the least element in $A$. 
+        Now, suppose $\alpha \cap A \neq \varnothing$. Let $A' := \alpha \cap A \subseteq \alpha$, 
+        which contains a least element, say $a \in A'$ (as $\alpha$ is an ordinal). Suppose $b \in A$ with $b \in a$. Since 
+        $a \in \alpha$, we have $b \in \alpha$, and hence $b \in \alpha \cap A = A'$, contradicting 
+        the fact that $a$ is least in $A'$. Thus, $a$ is least in $A$.
+    \end{itemize}
+    This shows that $E$ is strictly well-ordered by membership.
+    
+    \item Let $E \subseteq \Ord$ be a set of ordinals. Note that $\sup E$ is an ordinal by 
+    Proposition 6.1 part (a). Then by Proposition 6.2 part (b), $(\sup E, \in)$ is a strict 
+    well-ordering. Now, suppose $\alpha \in \sup E$. Then $\alpha \in \gamma$ for some 
+    $\gamma \in E$. Since $\gamma$ is an ordinal, we have $\alpha \subseteq \gamma$. 
+    If $x \in \alpha$, then $x \in \gamma \subseteq \bigcup E = \sup E$. Hence 
+    $\alpha \subseteq \sup E$, and so $\sup E \in \Ord$.
+    
+    \item Suppose $\Ord$ is a set. By Proposition 6.2 part (b), $(\Ord, \in)$ is a 
+    strict well-ordering. Moreover, by Proposition 6.1 part (a), if $\alpha \in \Ord$, then 
+    $\alpha \subseteq \Ord$. Hence $\Ord \in \Ord$. But ordinals cannot be members of themselves, 
+    a contradiction. Hence, $\Ord$ is a proper class. \qedhere
+\end{enumerate} 
+\end{pf}
+
+As justified by Proposition 6.2, for $\alpha, \beta \in \Ord$, the notation 
+$\alpha < \beta$ will be synonymous with $\alpha \in \beta$. 
+
+%  
+\newpage\section{Sups, successors, limits, and transfinite induction}
+
+\begin{lemma}~
+\begin{enumerate}[(a)]
+    \item If $\alpha \in \Ord$, then $\alpha < S(\alpha)$ and there is no ordinal in between. 
+    \item Suppose $E$ is a set of ordinals. Then $\sup E = \bigcup E$ is the least upper bound of $E$.
+    \item Given a set of ordinals $E$, there exists a least ordinal not in $E$.
+\end{enumerate} 
+\end{lemma}
+\begin{pf}~ 
+\begin{enumerate}[(a)]
+    \item Note that $S(\alpha) = \alpha \cup \{\alpha\}$, so we see immediately that $\alpha < 
+    S(\alpha)$, and if $x < S(\alpha)$, then $x < \alpha$ or $x = \alpha$. 
+    \item If $\sup E$ is not an upper bound for $E$, then there exists $\alpha \in E$ such that 
+    $\sup E < \alpha$. But $\alpha \subseteq \bigcup E = \sup E$, and hence 
+    $\sup E < \sup E$. Since $\sup E$ is an ordinal, this is a contradiction. 
+    To see that it is least, observe that if $\alpha < \sup E$, then $\alpha < \beta$ for some 
+    $\beta \in E$.
+    \item Note that since $\Ord \setminus E$ is a proper class, we cannot use well-ordering 
+    to take the least element of $\Ord \setminus E$. However, if we can find $\alpha \in \Ord$ 
+    such that $E \subsetneq \alpha$, then we can consider the set $\alpha \setminus E$. 
+    The least element of $\alpha \setminus E$ will then be the least element not in $E$. 
+    
+    If $\alpha = \sup E$, then note that $E \subseteq \alpha$ may not be strict. 
+    
+    If $\alpha = S(\sup E)$, then we may have $E = S(\sup E)$, in which case $\alpha \setminus E$ 
+    would be empty.
+    
+    Finally, $\alpha = S(S(\sup E))$ works. We leave it as an exercise to verify this. \qedhere
+\end{enumerate}
+\end{pf}
+
+\begin{defn}[Successor and limit ordinals] 
+A {\bf successor ordinal} is of the form $S(\alpha)$ for some $\alpha \in \Ord$. An ordinal 
+which is not a successor ordinal is said to be a {\bf limit ordinal}.
+\end{defn} 
+
+\begin{exmp}
+Every non-zero $n \in \omega$ is a successor ordinal, while $0$ and $\omega$ are limit ordinals.
+\end{exmp}
+
+Transfinite induction is a method to prove things about $\Ord$.
+
+\begin{thm}[Transfinite induction] 
+Suppose $P$ is a definite condition satisfying: 
+\[ \text{If $\alpha$ is an ordinal and $P(\beta)$ is true for all $\beta < \alpha$, then 
+$P(\alpha)$ is true.} \tag{$\star$} \]
+Then $P$ is true of all ordinals.
+\end{thm}
+\begin{pf} 
+Suppose $P$ is not true of all ordinals. Let $\alpha \in \Ord$ be such that 
+$\neg P(\alpha)$. Let 
+\[ D =  \{\underbrace{\beta \leq \alpha}_{\beta < S(\alpha)} : \neg P(\beta)\}, \]
+which is a set by bounded separation. Note that $\alpha \in D$, so $D$ is non-empty. 
+Let $\alpha_0 \in D$ be least. Hence for all $\beta < \alpha_0$, $P(\beta)$ is true. 
+By $(\star)$, we see that $P(\alpha_0)$ is true, a contradiction.
+\end{pf}
+
+This is not the usual form of induction that we see. We often see it stated differently, in a more useful 
+form. We leave it as an exercise to show that the following form is equivalent to the first.
+
+\begin{cor}[Transfinite induction -- second form]
+Suppose $P$ is a definite condition satisfying:
+\begin{enumerate}[(1)]
+    \item $P(0)$ is true. 
+    \item For all ordinals $\beta$, if $P(\beta)$ then $P(S(\beta))$. 
+    \item For all limit ordinals $\alpha > 0$, if $P(\beta)$ for all $\beta < \alpha$, then $P(\alpha)$.
+\end{enumerate} 
+Then $P$ is true of all ordinals.
+\end{cor}
+
+%  
+\newpage\section{Transfinite recursion}
+
+In the previous section, we introduced transfinite induction, which is a method of proving 
+things on $\Ord$. On the other hand, transfinite recursion is a method to construct a definite operation on $\Ord$ with some desired property.
+
+Let $X$ be the class of all functions whose domain is an ordinal. That is, 
+\[ X = [[ \, \Gamma : \exists A, B,\, A \in \Ord,\, \Gamma \subseteq A \times B \text{ is the 
+graph of a function}\,]]. \]
+We also introduce the following notation: if $F$ is a definite operation on $\Ord$ and 
+$\alpha \in \Ord$, then $F \upharpoonright_\alpha$ denotes the function obtained by restricting 
+$F$ to $\alpha$. 
+
+\begin{thm}[Transfinite recursion] 
+Given a definite operation $G : X \to \Sets$, there is a unique definite operation $F : \Ord 
+\to \Sets$ satisfying 
+\[ F(\alpha) = G(\underbrace{F \upharpoonright_\alpha}_{\in X}) \]
+for all $\alpha \in \Ord$. 
+
+(That is, if we know what $F$ is on members of $\alpha$, then $G$ tells us what $F$ should be 
+on $\alpha$.)
+\end{thm}
+\begin{pf}
+We give a sketch of the proof. 
+
+It is straightforward to show uniqueness by transfinite induction. Let $F' : \Ord \to \Sets$ 
+where $F'(\alpha) = G(F' \upharpoonright_\alpha)$. Given $\alpha \in \Ord$, suppose that 
+$F(\beta) = F'(\beta)$ for all $\beta < \alpha$. Verify that this implies $F \upharpoonright_\alpha 
+= F' \upharpoonright_\alpha$. Then, it follows that $F(\alpha) = G(F \upharpoonright_\alpha) 
+= G(F' \upharpoonright_\alpha) = F'(\alpha)$. By transfinite induction, we have $F(\alpha) = 
+F'(\alpha)$ for all ordinals $\alpha$.
+
+To show existence, we first introduce some terminology. A function $t$ with domain $\alpha$ is 
+an {\bf $\alpha$-function defined by $G$} if 
+\[ t(\beta) = G(t \upharpoonright_\beta) \] 
+for all $\beta < \alpha$. This is an approximation to the $F$ we want to construct. 
+
+Observe that: 
+\begin{enumerate}[(1)]
+    \item If an $\alpha$-function defined by $G$ exists, then it is unique. (We can prove this by transfinite induction with the property $P(x) = x \geq \alpha \vee t(x) = t'(x)$.) 
+    \item If $\alpha < \beta$, $t_\alpha$ is an $\alpha$-function defined by $G$, and 
+    $t_\beta$ is a $\beta$-function defined by $G$, then $t_\alpha \subseteq t_\beta$
+    (that is, $\Gamma(t_\alpha) \subseteq \Gamma(t_\beta)$).
+\end{enumerate} 
+{\sc Claim.} For all $\alpha \in \Ord$, an $\alpha$-function defined by $G$, $t_\alpha$, exists. 
+
+{\sc Proof of Claim.} We use the second form of transfinite induction. Clearly, $t_0 = \varnothing$. 
+Given $t_\alpha$ for $\alpha \in \Ord$, define 
+\[ t_{S(\alpha)} = \begin{cases} t_\alpha & \text{on members of $\alpha$} \\ 
+G(t_\alpha) & \text{$\alpha$ itself}. \end{cases} \]
+Finally, if $\beta$ is a limit ordinal and $t_\alpha$ is given for all $\alpha < \beta$, then 
+define 
+\[ t_\beta = \textstyle\bigcup \{t_\alpha : \alpha < \beta\}. \] 
+Note that this is a set by replacement, as $\alpha \mapsto t_\alpha$ is a definite operation. 
+Then $t_\beta$ is a function by observation (2). Check that this is indeed a $\beta$-function 
+defined by $G$. \hfill $\blacksquare$
+
+Finally, take 
+\[ F = \bigcup \,[[t_\alpha : \alpha \in \Ord]]. \]
+Verify that $F(\alpha) = G(F \upharpoonright_\alpha)$. 
+\end{pf}
+
+We now state an easier form of transfinite recursion to work with. 
+
+\begin{cor}[Transfinite recursion -- second form]
+Suppose that $G_1$ is a set, $G_2 : \Sets \to \Sets$ is a definite operation, and 
+$G_3 : X \to \Sets$ is a definite operation. Then there exists a unique definite operation 
+$F : \Ord \to \Sets$ satisfying: 
+\begin{enumerate}[(1)]
+    \item $F(0) = G_1$. 
+    \item For all $\alpha \in \Ord$, $F(S(\alpha)) = G_2(F(\alpha))$. 
+    \item For all limit ordinals $\alpha > 0$, $F(\alpha) = G_3(F \upharpoonright_\alpha)$.
+\end{enumerate} 
+\end{cor}
+\begin{pf}
+Let $G : X \to \Sets$ be given by 
+\[ G(f) = \begin{cases} G_1 & \text{if $f = \varnothing$} \\ 
+G_2(f(\alpha)) & \text{if $\dom(f) = S(\alpha)$} \\
+G_3(f) & \text{if $\dom(f) \neq \varnothing$, limit ordinal.} \end{cases} \]
+Apply the first form of transfinite recursion to this to produce a unique $F : \Ord \to \Sets$ 
+such that 
+\[ F(\alpha) = G(F \upharpoonright_\alpha) \] 
+for all $\alpha \in \Ord$. It is straightforward to check that (1), (2), and (3) hold and that 
+$F$ is unique.
+\end{pf}
+
+ 
+\newpage\section{Ordinal arithmetic} 
+
+As an application of transfinite recursion, we can now define some arithmetic operations on ordinals. 
+
+\begin{defn}[Ordinal addition] 
+Fix $\beta \in \Ord$ and define $\beta + \alpha$ for all $\alpha \in \Ord$ as follows: 
+\begin{enumerate}[(1)]
+    \item $\beta + 0 := \beta$,
+    \item $\beta + S(\alpha) := S(\beta + \alpha)$ for all $\alpha \in \Ord$,
+    \item $\beta + \alpha := \sup \{\beta + \gamma : \gamma < \alpha\}$ for all limit ordinals 
+    $\alpha > 0$.
+\end{enumerate} 
+In terms of transfinite recursion (second form), we have $G_1 = \beta \in \Sets$, 
+$G_2 = S : \Sets \to \Sets$, and $G_3 = \sup(\im f) : X \to \Sets$ for $f$ a function with 
+domain an ordinal. This gives a unique definite operation $\Ord \to \Sets$ taking 
+$\alpha \mapsto \beta + \alpha$, satisfying (1) to (3). We do this for each $\beta \in \Ord$.
+\end{defn}
+
+Notice that for $\beta \in \Ord$, we have 
+\begin{align*} 
+\beta + 1 &= \beta + S(0) \\ 
+&= S(\beta + 0) \text{ by (2)} \\
+&= S(\beta) \text{ by (1).}
+\end{align*}
+As such, we will tend to use $\alpha + 1$ to mean $S(\alpha)$. Also, note that ordinal addition 
+is not commutative. We have 
+\[ 1 + \omega = \sup\{1+n : n < \omega\} = \omega \neq S(\omega) = \omega + 1. \]
+
+\begin{remark} 
+Ordinal addition concatenates the order type of the ordinals. More informally, for 
+$\alpha, \beta \in \Ord$ and taking $\alpha + \beta$, we are essentially placing $\beta$ 
+on top of $\alpha$.
+\end{remark}
+
+\begin{defn}[Ordinal multiplication] 
+Fix $\beta \in \Ord$. Then define 
+\begin{enumerate}[(a)]
+    \item $\beta \cdot 0 := 0$, 
+    \item $\beta \cdot S(\alpha) := \beta \cdot \alpha + \beta$ for all $\alpha \in \Ord$, 
+    \item $\beta \cdot \alpha := \sup\{\beta \cdot \gamma : \gamma < \alpha\}$ for all 
+    limit ordinals $\alpha > 0$.
+\end{enumerate} 
+In terms of transfinite recursion, we have $G_1 = 0$, $G_2(x) = x+\beta$, and $G_3 = \sup(\im f)$.
+\end{defn}
+
+Note that we have 
+\begin{align*} 
+\omega \cdot 1 &= \omega \cdot S(0) \\ 
+&= \omega \cdot 0 + \omega \; \text{ by (2)} \\
+&= 0 + \omega \; \text{ by (1)} \\
+&= \sup\{0 + n : n < \omega\} \\
+&= \omega. 
+\end{align*}
+In fact, we have $\beta \cdot 1 = \beta$ for all ordinals $\beta$. Also, notice that 
+\begin{align*} 
+\beta \cdot 2 &= \beta \cdot S(1) \\
+&= \beta \cdot 1 + \beta \; \text{ by (2)} \\ 
+&= \beta + \beta. 
+\end{align*}
+We can extend this to obtain the ordinal
+\[ \omega \cdot \omega = \sup\{w \cdot n : n < \omega\}. \]
+Finally, we observe that ordinal multiplication is also non-commutative. Indeed, 
+\[ \omega \cdot 2 = \omega + \omega \neq \omega = \sup\{2 \cdot n : n < \omega\} = 2 \cdot \omega. \]
+
+\begin{exercise}
+What is the order type of $\beta \cdot \alpha$ in terms of the well-orderings $\beta$ and $\alpha$? 
+\end{exercise}
+
+We end this section with some properties of ordinal addition and multiplication.
+\begin{prop}
+Let $\alpha, \beta, \delta \in \Ord$. 
+\begin{enumerate}[(a)]
+    \item $\alpha < \beta \,\Leftrightarrow\, \delta + \alpha < \delta + \beta$.
+    \item $\alpha = \beta \,\Leftrightarrow\, \delta + \alpha = \delta + \beta$.
+    \item $(\alpha + \beta) + \delta = \alpha + (\beta + \delta)$.
+    \item If $\delta \neq 0$, then $\alpha < \beta \,\Leftrightarrow\, \delta\alpha < \delta\beta$.
+    \item If $\delta \neq 0$, then $\alpha = \beta \,\Leftrightarrow\, \delta\alpha = \delta\beta$.
+    \item $(\alpha\beta)\delta = \alpha(\beta\delta)$.
+\end{enumerate}
+\end{prop}
+\begin{pf}
+Exercise -- use transfinite induction.
+\end{pf}
+
+ 
+\newpage\section{Well-orderings and ordinals} 
+From the work we have done, it might appear that ordinals are a very special class of well-orderings. 
+However, we will prove that ordinals are in fact all the well-orderings. 
+First, we begin with a couple lemmas which we will use to prove our main theorem. 
+
+\begin{lemma} 
+Well-orderings are {\bf rigid}; that is, the only automorphism is the identity. 
+\end{lemma} 
+\begin{pf}
+Suppose $(E, <)$ is a well-ordering, and let $f : (E, <) \to (E, <)$ be an automorphism 
+(i.e. $f$ is a bijective map and $f(a) < f(b)$ if and only if $a < b$). 
+Let $D = \{x \in E : f(x) \neq x\}$. Assume towards a contradiction that $f \neq \id$. 
+Then $D \neq \varnothing$. Let $a \in D$ be least. We consider two cases. 
+
+If $f(a) < a$, then $f(a) \notin D$, so $f(f(a)) = f(a)$. But $f$ is injective, so $f(a) = a$, 
+a contradiction. 
+
+If $a < f(a)$, then $f^{-1}(a) < a$, and hence $f^{-1}(a) \notin D$. From this, we see that 
+$f^{-1}(a) = f(f^{-1}(a)) = a$. Applying $f$ to both sides, we obtain $a = f(f^{-1}(a)) = f(a)$, 
+which implies that $a \notin D$, a contradiction. 
+\end{pf}
+
+\begin{lemma} 
+A well-ordering is not isomorphic to any proper initial segment. 
+\end{lemma}
+\begin{pf}
+Let $(E, <)$ be a well-ordering, and suppose that $b \in E$ so that 
+$E_{<b} = \{x \in E : x < b\}$ is a proper initial segment. We want to show that 
+$(E, <) \not\simeq (E_{<b}, <)$. Assume towards a contradiction that $f : 
+(E, <) \to (E_{<b}, <)$ is an isomorphism. Let $D = \{x \in E: f(x) \neq x\}$. Note that 
+$b \in D$ since $f(b) \in E_{<b} \not\ni b$, so $D \neq \varnothing$. So let 
+$a \in D$ be least. We leave it as an exercise to show that both $f(a) > a$ and 
+$f(a) < a$ lead to a contradiction.
+\end{pf}
+
+We are now ready to present the main result. 
+
+\begin{thm} 
+Every strict well-ordering is isomorphic to an ordinal. Moreover, the ordinal and the 
+isomorphism are unique.
+\end{thm} 
+\begin{pf}
+Let $(E, <)$ be a well-ordering, and let $f : (E, <) \to (\alpha, \in)$ be an isomorphism, 
+where $\alpha \in \Ord$. 
+To see that $f$ is unique, suppose that $g : (E, <) \to (\alpha, \in)$ is another isomorphism. 
+Then 
+\[ g^{-1} \circ f : (E, <) \to (E, <) \] 
+is an automorphism. By Lemma 10.1, we must have $g^{-1} \circ f = \id$, and hence $g = f$. 
+
+For the uniqueness of $\alpha$, suppose that $g : (E, <) \to (\beta, \in)$ is an isomorphism, where 
+$\beta \in \Ord$. If $\alpha \neq \beta$, then either $\alpha \in \beta$ or $\beta \in \alpha$. 
+If $\alpha \in \beta$, then by Assignment 2 Question 4, we know that $(\alpha, \in) = (\beta_{\in\alpha}, \in)$ is an initial segment. Then 
+\[ (\beta, \in) \xrightarrow[\simeq]{g^{-1}} (E, <) \xrightarrow[\simeq]{f} (\alpha, \in) \] 
+is an isomorphism, contradicting Lemma 10.2. The argument is analogous for the $\beta \in \alpha$ case, 
+so we must have $\alpha = \beta$. 
+
+It remains to prove that if $(E, <)$ is a well-ordering, then there exists $\alpha \in \Ord$ 
+and an isomorphism $f : (E, {<)} \to (\alpha, \in)$. Note that we may assume that 
+$E \neq \varnothing$, for otherwise $(E, <) \simeq (0, \in)$. Consider the set 
+\[ A := \{x \in E : (E_{<x}, <) \text{ is isomorphic to an ordinal}\}. \]
+To see that $A$ is a set, we leave it as an exercise to check that the condition presented above 
+is definite, and apply bounded separation. Notice that if $e \in E$ is least, then 
+$(E_{<e}, <) \simeq (0, \in)$, so $e \in A$, and thus $A \neq \varnothing$. 
+
+Let $f : A \to \Ord$ be the definite operation such that $(E_{<x}, <) \simeq (f(x), \in)$ 
+for all $x \in A$. By the replacement axiom, $\im(f)$ is a set of ordinals. 
+Let $\alpha \in \Ord$ be the least ordinal not in $\im(f)$. We prove that 
+$f : A \to \im(f)$ is an isomorphism between $(E, <)$ and $(\alpha, \in)$. 
+\begin{enumerate}[(1)]
+    \item {\em $f$ preserves the ordering; in fact, if $x, y \in E$ with $y \in A$ and 
+    $x < y$, then $x \in A$ and $f(x) \in f(y)$.} Indeed, since $x < y$, we see that 
+    $E_{<x}$ is an initial segment of $E_{<y}$. If $h$ is the isomorphism between 
+    $(E_{<y}, <)$ and $(f(y), \in)$, then 
+    \[ h(E_{<x}) = \{\alpha \in f(y) : \alpha \in h(x)\} = h(x). \]
+    Hence, $h$ restricts to an isomorphism between $E_{<x}$ and the ordinal $h(x)$. 
+    It follows that $x \in A$, and by uniqueness, we have $h(x) = f(x)$. 
+    Thus, $f(x) \in f(y)$. 
+    \item {\em $\alpha = \im(f)$.} Suppose that $\beta \in \alpha$. By our choice of $\alpha$, 
+    we have $\beta \in \im(f)$. Conversely, suppose that $\beta \in \im(f)$. Let 
+    $h$ be the isomorphism between $(E_{<x}, <)$ and $(\beta, \in)$ for some $x \in A$. 
+    Then $\beta \neq \alpha$. If $\alpha < \beta$, then $\alpha = h(y)$ for some $y < x$. 
+    By the proof of (1), we have $y \in A$ and $f(y) = h(y) = \alpha$, contradicting 
+    $\alpha \notin \im(f)$. Thus, $\beta \in \alpha$, as desired. 
+    \item {\em $f$ is injective.} Suppose that $f(x) = f(y)$. If $x < y$, then $(E_{<x}, <)$ 
+    is a proper initial segment of $(E_{<y}, <)$ which is isomorphic to $(E_{<y}, <)$, 
+    contradicting Lemma 10.2. An analogous argument can be made for the $y < x$ case. Hence, $x = y$. 
+    \item {\em $A = E$.} Suppose for a contradiction that $E \setminus A$ is non-empty, 
+    and let $x \in E \setminus A$ be least. By (1), no element less than $x$ is in $A$. 
+    That is, $A = E_{<x}$. We have already proved that $f$ is an isomorphism between 
+    $(A, <)$ and $(\alpha, \in)$, so this implies that $x \in A$, a contradiction. 
+\end{enumerate} 
+This proves that $f$ is an isomorphism between $(E, <)$ and $(\alpha, \in)$, as required.
+\end{pf}
+
+ 
+\newpage\section{Equinumerosity} 
+
+\begin{defn}[Equinumerous] 
+Two sets $A$ and $B$ are said to be {\bf equinumerous} if there exists a bijective function 
+$f : A \to B$. 
+\end{defn} 
+
+\begin{prop}[Schroeder-Bernstein] 
+Two sets $A$ and $B$ are equinumerous if and only if there exist injective functions $A \to B$ 
+and $B \to A$. 
+\end{prop} 
+\begin{pf} 
+The forward direction is immediate. Suppose that there exist injective functions $A \hookrightarrow B$ 
+and $B \hookrightarrow A$. Then we may consider the injection 
+\[ \underbrace{A \hookrightarrow B \hookrightarrow A}_{f}. \] 
+It suffices to prove that if $f : X \to X$ is an injective function from a set $X$ to itself, 
+and $X \supseteq Y \supseteq f(X)$, then $X$ and $Y$ are equinumerous. Indeed, observe that 
+\[ X \supseteq Y \supseteq f(X) \supseteq f(Y) \supseteq f^2(X) \supseteq f^2(Y) \supseteq \cdots. \] 
+Consider the set $Z := (X \setminus Y) \cup (f(X) \setminus f(Y)) \cup \cdots$. 
+Let $W := X \setminus Z$. Clearly, $X = Z \sqcup W$ is a disjoint union. On the other hand, 
+we leave it as an exercise to check that $Y = f(Z) \sqcup W$. Then $g: X \to Y$ given by 
+\[ g(x) = \begin{cases} f(x) & x \in Z \\ \id(x) & x \in W \end{cases} \] 
+is a bijection. 
+\end{pf}
+
+\begin{defn}[Finite, countable] 
+A set is {\bf finite} if it is equinumerous to some $n \in \omega$. A set is 
+{\bf countable} if it is finite or equinumerous with $\omega$. 
+\end{defn} 
+
+\begin{lemma} 
+Let $\alpha \in \Ord$ be infinite. Then $\alpha$ is equinumerous with $\alpha + 1$. 
+\end{lemma}
+\begin{pf}
+Define $f : \alpha+1 \to \alpha$ as follows: 
+\[ f(x) = \begin{cases} x+1 & \text{if } x \in \omega \\ 0 & \text{if } x = \alpha \\ x & \text{otherwise.} \end{cases} \] 
+Since $\alpha$ is infinite, we have $\alpha \notin \omega$, so $f$ is well-defined on all 
+of $\alpha+1$. It is surjective as its image clearly contains $\omega$, and if 
+$x \in \alpha \setminus \omega$, then $f(x) = x$. It is also clearly injective. 
+\end{pf}
+
+The above lemma tells us that ordinals are not good at measuring sizes of sets. 
+We need something better to do so.
+
+\begin{defn}[Cardinal] 
+A {\bf cardinal} is an ordinal that is not equinumerous with any strictly lesser ordinal. 
+We denote by $\Card$ the class of all cardinals. 
+\end{defn} 
+
+We leave it as an exercise to check that $\Card$ is a class. Note that 
+$\Card$ is a subclass of $\Ord$. 
+
+\begin{remark} 
+By Lemma 11.4, no infinite successor ordinal is a cardinal. Hence, every infinite cardinal 
+is a limit ordinal. Conversely, not all limit ordinals are cardinals. For instance, 
+$\omega \cdot 2$ is equinumerous with $\omega$, but $\omega \cdot 2$ is a limit ordinal. 
+\end{remark} 
+
+\begin{exmp} The following can be proved using induction:  
+\begin{enumerate}[(a)]
+    \item Every $n \in \omega$ is a cardinal. 
+    \item $\omega$ itself is a cardinal.
+\end{enumerate} 
+\end{exmp}
+
+Are there any other cardinals? The following proposition allows us to find uncountable 
+cardinals, namely, cardinals larger than $\omega$. 
+
+\begin{prop} 
+For every set $E$, there is a unique cardinal $h(E)$ which is the least ordinal not 
+equinumerous with a subset of $E$. 
+\end{prop} 
+\begin{pf}
+We show that 
+\[ X = [[ \alpha \in \Ord \mid \alpha \text{ is equinumerous with a subset of $E$}]] \]
+is a set. Consider 
+\[ W = \{(A, \prec) : A \subseteq E \text{ and $\prec$ is a well-ordering of $A$}\}, \] 
+which is a set by bounded separation, as each $(A, \prec) \in {\cal P}(E) \times {\cal P}(E \times E)$. 
+
+Let $F : W \to \Ord$ be the definite operation on $W$ such that $F(A, \prec)$ is the unique 
+ordinal that is isomorphic to $(A, \prec)$, which can be done due to Theorem 10.3. By the 
+replacement axiom, $\im(F) \subseteq \Ord$ is a set. 
+
+We leave it as an exercise to show that $\im(F) = X$. Then, the least ordinal not in 
+$\im(F)$ is our desired $h(E)$. Note that $h(E)$ is a cardinal, since if $\alpha < h(E)$, 
+then $\alpha \notin X$, and hence $\alpha$ would be equinumerous with some subset of $E$.
+\end{pf}
+
+ 
+\newpage\section{Axiom of choice} 
+
+Last time, for every set $E$, we constructed cardinals $h(E)$. In particular, we have 
+$h(\omega) > \omega$, so we have a cardinal which is uncountable. 
+
+However, we want more out of cardinals. We want every set to be equinumerous to a cardinal. 
+This would imply that every set $A$ has a bijection $f$ such that 
+\[ A \xrightarrow[]{f} \alpha \in \Card \subseteq \Ord. \] 
+In particular, as $\alpha \in \Ord$, we have the well-ordering $(\alpha, \in)$. 
+We wish to use this to define a well-ordering on $A$. For $a, b \in A$, we want 
+to define $a < b$ if and only if $f(a) \in f(b)$, so that $(A, <)$ is a well-ordering. 
+But we cannot prove in {\bf ZF} that every set admits a well-ordering. Hence, we require the 
+axiom of choice. 
+
+\begin{defn}[Choice function] 
+For any set ${\cal F}$, a {\bf choice function on ${\cal F}$} is a function $c : 
+{\cal F} \to \bigcup {\cal F}$ such that for all $F \in {\cal F}$, we have $c(F) \in F$. 
+\end{defn}
+
+\begin{axiom}[Axiom of Choice] 
+For any set ${\cal F}$, if $\varnothing \notin {\cal F}$, then there exists a choice function 
+on ${\cal F}$. 
+\end{axiom}
+
+\begin{remark} 
+The axiom of choice (AC) is a set existence axiom. For any set ${\cal F}$ not containing 
+$\varnothing$, there is a set $\Gamma \subseteq {\cal F} \times \bigcup {\cal F}$ such that 
+for all $F \in {\cal F}$, there is a unique $a \in \bigcup {\cal F}$ such that 
+$(F, a) \in \Gamma$ and $a \in F$. 
+\end{remark}
+
+\begin{remark} 
+We do not always need AC to find a choice function. For example, suppose that we have the 
+singleton set ${\cal F} = \{F\}$, where $F \neq \varnothing$. Let $a \in F$. 
+Consider $\Gamma := \{(F, a)\}$. Observe that this is a set by {\bf ZF}. 
+Note that $\Gamma \subseteq {\cal F} \times F = {\cal F} \times \bigcup {\cal F}$, 
+and we chose $a \in F$, so $\Gamma$ is a choice function on ${\cal F}$. 
+\end{remark}
+
+\begin{exercise}
+Show that if ${\cal F}$ is a finite set, then we can construct a choice function on ${\cal F}$ 
+without using AC.
+\end{exercise}
+
+\begin{exercise} 
+Suppose $(A, <)$ is a well-ordering. Let ${\cal F} := {\cal P}(A) \setminus \{\varnothing\}$. 
+Prove that $c : {\cal F} \to \bigcup {\cal F}$ where $c(F)$ is the $<$-least element 
+of $F$ for each $F \in {\cal F}$ is a choice function without using AC.
+\end{exercise}
+
+\begin{thm}
+In {\bf ZF}, the following are equivalent:  
+\begin{enumerate}[(1)]
+    \item Axiom of Choice. 
+    \item Well-Ordering Principle: Every set admits a well-ordering. 
+    \item Zorn's Lemma: Suppose $(E, R)$ is a strict poset that satisfies 
+    \begin{align*} \text{If $C \subseteq E$ is } & \text{totally ordered by $R$ (i.e. it is a {\bf chain} in 
+    $(E, R)$),} \\ &\text{then $C$ has an upper $R$-bound in $E$.} \tag{$\star$}\end{align*}
+    Then $(E, R)$ has a maximal element.
+\end{enumerate} 
+\end{thm}
+\begin{pf} 
+We prove (1) implies (2). The remaining proofs are in the complete notes (Theorem 2.8). 
+
+Suppose $A$ is an arbitrary set. Let $c$ be a choice function on 
+${\cal P}(A) \setminus \{\varnothing\}$, which exists by AC. Define, by transfinite recursion, a 
+definite operation $F$ on $\Ord$ by 
+\[ F(\alpha) = \begin{cases} c(A \setminus \im(F \upharpoonright_\alpha)) & \text{if } A 
+\setminus \im(F \upharpoonright_\alpha) \neq \varnothing \\ \theta & \text{otherwise} \end{cases} \]
+where $\theta$ is an ordinal not in $A$ fixed in advance. 
+
+If $F(\alpha) \neq \theta$ for all $\alpha$, then $F : \Ord \to A$. In particular, 
+$F \upharpoonright_{h(A)} : h(A) \to A$, where $h(A)$ is the least ordinal not equinumerous 
+with any subset of $A$, as in Proposition 11.8. 
+
+Check that $F \upharpoonright_{h(A)}$ is injective (by transfinite induction). 
+
+But this implies that $h(A)$ is equinumerous with a subset of $A$, a contradiction. 
+
+Hence, we must have $F(\alpha) = \theta$ for some $\alpha$. Let $\alpha \in \Ord$ 
+be least such that $F(\alpha) = \theta$. Hence, $F \upharpoonright_\alpha : \alpha \to A$ 
+is injective (check). Since $F(\alpha) = \theta$, we have $\im(F \upharpoonright_\alpha) = A$, 
+so it follows that $F \upharpoonright_\alpha$ is a bijection. 
+
+Now, define $a < b$ in $A$ by $F \upharpoonright_\alpha^{-1}(a) \in 
+{F \upharpoonright_\alpha}^{-1}(b)$ in $\alpha$. Then, $(A, <)$ is a well-ordering.
+\end{pf}
+
+There are many more statements which are equivalent to AC, such as the following: 
+\begin{enumerate}[(1)]
+    \item Every surjective function has a right inverse.
+    \item All vector spaces have a basis. 
+\end{enumerate}
+
+ 
+\newpage\section{Cardinality}
+
+\begin{prop}
+Assume the axiom of choice. Every set is equinumerous to a unique cardinal.
+\end{prop}
+\begin{pf}
+Let $X$ be a set. By the axiom of choice and Theorem 12.7, there is a well-ordering 
+$<$ on $X$. By Theorem 10.3, $(X, <)$ is order isomorphic with $(\alpha, \in)$ for some 
+$\alpha \in \Ord$. Let $S := \{\beta \leq \alpha : X \text{ is equinumerous with } \beta\}$, 
+and let $\alpha_0$ be least in $S$. If $\beta < \alpha_0$, then $\beta \notin S$, 
+so $\beta$ is not equinumerous with $X$. As $\alpha_0$ is equinumerous with $X$, 
+we see that $\beta$ is not equinumerous with $\alpha_0$. Hence, $\alpha_0$ is a cardinal.
+To see that this cardinal is unique, we note that by definition, distinct cardinals 
+are not equinumerous.
+\end{pf}
+
+\begin{defn}[Cardinality] 
+Let $X$ be a set. The {\bf cardinality} of $X$, denoted by $|X|$, is the unique 
+cardinal that $X$ is equinumerous to.
+\end{defn}
+
+\begin{remark} 
+Let $X, Y$ be sets. Then $|X| = |Y|$ if and only if $X$ and $Y$ are equinumerous.
+\end{remark} 
+
+\begin{prop}
+Let $X, Y$ be sets. Then $|X| \leq |Y|$ if and only if there is an injective map 
+$X \to Y$.
+\end{prop}
+\begin{pf}
+Let $\kappa = |X|$ and $\lambda = |Y|$. If $\kappa \leq \lambda$, then $\kappa \subseteq \lambda$. 
+Then there are bijections $f : X \to \kappa$ and $g : \lambda \to Y$, and hence there is 
+an injection 
+\[ X \xrightarrow[]{f} \kappa \subseteq \lambda \xrightarrow[]{g} Y. \]
+Conversely, suppose there is an injective map $h : X \to Y$. Again, we have 
+bijections $f : X \to \kappa$ and $g : \lambda \to Y$, and so we have an injection 
+\[ \kappa \xrightarrow[]{f^{-1}} X \xrightarrow[]{h} Y \xrightarrow[]{g^{-1}} \lambda. \]
+If $\lambda < \kappa$, then $\lambda \subseteq \kappa$. By Schroeder-Bernstein, 
+we see that $\kappa$ and $\lambda$ are equinumerous. This is a contradiction as 
+both $\kappa$ and $\lambda$ are cardinals. Hence, $\kappa \leq \lambda$. 
+\end{pf}
+
+\begin{prop}
+Let $A, B$ be sets. If $f : A \to B$ is a function, then $|\im(f)| \leq |A|$. 
+\end{prop}
+\begin{pf}
+Consider the definite operation that maps $b \in B$ to $f^{-1}(b) = \{a \in A : f(a) = b\}$ 
+(this is called the fiber). Then the map $g : \im(f) \to {\cal F} := \{f^{-1}(b) : b \in \im(f)\}$ 
+given by $b \mapsto f^{-1}(b)$ is also a definite operation. By the axiom of choice, there 
+exists a choice function $c : {\cal F} \to \bigcup {\cal F} \subseteq A$. 
+It follows that 
+\[ s : \im(f) \xrightarrow[]{g} {\cal F} \xrightarrow[]{c} A \] 
+is injective.  By Proposition 13.4, $|\im(f)| \leq |A|$. 
+\end{pf}
+
+For the remainder of this course, we will assume the axiom of choice along with 
+the Zermelo-Fraenkel axioms of set theory ({\bf ZFC}) without explicitly saying so. 
+
+ 
+\newpage\section{Enumerating cardinals}
+
+Let $\kappa \in \Card$. Recall that $h(\kappa)$ as in Proposition 11.8 is the least 
+cardinal strictly bigger than $\kappa$. Indeed, if $\lambda \in \Card$ is such that 
+$\lambda > \kappa$, then $|\lambda| = \lambda > \kappa = |\kappa|$. Hence, there 
+is no injective function $\lambda \to \kappa$ by Proposition 13.4, and so 
+$\lambda \geq h(\kappa)$. 
+
+\begin{notation} As such, we denote $h(\kappa)$ by $\kappa^+$. \end{notation}
+
+Note that we now have two different notions of successors between ordinals and cardinals. 
+For $\kappa$ infinite, we have $\kappa + 1 \neq \kappa^+$. 
+
+In this lecture, we will give an ordinal-valued enumeration of all infinite cardinals. 
+In particular, we will have a strictly increasing definite operation 
+$\Ord \to \Card : \alpha \mapsto \aleph_\alpha$
+onto the infinite cardinals. We define this via transfinite recursion via:
+\begin{enumerate}[(1)]
+    \item $\aleph_0 := \omega$.
+    \item $\aleph_{\alpha+1} := \aleph_\alpha^+ \text{ for all } \alpha \in \Ord$.
+    \item $\aleph_\beta := \sup\{\aleph_\alpha : \alpha < \beta\} \text{ for all limit ordinals } \beta > 0.$
+\end{enumerate}
+
+\begin{lemma}
+For all $\alpha \in \Ord$, $\aleph_\alpha$ is an infinite cardinal.
+\end{lemma}
+\begin{pf}
+It is obvious that these are infinite, and that $\aleph_\alpha$ is a cardinal at the 
+zero and successor stages. It suffices to check that $\aleph_\beta$ is a cardinal 
+when $\beta > 0$ is a limit ordinal. Let $\alpha \in \Ord$ be such that 
+$\alpha < \aleph_\beta$. By definition, there is $\gamma < \beta$ such that 
+$\alpha < \aleph_\gamma$. By our inductive hypothesis, $\aleph_\gamma$ is an infinite cardinal. 
+Then $\alpha < \aleph_\gamma \leq \aleph_\beta$, and hence $|\alpha| < 
+|\aleph_\gamma| = \aleph_\gamma \leq \aleph_\beta = |\aleph_\beta|$. Thus, 
+$\alpha$ and $\aleph_\beta$ are not equinumerous, so $\aleph_\beta$ is a cardinal.
+\end{pf}
+
+\begin{lemma} 
+Let $\alpha, \beta \in \Ord$ be such that $\alpha < \beta$. Then $\aleph_\alpha < \aleph_\beta$. 
+\end{lemma}
+\begin{pf}
+We proceed by transfinite induction on $\beta$. There is nothing to prove for $\beta = 0$. 
+For $\beta = \gamma + 1$, we have $\aleph_\beta = \aleph_\gamma^+ > \aleph_\gamma$, and the 
+result follows from the inductive hypothesis. Finally, if $\beta$ is a non-zero limit ordinal, 
+then there exists $\gamma < \beta$ such that $\alpha < \gamma$. Then $\aleph_\alpha 
+< \aleph_\gamma$ by the inductive hypothesis, and $\aleph_\gamma \leq \aleph_\beta$ since 
+$\aleph_\gamma \subseteq \aleph_\beta$. Hence, we have $\aleph_\alpha < \aleph_\beta$, as desired.
+\end{pf}
+
+\begin{lemma}
+For all $\alpha \in \Ord$, $\alpha \leq \aleph_\alpha$. The inequality is strict if 
+$\alpha$ is a successor ordinal.
+\end{lemma}
+\begin{pf}
+We proceed by transfinite induction on $\alpha$. Clearly, $0 \leq \aleph_0$. For 
+$\alpha = \beta + 1$, we know by the inductive hypothesis that $\beta \leq \aleph_\beta$, 
+and hence $\alpha = \beta + 1 \leq \aleph_\beta + 1$. On the other hand, we have 
+$\aleph_\beta + 1 < |\aleph_\beta|^+ = \aleph_\alpha$, so $\alpha < \aleph_\alpha$. 
+Now, suppose that $\alpha$ is a non-zero limit ordinal. For every $\beta < \alpha$, we have that 
+$\beta \leq \aleph_\beta < \aleph_\alpha$, where the first inequality is by the inductive hypothesis, 
+and the second inequality follows from Lemma 14.3. Thus, $\alpha = 
+\sup\{\beta : \beta < \alpha\} \leq \aleph_\alpha$. 
+\end{pf}
+
+\begin{exercise}
+The inequality in the above lemma may not be strict. Consider the sequence 
+$\alpha_0 = 0$ and $\alpha_{n+1} = \aleph_{\alpha_n}$. Verify that 
+for $\alpha := \sup\{\alpha_n : n < \omega\}$, we have $\aleph_\alpha = \alpha$. 
+In fact, this works for any ordinal $\alpha_0$, not just $0$.
+\end{exercise}
+
+\begin{prop}
+Every infinite cardinal is of the form $\aleph_\alpha$ for some $\alpha \in \Ord$. 
+\end{prop}
+\begin{pf}
+Suppose $\kappa$ is an infinite cardinal. By the previous lemma, we have 
+$\kappa \leq \aleph_\kappa < \aleph_{\kappa+1}$. Hence, it suffices to prove that for all 
+ordinals $\beta$ and every infinite cardinal $\kappa < \aleph_\beta$, there exists 
+$\alpha \in \Ord$ such that $\kappa = \aleph_\alpha$. We proceed by transfinite induction on $\beta$. 
+For $\beta = 0$, there is nothing to prove. Suppose that this holds for $\beta$. 
+Let $\kappa < \aleph_{\beta+1} = \aleph_\beta^+$. Then, it must be that 
+$\kappa \leq \aleph_\beta$. If $\kappa = \aleph_\beta$, we are done. If 
+$\kappa < \aleph_\beta$, then the result follows from the inductive hypothesis. 
+Finally, suppose $\beta > 0$ is a limit ordinal, and let $\kappa < \aleph_\beta$. 
+Then $\kappa < \aleph_\gamma$ for some $\gamma < \beta$. By 
+the inductive hypothesis, $\kappa = \aleph_\alpha$ for some $\alpha \in \Ord$. 
+\end{pf}
+
+As a result of Proposition 14.6, we see that $\alpha \mapsto \aleph_\alpha$ is a strict 
+ordinal enumeration of all infinite cardinals. 
+
+To finish off this lecture, we briefly discuss the continuum hypothesis. 
+
+\begin{thm}[Cantor's diagonalization] 
+For any set $E$, $|{\cal P}(E)| > |E|$. 
+\end{thm}
+\begin{pf}
+Observe that $x \mapsto \{x\}$ is an embedding of $E$ into ${\cal P}(E)$, so we have 
+$|E| \leq |{\cal P}(E)|$. Now, suppose for a contradiction that there exists a 
+bijective function $f : E \to {\cal P}(E)$. Consider the set 
+$\Delta := \{x \in E : x \notin f(x)\}$. Notice that $\Delta \in {\cal P}(E)$ and hence 
+there is some $x_0 \in E$ such that $\Delta = f(x_0)$. If $x_0 \in \Delta$, then 
+by definition, we have $x_0 \notin f(x_0) = \Delta$, a contradiction. Hence, we must have 
+$x_0 \notin \Delta$. But then $x_0 \in f(x_0) = \Delta$, another contradiction. Thus, 
+no such bijection $f$ exists, and so $|E| < |{\cal P}(E)|$.
+\end{pf}
+
+Due to this theorem, we would like to ask what cardinal $|{\cal P}(\aleph_0)|$ is, based on the previous hierarchy 
+we have constructed. The statement that $|{\cal P}(\aleph_0)| = \aleph_1$ 
+is called the {\bf continuum hypothesis} (CH). Moreover, the {\bf generalized continuum hypothesis} 
+(GCH) states that $|{\cal P}(\kappa)| = \kappa^+$ for all cardinals $\kappa$. 
+These statements are independent of {\bf ZFC}; that is, they cannot be proved in {\bf ZFC}, 
+nor can their negations. Unlike the axiom of choice, the (generalized) continuum hypothesis 
+is not indispensable to most of contemporary mathematics. In this course, we will not assume CH and GCH, 
+nor their negations.
+
+ 
+\newpage\section{Cardinal arithmetic}
+
+In the interest of time, the topics in this section were covered briefly. 
+It is encouraged to read Section 3.3 in the complete notes thoroughly to understand all the details.
+
+\begin{defn}[Cardinal sum] 
+Let $\kappa_1, \kappa_2 \in \Card$. The {\bf cardinal sum} of $\kappa_1$ and $\kappa_2$ is 
+\[ \kappa_1 + \kappa_2 := |X_1 \cup X_2|, \] 
+where $X_1$ and $X_2$ are disjoint, $|X_1| = \kappa_1$, and $|X_2| = \kappa_2$. 
+\end{defn}
+
+\begin{remark}~
+\begin{enumerate}[(a)]
+    \item We need to prove this is well-defined. That is, the choice of the disjoint 
+    sets $X_1, X_2$ does not matter. The proof can be seen in Lemma 3.9 of the notes.
+    \item If $X_1, X_2$ are not necessarily disjoint sets, then $|X_1 \cup X_2| \leq 
+    |X_1| + |X_2|$. Indeed, let $X'_1 = X_1 \times \{1\}$ and $X'_2 = X_2 \times \{2\}$. 
+    These are clearly disjoint, so we see that 
+    \[ |X'_1 \cup X'_2| = |X'_1| + |X'_2| = |X_1| + |X_2|. \] 
+    Then, we can consider the surjective map $X'_1 \cup X'_2 \to X_1 \cup X_2 : (a, b) \mapsto a$. 
+    It follows from Proposition 13.4 that 
+    \[ |X_1 \cup X_2| \leq |X'_1 \cup X'_2| = |X_1| + |X_2|. \]
+    \item A warning: ordinal and cardinal sum are not the same. Nonetheless, we use the 
+    same symbol to denote both. Context will make it clear what is meant.
+\end{enumerate} 
+\end{remark}
+
+\begin{defn}[Cardinal product] 
+Let $\kappa_1, \kappa_2 \in \Card$. The {\bf cardinal product} of $\kappa_1$ and $\kappa_2$ 
+is 
+\[ \kappa_1 \cdot \kappa_2 := |X_1 \times X_2|, \] 
+where $X_1, X_2$ are sets such that $|X_1| = \kappa_1$ and $|X_2| = \kappa_2$. 
+\end{defn}
+
+\begin{remark}~
+\begin{enumerate}[(a)]
+    \item As with cardinal sum, we need to prove well-definedness. In particular, 
+    we can simply pick $\kappa_1$ and $\kappa_2$ to be our sets, as we do not require 
+    them to be disjoint. The proof can be seen in Lemma 3.9. 
+    \item Cardinal product is not the same as ordinal product, so we have notational ambiguity.
+\end{enumerate}
+\end{remark}
+
+By the following theorem, cardinal arithmetic of infinite cardinals trivializes to computing maxima.
+
+\begin{thm} Let $\kappa_1, \kappa_2 \in \Card$ with $\kappa_1 \leq \kappa_2$ and 
+$\kappa_2$ infinite.
+\begin{enumerate}[(a)]
+    \item $\kappa_1 + \kappa_2 = \kappa_2$. 
+    \item If $\kappa_1 \neq 0$, then $\kappa_1 \cdot \kappa_2 = \kappa_2$.
+\end{enumerate}
+\end{thm}
+\begin{pf}
+See notes (Corollary 3.14).
+\end{pf}
+
+We now extend the notions of cardinal sum and product to arbitrary (possibly infinite) sets of 
+cardinals. First, we need to introduce some preliminaries on arbitrary sequences of sets. 
+
+\begin{defn} Let $I$ be a set. 
+\begin{enumerate}[(a)]
+    \item By an {\bf $I$-sequence of sets}, we understand a function 
+    $f : I \to \Sets$. We often use the notation 
+    $(X_i : i \in I)$, where $X_i := f(i)$.
+    \item Let $(X_i : i \in I)$ be an $I$-sequence of sets. The {\bf Cartesian product}, 
+    denoted by $\times_{i\in I} X_i$, is the set of all functions $f : 
+    I \to \bigcup_{i\in I} X_i$ such that $f(i) \in X_i$. 
+\end{enumerate}
+\end{defn}
+
+\begin{defn}[Generalized cardinal sum] 
+Let $(\kappa_i : i \in I)$ be an $I$-sequence of cardinals. The {\bf generalized cardinal 
+sum} is 
+\[ \sum_{i\in I} \kappa_i := \left| \bigcup_{i \in I} X_i \right|, \]
+where $(X_i : i \in I)$ is an $I$-sequence of sets that are pairwise disjoint and $|X_i| = \kappa_i$
+for all $i \in I$.
+\end{defn}
+
+\begin{remark}~
+\begin{enumerate}[(a)]
+    \item We need to prove well-definedness. This can be seen in Lemma 3.17. Note that 
+    it is the same proof as the finite case, except we need to use the axiom of choice here.
+    \item If $(X_i : i \in I)$ is given by $f : I \to \Sets : i \mapsto X_i$, then 
+    $\bigcup_{i\in I} X_i := \bigcup \im(f)$.
+\end{enumerate}
+\end{remark}
+
+\begin{notation}
+Let $(\kappa_i : i \in I)$ be given by $f : I \to \Sets$ with $f(i) = \kappa_i$ for all 
+$i \in I$. We write $\sup_{i\in I} \kappa_i := \sup \im(f)$.
+\end{notation}
+
+From the following theorem, infinite cardinal sums simply reduce to computing suprema.
+
+\begin{thm} 
+Suppose $I$ is an infinite set and $(\kappa_i : i \in I)$ is an $I$-sequence of non-zero cardinals. 
+Then:
+\begin{enumerate}[(a)]
+    \item $\sup_{i \in I} \kappa_i$ is a cardinal. 
+    \item $\sum_{i\in I} \kappa_i = \max\{|I|, \sup_{i\in I} \kappa_i\}$.
+\end{enumerate}
+\end{thm}
+\begin{pf}
+The proof of (a) is Lemma 3.19 in the notes, and the proof of (b) is Proposition 3.20 in the notes.
+\end{pf}
+
+\begin{defn}[Generalized cardinal product]
+Let $(\kappa_i : i \in I)$ be an $I$-sequence of cardinals. The {\bf generalized cardinal product} is 
+\[ \prod_{i\in I} \kappa_i := |\hspace{-0.5ex}\times_{i\in I} X_i|, \]
+where $(X_i : i \in I)$ is a sequence of sets with $|X_i| = \kappa_i$ for all $i \in I$.
+\end{defn}
+
+On the other hand, infinite cardinal products are more interesting, as they do not reduce to 
+computing suprema. Let $I$ be a set such that $|I| \geq 2$, and suppose $\kappa_i = 2$
+for all $i \in I$. The map that assigns each $a = (a_i : i \in I) \in \times_{i \in I} \, 2$ 
+to the set $\{i \in I : a_i = 1\} \in {\cal P}(I)$, is a bijection 
+between $\times_{i \in I} \, 2$ and ${\cal P}(I)$ (check this). Hence, 
+$\prod_{i\in I} 2 = |{\cal P}(I)| > |I|$, where the last inequality follows from 
+Cantor's diagonalization (Theorem 14.7).
+
+\begin{defn}[Cardinal exponentiation] 
+Let $\kappa, \lambda \in \Card$. We define $\kappa^\lambda$ to be the 
+cardinality of the set of all functions $f : \lambda \to \kappa$. 
+\end{defn}
+
+\begin{lemma} 
+For $\kappa, \lambda \in \Card$, we have $\prod_{i<\lambda} \kappa$. 
+\end{lemma}
+\begin{pf}
+The $\lambda$-th Cartesian power of a set is exactly the set of functions from 
+$\lambda$ to that set. 
+\end{pf}
+
+In particular, we see that $2^\lambda = |{\cal P}(\lambda)|$. 
+
+\begin{lemma} 
+Let $\kappa, \lambda, \mu \in \Card$.
+\begin{enumerate}[(a)]
+    \item If $\lambda \leq \mu$, then $\kappa^\lambda \leq \kappa^\mu$ and $\lambda^\kappa \leq 
+    \mu^\kappa$. 
+    \item $\kappa^{\lambda+\mu} = \kappa^\lambda \cdot \kappa^\mu$.
+    \item $(\kappa^\lambda)^\mu = \kappa^{\lambda \cdot \mu}$.
+\end{enumerate} 
+\end{lemma}
+\begin{pf}
+See notes (Lemma 3.23).
+\end{pf}
+
+The following theorem is a generalization of Cantor's diagonalization.
+
+\begin{thm}[K\"onig's Theorem] 
+Suppose that $(\kappa_i : i \in I)$ and $(\lambda_i : i \in I)$ are both sequences of cardinals, 
+and $\kappa_i < \lambda_i$ for all $i \in I$. Then 
+\[ \sum_{i\in I} \kappa_i < \prod_{i\in I} \lambda_i. \] 
+\end{thm}
+\begin{pf}
+See notes (Theorem 3.25).
+\end{pf}
+This concludes the set theory portion of the course, and we begin model theory starting 
+from the next section.
+
+\newpage 
+\addcontentsline{toc}{section}{{\bf \large Part 2: Model Theory}}
+\thispagestyle{empty}
+\hspace{0pt}\vfill
+\begin{center} 
+\LARGE{{\bf Part 2}} \\\vspace{0.5cm}
+\LARGE{\bf Model Theory}
+\end{center}
+\vfill\hspace{0pt}
+\newpage 
+
+\section{Structures}
+
+\begin{defn}[Structure]
+A {\bf structure} ${\cal M}$ consists of:
+\begin{itemize}
+    \item a non-empty set $M$, called the {\bf universe} of ${\cal M}$; 
+    \item a sequence $(c_i : i \in I_C)$ of elements from ${\cal M}$, called the 
+    {\bf constants} of ${\cal M}$;
+    \item a sequence $(f_i : i \in I_F)$ of functions on powers of $M$, called 
+    the {\bf basic functions} of ${\cal M}$ (i.e. each $f_i : M^{n_i} \to M$, 
+    and $n_i$ is said to be the {\bf arity} of $f_i$);
+    \item a sequence $(R_i : i \in I_R)$ of subsets of powers of $M$, called the 
+    {\bf basic relations} of ${\cal M}$ (i.e. each $R_i \subseteq M^{k_i}$, 
+    with $k_i$ being the {\bf arity} of $R_i$).
+\end{itemize}
+The {\bf signature} of ${\cal M}$ is given by $((c_i : i \in I_C), (f_i : i \in I_F), 
+(R_i : i \in I_R))$.
+\end{defn}
+
+\begin{remark}
+By convention, we have $M^0 = 1 = \{0\}$. Hence, if $f$ is a basic relation of arity $0$, 
+then it is determined by $f(0) \in M$. In particular, $0$-ary functions are just constants. 
+Thus, we usually only deal with basic functions of arity at least $1$.
+\end{remark}
+
+\begin{remark}
+Note that $I_C, I_F, I_R$ may be empty, but the universe $M$ must be non-empty.
+\end{remark}
+
+\begin{exmp}
+Consider the real numbers $\R$.
+\begin{enumerate}[(a)]
+    \item If we are interested in the ordering on $\R$, we may consider the structure ${\cal M} = (\R, <)$, where $\R$ is the universe and $<$ is a basic binary relation, namely
+    $\{(a, b) \in \R^2 : a < b\}$.
+    \item If we are interested in the additive group of reals, then we may consider the 
+    structure ${\cal M} = (\R, 0, +, -)$ where $\R$ is the universe, $0$ is a constant, 
+    $+$ is a binary basic function, and $-$ is a unary basic function that takes the 
+    additive inverse.
+    \item If we want $\R$ as a ring, we may take ${\cal M} = (\R, 0, 1, +, -, \cdot)$ 
+    where $1$ is a constant, $\cdot$ is a binary basic function, and everything else 
+    is as in (b).
+    \item The ordered ring of reals is given by ${\cal M} = (\R, 0, 1, +, -, \cdot, <)$.
+\end{enumerate}
+\end{exmp}
+Note that all of these examples have the same universe, but different signatures. 
+
+\begin{defn}[Expansion, Reduct] 
+Suppose that ${\cal M}$ and ${\cal N}$ are structures. We say that ${\cal N}$ is an {\bf expansion} of 
+${\cal M}$, or ${\cal M}$ is a {\bf reduct} of ${\cal N}$, if they have the same 
+universe and the signature of ${\cal M}$ is contained in the signature of ${\cal N}$.
+\end{defn}
+
+\begin{exmp}
+$(\R, 0, +, -)$ is a reduct of $(\R, 0, 1, +, -, \cdot)$.
+\end{exmp}
+
+An important theme in model theory is to ask questions such as the following:
+\begin{enumerate}[(1)]
+    \item Can we recover $(\R, 0, 1, +, -, \cdot)$ from its reduct $(\R, 0, 1, +)$?
+    \item Can we recover $(\R, 0, 1, +, -, \cdot, <)$ from $(\R, 0, 1, +, -, \cdot)$?
+\end{enumerate}
+It turns out that the answer to (1) is no, while the answer to (2) is yes. 
+However, we need to introduce definability, which will be later in this course. 
+
+To discuss structures with the same signature, it is useful to introduce the notion of 
+languages.
+
+\begin{defn}[Language] 
+A {\bf language} $L$ consists of the following sets of symbols:
+\begin{itemize}
+    \item a set $L^C$ of {\bf constant symbols};
+    \item a set $L^F$ of {\bf function symbols} together with a positive integer 
+    $n_f$ for each $f \in L^F$, called the {\bf arity} of $f$;
+    \item a set $L^R$ of {\bf relation symbols} together with a positive integer 
+    $k_R$ for each $R \in L^R$, called the {\bf arity} of $R$.
+\end{itemize}
+\end{defn}
+
+\begin{defn}[$L$-structure] 
+Let $L$ be a language. An {\bf $L$-structure} is a structure ${\cal M}$ together
+with bijective correspondences $L^C \leftrightarrow I_C$, 
+$L^R \leftrightarrow I_R$, and $L^F \leftrightarrow I_F$ that preserve arity. 
+Namely, each constant symbol $c \in L^C$ is associated with a constant $c^{\cal M} \in M$ 
+of ${\cal M}$, each $n$-ary function symbol $f \in L^F$ is associated with an 
+$n$-ary basic function $f^{\cal M} : M^n \to M$ of ${\cal M}$, and 
+each $k$-ary relation symbol $R \in L^R$ is associated with a $k$-ary basic 
+relation $R^{\cal M} \subseteq M^k$ of ${\cal M}$. These constants, functions, and relations 
+$c^{\cal M}, f^{\cal M}, R^{\cal M}$ are said to be the {\bf interpretations} in 
+${\cal M}$ of the corresponding symbols.
+\end{defn}
+
+ 
+\newpage\section{Embeddings}
+A language $L$ is made up of constant, function, and relation symbols with arity. 
+An $L$-structure is a non-empty set together with an interpretation of the symbols in $L$. 
+
+The only requirements to be an $L$-structure are that constant symbols are interpreted as 
+elements of the universe, $n$-ary function symbols are interpreted as $n$-ary functions on the 
+universe, and $k$-ary relation symbols are interpreted as subsets of the $k$-th power 
+of the universe. 
+
+\begin{exmp}
+Let $L = \{0, +, -\}$ be the language of additive groups, namely $L^C = \{0\}$, 
+$L^F = \{+, -\}$ where $+$ is binary and $-$ is unary, and $L^R = \varnothing$. 
+Then ${\cal R} = (\R, 0, +, -)$ and ${\cal Z} = (\Z/4\Z, 0, +, -)$ are both $L$-structures.
+\end{exmp}
+
+Note that this is an abuse of notation; we should really be writing ${\cal R} = (\R, 0^{\cal R}, +^{\cal R}, -^{\cal R})$ and ${\cal Z} = (\Z/4\Z, 0^{\cal Z}, +^{\cal Z}, -^{\cal Z})$. However, 
+this is unwieldy, so we often drop the superscripts distinguishing between the symbols 
+and their interpretations.
+
+Every group can be viewed naturally as an $L$-structure, but not every $L$-structure is a group. 
+
+\begin{exmp}
+Consider the same language $L = \{0, +, -\}$. Then ${\cal N} = (\Z, 0^{\cal N}, 
++^{\cal N}, -^{\cal N})$ where $0^{\cal N} = 1731$, $+^{\cal N} : \Z \times \Z \to \Z : 
+(a, b) \mapsto \max\{a, b\}$, and $-^{\cal N} : \Z \to \Z : a \mapsto 0$ is an 
+$L$-structure, but is not a group.
+\end{exmp}
+
+Previously, we discussed expansions and reducts, where the universe is unchanged 
+but the signature is expanded or reduced. We can also think about structures in the opposite way, 
+where the universe is expanded or reduced, but the signature (or rather, the language) 
+is the same.
+
+\begin{defn}[$L$-embedding]
+Suppose that $L$ is a language, and let ${\cal M}$ and ${\cal N}$ be $L$-structures. 
+An {\bf $L$-embedding} of ${\cal M}$ in ${\cal N}$, written $j : {\cal M} \to {\cal N}$, is an injective function 
+$j : M \to N$ satisfying:
+\begin{enumerate}[(i)]
+    \item for all $c \in L^C$, $j(c^{\cal M}) = c^{\cal N}$;
+    \item for all $f \in L^F$ and $a \in M^{n_f}$, $j(f^{\cal M}(a)) = f^{\cal N}(j(a))$; 
+    \item for all $R \in L^R$ and $a \in M^{k_R}$, $a \in R^{\cal M}$ if and only if 
+    $j(a) \in R^{\cal N}$.
+\end{enumerate}
+A surjective $L$-embedding is said to be an {\bf $L$-isomorphism}.
+\end{defn}
+
+\begin{defn}[$L$-substructure] 
+Let ${\cal M}$ and ${\cal N}$ be as in Definition 17.3. If $M \subseteq N$ and the inclusion map 
+$M \to N$ is an $L$-embedding, then we call ${\cal M}$ an {\bf $L$-substructure} of 
+${\cal N}$, or ${\cal N}$ an {\bf $L$-extension} of ${\cal M}$. 
+We denote this by ${\cal M} \subseteq {\cal N}$.
+\end{defn}
+
+In particular, ${\cal M} \subseteq {\cal N}$ if and only if $M \subseteq N$, 
+$c^{\cal N} = c^{\cal M}$ for all $c \in L^C$, $f^{\cal N} \upharpoonright_{M^n} \, = 
+f^{\cal M}$ for all $n$-ary function symbols $f \in L^R$, and 
+$R^{\cal N} \cap M^k = R^{\cal M}$ for all $k$-ary relation symbols $R \in L^R$.
+
+\begin{exercise}
+Suppose that $L$ is a language, ${\cal N}$ is an $L$-structure, and $A \subseteq N$. 
+Then $A$ is the universe of an $L$-substructure of ${\cal N}$ if and only if 
+$A \neq \varnothing$, $A$ contains all constants of ${\cal N}$, and 
+$A$ is preserved under all basic functions of ${\cal N}$. In this case, there is a 
+unique $L$-substructure ${\cal A} \subseteq {\cal N}$ whose universe is $A$.
+\end{exercise}
+
+We now give some examples of structures and their substructures. 
+
+\begin{exmp}~
+\begin{itemize}
+    \item For ${\cal M} = (\R)$, every non-empty subset of $\R$ is a substructure. 
+    \item For ${\cal M} = (\R, 0, +)$, the substructures of ${\cal M}$ are the semigroups. 
+    \item For ${\cal M} = (\R, 0, +, -)$, the substructures are precisely the subgroups.
+    \item For ${\cal M} = (\R, 0, 1, +, -, \cdot)$, the substructures are precisely the subrings.  
+    \item For ${\cal M} = (\R, <)$, note that the relations do not impose any conditions, 
+    and so the substructures are the non-empty subsets of $\R$ with the induced orderings.
+\end{itemize}
+\end{exmp}
+
+\begin{exmp}
+Fix a field $F$. The language of $F$-vector spaces is $L = \{0, +, -, (\lambda_a)_{a\in F}\}$, 
+where each $\lambda_a$ is a unary function symbol. If $V$ is an $F$-vector space, we can make 
+an $L$-structure ${\cal V}$ where:
+\begin{itemize}
+    \item $V$ is the universe;
+    \item $0^{\cal V}$ is the zero vector;
+    \item $+^{\cal V}$ denotes vector addition;
+    \item $-^{\cal V}$ gives the negative of a vector;
+    \item $\lambda_a^{\cal V} : V \to V : v \mapsto av$ denotes scalar multiplication.
+\end{itemize}
+Then ${\cal V}$ is an $L$-structure where the substructures are precisely the subspaces.
+\end{exmp}
+
+ 
+\newpage\section{Terms}
+
+In our definition, we saw $L$-substructures as a special case of $L$-embeddings. 
+However, due to the following exercise, it suffices to study substructures to study $L$-embeddings.
+
+\begin{exercise}
+Suppose $j : {\cal M \to N}$ is an $L$-embedding. Let $A := j(M) \subseteq N$. Then 
+there is a unique substructure ${\cal A \subseteq N}$ with universe $A$, and such that 
+$j : {\cal M \to A}$ is an $L$-isomorphism.
+\end{exercise}
+
+We want to define $L$-formulae. These are used:
+\begin{enumerate}[(1)]
+    \item To describe properties of $L$-structures, such as axioms. For instance, if 
+    $L = \{<\}$, then to be able to talk about posets among all $L$-structures, we use formulae.
+    \item To define certain subsets of a structure. For example, consider 
+    ${\cal R} = (\R, 0, 1, +, -, \times)$ and suppose we want the set of multiplicative units in 
+    ${\cal R}$. We can use formulae to isolate these.
+\end{enumerate}
+Before we begin with formulae, we need to start with terms. We will make use of a fixed infinite 
+set $\Var$ of symbols called {\bf variables}. We assume that $\Var$ is countable.
+
+\begin{defn}[$L$-term]
+Fix a language $L$. The set of {\bf $L$-terms} is the set of strings of symbols defined 
+recursively as follows:
+\begin{enumerate}[(i)]
+    \item Every variable is an $L$-term.
+    \item Every constant symbol of $L$ is an $L$-term.
+    \item If $f \in L^F$ is $n$-ary and $t_1, \dots, t_n$ are $L$-terms, then 
+    $f(t_1, \dots, t_n)$ is an $L$-term.
+\end{enumerate}
+\end{defn}
+We write $t = t(x_1, \dots, x_n)$ to mean that the variables appearing in $t$ come 
+from the list $\{x_1, \dots, x_n\}$. This is similar to how we write multivariable polynomials.
+
+Note that $L$-terms are finite strings of symbols from $\Var \, \cup \,\, L^C \cup L^F 
+\cup \{(\,, )\} \cup \{\,,\}$.
+
+We will often abuse notation for readability and write things more naturally. 
+For example, consider the language $L = \{0, 1, +, -, \times\}$. Instead of the correctly 
+written $L$-term 
+\[ \times (+(x_1, -(x_2)), \times(1, x_2)), \] 
+we will write $(x_1 - x_2)(1x_2)$.
+
+\begin{defn}[Interpreting terms] 
+Suppose ${\cal M}$ is an $L$-structure and $t = t(x_1, \dots, x_n)$ is an $L$-term. We define 
+the {\bf interpretation of $t$ in ${\cal M}$} to be the function $t^{\cal M} : M^n \to M$ 
+defined recursively as follows:
+\begin{enumerate}[(i)]
+    \item If $t$ is $x_i$ for some $1 \leq i \leq n$, then $t^{\cal M}(a_1, \dots, a_n) = a_i$ 
+    (i.e. a coordinate projection). 
+    \item If $t$ is some $c \in L^C$, then $t^{\cal M}(a_1, \dots, a_n) = c^{\cal M}$ 
+    (i.e. a constant function).
+    \item If $t$ is $f(t_1, \dots, t_\ell)$ where $f \in L^F$ is $\ell$-ary 
+    and $t_1, \dots, t_\ell$ are $L$-terms, then $t_i = t_i(x_1, \dots, x_n)$, and hence 
+    \[ t^{\cal M}(a_1, \dots, a_n) = f^{\cal M}(t_1^{\cal M}(a_1, \dots, a_n), 
+    \dots, t_\ell^{\cal M}(a_1, \dots, a_n)). \]
+\end{enumerate}
+\end{defn}
+
+\begin{remark}
+Note that $t^{\cal M}$ depends not only on $t$ and ${\cal M}$, but also on the 
+presentation $t = t(x_1, \dots, x_n)$. 
+\end{remark}
+
+\begin{exmp}
+Suppose that $t$ is a variable $x$.
+\begin{itemize}
+    \item If $t = t(x)$, then $t^{\cal M} : M \to M : a \mapsto a$ is the identity.
+    \item If $t = t(x, y)$, then $t^{\cal M} : M^2 \to M : (a, b) \mapsto a$.
+    \item If $t = t(y, x)$, then $t^{\cal M} : M^2 \to M : (a, b) \mapsto b$.
+\end{itemize}
+\end{exmp}
+
+\begin{exercise}
+Suppose that ${\cal M}$ is an $L$-structure and $A \subseteq M$. Then 
+$A$ is the universe of a substructure if and only if 
+$A \neq \varnothing$ and $t^{\cal M}(A^n) \subseteq A$ for every $L$-term 
+$t(x_1, \dots, x_n)$. 
+\end{exercise}
+
+\begin{remark}
+Let ${\cal T} := \{t^{\cal M} : t \text{ is an $L$-term}\}$. Then ${\cal T}$ is the 
+smallest collection of functions on Cartesian products of $M$ satisfying:
+\begin{itemize}
+    \item all coordinate projections are in ${\cal T}$;
+    \item all constant functions $M^n \to M : (a_1, \dots, a_n) \mapsto c^{\cal M}$ 
+    for $c \in L^C$ are in ${\cal T}$; 
+    \item every function $f^{\cal M}$ where $f \in L^F$ is in ${\cal T}$;
+    \item the collection is closed under composition.
+\end{itemize}
+\end{remark}
+
+\newpage 
+\section{Formulae}
+
+The following is the base case of the formulae which we would like to define. 
+
+\begin{defn}[Atomic $L$-formula] 
+An {\bf atomic $L$-formula} is a string of symbols from 
+\[ L \cup \{(\,, )\} \cup \{\,,\} \cup \Var \cup \,\{\hspace{0.2ex}=\hspace{0.2ex}\} \] 
+of the form
+\begin{enumerate}[(i)]
+    \item $(t=s)$, where $t$ and $s$ are $L$-terms, or 
+    \item $R(t_1, \dots, t_k)$, where $R \in L^R$ is $k$-ary and $t_1, \dots, t_k$ are $L$-terms.
+\end{enumerate}
+\end{defn}
+
+As with $L$-terms, we will abuse notation for readability. For instance, if $L = \{<, \times\}$, 
+then we will write $y_1 < y_2^2$ instead of $<\hspace{-0.2ex}(y_1, \times(y_2, y_2))$.
+
+\begin{defn}[$L$-formulae]
+The set of {\bf $L$-formulae} is the smallest set of strings from 
+\[ L \cup \{(\,, )\,, =\} \cup \{\,,\} \cup \Var \cup \,\{\neg, \wedge, \vee, \forall, \exists\} \] 
+satisfying the following:
+\begin{enumerate}[(i)]
+    \item Every atomic $L$-formula is an $L$-formula.
+    \item If $\phi$ and $\psi$ are $L$-formulae, then so are $(\phi \wedge \psi)$, 
+    $(\phi \vee \psi)$, and $\neg \phi$.
+    \item If $\phi$ is an $L$-formula and $x \in \Var$, then 
+    $\forall x \, \phi$ and $\exists x \, \phi$ are also $L$-formulae.
+\end{enumerate}
+\end{defn}
+We will write $(\phi \to \psi)$ to mean 
+$(\neg \phi \vee \psi)$, and $(\phi \leftrightarrow \psi)$ to mean 
+$(\phi \to \psi) \wedge (\psi \to \phi)$.
+
+\begin{defn}[Free and bound variables] 
+Suppose that $\phi$ is an $L$-formula and $x \in \Var$. An occurrence of $x$ in $\phi$ is 
+said to be {\bf bound} of it appears in the scope of a quantifier ($\forall, \exists$). 
+An occurrence of $x$ is $\phi$ is {\bf free} if it is not bound.
+\end{defn}
+
+\begin{exmp}
+Let $L = \{\in\}$. Consider the $L$-formula given by 
+\[ (x \in y) \wedge \forall z \, (z \in x \to z \in y) \wedge \forall z \, (z \in y 
+\to (z \in x) \vee (z = x)). \] 
+Then every occurrence of $x$ and $y$ is free, but every occurrence of $z$ is bound. 
+Viewed in the natural way of set theory, this says that $y$ is a successor of $x$.
+\end{exmp}
+
+We write $\phi = \phi(x_1, \dots, x_n)$ to mean that all free occurrences of variables 
+in $\phi$ are from $\{x_1, \dots, x_n\}$. As before, we do not require all of 
+$x_1, \dots, x_n$ to appear in $\phi$. For instance, we may represent the formula in the 
+above example as $\phi(x, y)$ or $\phi(x, y, w)$.
+
+\begin{defn}[$L$-sentence]
+An $L$-formula with no free variables is an {\bf $L$-sentence}.
+\end{defn}
+
+For simplification, we will assume that no variable appears in an $L$-formula both bound and free.
+
+\begin{exmp}
+Let $L = \{<, \times, 0\}$ and consider the completely valid $L$-formula 
+\[ (x < 0) \wedge \exists x \, (x^2 = y). \] 
+Note that the first occurrence of $x$ is free, while the second occurrence is bound. 
+Next, consider 
+\[ (x < 0) \wedge \exists z \, (z^2 = y). \] 
+While these formulae are not the same, we will see that they have the same 
+meaning, which is why we can make the above simplification. 
+\end{exmp}
+
+\begin{exmp}
+Consider the language of set theory $L = \{\in\}$.
+\begin{itemize}
+    \item The $L$-terms are just the variables, as there are no constant or function symbols.
+    \item The atomic $L$-formulae are precisely of the form $(x = y)$ or $(x \in y)$ 
+    where $x, y \in \Var$. 
+    \item The $L$-formulae are the definite properties in set theory. For instance, 
+    the {\bf ZFC} axioms are $L$-formulae; in fact, since there are no free variables, 
+    they are $L$-sentences.
+\end{itemize}
+\end{exmp}
+
+\newpage 
+\section{Truth}
+
+\begin{defn}[Satisfaction] 
+Let ${\cal M}$ be an $L$-structure, suppose $\phi = \phi(x)$ is an $L$-formula where 
+$x = (x_1, \dots, x_n)$, and $a = (a_1, \dots, a_n) \in M^n$. We define ${\cal M} 
+\vDash \phi(a)$ inductively as follows:
+\begin{enumerate}[(i)]
+    \item If $\phi$ is $(t_1 = t_2)$ where $t_1 = t_1(x)$ and $t_2 = t_2(x)$ are $L$-terms, then 
+    ${\cal M} \vDash \phi(a)$ if $t_1^{\cal M}(a) = t_2^{\cal M}(a)$.
+    \item If $\phi$ is $R(t_1, \dots, t_k)$ where $R \in L^R$ is a $k$-ary relation symbol 
+    in ${\cal M}$ and each $t_i = t_i(x_1, \dots, x_n)$, then ${\cal M} \vDash 
+    \phi(a)$ if $(t_1^{\cal M}(a), \dots, t_k^{\cal M}(a)) \in R^{\cal M}$.
+    \item If $\phi$ is $\neg \psi$ where $\psi = \psi(x)$ is an $L$-formula, then 
+    ${\cal M} \vDash \phi(a)$ if ${\cal M} \nvDash \psi(a)$. 
+    \item If $\phi$ is $(\psi \wedge \theta)$ where $\psi(x)$ and $\theta(x)$ 
+    are $L$-formulae, then ${\cal M} \vDash \phi(a)$ if ${\cal M} \vDash \psi(a)$ and 
+    ${\cal M} \vDash \theta(a)$.
+    \item If $\phi$ is $(\psi \vee \theta)$ where $\psi(x)$ and $\theta(x)$ 
+    are $L$-formulae, then ${\cal M} \vDash \phi(a)$ if ${\cal M} \vDash \psi(a)$ or
+    ${\cal M} \vDash \theta(a)$.
+    \item If $\phi$ is $\exists y \, \psi$ where $y \in \Var$ and $\psi(x, y)$ is an 
+    $L$-formula, then ${\cal M} \vDash \phi(a)$ if there exists $b \in M$ such that 
+    ${\cal M} \vDash \psi(a, b)$.
+    \item If $\phi$ is $\forall y \, \psi$ where $y \in \Var$ and $\psi(x, y)$ is an 
+    $L$-formula, then ${\cal M} \vDash \phi(a)$ if for every $b \in M$, we have 
+    ${\cal M} \vDash \psi(a, b)$.
+\end{enumerate}
+If ${\cal M} \vDash \phi(a)$, then we say that {\bf ${\cal M}$ satisfies $a$}, or that
+{\bf $\phi(a)$ is true in ${\cal M}$}, or that {\bf $a$ realizes $\phi(x)$ in ${\cal M}$}. 
+The set of all realizations of $\phi$ in ${\cal M}$, 
+\[ \{a \in M^n : {\cal M} \vDash \phi(a)\}, \] 
+is called the {\bf set defined by $\phi$ in ${\cal M}$}, and is denoted by $\phi^{\cal M}$.
+\end{defn}
+
+\begin{remark}
+If $n = 0$, then $\phi$ is an $L$-sentence. By convention, we have $M^0 = \{\varnothing\}$, so 
+the only question is whether $\varnothing$ realizes $\phi(x)$ or not. In particular, 
+$\phi$ is either true or false in ${\cal M}$.
+\end{remark}
+
+\begin{exmp}
+Consider the $L$-formula $\phi(x) = \exists z \, (z^2 = x)$. 
+
+Let ${\cal R} = (\R, 0, 1, +, -, \times)$. Then ${\cal R} \vDash \phi(2)$, but 
+${\cal R} \vDash \neg \phi(-2)$. In fact, $\phi^{\cal R} = \R_{\geq0}$. In particular, if 
+$\sigma$ is given by $\forall x \, \phi(x)$, then ${\cal R} \vDash \neg \sigma$. 
+
+Now, consider instead ${\cal Q} = (\Q, 0, 1, +, -, \times)$. We see that ${\cal Q} \vDash 
+\neg \phi(2)$ this time, and we have 
+\[ \phi^{\cal Q} = \left\{\frac{n^2}{m^2} : n,m\in\Z,\, m \neq 0\right\}. \]
+Finally, if ${\cal C} = (\C, 0, 1, +, -, \times)$, then in fact ${\cal C} \vDash \sigma$. 
+That is, $\phi^{\cal C} = \C$.
+\end{exmp}
+
+\begin{exmp}
+Let $L = \{0, +, -\}$ and let ${\cal Z} = (\Z, 0, +, -) \subseteq (\Q, 0, +, -) = {\cal Q}$.
+Consider the atomic formula $\psi(x, y)$ given by $y + y = x$. For $a, b \in \Z$, notice that 
+\[ {\cal Z} \vDash \psi(a, b) \iff a = 2b \iff {\cal Q} \vDash \psi(a, b). \]
+That is, ${\cal Z}$ and ${\cal Q}$ agree on what the integer solutions of $\psi$ are. 
+
+Now, let $\phi(x)$ be given by $\exists y \, \psi(x, y)$. Then ${\cal Q} \vDash \phi(1)$, 
+but ${\cal Z} \vDash \neg \phi(1)$, so ${\cal Q}$ and ${\cal Z}$ do not agree on the 
+integer realizations of $\phi(x)$.
+\end{exmp}
+
+\newpage 
+\section{Elementary substructures}
+
+The final example from the previous section gives some insight into how satisfaction 
+for formulae is inherited by substructures.
+
+\begin{prop}
+Suppose that ${\cal M} \subseteq {\cal N}$ are $L$-structures, $\phi(x)$ is an $L$-formula 
+where $x = (x_1, \dots, x_n)$, and $a = (a_1, \dots, a_n) \in M^n$. If $\phi$ is quantifier-free, 
+then ${\cal M} \vDash \phi(a)$ if and only if ${\cal N} \vDash \phi(a)$.
+\end{prop}
+\begin{pf}
+In order to prove something about all formulae, one usually has to begin by proving something about terms and then proceeding by induction on the complexity of the formula. The result about terms is itself usually proved by induction on the complexity of the term.
+
+We will begin with the following claim on terms. 
+
+{\bf Claim.} For every $L$-term $t(x)$, we have $t^{\cal N} \upharpoonright_{M^n} \, = t^{\cal M}$.
+
+{\bf Proof of Claim.} We proceed by induction on the complexity of the term $t$.
+\begin{itemize}
+    \item Suppose that $t = x_i$ for some $1 \leq i \leq n$. Then $t^{\cal N} \upharpoonright_{M^n}$ 
+    is the $i$-th coordinate projection on $N^n$ restricted to $M^n$. This is simply 
+    the $i$-th coordinate projection of $M^n$, which is $t^{\cal M}$.
+    \item Suppose that $t = c$ where $c \in L^C$. Then $t^{\cal N} \upharpoonright_{M^n}$ is 
+    the constant function on $N^n$ with value $c^{\cal N}$, restricted to $M^n$. 
+    Since ${\cal M \subseteq N}$, we have $c^{\cal M} = c^{\cal N}$, so this is 
+    just the constant function on $M^n$ with value $c^{\cal M}$, which is $t^{\cal M}$.
+    \item Suppose that $t = f(t_1, \dots, t_\ell)$ where $f \in L^F$ is $\ell$-ary 
+    and $t_1, \dots, t_\ell$ are $L$-terms. Then 
+    \[ t^{\cal N}(a) = f^{\cal N}(t_1^{\cal N}(a), \dots, t_\ell^{\cal N}(a)) 
+    = f^{\cal N}(t_1^{\cal M}(a), \dots, t_\ell^{\cal M}(a)) = f^{\cal M}(t_1^{\cal M}(a), 
+    \dots, t_\ell^{\cal M}(a)) = t^{\cal M}(a), \]
+    where the second equality is from the inductive hypothesis, and the third equality 
+    follows from the fact that ${\cal M \subseteq N}$ and hence $f^{\cal N} \upharpoonright_{M^n}
+    \, = f^{\cal M}$.
+\end{itemize}
+This completes the proof of the claim. \hfill $\blacksquare$
+
+We now prove the proposition by induction on the complexity of $\phi(x)$.
+\begin{itemize}
+    \item Suppose that $\phi(x)$ is atomic; that is, $\phi(x)$ is $(t = s)$ for $L$-terms 
+    $t(x)$ and $s(x)$. Then 
+    \begin{align*}
+        {\cal M} \vDash \phi(a) &\iff t^{\cal M}(a) = s^{\cal M}(a) \\ 
+        &\iff t^{\cal N}(a) = s^{\cal N}(a) \; \text{ by Claim} \\ 
+        &\iff {\cal N} \vDash \phi(a).
+    \end{align*}
+    \item Suppose that $\phi(x)$ is $R(t_1, \dots, t_k)$ where $R \in L^R$ is $k$-ary 
+    and $t_1(x), \dots, t_k(x)$ are $L$-terms. Then 
+    \begin{align*}
+        {\cal M} \vDash \phi(a) &\iff (t_1^{\cal M}(a), \dots, t_k^{\cal M}(a)) \in R^{\cal M} \\ 
+        &\iff (t_1^{\cal M}(a), \dots, t_k^{\cal M}(a)) \in R^{\cal N} \; \text{ since 
+        ${\cal M \subseteq N}$ implies $R^{\cal M} = R^{\cal N} \cap M^k$} \\ 
+        &\iff (t_1^{\cal N}(a), \dots, t_k^{\cal N}(a)) \in R^{\cal N} \; \text{ by Claim} \\ 
+        &\iff {\cal N} \vDash \phi(a).
+    \end{align*}
+\end{itemize}
+We have proved the base cases. Let $\psi(x)$ and $\theta(x)$ be 
+quantifier-free formulae for which the result is known. 
+\begin{itemize}
+    \item Suppose $\phi(x)$ is $\neg \psi(x)$. Then 
+    \begin{align*}
+        {\cal M} \vDash \phi(a) &\iff {\cal M} \nvDash \psi(a) \\ 
+        &\iff {\cal N} \nvDash \psi(a) \; \text{ by inductive hypothesis} \\ 
+        &\iff {\cal N} \vDash \phi(a).
+    \end{align*}
+    \item Suppose $\phi(x)$ is $(\psi(x) \wedge \theta(x))$. Then 
+    \begin{align*}
+        {\cal M} \vDash \phi(a) &\iff {\cal M} \vDash \psi(a) \text{ and } {\cal M} \vDash \theta(a) \\ 
+        &\iff {\cal N} \vDash \psi(a) \text{ and } {\cal N} \vDash \theta(a) \; \text{ by inductive hypothesis} \\ 
+        &\iff {\cal N} \vDash \phi(a).
+    \end{align*}
+    \item Suppose $\phi(x)$ is $(\psi(x) \vee \theta(x))$. We can prove this the exact same 
+    way as above, or we may simply note that $(\psi \vee \theta)$ is equivalent to 
+    $\neg (\neg \psi \wedge \neg \theta)$.
+\end{itemize}
+As $\phi(x)$ is quantifier-free, this completes the induction. 
+\end{pf}
+
+\begin{prop}
+Suppose that ${\cal M} \subseteq {\cal N}$ are $L$-structures, $\phi(x)$ is an $L$-formula 
+where $x = (x_1, \dots, x_n)$, and $a = (a_1, \dots, a_n) \in M^n$.
+\begin{enumerate}[(a)]
+    \item Suppose that $\phi(x)$ is existential (i.e. $\phi(x)$ is of the form 
+    $\exists y \, \psi(x, y)$ where $y = (y_1, \dots, y_m)$ and $\psi$ is quantifier free). 
+    If ${\cal M} \vDash \phi(a)$, then ${\cal N} \vDash \phi(a)$.
+    \item Suppose that $\phi(x)$ is universal (i.e. $\phi(x)$ is of the form 
+    $\forall y \, \psi(x, y)$ where $y = (y_1, \dots, y_m)$ and $\psi$ is quantifier free). 
+    If ${\cal N} \vDash \phi(a)$, then ${\cal M} \vDash \phi(a)$.
+\end{enumerate}
+\end{prop}
+\begin{pf}
+To prove (a), suppose that 
+$\phi(x)$ is existential. Then 
+\begin{align*}
+    {\cal M} \vDash \phi(a) &\iff \text{There exists $b \in M^m$ such that ${\cal M} \vDash 
+    \psi(a, b)$} \\
+    &\iff \text{There exists $b \in M^m$ such that ${\cal N} \vDash \psi(a, b)$} \; 
+    \text{ by Proposition 21.1} \\ 
+    &\;\;\Longrightarrow\;\text{There exists $b \in N^m$ such that ${\cal N} \vDash \psi(a, b)$} \; 
+    \text{ since $M \subseteq N$} \\ 
+    &\iff {\cal N} \vDash \phi(a).
+\end{align*}
+To prove (b), we use the fact that $\forall y$ is equivalent to $\neg \exists y \, \neg$. We have 
+\begin{align*}
+    {\cal N} \vDash \phi(a) &\iff {\cal N} \vDash \forall y \, \psi(a, y) \\ 
+    &\iff {\cal N} \vDash \neg \exists y \, \neg \psi(a, y) \\ 
+    &\iff {\cal N} \nvDash \exists y \, \neg \psi(a, y) \\ 
+    &\;\;\Longrightarrow\; {\cal M} \nvDash \exists y \, \neg \psi(a, y) \;\text{ by the contrapositive of (a)} \\ 
+    &\iff {\cal M} \vDash \neg \exists y \, \exists \psi(a, y) \\ 
+    &\iff {\cal M} \vDash \phi(a).
+\end{align*}
+This completes the proof of the proposition.
+\end{pf}
+
+While Propositions 21.1 and 21.2 are about substructures ${\cal M \subseteq N}$, the proofs 
+clearly extend to $L$-embeddings $j : {\cal M} \to {\cal N}$. For instance, if 
+$\phi$ is quantifier free and $a \in M^n$, we have ${\cal M} \vDash \phi(a)$ if and only if 
+${\cal N} \vDash \phi(j(a))$. We can strengthen the notion of an embedding to force Proposition 21.1 
+to hold for any formula, and not just quantifier free ones.
+
+\begin{defn}[Elementary embedding, elementary substructure] 
+Suppose that ${\cal M}$ and ${\cal N}$ are $L$-structures with universes $M$ and $N$ respectively. 
+An $L$-embedding $j : {\cal M \to N}$ is called an {\bf elementary embedding} if for all 
+$L$-formulae $\phi(x)$ where $x = (x_1, \dots, x_n)$ and all $a \in M^n$, we have 
+${\cal M} \vDash \phi(a)$ if and only if ${\cal N} \vDash \phi(j(a))$.
+
+If $M \subseteq N$ and the containment map $j : {\cal M} \to {\cal N}$ is an elementary embedding, then we say that ${\cal M}$ is an {\bf elementary substructure} of ${\cal N}$, denoted by 
+${\cal M \preceq N}$.
+\end{defn}
+
+\begin{exmp}
+Let ${\cal Q} = (\Q, 0, +, -)$.
+\begin{enumerate}[(a)]
+    \item From Example 20.4, we have that ${\cal Z} = (\Z, 0, +, -) \npreceq {\cal Q}$. 
+    In particular, recall that we had the sentence $\phi(x) := \exists y \, (y + y = x)$, 
+    and we saw that ${\cal Q} \vDash \phi(1)$ but ${\cal Z} \vDash \neg \phi(1)$.
+    
+    \item In fact, ${\cal Q}$ has no proper elementary subgroups. Indeed, suppose that 
+    ${\cal G} = (G, 0, +, -) \preceq {\cal Q}$. 
+    We make the remark that in the definition of an elementary structure, we can take 
+    $n = 0$, so elementary substructures satisfy all the same $L$-sentences as the extension. 
+    Note that ${\cal Q} \vDash \exists x \, (x \neq 0)$. 
+    Now, since ${\cal G \preceq Q}$, we obtain ${\cal G} \vDash \exists x \, (x \neq 0)$. That is, 
+    we have $a \in G$ where $a \neq 0$. Since $G \subseteq \Q$, we see that $a = \frac{n}{m}$ 
+    for some $n, m \in \Z$. We may assume without loss of generality that $n, m > 0$ as 
+    we may simply take the additive inverse if $a < 0$. 
+    As $a \in G$, we also have $n \in G$, since we may write 
+    \[ n = \underbrace{a + \cdots + a}_{\text{$m$ times}}. \]
+    Observe that we have 
+    \[ {\cal Q} \vDash \forall x \exists y \, (\underbrace{y + \cdots + y}_{\text{$n$ times}} = x). \]
+    That is, $\Q$ is $n$-divisible. It then follows that 
+    \[ {\cal Q} \vDash \exists y \, (\underbrace{y + \cdots + y}_{\text{$n$ times}} = n). \]
+    Since ${\cal G \preceq Q}$, we obtain 
+    \[ {\cal G} \vDash \exists y \, (\underbrace{y + \cdots + y}_{\text{$n$ times}} = n). \]
+    Hence, there is $\ell \in G$ such that 
+    \[ \underbrace{\ell + \cdots + \ell}_{\text{$n$ times}} = n. \]
+    Necessarily, $\ell = 1$, so $1 \in G$. From this, we obtain $\Z \leq G \leq \Q$. 
+    Finally, for every $0 < k \in \Z$, let $\sigma_k$ be the $L$-sentence 
+    \[ \sigma_k := \forall x \exists y \, (\underbrace{y + \cdots + y}_{\text{$k$ times}} = x). \]
+    Note that ${\cal Q} \vDash \sigma_k$ for all $k > 0$, and from ${\cal G \preceq Q}$, 
+    we have that ${\cal G} \vDash \sigma_k$ 
+    for all $k > 0$ as well. Thus, $G = \Q$, which we wanted to show.
+\end{enumerate}
+\end{exmp}
+
+\newpage 
+\section{Tarski-Vaught}
+
+\begin{prop}
+Isomorphisms are elementary embeddings.
+\end{prop}
+\begin{pf}
+Suppose that $j : {\cal M \to N}$ is an $L$-isomorphism of $L$-structures. We need to show that 
+for all $L$-formulae $\phi(x_1, \dots, x_n)$ and $a \in M^n$, we have 
+\[ {\cal M} \vDash \phi(a) \iff {\cal N} \vDash \phi(j(a)). \tag{$\star$} \]
+We prove this by induction on the complexity of $\phi$. If $\phi$ is atomic, it is 
+quantifier-free, so $(\star)$ holds for any $L$-embedding; in particular, 
+it holds for $j$. The $\wedge, \vee, \neg$ 
+cases are easy to check by induction. We may write $\forall$ has $\neg \exists \neg$, 
+so it suffices to check the case where $\phi$ is $\exists y \, \psi(x_1, \dots, x_n, y)$ 
+where $(\star)$ holds for $\psi$. Indeed, we have 
+\begin{align*}
+    {\cal M} \vDash \phi(a) &\iff \text{there is $b \in M$ such that ${\cal M} \vDash \psi(a, b)$} \\
+    &\iff \text{there is $b \in M$ such that ${\cal N} \vDash \psi(j(a), j(b))$} && \text{by inductive hypothesis} \\ 
+    &\iff \text{there is $c \in N$ such that ${\cal N} \vDash \psi(j(a), c)$} && \text{by surjectivity of $j$} \\
+    &\iff {\cal N} \vDash \exists y \, \psi(j(a), y) \\
+    &\iff {\cal N} \vDash \phi(j(a)).
+\end{align*}
+This completes the induction.
+\end{pf}
+
+We saw previously that being an elementary substructure is a very strong condition. 
+Recall that the equation $y + y = 1$ has a solution in $\Q$ but not in $\Z$, 
+and so $(\Z, 0, +, -) \npreceq (\Q, 0, +, -)$ as in Example 21.4.
+The following proposition tells us that this is a typical way that substructures can fail to 
+be elementary. 
+
+\begin{prop}[Tarski-Vaught Test]
+Suppose that ${\cal M \subseteq N}$ are $L$-structures. The following are equivalent:
+\begin{enumerate}[(i)]
+    \item ${\cal M}$ is an elementary substructure of ${\cal N}$.
+    \item For every $L$-formula $\phi(x_1, \dots, x_n, y)$ and $a \in M^n$, 
+    \[ \text{if ${\cal N} \vDash \exists y \, \phi(a, y)$, then there is $b \in M$ such that 
+    ${\cal N} \vDash \phi(a, b)$.} \tag{$\dagger$} \]
+\end{enumerate}
+\end{prop}
+\begin{pf}
+First, we prove that (i) implies (ii). Suppose that ${\cal M \preceq N}$. Let $\psi(x) 
+:= \exists y \, \phi(x_1, \dots, x_n, y)$ and $a \in M^n$. If ${\cal N} \vDash 
+\exists y \, \phi(a, y)$, then ${\cal N} \vDash \psi(a)$. As ${\cal M \preceq N}$, we obtain
+${\cal M} \vDash \psi(a)$. In particular, 
+${\cal M} \vDash \exists y \, \phi(a, y)$, so there exists $b \in M$ such that 
+${\cal M} \vDash \phi(a, b)$. Using the fact that ${\cal M} \preceq {\cal N}$ again, it follows that 
+${\cal N} \vDash \phi(a, b)$, so $(\dagger)$ holds.
+
+Conversely, assume (ii). We show that for every $L$-formula $\theta(x_1, \dots, x_n)$ 
+and $a \in M^n$, we have 
+\[ {\cal M} \vDash \theta(a) \iff {\cal N} \vDash \theta(a). \tag{$\star$} \]
+As usual, we proceed by induction on the complexity of $\theta$. If $\theta$ is atomic, 
+$(\star)$ follows from the fact that ${\cal M \subseteq N}$ and $\theta$ is quantifier-free. 
+The $\neg, \vee, \wedge$ cases follow easily from induction. Again, $\forall$ can be 
+written as $\neg\exists\neg$, so we only need to prove that $(\star)$ holds when 
+$\theta$ is $\exists y \, \phi(x_1, \dots, x_n, y)$, where $(\star)$ holds for $\phi$. 
+Indeed, suppose ${\cal M} \vDash \theta(a)$. Then ${\cal M} \vDash \phi(a, b)$ for some 
+$b \in M$, and by the inductive hypothesis, we obtain ${\cal N} \vDash \phi(a, b)$. Hence, ${\cal N} \vDash \theta(a)$. On the other hand, suppose ${\cal N} \vDash \theta(a)$. Then 
+${\cal N} \vDash \exists y \, \phi(a, y)$, and by $(\dagger)$, there is 
+$b \in M$ such that ${\cal N} \vDash \phi(a, b)$. By the inductive hypothesis, 
+${\cal M} \vDash \phi(a, b)$, and hence ${\cal M} \vDash \theta(a)$. Thus, 
+$(\star)$ holds for $\theta$, and we are done.
+\end{pf}
+
+\begin{exercise}
+Suppose that $M$ is the universe of an $L$-structure ${\cal M}$, and $A \subseteq M$. 
+Then $A$ is the universe of an elementary substructure of ${\cal M}$ if and only if 
+for every $L$-formula $\phi(x_1, \dots, x_n, y)$ and $a \in A^n$, if 
+${\cal M} \vDash \exists y \, \phi(a, y)$, then there exists $b \in A$ such that 
+${\cal M} \vDash \phi(a, b)$. 
+(Hint: The left-to-right implication is easy. For the right-to-left direction, show that 
+$A$ is the universe of a substructure of ${\cal M}$, and apply Tarski-Vaught.)
+\end{exercise}
+
+The following is one of the first theorems in model theory. We can prove it
+as a consequence of Exercise 22.3.
+
+\begin{thm}[Downward L\"owenheim-Skolem]
+Suppose that ${\cal M}$ is an $L$-structure and $A \subseteq M$. Then there exists an elementary 
+substructure of ${\cal M}$ that contains $A$ and is of cardinality at most $|A| + |L| + \aleph_0$. 
+In particular, if $A = \varnothing$ and $L$ is countable, then every $L$-structure has a 
+countable elementary substructure.
+\end{thm}
+\begin{pf}
+Let $\kappa := |A| + |L| + \aleph_0$. We construct a countable chain 
+\[ A = A_0 \subseteq A_1 \subseteq A_2 \subseteq \cdots \subseteq M \] 
+such that for any $L$-formula $\phi(x_1, \dots, x_n, y)$ and $a \in A_i^n$, if 
+${\cal M} \vDash \exists y \, \phi(a, y)$, then there is $b \in A_{i+1}$ such that 
+${\cal M} \vDash \phi(a, b)$.
+
+Note that every $L$-formula is a finite string from a set of symbols of size $|L| + \aleph_0 
+\leq \kappa$, and there are at most $\kappa$-many such finite strings since 
+$\kappa$ is infinite (by Theorem 15.5 and Theorem 15.10 part (b)). Similarly, 
+there are at most $\kappa$-many finite tuples from each $A_i$ since $|A_i| \leq \kappa$. 
+Thus, the number of pairs $(\phi, a)$ is at most $\kappa$. 
+
+For any pair $\phi(x_1, \dots, x_n, y)$ 
+and $a \in A_i^n$ with ${\cal M} \vDash \exists y \, \phi(a, y)$, we choose a realization 
+and include it in $A_{i+1}$. Then we have $A_i \subseteq A_{i+1}$, $|A_{i+1}| \leq 
+\kappa$, and $A_{i+1}$ satisfies the desired property. 
+
+Finally, let $B := \bigcup_i A_i$, and note that we have $|B| \leq \kappa$ as well. By 
+Exercise 22.3, it follows that $B$ is the universe of an elementary substructure of 
+${\cal M}$, which completes the proof.
+\end{pf}
+
+\newpage 
+\section{Definable sets and parameters}
+
+Consider ${\cal R} = (\R, 0, 1, +, \times, <)$. If $0 \leq n < m$ are integers, then 
+we can define the open interval $(n, m)$ in ${\cal R}$ with the formula 
+\[ \phi(x) := (\underbrace{1 + \cdots + 1}_{\text{$n$ times}} < x) 
+\wedge (x < \underbrace{1+ \cdots + 1}_{\text{$m$ times}}). \]
+Indeed, we have $\phi^{\cal R} = (n, m)$. We may also define $(q, r)$ for $q, r \in \Q$. 
+For instance, $(0, \frac12)$ may be defined with the formula
+\[ (0 < x) \wedge \exists y \, ((y + y = 1) \wedge (x < y)). \] 
+However, we cannot define an interval such as $(0, \pi)$. We need to change the 
+language to allow parameters from the universe. This motivates the following definition.
+
+\begin{defn}
+Suppose that ${\cal M}$ is an $L$-structure and $B \subseteq M$. We write 
+\[ L_B := L \cup \{ \underline{b} : b \in B \}, \] 
+where each $\underline{b}$ is a new, distinct constant symbol. We define 
+${\cal M}_B$ to be the $L_B$-structure whose universe is $M$, the symbols from $L$ 
+are interpreted exactly as in ${\cal M}$, and for each $b \in B$, 
+\[ \underline{b}^{{\cal M}_B} := b. \] 
+We see that ${\cal M}_B$ is the natural way of making ${\cal M}$ into an $L_B$-structure. 
+\end{defn}
+
+We often drop the underline and rely on context to distinguish between 
+$b \in B$ and $b \in L_B^C$. Also, as the construction of ${\cal M}_B$ from ${\cal M}$ 
+is quite natural, we sometimes drop the subscript and rely on context to determine if 
+${\cal M}$ is being viewed as an $L$-structure or an $L_B$-structure.
+
+\begin{remark}
+We may now rephrase Tarski-Vaught as follows. Suppose ${\cal M} \subseteq {\cal N}$. 
+Then ${\cal M} \preceq {\cal N}$ if and only if for every $L_M$-formula $\phi(y)$ 
+in a single variable, if ${\cal N} \vDash \exists y \, \phi(y)$, then there is 
+$b \in M$ such that ${\cal N} \vDash \phi(b)$.
+\end{remark}
+
+\begin{defn}[Definable sets]
+Let ${\cal M}$ be an $L$-structure and $B \subseteq M$. A subset $X \subseteq M^n$ is 
+{\bf definable over $B$} (or {\bf $B$-definable}) {\bf in} ${\cal M}$ if there exists 
+an $L_B$-formula $\phi(x_1, \dots, x_n)$ such that 
+\[ X = \{a \in M^n : {\cal M}_B \vDash \phi(a)\}. \]
+In this case, we write $X = \phi^{\cal M}$ and say that $\phi$ {\bf defines} $X$. 
+We say that $X$ is {\bf definable} in ${\cal M}$ if it is $M$-definable, 
+and that $X$ is {\bf $0$-definable} if it is definable over $\varnothing$. 
+\end{defn}
+
+\begin{remark}
+Observe that if $\phi(x_1, \dots, x_n)$ is an $L_B$-formula, then there exists an $L$-formula 
+$\psi(x_1, \dots, x_n, y_1, \dots, y_m)$ and a tuple $b \in B^m$ such that 
+$\phi(x_1, \dots, x_n) = \psi(x_1, \dots, x_n, b)$. Thus, $X \subseteq M^n$ is $B$-definable 
+if and only if $X = \{a \in M^n : {\cal M} \vDash \psi(a, b)\}$ for some $L$-formula 
+$\psi(x_1, \dots, x_n, y_1, \dots, y_m)$ and $b \in B^m$.
+\end{remark}
+
+Before we state the following proposition, we will introduce the notation $\Aut_B({\cal M})$ 
+to mean the set of $L$-automorphisms of ${\cal M}$ that fix $B$ pointwise. Note that 
+this is also equal to the set of $L_B$-automorphisms of ${\cal M}_B$. 
+
+\begin{prop}
+Suppose ${\cal M}$ is an $L$-structure, $B \subseteq M$, and $X \subseteq M^n$. 
+If $X$ is $B$-definable, then for all automorphisms $j \in \Aut_B({\cal M})$, 
+we have $j(X) = X$. 
+\end{prop}
+\begin{pf}
+If $X$ is $B$-definable, then $X = \{a \in M^n : {\cal M} \vDash \phi(a, b)\}$
+where $\phi(x_1, \dots, x_n, y_1, \dots, y_m)$ is an $L$-formula and $b = (b_1, \dots, b_m) \in B^m$. 
+For any $a \in M^n$, we see that 
+\begin{align*}
+    a \in X &\iff {\cal M} \vDash \phi(a, b) \\ 
+    &\iff {\cal M} \vDash \phi(j(a), j(b)) && \text{by Proposition 22.1} \\ 
+    &\iff {\cal M} \vDash \phi(j(a), b) && \text{since $j(b) = b$} \\ 
+    &\iff j(a) \in X.
+\end{align*}
+Thus, $j(X) = X$ as desired.
+\end{pf}
+
+Due to this proposition, with some knowledge of 
+automorphisms of a structure, we may produce non-definable sets. 
+
+\begin{exmp}
+The interval $(0, 1)$ is not $0$-definable in $(\R, <)$. 
+\end{exmp}
+\begin{pf}
+Suppose that $(0, 1)$ were $0$-definable in $(\R, <)$. Consider the map $j : \R \to \R : 
+x \mapsto x+1$. This is indeed an automorphism of $(\R, <)$, but 
+$j((0, 1)) = (1, 2) \neq (0, 1)$, which contradicts Proposition 23.5.
+\end{pf}
+
+The above example was fairly trivial, so we will give a slightly more complicated one.
+
+Let $f : X \to Y$ be a function where $X \subseteq M^n$ and $Y \subseteq M^m$. We say that 
+$f$ is {\bf definable} in ${\cal M}$ if $\Gamma(f) = \{(a, f(a)) : a \in X\} \subseteq M^{n+m}$, 
+the graph of $f$, is definable.
+
+\begin{exmp}
+Addition of real numbers is not definable in $(\R, <)$.
+\end{exmp}
+\begin{pf}
+Suppose that $\Gamma(+) \subseteq \R^3$ is definable over $b_1, \dots, b_m \in \R$. 
+We may assume without loss of generality that $b_1 < b_2 < \cdots < b_m$. Fix 
+$c \in \R$ such that $c > b_m$. Now, define $j : \R \to \R$ by 
+\[ j(x) = \begin{cases} x & x \leq c \\ x - \frac{x-c}2 & x > c. \end{cases} \]
+In particular, if $x > c$, then $j$ maps $x$ halfway to $c$. We see that $j$ is an 
+automorphism fixing $b_1, \dots, b_m$ pointwise. However, we have 
+\[ j(\underbrace{c+1, c+1, 2c+2}_{\in\,\Gamma(+)}) = (\underbrace{c + \tfrac12, c + \tfrac12, \tfrac32 c + 1}_{\notin\,\Gamma(+)}), \] 
+contradicting Proposition 23.5, so $+$ is not definable.
+\end{pf}
+
+However, this method relies on the existence of many automorphisms. For example, it was proved 
+in Homework 6 that the only automorphism of $(\R, 0, 1, +, -, \times, <)$ is the identity. 
+Hence, to prove that the integers are not definable in this structure (which they 
+aren't), we need to thoroughly understand what the definable sets look like. 
+
+\newpage
+\section{Algebraic and semi-algebraic sets}
+
+Let $L = \{0, 1, +, -, \times\}$ be the language of rings and ${\cal R} = (R, 0, 1, +, -, \times)$, 
+where $R$ is commutative and unitary. We would like to know what the definable sets of ${\cal R}$ are.
+
+Suppose that $P_1, \dots, P_\ell \in R[X_1, \dots, X_n]$. Then the zero set 
+\[ V(P_1, \dots, P_\ell) := \{a \in R^n : P_i(a) = 0 \text{ for all } 1 \leq i \leq n\} \] 
+is called an {\bf algebraic} or {\bf Zariski closed} subset of $R^n$. Note that these 
+are all quantifier-free definable in ${\cal R}$. Indeed, we may consider the $L_R$-formula 
+$\phi(x_1, \dots, x_n)$ given by 
+\[ \bigwedge_{i=1}^\ell (P_i(x_1, \dots, x_n) = 0). \] 
+In fact, these, and their finite boolean combinations (intersection, union, complement) 
+are the {\it only} quantifier-free definable sets in ${\cal R}$.
+
+The atomic $L_R$-formulae are of the form $(t = s)$ where $t(x_1, \dots, x_n)$ and 
+$s(x_1, \dots, x_n)$ are $L_R$-terms. In a similar fashion to Question 4 of Homework 6, 
+we can show that the $L_R$-terms agree with the polynomials over $R$. Hence, the atomically 
+definable sets in ${\cal R}$ are precisely the hypersurfaces: namely of the form 
+$V(P)$ where $P \in R[X_1, \dots, X_n]$. From this, we can see that the quantifier-free definable 
+subsets of $R^n$ are precisely the sets of the form 
+\[ V_1 \setminus W_1 \cup \cdots \cup V_k \setminus W_k, \] 
+where $W_i \subseteq V_i \subseteq R^n$ are algebraic sets. 
+
+\begin{exercise}
+Using disjunctive normal form (DNF), every quantifier-free formula is logically equivalent 
+to one of the form 
+\[ \bigvee_{i=1}^r \left( \bigwedge_{j=1}^{s_i} \phi_{i,j} \wedge \bigwedge_{j=1}^{t_i} 
+\neg \psi_{i,j} \right) \]
+where $\phi_{i,j}, \psi_{i,j}$ are atomic.
+\end{exercise}
+
+Such sets are called the {\bf Zariski-constructible} sets. With this exercise, we have now proven that in
+any ring, the quantifier-free definable sets are the Zariski-constructible sets. 
+
+\begin{fact}[Tarski]
+Suppose that $R$ is an algebraically closed field. Then every definable set in ${\cal R} 
+= (R, 0, 1, +, -, \times)$ is Zariski-constructible. That is, every definable set is 
+quantifier-free definable, so ${\cal R}$ has quantifier elimination. 
+(We prove this later.)
+\end{fact}
+
+\begin{cor}
+If $R$ is an algebraically closed field, then every definable subset of $R$ in 
+${\cal R} = (R, 0, 1, +, -, \times)$ is either finite or cofinite (the complement is finite).
+\end{cor}
+
+Consider $R = \R$, and ${\cal R} = (\R, 0, 1, +, -, \times)$. Let 
+\[ \phi(x) := \exists y \, (y^2 = x). \] 
+Then $\phi^{\cal R} = \R_{\geq0}$. This is neither finite nor cofinite, and hence is not 
+quantifier-free definable in ${\cal R}$. Hence, ${\cal R}$ does not have quantifier elimination.
+
+\begin{fact}[Macintyre]
+If ${\cal R}$ is a ring that admits quantifier elimination, then it is an algebraically closed field. 
+(We will not prove this; this is outside the scope of the course.)
+\end{fact}
+
+Equipped with this fact, what can we say about $\R$? Note that $<$ on $\R$ is definable in 
+$(\R, 0, 1, +, -, \times)$, since to encode $x < y$, we may consider the formula 
+\[ \exists z \, (z^2 = y - x) \wedge \neg (x = y). \] 
+
+\begin{fact}[Tarski]
+Every definable set in $(\R, 0, +, -, \times, <)$ is quantifier-free definable. 
+(We prove this later.)
+\end{fact}
+
+This says that if we include $<$ in our language, then every definable set 
+is quantifier-free definable. In particular, $<$ was the only thing that 
+we needed quantifiers for. 
+
+\begin{exercise}
+The quantifier-free definable sets in an ordered ring $(R, 0, 1, +, -, \times, <)$ 
+(i.e. $a < b$ implies $a + c < b + c$, and if $a < b$ with $c > 0$, then $ac < bc$) 
+are finite boolean combinations of sets of the form $P(x_1, \dots, x_n) = 0$, or 
+$P(x_1, \dots, x_n) > 0$,
+where $P \in R[X_1, \dots, X_n]$.
+\end{exercise}
+
+The sets from Exercise 24.6 are called {\bf semi-algebraic}. 
+
+\begin{cor}
+The definable sets in $(\R, 0, 1, +, -, \times)$ are precisely the semi-algebraic sets.
+\end{cor}
+
+Note that these examples were very tame, in which we could easily describe the definable sets. 
+This is not always the case. For instance, consider the ring of integers. There is 
+no easy way of describing the definable sets other than repeating the definition; 
+in fact, G\"odel proved that all of mathematics could be encoded using the ring of 
+integers, so this should make sense.
+
+\newpage 
+\section{Theories and models}
+
+Previously, we looked at structures and analyzed their definable sets (via formulas and 
+interpretations). On the other hand, formulas 
+(or rather, sentences) can be used to axiomatise classes of structures. We 
+will later see that these two topics are intimately related and complementary. 
+
+\begin{defn} Let $L$ be a language.
+\begin{itemize}
+    \item An {\bf $L$-theory} is a set of $L$-sentences.
+    \item Let $T$ is an $L$-theory. A {\bf model} of $T$ is an $L$-structure ${\cal M}$ 
+    such that for every $L$-sentence $\sigma \in T$, we have ${\cal M} \vDash \sigma$. 
+    We denote this by ${\cal M} \vDash T$.
+    \item An $L$-theory is said to be {\bf consistent} if it has a model.
+    \item A class ${\cal K}$ of $L$-structures is said to be {\bf elementary} or 
+    {\bf axiomatisable} if there exists an $L$-theory $T$ such that 
+    ${\cal M} \in {\cal K}$ if and only if ${\cal M} \vDash T$.
+\end{itemize}
+\end{defn}
+
+\begin{exmp}
+Let $L = \{e, \cdot, {}^{-1}\}$ be the language of groups (we do not use 
+additive notation as this is typically reserved for abelian groups). The following 
+are all axiomatisable.
+\begin{itemize}
+    \item {\bf Groups:} Each of the group axioms can be written as an $L$-sentence. 
+    In fact, these are finitely axiomatisable.
+    \item {\bf Abelian groups:} Take the group axioms, and add an $L$-sentence that 
+    says that the elements commute. These are also finitely axiomatisable.
+    \item {\bf Groups of a fixed exponent $n$:} We may add the $L$-sentence $\forall x \, (x^n = e)$, 
+    and these are also finitely axiomatisable. 
+    \item {\bf Torsion-free groups:} For each $n \in \N$, we may consider the $L$-sentence 
+    \[ \sigma_n := \forall x \, ((x^n = e) \to (x = e)). \] 
+    These are infinitely axiomatisable, and we will prove that they are not finitely axiomatisable.
+    \item {\bf Divisible groups:} In particular, groups in which for every $n \in \N$, 
+    every element has an $n$-th root. Indeed, we may add the $L$-sentence 
+    \[ \tau_n := \forall x \exists y \, (y^n = x) \] 
+    for all $n \in \N$. These are infinitely axiomatisable, but not finitely axiomatisable. 
+\end{itemize}
+We will show later that the following are not axiomatisable.
+\begin{itemize}
+    \item {\bf Torsion groups:} Note that we can only quantify over the universe of the 
+    structure, and not $\N$, so $\forall x \exists n \, (x^n = e)$ is not an $L$-sentence.
+    We also see that 
+    \[ \forall x \, ((x = e) \vee (x^2 = e) \vee \cdots) \] 
+    is not an $L$-sentence as it is not of finite length.
+    \item {\bf Finite groups:} It is possible to write an $L$-sentence expressing that 
+    there are exactly $n$ elements in the structure, so the collection of finite groups of a particular 
+    size is axiomatisable. However, we cannot axiomatise the collection of all finite groups.
+\end{itemize}
+\end{exmp}
+
+\begin{defn}
+Let ${\cal M}$ be an $L$-structure. The {\bf theory of ${\cal M}$} is the $L$-theory
+given by 
+\[ \Th({\cal M}) := \{\sigma : {\cal M} \vDash \sigma\}. \] 
+If ${\cal M}$ and ${\cal N}$ are $L$-structures, then ${\cal M}$ is {\bf elementarily equivalent} 
+to ${\cal N}$ if $\Th({\cal M}) = \Th({\cal N})$. That is, for every $L$-sentence 
+$\sigma$, ${\cal M} \vDash \sigma$ if and only if ${\cal N} \vDash \sigma$. 
+We write ${\cal M} \equiv {\cal N}$.
+\end{defn}
+
+\begin{remark}
+To prove that two $L$-structures are elementarily equivalent, one only needs to show one 
+direction, as the other follows from the fact that $L$-sentences are closed under negation.
+\end{remark}
+
+\begin{remark} Let ${\cal M}$ and ${\cal N}$ be $L$-structures.
+\begin{enumerate}[(a)]
+    \item If $j : {\cal M} \to {\cal N}$ is an elementary embedding, then ${\cal M}$ is 
+    elementarily equivalent to ${\cal N}$ by taking $n = 0$ in the definition of an elementary 
+    embedding. Hence, if ${\cal M} \preceq {\cal N}$, then ${\cal M} \equiv {\cal N}$. 
+    \item Note that ${\cal M} \subseteq {\cal N}$ and ${\cal M} \equiv {\cal N}$ 
+    does not necessarily imply that ${\cal M} \preceq {\cal N}$. For example, 
+    consider ${\cal M} = (\omega \setminus \{0\}, <)$ and ${\cal N} = (\omega, <)$. 
+    We see that ${\cal M} \subseteq {\cal N}$. Moreover, the map $j : {\cal M} \to {\cal N}$
+    taking $n \in \omega \setminus \{0\}$ to its predecessor is an $L$-isomorphism, and hence an
+    elementary embedding. 
+    So by part (a), ${\cal M} \equiv {\cal N}$. However, observe that ${\cal M} 
+    \npreceq {\cal N}$ since the $L_M$-sentence $\exists y \, (y < 1)$ is true in 
+    ${\cal N}$, but not in ${\cal M}$.
+    \item If ${\cal M} \subseteq {\cal N}$, then ${\cal M} \preceq {\cal N}$
+    (as $L$-structures) if and only if ${\cal M}_M \equiv {\cal N}_M$ 
+    (as $L_M$-structures). 
+\end{enumerate}
+\end{remark}
+
+The following proposition is a strengthening of part (c) of the previous remark.
+
+\begin{prop}
+Let ${\cal M}$ and ${\cal N}$ be $L$-structures. There exists an 
+elementary embedding $j : {\cal M} \to {\cal N}$ if and only if ${\cal N}$ can be 
+expanded to be a model of the $L_M$-theory $\Th({\cal M}_M)$.
+\end{prop}
+\begin{pf}
+Suppose that $j : {\cal M} \to {\cal N}$ is an elementary embedding. We expand ${\cal N}$ 
+into an $L_M$-structure ${\cal N}'$ by setting $\underline{a}^{{\cal N}'} := j(a)$ 
+for every $a \in M$, interpreting all symbols the same as ${\cal N}$, 
+and keeping the universe the same. We leave it as an exercise to 
+check that ${\cal N}' \vDash \Th({\cal M}_M)$ using the fact that $j$ is an elementary embedding.
+
+Conversely, if ${\cal N}'$ is an expansion of ${\cal N}$ such that ${\cal N}' \vDash 
+\Th({\cal M}_M)$, then we may define the map $j : {\cal M} \to {\cal N}$ by 
+$j(a) := \underline{a}^{{\cal N}'}$ for all $a \in M$. Verify that $j$ is an 
+elementary embedding. 
+\end{pf}
+
+\newpage 
+\section{Entailment}
+
+\begin{defn}
+Let $T$ be an $L$-theory and $\sigma$ be an $L$-sentence. We say that $T$ {\bf implies}
+(or {\bf entails}) $\sigma$, denoted by $T \vDash \sigma$, if for every model 
+${\cal M} \vDash T$, we have ${\cal M} \vDash \sigma$. 
+(We also say that $\sigma$ is a {\bf consequence} of $T$.) 
+We say that $T$ is {\bf complete} if for every $L$-sentence $\sigma$, either 
+$T \vDash \sigma$ or $T \vDash \neg \sigma$. 
+\end{defn}
+
+\begin{exmp}~
+\begin{enumerate}[(a)]
+    \item Let ${\cal M}$ be an $L$-structure, and let $T = \Th({\cal M})$. For every 
+    $L$-sentence $\sigma$, either ${\cal M} \vDash \sigma$ or 
+    ${\cal M} \vDash \neg \sigma$, so it follows that $T$ is complete. 
+    \item Let $L = \{0, 1, +, -, \times\}$ be the language of rings. 
+    Let $T_1$ be the theory of rings. Note that $T_1$ is incomplete, as 
+    we may consider the sentence $\sigma := \forall x \forall y \, (xy = yx)$. 
+    Then $T_1 \nvDash \sigma$ as non-commutative rings exist, 
+    but $T_1 \nvDash \neg \sigma$ as well since commutative rings exist. 
+    
+    Let $T_2$ be the theory of fields. This is also incomplete; we may consider the 
+    sentence $\tau := \forall x \exists y \, (y^2 = x)$, which is true in $\C$ but false in $\R$. 
+    
+    Let $T_3$ be the theory of algebraically closed fields. This is incomplete as well, 
+    since the sentence $(1 + 1 = 0)$ is true in $\Z/2\Z$ but false in $\C$.
+    
+    Finally, $\ACF_p$, the theory of algebraically closed fields of characteristic $p$, 
+    where $p$ is either prime or zero, is complete. (We prove this fact later.)
+\end{enumerate}
+\end{exmp}
+
+\begin{lemma}
+Let $T$ be a consistent $L$-theory, and let $\overline{T} = \{\sigma : T \vDash \sigma\}$. 
+The following are equivalent.
+\begin{enumerate}[(i)]
+    \item $T$ is complete.
+    \item $\overline{T}$ is maximally consistent. 
+    \item $\overline{T} = \Th({\cal M})$ for some (or equivalently, any) ${\cal M} \vDash T$. 
+    \item Any two models of $T$ are elementarily equivalent. 
+\end{enumerate}
+\end{lemma}
+\begin{pf}
+(i) $\Rightarrow$ (ii). Suppose that $T$ is complete. Note that $\overline{T}$ is 
+consistent, since any model of $T$ is a model of $\overline{T}$. Now, suppose 
+that $S \supsetneq \overline{T}$. Let $\sigma \in S \setminus \overline{T}$. Then 
+$T \nvDash \sigma$, and since $T$ is complete, $T \vDash \neg \sigma$. Hence, 
+$\neg \sigma \in \overline{T} \subseteq S$. As
+$\sigma, \neg \sigma \in S$, it follows that $S$ has no models. 
+
+(ii) $\Rightarrow$ (iii). Suppose that $\overline{T}$ is maximally consistent. 
+Let ${\cal M} \vDash T$ be arbitrary. Then ${\cal M} \vDash \overline{T}$, and 
+hence $\Th({\cal M}) \supseteq \overline{T}$. Now, $\Th({\cal M})$ is consistent 
+as it has ${\cal M}$ as a model, and $\overline{T}$ is maximally consistent, 
+so $\Th({\cal M}) = \overline{T}$. (This proves the stronger version of (iii) where 
+$\overline{T} = \Th({\cal M})$ for {\it all} models ${\cal M} \vDash T$.)
+
+(iii) $\Rightarrow$ (iv) Suppose that $\overline{T} = \Th({\cal M})$ for some 
+${\cal M} \vDash T$. (Here, we use the weaker version of (iii).) Let 
+${\cal N} \vDash T$. Then $\Th({\cal N}) \supseteq \overline{T} = \Th({\cal M})$. 
+Since $\Th({\cal M})$ is complete, it is maximally consistent 
+(from (i) $\Rightarrow$ (ii) applied to $\Th({\cal M})$), so 
+$\Th({\cal N}) = \Th({\cal M})$. Thus, ${\cal N} \equiv {\cal M}$. Every model 
+of $T$ is elementarily equivalent to ${\cal M}$, and hence any two models of $T$ 
+are elementarily equivalent to each other.
+
+(iv) $\Rightarrow$ (i). Assume that any two models of $T$ are elementarily equivalent to each other. 
+Suppose that $\sigma$ is an $L$-sentence such that $T \nvDash \sigma$. Then there exists 
+a model ${\cal M} \vDash T$ such that ${\cal M} \vDash \neg \sigma$. As any model of $T$ 
+is elementarily equivalent to ${\cal M}$, it follows that $\neg \sigma$ is true in every 
+model of $T$. Thus, $T \vDash \neg \sigma$, so $T$ is complete. 
+\end{pf}
+
+The Compactness Theorem for first-order logic is of fundamental importance and is the 
+starting point for model theory and its applications. 
+
+\begin{thm}[Compactness Theorem]
+Let $L$ be a language and $T$ be an $L$-theory. $T$ is consistent if and only if every 
+finite subset of $T$ is consistent.
+\end{thm}
+
+Generally, the Compactness Theorem is seen as an immediate consequence of G\"odel's 
+completeness theorem, which states that $T$ is consistent if and only if there is no 
+"formal derivation" of a contradiction using the sentences in $T$ as assumptions. 
+The fact that derivations are finite then implies the Compactness Theorem. 
+However, this approach involves proof theory, which we would like to avoid. 
+Instead, we will prove the Compactness Theorem using ultraproducts, which we will introduce 
+in the next lecture. 
+
+\newpage 
+\section{Ultraproducts}
+
+\begin{defn}[Filter]
+Let $I$ be a non-empty set. A {\bf filter} on $I$ is a subset ${\cal F} \subseteq {\cal P}(I)$ 
+satisfying:
+\begin{enumerate}[(i)]
+    \item $I \in {\cal F}$ and $\varnothing \notin {\cal F}$. 
+    \item If $A, B \in {\cal F}$, then $A \cap B \in {\cal F}$. 
+    \item If $A \in {\cal F}$ and $A \subseteq B \subseteq I$, then $B \in {\cal F}$.
+\end{enumerate}
+\end{defn}
+
+Filters give us a notion of "largeness" for subsets of $I$. We give some examples below.
+
+\begin{exmp}~
+\begin{enumerate}[(a)]
+    \item Let $I = \R$. Then ${\cal F} = \{A \subseteq \R : \R \setminus A \text{ 
+    has Lebesgue measure } 0\}$ is a filter on $I$.
+    \item Let $I$ be an infinite set, and let $\kappa$ be a cardinal with 
+    $\aleph_0 \leq \kappa \leq |I|$. Then ${\cal F} = \{A \subseteq I 
+    : |I \setminus A| < \kappa\}$ is a filter on $I$. In particular, when
+    $\kappa = \aleph_0$, then ${\cal F} = \{A \subseteq I : A \text{ is cofinite}\}$, 
+    and this is called the {\bf Fr\'echet filter} on $I$.
+    \item Let $I$ be a non-empty set. A {\bf principal filter} on $I$ 
+    is a filter of the form ${\cal F} = 
+    \{A \subseteq I : x \in A\}$ for some fixed $x \in I$.
+\end{enumerate}
+\end{exmp}
+
+An {\bf ultrafilter} is a maximal filter; that is, a filter that is not properly contained in 
+any filter on $I$. Note that every principal filter is an ultrafilter. 
+To see this, let ${\cal F} = \{A \subseteq I : x \in A\}$ be a principal filter.
+Then any larger filter would contain a set that does not contain $x$, 
+and hence its intersection with $\{x\} \in {\cal F}$ would be the empty set, 
+contradicting the fact that $\varnothing$ is not contained in any filter. 
+It is slightly more difficult to describe the ultrafilters that are not principal filters. 
+First, we prove some facts.
+
+\begin{prop}
+Every filter can be extended to an ultrafilter.
+\end{prop}
+\begin{pf}
+Let $I$ be a non-empty set and suppose that ${\cal F}$ is a filter on $I$. Let 
+$\Lambda$ be the set of filters on $I$ that contain ${\cal F}$, and observe that 
+$\Lambda$ is partially ordered by $\subseteq$. Now, if ${\cal G}_1 \subseteq {\cal G}_2 
+\subseteq \cdots$ is a chain in $\Lambda$, then $\bigcup_{i \in \omega} {\cal G}_i \in \Lambda$.
+By Zorn's Lemma, we obtain a maximal element ${\cal U} \in \Lambda$, and 
+${\cal U} \supseteq {\cal F}$ is an ultrafilter, as required.
+\end{pf}
+
+\begin{lemma}
+A filter ${\cal U}$ on a set $I$ is an ultrafilter if and only if for every subset $A \subseteq I$, 
+either $A \in {\cal U}$ or $I \setminus A \in {\cal U}$. 
+\end{lemma}
+\begin{pf}
+Suppose that ${\cal U}$ is an ultrafilter and let $A \subseteq I$. Suppose that $A \notin {\cal U}$.
+Then ${\cal F} = \{B \subseteq I : B \supseteq C \setminus A \text{ for some } 
+C \in {\cal U}\}$ is a filter (check this). Now, ${\cal U} \subseteq {\cal F}$ by simply
+taking $B = C$ in the set above. By maximality, we have ${\cal U} = {\cal F}$, 
+and it follows that $I \setminus A \in {\cal F} = {\cal U}$. 
+
+Conversely, assume that for every $A \subseteq I$, either $A \in {\cal U}$ or 
+$I \setminus A \in {\cal U}$. Suppose to the contrary that there is a 
+filter ${\cal F} \supsetneq {\cal U}$. Let $A \in {\cal F} \setminus {\cal U}$. 
+As $A \notin {\cal U}$, we have $I \setminus A \in {\cal U}$. Now 
+$A \cap (I \setminus A) = \varnothing \in {\cal F}$, a contradiction.
+\end{pf}
+
+With a little bit more work, we can describe the ultrafilters which are not principal filters. 
+The following exercise can be proven from what we just showed above. 
+
+\begin{exercise}
+An ultrafilter ${\cal U}$ is non-principal 
+if and only if ${\cal U}$ extends the Fr\'echet filter.
+\end{exercise}
+
+\begin{defn}[Ultraproduct]
+Let $I$ be an infinite set. Let $L$ be a language and let $({\cal M}_i : i \in I)$ be a sequence of
+$L$-structures. Suppose that ${\cal U}$ is an ultrafilter on $I$. The {\bf ultraproduct} 
+of $({\cal M}_i : i \in I)$ with respect to ${\cal U}$ is the $L$-structure 
+\[ {\cal M} := \prod_{\cal U} {\cal M}_i \] 
+defined as follows:
+\begin{itemize}
+    \item The universe of ${\cal M}$ is $M := (\prod_{i\in I} M_i) / E$ where $E$ is the equivalence 
+    relation $(a_i : i \in I) \, E \, (b_i : i \in I)$ if $\{i \in I : a_i = b_i\} \in 
+    {\cal U}$, that is, the indices of the sequences agree.
+    \item For every constant symbol $c \in L^C$, set $c^{\cal M} = 
+    [(c^{{\cal M}_i} : i \in I)]$, that is, the $E$-class of the sequence 
+    given by $c^{{\cal M}_i}$ for each $i \in I$. 
+    \item For every $n$-ary function symbol $f \in L^F$ and all 
+    $\alpha_1, \dots, \alpha_n \in M$, define 
+    \[ f^{\cal M}(\alpha_1, \dots, \alpha_n) := \beta, \] 
+    where if $\alpha_j = [(a_{ij} : i \in I)]$ for $1 \leq j \leq n$, then 
+    $\beta = [(f^{{\cal M}_i}(a_{i1}, \dots, a_{in}) : i \in I)]$. Verify that 
+    this definition does not depend on the set of representatives $\alpha_1, \dots, \alpha_n$. 
+    \item For every $k$-ary relation symbol $R \in L^R$ and $\alpha_1, \dots, \alpha_k \in M$, 
+    define $R^{\cal M} \subseteq M^k$ by 
+    \[ (\alpha_1, \dots, \alpha_k) \in R^{\cal M} \iff \{i \in I : 
+    (a_{i1}, \dots, a_{ik}) \in R^{{\cal M}_i}\} \in {\cal U}, \] 
+    where each $\alpha_j = [(a_{ij} : i \in I)]$ for $1 \leq j \leq k$. Similarly with 
+    function symbols, check that this definition does not depend on the set of 
+    representatives $\alpha_1, \dots, \alpha_k$. 
+\end{itemize}
+\end{defn}
+
+\newpage 
+\section{\L{}o\'s' Theorem}
+
+This lecture will be focused on proving \L{}o\'s' Theorem, of which we will explore 
+its consequences and use it to prove the Compactness Theorem. 
+Informally, it states that if $({\cal M}_i : i \in I)$ is a sequence of 
+$L$-structures, ${\cal U}$ an ultrafilter, and $\phi$ is an $L$-formula, then 
+$\phi$ is true in the ultraproduct $\prod_{\cal U} {\cal M}_i$ if and only if 
+$\phi$ is true in almost all ${\cal M}_i$. 
+
+\begin{thm}[\L{}o\'s' Theorem]
+Let $\{{\cal M}_i : i \in I\}$ be a sequence of $L$-structures and ${\cal U}$ be an ultrafilter on $I$. 
+Let ${\cal M} = \prod_{\cal U} {\cal M}_i$ be the ultraproduct of $\{{\cal M}_i 
+: i \in I\}$ with respect to ${\cal U}$. Suppose that $\phi(x_1, \dots, x_n)$ is an 
+$L$-formula, and $g_1, \dots, g_n \in \prod_{i \in I} M_i$. Then 
+\[ {\cal M} \vDash \phi([g_1], \dots, [g_n]) \iff \{i \in I : {\cal M}_i \vDash 
+\phi(g_1(i), \dots, g_n(i))\} \in {\cal U}. \]
+In particular, if $\sigma$ is an $L$-sentence, then 
+\[ {\cal M} \vDash \sigma \iff \{i \in I : {\cal M}_i \vDash \sigma\} \in {\cal U}. \]
+\end{thm}
+\begin{pf}
+We first state the following claim on terms. 
+
+{\sc Claim.} For any $L$-term $t = t(x_1, \dots, x_n)$ and $g_1, \dots, g_n \in \prod_{i \in I} 
+M_i$, we have 
+\[ t^{\cal M}([g_1], \dots, [g_n]) = [(t^{{\cal M}_i}(g_1(i), \dots, g_n(i)))_{i \in I}]. \]
+{\sc Proof of Claim.} This follows easily by induction on the complexity of the term 
+and the definition of the ultraproduct, and as such, is left as an exercise. \hfill $\blacksquare$
+
+With this claim, we may proceed by induction on the complexity of $\phi$. Suppose that $\phi$ is 
+atomic. If $\phi$ is of the form $(t_1 = t_2)$ where $t_1 = t_1(x_1, \dots, x_n)$ and 
+$t_2 = t_2(x_1, \dots, x_n)$ are $L$-terms, then 
+\begin{align*}
+    {\cal M} \vDash \phi([g_1], \dots, [g_n]) 
+    &\iff t_1^{\cal M}([g_1], \dots, [g_n]) = t_2^{\cal M}([g_1], \dots, [g_n]) \\
+    &\overset{\text{Claim}}{\iff} [(t_1^{{\cal M}_i}(g_1(i), \dots, g_n(i)))_{i \in I}] = [(t_2^{{\cal M}_i}(g_1(i), \dots, g_n(i)))_{i \in I}] \\
+    &\iff \{i \in I : t_1^{{\cal M}_i}(g_1(i), \dots, g_n(i)) = t_2^{{\cal M}_i}(g_1(i), 
+    \dots, g_n(i))\} \in {\cal U} \\
+    &\iff \{i \in I : {\cal M}_i \vDash \phi(g_1(i), \dots, g_n(i))\} \in {\cal U}.
+\end{align*}
+On the other hand, if $\phi$ is $R(t_1, \dots, t_\ell)$ where $R$ is an $\ell$-ary relation symbol
+and each $t_j = t_j(x_1, \dots, x_n)$ is an $L$-term, then 
+\begin{align*}
+    {\cal M} \vDash \phi([g_1], \dots, [g_n]) 
+    &\iff (t_1^{\cal M}([g_1], \dots, [g_n]), \dots, t_\ell^{\cal M}([g_1], \dots, [g_n])) \in R^{\cal M} \\
+    &\overset{\text{Claim}}{\iff} ([(t_1^{{\cal M}_i}(g_1(i), \dots, g_n(i)))_{i\in I}], \dots, 
+    [(t_\ell^{{\cal M}_i}(g_1(i), \dots, g_n(i)))_{i\in I}]) \in R^{\cal M} \\
+    &\iff \{i \in I : (t_1^{{\cal M}_i}(g_1(i), \dots, g_n(i)), \dots, t_\ell^{{\cal M}_i}
+    (g_1(i), \dots, g_n(i))) \in R^{{\cal M}_i}\} \in {\cal U} \\
+    &\iff \{i \in I : {\cal M}_i \vDash \phi(g_1(i), \dots, g_n(i))\} \in {\cal U}.
+\end{align*}
+Now, suppose that $\phi(x_1, \dots, x_n)$ is $\neg \psi(x_1, \dots, x_n)$ where the result is known for 
+$\psi$. We have 
+\begin{align*}
+    {\cal M} \vDash \phi([g_1], \dots, [g_n]) 
+    &\iff {\cal M} \nvDash \psi([g_1], \dots, [g_n]) \\
+    &\iff \{i \in I : {\cal M}_i \vDash \psi(g_1(i), \dots, g_n(i))\} 
+    \notin {\cal U} \, \text{ by IH} \\
+    &\iff I \setminus \{i \in I : {\cal M}_i \vDash \psi(g_1(i), \dots, g_n(i))\} \in {\cal U}
+    \, \text{ by Lemma 27.4} \\
+    &\iff \{i \in I : {\cal M}_i \nvDash \psi(g_1(i), \dots, g_n(i))\} \in {\cal U} \\ 
+    &\iff \{i \in I : {\cal M}_i \vDash \phi(g_1(i), \dots, g_n(i))\} \in {\cal U}.
+\end{align*}
+We leave the $\wedge$ and $\vee$ cases as an exercise. In particular, the 
+$\wedge$ case follows from the fact that ultrafilters are closed under intersections, 
+and the $\vee$ case follows from the fact that ultrafilters are closed under unions.
+
+As usual, the case of the universal quantifier is reduced to the existential quantifier. 
+Suppose that $\phi(x_1, \dots, x_n)$ is of the form 
+$\exists y \, \psi(x_1, \dots, x_n, y)$ where the result is known for $\psi$. 
+Then ${\cal M} \vDash \phi([g_1], \dots, [g_n])$ if and only if there is some 
+$h \in \prod_{i \in I} M_i$ such that ${\cal M} \vDash \psi([g_1], \dots, [g_n], [h])$. 
+By the inductive hypothesis, this is if and only if 
+\[ X_h := \{i \in I : {\cal M}_i \vDash \psi(g_1(i), \dots, g_n(i), h(i)) \} \in {\cal U}. \] 
+Now, let $Y := \{i \in I : {\cal M}_i \vDash \phi(g_1(i), \dots, g_n(i))\}$. 
+We want that ${\cal M} \vDash \phi([g_1], \dots, [g_n])$ if and only if $Y \in {\cal U}$. 
+It suffices to show that there exists $h \in \prod_{i \in I} M_i$ such that $X_h \in {\cal U}$ 
+if and only if $Y \in {\cal U}$. Indeed, for the left-to-right direction, 
+suppose that there exists $h \in \prod_{i \in I} M_i$ such that $X_h \in {\cal U}$. 
+Observe that $X_h \subseteq Y$, and since supersets are preserved under filters, 
+it follows that $Y \in {\cal U}$. Conversely, suppose that $Y \in {\cal U}$. 
+For each $i \in Y$, we have ${\cal M}_i \vDash \exists y \, \psi(g_1(i), \dots, g_n(i), y)$. 
+Let $a_i \in M_i$ witness this; that is, ${\cal M}_i \vDash \psi(g_1(i), \dots, g_n(i), a_i)$.
+Now, define $h : I \to \bigcup_{i \in I} M_i$ by 
+\[ h(i) := \begin{cases} a_i & i \in Y \\ b_i & i \notin Y, \end{cases} \]
+where $b_i \in M_i$ for $i \notin Y$ is fixed arbitrarily. Note that $Y \subseteq X_h$ 
+since if $i \in Y$, then $h(i) = a_i$, so that ${\cal M}_i \vDash \psi(g_1(i), \dots, g_n(i), 
+h(i))$, and hence $i \in X_h$. As before, supersets are closed under filters, so $X_h 
+\in {\cal U}$. This completes the proof.
+\end{pf}
+
+\newpage 
+\section{Some consequences of \L{}o\'s' Theorem}
+
+First, we introduce a special case of the ultraproduct. 
+
+\begin{defn}[Ultrapower]
+Suppose that ${\cal M}$ be an $L$-structure, $I$ is a non-empty set, and 
+${\cal U}$ is an ultrafilter on $I$. The {\bf ultrapower} of ${\cal M}$ with respect to ${\cal U}$ 
+is the ultraproduct of $({\cal M}_i : i \in I)$ where ${\cal M}_i = {\cal M}$ for all $i \in I$ 
+with respect to ${\cal U}$. We write 
+\[ \prod_{\cal U} {\cal M} =: {\cal M}^I / {\cal U}. \]
+\end{defn}
+
+Now, let ${\cal M}$ be an $L$-structure. Consider the map $d : {\cal M} \to {\cal M}^I / {\cal U}$ 
+which maps $a \in M$ to $[(a)_{i \in I}]$, called the {\bf diagonal}. 
+
+\begin{prop}
+Suppose that ${\cal M}$ is an $L$-structure, $I$ is a non-empty set, and ${\cal U}$ is an 
+ultrafilter on $I$. Then the diagonal $d : {\cal M} \to {\cal M}^I / {\cal U}$ is an elementary embedding.
+\end{prop}
+\begin{pf}
+Let $\phi(x_1, \dots, x_n)$ be an $L$-formula and suppose $a_1, \dots, a_n \in M$. We want to show that 
+\[ {\cal M} \vDash \phi(a_1, \dots, a_n) \iff {\cal M}^I / {\cal U} \vDash 
+\phi(d(a_1), \dots, d(a_n)). \]
+For each $a \in M$, we let $d_a \in \prod_{i \in I} M$ be the function 
+$d_a(i) = a$ for all $i \in I$. Then the diagonal is given by $a \mapsto [d_a]$. 
+For the left-to-right direction, we have 
+\begin{align*}
+    {\cal M} \vDash \phi(a_1, \dots, a_n) &\;\Longrightarrow\; {\cal M} \vDash 
+    \phi(d_{a_1}(i), \dots, d_{a_n}(i)) \text{ for all } i \in I \\ 
+    &\;\Longrightarrow\; \{i \in I : {\cal M} \vDash \phi(d_{a_1}(i), \dots, d_{a_n}(i)) \} = I \in {\cal U} \\
+    &\;\Longrightarrow\; {\cal M}^I / {\cal U} \vDash \phi([d_{a_1}], \dots, [d_{a_n}]) \, \text{ by 
+    \L{}o\'s' Theorem}.
+\end{align*}
+Conversely, if $\{i \in I : {\cal M} \vDash \phi(d_{a_1}(i), \dots, d_{a_n}(i)\} \in {\cal U}$, 
+then this set is non-empty and hence ${\cal M} \vDash \phi(d_{a_1}(i), \dots, d_{a_n}(i))$ 
+for some $i \in I$. Since each $d_{a_j}(i) = a_j$, we then obtain 
+${\cal M} \vDash \phi(a_1, \dots, a_n)$ as desired. 
+\end{pf}
+
+Due to this proposition, we can see that from identifying ${\cal M}$ with its image under the 
+diagonal, we obtain ${\cal M} \preceq {\cal M}^I / {\cal U}$. 
+
+\begin{defn}[Finite intersection property]
+Let $X$ be a set and suppose that $F = (F_i : i \in I)$ is a non-empty family of subsets of $X$ 
+indexed by $I$. Then $F$ has the {\bf finite intersection property} if for every non-empty finite 
+subset $J \subseteq I$, we have $\bigcap_{i \in J} F_i \neq \varnothing$. 
+\end{defn}
+
+\begin{prop}
+Suppose that $({\cal M}_i : i < \omega)$ is a sequence of $L$-structures and 
+${\cal U}$ is a non-principal ultrafilter. Then ${\cal M} = \prod_{\cal U} {\cal M}_i$ is 
+$\aleph_1$-compact; that is, given any countable collection 
+$\{F_i : i < \omega\}$ of non-empty 
+definable subsets of $M^\ell$ with the finite intersection property, 
+it follows that $\bigcap_{i<\omega} F_i \neq \varnothing$. 
+\end{prop}
+\begin{pf}
+We prove this proposition in the $0$-definable case; the general case with parameters is 
+on Assignment 10. For each $i < \omega$, suppose that $F_i$ is defined by the 
+$L$-formula $\phi_i(x)$. 
+
+We may assume that $\vDash \phi_{n+1} \to \phi_n$ (that is, this holds for any $L$-structure) 
+by taking conjunctions. In particular, we may replace $F_0,\,F_1,\, F_2, \cdots$ 
+by $F_0,\, F_1 \cap F_0,\, F_2 \cap F_1 \cap F_0, \cdots$. Moreover, 
+we may also assume that $\phi_0 := (x = x)$ so that $F_0 = M^\ell$. 
+
+For each $i < \omega$, let 
+\[ n_i := \max\{n \leq i : {\cal M}_i \vDash \exists x \, \phi_n(x)\}. \]
+Note that this always exists as $n = 0$ works. Now, to prove the proposition, 
+we want to find a sequence $(a_i)_{i<\omega}$ with $a_i \in M_i$ such that 
+if $a = [(a_i)] \in M$, then ${\cal M} \vDash \phi_n(a)$ for all $n < \omega$. 
+
+Indeed, let $a_i \in M_i$ be such that ${\cal M}_i \vDash \phi_{n_i}(a_i)$. 
+We will show that $a = [(a_i)]$ works. Fix some $n < \omega$. Then, consider the set
+\[ X_n := \{i : i \geq n \text{ and } {\cal M}_i \vDash \exists x \, \phi_n(x)\}. \]
+{\sc Claim 1.} $X_n \in {\cal U}$. 
+
+{\sc Proof of Claim 1.} By the finite intersection property, we clearly have $F_n \neq \varnothing$. 
+Thus, ${\cal M} \vDash \exists x \, \phi_n(x)$. By \L{}o\'s' Theorem, we see that 
+$A := \{i < \omega : {\cal M}_i \vDash \exists x \, \phi_n(x)\} \in {\cal U}$. 
+Then, since ${\cal U}$ is a non-principal ultrafilter, we know by Exercise 27.5 that ${\cal U}$ 
+extends the Fr\'echet filter. Hence, $B := \{i < \omega : i \geq n\} \in {\cal U}$. 
+Now, filters are closed under intersections, and so $X_n = A \cap B \in {\cal U}$. \hfill $\blacksquare$
+
+{\sc Claim 2.} $X_n \subseteq \{i < \omega : {\cal M}_i \vDash \phi_n(a_i)\}$.
+
+{\sc Proof of Claim 2.} Let $i \in X_n$. Then ${\cal M}_i \vDash \exists x \, \phi_n(x)$ and 
+$i \geq n$. Observe that from ${\cal M}_i \vDash \exists x \, \phi_n(x)$, we have $n \leq n_i$.
+Thus, it follows that $\vDash \phi_{n_i} \to \phi_n$. By our choice of $a_i$, we 
+have ${\cal M}_i \vDash \phi_{n_i}(a_i)$, and hence ${\cal M}_i \vDash \phi_n(a_i)$. 
+\hfill $\blacksquare$
+
+From these claims, noting that filters are closed under supersets, we obtain 
+$\{i < \omega : {\cal M}_i \vDash \phi_n(a_i)\} \in {\cal U}$ for every $n < \omega$. 
+By \L{}o\'s' Theorem, we have ${\cal M} \vDash \phi_n(a)$ for all $n < \omega$, as 
+$a = [(a_i)]$.
+\end{pf}
+
+\begin{remark}
+Note that $(\Z, <)$ is not $\aleph_1$-compact. Indeed, consider the collection 
+$\{F_i : i < \omega\}$ where $F_i := \{m \in \Z : m > i\}$ for each $i < \omega$. This 
+has the finite intersection property, but $\bigcap_{i < \omega} F_i = \varnothing$, 
+as there is no greatest integer. 
+\end{remark}
+
+\begin{remark}
+Consider the ordered ring of reals ${\cal R} 
+= (\R, 0, 1, +, -, \times, <)$. Fix a non-principal ultrafilter ${\cal U}$ on $\omega$. 
+Then, from Proposition 29.2, we have ${\cal R} \preceq {\cal R}^{\omega} / {\cal U} 
+=: {\cal R}^*$. We call ${\cal R}^*$ a "non-standard model" of ${\cal R}$. 
+By Proposition 29.4, ${\cal R}^*$ is $\aleph_1$-compact. In particular, we can find that
+there are elements in ${\cal R}^*$ that is bigger than every integer, called infinite elements. 
+Moreover, there exist infinitesimal elements, namely elements greater than $0$ 
+but less than $1/n$ for every $0 < n < \omega$. This is the beginning of non-standard analysis.
+Since ${\cal R}$ and ${\cal R}^*$ are elementarily equivalent, we may prove 
+a statement in ${\cal R}^*$, and if it is a sentence, then it must also hold true in ${\cal R}$. 
+\end{remark}
+
+\newpage 
+\section{Compactness Theorem}
+
+Before we prove the Compactness Theorem, we will give one more application of 
+\L{}o\'s' Theorem. 
+
+\begin{prop}
+The class of finite groups is not axiomatisable in $L = \{0, +, -\}$. 
+\end{prop}
+\begin{pf}
+For each $n < \omega$, let ${\cal G}_n$ be a group of size $n$. For example, we may take 
+${\cal G}_n = (\Z/n\Z, 0, +, -)$ for each $n < \omega$, and we have a sequence 
+$({\cal G}_n : n < \omega)$ of $L$-structures. Now, fix a non-principal ultrafilter 
+${\cal U}$ on $\omega$, and consider 
+\[ {\cal G} = \prod_{\cal U} {\cal G}_n. \] 
+Let $T$ be the theory of groups and let $\sigma \in T$. By \L{}o\'s' Theorem, we have 
+\[ {\cal G} \vDash \sigma \iff \{i \in I : {\cal G}_i \vDash \sigma\} = I \in {\cal U}. \] 
+Hence, ${\cal G} \vDash \sigma$, and so ${\cal G} \vDash T$. That is, ${\cal G}$ is a group. 
+
+Next, for each $N < \omega$, let 
+\[ \sigma_N := \exists x_1 \cdots \exists x_N \left( \bigwedge_{1 \leq i < j \leq N} (x_i \neq x_j) 
+\right). \] 
+Each $\sigma_N$ says that there exists at least $N$ distinct elements. Then by 
+\L{}o\'s' Theorem, 
+\[ {\cal G} \vDash \sigma_N \iff \{n : {\cal G}_n \vDash \sigma_N\} = \{n : n \geq N\} \in {\cal U}. \] 
+Observe that $\{n : n \geq N\}$ is an element of the Fr\'echet filter, 
+and that the Fr\'echet filter is a subset of ${\cal U}$ since ${\cal U}$ is non-principal. 
+Thus, ${\cal G} \vDash \sigma_N$ for all $N < \omega$, and so ${\cal G}$ is infinite. 
+(Exercise: In fact, since ${\cal G}$ is $\aleph_1$-compact, we have $|{\cal G}| > \aleph_0$.)
+
+Finally, suppose that the class of finite groups was axiomatisable, say by the $L$-theory
+$T_{\text{fin}}$. Then ${\cal G}_n \vDash T_{\text{fin}}$ for all $n < \omega$. By 
+\L{}o\'s' Theorem, we obtain ${\cal G} \vDash T_{\text{fin}}$, so ${\cal G}$ is finite, 
+a contradiction.
+\end{pf}
+
+We now restate the Compactness Theorem, and use the tools that we have developed to prove it. 
+
+\begin{thm}[Compactness Theorem]
+Let $L$ be a language and $T$ be an $L$-theory. $T$ is consistent if and only if every 
+finite subset of $T$ is consistent.
+\end{thm}
+\begin{pf}
+The forward direction is obvious; the backward direction is the only one that needs proving. 
+Suppose that every finite subset of $T$ is consistent. Let 
+\[ I = {\cal P}^{\text{fin}}(T) := \{\Sigma \subseteq T : \Sigma \text{ is finite}\}. \] 
+(Note that this forms a lattice structure.) For each $\Sigma \in I$, there exists  
+a model ${\cal M}_\Sigma$ of $\Sigma$ by assumption. Then $({\cal M}_\Sigma : \Sigma \in I)$ is 
+a sequence of $L$-structures. Then, for all $\Sigma \in I$, let 
+\[ X_\Sigma = \{\Sigma' \in I : \Sigma \subseteq \Sigma'\}. \]
+Intuitively, this is the cone above $\Sigma$ in $I$. Let ${\cal A} = \{X_\Sigma : 
+\Sigma \in I\}$. Note that ${\cal A}$ is not a filter. However, we can see that 
+$\varnothing \notin {\cal A}$, $I = X_{\varnothing} \in {\cal A}$, and 
+for any $\Sigma, \Delta \in I$, we have $X_\Sigma \cap X_\Delta = X_{\Sigma \cup \Delta} \in {\cal A}$.
+Then, we can make a filter by 
+\[ {\cal F} = \{Y \subseteq I : Y \supseteq X_\Sigma \text{ for some } \Sigma \in I\}. \] 
+We leave it as an exercise to check that this is indeed a filter on $I$. Let 
+${\cal U} \supseteq {\cal F}$ be an ultrafilter extending ${\cal F}$. (Exercise: If 
+$T$ is an infinite theory, then ${\cal U}$ is non-principal.) 
+
+Let ${\cal M} := \prod_{\cal U} {\cal M}_\Sigma$. We claim that ${\cal M} \vDash T$. 
+Indeed, let $\sigma \in T$. Then 
+\[ X_{\{\sigma\}} = \{\Sigma \in I : \sigma \in \Sigma\} \subseteq 
+\{\Sigma \in I : {\cal M}_\Sigma \vDash \sigma\}. \]
+Since $X_{\{\sigma\}} \in {\cal A} \subseteq {\cal F} \subseteq {\cal U}$, it follows that 
+\[ \{\Sigma \in I : {\cal M}_\Sigma \vDash \sigma\} \in {\cal U} \] 
+as filters are closed under supersets. Finally, by \L{}o\'s' Theorem, ${\cal M} \vDash \sigma$. 
+So ${\cal M} \vDash T$, and we may conclude that $T$ is consistent.
+\end{pf}
+
+The following is an equivalent formulation of the Compactness Theorem.
+
+\begin{cor}
+Let $T$ be an $L$-theory and $\sigma$ be an $L$-sentence. If $T \vDash \sigma$, then there 
+is a finite subset $\Sigma \subseteq T$ such that $\Sigma \vDash \sigma$. 
+\end{cor}
+\begin{pf}
+Let $S = T \cup \{\neg \sigma\}$. Since $T \vDash \sigma$, we have that $S$ is inconsistent. 
+By the Compactness Theorem, there is a finite subset $\Delta \subseteq S$ which is inconsistent. 
+It follows that $\Delta \cup \{\neg \sigma\}$ is inconsistent as well. But 
+$\Delta \cup \{\neg \sigma\} = \Sigma \cup \{\neg \sigma\}$ for some finite 
+$\Sigma \subseteq T$. Since $\Sigma \cup \{\neg \sigma\}$ is inconsistent, 
+we must have $\Sigma \vDash \sigma$. 
+\end{pf}
+
+\newpage
+\section{First consequences of compactness}
+
+Having just proved the Compactness Theorem, we will show some typical applications of it to 
+particular classes of structures. 
+
+\begin{exmp}
+Let $L = \varnothing$. The class of infinite $L$-structures is not finitely axiomatisable. 
+\end{exmp}
+\begin{pf}
+Let $T$ be the natural $L$-theory of infinite sets; that is, for each $n < \omega$, let 
+\[ \tau_n := \exists x_1 \cdots \exists x_n \left( \bigwedge_{1 \leq i < j \leq n} (x_i \neq x_j) 
+\right) \] 
+and set $T = \{\tau_n : n < \omega\}$. Suppose that the class of infinite $L$-structures 
+was finitely axiomatisable. Let $\sigma$ be an $L$-sentence such that ${\cal M} \vDash \sigma$ 
+if and only if the universe of ${\cal M}$ is infinite. Clearly, $T \vDash \sigma$. 
+By compactness, there is a finite subset $\Sigma \vDash T$ such that $\Sigma \vDash \sigma$. 
+In particular, there exists $m < \omega$ such that $\Sigma \subseteq \{\tau_1, \dots, 
+\tau_m\}$. Then, we see that $\{\tau_1, \dots, \tau_m\} \vDash \sigma$. Now, let ${\cal M}$ 
+be a finite set of size $m + 1$. We have ${\cal M} \vDash \{\tau_1, \dots, \tau_m\}$, 
+but ${\cal M} \nvDash \sigma$, a contradiction.
+\end{pf}
+
+\begin{exmp}
+Let $L = \{0, +, -\}$. The class ${\cal K}$ of abelian torsion groups is not elementary.
+\end{exmp}
+\begin{pf}
+We will use compactness to prove this, but note that we may very well use ultraproducts
+and \L{}o\'s' Theorem as seen in Proposition 30.1. 
+
+Suppose for a contradiction that ${\cal K}$ were elementary, and let $T$ 
+be an axiomatisation of ${\cal K}$. Let $L' := L \cup \{c\}$ where $c$ is a new constant symbol. 
+Let $T' := T \cup \{\tau_n : 0 < n < \omega\}$ be the $L'$-theory where for each 
+$0 < n < \omega$, we have 
+\[ \tau_n := (\underbrace{c + \cdots + c}_{\text{$n$ times}} \neq 0). \]
+We claim that $T'$ is consistent. Indeed, suppose that $\Sigma \subseteq T'$ is a finite subset. 
+Then $\Sigma \subseteq T \cup \{\tau_1, \dots, \tau_m\}$ for some $m < \omega$. Let 
+${\cal M} = (\Z/(m+1)\Z, 0, +, -) \vDash T$. We expand ${\cal M}$ to an $L'$-structure 
+${\cal M}'$ by setting $c^{{\cal M}'} = 1 \pmod{m+1}$. Observe that ${\cal M}' \vDash T$. 
+Moreover, ${\cal M}' \vDash \tau_i$ for all $i \leq m$, so ${\cal M}' \vDash \Sigma$. 
+It follows from compactness that $T'$ is consistent. 
+
+Finally, let ${\cal N} = (N, 0, +, -, a = c^{\cal N}) \vDash T'$ where $a \in N$. 
+Then $(N, 0, +, -)$, the $L$-reduct of ${\cal N}$, is a model of $T$, and hence a torsion group. 
+But ${\cal N} \vDash \tau_n$ for all $n < \omega$, so for all $0 < n < \omega$, 
+\[ \underbrace{a + \cdots + a}_{\text{$n$ times}} \neq 0 \] 
+in ${\cal N}$. Thus, $a$ is not torsion, a contradiction.
+\end{pf}
+
+\begin{prop}
+Let ${\cal M}$ and ${\cal N}$ be $L$-structures. Then ${\cal M} \equiv {\cal N}$ if and only if 
+there exists an $L$-structure ${\cal R}$ such that ${\cal M} \preceq {\cal R}$ and 
+${\cal N} \preceq {\cal R}$. 
+\end{prop}
+\begin{pf}
+The right-to-left direction is clear. Conversely, suppose that ${\cal M} \equiv {\cal N}$. 
+Let $L' = L_{M\sqcup N} := L \cup \{\underline{a} : a \in M\} \cup 
+\{\underline{b} : b \in N\}$. Then $T' := \Th({\cal M}_M) \cup \Th({\cal M}_N)$ 
+is an $L'$-theory. By Proposition 25.6, it suffices to show that $T'$ is consistent. Indeed, 
+if ${\cal R}' \vDash {\cal T}'$, let ${\cal R}$ be the $L$-reduct of ${\cal R}'$. Since 
+${\cal R}$ can be expanded to a model of $\Th({\cal M}_M)$, Proposition 25.6 says that 
+there exists an elementary embedding ${\cal M} \to {\cal R}$. Analogously, there exists 
+an elementary embedding ${\cal N} \to {\cal R}$. 
+
+Let $\Sigma \subseteq T'$ be finite. Taking conjunctions, we may assume that 
+$\Sigma = \{\phi(\underline{a_1}, \dots, \underline{a_m}), \psi(\underline{b_1}, 
+\dots, \underline{b_n})\}$ where $\phi(x_1, \dots, x_m)$, $\psi(y_1, \dots, y_n)$ are 
+$L$-formulas, $a_1, \dots, a_m \in M$, $b_1, \dots, b_n \in N$, and 
+${\cal M} \vDash \phi(a_1, \dots, a_m)$, ${\cal N} \vDash \psi(b_1, \dots, b_n)$. 
+
+In particular, ${\cal N} \vDash \exists y_1 \cdots \exists y_n \, \psi(y_1, \dots, y_n)$ 
+and since ${\cal M} \equiv {\cal N}$, we have 
+${\cal M} \vDash \exists y_1 \cdots \exists y_n \, \psi(y_1, \dots, y_n)$ as well. 
+Hence, there exist $a'_1, \dots, a'_n \in M$ such that ${\cal M} 
+\vDash \psi(a'_1, \dots, a'_n)$. Let ${\cal M}'$ be the $L'$-structure expanding 
+${\cal M}$ such that $\underline{a}^{{\cal M}'} = a$ for all $a \in M$, 
+$\underline{b_i}^{{\cal M}'} = a'_i$ for all $1 \leq i \leq n$, and any other $b \in N$ 
+is interpreted arbitrarily in ${\cal M}'$. Then ${\cal M}' \vDash \Sigma$. 
+By compactness, it follows that $T'$ is consistent.
+\end{pf}
+
+\newpage 
+\section{Upward L\"owenheim-Skolem and Vaught}
+
+We now turn our attention to more general and theoretical applications of compactness. 
+
+\begin{thm}[Upward L\"owenheim-Skolem] 
+Suppose ${\cal M}$ is an infinite $L$-structure, and $\kappa$ is a cardinal such that 
+$\kappa \geq \max\{|M|, |L|\}$. Then there exists an elementary extension ${\cal N}$ of 
+${\cal M}$ such that $|N| = \kappa$.
+\end{thm}
+\begin{pf}
+Let $L' := L_M \cup \{c_\alpha : \alpha < \kappa\}$ where each $c_\alpha$ is a new constant symbol.
+Let 
+\[ T' := \Th({\cal M}_M) \cup \{c_\alpha \neq c_\beta : \text{for all } 
+\alpha, \beta < \kappa \text{ such that }
+\alpha \neq \beta\}. \]
+We show that $T'$ is consistent. To that end, let $\Sigma \subseteq T'$ be finite. 
+Note that $\Sigma$ involves only finitely many sentences of the form $c_\alpha \neq c_\beta$, 
+so ${\cal M}_M$ can be expanded to a model of $\Sigma$ as $M$ is infinite. Thus, 
+$T'$ is consistent by compactness. 
+
+Let ${\cal R}' \vDash T'$ and let ${\cal R}$ be the $L$-reduct of ${\cal R}'$. 
+Since ${\cal R}$ can be expanded to a model of $\Th({\cal M}_M)$, it follows from Proposition 
+25.6 that there is an elementary embedding ${\cal M} \to {\cal R}$. Moreover, 
+note that $|R| \geq \kappa$, and this is witnessed by interpretations of the 
+$c_\alpha$ in ${\cal R}'$. 
+
+Finally, by Downward L\"owenheim-Skolem, there is an $L$-structure ${\cal N} \preceq {\cal R}$ 
+such that $|N| = \kappa$ and ${\cal M} \subseteq {\cal N}$. 
+Since ${\cal M} \subseteq {\cal N} \preceq {\cal R}$ and ${\cal M} \preceq {\cal R}$, 
+it follows that ${\cal M} \preceq {\cal N}$ (exercise), so we are done.
+\end{pf}
+
+\begin{cor}[Vaught's Test]
+Suppose that $T$ is an $L$-theory with only infinite models. Moreover, suppose that 
+for some infinite cardinal $\kappa \geq |L|$, all models of $T$ of size $\kappa$ are isomorphic 
+(in which we say that $T$ is {\bf $\kappa$-categorical}). Then $T$ is complete.
+\end{cor}
+\begin{pf}
+Let ${\cal M}$ and ${\cal N}$ be two models of $T$. Using either Downward L\"owenheim-Skolem 
+or Upward L\"owenheim-Skolem, we can find an $L$-structure ${\cal M}'$ such that either 
+${\cal M} \preceq {\cal M}'$ or ${\cal M}' \preceq {\cal M}$ with $|M'| = \kappa$. 
+Similarly, we can find an $L$-structure ${\cal N}'$ such that either ${\cal N} \preceq {\cal N}'$ or
+${\cal N}' \preceq {\cal N}$ with $|N'| = \kappa$. By $\kappa$-categoricity, ${\cal M}'$ 
+is isomorphic to ${\cal N}'$. But ${\cal M}' \equiv {\cal M}$ and ${\cal N}' \equiv {\cal N}$, 
+so ${\cal M} \equiv {\cal N}$. By Lemma 26.3, $T$ is complete.
+\end{pf}
+
+The following is a classic example of an application of Vaught's Test. 
+
+\begin{exmp}
+Let $L = \{<\}$. We denote by $\DLO$ the $L$-theory of dense linear orderings without endpoints. 
+Then $\DLO$ is complete.
+\end{exmp}
+\begin{pf}
+We show that $\DLO$ is $\aleph_0$-categorical. We will use 
+a classic "back-and-forth" argument (also known as an Ehrenfeucht-Fra\"iss\'e game). 
+
+Suppose that $(E_1, <) \vDash \DLO$ and $(E_2, <) \vDash \DLO$ are both countable. 
+We construct recursively finite sets $A_0 \subseteq A_1 \subseteq \cdots$ and 
+$B_0 \subseteq B_1 \subseteq \cdots$ such that $E_1 = \bigcup_{i<\omega} A_i$ 
+and $E_2 = \bigcup_{i<\omega} B_i$, with an order preserving bijection 
+$f_i : A_i \to B_i$ where $f_i \subseteq f_{i+1}$ for all $i < \omega$. 
+Once we do this, then 
+\[ f := \bigcup_{i < \omega} f_i : E_1 \to E_2 \]
+is a order preserving bijection. In particular, $f$ is an $L$-isomorphism from 
+$(E_1, <)$ to $(E_2, <)$. 
+
+To give some intuition for what we are about to construct, we note that in the odd steps, 
+we ensure that $\bigcup_{i<\omega} A_i = E_1$ ("forth"), and in the even steps, we 
+ensure that $\bigcup_{i<\omega} B_i = E_2$ ("back"). 
+
+First, enumerate $E_1 = \{a_i : i < \omega\}$ and $E_2 = \{b_i : i < \omega\}$. 
+
+\underline{Step $0$:} Let $A_0 = B_0 = \varnothing = f_0$. 
+
+Now, suppose that we have built an order preserving bijection $f_n : A_n \to B_n$ where 
+$A_n \subseteq E_1$ and $B_n \subseteq E_2$ are finite subsets. 
+
+\underline{Step $n+1$:} Suppose that $n + 1$ is odd; that is, $n + 1 = 2m + 1$ for some $m < \omega$. 
+We want to get $a_m$ into $A_{n+1}$. If $a_m \in A_n$, then we set $A_{n+1} = A_n$, 
+$B_{n+1} = B_n$, and $f_{n+1} = f_n$. If $a_m \notin A_n$, consider the relationship of $a_m$ 
+to $A_n$. We have one of the following three cases.
+\begin{enumerate}[(1)]
+    \item $a_m$ is less than every element in $A_n$.
+    \item $a_m$ is greater than every element in $A_n$.
+    \item There are consecutive elements $\alpha < \beta$ in $A_n$ such that $\alpha < a_m < \beta$.
+\end{enumerate}
+Let $A_{n+1} = A_n \cup \{a_m\}$. We now choose $b \in E_2$ based on which case $a_m$ falls in.
+\begin{enumerate}[(1)]
+    \item Let $b \in E_2$ be less than every element of $B_n$, which exists since $(E_2, <)$ 
+    has no endpoints. 
+    \item Let $b \in E_2$ be greater than every element of $B_n$.
+    \item Choose $b \in E_2$ such that $f_n(\alpha) < b < f_n(\beta)$, which is possible 
+    since $f_n$ preserves order and $(E_2, <)$ is dense.
+\end{enumerate}
+Then, set $B_{n+1} = B_n \cup \{b\}$ and $f_{n+1} = f_n \cup \{(a_m, b)\}$. 
+
+On the other hand, suppose $n + 1$ is even, so $n + 1 = 2m$ for some $m < \omega$. 
+In this case, we want to get $b_m$ into $B_{n+1}$. As before, if 
+$b_m \in B_n$, then set $B_{n+1} = B_n$, $A_{n+1} = A_n$, and $f_{n+1} = f_n$. 
+Otherwise, $b_m \notin B_n$, so $b_m$ sits with respect to the elements of $B_n$ in three 
+possible cases analogously to cases (1), (2), and (3) above. Choose $a \in E_1$ according to 
+which case $b_m$ satisfies. Then, set $B_{n+1} = B_n \cup \{b_m\}$, 
+$A_{n+1} = A_n \cup \{a\}$, and $f_{n+1} = f_n \cup \{(a, b_m)\}$. 
+
+Hence, we have shown that $\DLO$ is $\aleph_0$-categorical. Since every model of $\DLO$ is infinite 
+and $L$ is finite, it follows from Vaught's Test that $\DLO$ is complete. 
+\end{pf}
+
+\begin{remark}
+Note that $(\Q, <) \equiv (\R, <)$, so in particular, "completeness of $<$" cannot be expressed 
+using $L$-sentences. 
+\end{remark}
+
+\newpage
+\section{$\ACF_p$ is complete}
+
+In this lecture, we fix the language of rings $L = \{0, 1, +, -, \times\}$. Recall that in Example 26.2, 
+we stated that $\ACF_p$, the $L$-theory of algebraically closed fields of characteristic $p$ 
+(where $p$ is either prime or zero), is complete. We now prove this using Vaught's Test. 
+
+\begin{lemma}
+Suppose that $K \vDash \ACF_p$ is uncountable. Then $\trdeg(K/\F) = |K|$, where $\F \subseteq K$ 
+is the prime field; that is, $\F = \Q$ for $p = 0$ and $\F = \Z/p\Z$ for prime $p$. 
+\end{lemma}
+\begin{pf}
+In general, if $B$ is a finite set, then $|\F(B)^{\alg}| = \aleph_0$. To see this, 
+observe that $|\F(B)| = \aleph_0$. Since there are only $\sum_{n<\omega} |\F(B)|^n = \aleph_0$ 
+polynomials over $\F(B)$, each with finitely many roots, we obtain 
+$|\F(B)^{\alg}| \leq \aleph_0$. On the other hand, $|\F(B)^{\alg}| \geq \aleph_0$ follows 
+from the structure of finite fields. 
+
+If $B$ is infinite, then $|\F(B)^{\alg}| = |B|$. Clearly, $\F(B)^{\alg} \supseteq B$, so 
+$|\F(B)^{\alg}| \geq |B|$. Conversely, the number of polynomials over $\F(B)$ is bounded above by 
+\[ \sum_{n<\omega} |\F(B)|^n = \sum_{n<\omega} |B|^n = |B|, \]
+so $|\F(B)^{\alg}| \leq |B|$. 
+
+Finally, suppose $K$ is uncountable. Let $B \subseteq K$ be a transcendence basis so that 
+$K = \F(B)^{\alg}$. Then $B$ is infinite, so we obtain 
+\[ \trdeg(K/\F) = |B| = |\F(B)^{\alg}| = |K|. \qedhere \]
+\end{pf}
+
+\begin{thm}
+Let $\kappa$ be an uncountable cardinal. Then $\ACF_p$ is $\kappa$-categorical. 
+\end{thm}
+\begin{pf}
+Suppose that $K \vDash \ACF_p$ and $L \vDash \ACF_p$ where $|K| = |L| = \kappa$. 
+Let $B \subseteq K$ be a transcendence basis over $\F$, and similarly, let 
+$C \subseteq L$ be a transcendence basis over $\F$. By the previous lemma, 
+we have that $|B| = |K| = \kappa = |L| = |C|$. Let $\alpha : B \to C$ be a bijection. 
+Then this extends to an isomorphism 
+\[ \F(B) \to \F(C) : \frac{P(b_1, \dots, b_n)}{Q(b_1, \dots, b_n)} \mapsto 
+\frac{P(\alpha(b_1), \dots, \alpha(b_n))}{Q(\alpha(b_1), \dots, \alpha(b_n)}. \]
+By the uniqueness of algebraic closure, this further extends to an 
+isomorphism $K = \F(B)^{\alg} \to \F(C)^{\alg} = L$. 
+\end{pf}
+
+\begin{cor}
+$\ACF_p$ is complete.
+\end{cor}
+\begin{pf}
+Every algebraically closed field is infinite, and the language of rings is 
+finite. By the previous theorem and Vaught's Test, $\ACF_p$ is complete.
+\end{pf}
+
+\begin{remark}
+As a consequence of this, $(\Q^{\alg}, 0, 1, +, -, \times) \equiv (\C, 0, 1, +, -, \times)$, so no sentence in the language of rings can distinguish 
+between these two structures.
+\end{remark}
+
+\begin{remark}
+While $\ACF_p$ is $\kappa$-categorical for any uncountable cardinal 
+$\kappa$, note that it is not $\aleph_0$-categorical. To see this, let $\F$ be the prime field
+and consider 
+\[ \F^{\alg} \ncong \F(t_1)^{\alg} \ncong \F(t_1, t_2)^{\alg} \ncong \cdots \]
+where $t_1, t_2, \dots$ are indeterminates. Each of these fields is countable.
+\end{remark}
+
+\begin{exercise}
+$\DLO$ is not $\aleph_1$-categorical.
+\end{exercise}
+
+\begin{remark}
+Morley's Categoricity Theorem states that if $L$ is a countable language and 
+$T$ is an $L$-theory which is $\kappa$-categorical for some uncountable cardinal $\kappa$, then 
+$T$ is in fact $\lambda$-categorical for every uncountable cardinal $\lambda$. The proof of this 
+is quite involved and is outside the scope of the course. However, this gives some insight into the
+situation we had with $\ACF_p$, where $\ACF_p$ is $\kappa$-categorical for any 
+uncountable cardinal $\kappa$. Moreover, due to the above exercise, $\DLO$ is not $\lambda$-categorical
+for any uncountable cardinal $\lambda$, because if it were, then it would also be 
+$\aleph_1$-categorical. 
+\end{remark}
+
+As a consequence of the completeness of $\ACF_p$, we can prove the following 
+"metatheorem" in algebraic geometry. For the rest of the lecture, for any prime $p$, 
+let $\F_p$ denote the prime field of $p$ elements, $\Z/p\Z$. 
+
+\begin{thm}[Lefschetz Principle] 
+Let $L = \{0, 1, +, -, \times\}$ and suppose that $\sigma$ is an $L$-sentence. The following are 
+equivalent.
+\begin{enumerate}[(i)]
+    \item $K \vDash \sigma$ for some $K \vDash \ACF_0$.
+    \item $K \vDash \sigma$ for all $K \vDash \ACF_0$.
+    \item $\F_p^{\alg} \vDash \sigma$ for all but finitely primes.
+    \item $\F_p^{\alg} \vDash \sigma$ for infinitely many primes.
+\end{enumerate}
+\end{thm}
+\begin{pf}
+(i) $\Rightarrow$ (ii). This follows from the completeness of $\ACF_0$. 
+
+(ii) $\Rightarrow$ (iii). We have $\ACF_0 \vDash \sigma$. By compactness, $\Sigma \vDash \sigma$ 
+for some finite set $\Sigma \subseteq \ACF_0$. In particular, $\ACF_0$ is made up of the axioms 
+for algebraically closed fields, $\ACF$, together with sentences of the form 
+\[ \tau_n := \forall x \, (x \neq 0 \to \underbrace{x + \cdots + x}_{\text{$n$ times}} \neq 0) \] 
+for all $n < \omega$. For some $N < \omega$, we have $\Sigma \subseteq 
+\ACF \cup \, \{\tau_1, \dots, \tau_N\}$. Let $p > N$ be prime. Then $\ACF_p \vDash \tau_n$ for 
+$1 \leq n \leq N$, and hence $\ACF_p \vDash \sigma$. Hence, $\F_p^{\alg} \vDash \sigma$ 
+for all but finitely primes.
+
+(iii) $\Rightarrow$ (iv). This is clear. 
+
+(iv) $\Rightarrow$ (i). We prove the contrapositive. Suppose that $K \vDash \ACF_0$ with 
+$K \nvDash \sigma$. Then $K \vDash \neg \sigma$. By the completeness of $\ACF_0$, 
+we obtain $\ACF_0 \vDash \neg \sigma$. From (ii) implies (iii) which we just proved, 
+$\ACF_p \vDash \neg \sigma$ for all but finitely many primes $p$. Thus, 
+$\F_p^{\alg} \vDash \sigma$ for only finitely many primes.
+\end{pf}
+
+\newpage
+\section{Quantifier elimination}
+
+In Lecture 24, we looked at the definable sets of some particular structures, and briefly 
+discussed the notion of quantifier elimination. We now explore this further. 
+
+\begin{defn}[$T$-equivalent]
+Let $T$ be an $L$-theory. Let $\phi(x_1, \dots, x_n)$ and $\psi(x_1, \dots, x_n)$ be 
+$L$-formulas. We say that $\phi$ and $\psi$ are {\bf $T$-equivalent} if 
+\[ T \vDash \forall x_1 \cdots \forall x_n \, (\phi(x_1, \dots, x_n) \leftrightarrow 
+\psi(x_1, \dots, x_n)). \] 
+Equivalently, for every model ${\cal M} \vDash T$, we have $\phi^{\cal M} = \psi^{\cal M}$. 
+\end{defn}
+
+\begin{defn}[Quantifier elimination]
+An $L$-theory $T$ admits {\bf quantifier elimination} if every formula is $T$-equivalent to 
+a quantifier-free formula. In particular, in every model of $T$, all definable sets are 
+quantifier-free definable.
+\end{defn}
+
+We would like to develop some criterion for a theory to have quantifier elimination. 
+Towards that end, we introduce some more basic notions. 
+
+\begin{defn}
+Suppose that ${\cal M}$ is an $L$-structure and $A \subseteq M$. The 
+{\bf substructure generated by $A$} is the smallest substructure of ${\cal M}$ whose 
+universe contains $A$, if it exists. If this happens to be ${\cal M}$ itself, we say that 
+$A$ {\bf generates} ${\cal M}$.
+\end{defn}
+
+\begin{lemma}
+Suppose that ${\cal M}$ is an $L$-structure and $A \subseteq M$. Moreover, assume that 
+$A$ is non-empty or $L$ contains a constant symbol. Then the substructure generated by $A$ 
+exists, with universe 
+\[ \{t^{\cal M}(a_1, \dots, a_n) : n < \omega,\, a_1, \dots, a_n \in A,\, t(x_1, \dots, x_n) 
+\text{ is an $L$-term}\}. \]
+\end{lemma}
+\begin{pf}
+By Exercise 17.5, a non-empty subset is the universe of a substructure if and only if 
+it contains all the constants and is preserved by all the basic functions. We show this 
+is the case for 
+\[ N := \{t^{\cal M}(a_1, \dots, a_n) : n < \omega,\, a_1, \dots, a_n \in A,\, t(x_1, \dots, x_n) 
+\text{ is an $L$-term}\}. \]
+Considering the $L$-term $x$, it is clear that $A \subseteq N$. If $c \in L^C$, then $c$ 
+is itself an $L$-term and hence $c^{\cal M} \in N$. That is, $N$ contains $A$ and all 
+constants of ${\cal M}$, so in particular, $N \neq \varnothing$. If 
+$f \in L^F$ is $\ell$-ary and $a_1, \dots, a_\ell \in N$ where each
+$a_i = t_i^{\cal M}(a_{i,1}, \dots, a_{i,n_i})$, then 
+\[ f^{\cal M}(a_1, \dots, a_\ell) = t^{\cal M}(a_{1,1}, \dots, a_{1,n_1}, \dots, 
+a_{\ell,1}, \dots, a_{\ell, n_\ell}) \] 
+where $t = f(t_1, \dots, t_\ell)$, so $f^{\cal M}(a_1, \dots, a_\ell) \in N$. It follows that 
+$N$ is the universe of a substructure of ${\cal M}$, say ${\cal N}$. Now, to see that 
+${\cal N}$ is the substructure generated by $A$, we show that if ${\cal N}' \subseteq {\cal M}$ and 
+$A \subseteq N'$, then $N \subseteq N'$. Indeed, for any $L$-term $t(x_1, \dots, x_n)$ and 
+$a_1, \dots, a_n \in A \subseteq N'$, we have $t^{\cal M}(a_1, \dots, a_n) = 
+t^{{\cal N}'}(a_1, \dots, a_n)$ since ${\cal N}' \subseteq {\cal M}$. Hence, 
+$t^{\cal M}(a_1, \dots, a_n) \in N'$.
+\end{pf}
+
+In Proposition 25.6, we saw that there is an elementary embedding from ${\cal M}$ to ${\cal N}$ 
+if and only if ${\cal N}$ can be expanded to a model of $\Th({\cal M}_M)$. We give a 
+similar criterion for the existence of an embedding, but refine it to take into account 
+generating sets. 
+
+\begin{lemma}
+Suppose ${\cal M}$ is an $L$-structure generated by $A \subseteq M$. Assume that 
+$A$ is non-empty or $L$ contains a constant symbol. Consider the $L_A$-theory
+\[ \qfTh({\cal M}_A) := \{\phi(\underline{a_1}, \dots, \underline{a_n}) : 
+n < \omega,\, a_1, \dots, a_n \in A,\, \phi \text{ quantifier-free, and } 
+{\cal M} \vDash \phi(a_1, \dots, a_n)\}. \]
+Suppose that ${\cal N}$ is an $L$-structure. Then there exists an $L$-embedding 
+$j : {\cal M} \to {\cal N}$ if and only if ${\cal N}$ can be expanded to an 
+$L_A$-structure ${\cal N}'$ such that ${\cal N}' \vDash \qfTh({\cal M}_A)$. 
+\end{lemma}
+\begin{pf}
+If such an embedding $j : {\cal M} \to {\cal N}$ exists, then we can expand ${\cal N}$ 
+to an $L_A$-structure ${\cal N}'$ by $\underline{a}^{{\cal N}'} := j(a)$ for each 
+$a \in A$. Then ${\cal N}' \vDash \qfTh({\cal M}_A)$ by Proposition 21.1.
+
+Conversely, let ${\cal N}' \vDash \qfTh({\cal M}_A)$ be an expansion of ${\cal N}$. 
+We define $j : {\cal M} \to {\cal N}$ as follows. Suppose $b \in M$. By 
+Lemma 34.4, there is an $L$-term $t(x_1, \dots, x_n)$ and $a \in A^n$ such that 
+$b = t^{\cal M}(a)$. Then, $t(\underline{a})$ is an $L_A$-term, so set 
+$j(b) := t(\underline{a})^{{\cal N}'}$. This map is injective. Indeed, if $b \neq b'$ 
+are elements of $M$ with $b = t^{\cal M}(a)$ and $b' = s^{\cal M}(a')$ where 
+$t$ and $s$ are $L$-terms, $a \in A^n$, and $a' \in A^m$, then $(t(\underline{a}) \neq 
+s(\underline{a'})) \in \qfTh({\cal M}_A)$, so $j(b) \neq j(b')$. For 
+$c \in L^C$, we have $j(c^{\cal M}) = c^{{\cal N}'}$ by definition, and 
+$c^{{\cal N}'} = c^{\cal N}$ as ${\cal N}'$ expands ${\cal N}$. If 
+$f \in L^F$ is $n$-ary and $b_1, \dots, b_n \in M$, then writing 
+$b_i = t_i^{\cal M}(a_i)$ where each $t_i$ is an $L$-term and $a_i \in A^{n_i}$, 
+we have that $j(b_i) = t_i(\underline{a_i})^{{\cal N}'}$. Moreover, 
+$f^{\cal M}(b_1, \dots, b_n) = f^{\cal M}(t_1^{\cal M}(a_1), \dots, t_n^{\cal M}(a_n))$. 
+Hence, it follows that 
+\begin{align*}
+    j(f(b_1, \dots, b_n)) &= f(t_1(\underline{a_1}), \dots, t_n(\underline{a_n}))^{{\cal N}'} \\
+    &= f^{{\cal N}'}(t_1(\underline{a_1})^{{\cal N}'}, \dots, 
+    t_n(\underline{a_n})^{{\cal N}'}) \\
+    &= f^{\cal N}(j(b_1), \dots, j(b_n)),
+\end{align*}
+where the last equality uses the fact that ${\cal N}'$ is an expansion of ${\cal N}$. 
+Finally, suppose that $R \in L^R$ is $n$-ary and $b_1, \dots, b_n \in M$. Again, 
+writing $b_i = t_i^{\cal M}(a_i)$ where each $t_i$ is an $L$-term and $a_i \in A^{n_i}$, we have 
+\begin{align*}
+    (b_1, \dots, b_n) \in R^{\cal M} &\iff 
+    (t_1^{\cal M}(a_1), \dots, t_n^{\cal M}(a_n)) \in R^{\cal M} \\
+    &\iff R(t_1(\underline{a_1}), \dots, t_n(\underline{a_n})) \in \qfTh({\cal M}_A) \\
+    &\iff (t_1(\underline{a_1})^{{\cal N}'}, \dots, t_n(\underline{a_n})^{{\cal N}'}) \in R^{{\cal N}'}\\
+    &\iff (j(b_1), \dots, j(b_n)) \in R^{\cal N}.
+\end{align*}
+Hence, $j$ is an $L$-embedding, as required.
+\end{pf}
+
+We now give a criterion for eliminating quantifiers from a given formula. 
+
+\begin{thm}
+Suppose $T$ is an $L$-theory and $\phi(x_1, \dots, x_n)$ is an $L$-formula. 
+Suppose that $n > 0$ or $L$ contains a constant symbol. The following are equivalent.
+\begin{enumerate}[(i)]
+    \item $\phi(x_1, \dots, x_n)$ is $T$-equivalent to some quantifier-free formula 
+    $\psi(x_1, \dots, x_n)$. 
+    \item Suppose ${\cal M}$ and ${\cal N}$ are both models of $T$, 
+    and that ${\cal A}$ is an $L$-substructure of both ${\cal M}$ and ${\cal N}$. Then 
+    for all $a_1, \dots, a_n \in A$, ${\cal M} \vDash \phi(a_1, \dots, a_n)$ if and only if 
+    ${\cal N} \vDash \phi(a_1, \dots, a_n)$. 
+\end{enumerate}
+\end{thm}
+\begin{pf}
+Suppose that $\phi(x_1, \dots, x_n)$ is $T$-equivalent to a quantifier-free formula 
+$\psi(x_1, \dots, x_n)$. Let ${\cal M}, {\cal N}$, and ${\cal A}$ be as in (ii). 
+Then for any $a = (a_1, \dots, a_n) \in A^n$, we have 
+\begin{align*}
+    {\cal M} \vDash \phi(a) &\iff {\cal M} \vDash \psi(a) \, \text{ as 
+    $\phi$ is $T$-equivalent to $\psi$ and ${\cal M} \vDash T$} \\
+    &\iff {\cal A} \vDash \psi(a) \, \text{ as ${\cal A} \subseteq {\cal M}$ and Proposition 21.1} \\
+    &\iff {\cal N} \vDash \psi(a) \, \text{ as ${\cal A} \subseteq {\cal N}$ and Proposition 21.1} \\
+    &\iff {\cal N} \vDash \phi(a) \, \text{ as $\phi$ is $T$-equivalent to $\psi$ and ${\cal N} \vDash T$.}
+\end{align*}
+Conversely, suppose (ii) holds. We want to find a quantifier-free formula that is $T$-equivalent to 
+$\phi(x_1, \dots, x_n)$. Consider the set 
+\[ \Phi := \{\psi(x_1, \dots, x_n) : \psi \text{ quantifier-free and }
+T \vDash \forall x_1 \cdots \forall x_n \, (\phi(x_1, \dots, x_n) \to \psi(x_1, \dots, x_n))\}. \]
+Let $c_1, \dots, c_n$ be new constant symbols and let $L' := L \cup \{c_1, \dots, c_n\}$. 
+We denote by $\Phi(c_1, \dots, c_n)$ the set of $L'$-sentences $\{\psi(c_1, \dots, c_n) : 
+\psi \in \Psi\}$. 
+
+{\sc Claim.} $T \cup \Psi(c_1, \dots, c_n) \vDash \phi(c_1, \dots, c_n)$. 
+
+{\sc Proof of Claim.} Suppose not. Then there is a model ${\cal M} \vDash T$ and $a_1, \dots, a_n 
+\in M$ such that ${\cal M} \vDash \psi(a_1, \dots, a_n)$ for all $\psi \in \Psi$ but 
+${\cal M} \vDash \neg \phi(a_1, \dots, a_n)$. Consider the theory 
+\[ T' := T \cup \qfTh({\cal M}_{\{a_1, \dots, a_n\}}) \cup \{\phi(\underline{a_1}, 
+\dots, \underline{a_n})\} \] 
+in the language $L \cup \{\underline{a_1}, \dots, \underline{a_n}\}$. 
+
+{\sc Subclaim.} $T'$ is consistent. 
+
+{\sc Proof of Subclaim.} If not, then by compactness, there is a quantifier-free formula
+$\psi(x_1, \dots, x_n)$ with ${\cal M} \vDash \psi(a_1, \dots, a_n)$ such that 
+$T \cup \{\psi(\underline{a_1}, \dots, \underline{a_n}), \phi(\underline{a_1}, 
+\dots, \underline{a_n})\}$
+is inconsistent. Hence, we have 
+\[ T \vDash \phi(\underline{a_1}, \dots, \underline{a_n}) \to 
+\neg \psi(\underline{a_1}, \dots, \underline{a_n}). \]
+But $\underline{a_1}, \dots, \underline{a_n}$ are new constant symbols, so this implies that 
+\[ T \vDash \forall x_1 \cdots \forall x_n \, (\phi(x_1, \dots, x_n) \to \neg 
+\psi(x_1, \dots, x_n)). \] 
+In particular, this gives $\neg \psi \in \Psi$, so ${\cal M} \vDash \neg \psi(a_1, \dots, a_n)$. 
+But this is a contradiction as $\psi$ was chosen such that ${\cal M} \vDash 
+\psi(a_1, \dots, a_n)$. \hfill $\blacksquare$
+
+Having proved the subclaim, let ${\cal N}' \vDash T'$ and let ${\cal N}$ be the $L$-reduct of 
+${\cal N}'$, so ${\cal N} \vDash T$. Let ${\cal A}$ be the substructure of ${\cal M}$ 
+generated by $\{a_1, \dots, a_n\}$, which exists by Lemma 34.4, noting that $n > 0$ or 
+$L$ contains a constant symbol. Recall that ${\cal N}' \vDash \qfTh({\cal M}_{\{a_1, \dots, 
+a_n\}})$. Then by Lemma 34.5, there exists an $L$-embedding $j : {\cal A} \to {\cal N}$. 
+Identifying ${\cal A}$ with its image under $j$, we may assume that ${\cal A} \preceq {\cal N}$. 
+Applying (ii), we have ${\cal M} \vDash \phi(a_1, \dots, a_n)$. But this is a contradiction 
+since we assumed that ${\cal M} \vDash \neg \phi(a_1, \dots, a_n)$, which proves the claim. 
+\hfill $\blacksquare$
+
+Now, we have that $T \cup \Psi(c_1, \dots, c_n) \vDash \phi(c_1, \dots, c_n)$. 
+Write $c = (c_1, \dots, c_n)$.
+By compactness, there exist $\psi_1, \dots, \psi_\ell \in \Psi$ such that 
+$T \cup \{\psi_1(c), \dots, \psi_\ell(c)\} \vDash \phi(c)$. Let 
+\[ \psi(x_1, \dots, x_n) := \bigwedge_{i=1}^\ell \psi_i(x_1, \dots, x_n). \] 
+Then we have that $T \vDash \psi(c) \to \phi(c)$. But $c_1, \dots, c_n$ are new 
+constant symbols which do not appear in $T$, so this implies that 
+\[ T \vDash \forall x_1 \cdots \forall x_n \, (\psi(x_1, \dots, x_n) \to \phi(x_1, 
+\dots, x_n)). \] 
+On the other hand, we have $T \vDash \forall x_1 \cdots \forall x_n \, 
+(\phi(x_1, \dots, x_n) \to \psi(x_1, \dots, x_n))$ since 
+$\psi_i \in \Psi$ for all $1 \leq i \leq \ell$. 
+Thus, $\phi$ is $T$-equivalent to $\psi$, completing the proof.
+\end{pf}
+
+\newpage
+\section{A criterion for quantifier elimination}
+
+From Theorem 34.6, we can test whether a given formula is equivalent to 
+a quantifier-free formula. We can now develop a criterion for a theory to admit quantifier 
+elimination. 
+
+\begin{defn}
+An {\bf $L$-literal} is an atomic $L$-formula or a negated atomic $L$-formula. 
+\end{defn}
+
+\begin{thm}[Criterion for QE]
+Let $T$ be an $L$-theory satisfying the following condition. 
+\begin{align*}
+    (\star) \quad & \text{Let ${\cal M}$ and ${\cal N}$ be two models of $T$ and ${\cal A}$
+    a common $L$-substructure of ${\cal M}$ and ${\cal N}$.} \\
+    & \text{Let $\psi(y)$ be a 
+    conjunction of $L_A$-literals in a single free variable $y$. If $\psi(y)$ has a} \\
+    & \text{solution in ${\cal M}$, then it has a solution in ${\cal N}$.}
+\end{align*}
+Then $T$ admits quantifier elimination.
+\end{thm}
+\begin{pf}
+Suppose that $\phi(x)$ is an $L$-formula where $x = (x_1, \dots, x_n)$ and $n > 0$. 
+We show, using $(\star)$ and by induction on the complexity of $\phi$, that $\phi$ is 
+$T$-equivalent to a quantifier-free formula in $x$. Clearly, if $\phi(x)$ is atomic, then 
+it is already a quantifier-free formula. Moreover, note that being $T$-equivalent to 
+a quantifier-free formula is closed under conjunctions, disjunctions, and negations. 
+As usual, we can write $\forall$ in terms of $\neg$ and $\exists$. So it remains to consider the 
+case where $\phi(x)$ is of the form $\exists y \, \psi(x, y)$ where $y$ is a single variable in $\psi$
+and $\psi(x, y)$ is $T$-equivalent to a quantifier-free formula $\theta(x, y)$. Writing 
+$\theta$ in disjunctive normal form, we have 
+\[ \theta(x, y) = \bigvee_i \bigwedge_j \psi_{i,j}(x, y) \] 
+where each $\psi_{i,j}$ is an $L$-literal. It now suffices to show that 
+$\exists y \, (\bigvee_i \bigwedge_j \psi_{i,j}(x, y))$ is $T$-equivalent to 
+a quantifier-free formula in $x$. For this, we will verify the condition given in Theorem 34.6.
+Let ${\cal M}$ and ${\cal N}$ be two models of $T$, and let ${\cal A}$ be a common 
+$L$-substructure of ${\cal M}$ and ${\cal N}$. Let $a \in A^n$. If 
+${\cal M} \vDash \exists y \, (\bigvee_i \bigwedge_j \psi_{i,j}(a, y))$, then in particular, 
+${\cal M} \vDash \exists y \, (\bigwedge_j \psi_{i,j}(a, y))$ for some $i$. 
+Now, observe that $\bigwedge_j \psi_{i,j}(a, y)$ is a conjunction of $L_A$-literals in $y$. 
+By $(\star)$, ${\cal N} \vDash \exists y \, (\bigwedge_j \psi_{i,j}(a, y))$ for the same 
+$i$, and hence ${\cal N} \vDash \exists y \, (\bigvee_i \bigwedge_j \psi_{i,j}(a, y))$. 
+By symmetry, the converse is also true. Hence, we obtain 
+\[ {\cal M} \vDash \exists y \left( \bigvee_i \bigwedge_j \psi_{i,j}(x, y) \right) 
+\iff {\cal N} \vDash \exists y \left( \bigvee_i \bigwedge_j \psi_{i,j}(x, y) \right). \]
+By Theorem 34.6, it follows that $\exists y \, (\bigvee_i \bigwedge_j \psi_{i,j}(x, y))$ 
+is $T$-equivalent to a quantifier-free formula in $x$, which we wanted to show.
+\end{pf}
+
+To finish this lecture, we give a simple example where we apply this criterion.
+
+\begin{exmp}
+Let $L = \varnothing$. The $L$-theory $T$ of infinite sets admits quantifier elimination.
+\end{exmp}
+\begin{pf}
+We prove that $T$ satisfies the condition $(\star)$ in Theorem 35.2. 
+Suppose ${\cal M}$ and ${\cal N}$ are infinite sets with a common non-empty subset ${\cal A}$. 
+Let $\psi(y)$ be a conjunction of $L_A$-literals that has a solution in ${\cal M}$. We want to 
+show that $\psi(y)$ has a solution in ${\cal N}$. 
+
+Note that an $L_A$-literal in the variable $y$ is of one of the forms 
+$y = y$, $y \neq y$, $y = a$, $y \neq b$, $a = b$, or $a \neq b$ where $a, b \in A$. 
+We may throw out the literals of the form $a = b$ and $a \neq b$ out of $\psi(y)$ 
+because if they are true in ${\cal M}$, then they are clearly also true in ${\cal N}$. 
+We can also throw out $y = y$, as this is satisfied by everything. 
+Also, note that $y \neq y$ cannot appear in $\psi(y)$ since it has no solutions. 
+Hence, we may assume that $\psi(y)$ is of the form 
+\[ \bigwedge_{i=1}^r (y = a_i) \wedge \bigwedge_{j=1}^s (y \neq b_i), \]
+where $a_1, \dots, a_r, b_1, \dots, b_s \in A$. If $r \geq 1$, then $a_1$ is a solution to 
+$\psi(y)$ in ${\cal M}$. But $a_1 \in {\cal A} \subseteq {\cal N}$, so $a_1$ is also a solution to 
+$\psi(y)$ in ${\cal N}$. Otherwise, assume that $r = 0$. Then $\psi(y)$ is simply given by 
+\[ \bigwedge_{j=1}^s (y \neq b_i). \] 
+Since ${\cal N} \vDash T$, we have that ${\cal N}$ is infinite, so $\psi(y)$ is satisfied in 
+${\cal N}$ by choosing some element $b \in N \setminus \{b_1, \dots, b_s\}$. 
+\end{pf}
+
+\newpage 
+\section{Examples of quantifier elimination}
+
+We give a slightly more complicated example than before.
+
+\begin{exmp}
+Let $L = \{<\}$. The $L$-theory $\DLO$ admits quantifier elimination. 
+\end{exmp}
+\begin{pf}
+Suppose that $(M, <) \vDash \DLO$ and $(N, <) \vDash \DLO$. Let 
+$(A, <)$ be a common substructure of $(M, <)$ and $(N, <)$. 
+Let $\psi(y)$ be a conjunction of $L_A$-literals which has a realization in $(M, <)$. 
+We want to show that $\psi(y)$ has a realization in $(N, <)$. 
+
+The possible conjuncts in $\psi(y)$ are ones of the form\vspace{-1ex}
+\begin{multicols}{3}
+    \begin{itemize}
+        \item $y = y$
+        \item $y \neq y$
+        \item $y < y$
+        \item $y \geq y$
+        \item $y = a$
+        \item $y \neq a$
+        \item $y < a$
+        \item $y \geq a$
+        \item $a < y$
+        \item $a \geq y$
+    \end{itemize}
+\end{multicols}\vspace{-2ex}
+as well as the $L_A$-literals not involving $y$. Clearly, the $L_A$-literals not involving $y$ 
+can be dropped, since if they are true in ${\cal M}$, then they are true in ${\cal A}$, 
+and hence in ${\cal N}$. The first four from the above list can also be dropped 
+because they are either realized by everything or never realized. 
+If $y = a$, $y \geq a$, or $a \geq y$ appears in $\psi(y)$, then $a \in A \subseteq N$ is a solution, so we can also drop these. The only remaining literals we did not drop are of the form 
+$y \neq a$, $y < a$, and $a < y$. Hence, we may assume that $\psi(y)$ is of the form 
+\[ \bigwedge_{i=1}^r (y > a_i) \wedge \bigwedge_{j=1}^s (y \neq b_j) \wedge 
+\bigwedge_{k=1}^t (y < c_k) \]
+where $a_1, \dots, a_r, b_1, \dots, b_s, c_1, \dots, c_t \in A$. Since this has a solution in 
+$(M, <)$, it must be that $\max_{1\leq i \leq r} a_i < \min_{1 \leq k \leq t} c_k$. 
+Since $(N, <) \vDash \DLO$, there are infinitely many elements in $N$ strictly between these 
+two, so choose one that is not equal to any of $b_1, \dots, b_s$. This will satisfy $\psi(y)$.
+\end{pf}
+
+\begin{remark}
+As a consequence of this example, if $(M, <) \vDash \DLO$, then the definable subsets of $M$ 
+are finite unions of points and open intervals. Such an structure in a language containing 
+$<$ is said to be {\bf o-minimal}. A theory $T$ is then {\bf o-minimal} if every model of $T$ 
+is o-minimal. In particular, we see that $\DLO$ is o-minimal. It can also be shown that 
+$\Th(\R, 0, 1, +, -, \times, <)$ is o-minimal.
+\end{remark}
+
+The examples we have done were of complete theories. Let us look at an example in which the theory 
+is not complete. 
+
+\begin{exmp}
+Let $L$ be the language of rings. The $L$-theory $\ACF$ admits quantifier elimination.
+\end{exmp}
+\begin{pf}
+Suppose that $K \vDash \ACF$ and $L \vDash \ACF$. Let $R \subseteq K$ and $R \subseteq L$; 
+in particular, $R$ is a common subring of $K$ and $L$. Let $\psi(y)$ be a conjunction of 
+$L_R$-literals with a solution in $K$. We show that $\psi(y)$ has a solution in $L$. 
+
+First, we make some remarks. Note that $\ch(K) = \ch(L)$ as they both contain the common 
+subring $R$. Moreover, $R$ is an integral domain as it is the subring of a field, so we have that 
+the fraction field $\Frac(R)$ is a common subfield of $K$ and $L$. Then, by the uniqueness of 
+algebraic closure, $F := \Frac(R)^{\alg}$ is a common subfield of $K$ and $L$, 
+as $K$ and $L$ are algebraically closed. 
+
+Now, $\psi(y)$ is of the form 
+\[ \left( \bigwedge_{i=1}^r P_i(y) = 0 \right) \wedge \left( \bigwedge_{j=1}^s Q_j(y) \neq 0 
+\right) \] 
+where $P_1, \dots, P_r, Q_1, \dots, Q_s \in R[y] \subseteq F[y]$. We may assume that 
+$P_1, \dots, P_r, Q_1, \dots, Q_s$ are non-constant, for otherwise they can be dropped from
+$\psi(y)$. If $r > 0$, then a solution to $\psi(y)$ in $K$ will have to be in 
+$\Frac(R)^{\alg} = F \subseteq L$, so we are done. Otherwise, $r = 0$, so we have that 
+$\psi(y)$ is of the form 
+\[ \bigwedge_{j=1}^s Q_j(y) \neq 0. \]
+Every non-constant polynomial in a field has only finitely many solutions. 
+Since $L$ is infinite, there exists $c \in L$ such that $Q_j(c) \neq 0$ for all $1 \leq j \leq s$. 
+Then we have $L \vDash \psi(c)$. 
+\end{pf}
+
+\begin{remark}
+As an immediate consequence, every definable set in a model of $\ACF$ is Zariski-constructible, 
+which we noted in Fact 24.2.
+\end{remark}
+
+\newpage
+\section{Hilbert's Nullstellensatz}
+
+We now give an application of the fact that $\ACF$ admits quantifier elimination.
+
+\begin{remark}
+If $T$ admits quantifier elimination, then $T$ is {\bf model-complete}; that is,
+whenever ${\cal M} \vDash 
+T$ and ${\cal N} \vDash T$, if ${\cal M} \subseteq {\cal N}$, then ${\cal M} \preceq {\cal N}$.
+Note that model-completeness is strictly weaker than quantifier elimination. For example, 
+consider $T = \Th(\R, 0, 1, +, -, \times)$, which does not admit quantifier elimination (as 
+seen in Lecture 24). However, it is a fact (which requires some more work) that 
+$T$ is model-complete.
+\end{remark}
+
+\begin{exmp}
+Recall that $\DLO$ admits quantifier elimination, and hence is model-complete. Since 
+$(\Q, <) \subseteq (\R, <)$, it follows that $(\Q, <) \preceq (\R, <)$. 
+Similarly, since $\ACF$ admits quantifier elimination, we obtain 
+$(\Q^{\alg}, 0, 1, +, -, \times) \preceq (\C, 0, 1, +, -, \times)$.
+\end{exmp}
+
+\begin{thm}[Hilbert's Nullstellensatz]
+Suppose that $K \vDash \ACF$ and $P_1, \dots, P_\ell \in K[X_1, \dots, X_n]$. Suppose 
+there does not exist $Q_1, \dots, Q_\ell \in K[X_1, \dots, X_n]$ such that 
+\[ Q_1P_1 + \cdots + Q_\ell P_\ell = 1. \tag{$\star$} \]
+Then there is $a \in K^n$ such that $P_1(a) = P_2(a) = \cdots = P_\ell(a) = 0$.
+\end{thm}
+\begin{pf}
+By model-completeness, it suffices to find $K \subseteq L \vDash \ACF$ such that 
+\[ L \vDash \exists x \left( \bigwedge_{i=1}^\ell P_i(x) = 0 \right), \]
+since $K \preceq L$. Note that the above is an $L_K$-sentence. 
+By $(\star)$, the ideal $I := (P_1, \dots, P_\ell) \subseteq K[X_1, \dots, X_n]$ is proper. 
+Let $\mathfrak{M} \supseteq I$ be a maximal ideal. Then, $K[X_1, \dots, X_n] / 
+\mathfrak{M} =: F$ is a field. Letting $\pi$ be the projection map, we find that 
+\[ K \xrightarrow[]{\subseteq} K[X_1, \dots, X_n] \xrightarrow[]{\pi} 
+K[X_1, \dots, X_n] / \mathfrak{M} = F \]
+is an embedding, since $\mathfrak{M} \cap K = (0)$. Now, $K \subseteq F \subseteq F^{\alg} 
+=: L \vDash \ACF$. For each $1 \leq i \leq n$, let $b_i := \pi(X_i) \in F \subseteq L$. 
+Then, for $1 \leq j \leq \ell$, 
+\begin{align*}
+    P_j(b_1, \dots, b_n) &= P_j(\pi(X_1), \dots, \pi(X_n)) \\
+    &= \pi(P_j(X_1, \dots, X_n)) \\
+    &= 0
+\end{align*}
+since $P_j \in I \subseteq \mathfrak{M}$. Thus, $b = (b_1, \dots, b_n)$ is a solution to
+all $P_j(x) = 0$ in $L$.
+\end{pf}
+
+\end{document}
