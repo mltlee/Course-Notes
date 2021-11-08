@@ -22,7 +22,7 @@ Towards the proof of Burnside's theorem, we'll first prove some intermediate res
     \in \A$ for some $g \in G$, then $\chi(g) = 0$. 
 \end{lemma}
 
-We leave the proof of this lemma for the next lecture. For the moment, we 
+We leave the proof of this for later. For the moment, we 
 will use this lemma to prove the following theorem. 
 
 \begin{theo}{}
@@ -186,7 +186,7 @@ $K^{H_1} \supseteq K^{H_2}$; that is, this correspondence is inclusion-reversing
 In particular, notice that $K^G = \{a \in K : \sigma(a) = a \text{ for all } 
 \sigma \in \Gal(K/F)\} = F$. 
 
-\begin{theo}{}
+\begin{theo}[Kronecker]{}
     Consider the polynomial 
     \[ p(x) = x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0 = 
     (x - \alpha_1) \cdots (x - \alpha_n) \in \Z[x]. \] 
@@ -219,5 +219,135 @@ In particular, notice that $K^G = \{a \in K : \sigma(a) = a \text{ for all }
     \[ a_{n-k,j} = (-1)^k \sum_{1\leq i_1 < \cdots < i_k \leq n} \alpha_{i_1}^j \cdots 
     \alpha_{i_k}^j, \] 
     and since $|\alpha_i| \leq 1$ for all $i = 1, \dots, n$, it follows that 
-    $|a_{n-k,j}| \leq \binom{n}{k}$. 
+    $|a_{n-k,j}| \leq \binom{n}{k}$. Now, observe that the set 
+    $X = \{x^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0 \in \Z[x] : 
+    |a_i| \leq \binom{n}{i} \text{ for all } i = 0, \dots, n-1\}$ is finite, 
+    and $p_j(x) \in X$ for all $j \in \Z^+$. In particular, there exist 
+    integers $m_1 < m_2$ such that $p_{m_1}(x) = p_{m_2}(x)$. Notice that 
+    this implies that $\{\alpha_1^{m_1}, \dots, \alpha_n^{m_1}\} 
+    = \{\alpha_1^{m_2}, \dots, \alpha_n^{m_2}\}$. Then we 
+    either have $\alpha_i = 0$ or $\alpha_i^{m_2-m_1} = 1$ for each 
+    $i = 1, \dots, n$, completing the proof. 
 \end{pf}
+
+\section{Lemma for Burnside's theorem, tensor products (11/08/2021)}
+Now that we are equipped with Kronecker's theorem, we can prove the following 
+lemma we used towards proving Burnside's theorem. In the interest of time, 
+we will prove a slightly weaker version of it. 
+
+\begin{lemma}{}
+    Let $G$ be a non-abelian simple group. Let $\chi$ be an irreducible character 
+    of degree $n \geq 2$. If $g \in G$ with $g \neq 1$ and $\chi(g)/n \in \A$, 
+    then $\chi(g) = 0$. 
+\end{lemma}
+\begin{pf}
+    Note that there exists an integer $d$ such that $g^d = 1$. 
+    If $\chi$ is the character of some representation $\rho : G \to \GL_n(\C)$, 
+    then 
+    \[ \rho(g) \sim \begin{pmatrix}
+        \omega_1 & & 0 \\ 
+        & \ddots & \\ 
+        0 & & \omega_n 
+    \end{pmatrix}, \] 
+    where $\omega_1, \dots, \omega_n$ are $d$-th roots of unity. Indeed, every 
+    matrix over $\C$ is triangularizable. But $g^d = 1$ implies that 
+    $\rho(g)^d - I = 0$, so the minimal polynomial of $\rho(g)$ divides 
+    $x^d - 1$, and the roots of $x^d - 1$ are distinct. A matrix over 
+    an algebraically closed field is diagonalizable if and only if its minimal 
+    polynomial has distinct roots, so in particular, $\rho(g)$ is diagonalizable. 
+    Now, observe that 
+    \[ \frac{\chi(g)}{n} = \frac{\omega_1 + \cdots + \omega_n}{n}. \] 
+    By the Cauchy-Schwarz inequality, we see that 
+    \[ \left| \frac{\chi(g)}{n} \right| = 
+    \left\langle (\omega_1, \dots, \omega_n), 
+    \left( \frac1n, \dots, \frac1n \right) \right\rangle 
+    \leq \sqrt n \cdot \sqrt{\frac1n} = 1, \] 
+    with equality if and only if $\omega_1 = \cdots = \omega_n$. We now 
+    consider two cases. 
+
+    If $\omega_1 = \cdots = \omega_n =: \omega$, then 
+    \[ \rho(g) \sim \begin{pmatrix}
+        \omega & & 0 \\ 
+        & \ddots & \\ 
+        0 & & \omega
+    \end{pmatrix} = \omega I. \] 
+    Note that $\omega I$ commutes with everything in $\GL_n(\C)$. Hence, 
+    we obtain $\rho(ghg^{-1}h^{-1}) = \rho(g)\rho(h)\rho(g)^{-1}\rho(h)^{-1} 
+    = I$ for all $h \in G$. This means that $ghg^{-1}h^{-1} \in \ker\rho$ for 
+    all $h \in G$. Note that $\ker\rho \trianglelefteq G$, and since $G$ 
+    is simple, we either have $\ker\rho = G$ or $\ker\rho = \{1\}$. The 
+    first case is impossible since $\rho$ is irreducible of degree $n \geq 2$. 
+    Then $\ker\rho = \{1\}$, so $ghg^{-1}h^{-1} = 1$ for all $h \in G$. 
+    This implies that $g \in Z(G) \trianglelefteq G$. But we assumed that 
+    $g \neq 1$, so $G$ being simple shows that $Z(G) = G$. This is a 
+    contradiction since $G$ is non-abelian. 
+
+    Assume now that $\omega_1, \dots, \omega_n$ are not all equal. In this 
+    case, we have 
+    \[ \left| \frac{\chi(g)}{n} \right| = \left| \frac{\omega_1 + \cdots + 
+    \omega_n}{n} \right| < 1. \] 
+    Let $\alpha = \chi(g)/n$, and let $K = \Q(e^{2\pi i/d})$. Notice that 
+    $\omega_1, \dots, \omega_n \in K$ as they are all $d$-th roots of unity. 
+    A $\Q$-algebra automorphism sends $d$-th roots of unity to other $d$-th 
+    roots of unity, since $\omega^d = 1$ implies that $\sigma(\omega)^d 
+    = \sigma(\omega^d) = \sigma(1) = 1$. Now, if $\sigma \in \Gal(K/\Q)$, then 
+    $\sigma$ is $\Q$-linear, so we get 
+    \[ \sigma(\alpha) = \frac{\sigma(\omega_1) + \cdots + \sigma(\omega_n)}{n}. \] 
+    Moreover, $\sigma(\omega_1), \dots, \sigma(\omega_n)$ are not all the same 
+    since $\sigma$ is an automorphism, and hence injective. Therefore, 
+    we have $|\sigma(\alpha)| < 1$ for all $\sigma \in \Gal(K/\Q)$. 
+
+    Assume that $\alpha \in \A$, so $\sigma(\alpha) \in \A$ for all $\sigma 
+    \in \Gal(K/\Q)$. Note that the polynomial 
+    \[ \prod_{\sigma \in \Gal(K/\Q)} (x - \sigma(\alpha)) \] 
+    lives in $\Q[x] \cap \A[x] = \Z[x]$. Note that $\alpha$ is a root of this 
+    polynomial with $|\alpha| < 1$. By Kronecker, $\alpha$ is 
+    either $0$ or a root of unity, with the latter case being impossible since 
+    $|\alpha| \neq 1$. It follows that $\alpha = |\chi(g)|/n$ must be $0$, 
+    and hence $\chi(g) = 0$. 
+\end{pf}
+
+We now introduce tensor products. Let $R$ be a ring, let $M = M_R$ be a 
+right $R$-module, and let $N = {}_R N$ be a left $R$-module. We can form 
+the tensor product $M \otimes_R N$ of $M$ and $N$. 
+
+Given an abelian group $A$, we say that a map $f : M \times N \to A$ 
+is {\bf bilinear} if 
+\begin{enumerate}[(i)]
+    \item $f(m_1 + m_2 \cdot a, n) = f(m_1, n) + a \cdot f(m_2, n)$ 
+          for all $m_1, m_2 \in M$, $n \in N$, and $a \in \Z$; 
+    \item $f(m, n_1 + an_2) = f(m, n_1) + a \cdot f(m, n_2)$ for all 
+          $m \in M$, $n_1, n_2 \in N$, and $a \in \Z$; 
+    \item $f(m \cdot r, n) = f(m, r \cdot n)$ for all $m \in M$, $n \in N$, and 
+          $r \in R$. 
+\end{enumerate}
+We can think of bilinear maps as an abstraction of multiplication between modules. 
+
+\begin{remark}{}
+    Note that we need the left and right pairing of the modules to make this work 
+    in general. Suppose that $M$ and $R$ are both right $R$-modules. We would like 
+    to impose that $f(m \cdot r, n) = f(m, n \cdot r)$ for all $m \in M$, $n \in N$, and 
+    $r \in R$. But this means that for all $r, s \in R$, we have $f(m(rs), n) 
+    = f(m, n(rs))$, and also 
+    \[ f(m(rs), n) = f(mr, ns) = f(m, n(sr)). \] 
+    In particular, we require that $f(m, n(rs - sr)) = 0$ for all $m \in M$, 
+    $n \in N$, and $r, s \in R$. This is not an issue for commutative rings, 
+    but there are rings $R$ such that $1 \in [R, R]$, in which case the only 
+    bilinear map is the zero map. The same issue occurs with two left $R$-modules. 
+\end{remark}
+
+We now formally define tensor products. 
+
+\begin{defn}{}
+    Let $T$ be the free abelian group on generators $e_{(m,n)}$ where $(m, n) 
+    \in M \times N$. That is, we have 
+    \[ T = \bigoplus_{(m, n) \in M \times N} \Z e_{(m,n)}. \] 
+    Let $U \subseteq T$ be the $\Z$-submodule spanned by the relations 
+    \begin{enumerate}[(i)]
+        \item $e_{(m_1 + m_2, n)} - e_{(m_1, n)} - e_{(m_2, n)}$; 
+        \item $e_{(m, n_1 + n_2)} - e_{(m, n_1)} - e_{(m, n_2)}$; and 
+        \item $e_{(mr, n)} = e_{(m, rn)}$. 
+    \end{enumerate}
+    Then the {\bf tensor product} of $M$ and $N$ is defined to be 
+    $M \otimes_R N := T/U$. 
+\end{defn}
