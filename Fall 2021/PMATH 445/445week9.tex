@@ -1,0 +1,128 @@
+\section{(11/10/2021)}
+$R$ a ring, $M = M_R$ a right $R$-module, $N = {}_R N$
+a left $R$-module. Then $M \otimes_R N = T/U$ is an abelian group. 
+
+Notation: We write $m \otimes n := e_{(m,n)} + U$. 
+
+{\bf Warning:} Not every element in $M \otimes_R N$ can be expressed as 
+$m \otimes n$ in general, but is a $\Z$-linear combination of 
+elements of the form $m \otimes n$. 
+
+We have a map 
+\[ M \times N \to M \otimes_R N, (m, n) \mapsto m \otimes n \] 
+which is bilinear and hence satisfies the property 
+\[ (m_1 + m_2, n) \mapsto (m_1 + m_2) \otimes n = 
+m_1 \otimes n + m_2 \otimes n. \] 
+This is the case since $e_{(m_1+m_2, n)} \equiv e_{(m_1, n)} 
++ e_{(m_2, n)} \pmod{U}$. Moreover, $e_{(mr, n)} \equiv 
+e_{(m, rn)} \pmod{U}$, so $mr \otimes n = m \otimes rn$. 
+
+{\bf Universal property.} If $A$ is an abelian group and 
+$\theta : M \times N \to A$ is a bilinear map, then there exists 
+a unique group homomorphism $\tilde\theta : M \otimes_R N \to A$. 
+
+\begin{pf}
+    Given a bilinear map $\theta : M \times N \to A$, define 
+    $\hat\theta : T \to A$ by 
+    \[ \hat\theta(e_{(m,n)}) = \theta(m, n). \] 
+    This is a group homomorphism. We claim that $U \subseteq 
+    \ker\hat\theta$. To see this, it suffices to show that 
+    \begin{enumerate}[(i)]
+        \item $\hat\theta(e_{(m_1+m_2a, n)} - e_{(m_1, n)} 
+        - ae_{(m_2, n)}) = 0$; 
+        \item $\hat\theta(e_{(m,n_1+an_2)} - e_{(m,n_1)} - 
+        ae_{(m,n_2)}) = 0$; 
+        \item $\hat\theta(e_{(mr, n)} + e_{(m, rn)}) = 0$. 
+    \end{enumerate}
+    We check (iii), and we leave (i) and (ii) as exercises. 
+    We have 
+    \begin{align*}
+        \hat\theta(e_{(mr, n)}) - e_{(m, rn)}) = 
+        \theta(mr, n) - \theta(m, rn) = 0, 
+    \end{align*}
+    since $\theta$ is bilinear. Now, using the map 
+    $M \times N \to T, (m, n) \mapsto e_{(m, n)}$, the 
+    map $\hat\theta : T \to A$ is unique. Since $U$ is 
+    in $\ker\hat\theta$, we have $\hat\theta(t + u) = 
+    \hat\theta(t)$ for all $u \in U$, so this 
+    induces a unique map $\tilde\theta : T/U \to A$. 
+\end{pf}
+
+{\bf Uniqueness of tensor products.} We have the bilinear map 
+$\pi : M \times N \to M \otimes_R N, (m, n) \mapsto m \otimes n$ 
+which gives us the universal property. Suppose that $\Omega$ is 
+another abelian group with a bilinear map $\pi' : M \times N 
+\to \Omega$ which also has the universal property. Then 
+$M \otimes_R N \cong \Omega$. 
+
+\begin{pf}
+    By the universal property of $\Omega$, there exists a unique group 
+    homomorphism $\tilde\pi' : M \otimes_R N \to \Omega$ with $\tilde\pi' \circ \pi = \pi'$. 
+    Similarly, by the universal property of $M \otimes_R N$, there 
+    is a unique group homomorphism $\tilde\pi : \Omega \to M \otimes_R N$. 
+
+    Clearly there is a unique map $\id : \Omega \to \Omega$. 
+    We can take $\tilde\pi : \Omega \to M \otimes_R N$ 
+    and $\tilde\pi' : M \otimes_R N \to \Omega$. Then 
+    \[ (\tilde\pi' \circ \tilde\pi) \circ \pi' 
+    = \tilde\pi' \circ (\tilde\pi \circ \pi') 
+    = \tilde\pi' \circ \pi = \pi'. \] 
+    So $\tilde\pi' \circ \tilde\pi : \Omega \to \Omega$. By uniqueness, 
+    $\tilde\pi' \circ \tilde\pi = \id_\Omega$; similarly, 
+    $\tilde\pi \circ \tilde\pi' = \id_{M\otimes_R N}$. 
+\end{pf}
+
+\begin{exmp}{}
+    Let $R = \Z$, $M = \Q$, $N = \Z/3\Z$. What is 
+    $\Q \otimes_{\Z} \Z/3\Z$? $(0)$. In this case, 
+    \[ T = \bigoplus_{(a, b) \in \Q \times \Z/3\Z} \Z e_{(a, b)}. \] 
+    Consider $a \otimes [1]_3$. We have 
+    \[ a \otimes [1]_3 = \frac{a}3 \cdot 3 \otimes [1]_3 
+    = \frac{a}3 \otimes 3 \cdot [1]_3 = \frac{a}3 \otimes 0
+    = \frac{a}3 \otimes 0 \cdot 0 = 0 \otimes 0 = 0. \] 
+    (Tensoring an abelian group with $\Q$ kills the torsion.)
+\end{exmp}
+
+\begin{exmp}{}
+    Let $m, n \geq 1$. What is $\Z/m\Z \otimes_{\Z} \Z/n\Z$? 
+    $\Z/d\Z$ where $d = \gcd(m, n)$. We have 
+    \[ [i]_m \otimes [j]_n = [i]_m \otimes j \cdot [1]_n 
+    = [ij]_m \otimes [1]_n. \] 
+    For $a \in \Z$, we can write $a = u + ms + nt$ where 
+    $u \in \{0, 1, \dots, d-1\}$. This gives 
+    \begin{align*} 
+        [ij]_m \otimes [1]_n 
+        &= [u + ms + nt]_m \otimes [1]_n \\
+        &= [u + nt]_m \otimes [1]_n \\
+        &= ([u]_m + [t]_m \cdot n) \otimes [1]_n \\
+        &= [u]_m \otimes [1]_n + [t]_m \cdot n \otimes [1]_m \\
+        &= u \cdot [1]_m \otimes [1]_n. 
+    \end{align*}
+    Hence, we have $|\Z/m\Z \otimes_{\Z} \Z/n\Z| \leq d$. 
+    Notice we can make a multiplication
+    \begin{align*}
+        \Z/m\Z \times \Z/n\Z &\to \Z/d\Z \\ 
+        ([a]_m, [b]_n) &\mapsto [ab]_d, 
+    \end{align*}
+    and this is onto. Using universal property, have 
+    map $\tilde\theta : \Z/m\Z \otimes_{\Z} \Z/n\Z \to \Z/d\Z$ 
+    onto, and $\tilde\theta$ an isomorphism. 
+\end{exmp}
+
+\begin{exmp}{}
+    Let $R = k$ be a field, $V, W$ be vector spaces. What is 
+    $V \otimes_k W$? 
+    \[ {\rm Span}\{v_\alpha \otimes w_\beta : \{v_\alpha\} 
+    \text{ basis for $V$, $\{w_\beta\}$ basis for $W$}\}. \] 
+\end{exmp}
+
+\begin{exmp}{}
+    Let $R = M_2(\C)$, $M = \C^{1\times2}$, $N = \C^{2\times1}$. 
+    $\C$. 
+\end{exmp}
+
+\begin{remark}{}
+    If $S$ and $R$ are rings, and $M = {}_S M_R$, $N = {}_R N$, then 
+    $M \otimes_R N$ is a left $S$-module via 
+    $s \cdot (m \otimes n) = s \cdot m \otimes n$. 
+\end{remark}
