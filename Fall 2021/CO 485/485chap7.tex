@@ -1,0 +1,131 @@
+\section{Digital Signature Schemes}
+Cryptographic digital signatures aim to transfer our conventional handwritten 
+signatures into some electronic form. The man-in-the middle attack to the 
+Diffie-Hellman protocol as described in Section 6.2.2 motivates the need for 
+cryptographic signatures. If Alice was able to generate a signature $\sigma$ 
+for her message $g^\alpha$ to Bob in the protocol, and Bob was able to 
+verify Alice's signatures on her messages, then the adversary would not be 
+able to mount a man-in-the-middle attack unless they were able to forge 
+signatures on behalf of Alice. 
+
+Notice that in the Diffie-Hellman protocol, Alice and Bob are not concerned 
+about the confidentiality of the messages $g^\alpha$ and $g^\beta$ being 
+sent over the channel, but they are worried about the \emph{integrity} and 
+\emph{authentication} of the messages they receive. In other words, Bob 
+should be able to verify 
+\begin{enumerate}[(i)]
+    \item whether the message he received was indeed originated from Alice; and 
+    \item whether the message he received from Alice has been altered by 
+          other parties.
+\end{enumerate}
+Alice should be able to do the same for Bob's messages. 
+
+We have previously covered the RSA and ElGamal public key encryption schemes. 
+Now, we will present the RSA and ElGamal public key digital signature schemes. 
+Practical applications require signing long messages which after being encoded as 
+integers would exceed the size of the underlying cryptographic parameters. 
+The RSA modulus $N$ and the ElGamal group parameter $p$ are examples of this. 
+Therefore, signature schemes generally apply a cryptographic hash function 
+$H$ to a message $m$ before signing it. In particular, $H : \{0, 1\}^* 
+\to \{0, 1\}^n$ is a function that maps strings of arbitrary length into 
+\emph{small} fixed length strings. For security and efficiency reasons, 
+$H$ must satisfy the following properties. 
+\begin{enumerate}
+    \item \textbf{Efficiently computable.} Given $H$ and a message $m \in \{0, 1\}^*$, 
+          it should be efficient to compute $H(m)$. 
+    \item \textbf{Preimage resistant.} Given a hash value $h \in \{0, 1\}^n$ 
+          chosen uniformly at random, it should be computationally infeasible 
+          to find any preimage $m \in \{0, 1\}^*$ such that $H(m) = h$. 
+    \item \textbf{Second preimage resistant.} Given an input value $m_1 \in \{0, 1\}^*$
+          chosen uniformly at random, it should be computationally infeasible 
+          to find a second preimage $m_2 \in \{0, 1\}^*$ such that $H(m_1) = H(m_2)$. 
+    \item \textbf{Collision resistant.} It should be computationally infeasible 
+          to find inputs $m_1, m_2 \in \{0, 1\}^*$ such that $m_1 \neq m_2$ and 
+          $H(m_1) = H(m_2)$. Such a pair $(m_1, m_2)$ is called a \textbf{collision} 
+          for $H$. 
+\end{enumerate}
+NIST specifies a list of standardized hash algorithms (SHA); among them is 
+the commonly deployed hash algorithm SHA-$256$, which takes a string of 
+arbitrary length as input and outputs a $256$-bit string. For a full list of 
+SHA and the current NIST policy on hash functions, see 
+\href{https://csrc.nist.gov/Projects/Hash-Functions/NIST-Policy-on-Hash-Functions}
+{NIST Policy on Hash Functions}. 
+
+\begin{remark}
+    We mentioned above that a cryptographic hash function is applied to messages 
+    before they are signed. In standardized signature schemes, messages go 
+    through additional preprocessing such as encoding, padding, and 
+    randomization. In this course, we will present textbook versions of 
+    signature schemes for simplicity, and skip details of preprocessing 
+    messages before signing. For example, in the RSA signature scheme, 
+    we will assume that messages to be signed already belong to $\Z_N$. 
+    We refer to \href{https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf}
+    {FIPS 186-4} for further details on some standardized
+    signature schemes. 
+\end{remark}
+
+\subsection{The RSA Signature Scheme}
+The RSA signature scheme consists of the following three algorithms. 
+\begin{enumerate}
+    \item \textbf{Key generation.} This is exactly the same key generation 
+    algorithm as in the RSA encryption scheme. The public key and secret 
+    key are $\PubKey = [N, e]$ and $\SecKey = [p, q, d]$, where 
+    $N = pq$ is a product of two randomly chosen distinct primes $p$ and $q$, 
+    and $e, d \in (1, \phi)$ satisfy $\gcd(e, \phi) = 1$ and 
+    $ed \equiv 1 \pmod\phi$ where $\phi = (p-1)(q-1)$. 
+
+    \item \textbf{Signature generation algorithm.} For a given public modulus $N$ 
+    and the secret exponent $d$, the signature generation algorithm takes a 
+    message $m$ as input, and outputs the signature $\sigma = m^d \in \Z_N$. 
+    We can denote this process with 
+    \begin{align*}
+        \Sig_{N,d} : \Z_N &\to \Z_N \\ 
+        m &\mapsto \sigma = m^d \pmod N, 
+    \end{align*}
+    or simply by $\Sig(m) = m^d \pmod N$ when $N$ and $d$ are clear from the context. 
+
+    \item \textbf{Signature verification algorithm.} For a given public key 
+    $\PubKey = [N, e]$, the signature verification algorithm takes a message 
+    $m \in \Z_N$ and a signature $\sigma \in \Z_N$ as input, and outputs 
+    $\True$ (indicating the validity of the message) if and only if 
+    $m = \sigma^e \pmod N$. That is, we write $\Ver_{N,e}(m, \sigma) 
+    = \True$ if and only if $m = \sigma^e$. 
+\end{enumerate}
+
+\begin{exmp}
+    Suppose that the public key is $\PubKey = [49163, 20771]$ and the secret key is 
+    $\SecKey = [233, 211, 36971]$. We can generate a signature for the message 
+    $m = 37917$ by 
+    \[ \sigma = m^d \text{ (mod $N$)} = 37917^{36971} \text{ (mod $49163$)} = 123. \] 
+    The validity of the signature $\sigma = 123$ on the message $m = 37917$ can be 
+    verified because given the public key $\PubKey = [N, e] = [49163, 20771]$, we have 
+    \[ \sigma^e \text{ (mod $N$)} = 123^{20771} \text{ (mod $49163$)} = 37917 = m. \] 
+\end{exmp}
+
+\subsection{The ElGamal Signature Scheme}
+As with the RSA signature scheme, the ElGamal signature scheme consists of three algorithms. 
+\begin{enumerate}
+    \item \textbf{Key generation.} The purpose of this algorithm is to generate 
+    a public key and secret key pair, where the secret key is used to generate 
+    signatures and the public key is used to verify signatures on a given message. 
+    The public key is a tuple 
+    \[ \PubKey = [p, g, y], \] 
+    where $p$ is prime, $g$ is a generator for $\Z_p^*$, and $y = g^x$ for some 
+    integer $x \in [1, p-1]$. The integer $x$ is chosen uniformly at random, 
+    and is the secret key; that is, we have 
+    \[ \SecKey = [x]. \] 
+
+    \item \textbf{Signature generation algorithm.} For a given public key 
+    $\PubKey = [p, g, y]$ and the secret key $x$, the signature generation 
+    algorithm takes a message $m \in \Z_p^*$ as input and generates a 
+    signature $\sigma = [r, s]$ as follows. 
+    \begin{enumerate}[(i)]
+        \item Select an integer $k \in \Z_{p-1}^*$ uniformly at random, and notice 
+        that $\gcd(k, p-1) = 1$. 
+        \item Compute $r = g^k \pmod p$. 
+        \item Compute $s = (m - xr)k^{-1} \pmod{p-1}$. 
+        \item If $s = 0$, then go back to (i); otherwise, output $\sigma = [r, s]$. 
+    \end{enumerate}
+
+    \item \textbf{Signature verification algorithm.} 
+\end{enumerate}
