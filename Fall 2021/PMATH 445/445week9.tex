@@ -183,7 +183,216 @@ We now consider the universal property of tensor products.
 
 \begin{remark}{}
     Let $S$ and $R$ be rings. If $M = {}_S M_R$ (that is, $M$ is a 
-    left $S$-module and right $R$-module) and $N = {}_R N$, then 
+    left $S$-module and right $R$-module, and we call $M$ a 
+    \textbf{$(S, R)$-bimodule}) and $N = {}_R N$, then 
     $M \otimes_R N$ is a left $S$-module via the action
-    $s \cdot (m \otimes n) = s \cdot m \otimes n$. 
+    $s \cdot (m \otimes n) = (s \cdot m) \otimes n$. 
+    
+    Similarly, if $S'$ is another ring and $N = {}_R M_{S'}$ is an 
+    $(R, S')$-bimodule, then $M \otimes_R N$ is a right $S'$-module via the 
+    action $(m \otimes n) \cdot s' = m \otimes (n \cdot s')$. 
 \end{remark}
+
+\section{More on tensor products, induced representations (11/12/2021)}
+We first make the small remark that every ring $R$ is a $\Z$-algebra, 
+as there is always a ring homomorphism $\Z \to R$. Now, we'll cover 
+another example of a tensor product. 
+
+\begin{exmp}{}
+    Let $k$ be a field. Let $V$ and $W$ be $k$-vector spaces with bases 
+    $\{v_\alpha\}_{\alpha\in X}$ and $\{w_\beta\}_{\beta\in Y}$ respectively. 
+    Then $V \otimes_k W$ is a $k$-vector space with basis 
+    $\{v_\alpha \otimes w_\beta\}_{(\alpha, \beta) \in X \times Y}$. 
+\end{exmp}
+\begin{pf}
+    We can think of $V$ as a $(k, k)$-bimodule with $\lambda \cdot v = v \cdot \lambda$. 
+    Then $V \otimes_k W$ is a $k$-vector space by Remark 25.6. Notice that 
+    $V \otimes_k W$ is spanned by elements of the form $v \otimes w$ 
+    with $v \in V$ and $w \in W$. Writing $v = \sum_{\alpha\in X} c_\alpha v_\alpha$ 
+    and $w = \sum_{\beta\in Y} d_\beta w_\beta$, we have 
+    \begin{align*}
+        v \otimes w &= \sum_{\alpha \in X} c_\alpha v_\alpha \otimes w \\
+        &= \sum_{\alpha \in X} c_\alpha \cdot (v_\alpha \otimes w) \\ 
+        &= \sum_{\alpha \in X} c_\alpha v_\alpha \otimes \sum_{\beta \in Y} d_\beta w_\beta \\ 
+        &= \sum_{\alpha \in X} \sum_{\beta \in Y} c_\alpha v_\alpha \otimes (d_\beta w_\beta) \\ 
+        &= \sum_{\alpha \in X} \sum_{\beta \in Y} c_\alpha d_\beta (v_\alpha \otimes w_\beta). 
+    \end{align*}
+    To show linear independence, let $U$ be the $k$-vector space with basis
+    $\{e_{(\alpha, \beta)} : (\alpha, \beta) \in X \times Y\}$. Define the map 
+    $\phi : V \times W \to U$ by the rule 
+    \[ \phi \left( \sum_{\alpha \in X} c_\alpha v_\alpha, 
+    \sum_{\beta \in Y} d_\beta w_\beta \right) = \sum_{\alpha \in X} 
+    \sum_{\beta \in Y} c_\alpha d_\beta e_{(\alpha, \beta)}. \]     
+    We see that $\phi$ is bilinear by construction. In particular, 
+    note that $\phi(\lambda v, w) = \lambda \cdot \phi(v, w)$. Moreover, 
+    we know that $\lambda(v \otimes w) = \lambda v \otimes w$. By the universal 
+    property, there exists a unique map $\tilde\phi : V \otimes_k W \to U$ 
+    which makes the following diagram commute. 
+    \begin{center}
+        \begin{tikzcd}
+            V \times W \arrow[rr, "\phi"] \arrow[dd, "\pi"'] &  & U \\
+                                                            &  &   \\
+            V \otimes_k W \arrow[rruu, "\tilde\phi"']        &  &  
+        \end{tikzcd}
+    \end{center}
+    In fact, notice that $\tilde\phi$ is $k$-linear. Now, we have 
+    \[ \tilde\phi(v_\alpha \otimes w_\beta) = \tilde\phi \circ \pi(v_\alpha, 
+    w_\beta) = \phi(v_\alpha, w_\beta) = e_{(\alpha, \beta)}. \] 
+    Suppose that we have $\sum c_{\alpha, \beta} v_\alpha \otimes w_\beta = 0$. 
+    Then we obtain 
+    \[ 0 = \tilde\phi \left( \sum c_{\alpha,\beta} v_\alpha \otimes w_\beta \right) 
+    = \sum c_{\alpha,\beta} \tilde\phi(v_\alpha \otimes w_\beta) = 
+    \sum c_{\alpha,\beta} e_{(\alpha,\beta)}, \] 
+    and hence $c_{\alpha,\beta} = 0$ for all $(\alpha, \beta) \in X \times Y$. 
+    Therefore, $\{v_\alpha \otimes w_\beta\}_{(\alpha, \beta) \in X \times Y}$ 
+    forms a basis for $V \otimes_k W$. 
+\end{pf}
+
+Let $R$ be a ring, let $M = M_R$ be a right $R$-module, and let $N = {}_R N$ 
+be a left $R$-module. By Exercise (iii) in Assignment 5, we have $R_R \otimes_R N 
+\cong N$ (as left $R$-modules) and $M \otimes_R {}_R R \cong M$ (as 
+right $R$-modules). This can be shown by considering the bilinear maps 
+$(r, n) \mapsto rn$ and $(m, r) \mapsto mr$, and showing that the universal
+property holds. 
+
+\begin{exercise}{}
+    Let $R$ be a ring. Let $(M_\alpha)$ be a family of left $R$-modules, 
+    and $N$ be a right $R$-module. Show that 
+    \[ \left( \bigoplus_\alpha M_\alpha \right) \otimes_R N \cong 
+    \bigoplus_{\alpha} (M_\alpha \otimes_R N). \] 
+    Similarly, if $(N_\beta)$ is a family of right $R$-modules and $M$ 
+    is a left $R$-module, then show that 
+    \[ M \otimes_R \left( \bigoplus_\beta N_\beta \right) \cong 
+    \bigoplus_\beta (M \otimes_R N_\beta). \] 
+    Hint: Show that these have the universal property. 
+\end{exercise}
+
+Intuitively, this makes sense because we can think of a tensor product as 
+multiplication, and we have a direct sum of modules. We would expect 
+multiplication to distribute over the sum. 
+
+\begin{cor}{}
+    Let $k$ be a field. If $V$ and $W$ are $k$-vector spaces with bases 
+    $\{v_\alpha\}_{\alpha\in X}$ and $\{w_\beta\}_{\beta\in Y}$ respectively, 
+    then 
+    \[ V \otimes_k W \cong \bigoplus kv_\alpha \otimes w_\beta. \] 
+\end{cor}
+\begin{pf}
+    Since $\{v_\alpha\}_{\alpha\in X}$ and $\{w_\beta\}_{\beta\in Y}$ are 
+    bases for $V$ and $W$ respectively, we can write $V \cong \bigoplus_{\alpha\in X}
+    kv_\alpha$ and $W \cong \bigoplus_{\beta\in Y} kw_\beta$. Using 
+    Exercise 26.2, it follows that 
+    \begin{align*}
+        V \otimes_k W 
+        &\cong \left( \bigoplus_{\alpha\in X} kv_\alpha \right) \otimes_k W \\ 
+        &\cong \bigoplus_{\alpha\in X} kv_\alpha \otimes_k W \\ 
+        &\cong \bigoplus_{\alpha\in X} (kv_\alpha) \otimes 
+        \left( \bigoplus_{\beta\in Y} kw_\beta \right) \\ 
+        &\cong \bigoplus_{\alpha\in X} \bigoplus_{\beta\in Y} kv_\alpha \otimes kw_\beta \\ 
+        &\cong \bigoplus_{\alpha\in X} \bigoplus_{\beta\in Y} kv_\alpha \otimes w_\beta. \qedhere 
+    \end{align*}
+\end{pf}
+
+We now begin induced representations. Suppose we are given a subgroup 
+$H \leq G$, and a representation $W$ of $H$ (that is, $W$ is a left 
+$k[H]$-module). Then we can find a representation $W \uparrow_H^G$ of $G$ 
+(that is, a left $k[G]$-module), called the {\bf induced representation} of $W$
+up to $G$. Let's see how this is done. 
+
+Since $H$ is a subgroup of $G$, we see that $k[H]$ is a subring of $k[G]$. 
+We can think of $k[G]$ as a $(k[G], k[G])$-bimodule. In particular, we can 
+view $k[G]$ as a left $k[G]$-module, and a right $k[H]$-module, forgetting 
+the fact that it is a right $k[G]$-module. Then we can form a 
+$k[G]$-module from $W$ by  
+\[ W \uparrow_H^G := k[G] \otimes_{k[H]} W. \] 
+Notice that this tensor product makes sense because $k[G]$ is a right 
+$k[H]$-module, and $W$ is a left $k[H]$-module. 
+
+Recall that $k[G]$ is a free right $k[H]$-module with basis $x_1, \dots, x_m$, 
+where $G = x_1H \cup x_2H \cup \cdots \cup x_mH$, where the union is disjoint 
+so that each $x_i$ is a left coset representative. Indeed, we can write 
+\[ \sum_{g\in G} \alpha_g g = \sum_{h\in H} \alpha_{x_1h}(x_1h) + \cdots + 
+\sum_{h\in H} \alpha_{x_mh}(x_mh), \] 
+so every element in $k[G]$ decomposes uniquely in the form 
+\[ \sum_{g\in G} \alpha_g g = x_1 \sum_{h\in H} \alpha_{x_1h}h + 
+\cdots + x_m \sum_{h\in H} \alpha_{x_mh}h. \] 
+Since each $\sum_{h\in H}\alpha_{x_ih}h \in k[H]$, we get 
+\[ k[G] \cong x_1 k[H] \oplus \cdots \oplus x_m k[H]. \] 
+Now, it follows that 
+\begin{align*}
+    k[G] \otimes_{k[H]} W 
+    &\cong (x_1 k[H] \oplus \cdots \oplus x_m k[H]) \otimes_{k[H]} W \\ 
+    &\cong (x_1 k[H] \otimes_{k[H]} W) \oplus \cdots \oplus 
+    (x_m k[H] \otimes_{k[H]} W). 
+\end{align*}
+By Exercise (iii) in Assignment 5, we have $k[H] \otimes_{k[H]} W \cong W$. 
+Hence, we obtain 
+\[ k[G] \otimes_{k[H]} W \cong x_1 W \oplus \cdots \oplus x_m W. \] 
+More precisely, if $\{w_1, \dots, w_p\}$ is a basis for $W$, then 
+$W \uparrow_H^G$ is the $k$-span of $\{x_i \otimes w_j : 
+1 \leq i \leq m,\, 1 \leq j \leq p\}$. Notice that each $x_i W$ is 
+$p$-dimensional, so $W \uparrow_H^G$ is $mp$-dimensional. Now, how does 
+$g \in G$ act on this basis? First, note that $g \cdot (x_i \otimes w) = 
+(g \cdot x_i) \otimes w$ by bilinearity. Once again, we recall that 
+$G = x_1H \cup \cdots \cup x_m H$, so there exists a unique $j \in 
+\{1, \dots, m\}$ and $h \in H$ such that $g \cdot x_i = x_j \cdot h$. We can take 
+\[ g \cdot (x_i \otimes w) = (g \cdot x_i) \otimes w = (x_j \cdot h) \otimes w 
+= x_j \otimes h \cdot w \] 
+to be our action. Since $W$ is a representation of $H$, we have a homomorphism
+$\rho : H \to \GL(W)$. In particular, $\rho(h)$ looks like an $m \times m$ 
+block matrix with copies of $\rho(h)$ or the zero matrix in the blocks. 
+
+\begin{exmp}{}
+    Let $k = \C$. Let $G = S_3$, and let $H = A_3 = \{\id, (123), (132)\}$ be the 
+    subgroup of index $3$. Notice that $S_3 = \id \cdot\,H \cup (12) \cdot H$, 
+    so we can take $x_1 = \id$ and $x_2 = (12)$ to be our coset representatives. 
+    Take $W = \C$ to be our $H$-module, with action given by 
+    $\id \cdot\,\lambda = \lambda$, $(123) \cdot \lambda = e^{2\pi i/3}$, 
+    and $(132) \cdot \lambda = e^{4\pi i/3}$.
+
+    Now, the basis of $W \uparrow_H^{S_3}$ is simply given by $\{x_1 \otimes 1, 
+    x_2 \otimes 1\}$, since $\{1\}$ forms a basis for $W = \C$. Write 
+    $v_1 = x_1 \otimes 1$ and $v_2 = x_2 \otimes 1$. Let's see how the elements 
+    of $S_3$ act on $W \uparrow_H^{S_3}$. 
+
+    We first consider $(12)$. Notice that 
+    \[ (12) \cdot v_1 = (12) \cdot (x_1 \otimes 1) = 
+    ((12) \cdot x_1) \otimes 1 = x_2 \otimes 1 = 0 \cdot v_1 + 1 \cdot v_2. \] 
+    Similarly, we find that 
+    \[ (12) \cdot v_2 = (12) \cdot (x_2 \otimes 1) = 
+    ((12) \cdot x_2) \otimes 1 = x_1 \otimes 1 = 1 \cdot v_1 + 0 \cdot v_2. \] 
+    Therefore, we have 
+    \[ \rho((12)) = \begin{pmatrix}
+        0 & 1 \\ 
+        1 & 0 
+    \end{pmatrix}. \] 
+    \newpage 
+    What about the action of $(123)$? Notice that $(123) \cdot v_1 = 
+    (123) \cdot (x_1 \otimes 1) = (123) \cdot x_1 \otimes 1$, and since 
+    $(123) \in H$, we can move it to the other side. This becomes 
+    \[ x_1 \otimes ((123) \cdot 1) = x_1 \otimes e^{2\pi i/3} = 
+    e^{2\pi i/3} (x_1 \otimes 1) = e^{2\pi i/3} \cdot v_1 + 0 \cdot v_2. \] 
+    On the other hand, we have $(123) \cdot v_2 = (123) \cdot (x_2 \otimes 1) 
+    = (123) \cdot (12) \otimes 1 = (12) \cdot (132) \otimes 1$. Notice that 
+    $(132) \in H$, so we can move it to the other side to obtain 
+    \[ (12) \otimes ((132) \cdot 1) = (12) \otimes e^{4\pi i/3} 
+    = e^{4\pi i/3} (x_2 \otimes 1) = 0 \cdot v_1 + e^{4\pi i/3} \cdot v_2. \] 
+    Therefore, we obtain 
+    \[ \rho((123)) = \begin{pmatrix}
+        e^{2\pi i/3} & 0 \\ 
+        0 & e^{4\pi i/3}
+    \end{pmatrix}. \] 
+    Now that we have the matrices for $(12)$ and $(123)$, we can compute the 
+    rest by multiplying, since these elements generate $S_3$. 
+
+    Note that $\rho$ is an irreducible $2$-dimensional representation of $S_3$. 
+    It is clear that it is $2$-dimensional. Notice that if $\chi$ is the 
+    character of $\rho$, then $\chi((12)) = 0$ by construction, 
+    $\chi((123)) = e^{2\pi i/3} + e^{4\pi i/3} = -1$, and $\chi(\id) = 2$. Since 
+    $\chi$ is a class function, it is now completely determined. Computing the 
+    inner product of $\chi$ with itself, we have 
+    \[ \langle \chi, \chi \rangle = \frac{1}{6}(2^2 \cdot 1 + 0^2 \cdot 3 
+    + (-1)^2 \cdot 2) = 1, \] 
+    so $\rho$ is in fact irreducible. These values also check out with the 
+    character table of $S_3$ that we computed in Example 16.2!
+\end{exmp}
