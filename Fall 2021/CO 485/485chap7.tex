@@ -201,5 +201,97 @@ signatures. Otherwise, DSA is very similar to the ElGamal signature scheme.
         \item Compute $u_1 = m \cdot w \pmod q$ and $u_2 = r \cdot w \pmod q$. 
         \item Compute $v = (g^{u_1} y^{u_2} \pmod p) \pmod q$. 
     \end{enumerate}
-    If the signature $\sigma = [r, s]$ 
+    If the signature $\sigma = [r, s]$ on a message $m$ is properly generated, 
+    then the verification step outputs $\True$ as expected since 
+    $s = (m + xr)k^{-1} \pmod q$ implies $k \equiv ms^{-1} + xrs^{-1} \pmod q$. 
+    Then we have 
+    \[ g^k \equiv g^{ms^{-1} + xrs^{-1}} \equiv g^{u_1} y^{u_2} \pmod p, \] 
+    and it follows that 
+    \[ r = (g^k \text{ (mod $p$)}) \text{ (mod $p$)} = (g^{u_1} y^{u_2} 
+    \text{ (mod $p$)}) \text{ (mod $q$)} = v. \]  
 \end{enumerate}
+
+\subsection{Security of Digital Signature Schemes}
+Suppose that Alice is a user with a public key and secret key pair 
+$(\PubKey, \SecKey)$ who generates digital signatures using her secret key 
+$\SecKey$. When analyzing the security of digital signature schemes, we allow 
+computationally bounded adversaries to interact with Alice to achieve one 
+of the following goals. 
+\begin{enumerate}
+    \item \textbf{Total break.} The adversary recovers Alice's secret key 
+    $\SecKey$, so they can forge Alice's signature on any message. 
+    \item \textbf{Universal forgery.} The adversary does not necessarily 
+    recover Alice's secret key $\SecKey$, but discovers a method to forge 
+    Alice's signatures. 
+    \item \textbf{Selective forgery.} The adversary discovers a method to 
+    forge Alice's signatures for a selected subset of messages of their choice, 
+    which have not been previously signed by Alice. 
+    \item \textbf{Existential forgery.} The adversary discovers a method 
+    to forge Alice's signature for a single message of their choice. 
+\end{enumerate}
+Clearly, we see that a total break implies a universal forgery, which implies 
+a selective forgery, which then implies an existential forgery. Adversaries 
+can also differ in their interactions with Alice, and we categorize them as follows. 
+\begin{enumerate}
+    \item \textbf{Key-only attack.} The adversary only knows Alice's public key. 
+    \item \textbf{Known-message attack.} The adversary knows some message and 
+    signature pairs, where the messages are not selected by the adversary. 
+    \item \textbf{Chosen-message attack.} The adversary chooses a subset of messages 
+    and obtains Alice's signatures on these messages. 
+    \item \textbf{Adaptive chosen-message attack.} This is the same as the  
+    chosen-message attack, except the adversary can choose their messages 
+    depending on the previous signatures they obtain from Alice. 
+\end{enumerate}
+We say that a signature scheme is \textbf{secure} if the strongest adversary 
+cannot achieve the weakest of goals. More formally, we say that a signature 
+scheme is secure if it is existentially unforgeable by a computationally
+bounded adversary that is mounting an adaptive chosen-message attack. 
+
+\begin{exmp}
+    We consider existential forgery against the textbook RSA signature scheme.
+    Suppose that Alice has public key $\PubKey = [N, e]$ and secret key 
+    $\SecKey = [p, q, d]$, and that a computationally bounded adversary 
+    knows Alice's public key. The adversary chooses a message $m \in \Z_N^*$ 
+    and constructs $m_1, m_2 \in \Z_N^*$ such that $m \equiv m_1 m_2 \pmod N$
+    and $m \neq m_i$ for $i = 1, 2$. Next, the adversary runs a chosen-message 
+    attack and asks Alice to sign $m_1$ and $m_2$. Alice generates two signatures 
+    $\sigma_1 = m_1^d \pmod N$ and $\sigma_2 = m_2^d \pmod N$ and sends them to 
+    the adversary. The adversary outputs $\sigma = \sigma_1 \sigma_2 \pmod N$ 
+    as a forgery of Alice's signature on the message $m$. Note that $\sigma$ 
+    is a valid signature on $m$ since 
+    \[ \sigma^e \equiv \sigma_1^e \sigma_2^e \equiv m_1^{ed} m_2^{ed} 
+    \equiv m_1 m_2 \equiv m \pmod N. \] 
+\end{exmp}
+
+Fortunately, the textbook RSA signature scheme can be modified in such a way 
+that one can prove the modified signature scheme is secure under reasonable 
+assumptions. This modified scheme is called the RSA full-domain hash signature 
+scheme (RSA-FDH), where a cryptographic hash function $H : \{0, 1\}^* 
+\to \Z_N^*$ is applied to a message $m$ before it gets signed. In particular, 
+the signature on $m$ is now calculated as $\sigma = H(m)^d \pmod N$. 
+Bellare and Rogaway \cite{10.1007/3-540-68339-9_34} proved in 1996 that if the 
+\href{https://en.wikipedia.org/wiki/RSA_problem}{RSA problem} is hard and 
+$H$ is modeled as a \href{https://en.wikipedia.org/wiki/Random_oracle}{random 
+oracle}, then RSA-FDH is secure. 
+
+\begin{exmp}
+    Now, let's consider existential forgery against the textbook ElGamal signature 
+    scheme. Suppose that Alice has public key $\PubKey = [p, g, y]$ and 
+    secret key $\SecKey = [x]$, and that a computationally bounded adversary 
+    knows Alice's public key. The adversary selects an integer $e \in [1, p-1]$ 
+    and sets $r = g^e y \pmod p$, $s = -r \pmod{p-1}$, and $m = es \pmod{p-1}$. 
+    Notice that this is a successful forgery since 
+    \[ g^m \equiv g^{es} \equiv y^{-s}(g^e y)^s \equiv y^r r^s \pmod p, \] 
+    and hence $[r, s]$ forms a valid signature on the message $m$. 
+\end{exmp}
+
+As with the RSA signature scheme, applying a cryptographic hash function to messages 
+before they get signed prevents the attack described above. Regarding the security 
+of the ElGamal signature scheme and DSA in general, an adversary can successfully 
+forge signatures if they can solve $\DLP$ in the underlying (sub)groups. In fact, 
+it appears that the only way to forge signatures in these schemes is to solve 
+$\DLP$ (although there is no known proof of this statement). However, it is 
+worth noting that the ElGamal signature scheme and DSA can be severely attacked 
+if the protocols are not properly implemented; for instance, one could fail 
+to choose $k$ independently and uniformly at random, or fail to check the
+non-zero conditions on $r$ and $s$. 
