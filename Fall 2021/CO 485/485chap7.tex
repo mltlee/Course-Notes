@@ -127,5 +127,79 @@ As with the RSA signature scheme, the ElGamal signature scheme consists of three
         \item If $s = 0$, then go back to (i); otherwise, output $\sigma = [r, s]$. 
     \end{enumerate}
 
-    \item \textbf{Signature verification algorithm.} 
+    \item \textbf{Signature verification algorithm.} For a given public key 
+    $\PubKey = [p, g, y]$, the signature verification algorithm takes a message 
+    $m \in \Z_p^*$ and a signature $\sigma = [r, s]$ as input, and outputs 
+    $\True$ (indicating the validity of the message) if and only if 
+    $r$ is non-zero and $g^m \equiv y^r r^s \pmod p$. Note that if the 
+    signature $\sigma = [r, s]$ on a message $m$ is properly generated, then 
+    the verification step would output $\True$ as expected since 
+    $s = (m - xr)k^{-1} \pmod{p-1}$ gives $m \equiv xr + ks \pmod{p-1}$, and hence 
+    \[ g^m \equiv g^{xr+ks} \equiv y^r r^s \pmod p. \] 
+\end{enumerate}
+
+\begin{exmp}
+    Suppose the public key is $\PubKey = [p, g, y] = [3967526699, 2, 729342158]$ 
+    and the secret key is $\SecKey = [x] = [596305913]$. We can generate a 
+    signature on the message $m = 37917$ as follows. 
+    \begin{enumerate}[(i)]
+        \item Select $k = 1094081451$. 
+        \item Compute $r = g^k \pmod p = 989111823$. 
+        \item Compute $s = (m - xr)k^{-1} = 390136376$. 
+        \item Output $\sigma = [r, s] = [989111823, 390136376]$. 
+    \end{enumerate}
+    We can verify the validity of the signature $\sigma = [r, s] 
+    = [989111823, 390136376]$ on the message $m = 37917$ because given the 
+    public key $\PubKey = [p, g, y] = [3967526699, 2, 729342158]$, we have 
+    \[ y^r r^s \text{ (mod $p$)} = 739342158^{989111823} \cdot 989111823^{390136376}
+    \text{( mod $3967526699$)} = 2621047120 = g^m. \] 
+\end{exmp}
+
+\subsection{The Digital Signature Algorithm}
+An ElGamal digital signature is a pair of integers $[r, s]$, where $r$ is a 
+non-zero integer modulo $p$ and $s$ is a non-zero integer modulo $p-1$. The 
+digital signature algorithm (DSA) offers an improvement over the ElGamal signatures 
+by working over the subgroup of $\Z_p^*$ of order $q$, where $q$ is a prime 
+divisor of $p-1$, with $q$ much smaller than $p$. As a result, a DSA signature 
+consists of a pair of integers $[r, s]$ with $r, s \in [1, q-1]$. For $128$-bit 
+security, it is suggested (for example, \href{https://www.keylength.com/en/4/}
+{BlueKrypt Cryptographic Key Recommendation}) to choose $p$ as a $3072$-bit prime, 
+and $q$ as a $256$-bit prime. This choice yields $2 \cdot 256 = 512$-bit DSA 
+signatures, which are much shorter than the $2 \cdot 3072 = 6144$-bit ElGamal 
+signatures. Otherwise, DSA is very similar to the ElGamal signature scheme. 
+\begin{enumerate}
+    \item \textbf{Key generation.} The purpose of this algorithm is to generate a 
+    public key and secret key pair, where the secret key is used to generate signatures, 
+    and the public key is used to verify signatures on a given message. The 
+    public key is a tuple 
+    \[ \PubKey = [p, q, g, y], \] 
+    where $p$ and $q$ are primes such that $q \mid (p-1)$, $g$ is a generator of the 
+    subgroup of $\Z_p^*$ of order $q$, and $y = g^x$ for some integer $x \in [1, 
+    q-1]$. The integer $x$ is chosen uniformly at random, and is the secret key; 
+    that is, we have 
+    \[ \SecKey = [x]. \] 
+
+    \item \textbf{Signature generation algorithm.} For a given public key 
+    $\PubKey = [p, q, g, y]$ and the secret key $x$, the signature generation 
+    algorithm takes a message $m \in \Z_q^*$ as input and generates a signature 
+    $\sigma = [r, s]$ as follows. 
+    \begin{enumerate}[(i)]
+        \item Select an integer $k \in \Z_q^*$ uniformly at random.
+        \item Compute $r = (g^k \pmod p) \pmod q$. 
+        \item If $r = 0$, then go back to (i); otherwise, continue to (iv). 
+        \item Compute $s = (m + xr)k^{-1} \pmod q$. 
+        \item If $s = 0$, then go back to (i); otherwise, output $\sigma = [r, s]$. 
+    \end{enumerate}
+
+    \item \textbf{Signature verification algorithm.} For a given public key 
+    $\PubKey = [p, q, g, y]$, the signature verification algorithm takes a 
+    message $m \in \Z_q^*$ and a signature $\sigma = [r, s]$ as input.
+    It outputs $\True$ (indicating the validity of the message) if and only if 
+    $r$ and $s$ are both non-zero, and $v = r$, where $v$ is computed as follows. 
+    \begin{enumerate}[(i)]
+        \item Compute $w = s^{-1} \pmod q$. 
+        \item Compute $u_1 = m \cdot w \pmod q$ and $u_2 = r \cdot w \pmod q$. 
+        \item Compute $v = (g^{u_1} y^{u_2} \pmod p) \pmod q$. 
+    \end{enumerate}
+    If the signature $\sigma = [r, s]$ 
 \end{enumerate}
