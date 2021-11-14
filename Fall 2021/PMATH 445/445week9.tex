@@ -48,7 +48,7 @@ We now consider the universal property of tensor products.
         - ae_{(m_2, n)}) = 0$; 
         \item $\hat\theta(e_{(m,n_1+an_2)} - e_{(m,n_1)} - 
         ae_{(m,n_2)}) = 0$; 
-        \item $\hat\theta(e_{(mr, n)} + e_{(m, rn)}) = 0$. 
+        \item $\hat\theta(e_{(mr, n)} - e_{(m, rn)}) = 0$. 
     \end{enumerate}
     We check (iii), and we leave (i) and (ii) as exercises. We have 
     \begin{align*}
@@ -61,7 +61,7 @@ We now consider the universal property of tensor products.
     the map $\hat\theta : T \to A$ is unique. Since $U$ is in $\ker\hat\theta$, 
     we have $\hat\theta(t + u) = \hat\theta(t)$ for all $u \in U$. This allows 
     us to extend $\hat\theta$ uniquely to a map $\tilde\theta$ on the cosets; 
-    that is, we have a map from $T/U = M \oplus_R N$ to $A$. Letting 
+    that is, we have a map from $T/U = M \otimes_R N$ to $A$. Letting 
     $\psi' : T \to T/U$ be the canonical projection, we obtain the following 
     diagram. 
     \begin{center}
@@ -169,8 +169,8 @@ We now consider the universal property of tensor products.
         \theta : \Z/m\Z \times \Z/n\Z &\to \Z/d\Z \\ 
         ([a]_m, [b]_n) &\mapsto [ab]_d, 
     \end{align*}
-    and this map is onto. Using the universal property, we have 
-    map $\tilde\theta : \Z/m\Z \otimes_{\Z} \Z/n\Z \to \Z/d\Z$ 
+    and this map is onto. Using the universal property, we have a
+    map $\tilde\theta : \Z/m\Z \otimes_{\Z} \Z/n\Z \to \Z/d\Z$ which is
     onto, and $\tilde\theta$ is an isomorphism. 
     \begin{center}
         \begin{tikzcd}
