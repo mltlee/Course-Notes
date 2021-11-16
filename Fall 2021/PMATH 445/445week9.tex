@@ -396,3 +396,141 @@ block matrix with copies of $\rho(h)$ or the zero matrix in the blocks.
     so $\rho$ is in fact irreducible. These values also check out with the 
     character table of $S_3$ that we computed in Example 16.2!
 \end{exmp}
+
+\section{Induced characters and transitivity (11/15/2021)}
+Let $k$ be a field, and let $H$ be a subgroup of $G$. Then $G$ is the 
+union of disjoint cosets $x_1H \cup \cdots \cup x_mH$. If $W$ is a 
+left $k[H]$-module with $k$-basis $\{w_1, \dots, w_p\}$, then we obtain 
+a representation
+\[ \rho : H \to \GL_p(k) \cong \GL(W) \] 
+which can be written in matrix form as $\rho(h) = (\rho_{ij}(h))_{1\leq i,j\leq p}$
+with action 
+\[ h \cdot w_j = \sum_{i=1}^p \rho_{ij}(h) \cdot w_i. \] 
+Recall that the induced representation of $W$ up to $G$ is a left $k[G]$-module 
+given by $W \uparrow_H^G k[G] \otimes_{k[H]} W$. This has basis 
+$\{x_i \otimes w_j : 1 \leq i \leq m,\, 1 \leq j \leq p\}$. Note that 
+$g \cdot x_i \in x_qH$ for some $q \in \{1, \dots, m\}$, so we can take the action 
+\[ g \cdot (x_i \otimes w) = x_q \otimes (h \cdot w). \] 
+With this basis, we get a representation 
+\[ \rho \uparrow_H^G\;: G \to \GL_{mp}(k). \] 
+What is $\rho \uparrow_H^G(g)$? If we treat each $\{x_j \otimes w_1, \dots, 
+x_j \otimes w_p\}$ as a ``block'', we obtain 
+\begin{align*}
+    g \cdot (x_j \otimes w_1) = x_q \otimes (h \cdot w_1) &= 
+    x_q \otimes [\rho_{11}(h) w_1 + \cdots + \rho_{p1}(h) w_p] \\ 
+    &\;\;\vdots \\ 
+    g \cdot (x_j \otimes w_p) = x_q \otimes (h \cdot w_p) &= 
+    x_q \otimes [\rho_{1p}(h) w_1 + \cdots + \rho_{pp}(h) w_p]. 
+\end{align*}
+Then the $j$-th column in the block matrix $\rho \uparrow_H^G(g)$ has 
+$\rho(h)$ in the $q$-th row, and $0$ in the other rows. This gives us 
+an $m \times m$ block matrix from $\rho(h)$, where the blocks are 
+$p \times p$ matrices, and the $(i, j)$-th block is $0$ if $gx_j \in x_i H$, 
+and it is $\rho(x_i^{-1}gx_j)$ if $gx_j \notin x_i H$ (since 
+$gx_j = x_ih$ implies that $h = x_i^{-1}gx_j$).
+
+Now, what is the character $\chi \uparrow_H^G = \Tr(\rho \uparrow_H^G)$? 
+If we write 
+\[ \rho \uparrow_H^G(g) = \begin{pmatrix}
+    A_{11} & \cdots & A_{1m} \\ 
+    \vdots & \ddots & \vdots \\ 
+    A_{m1} & \cdots & A_{mm}
+\end{pmatrix} \] 
+where each $A_{ij}$ is a $p \times p$ matrix, we get 
+\[ \chi \uparrow_H^G(g) = \Tr(A_{11}) + \Tr(A_{22}) + \cdots + \Tr(A_{mm}). \] 
+Notice that $A_{ii} \neq 0$ when $gx_i \in x_iH$, or equivalently, 
+$x_i^{-1}gx_i \in H$. In this case, we have $A_{ii} = \rho(x_i^{-1}gx_i)$. 
+So if $\chi = \Tr(\rho)$, then we get 
+\[ \chi \uparrow_H^G(g) = \sum_{\{i\,:\,x_i^{-1}gx_i \in H\}} 
+\Tr(\rho(x_i^{-1}gx_i)) = \sum_{\{i\,:\,x_i^{-1}gx_i \in H\}} \chi(x_i^{-1}gx_i). \] 
+
+\begin{exercise}{}
+    Show that we have the equivalent formula 
+    \[ \chi \uparrow_H^G(g) = \frac{1}{|H|} \sum_{\{x\,:\,x^{-1}gx \in H\}} 
+    \chi(x^{-1}gx). \] 
+\end{exercise}
+
+\begin{exmp}{}
+    In Assignment 4, we computed the character table of 
+    $G = \langle y \mid y^7 = 1 \rangle \rtimes \langle x \mid x^3 = 1 \rangle$ 
+    with $xyx^{-1} = y^2$. We can compute the irreducible characters of degree 
+    $3$ more easily by using induced representations. Let $W = \C$ be a 
+    $1$-dimensional representation of $H = \langle y \rangle$ with action 
+    \[ y^j \cdot 1 = \zeta^j, \] 
+    where $\zeta = e^{2\pi i/7}$ is a $7$-th root of unity. 
+    Notice that $G = H \cup xH \cup x^2H$, so $\C[G] \otimes_{\C[H]} W$ 
+    has basis $\{v_1, v_2, v_3\}$, where $v_1 = 1 \otimes 1$, $v_2 = x \otimes 1$, 
+    and $v_3 = x^2 \otimes 1$. Observe that 
+    \begin{align*}
+        x \cdot v_1 &= v_2, \\ 
+        x \cdot v_2 &= v_3, \\ 
+        x \cdot v_3 &= v_1.
+    \end{align*}
+    This gives us 
+    \[ \rho(x) = \begin{pmatrix}
+        0 & 0 & 1 \\ 
+        1 & 0 & 0 \\ 
+        0 & 1 & 0
+    \end{pmatrix}, \] 
+    which has trace $0$, so $\chi(x) = \chi(x^2) = 0$. 
+    
+    On the other hand, we compute 
+    \begin{align*}
+        y \cdot v_1 &= y \cdot 1 \otimes 1 = 1 \otimes (y \cdot 1) = 
+        \zeta \cdot v_1, \\ 
+        y \cdot v_2 &= y \cdot x \otimes 1 = x(x^{-1}yx) \otimes 1 = 
+        xy^4 \otimes 1 = x \otimes (y^4 \cdot 1) = \zeta^4 \cdot v_2, \\
+        y \cdot v_3 &= y \cdot x^2 \otimes 1 = x^2(x^{-2}yx^2) \otimes 1 
+        = x^2y^2 \otimes 1 = x^2 \otimes (y^2 \cdot 1) = \zeta^2 \cdot v_3. 
+    \end{align*} 
+    Therefore, we obtain 
+    \[ \rho(y) = \begin{pmatrix}
+        \zeta & 0 & 0 \\ 
+        0 & \zeta^4 & 0 \\ 
+        0 & 0 & \zeta^2
+    \end{pmatrix}, \] 
+    so $\chi(y) = \zeta + \zeta^2 + \zeta^4$. Then, we can deduce that 
+    \[ \chi(y^3) = \chi(y^6) = \chi(y^{-1}) = \overline{\chi(y)} 
+    = \zeta^3 + \zeta^5 + \zeta^6. \] 
+\end{exmp}
+
+We can extend the above formula to general class functions. 
+
+\begin{defn}{}
+    Let $H$ be a subgroup of $G$. Let $f : H \to k$ be a class function 
+    where $k$ is a field. Then we define 
+    \[ f \uparrow_H^G(g) := \frac{1}{|H|} \sum_{\{x\in G\,:\,x^{-1}gx \in H\}} 
+    f(x^{-1}gx). \] 
+\end{defn}
+
+In particular, $\chi \uparrow_H^G$ is the character of the induced representation
+from $H$ to $G$ with character $\chi$. 
+
+\begin{prop}[Transitivity of induction]{}
+    Let $H \leq G \leq K$ be groups, and let $f : H \to k$ be a class function. 
+    Then $(f \uparrow_H^G) \uparrow_G^K = f \uparrow_H^K$. 
+\end{prop}
+\begin{pf}
+    We'll prove this using a routine calculation, but we note that this can be 
+    done in a coordinate-free way by using tensor products, which we leave 
+    to Assignment 5. For $u \in K$, we have 
+    \begin{align*}
+        (f \uparrow_H^G) \uparrow_G^K(u)
+        &= \frac{1}{|G|} \sum_{\{x\in K\,:\,x^{-1}ux\in G\}} f \uparrow_H^G (x^{-1}ux) \\ 
+        &= \frac{1}{|G|} \sum_{\{x\in K\,:\,x^{-1}ux\in G\}} \left( 
+        \frac{1}{|H|} \sum_{\{y\in G\,:\,y^{-1}(x^{-1}ux)y\in H\}} f(y^{-1}(x^{-1}ux)y) \right) \\ 
+        &= \frac{1}{|G|} \frac{1}{|H|} \sum_{\{x\in K\,:\,x^{-1}ux\in G\}}
+        \sum_{\{y\in G\,:\,y^{-1}x^{-1}uxy\in H\}} f(y^{-1}x^{-1}uxy). 
+    \end{align*}
+    Notice that $y^{-1}x^{-1}uxy \in H$ with $y \in G$ implies that 
+    $x^{-1}ux \in yHy^{-1} \in G$. Now, by making the substitution $z = xy$, 
+    we obtain 
+    \begin{align*}
+        (f \uparrow_H^G) \uparrow_G^K(u)
+        &= \frac{1}{|G|} \frac{1}{|H|} \sum_{\{z\in K\,:\,z^{-1}uz \in H\}} 
+        \sum_{y \in G} f(z^{-1}uz) \\ 
+        &= \frac{1}{|G|} \frac{1}{|H|} \sum_{\{z\in K\,:\,z^{-1}uz \in H\}} 
+        |G| f(z^{-1}uz) \\ 
+        &= f \uparrow_H^K(u). \qedhere 
+    \end{align*}
+\end{pf}
