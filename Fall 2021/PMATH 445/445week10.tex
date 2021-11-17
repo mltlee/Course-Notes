@@ -1,0 +1,161 @@
+\section{Frobenius reciprocity (11/15/2021)}
+Let $H$ be a subgroup, and let $W$ be a left $k[H]$-module. Then 
+$W \uparrow_H^G\;= k[G] \otimes_{k[H]} W$ is a left $k[G]$-module. 
+We saw in the previous lecture that 
+\[ \chi_W \uparrow_H^G(g) = \frac{1}{|H|} \sum_{\{x\in G\,:\,x^{-1}gx \in H\}} \chi_W(x^{-1}gx). \] 
+Also, if $G$ has disjoint coset decomposition $x_1H \cup \cdots \cup x_mH$, then 
+\[ \chi_W \uparrow_H^G(g) = \sum_{\{i\,:\,x_i^{-1}gx_i \in H\}} \chi_W(x_i^{-1}gx_i). \] 
+
+\begin{remark}{}
+    If $H$ is a normal subgroup of $G$, then 
+    \[ \chi_W \uparrow_H^G (g) = \begin{cases} 
+        0 & \text{if } g \notin H, \\ 
+        \frac{1}{|H|} \sum_{x\in G} \chi_W(x^{-1}gx) & \text{if } g \in H,
+    \end{cases} \] 
+    since $x^{-1}gx \in H$ if and only if $g \in xHx^{-1} = H$. 
+\end{remark}
+
+Let $V$ be a left $k[G]$-module. We have a left $k[H]$-module $V \downarrow_H^G$
+by taking $V$ as a set, but we only remember the $k[H]$-module structure. 
+That is, we have $V \downarrow_H^G\;= {}_{k[H]} V$. If $\chi_V$ is the 
+character of $V$, then 
+\[ \chi_V \downarrow_H^G (h) = \chi_V(h) \] 
+for all $h \in H$. Indeed, we have $\chi_V \downarrow_H^G (h) = \Tr(\rho(h))$, 
+where $\rho(h) : V \to V$ is given by $v \mapsto h \cdot v$. But $h \in H 
+\subseteq G$, so this is just the trace of the particular element $\rho(h)$, 
+which is $\chi_V(h)$. 
+
+\begin{theo}[Frobenius reciprocity]{}
+    Let $\phi : G \to C$ and $\psi : H \to \C$ be class functions, where 
+    $H \leq G$ are finite groups. Then 
+    \[ \langle \psi \uparrow_H^G, \phi \rangle_G = \langle \psi, \phi \downarrow_H^G \rangle_H. \] 
+\end{theo}
+\begin{pf}
+    As with the transitivity of induction, this can also be done using a high
+    level proof, but we will do this using a straightforward computation. We have 
+    \begin{align*}
+        \langle \psi \uparrow_H^G, \phi \rangle_G 
+        &= \frac{1}{|G|} \sum_{g \in G} \psi \uparrow_H^G (g) \phi(g^{-1}) \\ 
+        &= \frac{1}{|G|} \sum_{g \in G} \left( \frac{1}{|H|} 
+        \sum_{\{x\in G\,:\,x^{-1}gx\in H\}} \psi(x^{-1}gx) \right) \phi(g^{-1}) \\
+        &= \frac{1}{|G|} \frac{1}{|H|} \sum_{g\in G} \sum_{\{x\in G\,:\,x^{-1}gx\in H\}}
+        \psi(x^{-1}gx) \phi(g^{-1}). 
+    \end{align*}
+    Now, substitute $h = x^{-1}gx$ so that $g = xhx^{-1}$ and $g^{-1} = 
+    xh^{-1}x^{-1}$. Then, we obtain 
+    \begin{align*}
+        \langle \psi \uparrow_H^G, \phi \rangle_G 
+        &= \frac{1}{|G|} \frac{1}{|H|} \sum_{h \in H} \sum_{x \in G} \psi(h) \phi(xh^{-1}x^{-1}) \\ 
+        &= \frac{1}{|G|} \frac{1}{|H|} \sum_{h \in H} |G| \psi(h) \phi(h^{-1}) \\ 
+        &= \frac{1}{|H|} \sum_{h\in H} \psi(h) \phi(h^{-1}) \\ 
+        &= \langle \psi, \phi \downarrow_H^G \rangle_H, 
+    \end{align*}
+    where the second equality is because $\phi$ is a class function, which yields 
+    $\phi(xh^{-1}x^{-1}) = \phi(h^{-1})$. 
+\end{pf}
+
+This result has a nice connection with tensor-hom adjunction. Let 
+$W$ be a left $k[H]$-module and let $V$ be a left $k[G]$-module. Then we have 
+a $k$-algebra isomorphism 
+\[ \Hom_{k[G]}(k[G] \otimes_{k[H]} W, V) \cong \Hom_{k[H]}(W, \Hom_{k[G]}(k[G], V)). \] 
+This essentially states that if we have a tensor on the left, then we can move it over. 
+
+How is this the same as Frobenius reciprocity? We have the nice fact that 
+if $V_1$ and $V_2$ are left $k[G]$-modules where $k$ is algebraically closed, then 
+\[ \dim_k \Hom_{k[G]}(V_1, V_2) = \langle \chi_{V_1}, \chi_{V_2} \rangle. \] 
+Somehow, the category of representations sees the character table. Let's 
+consider the case where $V_1$ and $V_2$ are simple. If $V_1$ and $V_2$ are 
+non-isomorphic, then both values are $0$. On the other hand, if $V_1$ and $V_2$
+are isomorphic, then Schur's lemma tells us that $\Hom_{k[G]}(V_1, V_2)$ is 
+just $k$, so these are both equal to $1$. Now, suppose that $V$ and $W$ 
+are general left $k[G]$-modules with decompositions   
+$V \cong V_1^{a_1} \oplus \cdots \oplus V_s^{a_s}$ and $W \cong V_1^{b_1} 
+\oplus \cdots \oplus V_s^{b_s}$ where $V_1, \dots, V_s$ are simple. Then 
+\[ \Hom_{k[G]}(V, W) \cong k^{a_1b_1 + \cdots + a_sb_s}, \] 
+which is just $\langle \chi_V, \chi_W \rangle$. 
+
+Now, let $W$ be a left $k[H]$-module and $V$ be a left $k[G]$-module. Then we have 
+\[ \dim_k \Hom_{k[G]} (k[G] \otimes_{k[H]} W, V) = 
+\dim_k \Hom_{k[G]} (W \uparrow_H^G, V) = \langle \chi_W \uparrow_H^G, \chi_V \rangle_G. \] 
+On the other hand, we can see that 
+\[ \dim_k \Hom_{k[H]} (W, {}_{k[H]} V) = \langle \chi_W, \chi_V \downarrow_H^G \rangle_H. \] 
+Hence, the above isomorphism gives us Frobenius reciprocity. 
+
+Let $\fix_n(\sigma)$ be the number of fixed points of $\sigma \in S_n$. 
+Recall that we had 
+\[ \frac{1}{n!} \sum_{\sigma \in S_n} \fix_n(\sigma) = 1 \] 
+for all $n \geq 1$, and 
+\[ \frac{1}{n!} \sum_{\sigma \in S_n} \fix_n(\sigma)^2 = 2 \] 
+for all $n \geq 2$. First, we'll give an easy proof of the first result. 
+Write $\fix_n = X_1 + \cdots + X_n$ where each $X_i$ is a random variable 
+given by 
+\[ X_i(\sigma) = \begin{cases} 
+    1 & \text{if } \sigma(i) = i, \\ 
+    0 & \text{otherwise.} 
+\end{cases} \] 
+We can think of the quantity on the left as the expected value of the number 
+of fixed points for a given $\sigma \in S_n$. Then it follows that 
+\[ \E(\fix_n) = \E(X_1) + \cdots + \E(X_n) = \frac1n + \cdots + \frac1n = 1. \] 
+However, we can't extend this proof to the second result. Instead, we can use 
+Frobenius reciprocity!
+
+\begin{remark}{}
+    Let $S_n$ act on $\{1, \dots, n\}$ as usual. Let $H$ be the subgroup of 
+    $S_n$ consisting of elements that fix $n$, and note that $H \cong S_{n-1}$. 
+    Then we will show on the assignment that  
+    \[ \chi_{\triv} \uparrow_H^{S_n} (\sigma) = \fix_n(\sigma), \] 
+    where $\chi_{\triv}$ is the trivial character on $H$. 
+\end{remark}
+
+Let's give another proof of the first fact. Let $\chi'_{\triv}$ be the trivial 
+character on $S_n$. By Frobenius reciprocity, we obtain 
+\[ \langle \chi_{\triv} \uparrow_H^{S_n}, \chi'_{\triv} \rangle_{S_n} 
+= \langle \chi_{\triv}, \chi'_{\triv} \downarrow_H^{S_n} \rangle_H 
+= \langle \chi_{\triv}, \chi_{\triv} \rangle_H = 1. \]
+On the other hand, we see that 
+\[ \langle \chi_{\triv} \uparrow_H^{S_n}, \chi'_{\triv} \rangle_{S_n} 
+= \langle \fix_n, \chi'_{\triv} \rangle_{S_n} = \frac{1}{n!} \sum_{\sigma \in S_n} 
+\fix(\sigma), \] 
+and this gives the result. Now, let $n \geq 2$. Applying Frobenius reciprocity, 
+we have 
+\begin{align*}
+    \langle \chi_{\triv} \uparrow_H^{S_n}, \fix_n \rangle_{S_n} 
+    &= \langle \chi_{\triv}, \fix_n \downarrow_H^{S_4} \rangle_H \\ 
+    &= \langle \chi_{\triv}, \chi_{\triv} + \fix_{n-1} \rangle_{S_{n-1}} \\ 
+    &= \langle \chi_{\triv}, \chi_{\triv} \rangle_{S_{n-1}} 
+    + \langle \chi_{\triv}, \fix_{n-1} \rangle_{S_{n-1}} \\ 
+    &= 1 + 1 = 2. 
+\end{align*}
+The second equality is because $n$ is fixed in $H$, so this proves the second fact. 
+
+In fact, we have the following more general result. 
+
+\begin{prop}{}
+    Let $m \leq n$ be positive integers. Then we have 
+    \[ \frac{1}{n!} \sum_{\sigma \in S_n} \fix_n(\sigma)^m = B_m, \] 
+    where $B_m$ is the number of partitions of $\{1, \dots, m\}$, called the 
+    $m$-th Bell number. 
+\end{prop}
+\begin{pf}
+    We proceed by induction on $m$. We have already proved this for $m = 1$ 
+    and $m = 2$. Notice that 
+    \[ \langle \chi_{\triv} \uparrow_H^{S_4}, \fix_n^{m-1} \rangle_{S_n} 
+    = \langle \fix_n, \fix_n^{m-1} \rangle_{S_n} = \frac{1}{n!} 
+    \sum_{\sigma \in S_n} \fix(\sigma) \fix(\sigma)^{m-1} 
+    = \frac{1}{n!} \sum_{\sigma \in S_n} \fix(\sigma)^m. \] 
+    On the other hand, Frobenius reciprocity gives us 
+    \begin{align*}
+        \langle \chi_{\triv} \uparrow_H^{S_4}, \fix_n^{m-1} \rangle_{S_n} 
+        &= \langle \chi_{\triv}, \fix_n^{m-1} \downarrow_H^{S_n} \rangle_H \\
+        &= \langle \chi_{\triv}, (1 + \fix_{n-1})^{m-1} \rangle_{S_{n-1}} \\
+        &= \sum_{j=0}^{m-1} \binom{m-1}{j} \langle \chi_{\triv}, \fix_{n-1} \rangle_{S_{n-1}}. 
+    \end{align*}
+    We have $j \leq m-1 \leq n-1$, so by the induction hypothesis, we obtain 
+    \[ \langle \chi_{\triv}, \fix_{n-1} \rangle_{S_{n-1}} 
+    = \frac{1}{(n-1)!} \sum_{\sigma \in S_{n-1}} \fix(\sigma)^j = B_j. \] 
+    In order to prove the result, it suffices to show that 
+    \[ \sum_{j=0}^{m-1} \binom{m-1}{j} B_j = \sum_{j=0}^{m-1} \binom{m-1-j}{j} B_j = B_m. \] 
+    To see this, note that $m$ has to be in one of the sets. Pick $m - 1 - j$ 
+    other elements to be in the same set as $m$. Then the remaining $j$ 
+    elements form a partition, which yields the desired identity. 
+\end{pf}
