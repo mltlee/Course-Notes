@@ -260,10 +260,10 @@ Since $G$ has left coset decomposition given by $G = \bigcup_{i=1}^r
 \end{align*} 
 Note that $s_i^{-1}x^{-1}kxs_i \in H$ if and only if $x^{-1}kx \in s_iHs_i^{-1}$. 
 Moreover, we have $T_i \subseteq K$, so $x^{-1}kx \in K$ as well. 
-Hence, we have $x^{-1}kx \in H_{s_i}$, so we obtain 
+Hence, we have $x^{-1}kx \in H_{s_i} = K \cap s_iHs_i^{-1}$, so we obtain 
 \begin{align*}
     \chi \uparrow_H^G (k) 
-    = \sum_{i=1}^r \sum_{\{x\in T_i\,:\,x^{-1}kx \in H_{s_i}} \chi(s_i^{-1}x^{-1}kxs_i) 
+    = \sum_{i=1}^r \sum_{\{x\in T_i\,:\,x^{-1}kx \in H_{s_i}\}} \chi(s_i^{-1}x^{-1}kxs_i) 
     = \sum_{i=1}^r \chi \uparrow_{H_{s_i}}^K (k),
 \end{align*}
 and this completes the proof. \qed
