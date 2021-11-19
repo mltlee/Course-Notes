@@ -159,3 +159,111 @@ In fact, we have the following more general result.
     other elements to be in the same set as $m$. Then the remaining $j$ 
     elements form a partition, which yields the desired identity. 
 \end{pf}
+
+\section{Inducing up and restricting down (11/19/2021)}
+Let $H \leq G$ be groups, and let $\chi$ be a character on $H$. 
+We'll be working towards Mackey's criterion, which gives us sufficient 
+and necessary conditions for $\chi \uparrow_H^G$ to be irreducible. 
+
+Recall that if $\chi$ is a character on $G$, then $\chi$ is irreducible 
+if and only if $\langle \chi, \chi \rangle_G = 1$. So to start, we 
+require that $\langle \chi \uparrow_H^G, \chi \uparrow_H^G \rangle_G = 1$
+in order for $\chi \uparrow_H^G$ to be irreducible. By Frobenius reciprocity, 
+we obtain 
+\[ \langle \chi, \chi \uparrow_H^G \downarrow_H^G \rangle_H = 
+\langle \chi \uparrow_H^G, \chi \uparrow_H^G \rangle_G = 1. \] 
+To understand this, we need to know the effect of inducing up and then 
+restricting down. Let $H, K \leq G$ be groups, and let $\chi$ be a character 
+on $H$. What is the character $\chi \uparrow_H^G \downarrow_K^G$ on $K$? 
+
+First, we'll review double cosets. For $H, K \leq G$, we put an equivalence 
+relation on $G$ by setting $g_1 \sim g_2$ if and only if there exist elements
+$k \in K$ and $h \in H$ such that $g_1 = kg_2h$. Let's verify that this is 
+indeed an equivalence relation. Observe that we have reflexivity by 
+taking $k = h = 1$. To see that $\sim$ is symmetric, notice that $g_1 = 
+kg_2h$ implies that $g_2 = k^{-1}g_1h^{-1}$. Finally, $\sim$ is transitive 
+since $g_1 = kg_2h$ and $g_2 = k'g_3h'$ implies that $g_1 = kk'g_3h'h$ with 
+$kk' \in K$ and $h'h \in H$. It follows that $\sim$ partitions $G$ 
+into disjoint sets called double cosets, and these are equivalence classes 
+under $\sim$. For $g \in G$, we write 
+\[ [g]_{\sim} = \{kgh : k\in K,\, h\in H\} = KgH. \] 
+Write $G = Ks_1H \cup \cdots \cup Ks_rH$ where $s_1, \dots, s_r$ is a 
+complete set of double set representatives. Given a double coset 
+representative $s \in G$, we let $H_s := K \cap sHs^{-1}$. If we have a 
+character $\chi$ on $H$, then we get a new character $\chi_s$ on $H_s$ 
+defined by $\chi_s(shs^{-1}) := \chi(h)$. To see that $\chi_s$ is a 
+character, note that $\chi$ is a character by assumption, so there 
+exists a representation $\rho : H \to \GL_d(\C)$ such that $\chi = \Tr(\rho)$. 
+Define $\tilde\rho : sHs^{-1} \to \GL_d(\C)$ by $\tilde\rho(sHs^{-1}) = 
+\rho(h)$. This is a group homomorphism since 
+\[ \tilde\rho(sh_1s^{-1}sh_2s^{-1}) = \tilde\rho(sh_1h_2s^{-1}) = 
+\rho(h_1h_2) = \rho(h_1)\rho(h_2) = \tilde\rho(sh_1s^{-1})\tilde\rho(sh_2s^{-1}). \] 
+By restricting to $H_s$, we have the map 
+\[ \tilde\rho|_{H_s} : K \cap sHs^{-1} \to \GL_d(\C), \] 
+and we can take $\chi_s = \Tr(\tilde\rho|_{H_s})$. 
+
+\begin{theo}{}
+    Let $H, K \leq G$ be groups, and let $\chi$ be a character on $H$. Then 
+    we have 
+    \[ \chi \uparrow_H^G \downarrow_K^G \;= \sum_{i=1}^r \chi_{s_i} \uparrow_{H_{s_i}}^K, \] 
+    where $G = Ks_1H \cup \cdots \cup Ks_rH$ and $H_{s_i} = K \cap s_iHs_i^{-1}$ for $i = 1, \dots, r$. 
+\end{theo}
+
+For $i = 1, \dots, r$, observe that we have 
+\[ H_{s_i} = K \cap s_iHs_i^{-1} \subseteq K. \] 
+Let $T_i \subseteq K$ be a set of left coset representatives for $K/H_{s_i}$ so that 
+\[ K = \bigcup_{x \in T_i} xH_{s_i}. \] 
+We claim that $\{xs_i : 1 \leq i \leq r,\, x \in T_i\}$ is a complete set 
+of left coset representatives of $H$ in $G$. First, we need to show that 
+the cosets $xs_iH$ are pairwise disjoint. Suppose that $x \in T_i$ and 
+$y \in T_j$ with $x \neq y$ if $i = j$. We show that $xs_iH \neq ys_jH$. 
+
+Suppose that $xs_iH = ys_jH$. Then $xs_iH \in Ks_iH$ since $x \in K$ and 
+$ys_jH \in Ks_jH$ since $y \in K$. This gives us $Ks_iH \cap Ks_jH \neq 
+\varnothing$, so $s_i = s_j$. Now, assume that we have $xs_iH = ys_iH$. 
+Then we get $xs_iHs_i^{-1} = ys_iHs_i^{-1}$. In particular, notice that 
+$y^{-1}x \in s_iHs_i^{-1} \cap K = H_{s_i}$, so $x = y$. Thus, the left cosets 
+$xs_iH$ are all pairwise disjoint. 
+
+Next, we show that each $g \in G$ is in one of the cosets $xs_iH$. 
+First, there exists a unique $1 \leq i \leq r$ such that $g \in Ks_iH$. 
+Write $g = ks_ih$ for some $k \in K$ and $h \in H$. Then, there exists a 
+unique $x \in T_i$ such that $k \in xHs_i$. This gives $g \in ks_iH = 
+x\theta s_iH$ for some $\theta \in H_{s_i} = K \cap s_iHs_i^{-1}$. 
+It follows that $\theta = s_ih_0s_i^{-1}$ for some $h_0 \in H$. Finally, 
+we obtain $g \in x\theta s_iH = x(s_ih_0s_i^{-1})s_i H = xs_i H$,
+which proves the claim. 
+
+Now that we have established that $\{xs_i : 1 \leq i \leq r,\,x\in T_i\}$ 
+forms a complete set of left coset representatives of $H$ in $G$, 
+we can prove Theorem 29.1. 
+
+{\sc Proof of Theorem 29.1.} Let $k \in K$. Notice that 
+$x^{-1}kx \in H_{s_i} = s_iHs_i^{-1} \cap K$, so we can write 
+$x^{-1}kx = s_ihs_i^{-1}$ if $x^{-1}kx \in H_{s_i}$. Then $s_i^{-1}x^{-1}kxs_i 
+= h$, so we get 
+\begin{align*}
+    \chi_{s_i} \uparrow_{H_{s_i}}^K (k) 
+    &= \sum_{\{x\in T_i\,:\,x^{-1}kx\in H_{s_i}\}} \chi_{s_i}(x^{-1}kx) \\
+    &= \sum_{\{x\in T_i\,:\,x^{-1}kx\in H_{s_i}\}} \chi_{s_i}(s_ihs_i^{-1}) \\  
+    &= \sum_{\{x\in T_i\,:\,x^{-1}kx\in H_{s_i}\}} \chi(h) \\ 
+    &= \sum_{\{x\in T_i\,:\,x^{-1}kx\in H_{s_i}\}} \chi(s_i^{-1}x^{-1}hxs_i).
+\end{align*}
+Next, we'll look at the left side of the equation. First, we immediately 
+notice that $\chi \uparrow_H^G \downarrow_K^G (k) = \chi \uparrow_H^G (k)$. 
+Since $G$ has left coset decomposition given by $G = \bigcup_{i=1}^r 
+\bigcup_{x\in T_i} xs_i H$, it follows that 
+\begin{align*}
+    \chi \uparrow_H^G (k) 
+    &= \sum_{i=1}^r \sum_{\{x\in T_i\,:\,(xs_i)^{-1}k(xs_i) \in H\}} \chi((xs_i)^{-1}k(xs_i)) \\
+    &= \sum_{i=1}^r \sum_{\{x\in T_i\,:\,s_i^{-1}x^{-1}kxs_i \in H\}} \chi(s_i^{-1}x^{-1}kxs_i). 
+\end{align*} 
+Note that $s_i^{-1}x^{-1}kxs_i \in H$ if and only if $x^{-1}kx \in s_iHs_i^{-1}$. 
+Moreover, we have $T_i \subseteq K$, so $x^{-1}kx \in K$ as well. 
+Hence, we have $x^{-1}kx \in H_{s_i}$, so we obtain 
+\begin{align*}
+    \chi \uparrow_H^G (k) 
+    = \sum_{i=1}^r \sum_{\{x\in T_i\,:\,x^{-1}kx \in H_{s_i}} \chi(s_i^{-1}x^{-1}kxs_i) 
+    = \sum_{i=1}^r \chi \uparrow_{H_{s_i}}^K (k),
+\end{align*}
+and this completes the proof. \qed
