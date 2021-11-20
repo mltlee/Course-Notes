@@ -1,0 +1,176 @@
+\section{Waring's Problem}\label{sec:8}
+
+\subsection{History of Waring's Problem}\label{subsec:8.1}
+A famous problem in additive number theory is Waring's problem. In 1770, 
+Edward Waring asserted without proof that every natural number is the sum 
+of at most $4$ squares, $9$ cubes, and $19$ biquadrates. In general, 
+Waring's problem is stated as follows. 
+
+\begin{prop}[Waring's problem]{prop:8.1}
+    For every $k \in \N$ with $k \geq 2$, there exists an integer $s = s(k)$ 
+    such that every natural number $n$ is the sum of at most $s$ 
+    $k$-th powers of natural numbers. That is, we have 
+    \[ n = x_1^k + \cdots + x_s^k \] 
+    where $x_i \in \N \cup \{0\}$ for $i = 1, \dots, s$. 
+\end{prop}
+
+Let $g(k)$ denote the smallest integer $s$ such that the above statement holds. 
+Then Waring's problem asserts that $g(2) = 4$, $g(3) = 9$, $g(4) = 19$, 
+and in general, $g(k) < \infty$ for all $k \geq 2$. 
+
+In 1770, Lagrange proved that $g(2) = 4$. By 1909, the only known cases were 
+$k = 2, 3, 4, 5, 6, 7, 8, 10$. In 1909, Hilbert proved using a combinatorial 
+method that $g(k) < \infty$ for every $k \geq 2$. 
+
+By the work of Vinogradov, we now have an almost complete solution to $g(k)$. 
+Consider the integer 
+\[ n = 2^k \floor{(3/2)^k} - 1 < 3^k. \] 
+The most efficient representation for $n$ is to use $\floor{(3/2)^k} - 1$ 
+copies of $2^k$, and $2^k - 1$ copies of $1^k$. In other words, we can write 
+\[ n = 2^k \left( \floor{(3/2)^k} - 1 \right) + 1^k (2^k - 1). \] 
+By a result of Euler, we obtain the inequality
+\[ g(k) \geq 2^k + \floor{(3/2)^k} - 2, \] 
+with equality holding for all but finitely many $k$. Recall that the 
+fractional part of $x \in \R$ is defined by $\{x\}$. We see that 
+equality holds if 
+\begin{equation}\label{eq:8.1}
+    2^k\{(3/2)^k\} + \floor{(3/2)^k} \leq 2^k. 
+\end{equation}
+On the other hand, if we have $2^k\{(3/2)^k\} + \floor{(3/2)^k} < 2^k$, then 
+we have one of the cases 
+\begin{align*}
+    g(k) = \begin{cases}
+        2^k + \floor{(3/2)^k} + \floor{(4/3)^k} - 2 & \text{if } \floor{(4/3)^k}\floor{(3/2)^k} + \floor{(4/3)^k} + \floor{(3/2)^k} = 2^k, \\ 
+        2^k + \floor{(3/2)^k} + \floor{(4/3)^k} - 3 & \text{if } \floor{(4/3)^k}\floor{(3/2)^k} + \floor{(4/3)^k} + \floor{(3/2)^k} > 2^k.
+    \end{cases} 
+\end{align*}
+In 1957, Mahler showed that $\eqref{eq:8.1}$ holds for all but finitely $k$, 
+and no exception is known. 
+
+\subsection{Special Cases of Waring's Problem}\label{subsec:8.2}
+We'll now establish that $g(2) = 4$. Determining $g(4)$ is significantly harder,
+but we can prove an upper bound for it by using some elementary arguments. 
+
+First, for each $x \in \Z/8\Z$, we observe that 
+$x^2$ is congruent to either $0$, $1$, or $4$ modulo $8$. Then 
+$x_1^2 + x_2^2 + x_3^2 \not\equiv 7 \pmod 8$ for any $x_1, x_2, x_3 \in \Z$, 
+so we must have $g(2) \geq 4$. 
+
+\begin{prop}{prop:8.2}
+    If $p$ is an odd prime, then there exist $x, y \in \Z$ such that 
+    \[ 1 + x^2 + y^2 = mp, \] 
+    where $m \in \Z$ satisfies $1 \leq m \leq p-1$. 
+\end{prop}
+\begin{pf}
+    First, consider the sets 
+    \begin{align*}
+        S_1 &= \{x^2 + p\Z : x \in \Z,\, 0 \leq x \leq (p-1)/2\}, \\ 
+        S_2 &= \{-1-y^2 + p\Z : y \in \Z,\,0 \leq y \leq (p-1)/2\}.
+    \end{align*}
+    Note that $x_1^2 \equiv x_2^2 \pmod p$ if and only if $x_1 \equiv 
+    \pm x_2 \pmod p$. Then the elements of $S_1$ are distinct since 
+    $0 \leq x \leq (p-1)/2$, and the elements of $S_2$ are also distinct. 
+    Since $|S_1| = |S_2| = (p+1)/2$, we have $S_1 \cap S_2 \neq \varnothing$. 
+    Thus, there exist $x, y \in \Z$ with $0 \leq x, y \leq (p-1)/2$ such that 
+    $x^2 \equiv -1-y^2 \pmod p$, or equivalently, $1 + x^2 + y^2 \equiv 0 
+    \pmod p$. In particular, we have $1 + x^2 + y^2 = mp$ for some $m \in \Z$. 
+    Moreover, notice that 
+    \[ 0 < m = \frac{1+x^2+y^2}{p} \leq \frac{1 + [(p-1)/2]^2 + [(p-1)/2]^2}{p} < p, \] 
+    so $1 \leq m \leq p-1$, as desired. 
+\end{pf}
+
+\begin{theo}[Lagrange's theorem]{thm:8.3}
+    We have $g(2) = 4$. In other words, every natural number can be 
+    expressed as a sum of $4$ squares. 
+\end{theo}
+\begin{pf}
+    Observe that we have the Lagrange identity 
+    \begin{align*}
+        (x_1^2 + x_2^2 + x_3^2 + x_4^2)(y_1^2 + y_2^2 + y_3^2 + y_4^2) 
+        &= (x_1y_1 + x_2y_2 + x_3y_3 + x_4y_4)^2 + (x_1y_2 - x_2y_1 + x_3y^4 - x_4y_3)^2 \\
+        &\quad\; + (x_1y_3 - x_3y_1 + x_4y_2 - x_2y_4)^2 + (x_1y_4 - x_4y_1 + x_2y_3 - x_3y_2)^2, 
+    \end{align*}
+    so the product of two numbers that are representable as a sum of $4$ 
+    squares is also representable as a sum of $4$ squares. In order to 
+    prove the theorem, it suffices to show that all primes can be written 
+    as the sum of $4$ squares. It is clear that 
+    \[ 2 = 1^2 + 1^2 + 0^2 + 0^2, \] 
+    so it remains to show that any odd prime $p$ can be written as the sum of 
+    $4$ squares. By Proposition~\ref{prop:8.2}, there exist $x_1, x_2, x_3, x_4 
+    \in \Z$ such that 
+    \[ x_1^2 + x_2^2 + x_3^2 + x_4^2 = mp \] 
+    where $1 \leq m \leq p-1$. Indeed, we can take $x_1 = 1$, $x_2 = x$, 
+    $x_3 = y$, and $x_4 = 0$ to get $x_1^2 + x_2^2 + x_3^2 + x_4^2 = 1 + x^2 + y^2$. 
+    Next, let $m_0$ be the smallest natural number such that $m_0p$ is the 
+    sum of $4$ squares. We claim that $m_0 = 1$, and thus 
+    $x_1^2 + x_2^2 + x_3^3 + x_4^2 = p$. First, suppose that $m_0$ 
+    is even. Note that 
+    \[ (x_1 + x_2 + x_3 + x_4)^2 = x_1^2 + x_2^2 + x_3^2 + x_4^2 
+    + 2 \sum_{1 \leq i < j \leq n} x_i x_j. \] 
+    Since $x_1^2 + x_2^2 + x_3^2 + x_4^2 = m_0p$ is even, it follows that 
+    $x_1 + x_2 + x_3 + x_4$ is even. They may be all even, all odd, 
+    or two even and two odd. In the last case, suppose without loss 
+    of generality that $x_1$ and $x_2$ are even, and $x_3$ and $x_4$ are odd. 
+    Then in all cases, the terms $x_1 + x_2$, $x_1 - x_2$, $x_3 + x_4$, 
+    and $x_3 - x_4$ are all even. Thus, we obtain 
+    \[ \left( \frac{x_1 + x_2}{2} \right)^{\!2} + 
+    \left( \frac{x_1 - x_2}{2} \right)^{\!2}
+    \left( \frac{x_3 + x_4}{2} \right)^{\!2}
+    \left( \frac{x_3 - x_4}{2} \right)^{\!2}
+    = \frac{x_1^2 + x_2^2 + x_3^2 + x_4^2}{2} = \frac{m_0}{2} p. \] 
+    But this contradicts the minimality of $m_0$, so $m_0$ must be odd. 
+
+    Next, suppose that $m_0 > 1$. Since $x_1^2 + x_2^2 + x_3^2 + x_4^2 
+    = m_0p$ and $1 \leq m_0 \leq p-1$, we see that not all of 
+    $x_1, x_2, x_3, x_4$ are divisible by $m_0$, for otherwise 
+    $m_0^2 \mid m_0p$ and hence $m_0 \mid p$, a contradiction. Hence, 
+    there exist $b_1, b_2, b_3, b_4 \in \Z$ such that $y_i = x_i 
+    - b_i m_0$ and $|y_i| < m_0/2$ for $i = 1, 2, 3, 4$ (note that 
+    $m_0$ being odd gives us the condition $|y_i| < m_0/2$), where 
+    the $y_i$ are not all $0$. Then we have 
+    \[ 0 < y_1^2 + y_2^2 + y_3^2 + y_4^2 < 4\left(\frac{m_0}{2}\right)^{\!2}
+    = m_0^2, \] 
+    and moreover, we know that $y_1^2 + y_2^2 + y_3^2 + y_4^2 \equiv 0 
+    \pmod{m_0}$. Hence, there exists $m_1 \in \N$ with $m_1 < m_0$ such that 
+    \[ y_1^2 + y_2^2 + y_3^2 + y_4^2 = m_0m_1. \] 
+    Recall that $x_1^2 + x_2^2 + x_3^2 + x_4^2 = m_0p$, so by multiplying 
+    these equations together, the Lagrange identity tells us that 
+    there exist $z_1, z_2, z_3, z_4 \in \Z$ such that 
+    \[ z_1^2 + z_2^2 + z_3^2 + z_4^2 = m_0^2 m_1 p. \] 
+    Notice that 
+    \[ z_1 = x_1y_1 + x_2y_2 + x_3y_3 + x_4y_4 = 
+    \sum_{i=1}^4 x_i y_i = \sum_{i=1}^4 x_i(x_i - b_im_0) = 
+    \sum_{i=1}^4 x_i^2 + m_0K \] 
+    for some $K \in \Z$. Since $x_1^2 + x_2^2 + x_3^2 + x_4^2 = m_0p$, 
+    this tells us that $z_1 \equiv 0 \pmod{m_0}$. By a similar argument, 
+    we can verify that $z_2, z_3, z_4$ are all divisible by $m_0$. 
+    Now, define $t_i = z_i/m_0$ for $i = 1, 2, 3, 4$. It follows that 
+    \[ t_1^2 + t_2^2 + t_3^2 + t_4^2 = m_1p \] 
+    with $1 \leq m_1 < m_0$, contradicting the minimality of $m_0$. 
+    Thus, we have $m_0 = 1$, so we are done. 
+\end{pf}
+
+\begin{theo}{thm:8.4}
+    We have $g(4) \leq 53$. 
+\end{theo}
+\begin{pf}
+    By Theorem~\ref{thm:8.3}, every non-negative integer $x$ can be written 
+    in the form $x = a^2 + b^2 + c^2 + d^2$ for some $a, b, c, d \in \N \cup \{0\}$. 
+    Observe that we have the identity 
+    \begin{align*}
+        6(a^2 + b^2 + c^2 + d^2) 
+        &= (a + b)^4 + (a - b)^4 + (c + d)^4 + (c - d)^4 \\ 
+        &\quad\; + (a + c)^4 + (a - c)^4 + (b + d)^4 + (b - d)^4 \\ 
+        &\quad\; + (a + d)^4 + (a - d)^4 + (b + c)^4 + (b - c)^4. 
+    \end{align*}
+    Hence, every integer of the form $6x^2$ can be expressed as the sum of 
+    $12$ fourth powers. Now, every natural number can be written in the form 
+    $6k + r$ where $k \in \N \cup \{0\}$ and $0 \leq r \leq 5$. By 
+    Theorem~\ref{thm:8.3}, we can write $k$ as a sum of $4$ squares, 
+    say $k = x_1^2 + x_2^2 + x_3^2 + x_4^2$. Then we have 
+    \[ 6k = 6x_1^2 + 6x_2^2 + 6x_3^2 + 6x_4^2. \] 
+    Each term in the above sum is a sum of $12$ fourth powers, so $6k$ 
+    can be expressed as a sum of $48$ fourth powers. Finally, we can write 
+    $r = 1^4 + \cdots + 1^4$ ($r$ times). Since $0 \leq r \leq 5$, 
+    we conclude that $6k + r$ is a sum of $53$ fourth powers. 
+\end{pf}

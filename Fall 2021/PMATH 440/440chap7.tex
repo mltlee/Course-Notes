@@ -560,3 +560,52 @@ determined by the series is limited only by a singularity on the real axis.
     \[ \sum_{p\equiv\ell\text{ (mod }k)} \frac{1}{p^s} = -\frac{1}{\phi(k)} \log(s-1) + O(1). \] 
     Since the quantity $\log(s-1)$ blows up as $s \to 1$, the series diverges. 
 \end{pf}
+
+\subsection{Distribution of Primes in Arithmetic Progressions}\label{subsec:7.7}
+Let $k$ and $\ell$ be coprime integers with $k \geq 2$. For each $x \in \R$, 
+define $\pi(x, k, \ell)$ to be the number of primes $p$ satisfying 
+$p \leq x$ and $p \equiv \ell \pmod k$. Then it can be shown that 
+\[ \pi(x, k, \ell) \sim \frac{1}{\phi(k)} \frac{x}{\log x} \sim \frac{\Li(x)}{\phi(k)}. \] 
+For $t \in \R$ and $k \in \Z^+$, set $\tau(k, t) = \max\{|t|, k + 2\}$. 
+Let $c \in \R$ with $0 < c < 1$, and define the set $R_c(k)$ by 
+\[ R_c(k) = \left\{ \sigma + it : 1 - \frac{c}{\log \tau(k, t)} < \sigma \right\}. \] 
+One can show that there exists a positive real number $c_0$ such that if 
+$\chi$ is a non-real character modulo $k$ for $k \geq 2$, then $L(s, \chi)$ 
+is nonzero in $R_{c_0}(k)$. 
+
+When $\chi$ is a real non-principal character, this is not true in general. 
+However, such a $c_0$ exists if we allow for the possibility that 
+there is a point $\beta$ on the real axis in $R_{c_0}(k)$ where 
+$L(s, \chi)$ is zero. 
+
+\begin{defn}{def:7.13} 
+    If $L(s, \chi)$ vanishes at $\beta \in R_{c_0}(k)$, then $\beta$ is a 
+    simple zero of $L(s, \chi)$ and is called a {\bf Siegel zero}. 
+\end{defn}
+
+The extended Riemann hypothesis implies that $L(s, \chi)$ is nonzero for 
+$\Re(s) > 1/2$, so no Siegel zero exists under this hypothesis. 
+
+Let $k$ and $\ell$ be coprime integers with $k \geq 2$. Put $b = \beta(k)$ 
+if there is a real non-principal character $\chi$ where $\beta$ is a 
+zero of $L(s, \chi)$ in $R_{c_0}(k)$, and set $b = 1$ otherwise. Then 
+there exists $a > 0$ such that 
+\[ \pi(x, k, \ell) = \frac{\Li(x)}{\phi(k)} - \frac{\lambda(b)}{b} \frac{x^b}{\phi(k)} 
++ O(x \exp(-a\sqrt{\log x})), \] 
+where $\lambda(b) = 0$ if $b = 1$, and $\lambda(b) = \chi(\ell)$ if $b \neq 1$. 
+We would like to know if the term 
+\[ \frac{\lambda(b)}{b} \frac{x^b}{\phi(k)} \] 
+exists, or in other words, whether a Siegel zero exists. We haven't been 
+able to do so yet, however. The best ``effective'' estimate for the size 
+of a Siegel zero $\beta(k)$ associated to $L(s, \chi)$ where $\chi$ is a 
+real character modulo $k$ is due to Pintz, who proved that 
+\[ \beta(k) < 1 - \frac{c}{\sqrt{k}}, \] 
+where $c$ is an effectively computable positive number. On the other hand, 
+Siegel proved that for every $\eps > 0$, there exists a positive 
+number $c(\eps)$ such that 
+\[ \beta(k) < 1 - \frac{c(\eps)}{k^{\eps}}. \] 
+Unfortunately, there is no known algorithm for computing $c(\eps)$ given 
+$\eps > 0$. Using Siegel's estimate, one can prove that if $H$ is a 
+positive number satisfying $k \leq (\log x)^H$, then 
+\[ \pi(x, k, \ell) = \frac{\Li(x)}{\phi(k)} + O\left( \frac{x}{\exp(C\sqrt{\log x})} \right) \] 
+for some $C > 0$. However, notice that this big-$O$ term is quite ineffective. 
