@@ -1,4 +1,6 @@
 \section{Elliptic Curve Cryptography}
+
+\subsection{Elliptic Curves}
 In Sections 6 and 7, we have described some discrete logarithm based cryptosystems.
 Generic descriptions of these cryptosystems assume a cyclic group $G$ with some 
 basic assumptions, namely that the elements of $G$ can be represented efficiently,
@@ -68,3 +70,131 @@ being the identity element, as we will see later.
     \[ E/\K = \{(x, y) \in \R \times \R : y^2 = x^3 - x\} \cup \{\infty\} \] 
     is an elliptic curve if and only if $4a^3 + 27b^2 \neq 0$. 
 \end{remark}
+
+\subsection{Elliptic Curve Groups}
+Suppose that $\K$ is a field that is not of characteristic $2$ or $3$. 
+Let $\bbL$ be a field extension of $\K$. Let $E/\K$ be the elliptic curve 
+defined by the equation $y^2 = x^3 + ax + b$, and let $P$ and $Q$ be 
+two points on $E(\bbL)$. 
+
+\begin{defn}
+    The {\bf geometric sum} of $P$ and $Q$, denoted by $P + Q$, is defined 
+    as follows. 
+    \begin{enumerate}[(1)]
+        \item If $P = {\cal O}$, then $P + Q = Q$. \textbf{Intuition:} ${\cal O}$ 
+        acts like the identity element. 
+        \item If $Q = {\cal O}$, then $P + Q = P$. \textbf{Intuition:} ${\cal O}$ 
+        acts like the identity element. 
+        \item If $P = (x, y)$ and $Q = (x, -y)$, then $P + Q = {\cal O}$.
+        \textbf{Intuition:} $Q$ acts like the inverse of $P$. 
+        \item If $P = (x_1, y_1)$ and $Q = (x_2, y_2)$ with $x_1 \neq x_2$, then 
+        we define $P + Q = (x_3, y_3)$ as follows. Let $\ell$ be the line 
+        passing through $P$ and $Q$ given by the equation $y = \alpha x + \beta$. 
+        Note that 
+        \[ \alpha = \frac{y_2 - y_1}{x_2 - x_1}, \quad \beta = y_1 - \alpha x. \] 
+        The line intersects $E$ at exactly three points, two of which are 
+        already known by construction; they are $P, Q \in \ell \cap E(\bbL)$. 
+        Now, we find the third point $(x'_3, y'_3) \in \ell \cap E(\bbL)$. 
+        If a point $(x, \alpha x + \beta)$ is on $E$, then 
+        \[ (\alpha x + \beta)^2 = x^3 + ax + b. \] 
+        Expanding and rearranging the above equation yields 
+        \[ x^3 - \alpha^2 x^2 + (a + 2\alpha\beta)x + (b - \beta^2) = 0. \]
+        Notice that $x_1$, $x_2$, and $x'_3$ are all roots of the above 
+        cubic. By expanding out $(x - x_1)(x - x_2)(x - x'_3)$ and equating 
+        it to the cubic, we can deduce that $x_1 + x_2 + x'_3 = \alpha^2$. 
+        Hence, we obtain 
+        \[ x'_3 = \alpha^2 - x_1 - x_2 = \left( \frac{y_2 - y_1}{x_2 - x_1} \right)^{\!2} - x_1 - x_2. \] 
+        Using the fact that $\alpha = (y'_3 - y_1)/(x'_3 - x_1)$, we can write 
+        \[ y'_3 = \left( \frac{y_2 - y_1}{x_2 - x_1} \right)(x'_3 - x_1) + y_1. \] 
+        In particular, we see that the third point on $\ell$ is 
+        \[ R = (x'_3, y'_3) = \left( \alpha^2 - x_1 - x_2 = 
+        \left( \frac{y_2 - y_1}{x_2 - x_1} \right)^{\!2} - x_1 - x_2,\,
+        \left( \frac{y_2 - y_1}{x_2 - x_1} \right)(x'_3 - x_1) + y_1 \right). \] 
+        Finally, we define $P + Q = (x_3, y_3) = (x'_3, -y'_3)$. 
+        \textbf{Intuition:} $P + Q$ is the reflection of the point $R$ 
+        about the $x$-axis, where $P$, $Q$, and $R$ are three collinear 
+        elliptic curve points. 
+        \item If $P = Q = (x_1, y_1)$ with $y_1 \neq 0$, then we define 
+        $P + Q = (x_3, y_3)$ as follows. Let $\ell$ be the line tangent 
+        to the elliptic curve $E$ at the point $P$, given by the equation 
+        $y = \alpha x + \beta$. Note that $y^2 = x^3 + ax + b$, so 
+        \[ 2y\frac{\dd y}{\dd x} = 3x^2 + a. \] 
+        This implies that 
+        \[ \alpha = \frac{3x_1^2 + a}{2y_1}. \] 
+        The line $\ell$ intersects $E$ at exactly three points; the point $P$ 
+        counts with multiplicity $2$. The third point $(x'_3, y'_3) \in \ell 
+        \cap E(\bbL)$ can be found similarly to the previous case. Skipping 
+        the details, we can write 
+        \[ R = (x'_3, y'_3) = \left( \left( \frac{3x_1^2+a}{2y_1} \right)^{\!2} 
+        - 2x_1,\, \left( \frac{3x_1^2+a}{2y_1} \right) (x'_3 - x_1) + y_1 \right). \] 
+        Finally, we define $P + Q = (x_3, y_3) = (x'_3, -y'_3)$. \textbf{Intuition:} 
+        $P + Q = 2P$ is the reflection of the point $R = (x'_3, y'_3)$ about the 
+        $x$-axis, where $R$ lies on the line $\ell$ tangent to $E$ at the point $P$. 
+    \end{enumerate}
+\end{defn}
+The below figure gives a geometric illustration of the operations. 
+\begin{center}
+    \includegraphics[width=\textwidth]{Images/ec_group_law.png}
+\end{center}
+One of the most interesting facts about elliptic curves is that the above 
+defined geometric sum of points indeed turns the set of points $E(\bbL)$ 
+into an abelian group. We explicitly state this in the next theorem, and leave 
+the proof as an exercise. 
+
+\begin{thm}
+    Define $\K$, $\bbL$, $E/\K$, $E(\bbL)$ and $P + Q$ as above. Furthermore, 
+    for $P = (x, y) \in E(\bbL)$, define $-P = (x, -y)$ and $-{\cal O} = {\cal O}$. 
+    Then $(E(\bbL), +)$ forms an abelian group. More specifically, 
+    given $P, Q, R \in E(\bbL)$, we have the following properties. 
+    \begin{enumerate}[(1)]
+        \item $E(\bbL)$ is closed under addition: $P + Q \in E(\bbL)$. 
+        \item $E(\bbL)$ is associative: $(P + Q) + R = P + (Q + R)$. 
+        \item $E(\bbL)$ is commutative: $P + Q = Q + P$.
+        \item $E(\bbL)$ has identity element ${\cal O}$: $P + {\cal O} = {\cal O} + P = P$.
+        \item Elements in $E(\bbL)$ are invertible: $P + (-P) = (-P) + P = {\cal O}$. 
+    \end{enumerate}
+\end{thm}
+
+\begin{remark}
+    In our above discussion, we have assumed that elliptic curves are 
+    defined over fields that are not of characteristic $2$ or $3$. Similar 
+    results can still be derived for elliptic curves defined over fields 
+    of characteristic $2$ or $3$. In particular, elliptic curve points form 
+    a group in these cases as well. However, deriving formulas require a 
+    bit more in these cases; see Section 6.7 in \cite{10.5555/1481183}. 
+\end{remark}
+
+\subsubsection{The Size of Elliptic Curve Groups}
+Let $\F_p$ be a finite field of size $p$ for some prime $p$. Let $\F_q$ 
+be a finite field of size $q$ as a degree $n$ extension of $\F_p$, where 
+$q = p^n$ for some positive integer $n$. Recall that finite fields are 
+unique up to isomorphism, so we may assume without loss of generality that 
+$\F_p = \Z_p$ is the set of integers modulo $p$, and $\F_q = 
+\Z_p[z]/\langle f(z) \rangle$ is the polynomial quotient ring of some 
+monic irreducible polynomial $f(z)$ of degree $n$ over $\Z_p$. 
+
+For cryptographic purposes, we are mostly interested in elliptic curves 
+defined over finite fields. For an elliptic curve $E/\F_p$ defined over 
+$\F_p$, the set of $\F_q$-points $E(\F_q)$ forms an abelian group based 
+on our results in the previous section, so we can naturally consider 
+instantiating discrete logarithm based cryptographic protocols using $E(\F_q)$.
+There are many natural questions to ask here. What is the size of 
+$E(\F_q)$? What is the group structure of $E(\F_q)$? How difficult is the 
+discrete logarithm problem in $E(\F_q)$? 
+
+Let's begin with the size of $E(\F_q)$. Since $E(\F_q)$ contains the 
+identity element ${\cal O}$ and the non-identity elements in $E(\F_q)$ 
+form a subset of $\F_q \times \F_q$, we can easily obtain the bounds 
+\[ 1 \leq |E(\F_q)| \leq q^2 + 1. \] 
+Our intuition gives us a better estimate than the one above. If $E/\F_p$ 
+is defined by the equation $y^2 = x^3 + ax + b$, then we would expect 
+$x^3 + ax + b$ to be a perfect square in $\F_q$ for half of the elements 
+$x \in \F_q$. When $x^3 + ax + b$ is a perfect square, then we expect 
+exactly two values $y$ to satisfy $y^2 = x^3 + ax + b$, except when 
+$x^3 + ax + b = 0$, in which case the unique corresponding value is $y = 0$. 
+As a result, we would expect two elliptic curve points for about 
+$(q - 1)/2$ choices of $x$, one elliptic curve point for about $1$ choice of $x$,
+and no elliptic curve points for about $(q - 1)/2$ choices of $x$. This gives us 
+$E(\F_q) \approx q + 1$, counting the identity element ${\cal O}$. It turns 
+out that Hasse's theorem confirms this intuition. More precisely, we have 
+\[ (\sqrt q - 1)^2 \leq |E(\F_q)| \leq (\sqrt q + 1)^2. \] 
