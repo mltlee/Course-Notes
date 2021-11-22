@@ -188,7 +188,7 @@ into disjoint sets called double cosets, and these are equivalence classes
 under $\sim$. For $g \in G$, we write 
 \[ [g]_{\sim} = \{kgh : k\in K,\, h\in H\} = KgH. \] 
 Write $G = Ks_1H \cup \cdots \cup Ks_rH$ where $s_1, \dots, s_r$ is a 
-complete set of double set representatives. Given a double coset 
+complete set of double coset representatives. Given a double coset 
 representative $s \in G$, we let $H_s := K \cap sHs^{-1}$. If we have a 
 character $\chi$ on $H$, then we get a new character $\chi_s$ on $H_s$ 
 defined by $\chi_s(shs^{-1}) := \chi(h)$. To see that $\chi_s$ is a 
@@ -267,3 +267,145 @@ Hence, we have $x^{-1}kx \in H_{s_i} = K \cap s_iHs_i^{-1}$, so we obtain
     = \sum_{i=1}^r \chi \uparrow_{H_{s_i}}^K (k),
 \end{align*}
 and this completes the proof. \qed
+
+\section{Mackey's criterion, unitary operators (11/22/2021)}
+Let $H \leq G$ be groups, and let $\chi$ be a character on $H$. 
+When is $\chi \uparrow_H^G$ irreducible? Recall that we showed that 
+$\chi \uparrow_H^G$ is irreducible if and only if 
+\[ \langle \chi, \chi \uparrow_H^G \downarrow_H^G \rangle_H = 
+\langle \chi \uparrow_H^G, \chi \uparrow_H^G \rangle_G = 1 \] 
+by applying Frobenius reciprocity. Now, let $G = Hs_1H \cup \cdots 
+\cup Hs_rH$ be the double coset decomposition of $G$. We may assume that 
+$s_1 = 1$ as it must be in one of the double cosets. In particular, 
+notice that $Hs_1 H = H \cdot 1 \cdot H = H$, so by Theorem 29.1, we obtain 
+\[ \chi \uparrow_H^G \downarrow_H^G\; = \sum_{i=1}^r \chi_{s_i} \uparrow_{H_{s_i}}^H, \] 
+where $H_{s_i} = H \cap s_i H s_i^{-1}$ and $\chi_{s_i}(s_ihs_i^{-1}) = \chi(h)$. 
+Therefore, $\chi \uparrow_H^G$ being irreducible is equivalent to 
+\[ \left\langle \chi,\,\sum_{i=1}^r \chi_{s_i} \uparrow_{H_{s_i}}^H \right\rangle_{\!\!H} = 1. \] 
+Since $\chi_{s_1} = \chi \uparrow_H^H = \chi$, we obtain 
+\[ \left\langle \chi,\, \chi + \sum_{i=2}^r \chi_{s_i} \uparrow_{H_{s_i}}^H \right\rangle_{\!\!H} 
+= \langle \chi, \chi \rangle_H + \sum_{i=2}^r \langle \chi, \chi_{s_i} \uparrow_{H_{s_i}}^H \rangle_H = 1. \] 
+Note that $\langle \chi, \chi \rangle_H = 1$ and $\langle \chi, \chi_{s_i} \uparrow_{H_{s_i}}^H \rangle_H \geq 0$ 
+for all $i = 2, \dots, r$. Therefore, we see that $\chi \uparrow_H^G$ is 
+irreducible if and only if $\chi$ is irreducible and $\langle \chi, 
+\chi_{s_i} \uparrow_{H_{s_i}}^H \rangle_H = 0$ for all $i = 2, \dots, r$. 
+Here, we notice that $s_i \notin H$ for all $i = 2, \dots, r$. This gives 
+us Mackey's criterion. 
+
+\begin{theo}[Mackey's criterion]{}
+    Let $H \leq G$ be groups, and let $\chi$ be a character on $H$. Then 
+    the induced character $\chi \uparrow_H^G$ is irreducible if and only if 
+    $\chi$ is irreducible and $\langle \chi, \chi_{s_i} \uparrow_{H_{s_i}} \rangle_H = 0$
+    for all $s_i \in G \setminus H$. 
+\end{theo}
+
+\begin{exmp}{}
+    Let $G = \langle x, y \mid x^3 = y^7 = 1,\, xyx^{-1} = y^2 \rangle$. Let 
+    $H = \langle y \rangle$. Define a character on $H$ by $\chi(y) = e^{2\pi i/7}$, 
+    which is irreducible since it is of degree $1$. Notice that $H \trianglelefteq G$, 
+    so we have $G = H \cup HxH \cup Hx^2H$ since 
+    \[ HxH = x(x^{-1}Hx)H = xHH = xH, \] 
+    and similarly, $Hx^2H = x^2H$. Moreover, we also have 
+    \begin{align*}
+        H_x &= H \cap xHx^{-1} = H, \\ 
+        H_{x^2} &= H \cap x^2Hx^{-2} = H. 
+    \end{align*}
+    By definition, we have $\chi_x(xyx^{-1}) = \chi(y) = e^{2\pi i/7}$. 
+    This yields $\chi_x(y^2) = e^{2\pi i/7}$ and hence 
+    \[ \chi_x(y) = \chi_x(y^8) = \chi_x(y^2)^4 = e^{8\pi i/7}. \] 
+    On the other hand, note that $\chi_{x^2}(y^4) = \chi_{x^2}(x^2yx^{-2})
+    = e^{2\pi i/7}$, which implies that 
+    \[ \chi_{x^2}(y) = \chi_{x^2}(y^8) = \chi_{x^2}(y^4)^2 = e^{4\pi i/7}. \] 
+    Finally, notice that $H_x = H_{x^2} = H$, so $\chi_x \uparrow_{H_x}^H 
+    = \chi_x$ and $\chi_{x^2} \uparrow_{H_{x^2}}^H = \chi_{x^2}$. These 
+    are both distinct characters from $\chi$ by our above calculations, 
+    so $\langle \chi, \chi_x \rangle_H = \langle \chi, \chi_{x^2} \rangle_H = 0$.
+    Thus, Mackey's criterion holds in this case. 
+\end{exmp}
+
+We've now reached the end of the syllabus, but not the end of the lecture period. 
+Let's now focus on some results about subgroups of $\GL_d(\C)$, since 
+representation theory at its heart is about looking at images of groups 
+inside $\GL_d(\C)$. Some of these are more useful in the context of 
+representations of infinite groups, but Jordan's theorem, which we will soon 
+give, is a very useful for representations of finite groups. In many of these 
+theorems, we will give explicit bounds; these will not be the best bounds, 
+but are done for the sake of proving that explicit bounds exist. 
+
+\begin{theo}[Jordan's theorem]{}
+    Let $d \geq 1$ be an integer. Then there exists an integer $N = N(d)$ 
+    such that if $G$ is a finite subgroup of $\GL_d(\C)$, then $G$ has an 
+    abelian subgroup of index at most $N(d)$. 
+\end{theo}
+
+When $G$ is small, this doesn't say much, as the trivial group has index 
+at most $N(d)$ if $|G| \leq N(d)$. On the other hand, this is very useful 
+when $G$ is large, as it says that $G$ is ``almost abelian''. As an 
+application, we can use this to prove results about representations of $S_n$. 
+The proof of Jordan's theorem requires some analysis, so we'll recall some 
+of the results as we go. 
+
+Let $G$ be a finite group, and let $V$ be a left $\C[G]$-module so that 
+$V \cong \C^d$ as a $\C$-vector space. We can define an inner product 
+between $v = (v_1, \dots, v_d)^T$ and $w = (w_1, \dots, w_d)^T$ by 
+\[ \langle v, w \rangle = \sum_{i=1}^d v_i \overline{w_i}. \] 
+Recall that an operator $U : V \to V$ is \textbf{unitary} if 
+$\langle Uv, w \rangle = \langle v, U^{-1}w \rangle$ for all $v, w \in V$. 
+For all $g \in G$, we have a linear map $L_g : V \to V$ defined by 
+$L_g(v) = g \cdot v$, but note that $L_g$ is not unitary in general. 
+To get around this, we can construct a new inner product by 
+\[ \langle v, w \rangle_G := \frac{1}{|G|} \sum_{g \in G} \langle gv, gw \rangle, \] 
+where $\langle \cdot, \cdot \rangle$ in the sum is our ordinary Euclidean inner 
+product over $\C^d$. 
+
+\begin{exercise}{}
+    Verify that $\langle \cdot, \cdot \rangle_G$ defined as above is an inner product. 
+\end{exercise}
+
+\begin{prop}{}
+    The operators $L_g : V \to V$ are unitary with respect to the inner product 
+    $\langle \cdot, \cdot \rangle_G$. 
+\end{prop}
+\begin{pf}
+    We need to show that $\langle L_gv, w \rangle_G = \langle v, L_{g^{-1}}w \rangle_G$, 
+    since $L_{g^{-1}}$ is the inverse of $L_g$. First, we have 
+    \[ \langle L_gv, w \rangle_G = \frac{1}{|G|} \sum_{x\in G} \langle xL_g v, xw \rangle 
+    = \frac{1}{|G|} \sum_{x\in G} \langle xgv, xw \rangle. \] 
+    By substituting $y = xg$, we obtain 
+    \[ \langle L_gv, w \rangle_G = \frac{1}{|G|} \sum_{y \in G} \langle yv, yg^{-1}w \rangle 
+    = \frac{1}{|G|} \sum_{y\in G} \langle yv, yL_{g^{-1}}w \rangle = \langle v, L_{g^{-1}}w \rangle_G. 
+    \qedhere \] 
+\end{pf}
+This is very useful for computations. Let $V$ be a representation, and let
+$W$ be a subrepresentation of $V$. If we define 
+\[ W^{\perp} := \{v \in V : \langle v, w \rangle_G = 0 \text{ for all } w \in W\}, \] 
+then $V = W \oplus W^{\perp}$. Note that $W^{\perp}$ is another representation, 
+because if we take $u \in W^{\perp}$, $g \in G$, and $w \in W$, then we obtain 
+\[ \langle g \cdot u, w \rangle_G = \langle u, g^{-1} \cdot w \rangle_G = 0 \] 
+as $g^{-1} \cdot w \in W$. Then $u \in W^{\perp}$ implies that $g \cdot u \in W^{\perp}$. 
+
+Note that $M_d(\C)$ has a norm, called the \textbf{operator norm}, which is defined by 
+\[ \|A\| := \sup_{\|v\|_G = 1} \sqrt{\langle Av, Av \rangle_G}, \] 
+where $\|v\|_G = \sqrt{\langle v, v \rangle_G}$. In particular, this 
+satisfies $\|A + B\| \leq \|A\| + \|B\|$, and this turns $M_d(\C)$ into 
+a metric space where the distance from $A$ to $B$ is given by $\|A - B\|$. 
+
+Let $U$ be the set of all unitary matrices in $M_d(\C)$. Then $U$ is compact;
+that is, every open cover has a finite subcover. Note that $M_d(\C)$ is 
+finite-dimensional over $\C$, so by Heine-Borel, this is equivalent to 
+saying that $U$ is closed and bounded. To see that $U$ is bounded, take 
+$A \in U$. Then we have 
+\[ \langle Av, Av \rangle_G = \langle v, A^{-1}Av \rangle_G = \langle v, v 
+\rangle_G, \] 
+which implies that $\|A\| = 1$, because if we are given $v$ on the unit ball
+(any $v$ having inner product $1$ with itself), then $Av$ is also on the unit 
+ball. This is called being an isometry; it preserves distance. To 
+see that $U$ is closed, recall that for any $A \in M_d(\C)$, there exists 
+$A^* \in M_d(\C)$, called the \textbf{adjoint}, such that $\langle Av, w 
+\rangle = \langle v, A^*w \rangle$, with $A$ being unitary if and only if 
+$A^{-1} = A^*$. Define the map $f : M_d(\C) \to M_d(\C)$ by 
+\[ f(A) = AA^*. \] 
+We leave it as an exercise to show that $f$ is continuous. Now, $\{I\}$ 
+is closed, and the preimage of a closed set under a continuous map is 
+closed, so it follows that $f^{-1}(\{I\}) = U$ is closed. Therefore, 
+$U$ is compact. 
