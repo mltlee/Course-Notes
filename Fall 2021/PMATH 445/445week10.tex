@@ -277,7 +277,7 @@ $\chi \uparrow_H^G$ is irreducible if and only if
 by applying Frobenius reciprocity. Now, let $G = Hs_1H \cup \cdots 
 \cup Hs_rH$ be the double coset decomposition of $G$. We may assume that 
 $s_1 = 1$ as it must be in one of the double cosets. In particular, 
-notice that $Hs_1 H = H \cdot 1 \cdot H = H$, so by Theorem 29.1, we obtain 
+notice that $Hs_1 H = H \cdot 1 \cdot H = H$. By Theorem 29.1, we obtain 
 \[ \chi \uparrow_H^G \downarrow_H^G\; = \sum_{i=1}^r \chi_{s_i} \uparrow_{H_{s_i}}^H, \] 
 where $H_{s_i} = H \cap s_i H s_i^{-1}$ and $\chi_{s_i}(s_ihs_i^{-1}) = \chi(h)$. 
 Therefore, $\chi \uparrow_H^G$ being irreducible is equivalent to 
@@ -385,27 +385,27 @@ because if we take $u \in W^{\perp}$, $g \in G$, and $w \in W$, then we obtain
 as $g^{-1} \cdot w \in W$. Then $u \in W^{\perp}$ implies that $g \cdot u \in W^{\perp}$. 
 
 Note that $M_d(\C)$ has a norm, called the \textbf{operator norm}, which is defined by 
-\[ \|A\| := \sup_{\|v\|_G = 1} \sqrt{\langle Av, Av \rangle_G}, \] 
-where $\|v\|_G = \sqrt{\langle v, v \rangle_G}$. In particular, this 
+\[ \|A\| := \sup_{|v|_G = 1} \sqrt{\langle Av, Av \rangle_G}, \] 
+where $|v|_G = \sqrt{\langle v, v \rangle_G}$. In particular, this 
 satisfies $\|A + B\| \leq \|A\| + \|B\|$, and this turns $M_d(\C)$ into 
 a metric space where the distance from $A$ to $B$ is given by $\|A - B\|$. 
 
-Let $U$ be the set of all unitary matrices in $M_d(\C)$. Then $U$ is compact;
+Let ${\cal U}$ be the set of all unitary matrices in $M_d(\C)$. Then ${\cal U}$ is compact;
 that is, every open cover has a finite subcover. Note that $M_d(\C)$ is 
 finite-dimensional over $\C$, so by Heine-Borel, this is equivalent to 
-saying that $U$ is closed and bounded. To see that $U$ is bounded, take 
-$A \in U$. Then we have 
+saying that ${\cal U}$ is closed and bounded. To see that ${\cal U}$ is bounded, take 
+$A \in {\cal U}$. Then we have 
 \[ \langle Av, Av \rangle_G = \langle v, A^{-1}Av \rangle_G = \langle v, v 
 \rangle_G, \] 
 which implies that $\|A\| = 1$, because if we are given $v$ on the unit ball
 (any $v$ having inner product $1$ with itself), then $Av$ is also on the unit 
 ball. This is called being an isometry; it preserves distance. To 
-see that $U$ is closed, recall that for any $A \in M_d(\C)$, there exists 
+see that ${\cal U}$ is closed, recall that for any $A \in M_d(\C)$, there exists 
 $A^* \in M_d(\C)$, called the \textbf{adjoint}, such that $\langle Av, w 
 \rangle = \langle v, A^*w \rangle$, with $A$ being unitary if and only if 
 $A^{-1} = A^*$. Define the map $f : M_d(\C) \to M_d(\C)$ by 
 \[ f(A) = AA^*. \] 
 We leave it as an exercise to show that $f$ is continuous. Now, $\{I\}$ 
 is closed, and the preimage of a closed set under a continuous map is 
-closed, so it follows that $f^{-1}(\{I\}) = U$ is closed. Therefore, 
-$U$ is compact. 
+closed, so it follows that $f^{-1}(\{I\}) = {\cal U}$ is closed. Therefore, 
+${\cal U}$ is compact. 
