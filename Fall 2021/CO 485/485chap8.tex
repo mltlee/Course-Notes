@@ -164,7 +164,7 @@ the proof as an exercise.
     bit more in these cases; see Section 6.7 in \cite{10.5555/1481183}. 
 \end{remark}
 
-\subsubsection{The Size of Elliptic Curve Groups}
+\subsection{The Size of Elliptic Curve Groups}
 Let $\F_p$ be a finite field of size $p$ for some prime $p$. Let $\F_q$ 
 be a finite field of size $q$ as a degree $n$ extension of $\F_p$, where 
 $q = p^n$ for some positive integer $n$. Recall that finite fields are 
@@ -198,3 +198,55 @@ and no elliptic curve points for about $(q - 1)/2$ choices of $x$. This gives us
 $E(\F_q) \approx q + 1$, counting the identity element ${\cal O}$. It turns 
 out that Hasse's theorem confirms this intuition. More precisely, we have 
 \[ (\sqrt q - 1)^2 \leq |E(\F_q)| \leq (\sqrt q + 1)^2. \] 
+We can use Hasse's theorem to write $|E(\F_q)| = q + 1 + t_q$ for some integer $t_q$ 
+such that $|t_q| \leq 2\sqrt{q}$. However, Hasse's theorem only gives us bounds on 
+the size of $E(\F_q)$, and it would be convenient to know exactly what that size is. 
+Using Schoof's algorithm, we can count the number of points on an elliptic curve in 
+polynomial time. Schoof's algorithm and its improvements are beyond the scope of 
+the course; we refer to \cite{10.2307/2007968} and 
+\href{http://www.mat.uniroma2.it/~schoof/ctpts.pdf}{Schoof's algorithm} for 
+the details. Another interesting fact about elliptic curves over finite fields 
+is that their group order is somewhat uniformly distributed over Hasse's 
+interval $[q + 1 - 2\sqrt{q}, q + 1 + 2\sqrt{q}]$; see Proposition 1.9 in 
+\cite{10.2307/1971363}. 
+
+\subsection{Elliptic Curves in Cryptography}
+Hasse's bounds on the size of the group of elliptic curves and the somewhat 
+uniform distribution of their exact sizes suggests a recipe for choosing a 
+suitable elliptic curve to be used in discrete logarithm cryptography. 
+\begin{enumerate}
+    \item Select a large random prime $p$. 
+    \item Select random $a, b \in \F_p$ such that $4a^3 + 27b^2 \neq 0$. 
+    \item Let $E_{a,b}/\F_p$ be the elliptic curve defined by the equation 
+    $y^2 = x^3 + ax + b$ and count $|E_{a,b}(\F_p)|$. 
+    \item If $|E_{a,b}(\F_p)| = h \cdot r$ where $h$ is small (for instance, 
+    $1 \leq h \leq 4$) and $r$ is prime, then output $[a, b, p]$; otherwise, 
+    go back to step 2. 
+\end{enumerate}
+
+\begin{exercise}
+    Why do we insist that $h$ is small in $|E_{a,b}(\F_p)| = h \cdot r$? 
+\end{exercise}
+
+Once we have chosen $[a, b, p]$ as above, it follows that the elliptic curve 
+group $E_{a,b}(\F_p)$ has a cyclic subgroup $G$ of prime order $r = O(p)$, 
+which can be used to initiate discrete logarithm based encryption and digital
+signatures (except our group is now additive rather than multiplicative). 
+We have seen efficient formulas to perform elliptic group operations, which 
+results in efficient elliptic curve discrete logarithm cryptosystems. 
+
+What about the security of such a system? Recall that Pollard's $\rho$-algorithm 
+is a general purpose algorithm for solving the discrete logarithm problem, 
+so it applies to $G \subseteq E_{a,b}(\F_p)$ as well, with runtime $O(\sqrt r)$. 
+The great thing about the elliptic curve discrete logarithm problem is that 
+special purpose subexponential time algorithms, such as the index calculus 
+algorithm for solving the discrete logarithm problem in $\F_p^*$, do 
+not apply to elliptic curves in general. In other words, the computational 
+complexity of the fastest known algorithms to solve the elliptic curve 
+discrete logarithm problem in $E_{a,b}(\F_p)$ is $O(\sqrt r) = O(\sqrt p)$. 
+Hence, groups obtained from $E_{a,b}/\F_p$ will generally yield comparable 
+efficiency and significantly higher security levels than $\F_p^*$. 
+More precisely, a carefully chosen elliptic curve over a $256$-bit prime 
+provides a security level of $128$-bits. On the other hand, in order to 
+achieve the same security level in $\F_p^*$, we require primes $p$ of 
+size $3072$-bits. 
