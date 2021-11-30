@@ -233,7 +233,7 @@ We give a nice application of this result.
     Suppose that $[S_n : H] = r < n$. Then by Proposition 32.2, there exists 
     $H_0 \trianglelefteq S_n$ such that $[S_n : H_0] \leq r!$. Notice that 
     $[S_n : A_n] \leq 2$, which implies that $[A_n : A_n \cap H_0] \leq r!$ 
-    with $A_n \cap H_0 \triangleleft A_n$. Now, $A_n$ is simple for 
+    with $A_n \cap H_0 \trianglelefteq A_n$. Now, $A_n$ is simple for 
     $n \geq 5$, so either $H_0 = A_n$ or $H_0 = \{1\}$. If $H_0 = \{1\}$, then 
     \[ [A_n : H_0] = |A_n| = \frac{n!}2 \leq r! \leq (n-1)!. \] 
     Now $n! \leq 2(n-1)!$, so $n \leq 2$, which is a contradiction. So we must 
@@ -284,3 +284,173 @@ called the Burnside-Schur theorem, which we will work towards proving.
     \end{pmatrix} \] 
     with respect to this new basis. 
 \end{pf}
+
+\section{Another theorem by Burnside (11/29/2021)}
+Let $R \subseteq M_d(\C)$ be a $\C$-submodule. Recall that either $R = 
+M_d(\C)$, or after a change of basis, every element of $R$ can be 
+put into block triangular form. 
+
+\begin{lemma}{}
+    Let $N \geq 2$. Let $G \leq \GL_d(\C)$ be a group in which every 
+    element has order at most $N$. Then $|G| \leq N^{2d^3}$. 
+\end{lemma}
+\begin{pf}
+   Let $A \in G \leq \GL_d(\C)$. Since every element in $G$ has order 
+   at most $N$, the eigenvalues of $A$ belong to the set 
+   \[ \Omega = \{\omega \in \C^* : \omega^j = 1 \text{ for some } 
+   1 \leq j \leq N\}. \] 
+   Notice that $|\Omega| = 1 + 2 + \cdots + N \leq N^2$. Next, notice that 
+   if $A \in G$, then $\Tr(A) \in \mathbb{X}$, where 
+   \[ \mathbb{X} := \{\omega_1 + \cdots + \omega_d : \omega_1, \dots, 
+   \omega_d \in \Omega\}. \] 
+   We see that $|\mathbb{X}| \leq |\Omega|^d \leq N^{2d}$. 
+
+   Now, we'll proceed by induction on $d$. For $d = 1$, we have $G \leq 
+   \C^*$, and in fact, $G \leq \Omega$, so $|G| \leq N^2$. Assume that the 
+   result holds up to $d - 1$. Let $R$ be the $\C$-span of all the elements 
+   in $G$; note that $R \subseteq M_d(\C)$. We can see that $R$ is a 
+   $\C$-algebra since 
+   \[ \left( \sum \lambda_A A \right) \left( \sum \gamma_B B \right) = 
+   \sum \lambda_A \gamma_B AB. \] 
+   Using Proposition 32.5, we can break this into two cases. 
+
+   {\sc Case 1.} Suppose that $R = M_d(\C)$. Then there exist $Y_1, \dots, Y_d 
+   \in G$ which form a basis for $M_d(\C)$. 
+
+   {\sc Claim.} If $A, B \in M_d(\C)$ and $\Tr(AY_i) = \Tr(BY_i)$ for all 
+   $i = 1, \dots, d$, then $A = B$.
+
+   {\sc Proof of Claim.} Letting $C = A - B$ and using the fact that trace is 
+   linear, it suffices to show that $\Tr(CY_i) = 0$ for all $i = 1, \dots, d$ 
+   implies that $C = 0$. So let $C = (c_{ij}) \in M_d(\C)$, and let 
+   $C^* = (\bar{c}_{ij})$. Then we have $\Tr(CC^*) = \sum |c_{ij}|^2$. 
+   If we write $C^* = \sum_{i=1}^d \lambda_i Y_i$, we get 
+   \[ \Tr(CC^*) = \Tr\left( C \left(\sum_{i=1}^d \lambda_iY_i\right) \right) 
+   = \sum_{i=1}^d \lambda_i \Tr(CY_i) = 0, \] 
+   where the last equality is by assumption, so $C = 0$. \hfill $\blacksquare$ 
+
+   Now, consider the map $\Psi : G \to \mathbb{X}^{d^2}$ given by 
+   \[ \Psi(A) = (\Tr(AY_1), \dots, \Tr(AY_d)). \] 
+   By the claim, this map is injective, so we obtain $|G| \leq |\mathbb{X}|^{d^2} 
+   \leq |\mathbb{X}|^{d^3}$. 
+
+   {\sc Case 2.} Suppose that $R \subsetneq M_d(\C)$. Then after a change of 
+   basis, we can assume that 
+   \[ G \subseteq R \subseteq \left\{ \begin{pmatrix} *_1 & * \\ 0 & *_2 \end{pmatrix} :
+    *_1 \in M_e(\C),\, *_2 \in M_{d-e}(\C) \right\} \] 
+   for some $1 \leq e \leq d-1$. So we can write each $A \in G$ in the form 
+   \[ A = \begin{pmatrix}
+       A_{11} & A_{12} \\ 0 & A_{22} 
+   \end{pmatrix} \] 
+   where $A_{11} \in \GL_e(\C)$ and $A_{22} \in \GL_{d-e}(\C)$. Since $A$ has 
+   order at most $N$, there exists $j \in \{1, \dots, n\}$ such that $A^j = I$. 
+   Then we obtain 
+   \[ A^j = \begin{pmatrix}
+       A_{11}^j & * \\ 0 & A_{22}^j 
+   \end{pmatrix} = \begin{pmatrix}
+       I_e & 0 \\ 0 & I_{d-e}
+   \end{pmatrix} = I. \] 
+   Hence, we have $A_{11}^j = I_e$ and $A_{22}^j = I_{d-e}$. Define the groups 
+   \begin{align*}
+       G_1 &= \{A_{11} : A \in G\} \leq \GL_e(\C), \\ 
+       G_2 &= \{A_{22} : A \in G\} \leq \GL_{d-e}(\C). 
+   \end{align*}
+   Every element of $G_1$ has order at most $N$, and every element of $G_2$
+   also has order at most $N$. By the induction hypothesis, we have 
+   $|G_1| \leq N^{2e^3}$ and $|G_2| \leq N^{2(d-e)^3}$. It follows that 
+   \[ |G_1||G_2| \leq N^{2(e^3+(d-e)^3)} \leq N^{2d^3}. \] 
+   To finish the proof, it remains to show that $|G| \leq |G_1||G_2|$.  
+   Suppose otherwise that $|G| > |G_1||G_2|$. Then by the pigeonhole 
+   principle, we can find $B_1 \in G_1$ and $B_2 \in G_2$ such that 
+   there are distinct elements $A, A' \in G$ of the form 
+   \begin{align*}
+       A &= \begin{pmatrix}
+           B_1 & C \\ 0 & B_2
+       \end{pmatrix}, & 
+       A' &= \begin{pmatrix}
+           B_1 & C' \\ 0 & B_2
+       \end{pmatrix},
+   \end{align*}
+   where $C \neq C'$. We see that 
+   \[ I \neq A(A')^{-1} = \begin{pmatrix}
+       B_1B_1^{-1} & * \\ 0 & B_2B_2^{-1} 
+   \end{pmatrix} = \begin{pmatrix}
+       I_e & D \\ 0 & I_{d-e}
+   \end{pmatrix} \] 
+   where $D \neq 0$. But $A(A')^{-1} \in G$, so there exists $j \in \{1, \dots, n\}$ 
+   such that $[A(A')^{-1}]^j = I$. This implies that 
+   \[ \begin{pmatrix}
+       I_e & D \\ 0 & I_{d-e}
+   \end{pmatrix}, \] 
+   so we must have $D = 0$, which is a contradiction.
+\end{pf}
+
+We note that this result is false if we are working over a field of characteristic 
+$p$, where $p$ is a prime. Indeed, take the group 
+\[ G = \left\{ \begin{pmatrix}
+    1 & a \\ 0 & 1 
+\end{pmatrix} : a \in \F_p(t)\right\} \leq \GL_2(\F_p(t)). \] 
+Then for any $a \in \F_p(t)$, we have 
+\[ \begin{pmatrix}
+    1 & a \\ 0 & 1 
+\end{pmatrix}^{\!p} = \left[ \begin{pmatrix}
+    1 & 0 \\ 0 & 1 
+\end{pmatrix}^{\!p} + \begin{pmatrix}
+    0 & a \\ 0 & 0 
+\end{pmatrix}^{\!p} \right] = \begin{pmatrix}
+    1 & 0 \\ 0 & 1 
+\end{pmatrix}^{\!p} + \begin{pmatrix}
+    0 & a \\ 0 & 0
+\end{pmatrix}^{\!p} = I. \] 
+
+Burnside used the above lemma to prove the following result. 
+
+\begin{theo}[Burnside]{}
+    Let $G \leq \GL_d(\Q)$ be a group in which element has finite order. 
+    Then $G$ is finite. 
+\end{theo}
+
+Recall that for $n \in \N$, the Euler totient function is given by 
+$\phi(n) = \#\{1 \leq m \leq n : \gcd(m, n) = 1\}$. Moreover, 
+we have $\lim_{n\to\infty} \phi(n) = \infty$, and it satisfies 
+\[ \phi(p_1^{a_1} \cdots p_s^{a_s}) = p_1^{a_1} \cdots p_s^{a_s} 
+\left(1 - \frac1{p_1}\right) \cdots \left(1 - \frac1{p_s}\right). \] 
+Note that for all $n \in \N$, we have $\phi(n) \geq \sqrt{n}/2$. 
+To see this, let $p \geq 3$ be prime and $a \geq 1$ be an integer. 
+Then 
+\[ \phi(p^a) = p^a\left(1 - \frac{1}{p}\right) \geq p^{a/2}. \] 
+Now, writing $n = 2^{b_1}p_2^{b_2} \cdots p_s^{b_s}$ where $p_2, \dots, p_s$ 
+are distinct odd primes, we have 
+\[ \phi(n) = \begin{cases}
+    2^{b_1-1}\phi(p_2^{b_2}) \cdots \phi(p_s^{b_s}) & \text{if } b_1 \geq 1, \\ 
+    \phi(p_2^{b_2}) \cdots \phi(p_s^{b_s}) & \text{if } b_1 = 0. 
+\end{cases} \] 
+In particular, we see that 
+\[ \phi(n) \geq \frac{2^{b_1/2}}2 p_2^{b_2/2} \cdots p_s^{b_s/2} = \frac{\sqrt n}2. \] 
+\begin{lemma}{}
+    Let $d \geq 1$. Then there exists an integer $n = n(d)$ such that if 
+    $A \in \GL_d(\C)$ has finite order, then the order of $A$ is at most $n$. 
+\end{lemma}
+\begin{pf}
+    Let $P(x) = x^d + c_{d-1}x^{d-1} + \cdots + c_0 \in \Q[x]$ be the characteristic 
+    polynomial of $A$. If $\omega$ is an eigenvalue of $A$, then $P(\omega) = 0$. This 
+    means that 
+    \[ [\Q(\omega) : \Q] \leq d \] 
+    since $P(x)$ has degree at most $d$. Now, if $\omega = e^{2\pi ij/b}$ 
+    where $\gcd(j, b) = 1$ (that is, $\omega$ is a $b$-th root of unity), then 
+    it can be shown that 
+    \[ [\Q(\omega) : \Q] = \phi(b). \] 
+    Note that $\phi(b) \leq d$. Since $\phi(n) \to \infty$ as $n \to \infty$, 
+    there exists $n = n(d)$ such that $\phi(j) > d$ for all $j \geq n$. 
+    So every eigenvalue of $A$ is a $b$-th root of unity where $b \leq 
+    n = n(d)$. Recall that 
+    \[ A \sim \begin{pmatrix}
+        \omega_1 & & 0 \\ 
+        & \ddots & \\ 
+        0 & & \omega_n
+    \end{pmatrix}, \] 
+    so $A^{n!} = I$. Thus, $A$ has order at most $n!$. 
+\end{pf}
+
+Notice that taking $N = \max(n(d), 2)$ and applying Lemma 33.1 shows that 
+$G \leq \GL_d(\Q)$ is finite when every element of $G$ has finite order.  
