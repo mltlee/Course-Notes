@@ -121,20 +121,23 @@ it is easy to extract the highest power of $2$ dividing $N$.
 
     {\bf Input:} A odd positive integer $N \geq 3$ and a positive integer $B$. 
     
-    {\bf Output:} A nontrivial factor of $N$, or a failure message. \vspace{0.5em}
-    
-    \begin{algorithmic}[1]
-        \State Set $a \gets 2$. \Comment{note that $\gcd(a, N) = 1$}
-        \For{$i = 2$ \textbf{to} $B$} 
-            \State $a \gets a^i \pmod N$.
-        \EndFor 
-        \State $n \gets \gcd(a - 1, N)$. 
-        \If{$1 < n < N$}
-            \State Output ``$n$ is a nontrivial factor of $N$'' and exit. 
-        \Else 
-            \State Output ``Failed to find a nontrivial factor of $N$'' and exit.
-        \EndIf 
-    \end{algorithmic}
+    {\bf Output:} A nontrivial factor of $N$, or a failure message. 
+    \begin{enumerate}
+        \item Set $a \gets 2$ (note that $\gcd(a, N) = 1$). 
+        \item {\bf for $i = 2$ to $B$ do:}
+        \begin{itemize}
+            \item $a \gets a^i \pmod N$. 
+        \end{itemize}
+        \item Set $n \gets \gcd(a - 1, N)$.
+        \item {\bf if $1 < n < N$:}
+        \begin{itemize}
+            \item Output ``$n$ is a nontrivial factor of $N$'' and exit. 
+        \end{itemize}
+        {\bf else:}
+        \begin{itemize}
+            \item Output ``Failed to find a nontrivial factor of $N$'' and exit.
+        \end{itemize}
+    \end{enumerate}
 \end{algo}
 
 \begin{exmp}
@@ -339,56 +342,60 @@ formally.
 
     {\bf Input:} A odd positive integer $N \geq 3$ and a positive integer $B$. 
     
-    {\bf Output:} A nontrivial factor of $N$, or a failure message. \vspace{0.5em}
-    
-    \begin{algorithmic}[1]
-        \State Set $\FB = \{p_1, p_2, \dots, p_{\pi(B)}\}$ as the factor 
+    {\bf Output:} A nontrivial factor of $N$, or a failure message.
+    \begin{enumerate}
+        \item Set $\FB = \{p_1, p_2, \dots, p_{\pi(B)}\}$ as the factor 
         basis of all primes at most $B$. 
-        \State Set an empty matrix $M$, which will eventually be a $T \times 
+        \item Set an empty matrix $M$, which will eventually be a $T \times 
         \pi(B)$ matrix. 
-        \State Set $i \gets 1$ and $T \gets \pi(B) + 1$. 
-        \State 
-        \State \textsc{Relation generation stage.} 
-        \Indent
-            \State Select $\sqrt{N} \leq x_i \leq N-1$ uniformly at random. 
-            \If{\textbf{$x_i^2 \pmod N$ is $B$-smooth}}
-                \State Write $x_i^2 \pmod N = \prod_{j=1}^{\pi(B)} p_j^{e_{ij}}$ 
+        \item Set $i \gets 1$ and $T \gets \pi(B) + 1$. 
+        \item {\bf Relation generation stage.}
+        \begin{itemize}
+            \item Select $\sqrt{N} \leq x_i \leq N-1$ uniformly at random. 
+            \item {\bf if $x_i^2 \pmod N$ is $B$-smooth:}
+            \begin{itemize}[$\circ$]
+                \item Write $x_i^2 \pmod N = \prod_{j=1}^{\pi(B)} p_j^{e_{ij}}$ 
                 for some $e_{ij} \geq 0$. 
-                \State Set $e_i = [e_{i1}, e_{i2}, \dots, e_{i\pi(B)}]$ and append 
+                \item Set $e_i = [e_{i1}, e_{i2}, \dots, e_{i\pi(B)}]$ and append 
                 $e_i$ as the $i$-th row of $M$.
-                \State $i \gets i+1$. 
-            \EndIf 
-            \If{\textbf{$M$ has reached $T$ rows}} 
-                \State Exit the relation generation stage. 
-            \Else
-                \State Go back to line 5. 
-            \EndIf
-        \EndIndent 
-        \State 
-        \State \textsc{Linear algebra stage.} 
-        \Indent 
-            \State Compute $M_2 = M \pmod 2$. 
-            \State Use linear algebra to find $I \subseteq \{1, \dots, T\}$ 
+                \item $i \gets i+1$.
+            \end{itemize}
+            \item {\bf if $M$ has reached $T$ rows:}
+            \begin{itemize}[$\circ$]
+                \item Exit the relation generation stage.
+            \end{itemize}
+            {\bf else:}
+            \begin{itemize}[$\circ$]
+                \item Restart the relation generation stage. 
+            \end{itemize}
+        \end{itemize}
+        \item {\bf Linear algebra stage.}
+        \begin{itemize}
+            \item Compute $M_2 = M \pmod 2$. 
+            \item Use linear algebra to find $I \subseteq \{1, \dots, T\}$ 
             so the rows of $M_2$ corresponding to $I$ are linearly 
             dependent. 
-            \State Determine integers $v_1, \dots, v_{\pi(B)} \geq 0$ such that 
+            \item Determine integers $v_1, \dots, v_{\pi(B)} \geq 0$ such that 
             $\sum_{i \in I} e_i = 2 \cdot [v_1, v_2, \dots, v_{\pi(B)}]$. 
-            \State Set $x = \prod_{i\in I} x_i$ and $y = \prod_{j=1}^{\pi(B)} 
+            \item Set $x = \prod_{i\in I} x_i$ and $y = \prod_{j=1}^{\pi(B)} 
             p_j^{v_j}$. 
-        \EndIndent
-        \State 
-        \State \textsc{Factor finding stage.} 
-        \Indent 
-            \State Compute $n = \gcd(x-y, N)$. 
-            \If{$1 < n < N$}
-                \State Output ``$n$ is a nontrivial factor of $N$''.
-            \Else 
-                \State Output ``Failed to find a nontrivial factor of $N$''. 
-            \EndIf 
-        \EndIndent
-    \end{algorithmic}
+        \end{itemize}
+        \item {\bf Factor finding stage.}
+        \begin{itemize}
+            \item Compute $n = \gcd(x-y, N)$. 
+            \item {\bf if $1 < n < N$:}
+            \begin{itemize}[$\circ$]
+                \item Output ``$n$ is a nontrivial factor of $N$''.
+            \end{itemize}
+            {\bf else:}
+            \begin{itemize}[$\circ$]
+                \item Output ``Failed to find a nontrivial factor of $N$''. 
+            \end{itemize}
+        \end{itemize}
+    \end{enumerate}
 \end{algo}
 
+\newpage 
 In order to understand the computational complexity of the random squares 
 algorithm, we will analyze the relation generation stage and linear algebra 
 stage separately. 

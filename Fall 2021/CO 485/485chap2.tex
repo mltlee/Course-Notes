@@ -56,29 +56,39 @@ encryption scheme (as in Section 1.2) is the multiplicative inverse of $e$ modul
 $e$ is the public key exponent and $\phi$ is the secret modulus. Fortunately, modular multiplicative
 inverses can be computed using extended Euclidean type algorithms, and we describe one below. 
 
+\newpage 
 \begin{algo}[Modular Multiplicative Inverses]~
 
 {\bf Input:} $n \geq 2$ and $a \in \Z_n^*$.
 
-{\bf Output:} $b \in \Z_n^*$ such that $a \cdot b \equiv 1 \pmod n$. \vspace{0.5em}
-
-\begin{algorithmic}[1]
-\State Set the initial state $t_a = a$, $t_n = n$, $u = [u_0, u_1] = [1, 0]$, $v = [v_0, v_1] = [0, 1]$. 
-\If{$t_n > t_a$} 
-    \State Use the division algorithm to write $t_n = qt_a + r$ for some $q \geq 0$ and $0 \leq r < t_a$.
-    \State Update the state: $t_n \gets r$, $v \gets v - q \cdot u$. 
-\ElsIf{$t_a > t_n$}
-    \State Use the division algorithm to write $t_a = qt_n + r$ for some $q \geq 0$ and $0 \leq r < t_n$.
-    \State Update the state: $t_a \gets r$, $u \gets u - q \cdot v$. 
-\EndIf 
-\If{$t_n = 1$}
-    \State Set $b = v_0 \pmod n$ and output $b$.
-\ElsIf{$t_a = 1$}
-    \State Set $b = u_0 \pmod n$ and output $b$.
-\Else
-    \State Go back to line 2.
-\EndIf
-\end{algorithmic}
+{\bf Output:} $b \in \Z_n^*$ such that $a \cdot b \equiv 1 \pmod n$. 
+\begin{enumerate}
+    \item Set the initial state $t_a = a$, $t_n = n$, $u = [u_0, u_1] = [1, 0]$, $v = [v_0, v_1] = [0, 1]$. 
+    \item {\bf if $t_n > t_a$:}
+    \begin{itemize}
+        \item Use the division algorithm to write $t_n = qt_a + r$ for some 
+        $q \geq 0$ and $0 \leq r < t_a$.
+        \item Update the state: $t_n \gets r$, $v \gets v - q \cdot u$.
+    \end{itemize}
+    {\bf else if $t_a > t_n$:}
+    \begin{itemize}
+        \item Use the division algorithm to write $t_a = qt_n + r$ for some 
+        $q \geq 0$ and $0 \leq r < t_n$.
+        \item Update the state: $t_a \gets r$, $u \gets u - q \cdot v$. 
+    \end{itemize}
+    \item {\bf if $t_n = 1$:}
+    \begin{itemize}
+        \item Set $b = v_0 \pmod n$ and output $b$.
+    \end{itemize}
+    {\bf else if $t_a = 1$:} 
+    \begin{itemize}
+        \item Set $b = u_0 \pmod n$ and output $b$.
+    \end{itemize}
+    {\bf else:}
+    \begin{itemize}
+        \item Go back to step 2. 
+    \end{itemize}
+\end{enumerate}
 \end{algo}
 
 Notice that the input $(a, n)$ of Algorithm 2.2 assumes that $\gcd(a, n) = 1$ since $a \in \Z_n^*$. 
@@ -90,33 +100,48 @@ some minor modifications to the algorithm.
 
 {\bf Input:} $n \geq 2$ and $0 \neq a \in \Z_n$.
 
-{\bf Output:} $\gcd = \gcd(a, n)$, and if $\gcd = 1$, then $b \in \Z_n^*$ such that $a \cdot b \equiv 1 \pmod n$. \vspace{0.5em}
-
-\begin{algorithmic}[1]
-\State Set the initial state $t_a = a$, $t_n = n$, $u = [u_0, u_1] = [1, 0]$, $v = [v_0, v_1] = [0, 1]$. 
-\If{$t_n > t_a$} 
-    \State Use the division algorithm to write $t_n = qt_a + r$ for some $q \geq 0$ and $0 \leq r < t_a$.
-    \State Update the state: $t_n \gets r$, $v \gets v - q \cdot u$. 
-\ElsIf{$t_a > t_n$}
-    \State Use the division algorithm to write $t_a = qt_n + r$ for some $q \geq 0$ and $0 \leq r < t_n$.
-    \State Update the state: $t_a \gets r$, $u \gets u - q \cdot v$. 
-\EndIf 
-\If{$t_a = 0$}
-    \If{$t_n = 1$}
-        \State Set $\gcd = 1$, $b = v_0 \pmod n$ and output $(\gcd, b)$.
-    \Else
-        \State Set $\gcd = t_n$ and output $\gcd$. 
-    \EndIf
-\ElsIf{$t_n = 0$}
-    \If{$t_a = 1$}
-        \State Set $\gcd = 1$, $b = u_0 \pmod n$ and output $(\gcd, b)$.
-    \Else
-        \State Set $\gcd = t_a$ and output $\gcd$. 
-    \EndIf
-\Else
-    \State Go back to line 2.
-\EndIf
-\end{algorithmic}
+{\bf Output:} $\gcd = \gcd(a, n)$, and if $\gcd = 1$, then $b \in \Z_n^*$ such that $a \cdot b \equiv 1 \pmod n$. 
+\begin{enumerate}
+    \item Set the initial state $t_a = a$, $t_n = n$, $u = [u_0, u_1] = [1, 0]$, $v = [v_0, v_1] = [0, 1]$. 
+    \item {\bf if $t_n > t_a$:}
+    \begin{itemize}
+        \item Use the division algorithm to write $t_n = qt_a + r$ for some 
+        $q \geq 0$ and $0 \leq r < t_a$.
+        \item Update the state: $t_n \gets r$, $v \gets v - q \cdot u$.
+    \end{itemize}
+    {\bf else if $t_a > t_n$:}
+    \begin{itemize}
+        \item Use the division algorithm to write $t_a = qt_n + r$ for some 
+        $q \geq 0$ and $0 \leq r < t_n$.
+        \item Update the state: $t_a \gets r$, $u \gets u - q \cdot v$. 
+    \end{itemize}
+    \item {\bf if $t_a = 0$:}
+    \begin{itemize}
+        \item {\bf if $t_n = 1$:} 
+        \begin{itemize}[$\circ$]
+            \item Set $\gcd = 1$, $b = v_0 \pmod n$ and output $(\gcd, b)$.
+        \end{itemize}
+        {\bf else:} 
+        \begin{itemize}[$\circ$]
+            \item Set $\gcd = t_n$ and output $\gcd$. 
+        \end{itemize}
+    \end{itemize}
+    {\bf else if $t_n = 0$:}
+    \begin{itemize}
+        \item {\bf if $t_a = 1$:} 
+        \begin{itemize}[$\circ$]
+            \item Set $\gcd = 1$, $b = u_0 \pmod n$ and output $(\gcd, b)$.
+        \end{itemize}
+        {\bf else:} 
+        \begin{itemize}[$\circ$]
+            \item Set $\gcd = t_a$ and output $\gcd$.  
+        \end{itemize}
+    \end{itemize}
+    {\bf else}
+    \begin{itemize}
+        \item Go back to step 2. 
+    \end{itemize}
+\end{enumerate}
 \end{algo}
 
 \newpage
@@ -225,19 +250,20 @@ representation of the exponent.
 {\bf Input:} $w \in \Z$, $w \geq 1$, $b = 2^w$, $e = (e_{\ell-1}\,e_{\ell-2}\,\cdots\,e_0)_b$, 
 $0 \leq e_i < 2^w$, $a \in \Z_n$, $n \in \Z$, $n \geq 2$.
 
-{\bf Output:} $a^e \in \Z_n$. \vspace{0.5em}
-
-\begin{algorithmic}[1]
-\State $a_1 \gets a$, $a_i \gets a_{i-1} \cdot a$ for $2 \leq i \leq 2^w$ \Comment{we can ignore this step when $w = 1$}
-\State $t \gets 1$
-\For{$i = \ell-1$ {\bf to} 0 {\bf by} $-1$}
-    \State $t \gets t^{2^w}$ \Comment{this step requires $w$ successive squaring operations}
-    \If{$e_i \neq 0$}
-        \State $t \gets t \cdot a_{e_i}$ \Comment{the multiply step; if $w = 1$, then $a_{e_i}$ is always $a$}
-    \EndIf
-\EndFor
-\State Output $t$. 
-\end{algorithmic}
+{\bf Output:} $a^e \in \Z_n$. 
+\begin{enumerate}
+    \item Set $a_1 \gets a$, $a_i \gets a_{i-1} \cdot a$ for $2 \leq i \leq 2^w$ (we can ignore this when $w = 1$). 
+    \item Set $t \gets 1$. 
+    \item {\bf for $i = \ell - 1$ to $0$ by $-1$ do:}
+    \begin{itemize}
+        \item $t \gets t^{2^w}$ (this step requires $w$ successive squaring operations)
+        \item {\bf if $e_i \neq 0$:} 
+        \begin{itemize}[$\circ$]
+            \item $t \gets t \cdot a_{e_i}$ (the multiply step; if $w = 1$, then $a_{e_i}$ is always $a$)
+        \end{itemize}
+    \end{itemize}
+    \item Output $t$. 
+\end{enumerate}
 \end{algo}
 
 \newpage

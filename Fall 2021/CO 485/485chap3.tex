@@ -86,28 +86,29 @@ since it is possible that $n$ is composite but no Fermat witness is found within
 
 {\bf Input:} A positive integer $n \geq 2$ and a positive integer $r$. 
 
-{\bf Output:} One of ``$n$ is composite'' or ``$n$ is probably prime''; the success probability is controlled by the input parameter $r$, the number of iterations. \vspace{0.5em}
-
-\begin{algorithmic}[1]
-\State $\counter \gets 1$. 
-\State Pick a random integer $1 < a < n-1$. 
-\State Compute $\gcd = \gcd(a, n)$. 
-\If{$\gcd > 1$}
-    \State Output ``$n$ is composite'' and exit.
-\Else
-    \State Compute $a^{n-1} \in \Z_n$. 
-    \If{$a^{n-1} \neq 1$} \Comment{$a$ is a Fermat witness}
-        \State Output ``$n$ is composite'' and exit. 
-    \Else \Comment{$a$ is a Fermat liar when $n$ is composite}
-        \State $\counter \gets \counter + 1$. 
-        \If{$\counter = r$} \Comment{after $r$ iterations, bet that $n$ is prime}
-            \State Output ``$n$ is probably prime'' and exit.
-        \Else 
-            \State Go back to line 2. 
-        \EndIf 
-    \EndIf
-\EndIf
-\end{algorithmic}
+{\bf Output:} One of ``$n$ is composite'' or ``$n$ is probably prime''; the 
+success probability is controlled by the input parameter $r$, the number of 
+iterations. 
+\begin{enumerate}
+    \item {\bf for $i = 1$ to $r$ do:}
+    \begin{itemize}
+        \item Pick a random integer $1 < a < n-1$. 
+        \item Compute $\gcd = \gcd(a, n)$. 
+        \item {\bf if $\gcd > 1$:}
+        \begin{itemize}[$\circ$]
+            \item Output ``$n$ is composite'' and exit.
+        \end{itemize}
+        {\bf else:}
+        \begin{itemize}[$\circ$]
+            \item Compute $a^{n-1} \in \Z_n$. 
+            \item {\bf if $a^{n-1} \neq 1$:}
+            \begin{itemize}[--]
+                \item Output ``$n$ is composite'' and exit ($a$ is a Fermat witness).
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \item Output ``$n$ is probably prime'' and exit (after $r$ iterations).
+\end{enumerate}
 \end{algo}
 
 It is clear that if the input $n$ to the Fermat primality test is prime, then the output 
@@ -237,33 +238,33 @@ the compositeness of $n$, as it certifies that $n$ is composite. If we do not fi
 witness for the compositeness of $n$ after $r$ iterations, then we will conclude that 
 $n$ is {\it probably} prime, as with the Fermat primality test. 
 
-\newpage 
 \begin{algo}[Solovay-Strassen Primality Test]~
 
 {\bf Input:} A positive odd integer $n \geq 3$ and a positive integer $r$. 
 
-{\bf Output:} One of ``$n$ is composite'' or ``$n$ is probably prime''; the success probability is controlled by the input parameter $r$, the number of iterations. \vspace{0.5em}
-
-\begin{algorithmic}[1]
-\State $\counter \gets 1$. 
-\State Pick a random integer $1 < a < n-1$. 
-\State Compute $\gcd = \gcd(a, n)$. 
-\If{$\gcd > 1$}
-    \State Output ``$n$ is composite'' and exit.
-\Else
-    \State Compute $\left( \frac an \right)$ and $a^{(n-1)/2} \in \Z_n$. 
-    \If{$\left(\frac an \right) \not\equiv a^{(n-1)/2} \pmod n$} \Comment{$a$ is an Euler witness}
-        \State Output ``$n$ is composite'' and exit. 
-    \Else \Comment{$a$ is an Euler liar when $n$ is composite}
-        \State $\counter \gets \counter + 1$. 
-        \If{$\counter = r$} \Comment{after $r$ iterations, bet that $n$ is prime}
-            \State Output ``$n$ is probably prime'' and exit.
-        \Else 
-            \State Go back to line 2. 
-        \EndIf 
-    \EndIf
-\EndIf
-\end{algorithmic}
+{\bf Output:} One of ``$n$ is composite'' or ``$n$ is probably prime''; the 
+success probability is controlled by the input parameter $r$, the number of 
+iterations. 
+\begin{enumerate}
+    \item {\bf for $i = 1$ to $r$ do:}
+    \begin{itemize}
+        \item Pick a random integer $1 < a < n-1$. 
+        \item Compute $\gcd = \gcd(a, n)$. 
+        \item {\bf if $\gcd > 1$:}
+        \begin{itemize}[$\circ$]
+            \item Output ``$n$ is composite'' and exit.
+        \end{itemize}
+        {\bf else:}
+        \begin{itemize}[$\circ$]
+            \item Compute $\left( \frac an \right)$ and $a^{(n-1)/2} \in \Z_n$. 
+            \item {\bf if $\left( \frac an \right) \not\equiv a^{(n-1)/2} \pmod n$:}
+            \begin{itemize}[--]
+                \item Output ``$n$ is composite'' and exit ($a$ is an Euler witness).
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \item Output ``$n$ is probably prime'' and exit (after $r$ iterations).
+\end{enumerate}
 \end{algo}
 
 \begin{defn}
@@ -335,22 +336,29 @@ witness for a composite input $n$.
 
 {\bf Input:} A positive odd integer $n \geq 3$ and a positive integer $r$. 
 
-{\bf Output:} One of ``$n$ is composite'' or ``$n$ is probably prime''; the success probability is controlled by the input parameter $r$, the number of iterations. \vspace{0.5em}
-
-\begin{algorithmic}[1]
-\For{$\counter = 0$ \textbf{to} $r - 1$} \Comment{at most $r$ iterations}
-    \State Pick a random integer $1 < a < n-1$. 
-    \State Compute $\gcd = \gcd(a, n)$. 
-    \If{$\gcd > 1$}
-        \State Output ``$n$ is composite'' and exit.
-    \Else
-        \State Write $n - 1 = 2^s d$ such that $s \geq 1$ and $d$ is odd.
-        \State Compute $b \equiv a^d \pmod n$. 
-        \If{$b \not\equiv 1 \pmod n$ {\bf and} $b^{2^t} \not\equiv -1 \pmod n$ {\bf for all} $0 \leq t \leq s-1$}
-            \State Output ``$n$ is composite'' and exit. 
-        \EndIf 
-    \EndIf
-\EndFor 
-\State Output ``$n$ is probably prime''. 
-\end{algorithmic}
+{\bf Output:} One of ``$n$ is composite'' or ``$n$ is probably prime''; the 
+success probability is controlled by the input parameter $r$, the number of 
+iterations.
+\begin{enumerate}
+    \item {\bf for $i = 1$ to $r$ do:}
+    \begin{itemize}
+        \item Pick a random integer $1 < a < n-1$. 
+        \item Compute $\gcd = \gcd(a, n)$. 
+        \item {\bf if $\gcd > 1$:}
+        \begin{itemize}[$\circ$]
+            \item Output ``$n$ is composite'' and exit.
+        \end{itemize}
+        {\bf else:}
+        \begin{itemize}[$\circ$]
+            \item Write $n - 1 = 2^s d$ such that $s \geq 1$ and $d$ is odd.
+            \item Compute $b \equiv a^d \pmod n$. 
+            \item {\bf if $b \not\equiv 1 \pmod n$ and $b^{2^t} \not\equiv -1 
+            \pmod n$ for all $0 \leq t \leq s-1$:}
+            \begin{itemize}[--]
+                \item Output ``$n$ is composite'' and exit ($a$ is an Miller-Rabin witness).
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \item Output ``$n$ is probably prime'' and exit (after $r$ iterations).
+\end{enumerate}
 \end{algo}

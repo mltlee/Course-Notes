@@ -429,18 +429,18 @@ random squares factor finding algorithm.
                   \begin{itemize}
                         \item Select $1 \leq x_i \leq p-2$ uniformly at random. 
                         \item {\bf if $g^{x_i} \pmod p$ is $B$-smooth:}
-                              \begin{itemize}
+                              \begin{itemize}[$\circ$]
                                     \item Write $g^{x_i} \pmod p = \prod_{j=1}^{\pi(B)} p_j^{e_ij}$, create the 
                                           vector $e_i = [e_{i1}, e_{i2}, \dots, e_{i\pi(B)}]$ with $e_{ij} \geq 0$, 
                                           and append $e_i$ as the $i$-th row of $M$. 
                                     \item Update $i \gets i+1$. 
                               \end{itemize}
                         \item {\bf if $M$ has reached $T$ rows:} 
-                              \begin{itemize}
+                              \begin{itemize}[$\circ$]
                                     \item Exit the relation generation stage. 
                               \end{itemize}
                         \item {\bf else:} 
-                              \begin{itemize}
+                              \begin{itemize}[$\circ$]
                                     \item Go back to step $5$. 
                               \end{itemize}
                   \end{itemize}
@@ -460,14 +460,14 @@ random squares factor finding algorithm.
                   \begin{itemize}
                         \item Select $1 \leq y \leq p-2$ uniformly at random and compute $hg^y \pmod p$. 
                         \item {\bf if $hg^y \pmod p$ is $B$-smooth:} 
-                              \begin{itemize}
+                              \begin{itemize}[$\circ$]
                                     \item Write $hg^y \pmod p = \prod_{j=1}^{\pi(B)} p_j^{e_j}$. 
                                     \item Note that $hg^y \pmod p = \prod_{j=1}^{\pi(B)} p_j^{e_j}$ and $p_j = g^{d_j}$ 
                                           implies that $\alpha + y \equiv \sum_{j=1}^{\pi(B)} e_j d_j \pmod{p-1}$. 
                                     \item Output $\alpha = \sum_{j=1}^{\pi(B)} e_j d_j - y \pmod{p-1}$. 
                               \end{itemize}
                         \item {\bf else:}
-                              \begin{itemize}
+                              \begin{itemize}[$\circ$]
                                     \item Go back to step $7$. 
                               \end{itemize}
                   \end{itemize}
