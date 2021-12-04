@@ -250,3 +250,98 @@ More precisely, a carefully chosen elliptic curve over a $256$-bit prime
 provides a security level of $128$-bits. On the other hand, in order to 
 achieve the same security level in $\F_p^*$, we require primes $p$ of 
 size $3072$-bits. 
+
+\subsection{Pairing-based Cryptography}
+Let $\K$ be a field which is not of characteristic $2$ or $3$. Let 
+$E/\K$ be an elliptic curve defined by the equation $y^2 = x^3 + ax + b$ 
+for $a, b \in \K$. For an integer $n \geq 2$, we define 
+\[ E[n] := \{P \in E(\overline{\K}) : nP = {\cal O}\} \] 
+to be the set of $n$-torsion points on $E$, where $\overline{\K}$ is the 
+algebraic closure of $\K$. It is not hard to check that $E[n]$ is a subgroup of 
+$E(\overline{\K})$. Moreover, we can determine $E[2]$ explicitly. 
+
+\begin{exmp}
+    Let $\K$ be a field which is not of characteristic $2$ or $3$. Let 
+    $E/\K$ be an elliptic curve defined by the equation $y^2 = x^3 + ax + b$ 
+    for $a, b \in \K$. As we have seen before, there exist pairwise 
+    distinct elements $r_1, r_2, r_3 \in \overline{\K}$ such that 
+    $x^3 + ax + b = (x - r_1)(x - r_2)(x - r_3)$. Using the elliptic curve 
+    addition laws, we can see that a point $P \in E(\overline{\K})$ 
+    satisfies $2P = {\cal O}$ if and only if the tangent line is vertical. 
+    This tells us that 
+    \[ E[2] = \{{\cal O}, (r_1, 0), (r_2, 0), (r_3, 0)\} \cong \Z_2 \times \Z_2. \] 
+\end{exmp}
+
+Similarly, we can show that $E[2] \cong \Z_2 \times \Z_2$ for elliptic curves 
+defined over fields of characteristic $3$. The case where the elliptic curve 
+is defined over a field of characteristic $2$ is trickier; we can either have 
+$E[2] = \{{\cal O}\}$ or $E[2] \cong \Z_2$. In general, we have the following 
+result for the $n$-torsion subgroups of elliptic curves. 
+
+\begin{thm}
+    Let $E$ be an elliptic curve defined over the field $\K$, and let 
+    $n \geq 2$ be an integer. If $\ch(\K) = 0$ or $\ch(\K) \nmid n$, then 
+    \[ E[n] \cong \Z_n \times \Z_n. \] 
+    Otherwise, we have $\ch(\K) = p \mid n$ and $n = p^rm$ for some $r > 0$ 
+    and $m \in \Z$ with $p \nmid m$. In this case, we either have
+    $E[n] \cong \Z_m \times \Z_m$ or $E[n] \cong \Z_n \times \Z_m$. 
+\end{thm}
+
+Similar to the $n$-torsion subgroup of an elliptic curve, we define the 
+$n$-th roots of unity of $\overline{\K}$ to be 
+\[ \mu_n = \{g \in \overline{\K} : g^n = 1\}. \] 
+Observe that if $\ch(\K) \nmid n$, then the polynomial $x^n - 1$ has no multiple 
+roots in $\overline{\K}$ and hence $\mu_n$ forms a cyclic group of order $n$. 
+The following theorem shows that $E[n]$ and $\mu_n$ are related through a 
+pairing function. 
+
+\begin{thm}[Weil pairing]
+    Let $E$ be an elliptic curve defined over the field $\K$, and let 
+    $n \geq 2$ be an integer such that $\ch(\K) \nmid n$. Then there exists a 
+    Weil pairing function $e_n : E[n] \times E[n] \to \mu_n$ with the following 
+    properties:
+    \begin{enumerate}[(1)]
+        \item $e_n$ is bilinear: for all $P, P_1, P_2, Q, Q_1, Q_2 \in E[n]$, we have 
+        \begin{align*}
+            e_n(P_1 + P_2, Q) &= e_n(P_1, Q) e_n(P_2, Q), \\ 
+            e_n(P, Q_1 + Q_2) &= e_n(P, Q_1) e_n(P, Q_2). 
+        \end{align*}
+        \item $e_n$ is non-degenerate: if $e_n(P, Q) = 1$ for all $Q \in E[n]$, 
+        then $P = {\cal O}$, and if $e_n(P, Q) = 1$ for all $P \in E[n]$, then 
+        $Q = {\cal O}$. 
+        \item $e_n(P, P) = 1$ for all $P \in E[n]$. 
+        \item $e_n(P, Q) = e_n(Q, P)^{-1}$ for all $P, Q \in E[n]$. 
+    \end{enumerate}
+\end{thm}
+
+Let $E$ be an elliptic curve defined over the field $\K$, and let $n \geq 2$ 
+be an integer such that $\ch(\K) \nmid n$. The isomorphism $E[n] 
+\cong \Z_n \times \Z_n$ implies that for every $R \in E[n]$, there exists a 
+pair of points $P, Q \in E[n]$ and integers $a, b \in \Z$ such that $R = aP + bQ$. In particular, we have 
+$E[n] = \langle P, Q \rangle$. It turns out the image of the generators 
+$P$ and $Q$ under the Weil pairing function yields a generator for the 
+multiplicative group $\mu_n$. 
+
+\begin{thm}
+    Let $E$ be an elliptic curve defined over the field $\K$, and let 
+    $n \geq 2$ be an integer such that $\ch(\K) \nmid n$. Let 
+    $e_n : E[n] \times E[n] \to \mu_n$ be the Weil pairing function. 
+    If $E[n] = \langle P, Q \rangle$, then $\mu_n = \langle e_n(P, Q) \rangle$. 
+\end{thm}
+\begin{pf}
+    Let $E[n] = \langle P, Q \rangle$, and suppose that $g = e_n(P, Q)$ 
+    has order $d$. Clearly, we have $d \mid n$. For an arbitrary point 
+    $R \in E[n]$, we can find $a, b \in \Z$ such that $R = aP + bQ$. 
+    We see that 
+    \begin{align*}
+        e_n(R, dQ) &= e_n(aP + bQ, dQ) \\ 
+        &= e_n(aP, dQ) e_n(bQ, dQ) \\ 
+        &= e_n(P, dQ)^a e_n(Q, dQ)^b \\ 
+        &= e_n(P, Q)^{da} e_n(Q, Q)^{db} \\ 
+        &= 1,
+    \end{align*}
+    where the last equality follows since $g = e_n(P, Q)$ has order $d$ 
+    and $e_n(Q, Q) = 1$. Since $R$ is arbitrary and $e_n$ is non-degenerate, 
+    we must have $dQ = {\cal O}$. Thus, we must have $n \mid d$ since 
+    $Q$ is a point of order $n$. Hence, we obtain $n = d$, as required. 
+\end{pf}
