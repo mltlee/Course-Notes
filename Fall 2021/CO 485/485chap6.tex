@@ -182,7 +182,7 @@ of $\BreakElGamal$, say
 \[ I = \{[\G, n, g, h = g^x], [c_1 = g^r, c_2 = m \cdot h^r]\}. \] 
 Moreover, assume that we have access to an oracle ${\cal O}_{\CDH}$ that solves 
 $\CDH$ instances. Given our instance $I$ of $\BreakElGamal$, we first create 
-a $\CDH$ instance $J = [G, n, g, c_1 = g^r, h = g^x]$, and query the 
+a $\CDH$ instance $J = [\G, n, g, c_1 = g^r, h = g^x]$, and query the 
 oracle ${\cal O}_{\CDH}$ with $J$. This returns $g^{rx}$, which we can use 
 to recover the message $m = c_2/g^{rx}$. 
 
@@ -191,7 +191,7 @@ instance of $\CDH$, say $I = [\G, n, g, g^\alpha, g^\beta]$. Assume also that
 we have access to an oracle ${\cal O}_{\BreakElGamal}$ that solves 
 $\BreakElGamal$ instances. Given our instance $I$ of $\CDH$, we create an 
 $\BreakElGamal$ instance 
-\[ J = \{[G, n, g, h = g^\alpha], [c_1 = g^\beta, c_2 = 1]\}, \] 
+\[ J = \{[\G, n, g, h = g^\alpha], [c_1 = g^\beta, c_2 = 1]\}, \] 
 and query ${\cal O}_{\BreakElGamal}$ using $J$. This returns $c_2c_1^{-\alpha} 
 = g^{-\alpha\beta}$, so we can recover $g^{\alpha\beta} = (c_2c_1^{-\alpha})^{-1}$. 
 
