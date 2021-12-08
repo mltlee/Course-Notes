@@ -117,3 +117,207 @@ have a general finitely generated extension $K/\Q$, then
     above coefficients must be $0$. Hence, we have $\deg q_{i_1\cdots i_s} \leq
     [\Q(\omega) : \Q]$, so $m \leq [\Q(\omega) : \Q]$. 
 \end{pf}
+
+\section{Wedderburn and Lie-Kolchin}
+We have already seen the Vandermonde determinant in linear algebra, but we'll 
+give an interesting proof of it using abstract algebra. 
+
+\begin{lemma}{}
+    We have 
+    \[ \det\begin{pmatrix}
+        1 & 1 & \cdots & 1 \\ 
+        x_1 & x_2 & \cdots & x_n \\ 
+        x_1^2 & x_2 & \cdots & x_n^2 \\ 
+        \vdots & \vdots & \ddots & \vdots \\ 
+        x_1^{n-1} & x_2^{n-1} & \cdots & x_n^{n-1}
+    \end{pmatrix} = \prod_{i>j}\,(x_i - x_j). \] 
+\end{lemma}
+\begin{pf}
+    Let $R = \Z[x_1, \dots, x_n]$, and let 
+    \[ P = \det\begin{pmatrix}
+        1 & 1 & \cdots & 1 \\ 
+        x_1 & x_2 & \cdots & x_n \\ 
+        x_1^2 & x_2 & \cdots & x_n^2 \\ 
+        \vdots & \vdots & \ddots & \vdots \\ 
+        x_1^{n-1} & x_2^{n-1} & \cdots & x_n^{n-1}
+    \end{pmatrix} \in R. \] 
+    Notice that for all $i > j$, we have $(x_i - x_j) \mid P$. Indeed, this is 
+    because 
+    \[ \det\begin{pmatrix}
+        1 & 1 & \cdots & 1 \\ 
+        x_1 & x_2 & \cdots & x_n \\ 
+        x_1^2 & x_2 & \cdots & x_n^2 \\ 
+        \vdots & \vdots & \ddots & \vdots \\ 
+        x_1^{n-1} & x_2^{n-1} & \cdots & x_n^{n-1}
+    \end{pmatrix} = \det\begin{pmatrix}
+        0 & 1 & \cdots & 1 \\ 
+        x_1 - x_2 & x_2 & \cdots & x_n \\ 
+        x_1^2 - x_2^2 & x_2 & \cdots & x_n^2 \\ 
+        \vdots & \vdots & \ddots & \vdots \\ 
+        x_1^{n-1} - x_2^{n-1} & x_2^{n-1} & \cdots & x_n^{n-1}
+    \end{pmatrix}. \] 
+    Notice that $R$ is a UFD since $\Z$ is a UFD. The $(x_i - x_j)$ are 
+    irreducible and pairwise coprime. So we have $\prod_{i>j} (x_i - x_j) \mid P$. 
+    Notice that $P$ and $\prod_{i>j} (x_i - x_j)$ both have degree $\binom{n}{2}$, 
+    so we see that 
+    \[ P = c \prod_{i>j}\,(x_i - x_j) \] 
+    for some $c \in \Z$. The coefficient of $x_1^0 x_2^1 \cdots x_n^{n-1}$ in $P$ 
+    is $1$, and it is also $1$ in $\prod_{i>j} (x_i - x_j)$. Hence, we must have 
+    $c = 1$. 
+\end{pf}
+
+\begin{theo}{}
+    Let $k$ be a field of characteristic $0$. Then $A \in M_n(k)$ is 
+    nilpotent if and only if $\Tr(A^i) = 0$ for all $i \geq 1$. 
+\end{theo}
+\begin{pf}
+    The forward direction is clear. For the converse, let $\lambda_1, \dots, 
+    \lambda_s$ be the distinct nonzero eigenvalues of $A$. Then $A$ is similar 
+    to an upper triangular matrix with the $\lambda_i$'s on the diagonal. 
+    In particular, we have 
+    \[ \Tr(A^i) = c_1 \lambda_1^i + \cdots + c_s \lambda_s^i \] 
+    for some $c_1, \dots, c_s \geq 0$. Since $\Tr(A^i) = 0$ for all $i \geq 1$, 
+    we obtain 
+    \[ \begin{pmatrix}
+        \lambda_1 & \lambda_2 & \cdots & \lambda_s \\ 
+        \lambda_1^2 & \lambda_2^2 & \cdots & \lambda_s^2 \\ 
+        \vdots & \vdots & \ddots & \vdots \\ 
+        \lambda_1^s & \lambda_2^s & \cdots & \lambda_s^s 
+    \end{pmatrix} \begin{pmatrix}
+        c_1 \\ c_2 \\ \vdots \\ c_s 
+    \end{pmatrix} = \begin{pmatrix}
+        0 \\ 0 \\ \vdots \\ 0
+    \end{pmatrix}. \] 
+    In particular, we see that 
+    \[ \det\begin{pmatrix}
+        \lambda_1 & \lambda_2 & \cdots & \lambda_s \\ 
+        \lambda_1^2 & \lambda_2^2 & \cdots & \lambda_s^2 \\ 
+        \vdots & \vdots & \ddots & \vdots \\ 
+        \lambda_1^s & \lambda_2^s & \cdots & \lambda_s^s 
+    \end{pmatrix} = \lambda_1 \cdots \lambda_s \det\begin{pmatrix}
+        1 & 1 & \cdots & 1 \\ 
+        \lambda_1 & \lambda_2 & \cdots & \lambda_s \\ 
+        \vdots & \vdots & \ddots & \vdots \\ 
+        \lambda_1^{s-1} & \lambda_2^{s-1} & \cdots & \lambda_s^{s-1} 
+    \end{pmatrix} = \lambda_1 \cdots \lambda_s 
+    \prod_{i>j}\,(\lambda_i - \lambda_j) \neq 0, \] 
+    since the $\lambda_i$'s are distinct and nonzero. It follows that $c_i = 0$ 
+    for all $i = 1, \dots, s$, so $A$ is nilpotent. 
+\end{pf}
+
+\begin{defn}{}
+    A nonempty set ${\cal S}$ is a {\bf semigroup} if it has a binary operation 
+    $\cdot$ that is associative. We say that ${\cal S}$ is a {\bf monoid} 
+    if there exists an element $1 \in {\cal S}$ such that $1 \cdot s = s \cdot 1 
+    = s$ for all $s \in {\cal S}$.
+\end{defn}
+
+If ${\cal S}$ is a $k$-algebra and $S$ is a multiplicatively closed subset of ${\cal S}$, 
+we can always make a $k$-subalgebra by taking 
+\[ k[\{1\} \cup S] = \left\{ \sum_{s\in S} \lambda_s s + \gamma \cdot 1 : 
+\lambda_s, \gamma \in k,\, \lambda_s = 0 \text{ for all but finitely many } 
+s \in S \right\}. \] 
+
+\begin{theo}[Wedderburn]{}
+    Let $S \subseteq M_n(\C)$ be a multiplicatively closed set of matrices 
+    in which every element is nilpotent. Then there exists a matrix $X \in \GL_n(\C)$ 
+    such that $XSX^{-1}$ is a subset of upper triangular matrices. 
+\end{theo}
+\begin{pf}
+    Let $R$ be the $\C$-span of elements from $S \cup \{1\} \subseteq M_n(\C)$. 
+    Then $R$ is a $\C$-subalgebra of $M_n(\C)$. Assume Wedderburn's result is not 
+    true. Pick the smallest $n \geq 1$ for which it fails. Notice that $n \geq 2$ 
+    since the only nilpotent $1 \times 1$ matrix is the zero matrix, which is 
+    always upper triangular. 
+
+    Recall that either $R = M_n(\C)$ or after a change of basis, $R$ is a subset of 
+    upper triangular matrices. 
+
+    {\sc Case 1.} Suppose that $R$ is a subset of upper triangular matrices. Then 
+    every element $s \in S$ is of the form 
+    \[ s = \begin{pmatrix}
+        s_1 & * \\ 0 & s_2
+    \end{pmatrix}. \] 
+    Take $S_1 = \{s_1 : s \in S\} \subseteq M_d(\C)$ and $S_2 = \{s_2 : s \in S\} 
+    \subseteq M_{n-d}(\C)$. Note that $S_1$ and $S_2$ are closed under multiplication 
+    since $S$ is also closed under multiplication. 
+
+    By the minimality of $n$, there exists $X_1 \in \GL_d(\C)$ and $X_2 \in 
+    \GL_{n-d}(\C)$ such that $X_1S_1X_1^{-1}$ and $X_2S_2X_2^{-1}$ are both 
+    subsets of upper triangular matrices. Then we see that $XSX^{-1}$ is a 
+    subset of upper triangular matrices, which is a contradiction. 
+
+    {\sc Case 2.} Suppose that $R = M_n(\C)$. Recall that $R$ is the $\C$-span 
+    of $S \cup \{1\}$, so there exists $s_2, \dots, s_n \in S$ such that 
+    $\{I, s_2, \dots, s_n\}$ is a basis for $M_n(\C)$. Moreover, we showed that 
+    if $C \in M_n(\C)$, $Y_1, \dots, Y_t$ is a basis for $M_n(\C)$, and 
+    $\Tr(CY_i) = 0$ for all $i = 1, \dots, t$, then $C = 0$. So let $s \in S$. 
+    Notice tht $\Tr(sI) = \Tr(s) = 0$ since $s$ is nilpotent, and $\Tr(ss_i) = 0$
+    for all $i = 2, \dots, t$ since $S$ is multiplicatively closed. Thus, 
+    we must have $s = 0$, and so $S \subseteq \{0\}$. Then $R$ is at most 
+    $1$-dimensional, contradicting the fact that $n \geq 2$. 
+\end{pf}
+
+Now, we'll prove the Lie-Kolchin theorem. Recall that a matrix $U \in \GL_n(\C)$ 
+is {\bf unipotent} if $U = I + N$ for some nilpotent matrix $N$. Equivalently, 
+all the eigenvalues of $U$ are $1$, and $U$ is similar to a matrix with all 
+ones along the diagonal. A subgroup $G \leq \GL_n(\C)$ is {\bf unipotent} 
+if every element $U \in G$ is unipotent. 
+
+\begin{exmp}{}
+    The discrete Heisenberg group given by 
+    \[ \left\{ \begin{pmatrix}
+        1 & a & b \\ 
+        0 & 1 & c \\ 
+        0 & 0 & 1 
+    \end{pmatrix} : a, b, c \in \Z \right\} \] 
+    is a unipotent group. 
+\end{exmp}
+
+\begin{theo}[Lie-Kolchin]{}
+    Let $G \leq \GL_n(\C)$ be a unipotent group. Then there exists 
+    $X \in \GL_n(\C)$ such that $XGX^{-1}$ is a subgroup of all upper triangular 
+    matrices with ones along the diagonal. 
+\end{theo}
+\begin{pf}
+    Let $S$ be the semigroup generated by all elements of the form $U - I$ 
+    with $U \in G$. That is, we have 
+    \[ S = \{(U_1 - I) \cdots (U_s - I) : s \geq 1,\, U_1, \dots, U_s \in G\}. \] 
+    Note that $S$ is multiplicatively closed by definition. We claim that every 
+    element of $S$ has trace $0$. To see this, let $(U_1 - I) \cdots (U_s - I) 
+    \in S$ for some $s \geq 1$. Notice that 
+    \[ (U_1 - I) \cdots (U_s - I) = \sum_{r=0}^d \sum_{1 \leq i_1 < \cdots < i_r \leq d}
+    U_{i_1} \cdots U_{i_r} (-1)^{d-r}. \] 
+    Fix $r \in \{0, \dots, d\}$. Note that $U_{i_1} \dots U_{i_r}$ is
+    unipotent, so it has trace $n$. Hence, we obtain 
+    \begin{align*}
+        \Tr((U_1 - I) \cdots (U_s - I)) 
+        &= \Tr\left( \sum_{r=0}^d \sum_{1 \leq i_1 < \cdots < i_r \leq d}
+        U_{i_1} \cdots U_{i_r} (-1)^{d-r} \right) \\ 
+        &= \sum_{r=0}^d \sum_{1 \leq i_1 < \cdots < i_r \leq d} 
+        \Tr(U_{i_1} \cdots U_{i_r}) (-1)^{d-r} \\ 
+        &= n \sum_{r=0}^d \sum_{1 \leq i_1 < \cdots < i_r \leq d} (-1)^{d-r} \\ 
+        &= n \sum_{r=0}^d \left( \sum_{1 \leq i_1 < \cdots < i_r \leq d} 1 \right) 
+        (-1)^{d-r} \\ 
+        &= n \sum_{r=0}^d \binom{d}{r} (-1)^{d-r} = n(1-1)^d = 0. 
+    \end{align*}
+    Thus, every element of $S$ has trace $0$. 
+
+    Now, each $A \in S$ is nilpotent. Indeed, since $S$ is multiplicatively 
+    closed, we have $A \cdot A = A^2 \in S$, and it follows by induction that 
+    $A^i \in S$ for all $i \geq 1$. These all have trace $0$, so by Theorem 35.2, 
+    $A$ must be nilpotent. By Wedderburn's theorem on semigroups of nilpotent 
+    matrices, there exists $X \in \GL_n(\C)$ such that $XSX^{-1}$ is a subset of 
+    upper triangular matrices. Such upper triangular matrices must have zeros along 
+    the diagonal since all the elements of $S$ have trace $0$. Finally, if 
+    $U \in G$, then we can write $U = I + (U - I)$, with $U - I \in S$. We see that 
+    \[ XUX^{-1} = X(I + (U - I))X^{-1} = I + \begin{pmatrix}
+        0 & & * \\ & \ddots & \\ 0 & & 0 
+    \end{pmatrix} = \begin{pmatrix}
+        1 & & * \\ & \ddots & \\ 0 & & 1 
+    \end{pmatrix}. \qedhere \] 
+\end{pf}
+
+\begin{exercise}{}
+    Using this result, show that unipotent groups are solvable. 
+\end{exercise}
