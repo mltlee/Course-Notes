@@ -8,3 +8,4 @@ Typed notes for courses taken at UW.
 |  Fall 2020  |                PMATH 433               |
 | Winter 2021 | STAT 241, CO 331, PMATH 348, PMATH 352 |
 |  Fall 2021  |      PMATH 440, PMATH 445, CO 485      |
+| Spring 2022 |           PMATH 450, CO 454            |
