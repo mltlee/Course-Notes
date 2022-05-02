@@ -27,8 +27,8 @@ solid body with shape given by $D$ is assumed to have constant density
 $\rho > 0$, and there is a specific heat constant $c > 0$. Then the 
 heat content of $D$ is given by
 \[ H(t) = \iiint_D c\rho u(x, y, z, t)\dd V. \] 
-Behaving as a physicist would, we toss the derivative into the 
-integral to obtain 
+Behaving as a physicist would, we toss the derivative into the integral 
+without question to obtain 
 \begin{equation}\label{eq:1.1}
     H'(t) = \iiint_D c\rho u_t(x, y, z, t)\dd V. 
 \end{equation}
@@ -66,14 +66,14 @@ As we would expect, this is very difficult! This is a PDE, and solving an
 ODE is already a tall order. 
 
 \subsection{Solving the Heat Equation}
-For simplicity, we will instead consider the $1$-dimensional heat equation; 
-let us take a thin rod over the interval $[-\pi, \pi]$. Suppose that this 
+For simplicity, we will instead consider the $1$-dimensional heat equation. 
+Let us take a thin rod over the interval $[-\pi, \pi]$. Suppose that this 
 rod is insulated so that heat only flows in the $x$-direction. In this 
 case, the heat equation is given by 
 \[ u_t = \kappa u_{xx}. \] 
 Our initial condition is $f(x) = u(x, 0)$ where $f$ is piecewise continuous
-or Riemann integrable, if we want to be more fancy. As for the boundary 
-conditions, this really depends on the physical scenario. We give 
+or even just Riemann integrable, if we want to be more fancy. As for the 
+boundary conditions, this really depends on the physical scenario. We give 
 some examples of them below.
 \begin{itemize}
     \item We may assert that the temperature is $0$ on the endpoints, so
