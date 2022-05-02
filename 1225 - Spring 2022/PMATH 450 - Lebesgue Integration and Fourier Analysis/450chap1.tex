@@ -1,3 +1,92 @@
-\section{Placeholder section}\label{sec:1}
+\section{Motivation}\label{sec:1}
+This course is a continuation of PMATH 351. It can be thought of 
+as a gateway course to many areas of modern analysis, and has 
+many applications such as partial differential equations or even
+representation of theory of groups.
 
-\subsection{Placeholder subsection}\label{subsec:1.1}
+Even though this course is called ``Lebesgue Integration and Fourier Analysis'',
+we will focus more on the latter, since there is a lot of overlap with 
+PMATH 451 in terms of measure theory. First, we will begin by giving a 
+hand-wavy derivation of the heat equation. We then try to solve the 
+corresponding PDE, which will give us some motivation for studying 
+Fourier analysis. 
+
+\subsection{Deriving the Heat Equation}\label{subsec:1.1}
+Take a ``nice'' region $D \subseteq \R^3$ with volume, such as a sphere, 
+cylinder, or cube. Consider a solid body with shape $D$. At time $t = 0$, 
+the body is heated to an initial temperature 
+\[ u(x, y, z, t)|_{t=0} = u(x, y, z, 0). \] 
+This is our initial condition. Moreover, for all $t > 0$, the temperature on 
+the boundary $\partial D$ is specified; that is, we know the values of 
+$u(x, y, z, t)$ for all $(x, y, z) \in \partial D$. These are the boundary 
+conditions. Our goal is to find $u(x, y, z, t)$ for all $t > 0$ and 
+$(x, y, z) \in D$. 
+
+To begin, we will derive (using physics) the PDE governing $u$. The 
+solid body with shape given by $D$ is assumed to have constant density
+$\rho > 0$, and there is a specific heat constant $c > 0$. Then the 
+heat content of $D$ is given by
+\[ H(t) = \iiint_D c\rho u(x, y, z, t)\dd V. \] 
+Behaving as a physicist would, we toss the derivative into the 
+integral to obtain 
+\begin{equation}\label{eq:1.1}
+    H'(t) = \iiint_D c\rho u_t(x, y, z, t)\dd V. 
+\end{equation}
+Now, Fourier's Law states that heat flows from hotter to colder regions at 
+a rate proportional to the temperature gradient 
+\[ \nabla u(x, y, z) = (u_x, u_y, u_z). \] 
+With our nice region $D$, heat only flows in and out through the surface 
+$\partial D$. Then Fourier states that there exists $\kappa > 0$ such that 
+$H'(t)$ is equal to $\kappa$ multiplied by the flux of $\nabla u$ through 
+$\partial D$. That is, we have 
+\[ H'(t) = \iint_{\partial D} \kappa(\nabla u) \cdot \dd\vec{S}, \] 
+where ${\rm d}\vec{S}$ is the surface differential $\vec{n} \cdot {\rm d}S$. 
+Recall that the divergence of a vector field $\vec{F} = (F_1, F_2, F_3)$ is 
+defined by $\divergence(\vec{F}) := (F_1)_x + (F_2)_y + (F_3)_z$, and 
+Gauss' Divergence Theorem states that 
+\[ \iint_{\partial D} \vec F \cdot {\rm d}\vec S = \iiint_D 
+\divergence(\vec{F})\dd V. \] 
+In our case, we have $\vec F = \kappa\nabla u = (\kappa u_x, \kappa u_y, 
+\kappa u_z)$, and hence 
+\[ \divergence(\kappa\nabla u) = \kappa(u_{xx} + u_{yy} + u_{zz}) = \kappa\Delta u, \] 
+where $\Delta u = u_{xx} + u_{yy} + u_{zz}$ is the Laplacian of $u$. From 
+our above equation, this yields 
+\begin{equation}\label{eq:1.2}
+    H'(t) = \iiint_D \kappa\Delta u\dd V.
+\end{equation}
+Combining $\eqref{eq:1.1}$ and $\eqref{eq:1.2}$ and doing some rearranging, 
+we end up with 
+\[ \iiint_D (c\rho u_t - \kappa\Delta u)\dd V = 0. \] 
+This holds for all ``nice'' regions, and implies that 
+\[ c\rho u_t - \kappa\Delta u = 0. \] 
+Setting $K = \kappa/(c\rho) > 0$, we obtain the heat equation 
+\[ u_t = K\Delta u. \] 
+We now want to solve this with our given initial and boundary conditions. 
+As we would expect, this is very difficult! This is a PDE, and solving an
+ODE is already a tall order. 
+
+\subsection{Solving the Heat Equation}
+For simplicity, we will instead consider the $1$-dimensional heat equation; 
+let us take a thin rod over the interval $[-\pi, \pi]$. Suppose that this 
+rod is insulated so that heat only flows in the $x$-direction. In this 
+case, the heat equation is given by 
+\[ u_t = \kappa u_{xx}. \] 
+Our initial condition is $f(x) = u(x, 0)$ where $f$ is piecewise continuous
+or Riemann integrable, if we want to be more fancy. As for the boundary 
+conditions, this really depends on the physical scenario. We give 
+some examples of them below.
+\begin{itemize}
+    \item We may assert that the temperature is $0$ on the endpoints, so
+    $u(-\pi, t) = u(\pi, t) = 0$ for all $t \geq 0$. These are called 
+    Dirichlet boundary conditions.
+    \item We can also assume that the endpoints are insulated, giving us 
+    $u_x(-\pi, t) = u_x(\pi, t) = 0$ for all $t \geq 0$. These are called 
+    Neumann boundary conditions.
+\end{itemize}
+For our purposes, we will consider a mixture of these and say that we have 
+periodic boundary conditions. To be specific, we want it so that for all 
+$t \geq 0$, we have 
+\begin{align*}
+    u(-\pi, t) &= u(\pi, t), \\ 
+    u_x(-\pi, t) &= u_x(\pi, t).
+\end{align*}
