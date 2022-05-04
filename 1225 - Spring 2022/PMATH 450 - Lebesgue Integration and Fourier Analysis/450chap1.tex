@@ -68,10 +68,10 @@ ODE is already a tall order.
 \subsection{Solving the Heat Equation}
 For simplicity, we will instead consider the $1$-dimensional heat equation. 
 Let us take a thin rod over the interval $[-\pi, \pi]$. Suppose that this 
-rod is insulated vertically so that heat only flows in the $x$-direction. 
+rod is laterally insulated so that heat only flows in the $x$-direction. 
 In this case, the heat equation is given by 
-\[ u_t = \kappa u_{xx}. \] 
-Our initial condition is $f(x) = u(x, 0)$ where $f$ is piecewise continuous
+\[ u_t = K u_{xx}. \] 
+Our initial condition is $u(x, 0) = f(x)$ where $f$ is piecewise continuous
 or even just Riemann integrable, if we want to be more fancy. As for the 
 boundary conditions, this really depends on the physical scenario. We give 
 some examples of them below.
@@ -90,3 +90,149 @@ $t \geq 0$, we have
     u(-\pi, t) &= u(\pi, t), \\ 
     u_x(-\pi, t) &= u_x(\pi, t).
 \end{align*}
+Now, we employ separation of variables, which allows us to find candidates for
+PDEs. We look for non-zero solutions of the form 
+\[ u(x, t) = T(t) X(x), \] 
+where $T$ and $X$ are differentiable and not equal to $0$ everywhere. 
+Notice that if $u$ solves the PDE $u_t = Ku_{xx}$, then for all 
+$t \geq 0$ and $x \in [-\pi, \pi]$, we have 
+\[ T'(t)X(x) = KT(t)X''(x). \] 
+This implies that 
+\[ \frac{T'(t)}{KT(t)} = \frac{X''(x)}{X(x)} \] 
+for all $t \geq 0$ such that $T(t) \neq 0$ and $x \in [-\pi, \pi]$ such that 
+$X(x) \neq 0$. Now notice that if we keep $t$ fixed and vary $x$, the value 
+of $X''(x)/X(x)$ remains unchanged. Similarly, if we keep $x$ fixed and 
+vary $t$, the value of $T'(t)/[KT(t)]$ is also unchanged. Therefore, 
+there exists some constant $\lambda \in \R$ such that 
+\[ \lambda = \frac{T'(t)}{KT(t)} = \frac{X''(x)}{X(x)}. \] 
+This yields the equations
+\begin{align}
+    T'(t) &= -\lambda KT(t), \label{eq:1.3} \\ 
+    X''(x) + \lambda X(x) &= 0. \label{eq:1.4}
+\end{align}
+Now, we put the periodic boundary conditions into play. This gives us 
+\begin{align*}
+    T(t) X(\pi) &= T(t) X(-\pi), \\ 
+    T(t) X'(\pi) &= T(t) X'(-\pi). 
+\end{align*}
+We will consider equation $\eqref{eq:1.4}$ first. Since we assumed that 
+$T$ is not identically $0$, we obtain the eigenvalue 
+problem for $X$ given by the following three equations 
+\begin{align*}
+    X''(x) + \lambda X(x) &= 0, \\
+    X(\pi) &= X(-\pi), \\
+    X'(\pi) &= X'(-\pi).
+\end{align*}
+Let us now determine what values of $\lambda$ will work. 
+
+{\sc Case 1.} Suppose that $\lambda > 0$. Then we can write $\lambda = \omega^2$
+for some $\omega > 0$. We obtain the equation 
+\[ X''(x) + \omega^2 X(x) = 0, \] 
+whose only solutions are of the form 
+\[ X(x) = C\cos(\omega x) + D\sin(\omega x) \] 
+for some constants $C$ and $D$. Using the first boundary condition 
+$X(\pi) = X(-\pi)$ gives us 
+\[ 2D\sin(\omega\pi) = 0, \] 
+so either $D = 0$ or $\omega \in \N$. Similarly, the second boundary 
+condition $X'(\pi) = X'(-\pi)$ implies that either $C = 0$ or 
+$2C\omega\sin(\omega\pi) = 0$, and the latter scenario means $\omega \in \N$. 
+Therefore, we have established that for $n \in \N$, the functions 
+\[ X_n(x) = C_n \cos(nx) + D_n \sin(nx) \] 
+with constants $C_n$ and $D_n$ are solutions to the eigenvalue problem. 
+
+{\sc Case 2.} Suppose that $\lambda = 0$. Then $X''(x) = 0$, which means that 
+\[ X(x) = C + Dx \] 
+for some constants $C$ and $D$. It is easily verified that $X(\pi) = X(-\pi)$
+gives $D = 0$, and that $X'(\pi) = X'(-\pi)$ gives nothing new. So 
+$X_0(x) = C_0$ is a solution to the eigenvalue problem. 
+
+{\sc Case 3.} Suppose that $\lambda < 0$. Then we can write $\lambda = 
+-\omega^2$ for some $\omega > 0$. It follows that all solutions to 
+$X''(x) - \omega^2 X = 0$ are of the form 
+\[ X(x) = C \cosh(\omega x) + D \sinh(\omega x). \] 
+Now $X(\pi) = X(-\pi)$ implies that $2D\sinh(\omega\pi) = 0$ and 
+$X'(\pi) = X'(-\pi)$ gives us $2C\omega\sinh(\omega\pi) = 0$. These 
+together have no nonzero solutions.
+
+Therefore, we have found that $X$ is either of the form $X_0(x) = C_0$
+for some constant $C_0$, or 
+\[ X_n(x) = C_n\cos(nx) + D_n\sin(nx) \] 
+for some $n \in \N$ and constants $C_n$ and $D_n$. Using equation 
+$\eqref{eq:1.3}$, we see that $\lambda = 0$ implies that $T(t)$ is constant, 
+and $\lambda = n^2 > 0$ implies that 
+\[ T(t) = \exp(-Kn^2t). \] 
+Then, the solutions for $u$ are $u_0(x, t) = T_0 X_0 = C_0$, and 
+\[ u_n(x, t) = \exp(-Kn^2t) (C_n\cos(nx) + D_n\sin(nx)) \]
+for all $n \in \N$. Using the Fourier method for PDEs, we notice that 
+$u_t = Ku_{xx}$ is linear, so we can take linear combinations such as 
+\[ u(x, t) = \sum_{n=0}^N u_n(x, t) \] 
+and still obtain a solution. However, finite sums can be insufficient 
+for the initial conditions to be satisfied too. Thus, we instead 
+consider formal infinite sums to get 
+\[ u(x, t) = \sum_{n=0}^\infty u_n(x, t) = C_0 + \sum_{n=1}^\infty 
+\exp(-Kn^2t) (C_n\cos(nx) + D_n\sin(nx)). \] 
+Assuming that the initial condition holds, this means we can write 
+\[ f(x) = u(x, 0) = C_0 + \sum_{n=1}^\infty (C_n\cos(nx) + D_n\sin(nx)). \] 
+The above form is known as a {\bf Fourier series}. Now, we recall that 
+we can write $\cos(nx) = (e^{inx} + e^{-inx})/2$ and $\sin(nx) = 
+(e^{inx} - e^{-inx})/2$, so if we let 
+\[ A_n = \begin{cases} 
+    C_0, & \text{if } n = 0, \\ 
+    (C_n - iD_n)/2, & \text{if } n > 0, \\ 
+    (C_{-n} + iD_{-n})/2, & \text{if } n < 0, 
+\end{cases} \] 
+then we obtain the nice formula 
+\[ f(x) = \sum_{n=-\infty}^{\infty} A_n e^{inx}. \] 
+This leads us to a few questions.
+\begin{enumerate}
+    \item Is $u$ actually a solution to the PDE? This comes with some subproblems.
+    \begin{enumerate}
+        \item Is $u$ differentiable? 
+        \item Do the initial conditions hold? Can an arbitrary function 
+        $f$ which is continuous (or worse) be written in the form 
+        $f(x) = \sum_{n=-\infty}^\infty A_n e^{inx}$?
+    \end{enumerate}
+    \item How are $f$ and the coefficients $A_n$ related?
+\end{enumerate}
+
+\subsection{Basic Notation}
+We will get into answering the above questions later. First, we will make 
+some definitions.
+
+\begin{defn}{defn:1.1}
+    \begin{itemize}
+        \item We define $\T = \{z \in \C : |z| = 1\} = 
+        \{e^{i\theta} : \theta \in [-\pi, \pi]\}$ to be the unit circle in $\C$. 
+        \item We define $C(\T)$ to be the continuous $\C$-valued functions 
+        on $\T$. Notice that we can view $C(\T)$ as the space of
+        $2\pi$-periodic functions $\{f \in C[-\pi, \pi] : f(\pi) = f(-\pi)\}$.
+        \item We define $R(\T)$ to be the Riemann integrable functions 
+        over $\T$. Note that $R(\T) \supseteq C(\T)$. 
+    \end{itemize}
+\end{defn}
+
+The space $C(\T)$ has many nice norms. 
+\begin{itemize}
+    \item One such norm is 
+    \[ \|f\|_\infty = \sup_{\theta \in [-\pi, \pi]} |f(\theta)|. \] 
+    In fact, $(C(\T), \|\cdot\|_\infty)$ is complete, so every 
+    Cauchy sequence in $C(\T)$ converges to a limit in $C(\T)$ with respect to 
+    $\|\cdot\|_\infty$.
+    \item Another norm is given by 
+    \[ \|f\|_1 = \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta)|\dd\theta. \] 
+    Note that $C(\T)$ is not complete with respect to $\|\cdot\|_1$; 
+    in fact, it is not even complete for $R(\T)$, which hints to us that 
+    Riemann integrability may not be enough. 
+    \item For functions $f, g \in C(\T)$, one can define an inner product by 
+    \[ \langle f, g \rangle = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta) 
+    \overline{g(\theta)}\dd\theta. \] 
+    This gives us a norm 
+    \[ \|f\|_2 = \langle f, f \rangle^{1/2} = 
+    \left( \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta)|^2\dd\theta \right)^{\!1/2}. \] 
+\end{itemize} 
+Now, suppose that we write $f \in C(\T)$ in the form 
+\[ f(\theta) = \sum_{n=-\infty}^\infty A_n e^{in\theta}. \] 
+If this makes sense (converges pointwise), then we claim that 
+\[ A_n = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta) e^{-in\theta}\dd\theta 
+=: \hat f(n). \] 
+
