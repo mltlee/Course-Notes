@@ -370,9 +370,10 @@ Such objective functions or performance measures are said to be {\bf regular}.
 \end{prop}
 \begin{pf}
     Consider two schedules $S$ and $S'$ with $C_j^S \leq C_j^{S'}$ for all 
-    $j$. Note that if $C_j^S > d_j$, then $C_j^{S'} > d_j$. 
-    Hence, if $U_j^S = 1$ for a job $j$, then $U_j^{S'} = 1$ as well. It follows 
-    that $\sum U_j^S \leq \sum U_j^{S'}$, so $\sum U_j$ is regular. 
+    jobs $j \in J$. Note that if $C_j^S > d_j$ for a job $j$, then 
+    $C_j^{S'} > d_j$ as well. Hence, if $U_j^S = 1$ for a job $j$, then 
+    $U_j^{S'} = 1$ too. It follows that $\sum U_j^S \leq \sum U_j^{S'}$, 
+    so we conclude that $\sum U_j$ is regular. 
 \end{pf}
 
 \begin{exercise}{exercise:1.5}
@@ -380,7 +381,7 @@ Such objective functions or performance measures are said to be {\bf regular}.
 \end{exercise}
 
 Not all performance measures are regular. For instance, there are scheduling 
-problems where each job comes $j$ with a time window $[a_j, b_j]$ and the 
+problems where each job $j$ with a time window $[a_j, b_j]$ and the 
 job needs to processed in that particular time window. Let $X_j = 0$ if the 
 job is processed in that time window, and $X_j = 1$ otherwise. 
 Is the performance measure $\sum X_j$ regular?
