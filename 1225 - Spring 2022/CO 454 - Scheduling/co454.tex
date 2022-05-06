@@ -20,7 +20,14 @@
 \usepackage{xcolor}
 \usepackage{microtype}
 \usepackage{verbatim}
+\usepackage{listings}
 \usepackage[framemethod=TikZ]{mdframed}
+
+\lstset{
+  basicstyle=\normalfont\ttfamily,
+  columns=flexible,
+  mathescape
+}
 
 % some useful math commands
 \newcommand{\eps}{\varepsilon}
@@ -52,6 +59,7 @@
 \DeclareMathOperator{\QR}{QR}
 \DeclareMathOperator{\NR}{NR}
 \DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\OPT}{OPT}
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}

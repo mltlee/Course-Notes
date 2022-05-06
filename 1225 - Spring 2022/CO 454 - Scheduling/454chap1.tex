@@ -353,7 +353,7 @@ to the course.
     which minimizes the maximum lateness of a job; that is, we want to 
     minimize $L_{\max} := \max_{j\in J} L_j$. 
 
-    \item {\bf Weighted number of tardy jobs} ($\gamma = \sum w_j U_j$)
+    \item {\bf Weighted Number of Tardy Jobs} ($\gamma = \sum w_j U_j$)
     Find a schedule that minimizes the weighted number of tardy jobs.
     When all weights are $1$, we instead write $\sum U_j$ in the field. 
 
@@ -385,3 +385,154 @@ problems where each job $j$ with a time window $[a_j, b_j]$ and the
 job needs to processed in that particular time window. Let $X_j = 0$ if the 
 job is processed in that time window, and $X_j = 1$ otherwise. 
 Is the performance measure $\sum X_j$ regular?
+
+A {\bf nondelay schedule} is a feasible schedule in which no machine is kept 
+idle while a job or operation is waiting for processing. Notice that in 
+Example \ref{exmp:1.3}, $M_2$ had a forced delay at the beginning because 
+it had to wait for $M_1$ to finish processing $S_1$. We will discuss this 
+later on, but introducing deliberate idleness can yield a more optimal 
+schedule than a nondelay one. 
+
+\subsection{Dynamic Programming}\label{subsec:1.3}
+There are a few algorithmic paradigms that have specific uses.
+\begin{itemize}
+    \item {\bf Greed.} Process the input in some order, myopically making 
+    irrevocable decisions.
+    \item {\bf Divide-and-conquer.} Break up a problem into independent 
+    subproblems. Solve each subproblem. Combine solutions to the subproblems to 
+    form a solution to the original problem.
+    \item {\bf Dynamic programming.} Break up a problem into a series of 
+    overlapping subproblems; combine solutions to smaller subproblems to 
+    form a solution to larger subproblem.
+\end{itemize}
+We will focus on dynamic programming. This has many applications, such as 
+to AI, operations research, information theory, control theory, and 
+bioinformatics. 
+
+Here, we will give a scheduling problem which we can solve by way of 
+dynamic programming. Suppose that each job $j$ has release date $r_j$, 
+processing time $p_j$, and has weight $w_j > 0$. We will call 
+two jobs {\bf compatible} if they don't overlap. The goal is to find a 
+maximum weight subset of mutually compatible jobs. 
+
+One can consider the jobs in ascending order of the finish time $r_j + p_j$. 
+We add a job to the subset if it is compatible with the previously chosen jobs. 
+This greedy algorithm is correct if all weights are $1$, but it can fail 
+spectacularly otherwise. For instance, consider a scenario where there are 
+two jobs $1$ and $2$ with the same start time. Suppose that $p_2 > p_1$ and
+$w_2 > w_1$. Then the greedy algorithm would pick job $1$ as it has a 
+smaller finish time, even though picking job $2$ would yield a larger weight. 
+
+For convention, we will assume that the jobs are listed in ascending 
+order of finish time $r_j + p_j$. We define $\ell_j$ to be the largest index 
+$i < j$ such that job $i$ is compatible with job $j$. 
+
+We define $\OPT(j)$ to be the maximum weight for any subset of 
+mutually compatible jobs for the subproblem consisting of only the jobs 
+$1, 2, \dots, j$. Our goal now is to find $\OPT(n)$. 
+
+Here's something obvious we can say about $\OPT(j)$: either job $j$ is 
+selected by $\OPT(j)$, or it is not. 
+\begin{itemize}
+    \item When job $j$ is not selected by $\OPT(j)$, we easily notice that 
+    $\OPT(j)$ is the same as $\OPT(j-1)$.
+    \item When job $j$ is selected by $\OPT(j)$, we collect the profit 
+    $w_j$ and notice that all the jobs in $\{\ell_j+1, \dots, j-1\}$ 
+    are incompatible with $j$, so $\OPT(j)$ must include an optimal 
+    solution to the subproblem consisting of the remaining compatible jobs 
+    $\{1, \dots, \ell_j\}$. 
+\end{itemize} 
+Therefore, we can deduce that 
+\[ \OPT(j) = \max(w_j + \OPT(\ell_j), \OPT(j-1)). \] 
+Moreover, we notice that job $j$ belongs to the optimal solution if and only if 
+the first of the options above is at least as good as the second; in other 
+words, job $j$ belongs to an optimal solution on the set $\{1, 2, \dots, j\}$ 
+if and only if 
+\begin{equation}\label{eq:1.1}
+    w_j + \OPT(\ell_j) \geq \OPT(j-1). 
+\end{equation} 
+These facts form the first crucial component on which a dynamic 
+programming solution is based: a recurrence equation that expresses the 
+optimal solution (or its value) in terms of the optimal solutions to smaller 
+subproblems. We can now give a recursive algorithm to compute $\OPT(n)$, 
+assuming that we have already sorted the jobs by finishing time and 
+computed the values $\ell_j$ for each $j$. 
+
+\begin{lstlisting}
+    ComputeOpt$(j)$
+        if $j=0$ then:
+            return $0$
+        else: 
+            return $\max(w_j + \texttt{ComputeOpt}(\ell_j), 
+            \texttt{ComputeOpt}(j-1))$
+        endif
+\end{lstlisting}
+
+\newpage 
+Unfortunately, if we implemented this as written, it would take exponential
+time to run in the worst case, since the tree will widen very quickly 
+due to the recursive branching. However, we are not far from reaching a 
+polynomial time solution. 
+
+We employ a trick called {\bf memoization}. We could store the value of 
+\texttt{ComputeOpt} in a globally accessible place the first time we compute 
+it and simply use the precomputed value for all future recursive calls. 
+We make use of an array $M = (M_0, M_1, \dots, M_n)$ where each $M_j$ 
+will be initialized as empty, but will hold the value of \texttt{ComputeOpt}$(j)$
+as soon as it is determined. 
+
+\begin{lstlisting}
+    MComputeOpt$(j)$
+        if $j=0$ then:
+            return $0$
+        else if $M_j$ is not empty then:
+            return $M_j$
+        else:
+            $M_j = \max(w_j + \texttt{ComputeOpt}(\ell_j), 
+            \texttt{ComputeOpt}(j-1))$
+            return $M_j$
+        endif
+\end{lstlisting}
+
+Notice that the running time of \texttt{MComputeOpt}$(n)$ is $O(n)$, assuming 
+that the input intervals are sorted by their finishing times. Indeed, 
+every time the procedure invokes the recurrence and issues two recursive 
+calls to \texttt{MComputeOpt}, it fills in a new entry, and thus increases 
+the number of filled in entries by $1$. Since $M$ only has $n+1$ entries, 
+there are at most $O(n)$ calls to \texttt{MComputeOpt}.
+
+Now, we typically don't just want the value of an optimal solution; we 
+also want to know what the solution actually is. We could do this by 
+extending \texttt{MComputeOpt} to keep track of an optimal solution 
+along with the value by maintaining an additional array which holds an 
+optimal set of intervals. But naively enhancing the code to maintain these 
+solutions would blow up the running time by a factor of $O(n)$, as writing 
+down a set takes $O(n)$ time. 
+
+Instead, we can recover the optimal solution from values saved in the array 
+$M$ after the optimum value has been computed. From the observation we made 
+in equation $\eqref{eq:1.1}$, we can get a pretty simple procedure which 
+``traces back'' through the array $M$ to find the set of intervals in an 
+optimal solution. 
+
+\begin{lstlisting}
+    FindSolution$(j)$
+        if $j=0$ then:
+            Output nothing
+        else: 
+            if $w_j + M_{\ell_j} \geq M_{j-1}$ then: 
+                Output $j$ together with the result of FindSolution$(\ell_j)$
+            else: 
+                Output the result of FindSolution$(j-1)$
+            endif 
+        endif
+\end{lstlisting}
+
+We see that \texttt{FindSolution} calls itself recursively on strictly 
+smaller values, so it makes a total of $O(n)$ recursive calls. It spends 
+constant time for call, so \texttt{FindSolution} returns an optimal solution 
+in $O(n)$ time. 
+
+Note that the values $\ell_j$ can be computed by means of a binary search 
+which takes $O(\log n)$ time, so the total running time between 
+using \texttt{MComputeOpt} and \texttt{FindSolution} is $O(n\log n)$. 
