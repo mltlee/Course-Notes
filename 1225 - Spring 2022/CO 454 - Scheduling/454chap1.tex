@@ -511,7 +511,7 @@ down a set takes $O(n)$ time.
 
 Instead, we can recover the optimal solution from values saved in the array 
 $M$ after the optimum value has been computed. From the observation we made 
-in equation $\eqref{eq:1.1}$, we can get a pretty simple procedure which 
+for the inequality $\eqref{eq:1.1}$, we can get a pretty simple procedure which 
 ``traces back'' through the array $M$ to find the set of intervals in an 
 optimal solution. 
 
@@ -530,8 +530,8 @@ optimal solution.
 
 We see that \texttt{FindSolution} calls itself recursively on strictly 
 smaller values, so it makes a total of $O(n)$ recursive calls. It spends 
-constant time for call, so \texttt{FindSolution} returns an optimal solution 
-in $O(n)$ time. 
+constant time for each call, so as a result, \texttt{FindSolution} returns 
+an optimal solution in $O(n)$ time. 
 
 Note that the values $\ell_j$ can be computed by means of a binary search 
 which takes $O(\log n)$ time, so the total running time between 
