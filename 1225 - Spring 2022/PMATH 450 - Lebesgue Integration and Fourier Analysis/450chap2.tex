@@ -45,17 +45,8 @@ many deficiencies.
     R[a, b]$ and $f(x) = \lim_{n\to\infty} f_n(x)$ exists, then we would also 
     want $f$ to be Riemann integrable with 
     \[ \int_a^b f(x)\dd x = \lim_{n\to\infty} \int_a^b f_n(x)\dd x. \] 
-    Unfortunately, this result is false! One can take an enumeration 
-    $(x_k)_{k=1}^n$ of $\Q \cap [0, 1]$, and define a function $f_n 
-    : [0, 1] \to \R$ via 
-    \[ f_n(x) = \begin{cases} 
-        1 & \text{if } x \in \{(x_k)_{k=1}^n\}, \\
-        0 & \text{otherwise.}
-    \end{cases} \] 
-    The sequence $\{f_n\}_{n=1}^\infty$ converges pointwise to the 
-    indicator function $1_{\Q}$ on $[0, 1]$, which is not Riemann integrable. 
-    This can be seen by noting that both $\Q$ and $\R \setminus \Q$ are dense 
-    on $[0, 1]$, so there will always be rational and irrational numbers 
-    in any small interval. Then the upper and lower Riemann sums will always 
-    differ by $1$. 
+    Unfortunately, this result is false! For example, one can take 
+    $f_n(x) = n^2 x^n (1-x)$ for each $n \in \N$. Then $f_n \to 0$ 
+    pointwise on $[0, 1]$, but 
+    \[ \int_0^1 n^2 x^n (1-x)\dd x = 1. \] 
 \end{itemize}
