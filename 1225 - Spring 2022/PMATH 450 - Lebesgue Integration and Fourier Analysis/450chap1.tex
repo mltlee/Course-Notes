@@ -236,6 +236,87 @@ Now, let $f \in C(\T)$, and assume that it makes sense to write it as
 For example, the series could be uniformly convergent. What are the 
 coefficients $A_n$?
 
-We claim that 
-\[ A_n = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta) e^{-in\theta}\dd\theta 
-=: \hat f(n). \] 
+\begin{lemma}{lemma:1.2}
+    The set $\{e^{in\theta} : n \in \Z\}$ is an orthonormal system in 
+    $C(\T)$, with 
+    \[ \langle e^{in\theta}, e^{im\theta} \rangle = \frac{1}{2\pi} 
+    \int_{-\pi}^\pi e^{i(n-m)\theta}\dd\theta = \begin{cases} 
+        1, & \text{if } n=m, \\ 
+        0, & \text{if } n\neq m.
+    \end{cases} \] 
+\end{lemma}
+
+Therefore, we would expect that 
+\begin{align*}
+    \langle f, e^{in\theta} \rangle 
+    &= \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta)e^{-in\theta}\dd\theta \\ 
+    &= \frac{1}{2\pi} \lim_{N\to\infty} \int_{-\pi}^\pi \sum_{k=-N}^N
+    A_k e^{ik\theta - in\theta}\dd\theta \\ 
+    &= \lim_{N\to\infty} \sum_{k=-N}^N A_k \delta_{kn} = A_n. 
+\end{align*}
+Putting the main ideas into one line, we expect that 
+\[ A_n = \langle f, e^{in\theta} \rangle = \frac{1}{2\pi} \int_{-\pi}^\pi 
+f(\theta)e^{-in\theta}\dd\theta. \] 
+
+\begin{defn}{defn:1.3}
+    Let $f \in C(\T)$ (or $R(\T)$). The {\bf $n$-th Fourier coefficient} of 
+    $f$ is defined to be 
+    \[ \hat f(n) := \frac{1}{2\pi} f(\theta)e^{-in\theta}\dd\theta = 
+    \langle f, e^{in\theta} \rangle. \] 
+    The (complex) Fourier series of $f$ is then 
+    \[ f \sim \sum_{n\in\Z} \hat f(n)e^{in\theta}. \] 
+\end{defn}
+
+We now revisit the questions we asked earlier. In what sense does the 
+Fourier series for $f$ converge? For $f \in C(\T)$, do we have 
+\begin{equation}\label{eq:1.5}
+    f(\theta) = \lim_{N\to\infty} \sum_{n=-N}^N \hat f(n)e^{in\theta} 
+\end{equation}
+for all $\theta \in [-\pi, \pi]$, meaning that we have pointwise convergence? 
+Denoting $s_N(f)$ to be the $N$-th partial sum of the Fourier series, do we have 
+\begin{align}
+    \lim_{N\to\infty} \|f - s_N(f)\|_2 &= 0, \label{eq:1.6} \\ 
+    \lim_{N\to\infty} \|f - s_N(f)\|_1 &= 0, \label{eq:1.7} \\ 
+    \lim_{N\to\infty} \|f - s_N(f)\|_\infty &= 0, \label{eq:1.8}
+\end{align}
+for all $f \in C(\T)$? We will show later that $\eqref{eq:1.8}$ implies both 
+$\eqref{eq:1.5}$ and $\eqref{eq:1.6}$, and that $\eqref{eq:1.6}$ implies 
+$\eqref{eq:1.7}$. So it would be great for $\eqref{eq:1.8}$ to hold 
+(uniform convergence). Unfortunately, we have the following fact, which 
+we will prove later. 
+
+\begin{fact}{fact:1.4}
+    There exists $f \in C(\T)$ and $\theta_0 \in \T$ such that 
+    \[ \left| \lim_{N\to\infty} s_N(f)(\theta_0) \right| = \infty. \] 
+    That is, the Fourier series diverges.
+\end{fact} 
+
+So that isn't ideal, but the good news is that we have the following 
+result due to Carleson.
+
+\begin{fact}[Carleson]{fact:1.5}
+    For all $f \in C(\T)$, we have 
+    \[ \lim_{N\to\infty} s_n(f)(\theta) = f(\theta) \] 
+    for ``almost all'' $\theta \in [-\pi, \pi]$. 
+\end{fact} 
+
+Note that ``almost all'' is a measure theoretic notion which we will define 
+more rigorously later. We list one more useful fact. 
+
+\begin{fact}{fact:1.6}
+    The sequence $\{s_n(f)\}_{N=1}^\infty$ is Cauchy with respect to 
+    $\|\cdot\|_2$ on $C(\T)$, so 
+    \[ \lim_{N,M\to\infty} \|s_N(f) - s_M(f)\|_2 = 0. \] 
+    In fact, we have $\|f - s_n(f)\|_2 \to 0$ (mean square convergence). 
+\end{fact} 
+
+But wait! We know that $(C(\T), \|\cdot\|_2)$ is a normed vector space, 
+but it isn't complete! Using metric space theory from PMATH 351, there 
+exists a completion $L^2(\T) = \overline{C(\T)}$ of $C(\T)$ with respect to 
+$\|\cdot\|_2$, so $s_n(f)$ is actually converging in this larger space. 
+
+What exactly is $L^2(\T)$? It's the space of ``Lebesgue measurable functions''
+$f : [-\pi, \pi] \to \C$ that are ``square integrable'' with respect to 
+Lebesgue measure! Lebesgue measure is a generalization of Riemann's 
+integration theory. It is very useful in modern mathematics, particularly 
+in studying Fourier series and their convergence. 

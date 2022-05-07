@@ -1,0 +1,56 @@
+\section{Lebesgue Measure and Integration}\label{sec:2}
+
+\subsection{Riemann Integration}\label{subsec:2.1}
+Recall that in Riemann's theory of integration, we start with bounded function 
+$f : [a, b] \to \R$. We could then obtain $\int_a^b f(x)\dd x$ via 
+approximations of Riemann sums. More specifically, we take a partition 
+\[ P = \{a = t_0 < t_1 < \cdots < t_n = b\} \] 
+of the interval $[a, b]$. For each $1 \leq i \leq n$, we set 
+$m_i = \inf_{x \in [t_{i-1}, t_i)} f(x)$ and 
+$M_i = \sup_{x \in [t_{i-1}, t_i)} f(x)$. We define the {\bf lower 
+Riemann sum} by 
+\[ L(f, P) = \sum_{i=1}^n m_i(t_i - t_{i-1}), \] 
+and similarly, the {\bf upper Riemann sum} by 
+\[ U(f, P) = \sum_{i=1}^n M_i(t_i - t_{i-1}). \] 
+It is clear for all partitions $P$ of $[a, b]$ that $L(f, P) \leq U(f, P)$. 
+Moreover, suppose $P$ and $Q$ are both partitions of $[a, b]$, and set 
+$P \vee Q$ to be the partition consisting of all points in $P$ and $Q$. 
+Then recall that $P \vee Q$ refines both $P$ and $Q$, and we have 
+\[ L(f, P) \leq L(f, P \vee Q) \leq U(f, P \vee Q) \leq U(f, Q). \] 
+Interchanging $P$ and $Q$ above gives us $L(f, Q) \leq U(f, P)$, so we can 
+deduce that 
+\[ \sup_P L(f, P) \leq \inf_P U(f, P). \] 
+That is, any lower Riemann sum of a given partition will always be at most 
+the upper Riemann sum of any other partition. 
+
+\begin{defn}{defn:2.1}
+    We say that $f : [a, b] \to \R$ is {\bf Riemann integrable} if 
+    \[ \sup_P L(f, P) = \inf_P U(f, P). \] 
+    In this case, we write 
+    \[ \int_a^b f(x)\dd x = \sup_P L(f, P) = \inf_P U(f, P). \] 
+    We write $R[a, b]$ to denote the vector space of Riemann integrable 
+    functions $f : [a, b] \to \R$. 
+\end{defn}
+
+Riemann's theory is good for many purposes, such as for the Fundamental 
+Theorem of Calculus or analysis over smooth manifolds. But there are also 
+many deficiencies. 
+\begin{itemize}
+    \item It forces $f$ to be bounded and ``almost continuous''. 
+    \item It doesn't generalize to integration over sets that are not ``like''
+    $\R$ or $\R^N$. Sometimes, one wants to integrate functions over 
+    irregular sets, such as fractals. 
+    \item There are no good limit theorems! If we have a 
+    sequence of Riemann integrable functions $(f_n)_{n=1}^\infty \subseteq 
+    R[a, b]$ and $f(x) = \lim_{n\to\infty} f_n(x)$ exists, then we would also 
+    want $f$ to be Riemann integrable with 
+    \[ \int_a^b f(x)\dd x = \lim_{n\to\infty} \int_a^b f_n(x)\dd x. \] 
+    Unfortunately, this result is false! One can take an enumeration 
+    $(x_k)_{k=1}^n$ of $\Q$, and define 
+    \[ f_n(x) = \begin{cases} 
+        1 & \text{if } x \in \{(x_k)_{k=1}^n\}, \\
+        0 & \text{otherwise.}
+    \end{cases} \] 
+    The sequence $\{f_n\}_{n=1}^\infty$ converges pointwise to the 
+    indicator function $1_{\Q}$, which is not Riemann integrable. 
+\end{itemize}
