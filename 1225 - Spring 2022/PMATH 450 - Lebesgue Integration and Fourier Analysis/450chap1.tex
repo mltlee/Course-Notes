@@ -166,9 +166,10 @@ Then, the solutions for $u$ are $u_0(x, t) = T_0 X_0 = C_0$, and
 for all $n \in \N$. Using the Fourier method for PDEs, we notice that 
 $u_t = Ku_{xx}$ is linear, so we can take linear combinations such as 
 \[ u(x, t) = \sum_{n=0}^N u_n(x, t) \] 
-and still obtain a solution. However, finite sums can be insufficient 
-for the initial conditions to be satisfied too. Thus, we instead 
-consider formal infinite sums to get 
+and still obtain a solution. Moreover, by formally interchanging 
+sums and derivatives, the boundary conditions are also linear.
+However, finite sums can be insufficient for the initial conditions to be 
+satisfied too. Thus, we instead consider formal infinite sums to get 
 \[ u(x, t) = \sum_{n=0}^\infty u_n(x, t) = C_0 + \sum_{n=1}^\infty 
 \exp(-Kn^2t) (C_n\cos(nx) + D_n\sin(nx)). \] 
 Assuming that the initial condition holds, this means we can write 
@@ -185,14 +186,14 @@ then we obtain the nice formula
 \[ f(x) = \sum_{n=-\infty}^{\infty} A_n e^{inx}. \] 
 This leads us to a few questions.
 \begin{enumerate}
-    \item Is $u$ actually a solution to the PDE? This comes with some subproblems.
+    \item Are we justified in interchanging summation and differentiation?
+    \item Given some nice function $f$ from $[-\pi, \pi]$ to 
+    $\R$ or $\C$, is it possible to express $f$ as the infinite sum 
+    $f(x) = \sum_{n=-\infty}^\infty A_n e^{inx}$?
     \begin{enumerate}
-        \item Is $u$ differentiable? 
-        \item Do the initial conditions hold? Can an arbitrary function 
-        $f$ which is continuous (or worse) be written in the form 
-        $f(x) = \sum_{n=-\infty}^\infty A_n e^{inx}$?
+        \item If so, in what sense does the sum converge?
+        \item How are $f$ and the coefficients $A_n$ related?
     \end{enumerate}
-    \item How are $f$ and the coefficients $A_n$ related?
 \end{enumerate}
 
 \subsection{Basic Notation}
@@ -230,9 +231,11 @@ The space $C(\T)$ has many nice norms.
     \[ \|f\|_2 = \langle f, f \rangle^{1/2} = 
     \left( \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta)|^2\dd\theta \right)^{\!1/2}. \] 
 \end{itemize} 
-Now, suppose that we write $f \in C(\T)$ in the form 
+Now, let $f \in C(\T)$, and assume that it makes sense to write it as 
 \[ f(\theta) = \sum_{n=-\infty}^\infty A_n e^{in\theta}. \] 
-If this makes sense (converges pointwise), then we claim that 
+For example, the series could be uniformly convergent. What are the 
+coefficients $A_n$?
+
+We claim that 
 \[ A_n = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta) e^{-in\theta}\dd\theta 
 =: \hat f(n). \] 
-
