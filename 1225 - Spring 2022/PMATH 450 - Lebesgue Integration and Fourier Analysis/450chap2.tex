@@ -1,7 +1,7 @@
 \section{Lebesgue Measure and Integration}\label{sec:2}
 
 \subsection{Riemann Integration}\label{subsec:2.1}
-Recall that in Riemann's theory of integration, we start with bounded function 
+Recall that in Riemann's theory of integration, we start with a bounded function 
 $f : [a, b] \to \R$. We could then obtain $\int_a^b f(x)\dd x$ via 
 approximations of Riemann sums. More specifically, we take a partition 
 \[ P = \{a = t_0 < t_1 < \cdots < t_n = b\} \] 
@@ -46,11 +46,16 @@ many deficiencies.
     want $f$ to be Riemann integrable with 
     \[ \int_a^b f(x)\dd x = \lim_{n\to\infty} \int_a^b f_n(x)\dd x. \] 
     Unfortunately, this result is false! One can take an enumeration 
-    $(x_k)_{k=1}^n$ of $\Q$, and define 
+    $(x_k)_{k=1}^n$ of $\Q \cap [0, 1]$, and define a function $f_n 
+    : [0, 1] \to \R$ via 
     \[ f_n(x) = \begin{cases} 
         1 & \text{if } x \in \{(x_k)_{k=1}^n\}, \\
         0 & \text{otherwise.}
     \end{cases} \] 
     The sequence $\{f_n\}_{n=1}^\infty$ converges pointwise to the 
-    indicator function $1_{\Q}$, which is not Riemann integrable. 
+    indicator function $1_{\Q}$ on $[0, 1]$, which is not Riemann integrable. 
+    This can be seen by noting that both $\Q$ and $\R \setminus \Q$ are dense 
+    on $[0, 1]$, so there will always be rational and irrational numbers 
+    in any small interval. Then the upper and lower Riemann sums will always 
+    differ by $1$. 
 \end{itemize}
