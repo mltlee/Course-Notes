@@ -35,18 +35,127 @@ the upper Riemann sum of any other partition.
 Riemann's theory is good for many purposes, such as for the Fundamental 
 Theorem of Calculus or analysis over smooth manifolds. But there are also 
 many deficiencies. 
-\begin{itemize}
-    \item It forces $f$ to be bounded and ``almost continuous''. 
-    \item It doesn't generalize to integration over sets that are not ``like''
-    $\R$ or $\R^N$. Sometimes, one wants to integrate functions over 
-    irregular sets, such as fractals. 
-    \item There are no good limit theorems! If we have a 
-    sequence of Riemann integrable functions $(f_n)_{n=1}^\infty \subseteq 
-    R[a, b]$ and $f(x) = \lim_{n\to\infty} f_n(x)$ exists, then we would also 
-    want $f$ to be Riemann integrable with 
-    \[ \int_a^b f(x)\dd x = \lim_{n\to\infty} \int_a^b f_n(x)\dd x. \] 
-    Unfortunately, this result is false! For example, one can take 
-    $f_n(x) = n^2 x^n (1-x)$ for each $n \in \N$. Then $f_n \to 0$ 
-    pointwise on $[0, 1]$, but 
-    \[ \int_0^1 n^2 x^n (1-x)\dd x = 1. \] 
-\end{itemize}
+
+For one, it forces $f$ to be bounded and ``almost continuous''. It also doesn't 
+generalize to integration over sets that are not ``like'' $\R$ or $\R^N$. 
+Sometimes, one wants to integrate functions over irregular sets, such as fractals. 
+
+Worst of all, there are no good limit theorems! Ideally, we want some kind of 
+``monotone convergence theorem'' which says that if we have a sequence of 
+Riemann integrable functions $(f_n)_{n=1}^\infty \subseteq R[a, b]$ satisfying 
+$f_1 \leq f_2 \leq \cdots$ and $f(x) = 
+\lim_{n\to\infty} f_n(x)$ exists, then $f$ is also Riemann integrable with 
+\[ \int_a^b f(x)\dd x = \lim_{n\to\infty} \int_a^b f_n(x)\dd x. \] 
+Unfortunately, this result is false! Note that the pointwise limit of Riemann 
+integrable functions might not even be Riemann integrable. Let 
+$\{r_n\}_{n=1}^\infty$ be an enumeration of $\Q \cap [0, 1]$, and for each 
+$n \in \N$, define the function $f_n : [0, 1] \to \R$ by 
+\[ f_n(x) = \begin{cases}
+    1, & \text{if } x \in \{r_1, \dots, r_n\}, \\ 
+    0, & \text{otherwise.} 
+\end{cases} \] 
+Then for all $n \in \N$, we have $f_n \in R[0, 1]$ with 
+\[ \int_0^1 f_n(x)\dd x = 0. \] 
+Moreover, we see that $(f_n)_{n=1}^\infty$ converges pointwise to 
+\[ f(x) = \begin{cases} 
+    1, & \text{if } x \in \Q \cap [0, 1], \\ 
+    0, & \text{otherwise,} 
+\end{cases} \] 
+the indicator function of $\Q$ over $[0, 1]$. Notice that this is a nice 
+monotone limit since $f_1 \leq f_2 \leq \cdots$. Even still, $f \notin R[0, 1]$
+since the rationals and irrationals are dense in $\R$, so given any 
+partition $P$ of $[0, 1]$, the upper Riemann sum is $U(f, P) = 1$ and 
+the lower Riemann sum is $L(f, P) = 0$. 
+
+\subsection{Lebesgue Outer Measure}\label{subsec:2.2}
+In our previous section, we saw that Riemann's theory of integration had 
+some flaws. Lebesgue had the idea that we could do Riemann sums over 
+partitions of the $y$-axis, instead of partitions over the $x$-axis. It turns 
+out that this idea extends allows many more functions to be integrable. 
+
+Take a function $f : [a, b] \to \R$, and suppose that we have a partition 
+$P = \{y_0 < y_1 < \cdots < y_n\}$ of the $y$-axis. Then we will take sums of 
+terms of the form 
+\[ y_i \cdot \ell(\{x \in [a, b] : f(x) \in (y_{i-1}, y_i]\}), \] 
+where $\ell(E)$ denotes the ``length'' of $E$. Notice that the set above 
+is the preimage of the half-open interval $(y_{i-1}, y_i]$, and so we have an 
+approximation 
+\[ \int_a^b f(x)\dd x \approx \sum_{i=1}^n y_i \cdot \ell(f^{-1}(y_{i-1}, y_i]). \] 
+Now, consider the case where $f$ is the indicator function of $\Q$ over 
+$[0, 1]$ as we discussed above. Then we would have 
+\[ \int_0^1 f(x)\dd x \approx 1 \cdot \ell(\Q \cap [0, 1]) + 0 \cdot 
+\ell(\Q^c \cap [0, 1]). \] 
+We would expect this to equal $0$ if we want our ``monotone convergence theorem''
+to hold, and also because $\Q$ is a countable set. As such, a desired property 
+of our ``length'' function would be to have $\ell(\Q \cap [0, 1]) = 0$. 
+
+We have now packaged the problem into generalizing the notion of length 
+from nice sets (such as unions of intervals) to more complicated sets 
+of the form $f^{-1}(y_{i-1}, y_i]$. This turns out to be a difficult task 
+even for a continuous function $f$. We wish to have a function 
+\[ m : {\cal P}(\R) \to [0, \infty] \] 
+satisfying the following properties: 
+\begin{enumerate}[(1)]
+    \item For any interval $I$ from $a$ to $b$ (which could be open, closed, 
+    or half-open), we have 
+    \[ m(I) = b-a. \] 
+    \item {\bf Translation invariance.} For all $x \in \R$, we have 
+    \[ m(E + x) = m(E), \] 
+    where $E + x = \{y + x : y \in E\}$. 
+    \item {\bf Countable additivity.} If $E_n \subseteq \R$ are disjoint 
+    for all $n \in \N$ and $E = \bigsqcup_{n=1}^\infty E_n$, then 
+    \[ m(E) = \sum_{n=1}^\infty m(E_n). \] 
+\end{enumerate}
+Bad news: there is no function $m : {\cal P}(\R) \to [0, \infty]$ 
+satisfying all of (1) to (3)! 
+
+To see this, we will assume there is such a function $m$ satisfying all $3$ 
+properties, and find a subset $E \subseteq [0, 1)$ such that $m(E)$ is not 
+well-defined. Define an equivalence relation on $[0, 1)$ by $x \sim y$ 
+if and only if $x - y \in \Q$. We leave it as an exercise to verify that 
+this is indeed an equivalence relation. As usual, let $[x]$ be the 
+equivalence class of each $x \in [0, 1)$. 
+
+Choose a set $E$ of representatives of all the equivalence classes $[x]$ for 
+$x \in [0, 1)$. Note that this is possible by the Axiom of Choice, and we have 
+$E \subseteq [0, 1)$ with $|E \cap [x]| = 1$ for all $x \in [0, 1)$. 
+
+We claim that $m(E)$ is not well-defined. Let $\{r_n\}_{n=1}^\infty$ be 
+an enumeration of $\Q \cap [0, 1)$, and for each $n \in \N$, set 
+\begin{align*}
+    E_n = E + r_n \text{ (mod $1$)} = ((E + r_n) \cap [0, 1)) \sqcup 
+    ((E + r_n - 1) \cap [0, 1)). 
+\end{align*}
+Since $m$ satisfies properties (1) to (3), we have that 
+\begin{align*}
+    m(E_n) &= m((E + r_n) \cap [0, 1)) + m((E + r_n - 1) \cap [0, 1)) & 
+    \text{by (3)} \\ 
+    &= m((E + r_n) \cap [0, 1)) + m((E + r_n) \cap [0, 1)) & \text{by (2)} \\ 
+    &= m(E + r_n) & \text{by (3)} \\ 
+    &= m(E) & \text{by (2)}
+\end{align*}
+for all $n \in \N$. We leave it as an exercise to check that $[0, 1) = 
+\bigsqcup_{n=1}^\infty E_n$. It follows that 
+\[ 1 = m([0, 1)) = \sum_{m=1}^\infty m(E_n) = \sum_{n=1}^\infty m(E) \] 
+where the second equality comes from (3), so there is no admissible value for 
+$m(E)$. 
+
+In light of this result, we might be asking too much for $m$ 
+to satisfy all $3$ properties. What can we do instead? 
+\begin{enumerate}[(a)]
+    \item We can restrict the domain of the function $m$ to a 
+    more ``tractable'' family of subsets of $\R$. Naturally, we would want to 
+    allow all intervals, as well as open and closed sets, to be in this family.
+    \item One other approach is to take a function $m$ that works for all 
+    subsets $E \subseteq \R$ and agrees with our intuitive notion of length 
+    for intervals, but in doing so, sacrificing some of the desirable properties. 
+\end{enumerate}
+
+The standard approach is the first one, and we shall adopt it. We now 
+introduce a candidate function that could be used for $m$. 
+
+\begin{defn}{defn:2.2}
+    The {\bf Lebesgue outer measure} of a subset $E \subseteq \R$ is defined to be 
+    \[ m^*(E) = \inf\left\{ \sum_{n=1}^\infty \ell(I_n) : \{I_n\}_{n=1}^\infty 
+    \text{ a cover of $E$ by intervals}\right\}. \] 
+\end{defn}
