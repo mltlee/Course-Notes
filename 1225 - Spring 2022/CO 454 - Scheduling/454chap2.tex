@@ -1,0 +1,229 @@
+\section{Single Machine Models}\label{sec:2}
+Single machine models are very important, as they are relatively simple 
+and can be viewed as a special case of all other environments. We 
+will analyze various single machine models in detail, such as 
+the total weighted completion time, as well as some due date related 
+objectives in the assignments. One observation that we can make for 
+single machine models is that when a problem is non-preemptive and the 
+objective is regular, finding an optimal schedule boils down to finding 
+a sequence of jobs.
+
+\subsection{Total Weighted Completion Time}\label{subsec:2.1}
+Before we begin, we should say something about interchange arguments, which 
+are commonplace in scheduling. Suppose we have two different sequences 
+for the same set of jobs, say 
+\begin{enumerate}
+    \item a reference sequence $R = r_1, r_2, \dots, r_n$, and 
+    \item an adversary sequence $A = a_1, a_2, \dots, a_n$,
+\end{enumerate}
+satisfying $\{r_1, \dots, r_n\} = \{a_1, \dots, a_n\}$ but $R \neq A$. 
+
+\begin{prop}{prop:2.1}
+    There exists an adjacent pair of items in $A$, say $a_i$ and $a_{i+1}$, 
+    such that $a_{i+1}$ precedes $a_i$ in $R$. 
+\end{prop}
+\begin{pf}
+    Assume no such pair exists, so every adjacent pair $a_i$ and $a_{i+1}$
+    of items in $A$ is such that $a_i$ precedes $a_{i+1}$ in $R$ as well. 
+    Then the only way for $R$ to have exactly $n$ jobs with 
+    $a_i$ preceding $a_{i+1}$ for all $i \in \{1, \dots, n-1\}$ is 
+    for $R$ to be the sequence $a_1, a_2, \dots, a_n$. This is a contradiction 
+    with our assumption that $R \neq A$. 
+\end{pf}
+
+We can now give an example of an interchange argument. A so-called {\bf adjacent 
+pairwise interchange} uses Proposition \ref{prop:2.1} to obtain 
+two adjacent items which can be swapped. 
+
+Consider the problem $(1\;\|\;\sum C_j)$, where there are $n$ jobs with 
+processing times $p_1, \dots, p_n$. The {\bf Shortest Processing Time 
+first (SPT) rule} says to put the shortest processing times first.
+
+\begin{theo}{theo:2.2}
+    The SPT rule is optimal for $(1\;\|\;\sum C_j)$. 
+\end{theo}
+\begin{pf}
+    Assume for simplicity that the processing times $p_1, \dots, p_n$ are 
+    distinct. Suppose there is a schedule $S$ that does not satisfy the 
+    SPT rule which is optimal. There exist two adjacent jobs, say $k$ followed 
+    by $\ell$, such that $p_k > p_\ell$, and using adjacent pairwise 
+    interchange, we can obtain a new schedule $S'$ by swapping $k$ and $\ell$. 
+
+    Note that all completion times are the same in $S$ and $S'$ except for 
+    $C_k$ and $C_\ell$. Suppose that $t$ is the starting time of job $k$ 
+    in $S$. Then in $S$, we have $C_k^S = t + p_k$ and $C_\ell^S = t + p_k + 
+    p_\ell$. On the other hand, in $S'$, we have $C_k^{S'} = t + p_k + p_\ell$ 
+    and $C_\ell^{S'} = t + p_\ell$. We see that $C_\ell^S = C_k^{S'}$, 
+    so subtracting the objectives yields 
+    \[ \sum C_j^S - \sum C_j^{S'} = C_k^S - C_\ell^{S'} = p_k - p_\ell > 0. \] 
+    This means that $S'$ has a better objective value than $S$, contradicting 
+    the optimality of $S$. 
+\end{pf}
+
+More generally, we can consider the total weighted completion time 
+$(1\;\|\;\sum w_j C_j)$. This problem gives rise to the {\bf Weighted 
+Shortest Processing Time first (WSPT) rule}, and according to this rule, 
+the jobs are placed in decreasing order of $w_j/p_j$. 
+
+\begin{theo}{theo:2.3}
+    The WSPT rule is optimal for $(1\;\|\;\sum w_j C_j)$. 
+\end{theo}
+\begin{pf}
+    Again, we apply an interchange argument. Suppose that there is a optimal 
+    schedule $S$ that is not WSPT. Then there must exist two adjacent 
+    jobs, say job $k$ followed by job $\ell$, such that 
+    \[ \frac{w_k}{p_k} < \frac{w_\ell}{p_\ell}. \] 
+    Using adjacent pairwise interchange, obtain a new schedule $S'$ by 
+    swapping the jobs $k$ and $\ell$. As before, all completion times 
+    are the same in $S$ and $S'$ except for $C_k$ and $C_\ell$. 
+    Suppose that job $k$ starts processing at time $t$ in $S$. Under $S$, 
+    the total weighted completion time for jobs $k$ and $\ell$ is 
+    \[ w_k(t + p_k) + w_\ell(t + p_k + p_\ell), \] 
+    whereas under $S'$, it is equal to 
+    \[ w_k(t + p_\ell + p_k) + w_\ell(t + p_\ell). \] 
+    Then subtracting the objective of $S$ from the objective of $S'$ yields 
+    the quantity 
+    \[ w_\ell p_k - w_k p_\ell, \] 
+    which is positive due to the assumption that $w_k/p_k < w_\ell/p_\ell$. 
+    This contradicts the optimality of $S$. 
+\end{pf}
+
+The computation time needed to order the jobs according to the WSPT rule 
+is the time required to sort the jobs according to the ratio of the 
+two parameters. This takes $O(n\log n)$ time since this is the time it takes
+to perform a simple sort. Since the SPT rule is a special case of the WSPT 
+rule with all weights equal to $1$, it also requires $O(n\log n)$ time. 
+
+How is the minimization of the total weighted completion time affected by
+precedence constraints?  Consider the simplest form of precedence constraints
+which take the form of parallel chains. This problem can still be solved by a 
+relatively simple and very efficient (polynomial time) algorithm. This 
+algorithm is based on some fundamental properties of scheduling with 
+precedence constraints.
+
+Consider two chains of jobs. The first chain consists of jobs $1, \dots, k$, 
+and the second chain consists of jobs $k+1, \dots, n$. The precedence 
+constraints are then $1 \to 2 \to \cdots \to k$ and $k+1 \to k+2 \to 
+\cdots \to n$. 
+
+The next lemma is based on the assumption that if the scheduler decides to
+start processing jobs of one chain, then they have to complete the entire 
+chain before they are allowed to work on jobs of the other chain.
+Which of the two chains should be processed first? 
+
+\begin{lemma}{lemma:2.4}
+    If we have 
+    \[ \frac{\sum_{j=1}^k w_j}{\sum_{j=1}^k p_j} > 
+    \frac{\sum_{j=k+1}^n w_j}{\sum_{j=k+1}^n p_j}, \] 
+    then it is optimal to process the chain of jobs $1, \dots, k$ before 
+    the chain of jobs $k+1, \dots, n$. 
+\end{lemma}
+\begin{pf}
+    We proceed by contradiction. Under the sequence $1, \dots, k, k+1, 
+    \dots, n$, the total completion time is 
+    \[ w_1p_1 + \cdots + w_k \sum_{j=1}^k p_j + w_{k+1} \sum_{j=1}^{k+1} 
+    p_j + \cdots + w_n \sum_{j=1}^n p_j, \] 
+    while under the sequence $k+1, \dots, n, 1, \dots, k$, it is 
+    \[ w_{k+1}p_{k+1} + \cdots + w_n \sum_{j=k+1}^n p_j + w_1 
+    \left( \sum_{j=k+1}^n p_j + p_1 \right) + \cdots + w_k \sum_{j=1}^n p_j. \] 
+    Using the inequality 
+    \[ \frac{\sum_{j=1}^k w_j}{\sum_{j=1}^k p_j} > 
+    \frac{\sum_{j=k+1}^n w_j}{\sum_{j=k+1}^n p_j}, \] 
+    the total weighted completion time of the first sequence 
+    is less than that of the second. The result follows. 
+\end{pf}
+
+An interchange between two adjacent chains of jobs is usually referred to as
+an {\bf adjacent sequence interchange}. Such an interchange is a generalization of
+an {\bf adjacent pairwise interchange}.
+
+\begin{defn}{defn:2.5}
+    Let $1 \to 2 \to \cdots \to k$ be a chain. Let $\ell^*$ satisfy 
+    \[ \frac{\sum_{j=1}^{\ell^*} w_j}{\sum_{j=1}^{\ell^*} p_j} 
+    = \max_{\ell\in\{1, \dots, k\}} \left( \frac{\sum_{j=1}^\ell w_j}
+    {\sum_{j=1}^\ell p_j} \right). \] 
+    The ratio on the left-hand side is called the {\bf $\rho$-factor} 
+    of the chain $1, \dots, k$ and is denoted by $\rho(1, \dots, k)$. 
+    The job $\ell^*$ is referred to as the {\bf determining job} of the chain.
+\end{defn}
+
+More generally, we now assume that the scheduler does not have to fully 
+complete chains immediately; they can process some jobs of one chain 
+(while adhering to the precedence constraints), switch over to another 
+chain, and revisit the original chain later. If the total weighted 
+completion time is the objective function, then the following result holds. 
+
+\begin{lemma}{lemma:2.6}
+    For a chain of jobs $1 \to 2 \to \cdots \to k$, suppose $\ell^*$ is 
+    a determining job. Then there exists an optimal schedule that processes 
+    the jobs $1, \dots, \ell^*$ consecutively, without processing any jobs 
+    of any other chains. 
+\end{lemma}
+\begin{pf}
+    We proceed by contradiction. Suppose that under the optimal sequence, 
+    the processing of the subsequence $1, \dots, \ell^*$ is interrupted by a 
+    job, say $v$, from another chain. That is, the optimal sequence 
+    contains the subsequence $1, \dots, u, v, u+1, \dots, \ell^*$; call 
+    this subsequence $S$. It suffices to show that either with subsequence 
+    $v, u+1, \dots, \ell^*$ which we denote $S'$, or subsequence 
+    $1, \dots, u, v$, which we denote $S''$, the total weighted completion 
+    time is less than with subsequence $S$. If it is not less with the
+    first subsequence, then it has to be less with the second and vice versa.
+    From Lemma~\ref{lemma:2.4}, it follows that if the total weighted 
+    completion time with $S$ is less than with $S'$, then
+    \[ \frac{w_v}{p_v} < \frac{w_1 + w_2 + \cdots + w_u}{p_1 + p_2 + \cdots 
+    + p_u}. \] 
+    Lemma~\ref{lemma:2.4} also tells us that if the total weighted completion 
+    time with $S$ is less than with $S''$, then
+    \[ \frac{w_v}{p_v} > \frac{w_{u+1} + w_{u+2} + \cdots + w_{\ell^*}}
+    {p_{u+1} + p_{u+2} + \cdots + p_{\ell^*}}. \] 
+    If job $\ell^*$ is the determining job for the chain $1, \dots, k$, then 
+    \[ \frac{w_{u+1} + w_{u+2} + \cdots + w_{\ell^*}}
+    {p_{u+1} + p_{u+2} + \cdots + p_{\ell^*}} > \frac{w_1 + w_2 + \cdots + w_u}
+    {p_1 + p_2 + \cdots + p_u}. \] 
+    If $S$ is better than $S''$, this means that 
+    \[ \frac{w_v}{p_v} > \frac{w_{u+1} + w_{u+2} + \cdots + w_{\ell^*}}
+    {p_{u+1} + p_{u+2} + \cdots + p_{\ell^*}} > \frac{w_1 + w_2 + \cdots + w_u}
+    {p_1 + p_2 + \cdots + p_u}. \] 
+    Therefore, $S'$ is better than $S$. The same argument applies if the 
+    interruption of the chain is caused by more than one job. 
+\end{pf}
+
+Intuitively, Lemma~\ref{lemma:2.6} makes sense. The condition of the lemma 
+implies that the ratios of the weight divided by the processing time of the 
+jobs in the string $1, \dots, \ell^*$ must be increasing in some sense. 
+If one had already decided to start processing a string of jobs, it makes 
+sense to continue processing the string until job $\ell^*$ is completed 
+without processing any other job in between. Our two lemmas contain the 
+basis for a simple algorithm that minimizes the total weighted completion 
+time when the precedence constraints take the form of chains.
+
+\begin{algo}[Total Weighted Completion Time and Chains]{algo:2.7}
+    Whenever the machine is freed, select among the remaining chains the one 
+    with the highest $\rho$-factor. Process this chain without interruption 
+    up to and including the job that determines its $\rho$-factor.
+\end{algo}
+
+We illustrate the use of this algorithm with an example. 
+
+\begin{exmp}{exmp:2.8}
+    Consider the two chains $1 \to 2 \to 3 \to 4$ and $5 \to 6 \to 7$. 
+    The weights and processing times of the jobs are as follows. 
+    \begin{align*}
+        \begin{array}{c|ccccccc}
+        j   & 1 & 2  & 3  & 4 & 5 & 6  & 7  \\ \hline
+        w_j & 6 & 18 & 12 & 8 & 8 & 17 & 18 \\
+        p_j & 3 & 6  & 6  & 5 & 4 & 8  & 10
+        \end{array}
+    \end{align*}
+    The $\rho$-factor of the first chain is $(6+18)/(3+6)$ and is determined 
+    by job $2$. The $\rho$-factor of the second chain is $(8+17)/(4+8)$ and 
+    is determined by job $6$. Since $24/9$ is larger than $25/12$, jobs 
+    $1$ and $2$ are processed first. The $\rho$-factor of the remaining 
+    part of the first chain is $12/6$ and is determined by job $3$. This is 
+    less than $25/12$, so we process jobs $5$ and $6$ next. The $\rho$-factor 
+    of the remaining part of the second chain is $18/10$ and is determined by 
+    job $7$. Hence, job $3$ follows job $6$. The $w_j/p_j$ ratio of job $7$ 
+    is higher than that of job $4$, so job $7$ follows job $3$ and job $4$ 
+    goes last. 
+\end{exmp}
