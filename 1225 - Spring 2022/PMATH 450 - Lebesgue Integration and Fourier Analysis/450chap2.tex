@@ -159,3 +159,121 @@ introduce a candidate function that could be used for $m$.
     \[ m^*(E) = \inf\left\{ \sum_{n=1}^\infty \ell(I_n) : \{I_n\}_{n=1}^\infty 
     \text{ a cover of $E$ by intervals}\right\}. \] 
 \end{defn}
+
+We look at some properties of the Lebesgue outer measure. 
+
+\begin{prop}{prop:2.3}
+    \begin{enumerate}[(a)]
+        \item We have $m^*(\varnothing) = 0$ and $m^*(E) \geq 0$ 
+        for all $E \subseteq \R$. 
+        \item {\bf Translation invariance.} For all $E \subseteq \R$ and 
+        $x \in \R$, we have $m^*(E+x) = m^*(E)$. 
+        \item {\bf Monotonicity.} If $E \subseteq F \subseteq \R$, then 
+        $m^*(E) \leq m^*(F)$. 
+        \item {\bf Countable subadditivity.} Suppose that $E = 
+        \bigcup_{n=1}^\infty E_n$ where the subsets $E_n \subseteq \R$ are not 
+        necessarily disjoint. Then 
+        \[ m^*(E) \leq \sum_{n=1}^\infty m^*(E_n). \] 
+    \end{enumerate}
+\end{prop}
+\begin{pf}~
+    \begin{enumerate}[(a)]
+        \item This is clear from definition. 
+        \item Coverings of $E$ by countable families of intervals are in 
+        bijection with those of $E + x$. In particular, we have 
+        $E \subseteq \bigcup_{n=1}^\infty I_n$ if and only if 
+        $E + x \subseteq \bigcup_{n=1}^\infty (I_n + x)$, with 
+        \[ \sum_{n=1}^\infty \ell(I_n) = \sum_{n=1}^\infty \ell(I_n + x). \] 
+        Taking infima, we obtain $m^*(E) = m^*(E + x)$. 
+        \item Any covering $\bigcup_{n=1}^\infty I_n$ of $F$ also gives a 
+        covering of $E$. On the other hand, coverings of $E$ are not 
+        necessarily coverings of $F$. Then the infimum in $m^*(E)$ is 
+        taken over a larger collection than with $m^*(F)$, so we get 
+        $m^*(E) \leq m^*(F)$. 
+        \item Without loss of generality, suppose that $\sum_{n=1}^\infty 
+        m^*(E_n) < \infty$. Let $\eps > 0$. Since $m^*(E_n) < \infty$ 
+        for all $n \in \N$, there exists a covering $\bigcup_{k=1}^\infty 
+        I_{k,n}$ of $E_n$ such that 
+        \[ \sum_{k=1}^\infty \ell(I_{k,n}) < m^*(E_n) + \frac{\eps}{2^n}. \] 
+        Then we have $E = \bigcup_{n=1}^\infty E_n \subseteq 
+        \bigcup_{n,k=1}^\infty I_{k,n}$, so it follows that 
+        \begin{align*}
+            m^*(E) &\leq \sum_{n=1}^\infty \sum_{k=1}^\infty \ell(I_{k,n}) \\ 
+            &\leq \sum_{n=1}^\infty \left( m^*(E_n) + \frac{\eps}{2^n} \right) \\
+            &= \sum_{n=1}^\infty m^*(E_n) + \eps. 
+        \end{align*}
+        Since $\eps > 0$ was arbitrary, the result follows. \qedhere 
+    \end{enumerate}
+\end{pf}
+
+The following result tells us that we can compute $m^*(E)$ using ``small''
+open intervals $I_n$ in our covers. 
+
+\begin{prop}{prop:2.4}
+    Let $E \subseteq \R$ and $\delta > 0$. Then 
+    \[ m^*(E) = \inf\left\{ \sum_{n=1}^\infty \ell(I_n) : 
+    \{I_n\}_{n=1}^\infty \text{ a cover of open intervals such that }
+    \ell(I_n) < \delta \right\}. \] 
+\end{prop}
+\begin{pf}
+    It is clear that $m^*(E)$ is at most the right hand side, because 
+    the collection we are taking the infimum over in the definition of 
+    $m^*$ is more general than the one in this proposition, which forces 
+    the intervals to be open and have length less than $\delta$. 
+
+    So, we turn to proving the other direction. Without loss of generality, 
+    we may assume that $m^*(E) < \infty$. Let $\eps > 0$. We can 
+    find intervals $\{J_n\}_{n=1}^\infty$ such that $E \subseteq 
+    \bigcup_{n=1}^\infty J_n$ and 
+    \[ \sum_{n=1}^\infty \ell(J_n) \leq m^*(E) + \eps. \] 
+    Without loss of generality, we can also partition these intervals 
+    $\{J_n\}_{n=1}^\infty$ into subintervals so that $\ell(J_n) < \delta$
+    for all $n \in \N$. Now, choose open intervals $I_n \supseteq J_n$ 
+    such that $\ell(I_n) \leq \max\{\delta, \ell(J_n) + \eps/2^n\}$. 
+    We see that $E \subseteq \bigcup_{n=1}^\infty I_n$ with 
+    \[ \sum_{n=1}^\infty \ell(I_n) \leq \sum_{n=1}^\infty 
+    \left( \ell(J_n) + \frac{\eps}{2^n} \right) \leq (m^*(E) + \eps) + \eps 
+    = m^*(E) + 2\eps. \] 
+    Taking infima, we see that $m^*(E)$ is at least the right hand side 
+    and we are done. 
+\end{pf}
+
+Next, we show that Lebesgue outer measure really generalizes length. 
+
+\begin{theo}{theo:2.5}
+    Let $I$ be an interval with left endpoint $a$ and right endpoint $b$, where 
+    $a < b \in \R$. Then 
+    \[ m^*(I) = \ell(I) = b-a. \]  
+\end{theo}
+\begin{pf}
+    We first prove this for the case where $I = [a, b]$ is a compact interval. 
+    Let $\eps > 0$. By taking $I_1 = (a - \eps/2, b + \eps/2)$
+    and $I_2 = \varnothing$ for $n \geq 2$, the collection $\{I_n\}_{n=1}^\infty$ 
+    is a cover of $[a, b]$ by intervals, which implies that 
+    \[ m^*(I) \leq \sum_{n=1}^\infty \ell(I_n) = \ell(I_1) = (b-a) + \eps. \] 
+    Since $\eps > 0$ is arbitrary, we have $m^*(I) \leq b-a$. 
+
+    We now turn to showing that $m^*(I) \geq b-a$. Let $\eps > 0$. By 
+    Proposition~\ref{prop:2.4}, we can find an open cover $\bigcup_{n=1}^\infty 
+    (a_n, b_n)$ of $I$ such that 
+    \[ \sum_{n=1}^\infty (b_n - a_n) \leq m^*(I) + \eps. \] 
+    But $I$ is compact, so we can find a finite subcover; that is, 
+    there exists $N \in \N$ such that $I \subseteq \bigcup_{n=1}^N (a_n, b_n)$. 
+    Without loss of generality, we may toss away any intervals $I_n$ such that 
+    $I_n \cap I = \varnothing$, and reorder the $I_n$'s if necessary to get 
+    $a_1 < a_2 < \cdots < a_N$. Since $I$ is an interval, it is connected. 
+    Thus, the intervals $(a_n, b_n)$ must overlap, and we obtain 
+    \[ \ell(I) = b-a \leq \sum_{n=1}^N (b_n - a_n) \leq 
+    \sum_{n=1}^\infty (b_n - a_n) \leq m^*(I) + \eps. \] 
+    But $\eps > 0$ was arbitrary, so we have $m^*(I) \geq \ell(I) = b-a$, as 
+    desired. 
+
+    We now prove the result in the case that $I = (a, b]$. For all 
+    $0 < \eps < b-a$, we have that $[a + \eps, b] \subseteq (a, b] \subseteq 
+    [a, b]$. By the monotonicity of Lebesgue outer measure 
+    (Proposition~\ref{prop:2.3}), we see that 
+    \[ (b-a) - \eps = m^*[a + \eps, b] \leq m^*(a, b] \leq m^*[a, b] = b-a. \] 
+    Since $\eps$ is arbitrary (subject to $0 < \eps < b-a$), we deduce that 
+    $m^*(a, b] = b-a$. The cases where $I = [a, b)$ and $I = (a, b)$ are 
+    proved similarly. 
+\end{pf}
