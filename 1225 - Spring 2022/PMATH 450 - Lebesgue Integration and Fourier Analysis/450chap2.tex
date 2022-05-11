@@ -212,7 +212,7 @@ open intervals $I_n$ in our covers.
 \begin{prop}{prop:2.4}
     Let $E \subseteq \R$ and $\delta > 0$. Then 
     \[ m^*(E) = \inf\left\{ \sum_{n=1}^\infty \ell(I_n) : 
-    \{I_n\}_{n=1}^\infty \text{ a cover of open intervals such that }
+    \{I_n\}_{n=1}^\infty \text{ a cover of $E$ by open intervals such that }
     \ell(I_n) < \delta \right\}. \] 
 \end{prop}
 \begin{pf}
@@ -247,15 +247,13 @@ Next, we show that Lebesgue outer measure really generalizes length.
 \end{theo}
 \begin{pf}
     We first prove this for the case where $I = [a, b]$ is a compact interval. 
-    Let $\eps > 0$. By taking $I_1 = (a - \eps/2, b + \eps/2)$
-    and $I_2 = \varnothing$ for $n \geq 2$, the collection $\{I_n\}_{n=1}^\infty$ 
-    is a cover of $[a, b]$ by intervals, which implies that 
-    \[ m^*(I) \leq \sum_{n=1}^\infty \ell(I_n) = \ell(I_1) = (b-a) + \eps. \] 
-    Since $\eps > 0$ is arbitrary, we have $m^*(I) \leq b-a$. 
-
-    We now turn to showing that $m^*(I) \geq b-a$. Let $\eps > 0$. By 
-    Proposition~\ref{prop:2.4}, we can find an open cover $\bigcup_{n=1}^\infty 
-    (a_n, b_n)$ of $I$ such that 
+    By taking $I_1 = I$ and $I_2 = \varnothing$ for $n \geq 2$, the 
+    collection $\{I_n\}_{n=1}^\infty$ is a cover of $[a, b]$ by intervals, 
+    which implies that 
+    \[ m^*(I) \leq \sum_{n=1}^\infty \ell(I_n) = \ell(I_1) = b-a. \] 
+    Thus, we have $m^*(I) \leq b-a$. We now turn to showing that 
+    $m^*(I) \geq b-a$. Let $\eps > 0$. By Proposition~\ref{prop:2.4}, we can 
+    find an open cover $\bigcup_{n=1}^\infty (a_n, b_n)$ of $I$ such that 
     \[ \sum_{n=1}^\infty (b_n - a_n) \leq m^*(I) + \eps. \] 
     But $I$ is compact, so we can find a finite subcover; that is, 
     there exists $N \in \N$ such that $I \subseteq \bigcup_{n=1}^N (a_n, b_n)$. 
@@ -269,7 +267,7 @@ Next, we show that Lebesgue outer measure really generalizes length.
     desired. 
 
     We now prove the result in the case that $I = (a, b]$. For all 
-    $0 < \eps < b-a$, we have that $[a + \eps, b] \subseteq (a, b] \subseteq 
+    $0 < \eps < b-a$, we have $[a + \eps, b] \subseteq (a, b] \subseteq 
     [a, b]$. By the monotonicity of Lebesgue outer measure 
     (Proposition~\ref{prop:2.3}), we see that 
     \[ (b-a) - \eps = m^*[a + \eps, b] \leq m^*(a, b] \leq m^*[a, b] = b-a. \] 
