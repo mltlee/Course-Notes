@@ -135,7 +135,7 @@ Which of the two chains should be processed first?
 
 An interchange between two adjacent chains of jobs is usually referred to as
 an {\bf adjacent sequence interchange}. Such an interchange is a generalization of
-an {\bf adjacent pairwise interchange}.
+an adjacent pairwise interchange.
 
 \begin{defn}{defn:2.5}
     Let $1 \to 2 \to \cdots \to k$ be a chain. Let $\ell^*$ satisfy 
@@ -178,6 +178,12 @@ completion time is the objective function, then the following result holds.
     \[ \frac{w_v}{p_v} > \frac{w_{u+1} + w_{u+2} + \cdots + w_{\ell^*}}
     {p_{u+1} + p_{u+2} + \cdots + p_{\ell^*}}. \] 
     If job $\ell^*$ is the determining job for the chain $1, \dots, k$, then 
+    by definition of $\ell^*$, we have 
+    \[ \frac{w_1 + \cdots + w_u + w_{u+1} + \cdots + w_{\ell^*}}{p_1 
+    + \cdots + p_u + p_{u+1} + \cdots + p_{\ell^*}} > 
+    \frac{w_{u+1} + w_{u+2} + \cdots + w_{\ell^*}}
+    {p_{u+1} + p_{u+2} + \cdots + p_{\ell^*}}. \] 
+    Noting that $(a+c)/(b+d) > a/b$ implies $c/d > a/b$, we obtain 
     \[ \frac{w_{u+1} + w_{u+2} + \cdots + w_{\ell^*}}
     {p_{u+1} + p_{u+2} + \cdots + p_{\ell^*}} > \frac{w_1 + w_2 + \cdots + w_u}
     {p_1 + p_2 + \cdots + p_u}. \] 
