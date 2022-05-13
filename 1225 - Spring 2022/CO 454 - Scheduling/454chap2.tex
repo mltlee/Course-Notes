@@ -310,8 +310,8 @@ We now introduce some terminology for branch and bound.
     \item If the LP relaxation of a node is infeasible, we say that the 
     node is {\bf pruned by infeasibility}. 
     \item If the bound from the LP relaxation of a node is worse than 
-    our current best solution, we say that node was {\bf pruned by bound}. 
-    \item If the LP relaxation has an integral solution, we say that node was 
+    our current best solution, we say that the node was {\bf pruned by bound}. 
+    \item If the LP relaxation has an integral solution, we say that the node was 
     {\bf pruned by optimality}. 
     \item If the node was not pruned, we must {\bf branch} on it; that is, 
     divide it into two smaller subproblems.
@@ -378,7 +378,7 @@ $h_{\max} = \max_{j\in\{1,\dots,n\}} h_j(C_j)$. We can see this is indeed a
 generalization of $(1\;\|\;L_{\max})$, since the lateness $L_j = C_j - d_j$ 
 is non-decreasing. 
 
-An easy observation to make is that the completion job of the last job 
+An easy observation to make is that the completion time of the last job 
 always occurs at the makespan $C_{\max} = \sum p_j$, and this is independent 
 of the schedule. The following algorithm, called the {\bf Lowest Cost Last (LCL) algorithm}, makes 
 use of this observation by going backwards starting from time $\sum p_j$. 

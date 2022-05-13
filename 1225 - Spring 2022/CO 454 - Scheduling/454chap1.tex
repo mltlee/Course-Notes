@@ -117,14 +117,14 @@ To begin, we'll first introduce some examples of scheduling problems.
     \max(36, 37) + 3 = 40$. We can visualize these values via a Gantt chart, 
     like below. 
     \begin{verbatim}
-        M1 |-S1-|--S2--|---S3---|-----S4-----| 
-           0    4      10       18           30 
+        M1 |-S1-|--S2--|---S3---|-----S4------|----idle---|
+           0    4      10       18            30          40 
 
-        M2      |----S1----|---S2---|-S3-|idle|--S4--|
-                4          14       23   26   30     36
+        M2 |idle|----S1----|---S2---|-S3-|idle|--S4--|idle|
+           0    4          14       23   26   30     36   40 
 
-        M3                 |----S1----|---S2---|--S3--|-S4-|
-                           14         25       32     37   40 
+        M3 |-----idle------|----S1----|---S2---|--S3--|S4-|
+           0               14         25       32     37  40 
     \end{verbatim} 
     \vspace{-1em}
     Notice that $M_2$ had to idle because $M_1$ did not finish processing 
@@ -382,7 +382,7 @@ Such objective functions or performance measures are said to be {\bf regular}.
 
 Not all performance measures are regular. For instance, there are scheduling 
 problems where each job $j$ with a time window $[a_j, b_j]$ and the 
-job needs to processed in that particular time window. Let $X_j = 0$ if the 
+job needs to be processed in that particular time window. Let $X_j = 0$ if the 
 job is processed in that time window, and $X_j = 1$ otherwise. 
 Is the performance measure $\sum X_j$ regular?
 
