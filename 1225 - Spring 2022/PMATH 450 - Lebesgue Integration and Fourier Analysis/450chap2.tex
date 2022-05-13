@@ -275,3 +275,158 @@ Next, we show that Lebesgue outer measure really generalizes length.
     $m^*(a, b] = b-a$. The cases where $I = [a, b)$ and $I = (a, b)$ are 
     proved similarly. 
 \end{pf}
+
+\subsection{Lebesgue Measure}\label{subsec:2.3}
+We have now shown that the Lebesgue outer measure is translation invariant 
+and is a ``good'' generalization of length. Does countable additivity hold 
+for $m^*$? The answer is of course no, because we showed that there is 
+no function $m : {\cal P}(\R) \to [0, \infty]$ which simultaneously 
+extends length, is translation invariant, and countably additive. 
+
+So when can countable or even just finite additivity hold? 
+We first consider some special cases. 
+
+\begin{defn}{defn:2.6}
+    A set $E \subseteq \R$ is said to have {\bf Lebesgue (outer) measure 
+    zero} if $m^*(E) = 0$.
+\end{defn}
+
+The following lemma says that when the sets have Lebesgue measure zero, 
+then $m^*$ is countably additive. 
+
+\begin{lemma}{lemma:2.7}
+    If $(E_n)_{n=1}^\infty$ are not necessarily disjoint sets with 
+    $m^*(E_n) = 0$ for all $n \in \N$, then 
+    \[ m^*\!\left( \bigcup_{n=1}^\infty E_n \right) = 
+    \sum_{n=1}^\infty m^*(E_n) = 0. \] 
+\end{lemma}
+\begin{pf}
+    By subadditivity of $m^*$, we obtain 
+    \[ 0 \leq m^*\!\left( \bigcup_{n=1}^\infty E_n \right) \leq 
+    \sum_{n=1}^\infty m^*(E_n) = 0. \qedhere \] 
+\end{pf}
+
+Next, we consider the notion of distance between two non-empty subsets of $\R$.
+
+\begin{defn}{defn:2.8}
+    Let $E, F \subseteq \R$ be non-empty. We define 
+    \[ d(E, F) = \inf\{|x - y| : x\in E, y\in F\} \] 
+    to be the {\bf distance} between $E$ and $F$. 
+\end{defn}
+
+Notice that if $E, F \subseteq \R$ satisfy $d(E, F) > 0$, then they are 
+certainly disjoint. In this case, it turns out that finite additivity holds
+for $m^*$.
+
+\begin{prop}{prop:2.9}
+    If $E, F \subseteq \R$ are such that $d(E, F) > 0$, then 
+    \[ m^*(E \sqcup F) = m^*(E) + m^*(F). \] 
+\end{prop}
+\begin{pf}
+    We will assume that $m^*(E), m^*(F) < \infty$. Otherwise, we get equality 
+    for free by observing that $E \sqcup F \supseteq E$ and $E \sqcup F 
+    \supseteq F$ and using the monotonicity of $m^*$. 
+    
+    By the countable subadditivity of $m^*$, we have $m^*(E \sqcup F) \leq 
+    m^*(E) + m^*(F)$, so we only need to prove the other direction. 
+    Let $\delta = d(E, F) > 0$, and let $\eps > 0$. Then there is a 
+    covering of $E \sqcup F$ by intervals $\bigcup_{n=1}^\infty I_n$ 
+    such that $\ell(I_n) < \delta$ for all $n \in \N$ and 
+    \[ \sum_{n=1}^\infty \ell(I_n) < m^*(E \sqcup F) + \eps. \] 
+    Without loss of generality, we can toss away any intervals $I_n$ 
+    such that $I_n \cap (E \sqcup F) = \varnothing$. Moreover, the 
+    restriction that $\ell(I_n) < \delta$ for all $n \in \N$ means that 
+    each $I_n$ touches one of $E$ or $F$, but not both. So we can 
+    partition $\{I_n\}_{n=1}^\infty$ into $\{I'_n\}_{n=1}^\infty 
+    \cup \{I''_n\}_{n=1}^\infty$, where the intervals $I'_n$ only touch 
+    $E$ and the intervals $I''_n$ only touch $F$. Observe now that 
+    $\{I'_n\}_{n=1}^\infty$ is a covering of $E$ and 
+    $\{I''_n\}_{n=1}^\infty$ is a covering of $F$, so we obtain 
+    \[ m^*(E) + m^*(F) \leq \sum_{n=1}^\infty \ell(I'_n) + \sum_{n=1}^\infty 
+    \ell(I''_n) \leq \sum_{n=1}^\infty \ell(I_n) < m^*(E \sqcup F) + \eps. \] 
+    Since $\eps > 0$ was arbitrary, this completes the proof. 
+\end{pf}
+
+\begin{cor}{cor:2.10}
+    If $K_1, \dots, K_n \subseteq \R$ are pairwise disjoint compact sets, then 
+    \[ m^*\!\left( \bigsqcup_{i=1}^n K_i \right) = \sum_{i=1}^n m^*(K_i). \] 
+\end{cor}
+\begin{pf}
+    Observe that $d(E, F) > 0$ when $E$ and $F$ are compact with $E \cap F 
+    = \varnothing$. So this result follows by induction and applying 
+    Proposition~\ref{prop:2.9}. 
+\end{pf}
+
+Our goal is to find a {\bf large} class of subsets ${\cal L} \subseteq 
+{\cal P}(\R)$ so that countable additivity of $m^*$ holds for ${\cal L}$. 
+We want ${\cal L}$ to contain all intervals, closed sets, open sets, and 
+anything else that can be built from them by countable unions and intersections. 
+In other words, we ideally want ${\cal L}$ to be a so-called $\sigma$-algebra, 
+which we define below.
+
+\begin{defn}{defn:2.11}
+    Let $X$ be a non-empty set. A family ${\cal M}$ of subsets of $X$ is 
+    called a {\bf $\sigma$-algebra} if the following three properties hold: 
+    \begin{enumerate}[(1)]
+        \item $\varnothing \in {\cal M}$ and $X \in {\cal M}$; 
+        \item $E \in {\cal M}$ if and only if $E^c \in {\cal M}$; and 
+        \item if $\{E_n\}_{n=1}^\infty$ is a countable sequence in ${\cal M}$, 
+        then $\bigcup_{n=1}^\infty E_n \in {\cal M}$. 
+    \end{enumerate}
+\end{defn}
+
+\begin{remark}{remark:2.12}
+    It follows immediately from the definition that $\sigma$-algebras 
+    are closed under countable intersections as well. Indeed, for 
+    a $\sigma$-algebra ${\cal M}$ and a countable sequence $\{E_n\}_{n=1}^\infty$ 
+    in ${\cal M}$, we have 
+    \[ \bigcap_{n=1}^\infty E_n = \left( \bigcup_{n=1}^\infty E_n^c \right)^{\!c} 
+    \in {\cal M} \] 
+    by De Morgan's law. In fact, we could use countable intersection 
+    in the definition of a $\sigma$-algebra and derive countable unions from it.
+\end{remark}
+
+\begin{exmp}{exmp:2.13}
+    \begin{enumerate}[(a)]
+
+        \item Some examples of $\sigma$-algebras are ${\cal P}(X)$ and 
+        ${\cal M}_E = \{\varnothing, X, E, E^c\}$ for a subset $E \subseteq X$.
+
+        \item The $\sigma$-algebras from part (a) are not very interesting; 
+        ${\cal P}(X)$ is too big and ${\cal M}_E$ is too small to work with. 
+        We give a slightly more interesting example. Let ${\cal F} \subseteq 
+        {\cal P}(X)$, and define 
+        \[ {\cal M}_{\cal F} = \bigcap_{\substack{
+            \text{$\sigma$-algebras ${\cal M}$} \\ 
+            \text{on $X$ such} \\ 
+            \text{that } {\cal F} \subseteq {\cal M}}} {\cal M}. \] 
+        Then ${\cal M}_{\cal F}$ is also a $\sigma$-algebra on $X$. 
+        In fact, it is the smallest $\sigma$-algebra containing 
+        ${\cal F}$. We call ${\cal M}_{\cal F}$ the {\bf $\sigma$-algebra 
+        generated by ${\cal F}$}.
+
+        \item Let $(X, \tau)$ be a topological space. Then 
+        \[ {\cal B}_X = {\cal M}_\tau \subseteq {\cal P}(X) \] 
+        is called the {\bf Borel $\sigma$-algebra}, and is the $\sigma$-algebra 
+        generated by open sets in $X$. 
+    \end{enumerate}
+\end{exmp}
+
+With the definition of a $\sigma$-algebra out of the way, we can now
+discuss what a measure on one should look like. 
+
+\begin{defn}{defn:2.14}
+    Let $X$ be a non-empty set, and let ${\cal M}$ be a $\sigma$-algebra on $X$. 
+    We say that a function $\mu : {\cal M} \to [0, \infty]$ is a 
+    {\bf measure on ${\cal M}$} if we have 
+    \begin{enumerate}
+        \item $\mu(\varnothing) = 0$, and 
+        \item if $(E_n)_{n=1}^\infty$ is a sequence of pairwise disjoint sets
+        in ${\cal M}$, then 
+        \[ \mu\!\left( \bigsqcup_{n=1}^\infty E_n \right) = \sum_{n=1}^\infty 
+        \mu(E_n). \] 
+    \end{enumerate}
+\end{defn}
+
+Recall that we wanted our large set ${\cal L}$ above to be a $\sigma$-algebra
+on $\R$. Therefore, our hope is that $m = m^*|_{\cal L}$ is a measure on ${\cal L}$.
