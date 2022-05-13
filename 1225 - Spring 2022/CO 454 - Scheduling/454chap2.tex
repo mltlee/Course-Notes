@@ -233,3 +233,199 @@ We illustrate the use of this algorithm with an example.
     is higher than that of job $4$, so job $7$ follows job $3$ and job $4$ 
     goes last. 
 \end{exmp}
+
+\subsection{Branch and Bound}\label{subsec:2.2}
+Before we discuss more about single machine models, we make a diversion 
+and introduce branch and bound. 
+Branch and bound is a divide-and-conquer approach for solving integer programs.
+While enumerating all solutions can work, it is just too slow in most cases 
+when there are many variables. Branch and bound starts off by enumerating, 
+but it cuts out a lot of the enumeration whenever possible. 
+
+To illustrate this point, suppose we go with a complete enumeration approach 
+with $n$ binary variables $x_1, \dots, x_n \in \{0, 1\}$. Then there are 
+$2^n$ different possibilities in the solution set, which of course blows 
+up the runtime as $n$ grows large. 
+
+The idea of branch and bound is as follows: if we can't solve the original 
+integer program, maybe we can divide it into smaller ones and solve them! 
+Picking a variable $x_k$ (which we call the branching variable) and a 
+value $a \notin \Z$, we can divide the IP into two subproblems by 
+adding the constraint $x_k \leq \lfloor a \rfloor$ to one and 
+$x_k \geq \lceil a \rceil$ to the other. This process partitions the feasible 
+region, and we note that any solution with $x_k = a$ could not possibly 
+be a solution to these two subproblems. For instance, suppose we have the IP 
+\begin{align*}
+    \max\quad & 3x_1 + 4x_2 \\ 
+    \text{s.t.}\quad & 2x + 2x_2 \leq 3 \\ 
+    & x \geq 0 \text{ and integer.}
+\end{align*}
+Then we can branch on $x_2$ with $a = 1.5$ to get two subproblems 
+\begin{align*}
+    \max\quad & 3x_1 + 4x_2 & \max\quad & 3x_1 + 4x_2 \\ 
+    \text{s.t.}\quad & 2x + 2x_2 \leq 3 & \text{s.t.}\quad & 2x + 2x_2 \leq 3 \\
+    & x_2 \leq 1 & & x_2 \geq 2 \\  
+    & x \geq 0 \text{ and integer,} & & x \geq 0 \text{ and integer.}
+\end{align*}
+Suppose that we have an integer program $\text{IP}_1$ which we split (branched) 
+into two subproblems $\text{IP}_2$ and $\text{IP}_3$. Then the optimal solution to 
+$\text{IP}_1$ is the best between the optimal solutions to $\text{IP}_2$ and 
+$\text{IP}_3$. 
+
+But the problem is that each subproblem can still be too hard to solve. As 
+we recall, IPs are hard to solve in general. 
+Thus, we can consider the LP relaxation of the IPs, which drops the integrality 
+constraints. We know how to solve these efficiently, such as by using the 
+Simplex algorithm from CO 250. 
+
+We remark that for knapsack problems (where we require $x_i \in \{0, 1\}$ for all 
+$i \in \{1, \dots, n\}$), we do not even need to use the Simplex 
+algorithm to solve their LP relaxations. We can use the greedy algorithm 
+which puts items into the knapsack in decreasing order of value per 
+weight unit. 
+
+Recall that any solution that is feasible for the IP is also feasible 
+for its LP relaxation. Equivalently, if the LP relaxation is infeasible, 
+then so is the IP. 
+
+Letting $z_{\text{IP}}^*$ be the optimal value of the 
+IP and $z_{\text{LP}}^*$ be the optimal value of the LP relaxation, 
+we see that $z_{\text{IP}}^* \leq z_{\text{LP}}^*$. Moreover, if the LP 
+relaxation of an IP has an optimal solution $x^*$ which happens 
+to be integral, then $x^*$ is also an optimal solution to the IP, because 
+this would imply $z_{\text{LP}}^* \leq z_{\text{IP}}^*$ and so 
+$z_{\text{IP}}^* = z_{\text{LP}}^*$. 
+
+We make one more observation: if we know a feasible solution for the original 
+IP with value $\bar{z}$ and the LP relaxation of a subproblem $\text{IP}_i$ 
+has an optimal solution with value $z_{\text{LP}_i}^*$ with 
+$z_{\text{LP}_i}^* \leq \bar{z}$, then the optimal solution to $\text{IP}_i$ 
+will be less than $\bar{z}$. 
+
+We now introduce some terminology for branch and bound. 
+\begin{itemize}
+    \item The branch and bound process is typically represented as a tree 
+    (called the {\bf branch and bound tree}), with each subproblem corresponding 
+    to a node of the tree (called a {\bf branch and bound node}). 
+    \item If the LP relaxation of a node is infeasible, we say that the 
+    node is {\bf pruned by infeasibility}. 
+    \item If the bound from the LP relaxation of a node is worse than 
+    our current best solution, we say that node was {\bf pruned by bound}. 
+    \item If the LP relaxation has an integral solution, we say that node was 
+    {\bf pruned by optimality}. 
+    \item If the node was not pruned, we must {\bf branch} on it; that is, 
+    divide it into two smaller subproblems.
+\end{itemize}
+
+Now, we are ready to state the branch and bound algorithm. Note that there 
+are further speedups that could be made to the algorithm as written. One 
+way is for the branch and bound algorithm to have heuristics that 
+``intelligently'' choose the best variable to branch on. One can also 
+round down to further improve bounds, or adding so-called valid inequalities. 
+
+\begin{algo}[Branch and Bound]{algo:2.9}
+    \begin{enumerate}
+        \item Initially, set $z_{\text{best}} = -\infty$ and $x_{\text{best}}$ 
+        to be undefined. 
+        \item If all subproblems have been explored, then stop. If 
+        $x_{\rm best}$ is still undefined, then the IP is infeasible.
+        Otherwise, $x_{\rm best}$ is the optimal solution to the IP with 
+        value $z_{\rm best}$. 
+        \item Solve the LP relaxation ${\rm LP}_k$ of a subproblem 
+        ${\rm IP}_k$ that has not been explored yet. 
+        \begin{enumerate}[(a)]
+            \item Declare ${\rm IP}_k$ as explored. 
+            \item If ${\rm LP}_k$ is infeasible, do not branch. This node is 
+            pruned by infeasibility. Go back to the start of step 3. 
+            \item Let $z_{{\rm LP}_k}^*$ be the optimal value and 
+            $x_{{\rm LP}_k}^*$ be the optimal solution to ${\rm LP}_k$. 
+            \item If $z_{{\rm LP}_k}^* \leq z_{\rm best}$, then do not 
+            branch. Any solution to the current subproblem cannot be 
+            better than the one we already have. This node is pruned by 
+            bound. Go back to the start of step 3. 
+            \item If $x_{{\rm LP}_k}^*$ is integral, then do not branch. 
+            We have found the optimal solution to the subproblem ${\rm IP}_k$.
+            If $z_{{\rm LP}_k}^* > z_{\rm best}$, then set 
+            $z_{\rm best} = z_{{\rm LP}_k}^*$ and $x_{\rm best} = 
+            x_{{\rm LP}_k}^*$. This node is now pruned by optimality. Go back 
+            to the start of step 3. 
+            \item Pick $j$ such that the $j$-th component of 
+            $x_{{\rm LP}_k}^*$ is equal to a value $a$ which is fractional 
+            (and $x_j$ is required to be an integer in ${\rm IP}_k$). 
+            \item Create two new subproblems: ${\rm IP}_k$ with the 
+            additional constraint $x_j \leq \lfloor a \rfloor$, and 
+            ${\rm IP}_k$ with the additional constraint $x_j \geq 
+            \lceil a \rceil$. 
+        \end{enumerate}
+    \end{enumerate}
+\end{algo}
+
+\subsection{Maximum Lateness}\label{subsec:2.3}
+Recall that the input to the problem $(1\;\|\;L_{\max})$ consists of 
+$n$ jobs, each with a processing time $p_j$ and a due date $d_j$. 
+The goal is to find a sequence of jobs which minimizes $L_{\max} = 
+\max_{j\in\{1,\dots,n\}} L_j$, where $L_j = C_j - d_j$. 
+
+The {\bf Earliest Due Date (EDD) rule} places the jobs in increasing order 
+of the due dates. We will prove on Assignment 2 that the EDD rule is in fact 
+optimal for $(1\;\|\;L_{\max})$; this can be done using an interchange argument.
+
+Now, we discuss a generalization of $(1\;\|\;L_{\max})$ problem, which is 
+$(1 \mid prec \mid h_{\max})$. In this setting, we have $n$ jobs, and 
+associated with each job is a processing time $p_j$ and a non-decreasing 
+cost function $h_j$. The goal is to find a schedule which minimizes 
+$h_{\max} = \max_{j\in\{1,\dots,n\}} h_j(C_j)$. We can see this is indeed a 
+generalization of $(1\;\|\;L_{\max})$, since the lateness $L_j = C_j - d_j$ 
+is non-decreasing. 
+
+An easy observation to make is that the completion job of the last job 
+always occurs at the makespan $C_{\max} = \sum p_j$, and this is independent 
+of the schedule. The following algorithm, called the {\bf Lowest Cost Last (LCL) algorithm}, makes 
+use of this observation by going backwards starting from time $\sum p_j$. 
+
+Let $S$ be the set of already scheduled jobs, which is initially $S = \varnothing$. 
+The jobs in $S$ are processed during the time interval 
+\[ \left[ C_{\max} - \sum_{j\in S} p_j, C_{\max} \right]. \] 
+Let $\hat J$ be the set of all jobs whose successors have been 
+scheduled; this is initially all jobs without any successors. 
+The set $\hat J$ is typically referred to as the set of schedulable jobs.
+Notice that $\hat J \subseteq S^c = \{1, \dots, n\} \setminus S$. Moreover, 
+we let $t$ denote the time of completion of the next job, and initially 
+set it to $t = \sum p_j$. 
+
+We now state the LCL algorithm, give an simple example of it in action, then 
+prove that it yields an optimal schedule for $(1 \mid prec \mid h_{\max})$. 
+
+\begin{algo}[Lowest Cost Last]{algo:2.10}
+    \begin{enumerate}
+        \item If $\hat J \neq \varnothing$, then stop. Otherwise, continue. 
+        \item Select $j \in \hat J$ such that $h_j(t) = \min_{k\in\hat J} 
+        h_k(t)$. 
+        \item Schedule $j$ so that it completes at time $t$. 
+        \item Add $j$ to $S$, delete $j$ from $\hat J$, and update $\hat J$
+        according to the precedence constraints. 
+        \item Set $t \gets t - p_j$. 
+    \end{enumerate}
+\end{algo} 
+
+\begin{exmp}{exmp:2.11}
+    Consider the following instance of $(1\;\|\;h_{\max})$ with $n = 3$ 
+    (so there are no precedence constraints). 
+    \begin{align*}
+        \begin{array}{c|ccc}
+            j   & 1       & 2      & 3 \\ \hline
+            p_j & 2       & 3      & 5 \\
+            h_j & 1 + C_j & 1.2C_j & 10
+        \end{array}
+    \end{align*}
+    Initially, we have $\hat J = \{1, 2, 3\}$ and $t = \sum p_j = 10$. 
+    Since $h_3(10) < h_1(10) < h_2(10)$, job $3$ goes last. 
+
+    Next, we have $\hat J = \{1, 2\}$ and $t = 10 - 5 = 5$. Then 
+    $h_1(5) = h_2(5) = 6$, so either job $1$ or $2$ could go last. This 
+    yields the two optimal schedules $1, 2, 3$ and $2, 1, 3$. 
+\end{exmp}
+
+\begin{theo}{theo:2.12}
+    The LCL algorithm yields an optimal schedule for $(1 \mid prec \mid h_{\max})$. 
+\end{theo}
