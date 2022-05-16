@@ -68,7 +68,7 @@ partition $P$ of $[0, 1]$, the upper Riemann sum is $U(f, P) = 1$ and
 the lower Riemann sum is $L(f, P) = 0$. 
 
 \subsection{Lebesgue Outer Measure}\label{subsec:2.2}
-In our previous section, we saw that Riemann's theory of integration had 
+In the previous section, we saw that Riemann's theory of integration had 
 some flaws. Lebesgue had the idea that we could do Riemann sums over 
 partitions of the $y$-axis, instead of partitions over the $x$-axis. It turns 
 out that this idea extends allows many more functions to be integrable. 
@@ -432,3 +432,167 @@ In particular, the second property means that the measure $\mu$ is
 countably additive on the $\sigma$-algebra ${\cal M}$. Recall that we wanted 
 our large set ${\cal L}$ above to be a $\sigma$-algebra on $\R$. Therefore, 
 our hope is that $m = m^*|_{\cal L}$ is a measure on ${\cal L}$.
+
+Let us now actually construct this large set ${\cal L}$. We first begin 
+with a definition. 
+
+\begin{defn}{defn:2.15}
+    A set $E \subseteq \R$ is said to satisfy {\bf Carathéodory's condition} 
+    if for any $A \subseteq \R$, we have 
+    \[ m^*(A) = m^*(A \cap E) + m^*(A \cap E^c). \] 
+    That is, $m^*$ is additive when partitioning any set $A$ with 
+    $\{E, E^c\}$. 
+\end{defn}
+
+Then, we set ${\cal L} := \{E \subseteq \R : E \text { satisfies 
+Carathéodory's condition}\}$. It turns out that this choice of ${\cal L}$ 
+gives us exactly what we want. Of course, we will need to check that 
+${\cal L}$ is actually a rich collection of sets, but we will leave 
+that for later. 
+
+\begin{theo}[Carathéodory]{theo:2.16}
+    The set ${\cal L}$ defined as above is a $\sigma$-algebra over $\R$, 
+    and $m = m^*|_{\cal L}$ is a measure on ${\cal L}$. We call 
+    $m$ the {\bf Lebesgue measure} on $\R$. 
+\end{theo}
+\begin{pf}
+    We will prove both of these claims simultaneously by beginning with 
+    the finite case, then lifting it to the infinite case.
+
+    {\sc Step 0.} Recall that an {\bf algebra} of sets ${\cal A} 
+    \subseteq {\cal P}(X)$ has the following properties: 
+    \begin{enumerate}[(1)]
+        \item $\varnothing \in {\cal A}$ and $X \in {\cal A}$;
+        \item $E \in {\cal A}$ if and only if $E^c \in {\cal A}$; and 
+        \item if $E, F \in {\cal A}$, then $E \cup F \in {\cal A}$.
+    \end{enumerate}
+    In particular, this is weaker than being a $\sigma$-algebra, 
+    only being closed under finite unions (and by extension, finite 
+    intersections). We show that ${\cal L}$ is an algebra of sets in $\R$.
+
+    {\sc Proof of Step 0.}~
+    \begin{enumerate}[(1)]
+
+        \item Observe that for any $A \subseteq \R$, we have 
+        \[ m^*(A) = m^*(A \cap \R) + m^*(A \cap \varnothing). \] 
+        Then $\R \in {\cal L}$ and by symmetry, $\varnothing \in {\cal L}$ 
+        as well.
+
+        \item If $E \in {\cal L}$, then for any $A \subseteq \R$, we have
+        \[ m^*(A) = m^*(A \cap E) + m^*(A \cap E^c), \] 
+        so we see that $E^c \in {\cal L}$. 
+
+        \item Let $E, F \in {\cal L}$ and $A \subseteq \R$. We will 
+        show that $E \cap F \in {\cal L}$, and so $E \cup F = 
+        (E^c \cap F^c)^c \in {\cal L}$ by De Morgan's laws. First, 
+        observe that 
+        \begin{align*}
+            m^*(A) &= m^*(A \cap E) + m^*(A \cap E^c) \\ 
+            &= m^*(A \cap E \cap F) + m^*(A \cap E \cap F^c) 
+            + m^*(A \cap E^c),
+        \end{align*}
+        where the first equality uses the fact that $E \in {\cal L}$, 
+        and the second equality comes from the fact that $F \in {\cal L}$ 
+        and applying it to $m^*(A \cap E)$. The idea now is to combine 
+        some terms to obtain a corresponding term $m^*(A \cap (E \cap F)^c)$. 
+        Indeed, we have 
+        \begin{align*}
+            m^*(A \cap (E \cap F)^c) 
+            &= m^*(A \cap (E^c \cup F^c)) \\ 
+            &= m^*(A \cap (E^c \cup F^c) \cap E) + m^*(A \cap (E^c \cup F^c) \cap E^c) \\ 
+            &= m^*(A \cap F^c \cap E) + m^*(A \cap E^c). 
+        \end{align*}
+        These last two terms are exactly what we had before, so combining
+        everything gives us 
+        \[ m^*(A) = m^*(A \cap (E \cap F)) + m^*(A \cap (E \cap F)^c). \] 
+        Thus, $E \cap F \in {\cal L}$, and we conclude that ${\cal L}$ is 
+        an algebra over $\R$. \hfill $\blacksquare$
+
+    \end{enumerate}
+
+    {\sc Step 1.} The Lebesgue outer measure $m^*$ is finitely additive 
+    on ${\cal L}$. That is, if $E_1, \dots, E_n \in {\cal L}$ are pairwise 
+    disjoint, then 
+    \[ m^*\!\left( \bigsqcup_{i=1}^n E_i \right) = \sum_{i=1}^n m^*(E_i). \] 
+    {\sc Proof of Step 1.} Let $E_1, \dots, E_n \in {\cal L}$ be 
+    pairwise disjoint, and let $A \subseteq \R$. We know that 
+    $\bigsqcup_{i=1}^n E_i \in {\cal L}$ since we have already shown that 
+    ${\cal L}$ is an algebra. Thus, noting that $E_n \in {\cal L}$, we get
+    \[ m^*\!\left(A \cap \bigsqcup_{i=1}^n E_i \right) = 
+    m^*\!\left(A \cap \bigsqcup_{i=1}^n E_i \cap E_n \right) 
+    + m^*\!\left( A \cap \bigsqcup_{i=1}^n E_i \cap E_n^c \right) 
+    = m^*(A \cap E_n) + m^*\!\left( A \cap \bigsqcup_{i=1}^{n-1} E_i \right), \] 
+    where the final equality is because the sets are pairwise disjoint. 
+    Repeating this argument inductively yields
+    \[ m^*\left( A \cap \bigsqcup_{i=1}^n E_i \right) = 
+    \sum_{i=1}^n m^*(A \cap E_i). \] 
+    Taking $A = \R$ completes the proof of this step. \hfill $\blacksquare$
+
+    {\sc Step 2.} If $\{E_i\}_{i=1}^\infty$ is a countable family of 
+    disjoint sets in ${\cal L}$, then $E = \bigsqcup_{i=1}^\infty E_i \in 
+    {\cal L}$ and 
+    \[ m^*(E) = \sum_{i=1}^\infty m^*(E_i). \] 
+    {\sc Proof of Step 2.} It suffices to show that 
+    \[ m^*(A) \geq m^*(A \cap E) + m^*(A \cap E^c) \] 
+    for any $A \subseteq \R$ with $m^*(A) < \infty$. Indeed, by the 
+    subadditivity of $m^*$, we always have $m^*(A) \leq 
+    m^*(A \cap E) + m^*(A \cap E^c)$. Moreover, if $m^*(A) = \infty$, 
+    then there is certainly equality. 
+
+    Let $A \subseteq \R$ be such that $m^*(A) < \infty$. Let 
+    $F_n = \bigsqcup_{i=1}^n E_i$, which is in ${\cal L}$ since 
+    it is an algebra. Arguing as in Step 1, we have 
+    \[ m^*(A) = m^*(A \cap F_n) + m^*(A \cap F_n^c) 
+    = \sum_{i=1}^n m^*(A \cap E_i) + m^*(A \cap F_n^c). \] 
+    Notice that $F_n \subseteq E$, so $E^c \subseteq F_n^c$, which in 
+    turn implies $A \cap E^c \subseteq A \cap F_n^c$. By the 
+    monotonicity of $m^*$, we get 
+    \[ m^*(A \cap E^c) \leq m^*(A \cap F_n^c). \] 
+    Applying this inequality to our above equation gives 
+    \[ m^*(A) \geq \sum_{i=1}^n m^*(A \cap E_i) + m^*(A \cap E^c). \] 
+    Since this holds for all $n \in \N$, we can take $n \to \infty$ 
+    and the inequality will still hold. This means that 
+    \begin{align*}
+        m^*(A) &\geq \sum_{i=1}^\infty m^*(A \cap E_i) + m^*(A \cap E^c) \\ 
+        &\geq m^*\!\left( \bigsqcup_{i=1}^\infty (A \cap E_i) \right) 
+        + m^*(A \cap E^c) \\ 
+        &= m^*(A \cap E) + m^*(A \cap E^c), 
+    \end{align*}
+    where the second inequality follows from the countable subadditivity of 
+    $m^*$. Letting $A = E$, we deduce that 
+    \[ m^*(E) \geq \sum_{i=1}^\infty m^*(E_i) + 0 \geq m^*(E), \] 
+    so we have the desired equality. \hfill $\blacksquare$ 
+
+    {\sc Step 3.} We claim that ${\cal L}$ is closed under countable unions. 
+    
+    {\sc Proof of Step 3.} Let $\{E_i\}_{i=1}^\infty$ be a countable 
+    family of not necessarily pairwise disjoint sets in ${\cal L}$. 
+    Let $E'_1 = E_1$, and for each $i \geq 2$, set $E'_i = E_i \setminus 
+    (E_1 \cup \cdots \cup E_{i-1})$. Then $\{E'_i\}_{i=1}^\infty$ is a 
+    countable family of disjoint sets in ${\cal L}$ with 
+    \[ \bigcup_{i=1}^\infty E_i = \bigsqcup_{i=1}^\infty E'_i, \] 
+    and this is in ${\cal L}$ since we showed that countable unions of 
+    pairwise disjoint sets in ${\cal L}$ are also in ${\cal L}$. 
+    \hfill $\blacksquare$  
+
+    This last step shows that ${\cal L}$ is a $\sigma$-algebra over $\R$
+    and Step 2 establishes that $m = m^*|_{\cal L}$ is a measure on 
+    ${\cal L}$, completing the proof. 
+\end{pf}
+
+In light of this result, we say that a set satisfying Carathéodory's condition 
+is a {\bf Lebesgue measurable set}. Now, let's determine which sets belong 
+to ${\cal L}$. Below, we see that sets of Lebesgue measure zero are an 
+easy example of Lebesgue measurable sets. 
+
+\begin{prop}{prop:2.17}
+    If $E \subseteq \R$ with $m^*(E) = 0$, then $E \in {\cal L}$.     
+\end{prop}
+\begin{pf}
+    Let $A \subseteq \R$. Notice that $m^*(A \cap E) \leq m^*(E) = 0$
+    by the monotonicity of $m^*$, so $m^*(A \cap E) = 0$. 
+    Similarly, we have $m^*(A \cap E^c) \leq m^*(A)$. Therefore, we obtain  
+    \[ m^*(A) \leq m^*(A \cap E) + m^*(A \cap E^c) = m^*(A \cap E^c) 
+    \leq m^*(A) \] 
+    and so we have the equality $m^*(A) = m^*(A \cap E) + m^*(A \cap E^c)$. 
+\end{pf}
