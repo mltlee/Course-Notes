@@ -429,3 +429,27 @@ prove that it yields an optimal schedule for $(1 \mid prec \mid h_{\max})$.
 \begin{theo}{theo:2.12}
     The LCL algorithm yields an optimal schedule for $(1 \mid prec \mid h_{\max})$. 
 \end{theo}
+\begin{pf}
+    We proceed by contradiction. Assume that the LCL algorithm yields a 
+    schedule $S$ which is not optimal. Let $S^*$ be an optimal schedule 
+    that has the longest common suffix with $S$; that is, $S^*$ agrees 
+    with $S$ at the tail end of the schedule for as long as possible. 
+
+    Let $j^*$ be the first index on the tail in $S$ such that $S$ and $S^*$ 
+    disagree. Let $j^{**}$ be the job in that same position in $S^*$. 
+    Then $j^*$ occurs at some earlier point in $S^*$. Construct 
+    the schedule $\hat S$ from $S^*$ by placing $j^*$ immediately after 
+    $j^{**}$ in $S^*$, and shift the rest of the jobs forward 
+    in the sequence. 
+
+    We show that the objective value of $\hat S$ is at most the objective 
+    value of $S^*$. This will give a contradiction since $\hat S$ is then 
+    an optimal sequence with a longer common suffix with $S$ than $S^*$, 
+    and we assumed that $S^*$ has the longest common suffix with $S^*$. 
+
+    Notice that the completion times of all jobs either stay the same 
+    or decrease from $S^*$ to $\hat S$, except for job $j^*$. But 
+    the completion time of $j^*$ in $\hat S$ is now less than the 
+    completion time of $j^{**}$ in $S^*$. Using the fact that the functions 
+    $h_j$ are all increasing, this completes the proof. 
+\end{pf}
