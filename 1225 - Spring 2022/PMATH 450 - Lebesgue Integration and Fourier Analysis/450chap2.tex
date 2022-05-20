@@ -738,3 +738,135 @@ additivity that
     \[ \mu(E) = \sum_{n=1}^\infty \mu(E_n) = \sum_{n=1}^\infty m(E_n) = m(E). 
     \qedhere \] 
 \end{pf}
+
+We have seen that not all Borel measurable sets are Lebesgue measurable. 
+But the following structure theorem for ${\cal L}$ tells us that every 
+$E \in {\cal L}$ is ``almost'' Borel measurable, up to throwing away 
+sets of measure zero. 
+
+\begin{theo}[Structure of Lebesgue measurable sets]{theo:2.22}
+    Let $E \subseteq \R$. The following are equivalent: 
+    \begin{enumerate}[(1)]
+        \item $E$ is Lebesgue measurable. 
+        \item For all $\eps > 0$, there exists an open set $V$ and closed 
+        set $F$ such that $F \subseteq E \subseteq V$ and 
+        $m(V \setminus F) < \eps$. 
+        \item There exists an $F_\sigma$-set $A$ and a $G_\delta$-set 
+        $B$ such that $A \subseteq E \subseteq B$ and $m(B \setminus A) = 0$. 
+    \end{enumerate}
+\end{theo}
+\begin{pf}
+    (1) $\Rightarrow$ (2). Let $K_n = [-n, n]$ for each $n \in \N$, and note that 
+    $\R = \bigcup_{n=1}^\infty K_n$. Let $E$ be a Lebesgue measurable set 
+    and let $\eps > 0$. Notice that $m(E \cap K_n) \leq m(K_n) = 2n < \infty$ 
+    for all $n \in \N$. In particular, there exists an open set $V_n \subseteq \R$ 
+    such that 
+    \[ m(V_n \setminus (E \cap K_n)) < \frac{\eps}{2^{n+1}}. \] 
+    Indeed, just take $V_n = \bigcup_{k=1}^\infty (a_k, b_k) \supseteq 
+    E \cap K_n$ such that 
+    \[ m(V_n) < m(E \cap K_n) + \frac{\eps}{2^{n+1}}, \] 
+    then use monotonicity to get $m(V_n \setminus (E \cap K_n)) \leq m(V_n)$.
+
+    Now, put $V = \bigcup_{n=1}^\infty V_n$. Observe that $V$ is open with 
+    $E \subseteq V$, and 
+    \[ m(V \setminus E) = m\!\left( \bigcup_{n=1}^\infty V_n \setminus E \right) 
+    \leq m\!\left( \bigcup_{n=1}^\infty V_n \setminus (E \cap K_n) \right) 
+    \leq \sum_{n=1}^\infty m(V_n \setminus (E \cap K_n)) 
+    < \sum_{n=1}^\infty \frac{\eps}{2^{n+1}} = \frac{\eps}{2}. \] 
+    We can repeat the same argument with $E^c$ replacing $E$. This gives us 
+    an open set $W \supseteq E^c$ such that $m(W \setminus E^c) < \eps/2$. 
+    Letting $F = W^c$, we see that $F$ is closed and $F \subseteq E \subseteq V$. 
+    Using the additivity of Lebesgue measure gives 
+    \[ m(V \setminus F) = m(V \setminus E) + m(E \setminus F) 
+    = m(V \setminus E) + m(W \setminus E^c) < \frac{\eps}{2} + \frac{\eps}{2} 
+    = \eps. \] 
+    (2) $\Rightarrow$ (3). Applying (2) with $\eps_k = 1/k$ for all $k \in \N$, 
+    we obtain closed sets $\{F_k\}_{k=1}^\infty$ and open sets $\{V_k\}_{k=1}^\infty$ 
+    such that $F_k \subseteq E \subseteq V_k$ and $m(V_k \setminus F_k) 
+    < 1/k$ for all $k \in \N$. Then $A = \bigcup_{k=1}^\infty F_k \subseteq E$ 
+    is an $F_\sigma$-set and $B = \bigcap_{k=1}^\infty V_k \supseteq E$ is a 
+    $G_\sigma$-set. We see that 
+    \[ B \setminus A \subseteq V_k \setminus F_k \] 
+    for all $k \in \N$. Note that $m(B \setminus A)$ is a well-defined quantity
+    since $A$ and $B$ are both Borel and hence Lebesgue measurable. Then 
+    monotonicity of $m$ implies that 
+    \[ m(B \setminus A) \leq m(V_k \setminus F_k) < \frac1k. \] 
+    Since this holds for all $k \in \N$, we in fact have $m(B \setminus A) = 0$. 
+
+    (3) $\Rightarrow$ (1). Recall from Proposition~\ref{prop:2.17} that if 
+    $W \subseteq \R$ with $m^*(W) = 0$, then $W \in {\cal L}$, and 
+    monotonicity shows that every subset $W_0 \subseteq W$ is also in ${\cal L}$. 
+    From (3), there exists an $F_\sigma$-set $A$ and a $G_\delta$-set $B$ 
+    such that $A \subseteq E \subseteq B$. Writing $E = A \cup (E \setminus A)$, 
+    notice that $A \in {\cal L}$ since it is Borel. On the other hand, 
+    we have $E \setminus A \subseteq B \setminus A$ with $m(B \setminus A) = 0$, 
+    so $E \setminus A \in {\cal L}$. Thus, $E$ is Lebesgue measurable as 
+    ${\cal L}$ is a $\sigma$-algebra and so closed under unions. \qedhere 
+\end{pf}
+
+\subsection{Lebesgue Measurable Functions}\label{subsec:2.4}
+Recall that when integrating a function $f : \R \to \R$ using Lebesgue's 
+approach of partitioning the $y$-axis, we needed to measure the length 
+of sets of the form 
+\[ f^{-1}(a, b) = \{x \in \R : f(x) \in (a, b)\}. \] 
+Therefore, we would like $m(f^{-1}(a, b))$ to be a well-defined quantity, or 
+equivalently, we want $f^{-1}(a, b)$ to be a Lebesgue measurable set for 
+any open interval $(a, b)$. 
+
+More generally, let $f : X \to Y$ be an arbitrary function. Let $B$ and $\{B_i\}_{i=1}^\infty$ 
+be subsets of $Y$. Then we have $f^{-1}(B^c) = (f^{-1}(B))^c$ and 
+\[ f^{-1}\!\left( \bigcup_{i=1}^\infty B_i \right) = \bigcup_{i=1}^\infty 
+f^{-1}(B_i), \] 
+so the inverse image operation $f^{-1}$ respects all the $\sigma$-algebra operations. 
+
+\newpage
+In particular, every open set $U \subseteq \R$ is of the form 
+\[ U = \bigcup_{n=1}^\infty (a_n, b_n). \] 
+So our above condition where we want $f^{-1}(a, b) \in {\cal L}$ for any 
+open interval $(a, b)$ is equivalent to having 
+\[ f^{-1}(U) = \bigcup_{i=1}^\infty f^{-1}(a_n, b_n) \in {\cal L} \] 
+for any open set $U \subseteq \R$. This leads us to the definition of a 
+Lebesgue measurable function. 
+
+\begin{defn}{defn:2.23}
+    Let $D$ be a Lebesgue measurable set. A function $f : D \to \R$ is 
+    called a {\bf Lebesgue measurable function} if for any open set 
+    $U \subseteq \R$, we have 
+    \[ f^{-1}(U) \in {\cal L}. \] 
+\end{defn}
+
+\begin{remark}{remark:2.24}
+    This definition is reminiscent of the characterization of continuous
+    functions via open sets. Suppose that $f : D \to \R$ is continuous 
+    where $D \in {\cal L}$. Then for every open subset $U \subseteq \R$, 
+    we know that $V = f^{-1}(U)$ is open in $D$. Then $V \cap D$ is open in 
+    $\R$ and $V \in {\cal L}$ since it is a Borel set, so $f$ is Lebesgue 
+    measurable. 
+\end{remark}
+
+Thinking more abstractly, we can generalize the above definition where the 
+domain has a $\sigma$-algebra associated with it, and the codomain 
+is a topological space. 
+
+\begin{defn}{defn:2.25}
+    Let $X$ be a set, and let ${\cal M}$ be a $\sigma$-algebra on $X$. 
+    Let $Y$ be a topological space with the topology $\tau_Y$ of open sets. 
+    Then $f : X \to Y$ is {\bf measurable} with respect to ${\cal M}$ 
+    if for all open sets $U \in \tau_Y$, we have 
+    \[ f^{-1}(U) \in {\cal M}. \] 
+\end{defn}
+
+\begin{prop}{prop:2.26}
+    Let $f : X \to Y$ be as in the above definition. The following are equivalent:
+    \begin{enumerate}[(1)]
+        \item $f$ is measurable with respect to ${\cal M}$. 
+        \item For all Borel sets $E \in {\cal B}_Y$, we have $f^{-1}(E) \in {\cal M}$. 
+        \item If ${\cal F}$ is any collection of Borel sets in $Y$ that generates 
+        ${\cal B}_Y$ (that is, ${\cal B}_Y = {\cal M}_{\cal F})$, then 
+        $f^{-1}(E) \in {\cal M}$ for all $E \in {\cal F}$. 
+    \end{enumerate}
+\end{prop}
+\begin{pf}
+    We leave the proof as an exercise. Hint: Use the observation above where 
+    the preimage is closed under all the operations of a $\sigma$-algebra. 
+\end{pf}
