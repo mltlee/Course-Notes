@@ -183,7 +183,7 @@ of these subsets whose union is equal to $U$?
     $X = \{v : S_v \in Y\}$ is a vertex cover of size $k$ in $G$. 
 \end{pf}
 
-\subsection{Intractability}\label{subsec:3.2}
+\subsection{Computational Intractability}\label{subsec:3.2}
 There are three main types of problems. 
 \begin{itemize}
     \item {\bf Decision problems.} Does there \emph{exist} a vertex cover of 
@@ -323,14 +323,14 @@ that they are indeed $\NP$-complete via reductions.
         and $b = \frac12 \sum_{j=1}^n s_j$, does there exist a subset 
         $J \subseteq I = \{1, \dots, n\}$ such that 
         \[ b = \sum_{j\in J} s_j = \sum_{j\in I\setminus J} s_j? \] 
-        \item {\sc $3$-Partition}: Given $3n$ positive integers 
-        $s_1, \dots, s_{3n}$, and an integer $b$ satisfying 
-        $\frac{b}{4} < s_j < \frac{b}{2}$ for all $j \in \{1, \dots, 3n\}$ 
-        and $b = \frac1n \sum_{j=1}^{3n} s_j$, do there exist 
-        $n$ pairwise disjoint three-element subsets $S_j \subseteq 
-        \{1, \dots, 3n\}$ such that 
+        \item {\sc $3$-Partition}: Given $3t$ positive integers 
+        $s_1, \dots, s_{3t}$, and an integer $b$ satisfying 
+        $\frac{b}{4} < s_j < \frac{b}{2}$ for all $j \in \{1, \dots, 3t\}$ 
+        and $\sum_{j=1}^{3t} s_j = t \cdot b$, do there exist 
+        $t$ pairwise disjoint three-element subsets $S_j \subseteq 
+        \{1, \dots, 3t\}$ such that 
         \[ b = \sum_{j\in J_i} s_j \] 
-        for all $j \in \{1, \dots, n\}$? 
+        for all $j \in \{1, \dots, t\}$? 
     \end{itemize}
 \end{exmp}
 
@@ -343,9 +343,9 @@ Next, we define what it means to be $\NP$-hard.
 
 Intuitively, $\NP$-hard problems are ``at least as hard as the hardest 
 problems in $\NP$''. These problems are not necessarily in $\NP$, and they 
-do not have to be decision problems. 
-For instance, given an $\NP$-complete decision problem, the optimization 
-problem corresponding to it is $\NP$-hard. 
+do not have to be decision problems. For instance, given an $\NP$-complete 
+decision problem, the optimization problem corresponding to it is $\NP$-hard. 
+The $\NP$-hard problems which are in $\NP$ are in fact $\NP$-complete. 
 
 There are two categories of $\NP$-hard problems.  
 \begin{itemize}
@@ -373,27 +373,320 @@ On the other hand, we can show that a scheduling problem is $\NP$-hard
 in the strong sense if {\sc 3-Partition} (or a similar problem) can be 
 reduced to this problem with a polynomial time algorithm. 
 
-\subsection{PTAS for the Knapsack Problem}\label{subsec:3.3}
-A {\bf polynomial time approximation scheme (PTAS)} is a
-$(1 + \eps)$-approximation algorithm for any constant $\eps > 0$. 
-While a PTAS produces arbitrarily high quality solutions, the consequence 
-is that it trades off accuracy for time. Here, we will give a PTAS for the 
-{\sc Knapsack} problem via rounding and scaling. 
-
+\subsection{{\bf NP}-completeness of the Knapsack Problem}\label{subsec:3.3}
 In the {\sc Knapsack} problem, we are given $n$ objects and a knapsack. 
 Each item $i$ has value $v_i > 0$ and weight $w_i > 0$. The knapsack 
 has weight limit $W$. The goal is to fill the knapsack as to maximize 
 the total value. 
 
+\begin{exmp}{exmp:3.16}
+    Consider the following instance of the {\sc Knapsack} problem.
+    \begin{align*}
+        \begin{array}{c|ccccc}
+            i & 1 & 2 & 3 & 4 & 5 \\ \hline 
+            v_i & 1 & 6 & 18 & 22 & 28 \\ 
+            w_i & 1 & 2 & 5 & 6 & 7
+        \end{array}
+    \end{align*}
+    Then the set $\{3, 4\}$ has total weight $11$ and value $40$. 
+\end{exmp}
+
 First, we formulate the {\sc Knapsack} problem as a decision problem
-and give a brief sketch that it is $\NP$-complete. 
+and give a proof that it is $\NP$-complete. 
 Given a set $X$, weights $w_i \geq 0$, values $v_i \geq 0$, a weight 
 limit $W$, and a target value $V$, is there a subset $S \subseteq X$ 
 such that $\sum_{i\in S} w_i \leq W$ and $\sum_{i\in S} v_i \geq V$? 
+We can see that {\sc Knapsack} is in $\NP$ because given a subset $S \subseteq X$, 
+it is easy to add up the weights and values in order to verify that they 
+satisfy the desired bounds. 
 
 The {\sc Subset-Sum} problem is the following: given $n$ natural numbers 
 $w_1, \dots, w_n$ and an integer $W$, is there a subset that adds up to 
 exactly $W$?
 
-We know that {\sc Sat} is $\NP$-complete, and one can show that 
-\[ \textsc{Sat} \leq_P \textsc{Subset-Sum} \leq_P \textsc{Knapsack}. \] 
+We know that {\sc Sat} is $\NP$-complete, and we will show that 
+\[ \textsc{Sat} \leq_P \textsc{3-Sat} \leq_P \textsc{Subset-Sum} \leq_P 
+\textsc{Knapsack}. \] 
+It is not hard to see that these intermediate problems are in $\NP$, 
+so they will also be $\NP$-complete. 
+
+\begin{prop}{prop:3.17}
+    We have $\textsc{Sat} \leq_P \textsc{3-Sat}$.
+\end{prop}
+\begin{pf}
+    Consider an instance $\Phi$ of {\sc Sat}. We construct an instance $\Phi'$ of 
+    {\sc $3$-Sat} by dealing with each clause $C$ in $\Phi$ as follows:
+    \begin{enumerate}[(1)]
+        \item If $C$ already has $3$ literals, leave it alone. 
+        \item If $C$ has fewer than $3$ literals, just duplicate one of the 
+        literals. For example, if $C = (x_1 \vee \overline{x_2})$, then 
+        replace the clause by $(x_1 \vee x_1 \vee \overline{x_2})$. 
+        \item Suppose that $C = (\ell_1 \vee \ell_2 \vee \cdots \vee \ell_n)$ 
+        where $n > 3$. Create new variables $\lambda_i$ and replace clause 
+        $C$ with the clauses 
+        \[ (\ell_1 \vee \ell_2 \vee {\color{blue} \lambda_1}) 
+        \wedge ({\color{blue} \overline{\lambda_1}} \vee \ell_3 \vee 
+        {\color{blue} \lambda_2}) \wedge ({\color{blue} \overline{\lambda_2}} 
+        \vee \ell_4 \vee {\color{blue} \lambda_3}) \wedge \cdots 
+        \wedge ({\color{blue} \overline{\lambda_{n-4}}} \vee \ell_{n-2} \vee
+        {\color{blue} \lambda_{n-3}}) \wedge ({\color{blue} 
+        \overline{\lambda_{n-3}}} \vee \ell_{n-1} \vee \ell_n). \] 
+    \end{enumerate}
+    We show that this replacement does not affect whether the formula is 
+    satisfiable. Suppose that $\Phi$ were satisfiable. Let $A$ be 
+    an assignment of truth values that makes $\Phi$ true. Then for 
+    every clause $C$ in $\Phi$, at least one literal is true. Let 
+    $\ell_i$ be a true literal in $C$. Set $\lambda_j = \textsf{T}$ for 
+    $j = 1, \dots, i-2$ and $\lambda_j = \textsf{F}$ for $j = i-1, \dots, 
+    n-3$. Then it can be checked that all the clauses in (3) have a true 
+    literal, so $\Phi'$ is satisfiable. 
+
+    Conversely, suppose that $\Phi'$ is satisfiable. Take an assignment 
+    of truth values so that $\Phi'$ is true. We claim that at least one of 
+    the $\ell_i$ is true. Assume towards a contradiction that they are all 
+    false. The first clause $(\ell_1 \vee \ell_2 \vee \lambda_1)$ means that 
+    $\lambda_1$ must be true. Following this train of thought means that 
+    $\lambda_i$ is true for all $i = 1, \dots, n-3$. But then the last 
+    clause $(\overline{\lambda_{n-3}} \vee \ell_{n-1} \vee \ell_n)$ is 
+    false, which is a contradiction. 
+\end{pf}
+
+\begin{prop}{prop:3.18}
+    We have $\textsc{3-Sat} \leq_P \textsc{Subset-Sum}$.
+\end{prop}
+\begin{pf}
+    This reduction is fairly tricky. Take an instance $\Phi$ of {\sc $3$-Sat},
+    and suppose that it has $n$ variables $x_1, \dots, x_n$ and 
+    $m$ clauses $C_1, \dots, C_m$. For each variable $x_i$, we construct 
+    numbers $t_i$ and $f_i$ of $n+m$ digits. 
+    \begin{enumerate}[(1)]
+        \item The $i$-th digit of $t_i$ and $f_i$ is equal to $1$. 
+        \item For $n+1 \leq j \leq n+m$, the $j$-th digit of $t_i$ is 
+        equal to $1$ if $x_i$ is in clause $C_{j-n}$.
+        \item For $n+1 \leq j \leq n+m$, the $j$-th digit of $f_i$ is 
+        equal to $1$ if $\overline{x_i}$ is in clause $C_{j-n}$. 
+        \item All other digits of $t_i$ and $f_i$ are $0$. 
+    \end{enumerate}
+    For example, if $\Phi = (x_1 \vee x_2 \vee x_3) \wedge 
+    (\overline{x_1} \vee \overline{x_2} \vee x_3) \wedge 
+    (\overline{x_1} \vee x_2 \vee \overline{x_3}) \wedge 
+    (x_1 \vee \overline{x_2} \vee x_3)$, then $t_i$ and $f_i$ are as follows. 
+    \begin{align*}
+        \begin{array}{c|ccc|cccc}
+            & i=1 & i=2 & i=3 & j=1 & j=2 & j=3 & j=4 \\ \hline 
+            t_1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 \\ 
+            f_1 & 1 & 0 & 0 & 0 & 1 & 1 & 0 \\ 
+            t_2 & 0 & 1 & 0 & 1 & 0 & 1 & 0 \\ 
+            f_2 & 0 & 1 & 0 & 0 & 1 & 0 & 1 \\ 
+            t_3 & 0 & 0 & 1 & 1 & 1 & 0 & 1 \\ 
+            f_3 & 0 & 0 & 1 & 0 & 0 & 1 & 0
+        \end{array}
+    \end{align*}
+    Next, for each clause $C_j$, we construct numbers $x_j$ and $y_j$ 
+    also of $n+m$ digits. 
+    \begin{enumerate}[(1)]
+        \item The $(n+j)$-th digit of $x_j$ and $y_j$ is equal to $1$. 
+        \item All other digits of $x_j$ and $y_j$ are $0$. 
+    \end{enumerate}
+    For the same formula $\Phi$ as above, $x_j$ and $y_j$ are as follows. 
+    \begin{align*}
+        \begin{array}{c|ccc|cccc}
+            & i=1 & i=2 & i=3 & j=1 & j=2 & j=3 & j=4 \\ \hline 
+            x_1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\ 
+            y_1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\ 
+            x_2 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\ 
+            y_2 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\ 
+            x_3 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\ 
+            y_3 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+            x_4 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\ 
+            y_4 & 0 & 0 & 0 & 0 & 0 & 0 & 1
+        \end{array}
+    \end{align*}
+    Finally, we construct a sum number $W$ of $n+m$ digits by letting 
+    the $j$-th digit of $W$ be $1$ for $j = 1, \dots, n$, and 
+    $3$ for $j = n+1, \dots, n+m$. This gives us our {\sc Subset-Sum} 
+    instance with natural numbers $t_i, f_i, x_j, y_j$ and desired 
+    sum $W$. 
+
+    We show that $\Phi$ is satisfiable if and only if a solution to the 
+    {\sc Subset-Sum} instance exists. For the forward direction, 
+    consider an assignment of truth values that makes $\Phi$ true. 
+    Take $t_i$ if $x_i$ is true and $f_i$ if $x_i$ is false. Take 
+    $x_j$ if the number of true literals in $C_j$ is at most $2$, 
+    and take $y_j$ if the number of true literals in $C_j$ is $1$. 
+    Then the sum of these numbers will yield $W$. 
+    
+    \newpage 
+    For example, consider our above formula 
+    $\Phi = (x_1 \vee x_2 \vee x_3) \wedge 
+    (\overline{x_1} \vee \overline{x_2} \vee x_3) \wedge 
+    (\overline{x_1} \vee x_2 \vee \overline{x_3}) \wedge 
+    (x_1 \vee \overline{x_2} \vee x_3)$ which is satisfied by 
+    taking $x_1 = x_2 = x_3 = \textsf{T}$. 
+    \begin{align*}
+        \begin{array}{c|ccc|cccc}
+            & i=1 & i=2 & i=3 & j=1 & j=2 & j=3 & j=4 \\ \hline 
+            t_1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 \\ 
+            t_2 & 0 & 1 & 0 & 1 & 0 & 1 & 0 \\ 
+            t_3 & 0 & 0 & 1 & 1 & 1 & 0 & 1 \\ \hline 
+            x_2 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\ 
+            y_2 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\ 
+            x_3 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+            y_3 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\ 
+            x_4 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\ \hline 
+            W   & 1 & 1 & 1 & 3 & 3 & 3 & 3
+        \end{array}
+    \end{align*}
+    Conversely, suppose that a solution to the {\sc Subset-Sum} problem exists. 
+    Set $x_i = {\sf T}$ if $t_i$ is in the subset, and $x_i = {\sf F}$ if 
+    $f_i$ is in the subset. Notice that exactly one number per variable 
+    must be in the subset, for otherwise one of the first $n$ digits of the 
+    sum is greater than $1$. This means that this assignment is consistent. 
+    Moreover, at least one variable number corresponding to a literal 
+    in a clause must be in the subset. Otherwise, one of the next $m$ 
+    digits would be smaller than $3$. In particular, each clause in 
+    $\Phi$ is satisfied. 
+\end{pf}
+
+\begin{prop}{prop:3.19}
+    We have $\textsc{Subset-Sum} \leq_P \textsc{Knapsack}$. 
+\end{prop}
+\begin{pf}
+    Given an instance $(\{u_1, \dots, u_n\}, U)$ of {\sc Subset-Sum}, 
+    create a {\sc Knapsack} instance by taking $v_i = w_i = u_i$ and 
+    $V = W = U$. The conditions in the {\sc Knapsack} problem are then 
+    $\sum_{i\in S} u_i \leq U$ and $\sum_{i\in S} u_i \geq U$, and thus 
+    $\sum_{i\in S} u_i = U$. So there is a solution to the {\sc Subset-Sum} 
+    instance if and only if there is a solution to the {\sc Knapsack}
+    instance. 
+\end{pf}
+
+\subsection{FPTAS for the Knapsack Problem}\label{subsec:3.4}
+We will first discuss two dynamic programming approaches to the 
+{\sc Knapsack} problem. 
+\begin{itemize}
+    \item {\bf Approach 1.} Let $\text{OPT}(i, w)$ be the maximum 
+    value subset of items $1, \dots, i$ with weight limit $w$. 
+
+    If $\text{OPT}$ does not select item $i$, then $\text{OPT}$ selects 
+    the best of $1, \dots, i-1$ up to the weight limit $w$. 
+    On the other hand, if $\text{OPT}$ does select item $i$, then 
+    there is a new weight limit $w - w_i$, and $\text{OPT}$ selects the 
+    best of $1, \dots, i-1$ up to the weight limit $w - w_i$. Thus, 
+    we can recursively compute 
+    \[ \text{OPT}(i, w) = \begin{cases}
+        0, & \text{if } i = 0, \\ 
+        \text{OPT}(i-1, w), & \text{if } w_i > w, \\ 
+        \max\{\text{OPT}(i-1, w), v_i + \text{OPT}(i-1, w-w_i)\}, & 
+        \text{otherwise.} 
+    \end{cases} \] 
+    We see that this approach computes the optimal value in $O(nW)$ time, 
+    which is not polynomial in the input size; however, it is polynomial 
+    in the input size if the weights are small integers. 
+
+    \item {\bf Approach 2.} Let $\text{OPT}(i, v)$ be the minimum weight 
+    of a knapsack for which we can obtain a solution of value $\geq v$ 
+    using a subset of items $1, \dots, i$. Notice that the optimal value 
+    is the largest value $v$ such that $\text{OPT}(n, v) \leq W$. 
+
+    If $\text{OPT}$ does not select item $i$, then $\text{OPT}$ selects the 
+    best of $1, \dots, i-1$ that achieves value $\geq v$. On the other hand, 
+    if $\text{OPT}$ does select item $i$, then it consumes weight $w_i$, 
+    and the remaining items need to achieve value $\geq v - v_i$. 
+    In particular, $\text{OPT}$ selects the best of $1, \dots, i-1$ that
+    achieves value $\geq v - v_i$. Therefore, we can recursively compute 
+    \[ \text{OPT}(i, v) = \begin{cases}
+        0, & \text{if } v \leq 0, \\ 
+        \infty, & \text{if } i = 0 \text{ and } v > 0, \\ 
+        \min\{\text{OPT}(i-1, v), w_i + \text{OPT}(i-1, v-v_i)\}, & 
+        \text{otherwise.} 
+    \end{cases} \] 
+    We see that this approach computes the optimal value in $O(n^2 v_{\max})$ 
+    time, where $v_{\max}$ is the maximum of the item values. Indeed, 
+    it is easy to see that the optimal value $V^*$ is bounded above by 
+    $nv_{\max}$. There is one subproblem for each item and for each 
+    value $v \leq V^*$, and it takes $O(1)$ time for each subproblem. 
+    Again, this is not polynomial in the input size, but it is polynomial time 
+    if the values are small integers. 
+\end{itemize}
+
+In fact, both these dynamic programming approaches are pseudo-polynomial
+time algorithms for {\sc Knapsack}, so the {\sc Knapsack} problem is 
+$\NP$-complete in the ordinary sense. 
+
+We now work towards an approximation scheme for solving {\sc Knapsack} instances. 
+
+\begin{defn}{defn:3.20}
+    \begin{itemize}
+        \item Let $\Pi$ be an optimization problem, and let $I$ be 
+        an instance of $\Pi$ with optimal value $\text{OPT}$. 
+        An {\bf approximation scheme} for $\Pi$ is an algorithm such that 
+        given $I$ together with an error parameter $\eps > 0$, returns a
+        (feasible) solution whose objective value is $\geq (1 - \eps) 
+        \text{OPT}$ if $\Pi$ is a maximization problem, or $\leq (1 + \eps) 
+        \text{OPT}$ if $\Pi$ is a minimization problem.
+        \item An approximation scheme is called a {\bf polynomial time 
+        approximation scheme (PTAS)} if for every fixed $\eps > 0$, the 
+        running time of the algorithm is polynomial in the size of the 
+        instance $|I|$. Note that the running time of a PTAS may depend 
+        on $1/\eps$ and may grow rapidly respect to it, but for a PTAS, 
+        only the running time with respect to $|I|$ is relevant. 
+        \item A {\bf fully polynomial time approximation scheme (FPTAS)} 
+        is a PTAS that is also polynomial in $1/\eps$. In other words, 
+        it is polynomial in both $1/\eps$ and the size of the instance $|I|$. 
+    \end{itemize}
+\end{defn}
+
+We can give an FPTAS for the {\sc Knapsack} problem by making use of our 
+second dynamic programming approach above. Recall that it runs in time 
+$O(n^2 v_{\max})$, so if $v_{\max}$ is polynomial in $n$, then the 
+dynamic programming approach is also polynomial in $n$. Therefore, 
+a rough sketch of the algorithm would be as follows: 
+\begin{enumerate}[(1)]
+    \item Round all the item values to lie in a smaller range. 
+    \item Run the second dynamic programming approach on the rounded instance. 
+    \item Return the optimal items from the rounded instance. 
+\end{enumerate}
+Now, consider step (1) where we round the values. Let $v_{\max}$ be the 
+largest value in the original instance. Given a precision factor 
+$0 < \eps \leq 1$, let $\theta = \eps v_{\max} / (2n)$ be the scaling 
+factor we apply to the values. Define the scaled values by 
+\[ \hat{v}_i = \left\lceil \frac{v_i}{\theta} \right\rceil, \] 
+and the values obtained by rescaling to the original problem by 
+\[ \bar{v}_i = \left\lceil \frac{v_i}{\theta} \right\rceil \theta. \] 
+An observation we can make is that optimal solutions to the problem 
+using $\bar v$ are equivalent to optimal solutions to the problem using 
+$\hat v$. Therefore, an optimal solution using $\hat v$ is nearly optimal 
+for the original instance. Since $\hat v$ is small, using our dynamic 
+programming algorithm is fast. 
+
+\begin{theo}{theo:3.21}
+    If $S$ is a solution found by the rounding algorithm and $S^*$ is 
+    any other feasible solution, then 
+    \[ (1 + \eps) \sum_{i\in S} v_i \geq \sum_{i\in S^*} v_i. \] 
+\end{theo}
+\begin{pf}
+    Let $S^*$ be any feasible solution satisfying the weight constraints. 
+    Then we have 
+    \begin{align*}
+        \sum_{i\in S^*} v_i 
+        &\leq \sum_{i\in S^*} \bar{v}_i & \text{(always rounding up)} \\ 
+        &\leq \sum_{i\in S} \bar{v}_i & \text{(solve rounded up instance optimally)} \\ 
+        &\leq \sum_{i\in S} (v_i + \theta) & \text{(rounding by at most $\theta$)} \\ 
+        &\leq \sum_{i\in S} v_i + n\theta & \text{(since $|S| \leq n$)} \\ 
+        &= \sum_{i\in S} v_i + \frac12 \eps v_{\max}. & \text{(since $\theta = \eps v_{\max}/(2n)$)}
+    \end{align*}
+    Notice that this argument applies to the subset $S^*$ 
+    containing only the item of largest value, which means 
+    \[ v_{\max} \leq \sum_{i \in S} v_i + \frac12 \eps v_{\max} \leq 
+    \sum_{i\in S} v_i + \frac12 v_{\max}, \] 
+    where the last inequality is because $0 < \eps \leq 1$. Rearranging 
+    the above gives 
+    \[ v_{\max} \leq 2 \sum_{i\in S} v_i, \] 
+    and we can complete the above chain of inequalities to get 
+    \[ \sum_{i\in S^*} v_i \leq \sum_{i\in S} v_i + \frac12 \eps v_{\max} 
+    \leq (1 + \eps) \sum_{i\in S} v_i. \qedhere \] 
+\end{pf}
+
+Thus, we can conclude that our above algorithm is an FPTAS for the 
+{\sc Knapsack} problem. 

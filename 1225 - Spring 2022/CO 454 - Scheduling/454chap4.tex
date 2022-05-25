@@ -1,0 +1,39 @@
+\section{More Single Machine Models} \label{sec:4}
+
+\subsection{Maximum Lateness with Release Dates} \label{subsec:4.1}
+We have already seen in Section~\ref{subsec:2.3} that there is a polynomial 
+time algorithm to solve $(1\;\|\;L_{\max})$ instances. This was the 
+Earliest Due Date (EDD) rule, which placed the jobs in increasing order of the 
+due dates. We also saw that this was a special case of $(1 \mid prec 
+\mid h_{\max})$, for which there was also an efficient algorithm, namely 
+Lowest Cost Last (LCL). 
+
+But what if we introduce release dates to the $(1\;\|\;L_{\max})$ problem? 
+It turns out that this generalization, without preemption, is significantly 
+harder than the problem where all jobs are available at time $0$. Moreover, 
+the optimal schedule is not necessarily a non-delay schedule. It can be 
+advantageous in this case to keep the machine idle before the release of a 
+new job. 
+
+\begin{theo}{theo:4.1}
+    The problem $(1 \mid r_j \mid L_{\max})$ is strongly $\NP$-hard. 
+\end{theo}
+\begin{pf}
+    This proof is based on the fact that {\sc $3$-Partition} (as described 
+    in Example~\ref{exmp:3.14}) reduces to $(1 \mid r_j \mid L_{\max})$. 
+    Suppose that we are given integers $a_1, \dots, a_{3t}, b$ such that 
+    $\frac{b}{4} < a_j < \frac{b}{2}$ and $\sum_{j=1}^{3t} a_j = t \cdot b$. 
+    We construct an instance of $(1 \mid r_j \mid L_{\max})$ with 
+    $n = 4t - 1$ as follows: 
+    \begin{itemize}
+        \item For $j = 1, \dots, t-1$, we set $r_j = jb + (j-1)$, $p_j = 1$, 
+        $d_j = jb + j$. 
+        \item For $j = t, \dots, 4t-1$, we set $r_j = 0$, $p_j = a_{j-t+1}$, 
+        and $d_j = tb + (t-1)$. 
+    \end{itemize}
+    Notice that a schedule with $L_{\max} \leq 0$ exists if and only if 
+    every job $j \in \{1, \dots, t-1\}$ can be processed between 
+    $r_j$ and $d_j = r_j + p_j$. This can be done if and only if the remaining 
+    jobs can be partitioned over the $t$ intervals of length $b$, which can be 
+    done if and only if {\sc $3$-Partition} has a solution. 
+\end{pf}
