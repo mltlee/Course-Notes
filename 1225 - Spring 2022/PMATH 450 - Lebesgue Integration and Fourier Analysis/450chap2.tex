@@ -837,11 +837,11 @@ Lebesgue measurable function.
 
 \begin{remark}{remark:2.24}
     This definition is reminiscent of the characterization of continuous
-    functions via open sets. Suppose that $f : D \to \R$ is continuous 
-    where $D \in {\cal L}$. Then for every open subset $U \subseteq \R$, 
-    we know that $V = f^{-1}(U)$ is open in $D$. Then $V \cap D$ is open in 
-    $\R$ and $V \in {\cal L}$ since it is a Borel set, so $f$ is Lebesgue 
-    measurable. 
+    functions via open sets; in fact, it is a generalization of it. 
+    Suppose that $f : D \to \R$ is continuous where $D \in {\cal L}$. Then for 
+    every open subset $U \subseteq \R$, we know that $f^{-1}(U)$ is relatively 
+    open in $D$; that is, it is of the form $D \cap V$ where $V \subseteq \R$ 
+    is open, so $f^{-1}(U) \in {\cal L}$. 
 \end{remark}
 
 Thinking more abstractly, we can generalize the above definition where the 
@@ -870,3 +870,152 @@ is a topological space.
     We leave the proof as an exercise. Hint: Use the observation above where 
     the preimage is closed under all the operations of a $\sigma$-algebra. 
 \end{pf}
+
+\begin{prop}{prop:2.27}
+    Let $D \in {\cal L}$, and let $f : D \to \R$ be a Lebesgue measurable 
+    function. The following are equivalent: 
+    \begin{enumerate}[(1)]
+        \item $f$ is Lebesgue measurable. 
+        \item $f^{-1}((\alpha, \infty)) \in {\cal L}$ for all $\alpha \in \R$. 
+        \item $f^{-1}([\alpha, \infty)) \in {\cal L}$ for all $\alpha \in \R$. 
+        \item $f^{-1}((-\infty, \alpha)) \in {\cal L}$ for all $\alpha \in \R$. 
+        \item $f^{-1}((-\infty, \alpha]) \in {\cal L}$ for all $\alpha \in \R$. 
+    \end{enumerate}
+\end{prop}
+\begin{pf}
+    It is clear that (1) implies (2) since $(\alpha, \infty)$ is open
+    for all $\alpha \in \R$. For (2) implies (3), observe that 
+    \[ [\alpha, \infty) = \bigcap_{n=1}^\infty (\alpha - 1/n, \infty), \] 
+    and since the inverse image preserves $\sigma$-algebra operations, 
+    we obtain 
+    \[ f^{-1}([\alpha, \infty)) = f^{-1}\!\left( \bigcap_{n=1}^\infty 
+    (\alpha - 1/n, \infty) \right) = \bigcap_{n=1}^\infty 
+    f^{-1}((\alpha - 1/n, \infty)) \in {\cal L}. \] 
+    For (3) implies (4), we have $(-\infty, \alpha) = [\alpha, \infty)^c$ 
+    and so 
+    \[ f^{-1}((-\infty, \alpha)) = f^{-1}([\alpha, \infty)^c) 
+    = (f^{-1}([\alpha, \infty)))^c \in {\cal L}. \] 
+    For (4) implies (5), we can use a similar argument to (2) implies (3), 
+    noting that 
+    \[ (-\infty, \alpha] = \bigcap_{n=1}^\infty (-\infty, \alpha + 1/n). \] 
+    Finally, for (5) implies (1), it suffices to show that $f^{-1}((a, b)) 
+    \in {\cal L}$ for every bounded open interval $(a, b)$. Indeed, we 
+    see that 
+    \[ (a, b) = (-\infty, a]^c \cap \bigcup_{n=1}^\infty (-\infty, 
+    b - 1/n], \] 
+    and taking the inverse image completes the proof. 
+\end{pf}
+
+Using this characterization, we can see that there are many more examples 
+of measurable functions other than continuous functions. 
+
+\begin{exmp}{exmp:2.28}
+    \begin{enumerate}[(1)]
+        \item For a set $E \in {\cal L}$, the characteristic function 
+        $\chi_E : \R \to \{0, 1\}$ on $E$ given by 
+        \[ \chi_E(x) = \begin{cases}
+            1, & \text{if } x \in E, \\ 
+            0, & \text{if } x \notin E 
+        \end{cases} \]
+        is measurable, because given $\alpha \in \R$, we have 
+        \[ f^{-1}((\alpha, \infty)) = \begin{cases}
+            E, & \text{if } \alpha \in (0, 1), \\ 
+            \varnothing, & \text{if } \alpha \geq 1, \\ 
+            \R, & \text{if } \alpha \leq 1, 
+        \end{cases} \] 
+        all of which are Lebesgue measurable sets. 
+
+        \item Let $f : \R \to \R$ be a non-decreasing function. 
+        Then $f$ is Lebesgue measurable since given $\alpha \in \R$, we have 
+        \[ f^{-1}((\alpha, \infty)) = \begin{cases}
+            \varnothing, & \text{if $f(x) \leq \alpha$ for all $x \in \R$,} \\ 
+            \R, & \text{if $f(x) > \alpha$ for all $x \in \R$,} \\ 
+            [a, \infty), & \text{if $f(x) > \alpha$ for all $x \geq a$,} \\ 
+            (a, \infty), & \text{if $f(x) > \alpha$ for all $x > a$.}
+        \end{cases} \] 
+        A similar computation shows that non-increasing functions are 
+        Lebesgue measurable, and thus all monotone functions are Lebesgue 
+        measurable. 
+
+        \item Let $D \in {\cal L}$. Let $Y$ and $Z$ be topological spaces. 
+        Let $g : Y \to Z$ be a continuous function, and let $f : D \to Y$ 
+        be Lebesgue measurable. Then $g \circ f : D \to Z$ is Lebesgue 
+        measurable. Indeed, if $U \subseteq Z$ is open, then 
+        $g^{-1}(U)$ is open in $Y$. From this, we see that 
+        \[ f^{-1}(g^{-1}(U)) = (g \circ f)^{-1}(U) \in {\cal L}. \] 
+        More generally, we can allow for $g : Y \to Z$ to be {\bf Borel 
+        measurable} where $g^{-1}(U)$ is a Borel set (rather than having 
+        to be open) for any open subset $U \subseteq Z$, and the same proof 
+        follows. 
+    \end{enumerate}
+\end{exmp}
+
+It would be nice to extend Lebesgue measurability to complex-valued functions 
+$f : D \to \C$ such that by taking the typical decomposition 
+$f = u + iv$ of real-valued functions $u, v : D \to \R$, we have that $f$ 
+is Lebesgue measurable if and only if $u$ and $v$ are. This is true, 
+but first, we will prove a more general result. 
+
+\begin{theo}{theo:2.29}
+    Let $D \in {\cal L}$, and let $u, v : D \to \R$ be Lebesgue measurable 
+    functions. Let $Y$ be a topological space and let $\Phi : \R^2 
+    \to Y$ be a continuous function. Then $h : D \to Y$ given by 
+    \[ h(x) = \Phi(u(x), v(x)) \] 
+    is also Lebesgue measurable. 
+\end{theo}
+\begin{pf}
+    Let $f : D \to \R^2$ be defined by $f(x) = (u(x), v(x))$. Then we have 
+    $h = \Phi \circ f$. Since $\Phi$ is continuous, it is enough to 
+    show that $f$ is measurable due to part (3) of Example~\ref{exmp:2.28}.
+    
+    Recall that the topology on $\R^2$ is generated by bounded open rectangles 
+    \[ U = (a, b) \times (c, d), \] 
+    so it suffices to show that $f^{-1}(U) \in {\cal L}$. We see that 
+    \[ f^{-1}(U) = u^{-1}((a, b)) \cap v^{-1}((c, d)). \] 
+    Since $u$ and $v$ are Lebesgue measurable, both the above preimages 
+    are in ${\cal L}$, so we deduce that $f^{-1}(U) \in {\cal L}$. 
+\end{pf}
+
+\begin{cor}{cor:2.30}
+    Let $D \in {\cal L}$. 
+    \begin{enumerate}[(a)]
+        \item If $u, v : D \to \R$ is measurable, then 
+        $f = u+iv : D \to \C$ is also measurable. 
+        \item If $f : D \to \C$ is measurable, then $u = \text{Re}(f)$,
+        $v = \text{Im}(f)$, and $|f|$ are all measurable. 
+        \item If $f, g : D \to \C$ are measurable, then $\alpha f$, 
+        $f + g$, and $fg$ are measurable for all $\alpha \in \C$. 
+    \end{enumerate}
+\end{cor}
+\begin{pf}~
+    \begin{enumerate}[(a)]
+        \item We can consider the topological isomorphism for $\R^2 \cong \C$. 
+        Taking $\Phi(u, v) = u + iv$ in Theorem~\ref{theo:2.29}, we obtain the 
+        result. 
+        \item Notice that $\text{Re}$, $\text{Im}$, and $|\cdot|$ are all 
+        continuous. Taking the composition of $f$ with these functions and 
+        applying part (3) of Example~\ref{exmp:2.28} gives the result. 
+        \item For any $\alpha \in \C$, it is clear that $\alpha f$ is 
+        measurable. Assume for the moment that $f$ and $g$ are real-valued 
+        functions. Applying Theorem~\ref{theo:2.29} with $\Phi(s, t) 
+        = s + t$ and $\Phi(s, t) = st$ which are both continuous, we 
+        find that $f + g$ and $fg$ are measurable in this special case. 
+
+        Now, suppose that $f$ and $g$ are complex-valued. Suppose that 
+        $f = u + iv$ and $g = w + iy$ where $u, v, w, y$ are real-valued. 
+        By (1), we see that $u, v, w, y$ are measurable. Then 
+        $f + g = (u + w) + i(v + y)$ and $fg = (uw - vy) + i(uy + vw)$ 
+        are also measurable by what we have just shown. \qedhere 
+    \end{enumerate}
+\end{pf}
+
+\begin{defn}{defn:2.31}
+    Let $f : D \to \C$ and $g : E \to \C$ be functions where $D, E \in {\cal L}$. 
+    We say that $f = g$ {\bf almost everywhere (a.e.)} if the set 
+    \[ \{f \neq g\} := E\,\Delta\,D \cup \{x \in E \cap D : f(x) \neq g(x)\} \] 
+    has Lebesgue measure zero, where $E\,\Delta\,D$ denotes the symmetric 
+    difference of $E$ and $D$. 
+\end{defn}
+
+We can think of $f$ and $g$ as essentially the ``same'' function, even if 
+$D$ and $E$ have trivial intersection. 
