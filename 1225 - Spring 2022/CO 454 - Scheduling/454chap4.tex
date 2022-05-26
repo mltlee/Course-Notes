@@ -110,4 +110,18 @@ ones are timely. This algorithm runs in $O(n\log n)$ time.
     Then we obtain $S_1 = \{3, 4, 5\}$ and $S_2 = \{1, 2\}$, so $\text{OPT} = 2$ for 
     this instance. 
 \end{exmp}
+
+The following lemma is the key to proving that the Moore-Hodgson algorithm is 
+optimal for $(1\;\|\;\sum U_j)$. We will assume that the jobs are already scheduled 
+in EDD. 
+
+\begin{lemma}{lemma:4.5}
+    Suppose there is at least one late job in the EDD sequence $1, \dots, n$. 
+    Let $k$ be the first late job in the EDD sequence, and let $m$ be the first 
+    job rejected by the Moore-Hodgson algorithm. Then there is an optimal 
+    schedule which rejects $m$. 
+\end{lemma}
+\begin{pf}
+    % TODO: See handout. 
+\end{pf}
  
