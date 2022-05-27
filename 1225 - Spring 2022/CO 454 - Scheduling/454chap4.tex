@@ -253,3 +253,75 @@ in EDD.
 \end{pf}
 
 \subsection{The Total Tardiness} \label{subsec:4.3}
+In practice, minimizing the number of tardy jobs $\sum U_j$ cannot be the 
+only objective to measure how due dates are being met. Only minimizing 
+the number of late jobs will force some jobs to have to wait for an 
+unacceptably long time to complete. If we instead minimize the total 
+tardiness, it is less likely that the wait for any given job will be 
+unacceptably long. 
+
+The problem $(1\;\|\;\sum T_j)$ has received an enormous amount of attention 
+in literature. For many years, its computational complexity remained open; 
+its $\NP$-hardness was only established recently in 1990. Since 
+$(1\;\|\;\sum T_j)$ is $\NP$-hard in the ordinary sense, it allows for a 
+pseudo-polynomial time algorithm based on dynamic programming. The 
+algorithm is based on two preliminary results. 
+
+\begin{lemma}{lemma:4.8}
+    If $p_j \leq p_k$ and $d_j \leq d_k$, then there exists an optimal schedule 
+    in which job $j$ is scheduled before job $k$. 
+\end{lemma}
+\begin{pf}
+    We leave the proof as an exercise. This is a standard interchange 
+    argument. 
+\end{pf}
+
+This type of result is useful when an algorithm has to be developed for
+a problem that is $\NP$-hard. Such a result, often referred to as a 
+{\bf dominance result} or {\bf elimination criterion}, often allows one to
+disregard a fairly large number of sequences. Such a dominance result may also 
+be thought of as a set of precedence constraints on the jobs. The more 
+precedence constraints created through such dominance results, the easier the 
+problem becomes.
+
+In the following lemma, the sensitivity of an optimal sequence to the due
+dates is considered. We consider two problem instances, both of which have 
+$n$ jobs with processing times $p_1, \dots, p_n$. The first instance has 
+due dates $d_1, \dots, d_n$. Let $k$ be a fixed job, and let $\hat C_k$ 
+be the latest completion time of job $k$ among all optimal schedules. 
+Then we set the due dates for the second instance to be 
+\[ \hat d_j = \begin{cases}
+    d_j, & \text{if } j \neq k, \\ 
+    \max(d_k, \hat C_k), & \text{if } j = k.
+\end{cases} \] 
+In particular, we are only changing one piece of data, namely the 
+due date of job $k$. 
+
+\begin{lemma}{lemma:4.9}
+    Any optimal sequence with respect to the second instance with due dates 
+    $\hat d_1, \dots, \hat d_n$ is also optimal for the first instance 
+    with due dates $d_1, \dots, d_n$. 
+\end{lemma}
+\begin{pf}
+    We first introduce some notation. Let $\hat S$ be an optimal sequence 
+    such that job $k$ has largest completion time $\hat C_k$ among 
+    all optimal sequences. For an arbitrary sequence $S$, we let 
+    $V(S)$ be the objective value according to the first instance 
+    where job $k$ has due date $d_k$, and $V'(S)$ be the objective 
+    value according to the second instance where job $k$ has due date 
+    $\hat d_k$. 
+
+    Let $S'$ be any optimal sequence for the second instance. Then we have 
+    $V'(\hat S) \geq V'(S')$ since $S'$ is optimal for the second instance. 
+    Moreover, we observe that 
+    \[ V'(\hat S) = V(\hat S) - (\hat C_k - d_k), \] 
+    or equivalently, $V(\hat S) - V'(\hat S) = \hat C_k - d_k$. Finally, 
+    when we switch objectives, the most improvement we can get is 
+    $\hat C_k - d_k$, so we deduce that 
+    \begin{align*}
+        V(S') &\leq V'(S') + (\hat C_k - d_k) \\ 
+        &= V'(S') + V(\hat S) - V'(\hat S) \\ 
+        &\leq V(\hat S).
+    \end{align*}
+    This means that $S'$ is also optimal for the first instance, so we are done. 
+\end{pf}
