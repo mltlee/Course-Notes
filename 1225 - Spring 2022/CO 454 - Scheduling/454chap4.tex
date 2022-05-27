@@ -38,27 +38,107 @@ new job.
     done if and only if {\sc $3$-Partition} has a solution. 
 \end{pf}
 
-% TODO: Discuss the branch-and-bound approach here 
+The $(1 \mid r_j \mid L_{\max})$ problem is important because it often 
+appears as a subproblem in heuristic procedures for flow shop and job shop 
+problems. A branch and bound procedure $(1 \mid r_j \mid L_{\max})$ 
+can be constructed as follows. The branching process may be based on the 
+fact that schedules are developed starting from the beginning of the schedule. 
+There is a single node at level $0$ which is the top of the tree. At this 
+node, no job has been put into any position of the sequence yet. There are 
+$n$ branches going down to $n$ nodes at level $1$. Each node at this level 
+has a specific job put into the first position of the schedule. Then
+at each node, there are $n-1$ jobs remaining whose position in the schedule 
+has yet to be determined. Hence, there are $n-1$ arcs emanating from each 
+node at level $1$ to level $2$, and there are $(n-1) \times (n-2)$ nodes at 
+level $2$. We could continue in this way to enumerate all possible schedules. 
+
+However, it is not necessary to consider every remaining job as a possible 
+candidate for the next position. If the jobs $j_1, \dots, j_{k-1}$ 
+are scheduled as the first $k-1$ jobs at a node at level $k-1$, then 
+we only need to consider job $j_k$ if 
+\[ r_{j_k} < \min_{\ell \in J} \left( \max(t, r_\ell) + p_\ell \right), \] 
+where $J$ denotes the set of jobs not yet scheduled and $t$ denotes the 
+time job $j_k$ is supposed to start. The reason for this condition is because 
+if job $j_k$ does not satisfy this inequality, then selecting the job 
+which minimizes the right-hand side instead of $j_k$ does not increase the 
+value of $L_{\max}$. Therefore, the branching rule is fairly easy. 
+
+There are several ways in which bounds for nodes can be obtained. 
+One easy lower bound for a node at level $k-1$ can be established by 
+scheduling the remaining jobs $J$ according to the \emph{preemptive} 
+EDD rule which is known to be optimal for $(1 \mid r_j, prmp \mid 
+L_{\max})$, and thus provides a lower bound for the problem at hand. 
+If a preemptive EDD rule results in a non-preemptive schedule, then 
+all nodes with a higher lower bound may be disregarded. 
+
+\begin{exmp}{exmp:4.2}
+    Consider the following instance of $(1 \mid r_j \mid L_{\max})$ with 
+    $n = 4$ jobs. 
+    \begin{align*}
+        \begin{array}{c|cccc} 
+            j & 1 & 2 & 3 & 4 \\ \hline 
+            p_j & 4 & 2 & 6 & 5 \\ 
+            r_j & 0 & 1 & 3 & 5 \\ 
+            d_j & 8 & 12 & 11 & 10 
+        \end{array}
+    \end{align*}
+    At level $1$ of the search tree, there are four nodes, namely 
+    $(1, *, *, *)$, $(2, *, *, *)$, $(3, *, *, *)$, and $(4, *, *, *)$. 
+    Notice that we may discard the nodes $(3, *, *, *)$ and 
+    $(4, *, *, *)$ immediately. Indeed, we have $\min_{\ell\in \{1, 2, 3, 4\}} 
+    (\max(t, r_\ell) + p_\ell) = 3$ with $\ell = 2$, and we see that 
+    $r_3 \geq 3$ and $r_4 \geq 5$. 
+
+    Computing a lower bound for node $(1, *, *, *)$ according to the 
+    preemptive EDD rule results in a schedule where job $3$ is processed 
+    during the interval $[4, 5]$, job $4$ is processed during $[5, 10]$, 
+    job $3$ again during $[10, 15]$, and job $2$ during $[15, 17]$. 
+    Then $L_{\max} = 5$ for this schedule, and so $5$ is a lower bound 
+    for the node $(1, *, *, *)$. A similar computation shows that a lower 
+    bound for the node $(2, *, *, *)$ is $7$. 
+
+    Consider now the node $(1, 2, *, *)$ at level $2$. The lower bound 
+    for this node is $6$ and is determined by the non-preemptive 
+    schedule $1, 2, 4, 3$. Next, looking at the node $(1, 3, *, *)$ 
+    at level $2$, the lower bound is $5$ and is determined by the 
+    non-preemptive schedule $1, 3, 4, 2$. Since the lower bound for node 
+    $(1, *, *, *)$ is $5$ and the lower bound for $(2, *, *, *)$ is 
+    greater than $5$, it follows that the schedule $1, 3, 4, 2$ is optimal. 
+\end{exmp}
+
+The problem $(1 \mid r_j, prec \mid L_{\max})$ can be handled in a similar 
+way. From an enumeration point of view, it is even easier than the problem 
+without precedence constraints since many schedules can be ruled out 
+immediately. 
 
 \subsection{The Number of Tardy Jobs} \label{subsec:4.2}
 Recall that $U_j = 0$ if the job is timely and $U_j = 1$ if the job is late. 
 The goal of the problem $(1\;\|\;\sum U_j)$ is to minimize the number of 
-tardy jobs. Notice that it does not matter how late a job is; the only 
+tardy jobs. This objective may at first appear somewhat artificial and 
+seems to be of no practical interest. However, in the real world, it is a 
+performance measure that is often monitored. It is equivalent to the 
+percentage of on time shipments.
+
+Notice that it does not matter how late a job is; the only 
 determining factor is if it is late or not. A solution to this problem can 
 be represented as a partition of the jobs into sets $S_1$ and $S_2$, where 
 $S_1$ is the set of jobs meeting their due dates in Earliest Due Date (EDD)
 order, and $S_2$ is the set of late jobs in an arbitrary order (since the 
 amount of lateness is irrelevant).  
 
-\begin{lemma}{lemma:4.2}
+\begin{lemma}{lemma:4.3}
     Let OPT denote the optimal value for a given instance of $(1\;\|\;\sum U_j)$.
     If the sequence given by the EDD rule has a late job, then $\text{OPT} \geq 1$. 
 \end{lemma}
 \begin{pf}
-    % TODO: See CRS'21 handout. 
+    Let $k$ be the first late job in the EDD sequence. Then we have 
+    \[ C_k = \sum_{i\in[k]} p_i > d_k = \max_{i\in[k]} d_i. \] 
+    Consider any schedule $S$. Let $\ell$ be the last of the jobs in $[k]$ in 
+    $S$. Then the completion time of $\ell$ in $S$ is at least $\sum_{i\in[k]} 
+    p_i > d_\ell$, so $\ell$ is a late job in $S$. 
 \end{pf}
 
-\begin{algo}[Moore-Hodgson]{algo:4.3}
+\begin{algo}[Moore-Hodgson]{algo:4.4}
     \begin{enumerate}
         \item Enumerate the jobs in EDD order. 
         \item Set $S_1 \gets \varnothing$ and $t \gets 0$. 
@@ -81,7 +161,7 @@ rule, and when a job gets late, we rescue the situation by throwing out the job 
 the highest processing time. All removed jobs are considered late, and the remaining 
 ones are timely. This algorithm runs in $O(n\log n)$ time. 
 
-\begin{exmp}{exmp:4.4}
+\begin{exmp}{exmp:4.5}
     Consider the following instance of $(1 \;\|\; \sum U_j)$ with $n = 5$ jobs, 
     where the jobs are already in EDD order.  
     \begin{align*}
@@ -115,13 +195,61 @@ The following lemma is the key to proving that the Moore-Hodgson algorithm is
 optimal for $(1\;\|\;\sum U_j)$. We will assume that the jobs are already scheduled 
 in EDD. 
 
-\begin{lemma}{lemma:4.5}
+\begin{lemma}{lemma:4.6}
     Suppose there is at least one late job in the EDD sequence $1, \dots, n$. 
     Let $k$ be the first late job in the EDD sequence, and let $m$ be the first 
     job rejected by the Moore-Hodgson algorithm. Then there is an optimal 
     schedule which rejects $m$. 
 \end{lemma}
 \begin{pf}
-    % TODO: See handout. 
+    Consider any optimal schedule $\pi$. Let $R_\pi \subseteq [n]$ denote 
+    the subset of rejected (late) jobs, and let $A_\pi = [n] \setminus R_\pi$ 
+    denote the set of timely jobs. By Lemma~\ref{lemma:4.3}, we may assume that 
+    $\pi$ schedules the jobs of $A_\pi$ in EDD order, followed by the 
+    jobs of $R_\pi$ in arbitrary order. 
+
+    If $m \in R_\pi$, we are done. So suppose that $m \notin R_\pi$. 
+    By Lemma~\ref{lemma:4.3}, there is a job $r \in [k]$ other than $m$ 
+    that has been rejected. Consider the schedule $\sigma$ that sequences 
+    the jobs in $A_\sigma = (A_\pi \setminus \{m\}) \cup \{r\}$ in EDD 
+    order first, followed by the jobs in $[n] \setminus A_\sigma = 
+    (R_\pi \setminus \{r\}) \cup \{m\}$ in arbitrary order. We will show that 
+    $\sigma$ schedules all jobs in $A_\sigma$ on time. This will mean that 
+    $\sigma$ is an optimal schedule since $|R_\sigma| = |R_\pi|$, 
+    and by construction, $\sigma$ rejects $m$.
+
+    First, the jobs in $A_\sigma \cap [k-1]$ are completed on time 
+    since the EDD rule completes all jobs in $[k-1]$ on time. Next, 
+    if $k \in A_\sigma$, then its completion time is at most 
+    \[ \sum_{i\in[k] \setminus \{m\}} p_i \leq 
+    \sum_{i\in[k-1]} p_i \leq d_{k-1} \leq d_k, \] 
+    where the first inequality follows from the choice of $m$ by the 
+    Moore-Hodgson algorithm which ensures that $p_m = 
+    \max_{i\in[k]} p_i \geq p_k$. Finally, compared to the schedule $\pi$, 
+    the completion times of the jobs in $A_\sigma \setminus [k] = 
+    A_\pi \setminus [k]$ have been changed in the new schedule $\sigma$
+    by $p_r - p_m \leq 0$, so these jobs are also on time. 
 \end{pf}
  
+\begin{theo}{theo:4.7}
+    The Moore-Hodgson algorithm gives an optimal schedule for 
+    $(1\;\|\;\sum U_j)$. 
+\end{theo}
+\begin{pf}
+    We proceed by induction on $\text{OPT}$ over all instances of the problem. 
+
+    If an instance has $\text{OPT} = 0$, then by Lemma~\ref{lemma:4.3}, the 
+    Moore-Hodgson algorithm outputs the EDD sequence with no late jobs. 
+
+    Suppose now that $I$ is an instance with $\text{OPT}(I) \geq 1$ late 
+    jobs. Let $I'$ be obtained from $I$ by deleting the first job $m$ 
+    which is rejected by the Moore-Hodgson algorithm. By Lemma~\ref{lemma:4.6}, 
+    we have $\text{OPT}(I') = \text{OPT}(I) - 1$. By the induction hypothesis, 
+    the algorithm finds an optimal schedule $S'$ for $I'$. The algorithm 
+    for $I$ outputs the schedule $S$ such that $S$ is the same as $S'$ 
+    except that job $m$ is added at the end as a rejected job. Clearly, 
+    $S$ has at most $\text{OPT}(I') + 1 = \text{OPT}(I)$ rejected jobs 
+    and hence is optimal. 
+\end{pf}
+
+\subsection{The Total Tardiness} \label{subsec:4.3}
