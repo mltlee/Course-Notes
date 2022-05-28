@@ -804,7 +804,7 @@ sets of measure zero.
     ${\cal L}$ is a $\sigma$-algebra and so closed under unions. \qedhere 
 \end{pf}
 
-\subsection{Lebesgue Measurable Functions}\label{subsec:2.4}
+\subsection{Measurable Functions}\label{subsec:2.4}
 Recall that when integrating a function $f : \R \to \R$ using Lebesgue's 
 approach of partitioning the $y$-axis, we needed to measure the length 
 of sets of the form 
@@ -1012,10 +1012,119 @@ but first, we will prove a more general result.
 \begin{defn}{defn:2.31}
     Let $f : D \to \C$ and $g : E \to \C$ be functions where $D, E \in {\cal L}$. 
     We say that $f = g$ {\bf almost everywhere (a.e.)} if the set 
-    \[ \{f \neq g\} := E\,\Delta\,D \cup \{x \in E \cap D : f(x) \neq g(x)\} \] 
+    \[ \{f \neq g\} := (E\,\Delta\,D) \cap \{x \in E \cap D : f(x) \neq g(x)\} \] 
     has Lebesgue measure zero, where $E\,\Delta\,D$ denotes the symmetric 
     difference of $E$ and $D$. 
 \end{defn}
 
 We can think of $f$ and $g$ as essentially the ``same'' function, even if 
 $D$ and $E$ have trivial intersection. 
+
+\begin{prop}{prop:2.32}
+    Let $D \in {\cal L}$, and let $f : D \to \C$ be a measurable function.
+    Suppose that $g : E \to \C$. If $f = g$ almost everywhere, then 
+    $E \in {\cal L}$ and $g$ is a measurable function satisfying 
+    \[ m(f^{-1}(U)) = m(g^{-1}(U)) \] 
+    for all open sets $U \subseteq \C$. 
+\end{prop}
+\begin{pf}
+    Observe that we can write 
+    \begin{align*}
+        E &= \{x \in E \cap D : f(x) = g(x)\} \cup (\{f \neq g\} \cap E) \\ 
+        &= (D \setminus \{f \neq g\}) \cup (\{f \neq g\} \cap E). 
+    \end{align*}
+    The first set is the measurable set $D$ minus the set of measure zero
+    $\{f \neq g\}$ whereas the second has measure zero, so $E \in {\cal L}$. 
+    Now suppose that $U \subseteq \C$ is open. We have 
+    \[ g^{-1}(U) = (f^{-1}(U) \setminus \{f \neq g\}) \cup 
+    (g^{-1}(U) \cap \{f \neq g\}), \] 
+    where the first set above is the set of elements in the preimage such that 
+    $f$ and $g$ agree, and the second set consists of the elements where 
+    either $f$ and $g$ disagree or $f$ is not defined where $g$ is. 
+    Noting that $f^{-1}(U) \in {\cal L}$, it follows from an analogous 
+    argument to above that $g^{-1}(U) \in {\cal L}$. Since $\{f \neq g\}$
+    is null, it is easy to see that $m(g^{-1}(U)) = m(f^{-1}(U))$. 
+\end{pf}
+
+The previous proposition tells us that when $f = g$ almost everywhere, then 
+$f = g$ in the eyes of Lebesgue measure. When $f$ is measurable, we are 
+free to redefine $f$ on measure zero sets, or extend the domain by $f$ 
+up to sets of measure zero. These operations do not ``materially'' change $f$. 
+
+To end this section, we say some words on extended real-valued functions. 
+We let $[-\infty, \infty] = \R \cup \{\pm\infty\}$ be the {\bf extended 
+real numbers}, and we want to consider functions $f : D \to [-\infty, 
+\infty]$ for some $D \in {\cal L}$. We will call $f$ {\bf Lebesgue 
+measurable} if $f^{-1}((\alpha, \infty]) \in {\cal L}$ for all 
+$\alpha \in \R$. In this case, we have $f^{-1}(\{\infty\}) \in {\cal L}$ 
+and $f^{-1}(\{-\infty\}) \in {\cal L}$. Note that this notion only makes 
+sense for real-valued functions, and not in $\C$. 
+
+\subsection{Limits of Measurable Functions} \label{subsec:2.5}
+Let $D \subseteq \R$, and let $(f_n)_{n=1}^\infty$ be a sequence of 
+continuous functions defined on $D$. If $f_n \to f$ pointwise, recall 
+that there is no guarantee that $f$ is continuous. For example, 
+letting $f_n(x) = x^n$ on $[0, 1]$, then $f_n \to f$ where 
+$f(x) = 0$ for $x \in [0, 1)$ and $f(1) = 1$. We can only guarantee 
+that $f = \lim_{n\to\infty} f_n$ is continuous when the convergence 
+is uniform (which is equivalent to convergence in the supremum norm). 
+
+It turns out that measurability is a little nicer in this regard
+and does not require uniform convergence. Recall that 
+$\sup_{n\in\N} f_n$ and $\inf_{n\in\N} f_n$ are defined such that 
+$(\sup_{n\in\N} f_n)(x) = \sup_{n\in\N} (f_n(x))$ and 
+$(\inf_{n\in\N} f_n)(x) = \inf_{n\in\N} (f_n(x))$.
+
+\begin{theo}{theo:2.33}
+    Let $(f_n)_{n=1}^\infty$ be a sequence of measurable extended real-valued 
+    functions defined on some $D \in {\cal L}$. Then $\sup_{n\in\N} f_n$ 
+    and $\inf_{n\in\N} f_n$ are both measurable functions. 
+\end{theo}
+\begin{pf}
+    Let $g = \sup_{n\in\N} f_n$ and take $\alpha \in \R$. Notice that 
+    $g(x) > \alpha$ if and only if there exists some $n \in \N$ such that 
+    $f_n(x) > \alpha$. Since each $f_n$ is measurable, we obtain
+    \[ g^{-1}((\alpha, \infty]) = \bigcup_{n=1}^\infty f_n^{-1}((\alpha, 
+    \infty]) \in {\cal L}, \] 
+    and thus $g$ is measurable. It follows that $\inf_{n\in\N} f_n = 
+    -\sup_{n\in\N} (-f_n)$ is also measurable. 
+\end{pf}
+
+\begin{cor}{cor:2.34}
+    Let $D \in {\cal L}$. 
+    \begin{enumerate}[(a)]
+        \item Let $f, g : D \to [-\infty, \infty]$ be measurable 
+        functions. Then $\max\{f, g\}$ and $\min\{f, g\}$ are 
+        both measurable. 
+        \item Let $f : D \to [-\infty, \infty]$ be a function. Define 
+        $f^+ = \max\{f, 0\}$ and $f^- = -\min\{f, 0\}$, and observe that 
+        $f = f^+ - f^-$. Then $f$ is measurable if and only if $f^+$ and 
+        $f^-$ are both measurable. 
+        \item Let $(f_n)_{n=1}^\infty$ be a sequence of real or complex
+        valued functions on $D$. Suppose that $\lim_{n\to\infty} 
+        f_n(x) = f(x)$ exists for all $x \in D$. Then $f$ is measurable. 
+    \end{enumerate}
+\end{cor}
+\begin{pf}~
+    \begin{enumerate}[(a)]
+        \item Take the sequence $f_1 = f$ and $f_n = g$ for all $n \geq 2$, 
+        then apply Theorem~\ref{theo:2.33} by observing that 
+        $\max\{f, g\} = \sup_{n\in\N} f_n$ and $\min\{f, g\} = 
+        \inf_{n\in\N} f_n$. 
+        \item The forward direction follows from (a). The backwards 
+        direction follows from part (c) of Corollary~\ref{cor:2.30}. 
+        \item Let $(f_n)_{n=1}^\infty$ be a sequence of real valued 
+        functions on $D$. Observe that 
+        \[ \limsup_{n\to\infty} f_n = \inf_{n\in\N} \left( \sup_{k\geq n}
+        f_k \right) \] 
+        is measurable by applying Theorem~\ref{theo:2.33}, and so is 
+        $\liminf_{n\to\infty} f_n = \sup_{n\in\N} (\inf_{k\geq n} f_k)$. 
+        Since $f_n \to f$ pointwise, we see that  $f = \limsup_{n\to\infty} f_n 
+        = \liminf_{n\to\infty} f_n$ is measurable. 
+        
+        For the complex valued case, we can write $f_n = u_n + iv_n$ 
+        where $u_n$ and $v_n$ are real valued for each $n \in \N$. 
+        Then $u_n \to u$ and $v_n \to v$ with $u$ and $v$ being measurable, 
+        and thus $f = u + iv$ is measurable by Corollary~\ref{cor:2.30}. \qedhere 
+    \end{enumerate}
+\end{pf}
