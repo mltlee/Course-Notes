@@ -371,7 +371,7 @@ of the due dates. We will prove on Assignment 2 that the EDD rule is in fact
 optimal for $(1\;\|\;L_{\max})$; this can be done using an interchange argument.
 
 Now, we discuss a generalization of $(1\;\|\;L_{\max})$ problem, which is 
-$(1 \mid prec \mid h_{\max})$. In this setting, we have $n$ jobs, and 
+$(1 \mid \text{prec} \mid h_{\max})$. In this setting, we have $n$ jobs, and 
 associated with each job is a processing time $p_j$ and a non-decreasing 
 cost function $h_j$. The goal is to find a schedule which minimizes 
 $h_{\max} = \max_{j\in\{1,\dots,n\}} h_j(C_j)$. We can see this is indeed a 
@@ -394,7 +394,7 @@ we let $t$ denote the time of completion of the next job, and initially
 set it to $t = \sum p_j$. 
 
 We now state the LCL algorithm, give an simple example of it in action, then 
-prove that it yields an optimal schedule for $(1 \mid prec \mid h_{\max})$. 
+prove that it yields an optimal schedule for $(1 \mid \text{prec} \mid h_{\max})$. 
 
 \begin{algo}[Lowest Cost Last]{algo:2.10}
     \begin{enumerate}
@@ -427,7 +427,7 @@ prove that it yields an optimal schedule for $(1 \mid prec \mid h_{\max})$.
 \end{exmp}
 
 \begin{theo}{theo:2.12}
-    The LCL algorithm yields an optimal schedule for $(1 \mid prec \mid h_{\max})$. 
+    The LCL algorithm yields an optimal schedule for $(1 \mid \text{prec} \mid h_{\max})$. 
 \end{theo}
 \begin{pf}
     We proceed by contradiction. Assume that the LCL algorithm yields a 

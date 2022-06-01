@@ -50,7 +50,7 @@ To begin, we'll first introduce some examples of scheduling problems.
     $T_j = \max(0, C_j - d_j)$, so $T_j = 0$ if Alice completes $B_j$ 
     by day $d_j$, and $T_j = C_j - d_j$ otherwise. 
 
-    More concretely, suppose that there are $n = 4$ books with the 
+    More concretely, suppose there are $n = 4$ books with the 
     following preparation times and due dates. 
     \begin{align*}
         \begin{array}{c|cccc}
@@ -131,7 +131,7 @@ To begin, we'll first introduce some examples of scheduling problems.
     $S_4$ yet. 
     
     Using the triplet notation $(\alpha \mid \beta \mid \gamma)$, 
-    this problem is denoted by $(F3\;\|\;C_{\max})$, where $3$ denotes 
+    this problem is denoted by $(F_3\;\|\;C_{\max})$, where $3$ denotes 
     the number of machines and $F$ refers to a ``flow shop''.
 
     Note that this problem does not require the students to visit $M_1, 
@@ -213,7 +213,7 @@ in our course are as follows.
     have $m$ identical machines and any job can run on any machine. Each job 
     has the same processing time on each machine. When the number of machines 
     is constant, the number of machines is appended after the letter $P$.
-    For example, if there are $m = 2$ machines, then we write $\alpha = P2$.
+    For example, if there are $m = 2$ machines, then we write $\alpha = P_2$.
 
     \item {\bf Uniform Speed Parallel Machines} ($\alpha = Q$) In this case, 
     we have $m$ machines and any job can run on any machine. Each machine 
@@ -281,7 +281,7 @@ as follows.
     may need to be cleaned and recalibrated between jobs $j$ and $k$. Unless
     mentioned otherwise, these setup times are assumed to be zero.
 
-    \item {\bf Precedence Constraints} ($\beta = prec$) In some applications, 
+    \item {\bf Precedence Constraints} ($\beta = \text{prec}$) In some applications, 
     job $k$ cannot be processed until another job $j$ is completed. Such 
     constraints are called precedence constraints. We assume that these 
     constraints are not cyclical; that is, we do not have a situation
@@ -291,7 +291,7 @@ as follows.
     and an arc from node $j$ to node $k$ represents the constraint ``$j$ 
     precedes $k$'' (that is, $k$ cannot start until $j$ is completed).
 
-    \item {\bf Preemption} ($\beta = prmp$) Informally speaking, if a job 
+    \item {\bf Preemption} ($\beta = \text{prmp}$) Informally speaking, if a job 
     allows preemption, then the ``scheduler'' is allowed to interrupt the 
     processing of the job (preempt) at any point in time and put a different 
     job on the machine instead. The amount of processing a preempted job 
