@@ -1128,3 +1128,238 @@ $(\inf_{n\in\N} f_n)(x) = \inf_{n\in\N} (f_n(x))$.
         and thus $f = u + iv$ is measurable by Corollary~\ref{cor:2.30}. \qedhere 
     \end{enumerate}
 \end{pf}
+
+Corollary~\ref{cor:2.34} tells us that measurable functions are closed under 
+pointwise limits. We now discuss some other modes of convergence. 
+
+\begin{defn}{defn:2.35}
+    Let $D \in {\cal L}$. A sequence of measurable functions $(f_n)_{n=1}^\infty$
+    defined on $D$ converges {\bf pointwise almost everywhere} to a function 
+    $f$ on $D$ if 
+    \[ \lim_{n\to\infty} f_n(x) = f(x) \] 
+    for almost every $x \in D$. We write $f_n \to f$ almost everywhere (a.e.). 
+\end{defn}
+
+Note that if we do not have pointwise convergence at a point, it 
+either converges to the wrong value or the sequence doesn't converge 
+at the point. The following lemma tells us that if $f_n \to f$ a.e., 
+then it doesn't really matter what happens for points $x \in D$ where
+$f(x) \neq \lim_{n\to\infty} f_n(x)$. 
+
+\begin{lemma}{lemma:2.36}
+    Let $D \in {\cal L}$. If $(f_n)_{n=1}^\infty$ is a sequence of measurable 
+    functions on $D$ and $f_n \to f$ a.e., then $f$ is measurable. 
+\end{lemma}
+\begin{pf}
+    Define the function 
+    \[ g(x) = \begin{cases}
+        \lim_{n\to\infty} f_n(x), & \text{if the limit exists,} \\ 
+        f(x), & \text{otherwise.} 
+    \end{cases} \] 
+    Then by construction, we have $g = f$ almost everywhere. By 
+    Proposition~\ref{prop:2.32}, $f$ is measurable. 
+\end{pf}
+
+Next, we talk about uniform convergence and almost uniform convergence. 
+
+\begin{defn}{defn:2.37}
+    Suppose that $(f_n)_{n=1}^\infty$ and $f$ are functions from $D$ 
+    to $\C$, $\R$, or $[-\infty, \infty]$. 
+    \begin{itemize}
+        \item We say that $f_n \to f$ {\bf uniformly} if for all $\eps > 0$, 
+        there exists $N \in \N$ such that $n \geq N$ implies
+        \[ |f_n(x) - f(x)| < \eps. \] 
+        \item We say that $f_n \to f$ {\bf almost uniformly} if for all 
+        $\eps > 0$, there exists a measurable subset $E \subseteq D$ such that 
+        $m(E) < \eps$ and $f_n \to f$ uniformly on $D \setminus E$. 
+    \end{itemize}
+\end{defn}
+
+It is clear that uniform convergence implies almost uniform convergence 
+and pointwise convergence, while pointwise convergence implies 
+pointwise almost everywhere convergence. Our goal is to determine the 
+relationship between almost uniform convergence and pointwise almost 
+everywhere convergence. 
+
+\begin{lemma}{lemma:2.38}
+    If $f_n \to f$ almost uniformly, then $f_n \to f$ a.e. pointwise. 
+\end{lemma}
+\begin{pf}
+    For each $m \in \N$, there exists a measurable subset $E_m \subseteq D$ 
+    with $m(E_m) < 1/m$ such that $f_m \to f$ uniformly on $D \setminus E_m$. 
+    Let $E = \bigcap_{m=1}^\infty E_m$. Using the continuity from above 
+    property of the Lebesgue measure from Assignment 2, we obtain 
+    \[ m(E) = \lim_{N\to\infty} m\!\left( \bigcap_{m=1}^N E_m \right) 
+    \leq \lim_{N\to\infty} m(E_N) = 0 \] 
+    since $(\bigcap_{m=1}^N E_m)_{N=1}^\infty$ is a decreasing sequence of sets. 
+    Therefore, $E$ is a null set. 
+
+    To show that $f_n \to f$ a.e. pointwise, it only remains to show that 
+    $f_n \to f$ for all $x \in D \setminus E$. Observe that 
+    \[ D \setminus E = D \setminus \bigcap_{m=1}^\infty E_m = 
+    \bigcup_{m=1}^\infty (D \setminus E_m). \] 
+    In particular, if $x \in D \setminus E$, then there exists some $m \in \N$ 
+    such that $x \in D \setminus E_m$. Then $f_n \to f$ uniformly there, 
+    which implies pointwise convergence. 
+\end{pf}
+
+What about the converse? Does almost everywhere convergence imply 
+almost uniform convergence? It turns out that this is true under the 
+assumption that $m(D) < \infty$. This is known as Egorov's Theorem. 
+
+\begin{theo}[Egorov's Theorem]{theo:2.39}
+    Suppose that $D \in {\cal L}$ is such that $m(D) < \infty$. 
+    Let $(f_n)_{n=1}^\infty$ be a sequence of measurable functions 
+    $f_n : D \to \C$, and let $f : D \to \C$. If $f_n \to f$ pointwise 
+    a.e. on $D$, then $f_n \to f$ almost uniformly on $D$. 
+\end{theo}
+\begin{pf}
+    We may assume without loss of generality that $f_n \to f$ pointwise 
+    by replacing $D$ with the set $\{x \in D : \lim_{n\to\infty} f_n(x) =
+    f(x)\}$; we are only dropping a set of measure zero. Given $n, k \in \N$, 
+    we let 
+    \[ E(n, k) = \bigcup_{m\geq n} \{x \in D : |f_m(x) - f(x)| \geq 1/k\}. \] 
+    We can think of this as the set of points were $f_m$ is doing a bad 
+    job of converging to $f$. 
+    
+    It is clear that $E(n, k)$ is measurable for all $n, k \in \N$. 
+    Now, keep $k \in \N$ fixed. Then $(E(n, k))_{n=1}^\infty$ is a decreasing 
+    sequence of sets with $\bigcap_{n=1}^\infty E(n, k) = \varnothing$. 
+    Indeed, if there existed an element $x \in \bigcap_{n=1}^\infty E(n, k)$, 
+    then for all $n \in \N$, there exists $m \in \N$ such that 
+    $|f_m(x) - f(x)| \geq 1/k$. This contradicts our assumption that 
+    $f_n \to f$ for all $x \in D$. By the continuity from above 
+    of Lebesgue measure from Assignment 2, we have 
+    \[ \lim_{n\to\infty} m(E(n, k)) = m\!\left( \bigcap_{n=1}^\infty E(n, k) 
+    \right) = 0. \] 
+    Note that we are using the fact that $m(E(1, n)) \leq m(D) < \infty$ here! 
+    
+    Let $\eps > 0$. Choose a subsequence $(n_k)_{k=1}^\infty$ such that 
+    \[ m(E(n_k, k)) < \frac{\eps}{2^k}, \] 
+    and set $E = \bigcup_{k=1}^\infty E(n_k, k)$. Then we have 
+    \[ m(E) \leq \sum_{k=1}^\infty m(E(n_k, k)) < \sum_{k=1}^\infty 
+    \frac{\eps}{2^k} = \eps. \] 
+    For all $x \in D \setminus E$, we see that $x \in D \setminus E(n_k, k)$
+    for all $k \in \N$. Then $|f_m(x) - f(x)| < 1/k$ for all $k \in \N$ 
+    and $m \geq n_k$, implying that $f_m \to f$ uniformly on $D \setminus E$. 
+\end{pf}
+
+\begin{exmp}{exmp:2.40}
+    For a simple example of Egorov's Theorem, consider the sequence of functions 
+    $f_n(x) = x^n$ on $[0, 1]$. Recall that $f_n \to f$ pointwise on $[0, 1]$ where 
+    $f(x) = 0$ on $[0, 1)$ and $f(1) = 1$. But for all $\eps > 0$, we see that 
+    $f_n \to f$ uniformly on $[0, 1-\eps]$. In particular, we have $f_n \to f$ 
+    almost uniformly on $[0, 1]$. 
+\end{exmp}
+
+\begin{remark}{remark:2.41}
+    The assumption that $m(D) < \infty$ is necessary for Egorov's Theorem. 
+    Take $D = \R$, and define the sequence of functions $f_n = \chi_{[-n, n]}$. 
+    Then $\lim_{n\to\infty} f_n(x) = 1$ for all $x \in \R$. 
+
+    We claim that $f_n \nrightarrow 1$ almost uniformly. Indeed, if 
+    $E \subseteq \R$ satisfies $m(E) < \eps < \infty$, then $m(E^c) = \infty$. 
+    That is, $E^c$ is unbounded. So there exists a sequence of points 
+    $x_k \in E^c$ such that $x_k > k$ for all $k \in \N$. This gives us 
+    \[ \sup_{x\in E^c} |f_k(x) - 1| \geq \sup_{k\in\N} |f_k(x_k) - 1| = 1, \] 
+    and thus 
+    \[ \limsup_{k\to\infty} \|f_k - 1\|_\infty = 1. \] 
+    We conclude that $f_n \nrightarrow 1$ uniformly on $E^c = \R \setminus E$.
+\end{remark}
+
+\subsection{Simple Functions} \label{subsec:2.6}
+We now consider simple functions, and see how measurable functions are 
+well approximated by them. 
+
+\begin{defn}{defn:2.42}
+    Let $D \in {\cal L}$. A function $f : D \to \C$ is {\bf simple} if 
+    its range is finite. That is, we have 
+    \[ \text{range}(f) = \{\alpha_1, \dots, \alpha_n\} \subseteq \C \] 
+    where the $\alpha_i$ are distinct elements. 
+\end{defn}
+
+Notice that if we let $E_i = f^{-1}(\{\alpha_i\})$, then $D = 
+\bigsqcup_{i=1}^n E_i$ and $f = \sum_{i=1}^n \alpha_i \chi_{E_i}$. 
+Moreover, $f$ is measurable if and only if $E_i$ is measurable for all 
+$1 \leq i \leq n$. 
+
+In general, there are many ways to write a simple function as a linear 
+combination of characteristic functions. By taking $\{A_i\}_{i=1}^n 
+\subseteq {\cal L}$, we might have 
+\[ f = \sum_{i=1}^n \beta_i \chi_{A_i} \] 
+for some values $\beta_i$ not necessarily equal to the $\alpha_i$. 
+But the form $f = \sum_{i=1}^n \alpha \chi_{E_i}$ above is really the 
+most natural representation of $f$ as a linear combination of 
+characteristic functions; we call it the {\bf standard representation} of $f$. 
+
+The following theorem tells us that every measurable function is a limit 
+of simple measurable functions. 
+
+\begin{theo}{theo:2.43}
+    \begin{enumerate}[(a)]
+        \item Let $D \in {\cal L}$, and let $f : D \to [0, \infty]$ be a 
+        measurable function. Then there exists a sequence $(f_n)_{n=1}^\infty$ 
+        of non-negative simple measurable functions on $D$ such that 
+        $0 \leq f_1 \leq f_2 \leq \cdots \leq f$ and for all $x \in D$, we have 
+        \[ \lim_{n\to\infty} f_n(x) = \sup_{n\in\N} f_n(x) = f(x). \] 
+        Moreover, for any $R > 0$, we have $f_n \to f$ uniformly on the 
+        set $E_R = \{x \in D : f(x) \leq R\} \subseteq D$. 
+        \newpage 
+        \item Let $D \in {\cal L}$ and let $f : D \to \C$ be measurable. 
+        Then there exists a sequence of simple measurable functions 
+        $f_n : D \to \C$ such that 
+        \[ f(x) = \lim_{n\to\infty} f_n(x) \] 
+        for all $x \in D$ and $0 \leq |f_1| \leq |f_2| \leq \cdots \leq |f|$. 
+        Moreover, for all $R > 0$, we have $f_n \to f$ uniformly on the set 
+        $E_R = \{x \in D : |f_n(x)| \leq R\} \subseteq D$. 
+    \end{enumerate}
+\end{theo}
+\begin{pf}
+    For part (a), we first prove a special case. Let $g : [0, \infty] 
+    \to [0, \infty]$ be defined by $g(t) = t$. We want to approximate 
+    $g$ by non-decreasing piecewise constant functions $g_n$. 
+    
+    Fix $n \in \N$. For $0 \leq t < \infty$, there is a unique $k \in \N$ 
+    such that $t \in [\frac{k}{2^n}, \frac{k+1}{2^n}]$. We write 
+    $k = k(t, n)$. Then, we define $g_n : [0, \infty] \to [0, \infty)$ by 
+    \[ g_n(t) = \begin{cases}
+        k(n, t)/2^n, & \text{if } t < n, \\ 
+        n, & \text{if } n \leq t \leq \infty. 
+    \end{cases} \]
+    Observe that for all $n \in \N$, $g_n$ is simple and non-decreasing. 
+    Moreover, for all $t \in [0, \infty]$, we have 
+    \[ g_n(t) \leq g_{n+1}(t) \leq g(t) = t. \] 
+    One more thing to note is that for $t \in [0, n]$, we have 
+    \[ g_n(t) = \frac{k}{2^n} \leq t \leq \frac{k}{2^n} + \frac{1}{2^n}
+    = g_n(t) + \frac{1}{2^n}. \]  
+    This implies that $|g_n(t) - g(t)| \leq 2^{-n}$, so by picking 
+    $n$ large enough so that $n > R$, we have $g_n \to g$ uniformly on 
+    the bounded interval $[0, R]$. Finally, we see that $g_n(t) \to g(t)$ 
+    for all $t \in [0, \infty]$. 
+
+    We now prove the general case of part (a). Let $f : D \to [0, \infty]$ 
+    be a measurable function and define $f_n = g_n \circ f$ for all 
+    $n \in \N$. Then each $f_n$ is simple as the $g_n$'s are simple. 
+    Moreover, for all $x \in D$, we have 
+    \[ f_n(x) = g_n(f(x)) \leq g_{n+1}(f(x)) = f_{n+1}(x), \] 
+    so the $f_n$'s are increasing. We see that $f_n(x) \to f(x)$ for all 
+    $x \in D$ since $g_n(t) \to t$. 
+
+    Let $R > 0$ and suppose that $x \in E_R = \{x \in D : f(x) \leq R\}$. 
+    Let $t = f(x)$. Then 
+    \[ |f(x) - f_n(x)| = |t - g_n(t)| < 2^{-n} \] 
+    provided that $t \leq R < n$. Thus, $f_n \to f$ uniformly on $E_R$. 
+
+    Finally, we claim that $f_n$ is measurable for all $n \in \N$. 
+    Indeed, we saw earlier that the $g_n$ are non-decreasing functions for all 
+    $n \in \N$, so $g_n^{-1}((\alpha, \infty])$ is an interval for all 
+    $\alpha \in \R$, say $I$. Then 
+    \[ f_n^{-1}((\alpha, \infty]) = f^{-1}(g_n^{-1}((\alpha, \infty])) 
+    = f^{-1}(I) \in {\cal L} \] 
+    since $f$ is measurable. This completes the proof of part (a). 
+
+    To prove part (b), we can break $f : D \to \C$ into real and imaginary parts 
+    $u, v : D \to \R$ so that $f = u + iv$. We can then write these as 
+    $u = u^+ - u^-$ and $v = v^+ - v^-$, which are non-negative functions on 
+    $D$. We leave it as an exercise to verify the remaining details. 
+\end{pf}
