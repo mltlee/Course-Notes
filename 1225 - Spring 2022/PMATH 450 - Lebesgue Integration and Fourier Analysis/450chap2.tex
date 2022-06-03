@@ -1267,9 +1267,8 @@ assumption that $m(D) < \infty$. This is known as Egorov's Theorem.
     We conclude that $f_n \nrightarrow 1$ uniformly on $E^c = \R \setminus E$.
 \end{remark}
 
-\subsection{Simple Functions} \label{subsec:2.6}
 We now consider simple functions, and see how measurable functions are 
-well approximated by them. 
+well approximated by them. This will allow us to jump into Lebesgue integration.
 
 \begin{defn}{defn:2.42}
     Let $D \in {\cal L}$. A function $f : D \to \C$ is {\bf simple} if 
@@ -1284,11 +1283,8 @@ Moreover, $f$ is measurable if and only if $E_i$ is measurable for all
 $1 \leq i \leq n$. 
 
 In general, there are many ways to write a simple function as a linear 
-combination of characteristic functions. By taking $\{A_i\}_{i=1}^n 
-\subseteq {\cal L}$, we might have 
-\[ f = \sum_{i=1}^n \beta_i \chi_{A_i} \] 
-for some values $\beta_i$ not necessarily equal to the $\alpha_i$. 
-But the form $f = \sum_{i=1}^n \alpha \chi_{E_i}$ above is really the 
+combination of characteristic functions $\chi_{A_i}$, where $A_i \in 
+{\cal L}$. But the form $f = \sum_{i=1}^n \alpha \chi_{E_i}$ above is really the 
 most natural representation of $f$ as a linear combination of 
 characteristic functions; we call it the {\bf standard representation} of $f$. 
 
@@ -1304,7 +1300,6 @@ of simple measurable functions.
         \[ \lim_{n\to\infty} f_n(x) = \sup_{n\in\N} f_n(x) = f(x). \] 
         Moreover, for any $R > 0$, we have $f_n \to f$ uniformly on the 
         set $E_R = \{x \in D : f(x) \leq R\} \subseteq D$. 
-        \newpage 
         \item Let $D \in {\cal L}$ and let $f : D \to \C$ be measurable. 
         Then there exists a sequence of simple measurable functions 
         $f_n : D \to \C$ such that 
@@ -1362,4 +1357,193 @@ of simple measurable functions.
     $u, v : D \to \R$ so that $f = u + iv$. We can then write these as 
     $u = u^+ - u^-$ and $v = v^+ - v^-$, which are non-negative functions on 
     $D$. We leave it as an exercise to verify the remaining details. 
+\end{pf}
+
+\subsection{Lebesgue Integration} \label{subsec:2.6}
+We will iteratively define the Lebesgue integral for measurable functions $f$
+on a measurable set $E \in {\cal L}$. First, we consider the Lebesgue integral 
+of non-negative simple measurable functions. We then use this to define 
+the integral of $f$ where $f : E \to [0, \infty]$ is measurable, and 
+derive a number of consequences of the definition. 
+
+\begin{defn}{defn:2.44}
+    Let $\varphi : \R \to [0, \infty)$ be a simple and measurable function
+    with range $\{\alpha_1, \dots, \alpha_n\}$. Let $\varphi = \sum_{i=1}^n 
+    \alpha_i \chi_{E_i}$ be its standard form with 
+    $E_i = \varphi^{-1}(\{\alpha_i\}) \in {\cal L}$. Then the 
+    {\bf Lebesgue integral} of $\varphi$ is 
+    \[ \int_{\R} \varphi\dd m = \int_{\R} \varphi = \int \varphi 
+    := \sum_{i=1}^n \alpha_i m(E_i). \] 
+\end{defn}
+
+By convention, we will define $0 \cdot \infty = \infty \cdot 0 = 0$. For example, 
+if $\alpha_i = 0$ and $m(E_i) = \infty$, then $\alpha_i m(E_i) = 0$. 
+
+Let us now extend this definition to arbitrary non-negative measurable 
+extended real-valued functions. 
+
+\begin{defn}{defn:2.45}
+    Let $f : \R \to [0, \infty]$ be a measurable function. Then we 
+    define the {\bf Lebesgue integral} of $f$ to be 
+    \[ \int_{\R} f\dd m = \int_{\R} f = \int f 
+    := \sup\left\{ \int_{\R} \varphi \dd m : 0 \leq \varphi \leq f, 
+    \text{ where $\varphi$ is simple and measurable} \right\}. \] 
+    For a measurable set $E \in {\cal L}$, we define 
+    \[ \int_E f\dd m = \int_{\R} f\chi_E \dd m. \] 
+\end{defn}
+
+We now list some basic properties of the Lebesgue integral which follow 
+easily from the definition.
+
+\begin{prop}{prop:2.46}
+    \begin{enumerate}[(a)]
+        \item If $E \in {\cal L}$ and $0 \leq f \leq g$ are measurable 
+        functions, then 
+        \[ \int_E f \dd m \leq \int_E g \dd m. \] 
+        \item If $A \subseteq B$ are measurable sets and $f \geq 0$ is a 
+        measurable function, then 
+        \[ \int_A f \dd m \leq \int_B f \dd m. \] 
+        \item Let $E \in {\cal L}$. If $f \geq 0$ is a measurable function 
+        and $c \in [0, \infty)$, then 
+        \[ \int_E cf\dd m = c \int_E f\dd m. \] 
+        \item Let $E \in {\cal L}$, and suppose that $f \geq 0$ is a measurable 
+        function such that $f(x) = 0$ for all $x \in E$. Then we have 
+        \[ \int_E f\dd m = 0. \] 
+        \item If $E \in {\cal L}$ with $m(E) = 0$, then for any measurable 
+        function $f \geq 0$, we have 
+        \[ \int_E f\dd m = 0. \] 
+    \end{enumerate}
+\end{prop}
+
+We want to have additivity of the Lebesgue integral. This will follow from 
+the Lebesgue Monotone Convergence Theorem. This is a very powerful theorem, 
+and it actually says a lot more: we actually have countable additivity 
+of the Lebesgue integral! 
+
+Towards this, we will first prove some useful properties concerning 
+non-negative simple measurable functions. It turns out that we can 
+actually construct a measure by applying the Lebesgue integral to a 
+non-negative simple measurable function, and that we have additivity 
+of the Lebesgue integral when the integrands are simple functions. 
+
+\begin{prop}{prop:2.47}
+    Let $\varphi$ and $\psi$ be non-negative simple measurable functions. 
+    \begin{enumerate}[(1)]
+        \item For any $E \in {\cal L}$, define 
+        \[ \mu(E) = \int_E \varphi\dd m = \int_{\R} \varphi\chi_E \dd m. \] 
+        Then $\mu$ is a measure. 
+        \item We have 
+        \[ \int_{\R} (\varphi + \psi)\dd m = \int_{\R} \varphi\dd m 
+        + \int_{\R} \psi\dd m. \] 
+    \end{enumerate}
+\end{prop}
+\begin{pf}
+    Let $\varphi = \sum_{i=1}^n \alpha_i \chi_{E_i}$ and $\psi = 
+    \sum_{j=1}^m \beta_j \chi_{F_j}$ be the standard forms of 
+    $\varphi$ and $\psi$ respectively. 
+    \begin{enumerate}[(1)]
+        \item For $E \in {\cal L}$, observe that 
+        \[ \mu(E) = \int_{\R} \varphi\chi_E \dd m = \int_{\R} 
+        \sum_{i=1}^n \alpha_i \chi_{E_i \cap E}\dd m 
+        = \sum_{i=1}^m \alpha_i m(E_i \cap E). \] 
+        It is clear that $\mu(\varnothing) = 0$ and $\mu(E) \geq 0$ 
+        since $\varphi \geq 0$. For countable additivity, suppose that 
+        $E = \bigsqcup_{k=1}^\infty A_k$ for some $A_k \in {\cal L}$. 
+        Then we obtain 
+        \begin{align*}
+            \mu(E) &= \sum_{i=1}^n \alpha_i m\!\left( E \cap \bigsqcup_{k=1}^\infty A_k \right) 
+            = \sum_{i=1}^n \alpha_i \sum_{k=1}^\infty m(E_i \cap A_k) \\
+            &= \sum_{k=1}^\infty \sum_{i=1}^n \alpha_i m(E_i \cap A_k)  
+            = \sum_{k=1}^\infty \mu(A_k). 
+        \end{align*}
+        Thus, we conclude that $\mu$ is a measure. 
+
+        \item Let $E_{ij} = E_i \cap F_j$ for $1 \leq i \leq n$ and $1 \leq j \leq m$. 
+        We see that $\R = \bigsqcup_{i,j} E_{ij}$. Note that $\varphi + \psi$ 
+        is a non-negative simple measurable function, so 
+        $\mu(E) = \int_E (\varphi + \psi)\dd m$ is a measure by (1). 
+        This gives us 
+        \[ \int_{\R} (\varphi + \psi)\dd m = \mu(\R) = 
+        \sum_{i,j} \mu(E_{ij}) = \sum_{i,j} \int_{E_{ij}} (\varphi + \psi)\dd m. \] 
+        Now, observe that $\varphi + \psi$ takes on value $\alpha_i + \beta_j$ 
+        on each $E_{ij} = E_i \cap F_j$. It follows that 
+        \begin{align*}
+            \int_{\R} (\varphi + \psi)\dd m = \mu(\R) 
+            &= \sum_{i,j} \int_{E_{ij}} (\varphi + \psi)\dd m \\ 
+            &= \sum_{i,j} \int_{\R} (\alpha_i + \beta_j) \chi_{E_i \cap F_j}\dd m \\ 
+            &= \sum_{i,j} (\alpha_i + \beta_j) m(E_i \cap F_j) \\ 
+            &= \sum_{i,j} \alpha_i m(E_i \cap F_j) + \sum_{i,j} \beta_j m(E_i \cap F_j) \\ 
+            &= \sum_{i,j} \int_{E_{ij}} \varphi\dd m + \sum_{i,j} \int_{E_{ij}} \psi\dd m \\ 
+            &= \int_{\R} \varphi\dd m + \int_{\R} \psi\dd m, 
+        \end{align*}
+        where the final equality is obtained by applying (1) to $\varphi$ and 
+        $\psi$ individually. \qedhere 
+    \end{enumerate}
+\end{pf}
+
+We are now ready to state and prove the Lebesgue Monotone Convergence Theorem, 
+which is our first big limit theorem. It tells us that the 
+Lebesgue integral is much better behaved than the Riemann integral. 
+
+\begin{theo}[Lebesgue Monotone Convergence Theorem]{theo:2.48}
+    Let $(f_n)_{n=1}^\infty$ be a sequence of non-negative extended 
+    real-valued measurable functions on $E \in {\cal L}$. Suppose that 
+    $0 \leq f_1 \leq f_2 \leq \cdots$ and for all $x \in E$, let 
+    \[ f(x) = \lim_{n\to\infty} f_n(x) = \sup_{n\in\N} f_n(x). \] 
+    Then $f$ is measurable and we have 
+    \[ \int_E f\dd m = \lim_{n\to\infty} \int_E f_n\dd m. \] 
+\end{theo}
+
+We state an immediate corollary of Lebesgue's Monotone Convergence Theorem, 
+which gives us a concrete way of defining the Lebesgue integral of $f$. 
+
+\begin{cor}{cor:2.49}
+    Let $E \in {\cal L}$. Let $f \geq 0$ be measurable. For any sequence 
+    $(\varphi_n)_{n=1}^\infty$ of non-negative simple measurable functions 
+    with $0 \leq \varphi_1 \leq \varphi_2 \leq \cdots \leq f$ and 
+    $\lim_{n\to\infty} \varphi_n(x) = f(x)$ for all $x \in E$, we have 
+    \[ \int_E f\dd m = \lim_{n\to\infty} \int_E \varphi_n \dd m. \] 
+\end{cor}
+
+Let us now prove the theorem. 
+
+\begin{pf}
+    We already know that $f$ is measurable by Theorem~\ref{theo:2.33}.
+    By assumption, we have $0 \leq f_1 \leq f_2 \leq \cdots \leq f = 
+    \sup_{n\in\N} f_n$. Then for all $n \in \N$, using part (a) of 
+    Proposition~\ref{prop:2.46} gives us 
+    \[ 0 \leq \int_E f_n\dd m \leq \int_E f_{n+1}\dd m \leq \int_E 
+    f\dd m. \] 
+    From this, we obtain 
+    \[ I(f) = \lim_{n\to\infty} \int_E f_n\dd m = \sup_{n\in\N} \int_E 
+    f_n\dd m \leq \int_E f\dd m. \] 
+    This is actually one direction of the desired equality, so 
+    it only remains to show that 
+    \begin{equation}\label{eq:2.1}
+        I(f) \geq \int_E f_n\dd m.
+    \end{equation} 
+    Fix $\eps \in (0, 1)$ and a simple and measurable function $\varphi$ 
+    such that $0 \leq \varphi \leq f$. We claim it suffices to show that 
+    \begin{equation}\label{eq:2.2}
+        I(f) \geq \eps \int_E \varphi\dd m. 
+    \end{equation}
+    Why is this enough? If we take $\eps \to 1$ in \eqref{eq:2.2}, 
+    then this implies that $I(f) \geq \int_E \varphi\dd m$ for all 
+    simple measurable functions $0 \leq \varphi \leq f$. Then taking 
+    the supremum over $\varphi$ on the right hand side implies \eqref{eq:2.1}. 
+
+    Set $E_n = \{x \in \R : f_n(x) \geq \eps\varphi(x)\}$. By definition, we 
+    have $E_n \in {\cal L}$. Moreover, since $(f_n)_{n=1}^\infty$ is an 
+    increasing sequence, we have $E_1 \subseteq E_2 \subseteq \cdots$ 
+    with $E = \bigcup_{n=1}^\infty E_n$. Applying Proposition~\ref{prop:2.47}, 
+    we see that $\mu : {\cal L} \to [0, \infty]$ defined by 
+    \[ \mu(F) = \int_F \eps\varphi\dd m \] 
+    is a measure. Then by the continuity of measure from below, we get 
+    \[ \int_E \eps\varphi\dd m = \mu(E) = \lim_{n\to\infty} \mu(E_n) 
+    = \lim_{n\to\infty} \int_{E_n} \eps\varphi\dd m. \] 
+    But $\eps\varphi \leq f_n$ on $E_n$ for all $n \in \N$ by definition, 
+    and thus 
+    \[ \int_{E_n} \eps\varphi\dd m \leq \int_{E_n} f_n\dd m 
+    \leq \int_E f_n\dd m \leq \lim_{n\to\infty} \int_E f_n\dd m = I(f). \] 
+    Taking $n \to \infty$ gives us $\eqref{eq:2.2}$, which completes the proof. 
 \end{pf}
