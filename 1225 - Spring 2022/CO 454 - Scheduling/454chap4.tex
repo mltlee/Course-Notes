@@ -111,7 +111,7 @@ way. From an enumeration point of view, it is even easier than the problem
 without precedence constraints since many schedules can be ruled out 
 immediately. 
 
-\subsection{The Number of Tardy Jobs} \label{subsec:4.2}
+\subsection{Number of Tardy Jobs} \label{subsec:4.2}
 Recall that $U_j = 0$ if the job is timely and $U_j = 1$ if the job is late. 
 The goal of the problem $(1\;\|\;\sum U_j)$ is to minimize the number of 
 tardy jobs. This objective may at first appear somewhat artificial and 
@@ -252,7 +252,7 @@ in EDD.
     and hence is optimal. 
 \end{pf}
 
-\subsection{Dynamic Programming for Total Tardiness} \label{subsec:4.3}
+\subsection{Total Tardiness} \label{subsec:4.3}
 In practice, minimizing the number of tardy jobs $\sum U_j$ cannot be the 
 only objective to measure how due dates are being met. Only minimizing 
 the number of late jobs will force some jobs to have to wait for an 
@@ -424,7 +424,6 @@ $O(n^4 \sum p_j)$, which is pseudo-polynomial.
     The sequences that attain this value are $1, 2, 4, 5, 3$ and $2, 1, 4, 5, 3$.    
 \end{exmp}
 
-\subsection{FPTAS for Total Tardiness} \label{subsec:4.3}
 Since $(1\;\|\;\sum T_j)$ is $\NP$-hard, we cannot hope to find a polynomial 
 time algorithm to solve arbitrary instances of it. However, we can give an FPTAS
 to obtain a solution that is close to optimal, using a similar approach 
@@ -490,3 +489,164 @@ as follows.
         \item Apply Algorithm~\ref{algo:4.11} to the rescaled data. 
     \end{enumerate}
 \end{algo}
+
+\subsection{Weighted Number of Late Jobs} \label{subsec:4.4}
+The generalization of the problem $(1\;\|\;\sum U_j)$ with additional weights 
+is known to be $\NP$-hard. This can be shown via a reduction from 
+{\sc $3$-Partition}. A popular heuristic for this problem is the WSPT rule, 
+but even that can perform very badly. As usual, we cannot hope to find a 
+polynomial time algorithm which solves $(1\;\|\;\sum w_j U_j)$. 
+
+\begin{exmp}{exmp:4.14}
+    Consider the following instance of $(1 \mid d_j = d \mid \sum w_j U_j)$ with 
+    $n = 3$ jobs and equal due dates. 
+    \begin{align*}
+        \begin{array}{c|ccc}
+            j & 1 & 2 & 3 \\ \hline 
+            p_j & 11 & 9 & 90 \\ 
+            d_j & 100 & 100 & 100 \\ 
+            w_j & 12 & 9 & 89
+        \end{array}
+    \end{align*}
+    Then the WSPT rule fails: it gives the schedule $1, 2, 3$ which has 
+    objective value $89$. The optimal schedules for this example are 
+    $2, 3, 1$ and $3, 2, 1$, which both have objective value $12$. 
+\end{exmp}
+
+In fact, the {\sc Knapsack} problem is equivalent to the special case 
+$(1 \mid d_j = d \mid \sum w_j U_j)$ where all due dates are equal. 
+Indeed, we can think of the due date $d$ as the weight of the knapsack, 
+the processing times $p_j$ as the weight of the individual items, 
+and the weights $w_j$ as their values. We then want to minimize the value 
+of the items we are throwing out of the knapsack, which is the same 
+as maximizing the value of the items inside the knapsack. 
+
+In this section, our goal is to come up with some dynamic programming 
+approaches to solve $(1\;\|\;\sum w_j U_j)$ in pseudo-polynomial time. 
+We then construct an FPTAS using one of the dynamic programming schemes. 
+
+First, we will introduce some notation. Consider an instance of 
+$(1\;\|\;\sum w_j U_j)$ where all weights $w_j \geq 0$ are integer. 
+We assume that the jobs are indexed by the EDD sequence. 
+\begin{itemize}
+    \item We call $S$ a {\bf feasible} set of jobs if every job in $S$ 
+    can be completed on time starting at time $0$. 
+    \item We define $w(S) = \sum_{j\in S} w_j$ and $p(S) = \sum_{j\in S} p_j$. 
+\end{itemize}
+
+{\bf Approach 1.} We define $T(i, \hat w)$ to be the minimum completion 
+time of a feasible subset $S$ of $[i] = \{1, \dots, i\}$ with weight 
+$\geq \hat w$. We can think of $\hat w$ as a ``target'' weight. 
+In other words, $T(i, \hat w)$ is the minimum completion time of a 
+chosen subset of the jobs $\{1, \dots, i\}$ such that all jobs in the 
+chosen subset are timely (that is, there are no late jobs in an EDD ordering 
+of the chosen subset) and moreover, the total weight of the jobs in the 
+chosen subset is $\geq \hat w$.
+
+We set $T(i, \hat w) = \infty$ if no such feasible set exists, 
+$T(0, 0) = 0$, and $T(0, \hat w) = \infty$ for all $\hat w > 0$. Then 
+the recurrence relation is given by 
+\[ T(i, \hat w) = \begin{cases}
+    \min\{T(i-1, \hat w), p_i + T(i-1, \hat w - w_i)\}, & \text{if } 
+    p_i + T(i-1, \hat w - w_i) \leq d_i, \\ 
+    T(i-1, \hat w), & \text{otherwise.} 
+\end{cases} \] 
+In the computed table for $T(i, \hat w)$, there are $n+1$ rows corresponding 
+to $i = 0, \dots, n$ where $n$ is the number of jobs, and $\sum w_j + 1$ 
+corresponding to the potential total weights $\hat w = 0, \dots, \sum w_j$. 
+From the table, we can then find the optimal solution to the 
+$(1\;\|\;\sum w_j U_j)$ instance in $O(\sum w_j)$ time.
+
+We can actually do slightly better. If $w^*$ is the maximum value of 
+$w$ such that $T(i, w^*)$ is finite, then we can compute the table for 
+$T(i, \hat w)$ in $O(nw^*)$ time and find the optimal solution from the 
+table in $O(w^*)$ time. So the dynamic programming algorithm runs in time 
+$O(nw^*)$. 
+
+{\bf Approach 2.} This is the approach we will use for our FPTAS. We define 
+$Q(i, \hat w)$ to be the minimum completion time of a feasible subset $S$ 
+of $[i]$ such that $w([i] \setminus S) \leq \hat w$. In other words, 
+$Q(i, \hat w)$ is the minimum completion time of a chosen subset of the jobs 
+$\{1, \dots, i\}$ such that all of the jobs in the chosen subset are timely 
+(that is, there are no late jobs in an EDD ordering of the chosen subset)
+and moreover, the sum of the weights of the remaining jobs in 
+$\{1, \dots, i\}$ is $\leq \hat w$. 
+
+We define $Q(0, \hat w) = 0$ for all $\hat w \geq 0$ and $Q(0, \hat w) 
+= \infty$ for all $\hat w < 0$. Then the recurrence relation is given by 
+\[ Q(i, \hat w) = \begin{cases}
+    \min\{Q(i-1, \hat w - w_i), p_i + Q(i-1, \hat w)\}, & \text{if } 
+    p_i + Q(i-1, \hat w) \leq d_i, \\ 
+    Q(i-1, \hat w - w_i), & \text{otherwise.}
+\end{cases} \]
+In essence, this is the complement to the first approach. But why do we 
+prefer this one instead? This is because it is slightly more efficient. 
+We do not need to compute all of the entries of the table like in the 
+first approach; we only need to start at $\hat w = 0$ and stop when 
+we reach the minimum value $w^{**}$ such that $Q(i, w^{**})$ is finite. 
+Observe that this minimum value $w^{**}$ is the same as the optimal value 
+to the $(1\;\|\;\sum w_j U_j)$ instance. In many cases, the value of 
+$w^{**}$ is much smaller than that of $w^*$ above. 
+
+Our FPTAS then uses an extension of the above observation. If we can compute a 
+lower bound $\text{LB}$ on $\text{OPT}$ such that $\text{LB} \leq 
+\text{OPT} \leq n \cdot \text{LB}$, then we could replace $w^{**}$ above 
+by $n \cdot \text{LB}$. We design the FPTAS by scaling and rounding the 
+weights, and then applying our second dynamic programming approach above
+with $Q(i, \hat w)$. This is quite similar to the FPTAS of the {\sc Knapsack} 
+problem. 
+
+There are two key building blocks for the FPTAS for $(1\;\|\;\sum w_j U_j)$. 
+\begin{enumerate}[(1)]
+    \item We need a lower bound $\text{LB}$ on $\text{OPT}$ computable in 
+    polynomial time such that $\text{LB} \leq \text{OPT} \leq n \cdot \text{LB}$.
+    \item We need an algorithm (based on dynamic programming) which computes 
+    the optimal value and runs in time  polynomial in $n$ and $\text{LB}$. 
+\end{enumerate}
+We address (1) by solving the problem $(1\;\|\;\max_j w_jU_j)$ on the 
+same instance. This can be done by applying the LCL algorithm 
+(Algorithm~\ref{algo:2.10}) to the functions 
+\[ h_j(C_j) = \begin{cases} 
+    0, & \text{if } C_j \leq d_j, \\ 
+    w_j, & \text{if } C_j > d_j. 
+\end{cases} \] 
+We also have the following result, and we leave its proof as an exercise. 
+
+\begin{prop}{prop:4.15}
+    For any schedule $S$, we have 
+    \[ \max_j w_j U_j^S \leq \sum_j w_j U_j^S \leq n \cdot \max_j w_j U_j^S. \] 
+    Moreover, if $S^*$ is an optimal schedule for $(1\;\|\;\max_j w_jU_j)$, then 
+    \[ \max_j w_j U_j^{S^*} \leq \text{OPT} \leq n \cdot \max_j w_j U_j^{S^*}, \] 
+    where $\text{OPT}$ is the optimal value for the $(1\;\|\;\sum w_j U_j)$ instance. 
+\end{prop}
+
+We set $\text{LB}$ to be the optimal value for the $(1\;\|\;\max_j w_j U_j)$ 
+instance. Our scale and round step is straightforward. Given an error 
+parameter $\eps > 0$, let the scaling parameter be $\delta = \eps \cdot 
+\text{LB}/n$. We define $w'_j = \lfloor w_j/\delta \rfloor$ for all jobs $j$. 
+It is easy to see that $w_j/\delta - 1 \leq w'_j \leq w_j/\delta$. 
+
+We apply the second dynamic programming algorithm to the rounded instance 
+with the weights $w'$. The running time is polynomial in $n$ and 
+$\text{LB}'$ where $\text{LB}' = \text{LB}/\delta = n/\eps$ because 
+the optimal value of the rounded instance is $\leq n \cdot \text{LB}'$.
+
+For the rounded instance, let $\text{OPT}'$ denote the optimal value. 
+Let $A'$ be the set of late jobs in an optimal schedule, so $w'(A') = 
+\text{OPT}'$. Let $A^*$ be the set of late jobs in an optimal schedule for 
+the original instance so that $w(A^*) = \text{OPT}$. 
+
+We claim that $w(A') \leq (1+\eps) \text{OPT}$. This follows from applying some
+inequalities we have stated earlier and the fact that $w'(A') \leq w'(A^*)$ 
+since $A'$ is optimal for the weights $w'$. Indeed, we have 
+\begin{align*} 
+    w(A') &= \sum_{j\in A'} w_j \leq \sum_{j\in A'} (\delta w'_j + \delta) \\
+    &\leq \delta w'(A') + n\delta \\ 
+    &\leq \delta w'(A^*) + n\delta \\
+    &\leq w(A^*) + \eps \cdot \text{LB} \\ 
+    &\leq (1 + \eps) w(A^*) \\ 
+    &= (1 + \eps) \text{OPT}. 
+\end{align*}
+Thus, we see that our algorithm is an FPTAS. 
+
+
