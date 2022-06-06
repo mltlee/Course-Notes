@@ -1547,3 +1547,142 @@ Let us now prove the theorem.
     \leq \int_E f_n\dd m \leq \lim_{n\to\infty} \int_E f_n\dd m = I(f). \] 
     Taking $n \to \infty$ gives us $\eqref{eq:2.2}$, which completes the proof. 
 \end{pf}
+
+We now discuss many consequences of Lebesgue's Monotone Convergence Theorem. 
+The first one we will prove is the countable additivity of the Lebesgue 
+integral for general non-negative measurable functions. 
+
+\begin{cor}{cor:2.50}
+    Let $(f_n)_{n=1}^\infty$ be a sequence of non-negative measurable functions
+    on $E \in {\cal L}$. Then $\sum_{n=1}^\infty f_n$ is measurable and we have 
+    \[ \int_E \left( \sum_{n=1}^\infty f_n \right) \textrm{d}m 
+    = \sum_{n=1}^\infty \int_E f_n\dd m. \] 
+\end{cor}
+\begin{pf}
+    We first prove finite additivity. Suppose that $(\varphi_n)_{n=1}^\infty$ 
+    and $(\psi_n)_{n=1}^\infty$ are non-negative simple measurable 
+    functions such that $\varphi_n \nearrow f_1$ and $\psi_n \nearrow f_2$
+    (where $\varphi_n \nearrow f_1$ means that $\varphi_1 \leq 
+    \varphi_2 \leq \cdots$ and $\varphi_n \to f_1$ pointwise). Then 
+    we see that $\varphi_n + \psi_n \nearrow f_1 + f_2$. It follows that 
+    \begin{align*}
+        \int_E (f_1 + f_2)\dd m 
+        &= \lim_{n\to\infty} \int_E (\varphi_n + \psi_n)\dd m \\ 
+        &= \lim_{n\to\infty} \left( \int_E \varphi_n\dd m + \int_E 
+        \psi_n\dd m \right) \\ 
+        &= \lim_{n\to\infty} \int_E \varphi_n\dd m + \lim_{n\to\infty} 
+        \int_E \psi_n\dd m \\ 
+        &= \int_E f_1\dd m + \int_E f_2\dd m, 
+    \end{align*}
+    where the first and last equality follow from Lebesgue's Monotone Convergence 
+    Theorem, and the second equality follows from Proposition~\ref{prop:2.47}
+    since $\varphi_n$ and $\psi_n$ are simple for all $n \in \N$. 
+    By induction, we obtain finite additivity. 
+
+    Next, observe that $f_1 + \cdots + f_N \nearrow \sum_{n=1}^\infty f_n$. 
+    Applying Lebesgue's Monotone Convergence Theorem gives 
+    \[ \int_E \left( \sum_{n=1}^\infty f_n \right) \textrm{d}m 
+    = \lim_{N\to\infty} \int_E \left( \sum_{n=1}^N f_n \right) 
+    \textrm{d}m = \lim_{N\to\infty} \sum_{n=1}^N \int_E f_n\dd m 
+    = \sum_{n=1}^\infty \int_E f_n\dd m. \qedhere \] 
+\end{pf}
+
+The next corollary tells us we can construct a measure from general 
+non-negative measurable functions as well, not just simple ones. 
+
+\begin{cor}{cor:2.51}
+    Suppose that $f : \R \to [0, \infty]$ is measurable. Define 
+    $\mu : {\cal L} \to [0, \infty]$ by 
+    \[ \mu(E) = \int_E f\dd m. \] 
+    Then $\mu$ is a measure. 
+\end{cor}
+\begin{pf}
+    It is clear that $\mu(\varnothing) = 0$ and $\mu(E) \geq 0$ for all 
+    $E \in {\cal L}$. Towards countable additivity, suppose that 
+    $E = \bigsqcup_{n=1}^\infty E_n$. Let $f_n = f\chi_{E_n}$ for each 
+    $n \in \N$. Observe that 
+    \[ f\chi_E = \sum_{n=1}^\infty f\chi_{E_n} = \sum_{n=1}^\infty f_n, \] 
+    so applying Corollary~\ref{cor:2.50} gives us 
+    \[ \mu(E) = \int_E f\dd m 
+    = \int_{\R} f\chi_E \dd m 
+    = \int_{\R} \left( \sum_{n=1}^\infty f_n \right)\textrm{d}m 
+    = \sum_{n=1}^\infty \int_{\R} f_n\dd m 
+    = \sum_{n=1}^\infty \int_{E_n} f\dd m 
+    = \sum_{n=1}^\infty \mu(E_n). \qedhere \] 
+\end{pf}
+
+We can think of $f$ as the ``density of $\mu$ relative to $m$''. 
+In the literature, this is often written $f = \frac{{\rm d}\mu}{{\rm d}m}$, 
+and we call this the Radon-Nikodym derivative. This topic is focused on 
+more heavily in PMATH 451. 
+
+The next result makes intuitive sense for how the integral should behave 
+when $f = 0$ almost everywhere. 
+
+\begin{cor}{cor:2.52}
+    If $f \geq 0$ is measurable and $E \in {\cal L}$, then $f = 0$ 
+    almost everywhere on $E$ if and only if 
+    \[ \int_E f\dd m = 0. \] 
+\end{cor}
+\begin{pf}
+    Suppose that $f = 0$ almost everywhere on $E$. Then we have 
+    \[ \int_E f\dd m = \int_{\{x\in E\,:\,f(x) = 0\}} f\dd m 
+    + \int_{\{x\in E\,:\,f(x) > 0\}} f\dd m = 0, \] 
+    where the first integral is $0$ because $f(x) = 0$ everywhere on that set 
+    and the second integral is $0$ because $m(\{x\in E : f(x) > 0\}) = 0$. 
+
+    Conversely, suppose that $\int_E f\dd m = 0$. For all $n \in \N$, define 
+    \[ E_n = \{x \in E : f(x) \geq 1/n\} \subseteq E. \] 
+    We see that $E_n \nearrow \{x \in E : f(x) > 0\}$. For all $n \in \N$, 
+    the monotonicity of the Lebesgue integral implies that 
+    \[ 0 = \int_E f\dd m \geq \int_{E_n} f\dd m \geq \int_{E_n} 
+    \frac1n\dd m \geq 0. \] 
+    This means that $\frac1n m(E_n) = 0$ and hence $m(E_n) = 0$ for all 
+    $n \in \N$. By the continuity of measure, we get 
+    \[ m(\{x \in E : f(x) > 0\}) = \lim_{n\to\infty} m(E_n) = 0. \] 
+    Thus, $f = 0$ almost everywhere. 
+\end{pf}
+
+\begin{remark}{remark:2.53}
+    The monotonicity of the sequence $(f_n)_{n=1}^\infty$ in Lebesgue's 
+    Monotone Convergence Theorem is essential. For example, let 
+    $f_n = n\chi_{[0, 1/n]}$ for all $n \in \N$. Then $f_n \to f$ pointwise 
+    where $f(0) = \infty$ and $f(x) = 0$ for all $x \neq 0$. 
+    This is certainly not a monotone limit. By Corollary~\ref{cor:2.52}, we have 
+    $\int_{\R} f\dd m = 0$. But each $f_n$ is simple and we see that 
+    \[ \int_{\R} f_n\dd m = n \cdot \frac1n = 1 \] 
+    for all $n \in \N$. In particular, the conclusion of Lebesgue's 
+    Monotone Convergence Theorem fails, since 
+    \[ 0 = \int_{\R} f\dd m < \lim_{n\to\infty} \int_{\R} f_n\dd m = 1. \] 
+\end{remark}
+
+Does the above inequality always hold? That is, do we have 
+\[ \int_{\R} \left( \lim_{n\to\infty} f_n \right) \textrm{d}m 
+\leq \lim_{n\to\infty} \int_{\R} f_n\dd m \] 
+given a sequence of non-negative measurable functions $(f_n)_{n=1}^\infty$? 
+The problem is that these limits may not make sense. But by making a slight 
+relaxation, it turns out that this does hold in general. This is known 
+as Fatou's Lemma. 
+
+\begin{theo}[Fatou's Lemma]{theo:2.54}
+    If $(f_n)_{n=1}^\infty$ be a sequence of non-negative measurable functions, then
+    \[ \int_{\R} \left( \liminf_{n\to\infty} f_n \right) \textrm{d}m 
+    \leq \liminf_{n\to\infty} \int_{\R} f_n\dd m. \] 
+\end{theo}
+\begin{pf}
+    By definition, we have 
+    \[ \liminf_{n\to\infty} f_n = \sup_{n\in\N} \left( \inf_{k\geq n} f_k \right). \] 
+    Setting $h_n = \inf_{k\geq n} f_k$, we see that $h_n \leq h_{n+1} \leq 
+    \cdots$ and $h_n = \inf_{k\geq n} f_k \leq f_k$ for all $k \geq n$. This 
+    gives us 
+    \[ \int_{\R} h_n\dd m = \int_{\R} \left( \inf_{k\geq n} f_k \right)\dd m 
+    \leq \int_{\R} f_k\dd m \] 
+    for all $k \geq n$, and thus 
+    \[ \int_{\R} h_n\dd m \leq \inf_{k\geq n} \int_{\R} f_k\dd m. \] 
+    Finally, applying Lebesgue's Monotone Theorem implies that 
+    \[ \int_{\R} \left( \liminf_{n\to\infty} f_n \right) \textrm{d}m 
+    = \lim_{n\to\infty} \int_{\R} h_n\dd m 
+    = \sup_{n\in\N} \int_{\R} h_n\dd m 
+    \leq \sup_{n\in\N} \left( \inf_{k\geq n} \int_{\R} f_k\dd m \right) 
+    = \liminf_{n\to\infty} \int_{\R} f_n\dd m. \qedhere \] 
+\end{pf}
