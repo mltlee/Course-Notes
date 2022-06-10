@@ -1,0 +1,463 @@
+\section{Advanced Single Machine Models} \label{sec:5}
+
+\subsection{Total Earliness and Tardiness} \label{subsec:5.1}
+One could imagine a situation where an earliness penalty is incurred. For 
+example, if one needs to go to convocation in a different city a week from now, 
+they wouldn't want to go immediately as they would need to pay for rent 
+or parking.  We define the earliness of a job $j$ by $E_j = \max(0, d_j - C_j)$.
+Note that unlike the performance measures we have discussed so far, 
+earliness is non-regular because it is decreasing with respect to 
+completion time. 
+
+In this section, we cover a generalization of the total tardiness 
+problem. We will focus on the objective 
+\[ \sum_{j=1}^n E_j + \sum_{j=1}^n T_j. \] 
+Intuitively, this problem is harder than total tardiness, which is known to be 
+$\NP$-hard. Therefore, we will focus on the special case where all 
+jobs have the same due date $d_j = d$. 
+
+An optimal schedule for this special case has some useful properties. For 
+example, it is easily shown that there is no idleness between any two jobs 
+for an optimal schedule, as one could close the gap by shifting jobs 
+later if they are early, or shifting jobs earlier if they are late. 
+Moreover, it is possible that an optimal schedule does not start processing 
+the jobs immediately at time $0$. Indeed, by the previous property, 
+an increase of $d$ would increase the starting time of the first job if 
+$d$ is sufficiently large. 
+
+We also observe that we can divide any sequence of jobs into 
+two disjoint sets and possibly one additional job. One set consists of the jobs 
+that are completed early so that $C_j \leq d$, and we will denote it by $J_1$. 
+The other set consists of the jobs that are started late, and we will denote it 
+by $J_2$. There may be another job which is started early but 
+completed late. 
+
+\begin{prop}{prop:5.1}
+    There is an optimal sequence in which one job is completed exactly 
+    at time $d$. 
+\end{prop}
+\begin{pf}
+    We proceed by contradiction. Suppose there is no such schedule. Then
+    there is always one job that starts its processing before time $d$ and 
+    completes its processing after time $d$. Call this job $j^*$. 
+    Let $|J_1|$ denote the number of jobs that are early and $|J_2|$ 
+    denote the number of jobs that are late. If $|J_1| < |J_2|$, then we 
+    can shift the entire schedule to the left in such a way that job $j^*$
+    completes its processing exactly at time $d$. This implies that the 
+    total tardiness decreases by $|J_2|$ times the length of the shift, 
+    while the total earliness increases by $|J_1|$ times the length of 
+    the shift. Clearly, the objective value is reduced. The case 
+    where $|J_1| > |J_2|$ can be treated in a similar way. 
+
+    The case where $|J_1| = |J_2|$ is somewhat special. In this case, there 
+    are many optimal schedules, of which only two satisfy the property 
+    given in the lemma. 
+\end{pf}
+
+Due to Proposition~\ref{prop:5.1}, we can avoid the situation where we have the 
+additional job in the middle altogether. In particular, there is an optimal 
+schedule such that the first job starts at time $0$ or later, the jobs in $J_1$ 
+scheduled first according to Longest Processing Time (LPT), and the jobs in $J_2$
+are scheduled last according to Shortest Processing Time (SPT). In this 
+sense, the schedule is shaped like a ``V''. Note that for a schedule of the 
+above form, say $1, \dots, n$, the total earliness is 
+\[ \sum_{j\in J_1} E_j = 0 \cdot p_1 + 1 \cdot p_2 + 2 \cdot 
+p_3 + \cdots + (|J_1| - 1) \cdot p_{|J_1|}, \] 
+while the total tardiness is 
+\[ \sum_{j\in J_2} T_j = 1 \cdot p_{|J_1|+|J_2|} + 2 \cdot 
+p_{|J_1|+|J_2|-1} + \cdots + |J_2| \cdot p_{|J_1|+1}. \] 
+For an instance in which all optimal schedules start processing the first job
+some time after $t = 0$ (that is, the due date $d$ is sufficiently large), 
+the following algorithm yields the optimal allocations of jobs to sets 
+$J_1$ and $J_2$. We assume that the jobs are ordered such that $p_1 \geq 
+p_2 \geq \cdots \geq p_n$. 
+
+\begin{algo}[Minimizing Total Earliness and Tardiness with Loose Due Date]{algo:5.2}
+    {\sc Step 1.} Assign job $1$ to set $J_1$. Initialize $k = 2$. 
+
+    {\sc Step 2.} Assign job $k$ to set $J_1$ and job $k+1$ to set $J_2$, 
+    or vice versa. 
+
+    {\sc Step 3.} If $k+2 \leq n-1$, then increase $k$ by $2$ and go back to 
+    Step 2. If $k+2 = n$, assign job $n$ to either set $J_1$ or set $J_2$ 
+    and stop. If $k+2 = n+1$, then all jobs have been assigned, so we stop. 
+\end{algo}
+
+This algorithm is somewhat flexible in its assignment of jobs to sets $J_1$ and 
+$J_2$. It can be implemented in a way that in the optimal assignment, the 
+total processing time of the jobs assigned to $J_1$ is minimized. Given the 
+total processing time of the jobs in $J_1$ and the due date $d$, it can be 
+verified easily whether the machine indeed must remain idle before it starts 
+processing its first job.
+
+If the due date $d$ is tight and it is necessary to start processing 
+a job at time $0$, then the problem is $\NP$-hard. The following heuristic 
+which assigns the $n$ jobs to the $n$ positions in the sequence can be 
+very effective, but does not always yield an optimal sequence. Again, we 
+assume that $p_1 \geq p_2 \geq \cdots \geq p_n$.  
+
+\begin{algo}[Minimizing Total Earliness and Tardiness with Tight Due Date]{algo:5.3}
+    {\sc Step 1.} Initialize $\tau_1 = d$ and $\tau_2 = \sum_{j=1}^n p_j - d$. 
+    Set $k = 1$.  
+
+    {\sc Step 2.} If $\tau_1 > \tau_2$, then assign job $k$ to the first 
+    unfilled position in the sequence and decrease $\tau_1$ by $p_k$. 
+    If $\tau_1 < \tau_2$, then assign job $k$ to the last unfilled position 
+    in the sequence and decrease $\tau_2$ by $p_k$. 
+
+    {\sc Step 3.} If $k < n$, then increase $k$ by $1$ and go back to Step 2. 
+    If $k = n$, then stop. 
+\end{algo}
+
+We give an example of this heuristic in action. 
+
+\begin{exmp}{exmp:5.4}
+    Consider the following example with $6$ jobs and common due date $d = 180$. 
+    \begin{align*}
+        \begin{array}{c|cccccc}
+            j & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline 
+            p_j & 106 & 100 & 96 & 22 & 20 & 2
+        \end{array}
+    \end{align*}
+    Applying the heuristic yields the following results. 
+    \begin{align*}
+        \begin{array}{c|c|c|c}
+            \tau_1 & \tau_2 & \text{Assignment} & \text{Sequence} \\ \hline 
+            180 & 166 & \text{Job $1$ placed first} & 1, *, *, *, *, * \\ 
+            74 & 166 & \text{Job $2$ placed last} & 1, *, *, *, *, 2 \\ 
+            74 & 66 & \text{Job $3$ placed first} & 1, 3, *, *, *, 2 \\ 
+            -22 & 66 & \text{Job $4$ placed last} & 1, 3, *, *, 4, 2 \\ 
+            -22 & 44 & \text{Job $5$ placed last} & 1, 3, *, 5, 4, 2 \\
+            -22 & 24 & \text{Job $6$ placed last} & 1, 3, 6, 5, 4, 2 \\  
+        \end{array}
+    \end{align*}
+\end{exmp}
+
+To end this section, we discuss some other versions of total 
+earliness and tardiness problems. 
+\begin{itemize}
+
+    \item Consider the objective $\sum w'E_j + \sum w''T_j$ where all 
+    due dates are equal with $d_j = d$. All jobs have exactly the same 
+    cost function, but the earliness penalty $w'$ and the tardiness 
+    penalty $w''$ are not the same. All the previous properties and
+    algorithms can be generalized relatively easily to take the 
+    difference between $w'$ and $w''$ into account. 
+
+    \item Consider the more general objective $\sum w'_j E_j + \sum w''_j T_j$ 
+    with $d_j = d$ for all jobs $j$. In this case, the shapes of the cost 
+    functions of the jobs are different. The LPT-SPT sequence described above 
+    is not necessarily optimal. The first part of the sequence must now be 
+    ordered according to Weighted Longest Processing Time first (WLPT), 
+    which is in increasing order of $w_j/p_j$. The second part of the 
+    sequence is ordered by Weighted Shortest Processing Time first (WSPT), 
+    which we are already familiar with. 
+
+    \item Consider the model with the objective function $\sum w'E_j + \sum w''T_j$
+    where we do not assume that the due dates are equal. It is clear that this 
+    case is $\NP$-hard as it is a more general model of the one we discussed in
+    Section~\ref{subsec:4.3}. This problem has an additional level of complexity. Because of
+    the different due dates, it may not necessarily be optimal to process the 
+    jobs one after another without interruption; it may be necessary to have 
+    idle times between the processing of consecutive jobs. Therefore, this 
+    problem has two aspects: one concerning the sequencing of the jobs, 
+    and the other concerning the idle time between the jobs. Approaches 
+    for this problem are typically based either on dynamic programming 
+    or branch and bound. However, given a predetermined sequence, the timing of 
+    the processing of the jobs (and therefore also the idle times) can be 
+    determined in polynomial time. This can also be applicable in a more 
+    general setting, which we will describe next. 
+
+    \item The most general setting has objective $\sum w'_j E_j + 
+    \sum w''_j T_j$ where the jobs have different due dates and weights. 
+    This problem is strongly $\NP$-hard since it is harder than 
+    $(1~||~\sum w_j T_j)$, which is also known to be strongly $\NP$-hard.
+    But again, given a predetermined sequence of the jobs, the timing 
+    of the jobs can be determined in polynomial time. However, we will not 
+    go into detail about this. 
+
+\end{itemize} 
+
+\subsection{Primary and Secondary Objectives} \label{subsec:5.2}
+In practice, a scheduler is often concerned with more than one objective. 
+For example, one might want to minimize inventory costs and meet due dates. 
+It would then be of interest, for instance, to find a schedule that minimizes a 
+combination of $\sum C_j$ and $L_{\max}$. 
+
+In many cases, there is more than one optimal schedule that minimizes a 
+given objective. A scheduler may then wish to consider the set of all 
+schedules that are optimal with respect to one objective (which 
+we will call the primary objective), and then search within this set of 
+schedules for the schedule that is best with regard to a secondary objective. 
+If the primary objective is $\gamma_1$ and the secondary objective is 
+$\gamma_2$, then such a problem is denoted by 
+$(\alpha~|~\beta~|~\gamma_1^{(1)}, \gamma_2^{(2)})$.
+
+We begin with the simple example $(1~||~\sum C_j^{(1)}, L_{\max}^{(2)})$ 
+where the primary objective is the total completion time and the secondary 
+objective is the maximum lateness. If there are no jobs with identical 
+processing times, then there is exactly one schedule that minimizes the 
+total completion time (namely the one obtained by SPT), so there is 
+no freedom to minimize $L_{\max}$. If there are jobs with identical processing 
+times, then there are multiple schedules that minimize the total completion 
+time. A set of jobs with identical processing times is preceded by a job with a 
+strictly shorter processing time and followed by a job with a strictly longer
+processing time. Jobs with identical processing times have to be processed 
+one after another, but the key is that they may be done in any order. 
+Then to minimize $L_{\max}$, we can put these jobs with identical processing 
+times in EDD order. We can refer to this rule as SPT/EDD, since the jobs are 
+first scheduled according to SPT and ties are broken according to EDD. This 
+rule can generalized to the case where the primary objective is 
+the total weighted completion time $\sum w_j C_j$. 
+
+Consider now the problem $(1~||~\sum L_{\max}^{(1)}, C_j^{(2)})$, which 
+has the same two objectives with reversed priorities. We know that 
+the EDD rule minimizes $L_{\max}$; suppose that the value of this minimum 
+$L_{\max}$ is $z$. Then the original problem can be transformed to 
+another equivalent problem. By creating a new set of due dates 
+$\overline{d_j} = d_j + z$, we see that these due dates are now deadlines. 
+The problem is to find a schedule which minimizes $\sum C_j$ subject to 
+the constraint that every job is completed by its deadline. We denote 
+this problem by $(1~|~\text{hard } d_j~|~\sum C_j)$. The algorithm 
+for finding the optimal schedule is based on the following result. 
+
+\begin{lemma}{lemma:5.5}
+    There exists a schedule that minimizes $\sum C_j$ in which job $k$ 
+    is scheduled last if and only if 
+    \begin{enumerate}[(1)]
+        \item $\overline{d_k} \geq \sum_{j=1}^n p_j$, and 
+        \item $p_k \geq p_\ell$ for all jobs $\ell$ such that 
+        $\overline{d_\ell} \geq \sum_{j=1}^n p_j$. 
+    \end{enumerate}
+\end{lemma}
+\begin{pf} 
+    Assume towards a contradiction that job $k$ is not scheduled last. 
+    There is a set of jobs that is scheduled after job $k$, and 
+    some job $\ell$ that is scheduled last. Note that job $\ell$ 
+    must satisfy condition (1) for otherwise it would not meet its due date. 
+    This means that job $\ell$ does not satisfy condition (2) and 
+    so $p_\ell < p_k$. After swapping jobs $k$ and $\ell$, the sum of the 
+    completion times of jobs $k$ and $\ell$ decreases, and the sum of the 
+    completion times of jobs scheduled between $k$ and $\ell$ also decreases. 
+    Hence, the original schedule that positioned job $\ell$ last could not have 
+    minimized $\sum C_j$. 
+\end{pf}
+
+In the following algorithm, $J^c$ represents the set of jobs that have 
+not been scheduled yet. 
+
+\begin{algo}[Minimizing Total Completion Time with Deadlines]{algo:5.6}
+    {\sc Step 1.} Set $k = n$, $\tau = \sum_{j=1}^n p_j$, and $J^c = \{1, \dots, n\}$. 
+
+    {\sc Step 2.} Find a job $k^* \in J^c$ such that $\overline{d_{k^*}} \geq \tau$ 
+    and $p_{k^*} \geq p_\ell$ for all jobs $\ell \in J^c$ such that 
+    $\overline{d_\ell} \geq \tau$. Put job $k^*$ in position $k$ of the sequence. 
+
+    {\sc Step 3.} Decrease $k$ by $1$, decrease $\tau$ by $p_{k^*}$, and 
+    delete job $k^*$ from $J^c$. 
+
+    {\sc Step 4.} If $k \geq 1$, then go back to Step 2. Otherwise, stop. 
+\end{algo}
+
+We give a simple example of the use of this backward algorithm. 
+
+\begin{exmp}{exmp:5.7}
+    Consider the following instance of $5$ jobs. 
+    \begin{align*}
+        \begin{array}{c|ccccc}
+            j & 1 & 2 & 3 & 4 & 5 \\ \hline 
+            p_j & 4 & 6 & 2 & 4 & 2 \\ 
+            d_j & 10 & 12 & 14 & 18 & 18
+        \end{array}
+    \end{align*}
+    For ease of notation, we will let $\hat J(\tau) = \{\ell \in J^c : 
+    \overline{d_\ell} \geq \tau\}$ be the set of eligible jobs that have 
+    not been scheduled yet. We start with $\tau = \sum_{j=1}^5 p_j = 18$, 
+    and applying the algorithm yields the following results. 
+    \begin{align*}
+        \begin{array}{c|c|c|c} 
+            \text{Iteration} & \tau & \hat J(\tau) & k^* \\ \hline 
+            1 & 18 & \{4, 5\} & 4 \\ 
+            2 & 14 & \{3, 5\} & 3 \text{ or } 5 \\ 
+            3 & 12 & \{2, 5\} \text{ or } \{2, 3\} & 2 \\ 
+            4 & 6 & \{1, 5\} \text{ or } \{1, 3\} & 1 \\ 
+            5 & 2 & \{5\} \text{ or } \{3\} & 5 \text{ or } 3            
+        \end{array}
+    \end{align*}
+    Thus, we obtain two optimal schedules, which are $5, 1, 2, 3, 4$ and 
+    $3, 1, 2, 5, 4$. 
+\end{exmp}
+
+It can be shown that even when preemptions are allowed, the optimal schedules 
+are non-preemptive for the $(1~|~\text{hard } d_j~|~\sum C_j)$ problem. We can 
+also assume feasibility of the problem in general as it can be checked easily 
+using the EDD rule. 
+
+Finally, we note that a fairly large number of problems of the form 
+$(1~|~\beta~|~\gamma_1^{(1)}, \gamma_2^{(2)})$ have been studied in the 
+literature. Very few of them can be solved in polynomial time. However, 
+problems of the type $(1~|~\beta~|~\sum w_j C_j^{(1)}, \gamma_2^{(2)})$ 
+tend to be easy based on the analysis of the $(1~||~\sum C_j^{(1)}, 
+L_{\max}^{(2)})$ problem we discussed at the beginning of the lecture. 
+We will see one such example on Assignment 6.
+
+\subsection{Parametric Analysis of Multiple Objectives} \label{subsec:5.3}
+Suppose that we have the two objectives $\gamma_1$ and $\gamma_2$. If 
+the overall objective is $\theta_1 \gamma_1 + \theta_2 \gamma_2$ where 
+$\theta_1$ and $\theta_2$ are the weights of the two objectives, then 
+we can denote the scheduling problem by $(1~|~\beta~|~\theta_1 \gamma_1 
++ \theta_2 \gamma_2)$. Multiplying both weights by the same constant 
+does not change the problem, so we may assume without loss of generality 
+that $\theta_1 + \theta_2 = 1$. For this section, we will focus on a 
+specific class of schedules. 
+
+\begin{defn}{defn:5.8}
+    A schedule is called {\bf Pareto optimal} if it is not possible to 
+    decrease the value of one objective without increasing the value of 
+    the other. 
+\end{defn}
+
+All Pareto optimal schedules can be represented by a set of points in the 
+$(\gamma_1, \gamma_2)$ plane. This set of points illustrates the tradeoffs 
+between the two objectives. Consider the two objectives we analyzed in the 
+previous section, namely $\sum C_j$ and $L_{\max}$. The two cases 
+we covered are the two extreme points of the tradeoff curve. Note that 
+if $\theta_1 \to 0$ and $\theta_2 \to 1$, then 
+\[ (1~|~\beta~|~\theta_1\gamma_1 + \theta_2\gamma_2) \to 
+(1~|~\beta~|~\gamma_2^{(1)}, \gamma_1^{(2)}), \] 
+while if $\theta_2 \to 0$ and $\theta_1 \to 1$, then 
+\[ (1~|~\beta~|~\theta_1\gamma_1 + \theta_2\gamma_2) \to 
+(1~|~\beta~|~\gamma_1^{(1)}, \gamma_2^{(2)}). \] 
+We will now focus on generating all Pareto optimal schedules for the 
+problem $(1~||~\theta_1 \sum C_j + \theta_2 L_{\max})$. 
+
+On one end of the extremes is the $(1~||~\sum L_{\max}^{(1)}, \sum C_j^{(2)})$ 
+problem, which could be solved using a more complicated backward algorithm
+where we have $L_{\max} = L_{\max}(\text{EDD})$. 
+
+On the other end, we have the $(1~||~\sum C_j^{(1)}, L_{\max}^{(2)})$ problem, 
+where the total completion time was minimized by the SPT rule and ties were 
+broken by EDD. We denoted this strategy by SPT/EDD, and we easily see that 
+$L_{\max} = L_{\max}(\text{SPT/EDD})$ in this case. It is clear that 
+\[ L_{\max}(\text{EDD}) \leq L_{\max}(\text{SPT/EDD}). \] 
+The algorithm that generates all Pareto optimal solutions in the tradeoff 
+curve contains two loops. One series of steps in the algorithm (the inner 
+loop) is an adaptation of Algorithm~\ref{algo:5.6}. In addition to the optimal 
+schedule with a maximum allowable $L_{\max}$, these steps determine 
+the minimum increment $\delta$ in the $L_{\max}$ that would allow for a 
+decrease in the minimum $\sum C_j$. The second (outer) loop of the algorithm 
+contains the structure that generates all the Pareto optimal points.
+The outer loop calls the inner loop at each Pareto optimal point to generate a 
+schedule at that point and also to determine how to move to the next efficient 
+point. The algorithm starts out with the EDD schedule that generates the first
+Pareto optimal point in the upper left part of the trade-off curve. It 
+determines the minimum increment in the $L_{\max}$ needed to achieve a 
+reduction in $\sum C_j$. Given this new value of $L_{\max}$, it uses 
+Algorithm~\ref{algo:5.6} to determine the schedule which minimizes 
+$\sum C_j$, and proceeds to determine the next increment. This goes on 
+until the algorithm reaches $L_{\max}(\text{SPT/EDD})$. 
+
+\begin{algo}[Tradeoffs between Total Completion Time and 
+    Maximum Lateness]{algo:5.9}
+    {\sc Step 1.} Set $r = 1$. Set $L_{\max} = L_{\max}(\text{EDD})$ and 
+    $\overline{d_j} = d_j + L_{\max}$. 
+
+    {\sc Step 2.} Set $k = n$ and $J^c = \{1, \dots, n\}$. Set 
+    $\tau = \sum_{j=1}^n p_j$ and $\delta = \tau$. 
+
+    {\sc Step 3.} Find a job $j^* \in J^c$ such that $\overline{d_{j^*}} \geq \tau$ 
+    and $p_{j^*} \geq p_\ell$ for all jobs $\ell \in J^c$ such that 
+    $\overline{d_\ell} \geq \tau$. Put job $j^*$ in position $k$ of the 
+    sequence. 
+
+    {\sc Step 4.} If there is no job $\ell$ such that $\overline{d_\ell} < 
+    \tau$ and $p_\ell > p_{j^*}$, then go to Step 5. Otherwise, let 
+    \[ \delta^{**} = \min\{\tau - \overline{d_\ell} : 
+    \text{jobs $\ell$ such that $\overline{d_\ell} < \tau$ and 
+    $p_\ell > p_{j^*}$}\} \] 
+    and set $\delta = \min\{\delta, \delta^{**}\}$. 
+
+    {\sc Step 5.} Decrease $k$ by $1$, decrease $\tau$ by $p_{j^*}$, 
+    and delete job $j^*$ from $J^c$. If $k \geq 1$, then go to Step 3. 
+    If $k = 0$, then go to Step 6. 
+
+    {\sc Step 6.} Set $L_{\max} = L_{\max} + \delta$. If $L_{\max} 
+    > L_{\max}(\text{SPT/EDD})$, then stop. Otherwise, set 
+    $r = r+1$, $\overline{d_j} = \overline{d_j} + \delta$, and 
+    go to Step 2. 
+\end{algo}
+
+The outer loop consists of Steps 1 and 6, while the inner loop consists of 
+Steps 2, 3, 4, and 5. Steps 2, 3, and 5 represent an adaptation of 
+Algorithm~\ref{algo:5.6}, while Step 4 computes the minimum increment 
+in the $L_{\max}$ needed to achieve a subsequent reduction in $\sum C_j$. 
+
+It can be shown that the number of Pareto optimal solutions is $n(n-1)/2$, 
+which is $O(n^2)$. Generating one Pareto optimal solution can be done in 
+$O(n\log n)$ time. Therefore, the total computation time of 
+Algorithm~\ref{algo:5.9} is $O(n^3\log n)$. 
+
+We now give an example of the use of the above algorithm. 
+
+\begin{exmp}{exmp:5.10}
+    Consider the following set of $5$ jobs. 
+    \begin{align*}
+        \begin{array}{c|ccccc}
+            j & 1 & 2 & 3 & 4 & 5 \\ \hline 
+            p_j & 1 & 3 & 6 & 7 & 9 \\ 
+            d_j & 30 & 27 & 20 & 15 & 12
+        \end{array}
+    \end{align*}
+    The EDD sequence is $5, 4, 3, 2, 1$ with $L_{\max}(\text{EDD}) = 2$ 
+    and total completion time $98$. The SPT/EDD sequence is $1, 2, 3, 4, 5$ with 
+    $L_{\max}(\text{SPT/EDD}) = 14$ and total completion time $58$. 
+
+    We give an example of one full iteration of the inner loop.
+    \begin{itemize}
+        \item Initially, we have $k = 5$, $\tau = \sum_{j=1}^5 p_j = 26$, and 
+        so the set of eligible jobs to put at the end of the sequence is $\{1, 2\}$.
+        Since job $2$ has the largest processing time, we place it last. 
+        Then we have $\delta^{**} = \tau - \overline{d_3} = 26 - 22 = 4$ and so
+        $\delta = 4$. 
+        \item Next, we have $k = 4$, $\tau = 23$, and job $1$ is the 
+        only eligible job. Then $\delta^{**} = 23 - 22 = 1$ and $\delta = 1$. 
+        \item Then, we have $k = 3$, $\tau = 22$, and the only eligible job is 
+        job $3$. We then have $\delta^{**} = \tau - \overline{d_4} = 22 - 17 = 5$.
+        \item For the next iteration of the inner loop, we have $k = 2$, $\tau = 16$, 
+        and job $4$ is the only eligible job. Then $\delta^{**} = \tau 
+        - \overline{d_5} = 16 - 12 = 4$.
+        \item Finally, we pick job $5$ at the end, and obtain the Pareto optimal 
+        schedule $5, 4, 3, 1, 2$ with $\delta = 1$.
+    \end{itemize} 
+    The full results are given in the following table. 
+    \begin{align*}
+        \begin{array}{c|c|c|c|c|c}
+            \text{Iteration} & \sum C_j & L_{\max} & \text{Pareto optimal schedule} 
+            & \text{current } \tau + \delta & \delta \\ \hline 
+            1 & 96 & 2 & 5, 4, 3, 1, 2 & 32~29~22~17~14 & 1 \\ 
+            2 & 77 & 3 & 1, 5, 4, 3, 2 & 33~30~23~18~15 & 2 \\ 
+            3 & 75 & 5 & 1, 4, 5, 3, 2 & 35~32~25~20~17 & 1 \\ 
+            4 & 64 & 6 & 1, 2, 5, 4, 3 & 36~33~26~21~18 & 2 \\ 
+            5 & 62 & 8 & 1, 2, 4, 5, 3 & 38~35~28~23~20 & 3 \\ 
+            6 & 60 & 11 & 1, 2, 3, 5, 4 & 41~38~31~26~23 & 3 \\ 
+            7 & 58 & 14 & 1, 2, 3, 4, 5 & 44~41~34~29~26 & \text{STOP} 
+        \end{array}
+    \end{align*} 
+\end{exmp}
+
+However, when one would consider the objective $\theta_1 \sum C_j + \theta_2 
+L_{\max}$, certain Pareto optimal schedules may never be optimal, 
+no matter what the weights are. 
+
+Consider the generalization $(1~||~\theta_1 \sum w_j C_j + \theta_2 L_{\max})$. 
+It is clear that the two extreme points of the tradeoff curve can be determined 
+in polynomial time using WSPT/EDD and EDD. However, even though the two 
+endpoints of the tradeoff curve can be analyzed in polynomial time, the 
+problem with arbitrary weights $\theta_1$ and $\theta_2$ is $\NP$-hard. 
+
+The tradeoff curve that corresponds to the example in this section has the
+shape of a staircase. This shape is fairly common in a single machine 
+environment with multiple objectives, especially when preemptions are not 
+allowed. However, in other machine environments such as parallel machines, 
+smoother curves may occur, especially when preemptions are allowed.
+We will not cover more parametric analysis in this course though. 
