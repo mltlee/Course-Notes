@@ -1686,3 +1686,192 @@ as Fatou's Lemma.
     \leq \sup_{n\in\N} \left( \inf_{k\geq n} \int_{\R} f_k\dd m \right) 
     = \liminf_{n\to\infty} \int_{\R} f_n\dd m. \qedhere \] 
 \end{pf}
+
+We now consider arbitrary complex-valued measurable functions. 
+In order to avoid $\infty - \infty$ type situations, we first make 
+the following definition. 
+
+\begin{defn}{defn:2.55}
+    The set of {\bf Lebesgue integrable functions} over $\R$ is defined to be 
+    the collection 
+    \[ L^1 = L^1(\R) = \left\{ f : \R \to \C : f \text{ is measurable and } 
+    \int_{\R} |f|\dd m < \infty \right\}. \] 
+    A function $f \in L^1$ is said to be {\bf absolutely integrable}. 
+    Given $E \in {\cal L}$, we can also consider the analogue 
+    \[ L^1(E) = \left\{ f : E \to \C : f \text{ is measurable and } 
+    \int_E |f|\dd m < \infty \right\}. \] 
+\end{defn}
+
+For $E \in {\cal L}$ and $f \in L^1(E)$, we can write $f = u+iv$ 
+where $u = \text{Re}(f)$ and $v = \text{Im}(f)$. We can again 
+split these into $u = u^+ - u^-$ and $v = v^+ - v^-$, and we observe that 
+$0 \leq u^\pm, v^\pm \leq |f|$. This means that $\int_E u^\pm \dd m < \infty$ 
+and $\int_E v^\pm \dd m < \infty$, so $u^\pm, v^\pm \in L^1(E)$. 
+
+\begin{defn}{defn:2.56}
+    Let $E \in {\cal L}$ and $f \in L^1(E)$. We define the {\bf Lebesgue 
+    integral of $f$ over $\C$} to be 
+    \[ \int_E f\dd m = \left( \int_E u^+\dd m - \int_E u^-\dd m 
+    \right) + i\left( \int_E v^+\dd m - \int_E v^-\dd m \right). \] 
+\end{defn}
+
+\begin{theo}{theo:2.57}
+    Let $E$ be a measurable set. 
+    \begin{enumerate}[(a)]
+        \item $L^1(E)$ is a $\C$-vector space under pointwise addition and 
+        scalar multiplication. 
+        \item The map $f \mapsto \int_E f\dd m$ is a linear functional
+        over $L^1(E)$. 
+        \item For any $f \in L^1(E)$, we have 
+        \[ \left| \int_E f\dd m \right| \leq \int_E |f|\dd m. \] 
+    \end{enumerate}
+\end{theo}
+\begin{pf}~
+    \begin{enumerate}[(a)]
+        \item Let $f, g \in L^1(E)$ and $\alpha, \beta \in \C$. We know that 
+        $\alpha f + \beta g$ is measurable with 
+        \[ |\alpha f + \beta g| \leq |\alpha||f| + |\beta||g|. \] 
+        It follows that 
+        \[ \int_E |\alpha f + \beta g|\dd m 
+        \leq \int_E (|\alpha||f| + |\beta||g|)\dd m 
+        \leq |\alpha| \int_E |f|\dd m + |\beta| \int_E |g|\dd m 
+        < \infty, \] 
+        so $\alpha f + \beta g \in L^1(E)$. 
+
+        \item To show that $f \mapsto \int_E f\dd m$ is a linear functional, 
+        it suffices to check that $\int_E (f+g)\dd m = \int_E f\dd m + 
+        \int_E g\dd m$ and $\int_E \alpha f\dd m = \alpha \int_E f\dd m$ 
+        for all $f, g \in L^1(E)$ and $\alpha \in \C$. Moreover, it is 
+        enough to consider the case where $f$ and $g$ are real-valued 
+        since the result follows from considering Definition~\ref{defn:2.56}. 
+
+        Let $h = f + g$. Write $f = f^+ - f^-$, $g = g^+ - g^-$, and 
+        $h = h^+ - h^-$. Then we see that 
+        \[ h^+ + f^- + g^- = f^+ + g^+ + h^-. \]
+        Recall from Corollary~\ref{cor:2.50} that the Lebesgue integral 
+        is additive for non-negative measurable functions and thus 
+        \[ \int_E h^+\dd m + \int_E f^-\dd m + \int_E g^- \dd m 
+        = \int_E f^+\dd m + \int_E g^+\dd m + \int_E h^-\dd m. \] 
+        Note that all the above values are finite since $f, g \in L^1(E)$, 
+        so rearranging yields 
+        \begin{align*}
+            \int_E (f+g)\dd m 
+            &= \int_E h^+\dd m - \int_E h^-\dd m \\
+            &= \int_E f^+\dd m - \int_E f^-\dd m + \int_E g^+\dd m - \int_E g^-\dd m \\ 
+            &= \int_E f\dd m + \int_E g\dd m.
+        \end{align*}
+        Next, we show that $\int_E \alpha f \dd m = \alpha \int_E f\dd m$
+        for all $f \in L^1(E)$ and $\alpha \in \C$. If $\alpha \geq 0$, 
+        then there is nothing to prove. For $\alpha = -1$, we see that 
+        \[ \alpha f = -u + i(-v) = (u^- - u^+) + i(v^- - v^+). \] 
+        Then we obtain 
+        \begin{align*}
+            \int_E (-f)\dd m 
+            &= \left( \int_E u^-\dd m - \int_E u^+\dd m \right)
+            + i\left( \int_E v^-\dd m - \int_E v^+\dd m \right) \\
+            &= - \left[ \left( \int_E u^+\dd m - \int_E u^-\dd m \right)
+            + i\left( \int_E v^+\dd m - \int_E v^-\dd m \right) \right] \\
+            &= - \int_E f\dd m.
+        \end{align*}
+        The $\alpha = i$ case can be proved similarly. Then the result 
+        for all $\alpha \in \C$ follows from the above cases by using the fact 
+        that $\int_E (f+g)\dd m = \int_E f\dd m + \int_E g\dd m$. 
+
+        \item Note that $\int_E f\dd m \in \C$, so we can pick 
+        $\alpha \in \C$ with $|\alpha| = 1$ so that 
+        \[ \left| \int_E f\dd m \right| = \alpha \int_E f\dd m. \] 
+        Then we have 
+        \[ 0 \leq \left| \int_E f\dd m \right| = \alpha \int_E f\dd m 
+        = \int_E \alpha f \dd m = \int_E \text{Re}(\alpha f)\dd m 
+        + i \int_E \text{Im}(\alpha f)\dd m. \] 
+        Note that the term $i \int_E \text{Im}(\alpha f)\dd m$ vanishes 
+        since the above quantities are real. Since $\text{Re}(\alpha f)
+        \leq |\alpha f| = |f|$, we deduce that 
+        \[ \left| \int_E f\dd m \right| = \int_E \text{Re}(\alpha f)\dd m 
+        \leq \int_E |f|\dd m. \qedhere \] 
+    \end{enumerate}
+\end{pf}
+
+Now, we discuss Lebesgue's Dominated Convergence Theorem. This result is 
+very powerful, and we will see many applications of it down the road. 
+One such result is the completeness of the $L^p$ spaces. 
+
+\begin{theo}[Lebesgue's Dominated Convergence Theorem]{theo:2.58}
+    Let $E \in {\cal L}$, and let $(f_n)_{n=1}^\infty$ be a sequence of 
+    functions in $L^1(E)$. Assume that there exists a non-negative 
+    function $g \in L^1(E)$ such that $0 \leq |f_n| \leq g$ for all 
+    $n \in \N$, and suppose that 
+    \[ f(x) = \lim_{n\to\infty} f_n(x) \] 
+    exists for all $x \in E$. Then $f \in L^1(E)$ and 
+    \[ \lim_{n\to\infty} \int_E |f - f_n|\dd m = 0. \] 
+\end{theo}
+
+In particular, by applying part (c) of Theorem~\ref{theo:2.57}, we see that 
+\[ \left| \int_E f\dd m - \int_E f_n\dd m \right| = \left| 
+\int_E (f - f_n)\dd m \right| \leq \int_E |f - f_n|\dd m \to 0, \] 
+and so we get a similar result to Lebesgue's Monotone Convergence Theorem, 
+namely 
+\[ \int_E f\dd m = \lim_{n\to\infty} \int_E f_n\dd m. \] 
+
+\begin{pf}
+    We have $f \in L^1(E)$ since $|f_n| \leq g$ for all $n \in \N$ 
+    and so $|f| \leq g$. Since $g \in L^1(E)$, we obtain 
+    \[ \int_E |f|\dd m \leq \int g\dd m < \infty. \] 
+    Next, define $F_n(x) = 2g(x) - |f(x) - f_n(x)| \geq 0$. It is clear 
+    that each $F_n$ is measurable. Note that 
+    \[ \liminf_{n\to\infty} F_n = 2g \] 
+    since $|f(x) - f_n(x)| \to 0$, so applying Fatou's Lemma 
+    (Theorem~\ref{theo:2.54}) to $(F_n)_{n=1}^\infty$ gives us 
+    \begin{align*}
+        \int_E 2g \dd m = \int_E \liminf_{n\to\infty} F_n\dd m 
+        &\leq \liminf_{n\to\infty} \int_E F_n\dd m \\ 
+        &= \liminf_{n\to\infty} \left( \int_E 2g\dd m - 
+        \int_E |f - f_n|\dd m \right) \\ 
+        &= \int_E 2g\dd m + \liminf_{n\to\infty} \left( - 
+        \int_E |f - f_n|\dd m \right). 
+    \end{align*}
+    Observe that 
+    \[ 0 \leq \liminf_{n\to\infty} \left( -\int_E |f - f_n|\dd m \right) 
+    = -\limsup_{n\to\infty} \int_E |f - f_n|\dd m, \] 
+    and so we have 
+    \[ 0 \leq \limsup_{n\to\infty} \int_E |f - f_n|\dd m \leq 0. \] 
+    Since $f_n \to f$ pointwise, we conclude that 
+    \[ \lim_{n\to\infty} \int_E |f - f_n|\dd m = 0. \qedhere \] 
+\end{pf}
+
+\begin{remark}{remark:2.59}
+    We note that there are ``almost everywhere'' versions of Lebesgue's 
+    Monotone Convergence Theorem and Dominated Convergence Theorem. 
+    The almost everywhere version of the Monotone Convergence Theorem states that 
+    if $(f_n)_{n=1}^\infty$ is a sequence of non-negative measurable functions on 
+    $E \in {\cal L}$ with $f_n \leq f_{n+1}$ almost everywhere for all $n \in \N$, 
+    then 
+    \[ f(x) = \lim_{n\to\infty} f_n(x) = \sup_{n\in\N} f_n(x) \] 
+    exists for almost every $x \in E$ and 
+    \[ \int_E f\dd m = \lim_{n\to\infty} \int_E f_n\dd m. \] 
+    We give a brief sketch of the proof. By taking 
+    \[ F = \{x \in E : f_n(x) > f_{n+1}(x) \text{ for some } n \in \N\} 
+    = \bigcup_{n\in\N} \{x \in E : f_n(x) > f_{n+1}(x)\}, \] 
+    we observe that each set $\{x \in E : f_n(x) > f_{n+1}(x)\}$ has 
+    measure $0$ and so $m(F) = 0$. Then we can restrict our attention to 
+    $F^c$ and observe that $f_n \nearrow f = \sup_{n\in\N} f_n$ there, in 
+    which case we can apply the normal version of Lebesgue's Monotone 
+    Convergence Theorem. The value of the integral is unaffected by the 
+    measure zero set $F$. 
+
+    The almost everywhere version of the Dominated Convergence Theorem states 
+    that if $(f_n)_{n=1}^\infty$ is a sequence of functions in $L^1(E)$ 
+    such that $|f_n| \leq g$ almost everywhere for all $n \in \N$ and 
+    $f_n \to f$ almost everywhere, then $f \in L^1(E)$ and 
+    \[ \lim_{n\to\infty} \int_E |f - f_n|\dd m = 0. \] 
+    We leave its proof as an exercise. 
+\end{remark}
+
+Finally, we show that the Riemann integral is special case of the Lebesgue 
+integral in some sense. 
+
+\begin{theo}{theo:2.60}
+    Let $f : [a, b] \to \R$ be a Riemann integrable function. Then $f$ 
+    is measurable and $f \in L^1([a, b])$. Moreover, we have 
+    \[ \int_a^b f(x)\dd x = \int_{[a, b]} f\dd m. \] 
+\end{theo}
