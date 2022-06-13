@@ -1816,7 +1816,7 @@ namely
 \begin{pf}
     We have $f \in L^1(E)$ since $|f_n| \leq g$ for all $n \in \N$ 
     and so $|f| \leq g$. Since $g \in L^1(E)$, we obtain 
-    \[ \int_E |f|\dd m \leq \int g\dd m < \infty. \] 
+    \[ \int_E |f|\dd m \leq \int_E g\dd m < \infty. \] 
     Next, define $F_n(x) = 2g(x) - |f(x) - f_n(x)| \geq 0$. It is clear 
     that each $F_n$ is measurable. Note that 
     \[ \liminf_{n\to\infty} F_n = 2g \] 
@@ -1867,7 +1867,7 @@ namely
     We leave its proof as an exercise. 
 \end{remark}
 
-Finally, we show that the Riemann integral is special case of the Lebesgue 
+Finally, we show that the Riemann integral is a special case of the Lebesgue 
 integral in some sense. 
 
 \begin{theo}{theo:2.60}
@@ -1875,3 +1875,50 @@ integral in some sense.
     is measurable and $f \in L^1([a, b])$. Moreover, we have 
     \[ \int_a^b f(x)\dd x = \int_{[a, b]} f\dd m. \] 
 \end{theo}
+\begin{pf}
+    Let $f : [a, b] \to \R$ be Riemann integrable. Note that by taking a 
+    sequence $(P_n)_{n=1}^\infty$ of partition refinements of $[a, b]$ with 
+    mesh approaching $0$, we obtain step functions $(u_n)_{n=1}^\infty$ 
+    and $(\ell_n)_{n=1}^\infty$ associated with the upper and lower 
+    Riemann sums. In particular, we have $\ell_n \leq f \leq u_n$ 
+    for all $n \in \N$ and 
+    \[ \int_a^b f(x)\dd x = \sup_{n\in\N} \int_a^b \ell_n(x)\dd x 
+    = \inf_{n\in\N} \int_a^b u_n(x)\dd x. \] 
+    Moreover, we have $\ell_n \leq \ell_{n+1}$ and $u_n \geq u_{n+1}$ for all 
+    $n \in \N$. It is easy to see that the Riemann integral coincides with 
+    the definition of the Lebesgue integral for simple step functions. 
+    Thus, we have 
+    \begin{align*}
+        \int_a^b u_n(x)\dd x &= \int_{[a, b]} u_n\dd m, \\
+        \int_a^b \ell_n(x)\dd x &= \int_{[a, b]} \ell_n\dd m. 
+    \end{align*}
+    Define $\ell = \sup_{n\in\N} \ell_n$ and $u = \inf_{n\in\N} u_n$. 
+    We know that both $\ell$ and $u$ are measurable since they are 
+    pointwise limits of step functions, which are measurable. We can 
+    also see that $\ell \leq f \leq u$. 
+
+    Consider the sequence of functions $(2u_1 - u_n + \ell_n)_{n=1}^\infty$. 
+    Observe that each of these functions is non-negative, and this is a 
+    non-decreasing sequence. We have $2u_1 - u_n + \ell_n \nearrow 2u_1 - u + 
+    \ell$, and applying Lebesgue's Monotone Convergence Theorem gives us 
+    \begin{equation} \label{eq:2.3} 
+        \lim_{n\to\infty} \int_{[a, b]} (2u_1 - u_n + \ell_n)\dd m 
+        = \int_{[a, b]} (2u_1 - u + \ell)\dd m.
+    \end{equation} 
+    The left hand side of $\eqref{eq:2.3}$ is equal to 
+    \[ \lim_{n\to\infty} \int_{[a, b]} (2u_1 - u_n + \ell_n)\dd m 
+    = \int_{[a, b]} 2u_1\dd m + \lim_{n\to\infty} \int_{[a, b]} (u_n - \ell_n)\dd m 
+    = \int_{[a, b]} 2u_1\dd m \] 
+    where the limit above went to $0$ since the Lebesgue integral coincides 
+    with the Riemann integral for the simple step functions and we know that 
+    $f$ is Riemann integrable. The right hand side of $\eqref{eq:2.3}$ is 
+    \[ \int_{[a, b]} (2u_1 - u + \ell)\dd m = \int_{[a, b]} 2u_1\dd m + 
+    \int_{[a, b]} (u - \ell)\dd m. \] 
+    Putting everything together, we know that $u - \ell \geq 0$ and 
+    \[ \int_{[a, b]} (u - \ell) \dd m = 0. \] 
+    Then we must have $u = \ell = f$ almost everywhere, and so $f$ is 
+    measurable. Since $f$ is Riemann integrable, it is also bounded, so 
+    $f \in L^1([a, b])$. We conclude that 
+    \[ \int_{[a, b]} f\dd m = \int_{[a, b]} u\dd m 
+    = \lim_{n\to\infty} u_n\dd m = \int_a^b f(x)\dd x. \qedhere \] 
+\end{pf}

@@ -1,0 +1,133 @@
+\section{Banach and Hilbert Spaces}\label{sec:3}
+
+\subsection{Banach and Hilbert Spaces}\label{subsec:3.1}
+Functional analysis is the study of normed vector spaces and the continuous 
+linear maps between them. Some of the most important examples of complete 
+metric spaces are Banach spaces. Recall from PMATH 351 that a metric space is 
+complete if every Cauchy sequence is convergent. We first give the definition 
+of a normed vector space and a Banach space, and then illustrate these concepts 
+with some examples. 
+
+\begin{defn}{defn:3.1}
+    A {\bf normed vector space} is a pair $(V, \|\cdot\|)$ where $V$ is a 
+    vector space over $\C$ and $\|\cdot\| : V \to [0, \infty)$ is a 
+    {\bf norm} on $V$. That is, $\|\cdot\|$ satisfies the following properties: 
+    \begin{enumerate}[(1)]
+        \item $\|v\| \geq 0$ for all $v \in V$, and $\|v\| = 0$ 
+        if and only if $v = 0$; 
+        \item $\|\alpha v\| = |\alpha|\|v\|$ for all $\alpha \in C$ and 
+        $v \in V$; and 
+        \item $\|v + w\| \leq \|v\| + \|w\|$ for all $v, w \in V$. 
+    \end{enumerate}
+\end{defn}
+
+Note that the property that $\|v\| = 0$ if and only if $v = 0$ says that 
+$\|\cdot\|$ is non-degenerate; without this requirement, $\|\cdot\|$ is 
+called a {\bf semi-norm}. Moreover, given $v, w \in V$, the above properties 
+together give rise to a canonical metric defined by 
+\[ d(v, w) = \|v - w\|. \]
+Thus, a normed vector space is a special case of a metric space. 
+
+\begin{defn}{defn:3.2}
+    A {\bf Banach space} is a complete normed vector space. 
+\end{defn}
+
+We begin with the prototypical example of a normed vector space. 
+
+\begin{exmp}{exmp:3.3} 
+    Let $v = (v_1, v_2, \dots, v_n) \in \C^n$. We define the $1$-norm on $\C^n$ by 
+    \[ \|v\|_1 = |v_1| + |v_2| + \cdots + |v_n|. \] 
+    The $2$-norm on $\C^n$ is given by 
+    \[ \|v\|_2 = (|v_1|^2 + |v_2|^2 + \cdots + |v_n|^2)^{1/2}. \] 
+    More generally, for $1 \leq p < \infty$, the $p$-norm on $\C^n$ is 
+    \[ \|v\|_p = (|v_1|^p + |v_2|^p + \cdots + |v_n|^p)^{1/p}. \] 
+    The $\infty$-norm or supremum norm on $\C^n$ is 
+    \[ \|v\|_\infty = \max\{|v_1|, |v_2|, \dots, |v_n|\}. \] 
+    In fact, $\C^n$ equipped with each of these norms is a finite-dimensional 
+    Banach space. 
+\end{exmp}
+
+We can also consider the continuous analogues for the space $C[a, b]$ 
+of continuous functions on $[a, b]$.
+
+\begin{exmp}{exmp:3.4}
+    Let $f \in C[a, b]$. The $1$-norm on $C[a, b]$ is 
+    \[ \|f\|_1 = \int_a^b |f(x)|\dd x. \] 
+    The $2$-norm on $C[a, b]$ is given by 
+    \[ \|f\|_2 = \left( \int_a^b |f(x)|^2\dd x \right)^{\!1/2}. \] 
+    Finally, the $\infty$-norm on $C[a, b]$ is 
+    \[ \|f\|_\infty = \sup_{x\in [a, b]} |f(x)|. \] 
+    Note that $C[a, b]$ is a Banach space equipped with the supremum norm, 
+    but it is not complete with respect to the $1$-norm and $2$-norm. 
+\end{exmp}
+
+Next, we consider inner product spaces and Hilbert spaces, which is
+a special case of Banach spaces. 
+
+\begin{defn}{defn:3.5} 
+    An {\bf inner product space} is a pair $(H, \langle \cdot, \cdot \rangle)$ 
+    where $H$ is a vector space over $\C$ and $\langle \cdot, \cdot \rangle
+    : H \times H \to \C$ satisfies the following properties.
+    \begin{enumerate}[(1)]
+        \item $\langle x, y \rangle = \overline{\langle y, x \rangle}$
+        for all $x, y \in H$. 
+        \item For fixed $y \in H$, the map $x \mapsto \langle x, y \rangle$
+        is a linear functional.
+        \item {\bf Positive semidefiniteness:} $\langle x, x \rangle \geq 0$ 
+        for all $x \in H$.
+        \item {\bf Non-degeneracy:} $\langle x, x \rangle = 0$ if and only if 
+        $x = 0$. 
+    \end{enumerate} 
+\end{defn}
+
+Note that properties (1) and (2) imply that $\langle \cdot, \cdot \rangle$ 
+is a {\bf sesquilinear form} on $H$. That is, $\langle \cdot, \cdot \rangle$ 
+is linear in the left variable, and conjugately linear in the right 
+variable. Moreover, we can define a norm on $H$ by 
+\[ \|x\| = \langle x, x \rangle^{1/2}. \] 
+We verify this fact in the following proposition. 
+
+\begin{prop}{prop:3.6}
+    Let $(H, \langle \cdot, \cdot \rangle)$ be an inner product space. 
+    \begin{enumerate}[(1)]
+        \item {\bf Cauchy-Schwarz inequality:} For all $x, y \in H$, 
+        we have $|\langle x, y \rangle| \leq \|x\|\|y\|$. 
+        \item $(H, \langle \cdot, \cdot \rangle)$ is a normed vector space. 
+    \end{enumerate}
+\end{prop}
+\begin{pf}~
+    \begin{enumerate}[(1)]
+
+        \item Fix $x, y \in H$. The result is clear if $\|x\| = 0$ or 
+        $\|y\| = 0$. Assume now that $x \neq 0$ and $y \neq 0$. For 
+        $t \in \R$, define $p(t) = \|x - ty\|^2 \geq 0$. Observe that 
+        \[ p(t) = \langle x - ty, x - ty \rangle = \|x\|^2 
+        + t^2 \|y\|^2 + 2t\,\text{Re}\langle x, y \rangle. \] 
+        By setting $a = \|y\|^2$, $b = 2\,\text{Re}\langle x, y \rangle$, 
+        and $c = \|x\|^2$, we have $p(t) = at^2 + bt + c \geq 0$. 
+        This means that $p(t)$ has at most one distinct real root, 
+        and thus $b^2 - 4ac \leq 0$. In particular, we have 
+        \[ 4(\text{Re}\langle x, y \rangle)^2 \leq 4\|x\|^2\|y\|^2, \] 
+        or equivalently, $|\text{Re}\langle x, y \rangle| \leq \|x\|\|y\|$. 
+        Choose $\alpha \in \C$ such that $|\alpha| = 1$ and 
+        $\langle \alpha x, y \rangle = |\langle x, y \rangle|$. Then 
+        we deduce that 
+        \[ |\langle x, y \rangle| = \langle \alpha x, y \rangle
+        = |\text{Re}\langle \alpha x, y \rangle| \leq \|\alpha x\|\|y\| 
+        = \|x\|\|y\|. \] 
+
+        \item We will show that $\|\cdot\|$ satisfies the triangle 
+        inequality; the other properties are obvious. Given $x, y \in H$, 
+        we have 
+        \[ \|x + y\|^2 = \|x\|^2 + \|y\|^2 + 2\,\text{Re}\langle x, y \rangle 
+        \leq \|x\|^2 + \|y\|^2 + 2\|x\|\|y\| = (\|x\| + \|y\|)^2. \qedhere \] 
+    \end{enumerate}
+\end{pf}
+
+Since we have shown that $\|x\| = \langle x, x \rangle^{1/2}$ is indeed a 
+norm on an inner product space $(H, \langle \cdot, \cdot \rangle)$, it 
+makes sense to make the following definition. 
+
+\begin{defn}{defn:3.7}
+    A {\bf Hilbert space} is a complete inner product space. 
+\end{defn}
