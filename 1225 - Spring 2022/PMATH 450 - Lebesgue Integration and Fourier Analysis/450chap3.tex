@@ -131,3 +131,149 @@ makes sense to make the following definition.
 \begin{defn}{defn:3.7}
     A {\bf Hilbert space} is a complete inner product space. 
 \end{defn}
+
+\subsection{Banach Spaces of Measurable Functions} \label{subsec:3.2}
+Recall that for $E \in {\cal L}$, we defined 
+\[ L^1(E) = \left\{ f : E \to \C : f \text{ is measurable and } 
+\int_E |f|\dd m < \infty \right\}, \] 
+and we showed in Theorem~\ref{theo:2.57} that $L^1(E)$ is a vector space 
+over $\C$. Given $f \in L^1(E)$, we will define the \textbf{$L^1$-norm} of 
+$f$ by the value of the integral above, so 
+\[ \|f\|_1 = \int_E |f|\dd m. \] 
+Note that $\|\cdot\|_1$ is close to being a norm, since it is 
+easy to see that $\|\alpha f\|_1 = |\alpha|\|f\|_1$ and 
+\[ \|f + g\|_1 = \int_E |f+g|\dd m \leq \int_E (|f| + |g|)\dd m 
+= \|f\|_1 + \|g\|_1 \] 
+for any $f, g \in L^1(E)$ and $\alpha \in \C$. However, we are not quite 
+there. Notice that 
+\[ \|f\|_1 = \int_E |f|\dd m = 0 \] 
+only implies that $f = 0$ almost everywhere, so we are not guaranteed 
+non-degeneracy. 
+
+To repair this, we can define an equivalence relation on $L^1(E)$ by 
+$f \sim g$ if and only if $f - g = 0$ almost everywhere. Then $L^1(E)/\!\sim$ 
+is a quotient space where $f \in L^1(E)$ is associated with the 
+equivalence class $[f] \in L^1(E)/\!\sim$. It can be verified that 
+$L^1(E)/\!\sim$ is a vector space over $\C$ with $\alpha [f] + \beta [g] 
+= [\alpha f + \beta g]$ for all $\alpha, \beta \in \C$ and $f, g \in L^1(E)$. 
+Moreover, we can define a norm on it by $\|[f]\|_1 = \|f\|_1$.
+
+From now on, we will abuse notation and identify $L^1(E)$ with 
+$L^1(E)/\!\sim$. That is, we only identify functions $f \in L^1(E)$ up to 
+almost everywhere equality. Then $(L^1(E), \|\cdot\|_1)$ is a normed 
+vector space. 
+
+\begin{defn}{defn:3.8}
+    Let $E \in {\cal L}$. We define the set of {\bf square-integrable 
+    functions} over $E$ by 
+    \[ L^2(E) = \left\{ f : E \to \C : f \text{ is measurable and }
+    \int_E |f|^2 \dd m < \infty \right\}. \] 
+    Equivalently, we have 
+    \[ L^2(E) = \{f : E \to \C \mid f \text{ is measurable and } 
+    f^2 \in L^1(E)\}. \] 
+\end{defn}
+
+\begin{prop}{prop:3.9}
+    Let $E \in {\cal L}$ and $f, g \in L^2(E)$. Then $L^2(E)$ is an inner 
+    product space with inner product given by 
+    \[ \langle f, g \rangle = \int_E f\overline g\dd m. \] 
+    In particular, this induces a norm on $L^2(E)$ via 
+    \[ \|f\|_2 = \langle f, f \rangle^{1/2} = \left( \int_E |f|^2 \dd m 
+    \right)^{\!1/2}, \] 
+    which we call the {\bf $L^2$-norm}. 
+\end{prop}
+\begin{pf}
+    Let $f, g \in L^2(E)$ and $\alpha \in \C$. It is clear that $\alpha f 
+    \in L^2(E)$. To see that $f + g \in L^2(E)$, note that 
+    $|f(x) + g(x)| \leq 2\max\{|f(x)|, |g(x)|\}$, and thus 
+    \[ |f(x) + g(x)|^2 \leq 4\max\{|f(x)|^2, |g(x)|^2\} 
+    \leq 4(|f(x)|^2 + |g(x)|^2). \] 
+    It follows that 
+    \[ \int_E |f + g|^2\dd m \leq \int_E 4(|f|^2 + |g|^2)\dd m < \infty, \] 
+    so $f + g \in L^2(E)$ and we conclude that $L^2(E)$ is a $\C$-vector space. 
+
+    Next, we verify that $\langle f, g \rangle$ is well-defined by 
+    showing that $f\overline g \in L^1(E)$ for any $f, g \in L^2(E)$. 
+    Note that if $a, b \geq 0$, then $ab \leq \frac12(a^2 + b^2)$. 
+    By taking $a = |f(x)|$ and $b = |g(x)|$, we obtain 
+    \[ |f(x) \overline g(x)| = |f(x)||g(x)| \leq \frac12(|f(x)|^2 + 
+    |g(x)|^2). \] 
+    Hence, we see that 
+    \[ \int_E f\overline g\dd m \leq \frac12 \int_E |f|^2\dd m 
+    + \frac12 \int_E |g|^2\dd m < \infty. \] 
+    It is easily checked that $\langle \alpha f + \beta g, h \rangle 
+    = \alpha \langle f, h \rangle + \beta \langle g, h \rangle$ 
+    and $\langle f, g \rangle = \overline{\langle g, f \rangle}$ 
+    for any $f, g, h \in L^2(E)$ and $\alpha, \beta \in \C$, so 
+    $\langle \cdot, \cdot \rangle$ is a sesquilinear form on $L^2(E)$. 
+    Finally, we have 
+    \[ \langle f, f \rangle = \int_E |f|^2 \dd m \geq 0 \] 
+    and $\langle f, f \rangle = 0$ if and only if $|f|^2 = 0$ almost 
+    everywhere, which is equivalent to saying that $f = 0$ almost everywhere. 
+    By identifying $L^2(E)$ with $L^2(E)/\!\sim$ where $\sim$ is the same 
+    equivalence relation as above, this is enough to show that 
+    $(L^2(E), \langle \cdot, \cdot \rangle)$ is an inner product space. 
+\end{pf}
+
+\begin{remark}{remark:3.10}
+    Let $1 \leq p < \infty$ and $E \in {\cal L}$. Analogous to 
+    what we have done so far, we can define 
+    \[ L^p(E) = \left\{ f : E \to \C : f \text{ is measurable and }
+    \int_E |f|^p \dd m < \infty \right\}. \] 
+    and define the {\bf $L^p$-norm} by 
+    \[ \|f\|_p = \left( \int_E |f|^p \dd m \right)^{\!1/p}. \] 
+    It can be verified that this is indeed a norm by using H\"older's inequality. 
+    This makes $(L^p(E), \|\cdot\|_p)$ a normed vector space. 
+\end{remark}
+
+Let $1 \leq p < \infty$. We now show that $L^p(E)$ is complete with 
+respect to the norm $\|\cdot\|_p$ defined as above. In particular, 
+this means that $(L^1(E), \|\cdot\|_1)$ is a Banach space and 
+$(L^2(E), \langle \cdot, \cdot \rangle)$ is a Hilbert space. 
+We recall that if a Cauchy sequence has a convergent subsequence in a 
+metric space, then the Cauchy sequence also converges. 
+
+\begin{theo}{theo:3.11}
+    Let $1 \leq p < \infty$ and $E \in {\cal L}$. Then $(L^p(E), \|\cdot\|_p)$ 
+    is complete. 
+\end{theo}
+\begin{pf}
+    Fix $1 \leq p < \infty$, and take a Cauchy sequence $(f_n)_{n=1}^\infty$ 
+    in $L^p(E)$ with respect to $\|\cdot\|_p$. Choose a subsequence 
+    $n_1 < n_2 < n_3 < \cdots$ such that 
+    \[ \|f_{n_{k+1}} - f_{n_k}\|_p < 2^{-k} \] 
+    for all $k \in \N$. By the above remark, it suffices to find a function 
+    $f \in L^p(E)$ such that $\|f - f_{n_k}\|_p \to 0$ as $k \to \infty$. 
+    We define 
+    \[ g_m(x) = |f_{n_1}(x)| + \sum_{k=1}^m |f_{n_{k+1}}(x) - f_{n_k}(x)|. \] 
+    Then we see that each $g_m$ is measurable with $0 \leq g_1 
+    \leq g_2 \leq \cdots$ and  
+    \[ \|g_m\|_p \leq \|f_{n_1}\|_p + \sum_{k=1}^m \|f_{n_{k+1}} - 
+    f_{n_k}\|_p \leq \|f_{n_1}\|_p + 1 = M. \]     
+    Thus, we have $0 \leq g_1^p \leq g_2^p \leq \cdots$ and 
+    \[ \int_E g_m^p \dd m \leq M^p \] 
+    for all $m \in \N$. Now, define 
+    \[ g(x) = \lim_{m\to\infty} g_m(x) = |f_{n_1}(x)| + 
+    \sum_{k=1}^\infty |f_{n_{k+1}}(x) - f_{n_k}(x)|, \] 
+    and observe that $g$ is measurable. By Lebesgue's Monotone Convergence 
+    Theorem (Theorem~\ref{theo:2.48}), we have 
+    \[ \int_E g^p\dd m = \lim_{m\to\infty} \int_E g_m^p\dd m \leq M^p 
+    < \infty. \] 
+    Thus, we have $g \in L^p(E)$ and in particular, $g(x) < \infty$ almost 
+    everywhere. If $g(x) < \infty$, then we know that the telescoping series 
+    \[ f_{n_1}(x) + \sum_{k=1}^\infty (f_{n_{k+1}}(x) - f_{n_k}(x)) \] 
+    converges absolutely. This means that $\lim_{m\to\infty} f_{n_m}(x)$ 
+    exists for almost every $x \in E$. Finally, define 
+    \[ f(x) = \begin{cases}
+        \lim_{m\to\infty} f_{n_m}(x), & \text{if } g(x) < \infty, \\ 
+        0, & \text{otherwise.}
+    \end{cases} \] 
+    Then $f_{n_k} \to f$ almost everywhere, so $f$ is measurable. Moreover, 
+    $|f_{n_k}| \leq g_{k-1} \leq g$ implies that $|f| \leq g$. This means that 
+    \[ \int_E |f|^p \dd m \leq \int_E g^p \dd m < \infty, \] 
+    so $f \in L^p(E)$. Finally, observe that 
+    \[ \|f_{n_m} - f\|_p = \left\| \sum_{k=m}^\infty (f_{n_{k+1}} 
+    - f_{n_k}) \right\|_p \leq \sum_{k=m}^\infty \|f_{n_{k+1}} - f_{n_k}\|_p 
+    \to 0, \] 
+    which completes the proof. 
+\end{pf}
