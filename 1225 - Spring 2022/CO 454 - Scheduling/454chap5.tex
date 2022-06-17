@@ -392,10 +392,10 @@ Steps 2, 3, 4, and 5. Steps 2, 3, and 5 represent an adaptation of
 Algorithm~\ref{algo:5.6}, while Step 4 computes the minimum increment 
 in the $L_{\max}$ needed to achieve a subsequent reduction in $\sum C_j$. 
 
-It can be shown that the number of Pareto optimal solutions is $n(n-1)/2$, 
-which is $O(n^2)$. Generating one Pareto optimal solution can be done in 
-$O(n\log n)$ time. Therefore, the total computation time of 
-Algorithm~\ref{algo:5.9} is $O(n^3\log n)$. 
+It can be shown that the number of Pareto optimal solutions is bounded 
+above by $\binom{n}{2} + O(1)$, which is $O(n^2)$. Generating one Pareto optimal 
+solution can be done in $O(n\log n)$ time. Therefore, the total computation 
+time of Algorithm~\ref{algo:5.9} is $O(n^3\log n)$. 
 
 We now give an example of the use of the above algorithm. 
 

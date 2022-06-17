@@ -173,19 +173,37 @@ ones are timely. This algorithm runs in $O(n\log n)$ time.
     \end{align*}
     We can initially schedule jobs $1$ and $2$, which will both be timely. However, 
     once we schedule job $3$, we see that it will be late, since $t = 19 > 18 = d_3$.
-    \begin{verbatim}
-        |---1---|---2----|-3--|
-        0       7        15   19
-    \end{verbatim}
-    \vspace{-1em}
+    \begin{center} 
+        \begin{tikzpicture}[/pgfgantt/y unit chart=0.7cm] 
+            \begin{ganttchart}[
+                title/.style={draw=none},
+                canvas/.append style={draw=none}, 
+                bar top shift=0.1, bar height=0.6,
+                y unit title=0.6cm
+            ]{1}{19}
+                \ganttbar[inline]{Job 1}{1}{7} \ganttbar[inline]{Job 2}{8}{15} \ganttbar[inline]{Job 3}{16}{19} \\
+                \gantttitlelist{1,...,19}{1}
+            \end{ganttchart}
+        \end{tikzpicture}
+    \end{center}
+    \vspace{-0.6cm}
     Therefore, we toss out job $2$ which has the highest processing time of $p_2 = 8$
     and continue. We can schedule job $4$ just fine, but job $5$ will be late with 
     $t = 23 > 21 = d_5$. 
-    \begin{verbatim}
-        |---1---|-3--|--4---|--5---|
-        0       7    11     17     23
-    \end{verbatim}
-    \vspace{-1em}
+    \begin{center} 
+        \begin{tikzpicture}[/pgfgantt/y unit chart=0.7cm] 
+            \begin{ganttchart}[
+                title/.style={draw=none},
+                canvas/.append style={draw=none}, 
+                bar top shift=0.1, bar height=0.6,
+                y unit title=0.6cm
+            ]{1}{19}
+                \ganttbar[inline]{Job 1}{1}{7} \ganttbar[inline]{Job 3}{8}{11} \ganttbar[inline]{Job 4}{12}{17} \ganttbar[inline]{Job 5}{18}{23} \\
+                \gantttitlelist{1,...,23}{1}
+            \end{ganttchart}
+        \end{tikzpicture}
+    \end{center}
+    \vspace{-0.6cm}
     This time, we toss out job $1$ since it has the highest processing time of $p_1 = 7$. 
     Then we obtain $S_1 = \{3, 4, 5\}$ and $S_2 = \{1, 2\}$, so $\text{OPT} = 2$ for 
     this instance. 

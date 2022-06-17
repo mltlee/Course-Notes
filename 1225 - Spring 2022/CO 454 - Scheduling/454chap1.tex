@@ -100,7 +100,7 @@ To begin, we'll first introduce some examples of scheduling problems.
     time of the students on $M_3$; that is, $C_{\max} = 
     \max_{j \in \{1, \dots, n\}} C_{3j}$. We often refer to 
     $C_{\max}$ as the {\bf makespan} of the schedule. The goal is to 
-    find a schedule which minimizes $C_{\max}$ among all feasible schedules.
+    find a schedule which minimizes $C_{\max}$.
     
     For instance, suppose that there are $n = 4$ students with the 
     following processing times. 
@@ -115,18 +115,24 @@ To begin, we'll first introduce some examples of scheduling problems.
     Using the schedule $S_1, S_2, S_3, S_4$ for all three machines, we 
     can determine that $C_{\max} = \max(C_{24}, C_{33}) + p_{34} = 
     \max(36, 37) + 3 = 40$. We can visualize these values via a Gantt chart, 
-    like below. 
-    \begin{verbatim}
-        M1 |-S1-|--S2--|---S3---|-----S4------|----idle---|
-           0    4      10       18            30          40 
-
-        M2 |idle|----S1----|---S2---|-S3-|idle|--S4--|idle|
-           0    4          14       23   26   30     36   40 
-
-        M3 |-----idle------|----S1----|---S2---|--S3--|S4-|
-           0               14         25       32     37  40 
-    \end{verbatim} 
-    \vspace{-1em}
+    like below. The black bars indicate that the machine is idling.
+    \begin{center} 
+        \begin{tikzpicture}[/pgfgantt/y unit chart=0.65cm] 
+            \begin{ganttchart}[
+                title/.style={draw=none},
+                canvas/.append style={draw=none}, 
+                bar top shift=0.1, bar height=0.6,
+                y unit title=0.65cm,
+                x unit=0.37cm
+            ]{1}{40}
+                \ganttbar{$M_1$}{1}{4} \ganttbar[inline]{$S_1$}{1}{4} \ganttbar[inline]{$S_2$}{5}{10} \ganttbar[inline]{$S_3$}{11}{18} \ganttbar[inline]{$S_4$}{19}{30} \ganttbar[bar/.append style={fill=black}]{}{31}{40} \\ 
+                \ganttbar{$M_2$}{1}{4} \ganttbar[bar/.append style={fill=black}]{}{1}{4} \ganttbar[inline]{$S_1$}{5}{14} \ganttbar[inline]{$S_2$}{15}{23} \ganttbar[inline]{$S_3$}{24}{26} \ganttbar[bar/.append style={fill=black}]{}{27}{30} \ganttbar[inline]{$S_4$}{31}{36} \ganttbar[bar/.append style={fill=black}]{}{37}{40} \\ 
+                \ganttbar{$M_3$}{1}{14} \ganttbar[bar/.append style={fill=black}]{}{1}{14} \ganttbar[inline]{$S_1$}{15}{25} \ganttbar[inline]{$S_2$}{26}{32} \ganttbar[inline]{$S_3$}{33}{37} \ganttbar[inline]{$S_4$}{38}{40} \\ 
+                \gantttitlelist{1,...,40}{1}
+            \end{ganttchart}
+        \end{tikzpicture}
+    \end{center}
+    \vspace{-0.4cm}
     Notice that $M_2$ had to idle because $M_1$ did not finish processing 
     $S_4$ yet. 
     

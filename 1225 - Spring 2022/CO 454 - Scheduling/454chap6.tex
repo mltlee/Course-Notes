@@ -1,0 +1,203 @@
+\section{Parallel Machine Models} \label{sec:6}
+
+\subsection{Makespan without Preemptions} \label{subsec:6.1}
+The makespan is not a very interesting objective for a single machine. 
+However, for parallel machine models, minimizing the makespan has the effect 
+of balancing the load over the various machines, which is an important 
+objective in practice. Recall that we denote this by $(P_m~\|~C_{\max})$.
+
+One can see that $(P_2~\|~C_{\max})$ is $\NP$-hard via a reduction from 
+\textsc{Partition}. Indeed, consider an instance of \textsc{Partition}, 
+where we are given $a_1, \dots, a_t \in \Z^+$ and want to find a subset 
+$S \subseteq \{1, \dots, t\}$ such that 
+\[ \sum_{j\in S} a_j = \frac12 \sum_{j=1}^t a_j = b. \] 
+Let $n = t$ be the number of jobs each with processing time $p_j = a_j$. Then 
+it is easy to check that there is a schedule with optimal value at most 
+$\frac12 \sum_{j=1}^n p_j$ if and only if there is a solution to the 
+\textsc{Partition} instance. 
+
+Over the years, there have been many heuristics developed for 
+$(P_m~\|~C_{\max})$. We focus on one such heuristic, and present it by 
+discussing some history on how this algorithm was developed. First, we 
+take a look at the list scheduling rule, which runs in $O(n\log m)$ time 
+using a priority queue for the loads. 
+
+\begin{algo}[List Scheduling]{algo:6.1}
+    Given $n$ jobs in some arbitrary order, assign job $j$ to machine $i$ 
+    whose load is smallest so far for each $j \in [n]$. 
+\end{algo}
+
+There are two obvious lower bounds on OPT, namely 
+\begin{enumerate}[(1)]
+    \item $\text{OPT} \geq \max_{j\in[n]} p_j$ since the jobs are not preemptive, and 
+    \item $\text{OPT} \geq \frac1m \sum_{j=1}^n p_j$ because at least one machine must 
+    have load which is at least the average. 
+\end{enumerate}
+We shall denote the load of a machine $i$ by $L(i) = p(S(i)) = 
+\sum_{j\in S(i)} p_j$, where $S(i)$ is the set of jobs assigned to machine $i$.
+
+\begin{theo}{theo:6.2}
+    Algorithm~\ref{algo:6.1} is a $2$-approximation for $(P_m~\|~C_{\max})$. 
+\end{theo}
+\begin{pf}
+    Let $i$ denote the machine which the highest load determining the objective 
+    value. Let $j$ be the last job scheduled on machine $i$. When job $j$ was 
+    assigned to machine $i$, it had the smallest load. Its load before the 
+    assignment was $L(i) - p_j$, and thus $L(i) - p_j \leq L(k)$ for all 
+    $1 \leq k \leq m$. Summing up this inequality over all $k$ and 
+    dividing by $m$, we obtain 
+    \[ L(i) - p_j \leq \frac1m \sum_{k=1}^m L(k) = \frac1m \sum_{j=1}^n p_j 
+    \leq \text{OPT}. \] 
+    We deduce that $L(i) = (L(i) - p_j) + p_j \leq 2 \cdot \text{OPT}$. 
+\end{pf}
+
+Is this analysis tight? That is, are there any examples where the factor 
+is as bad as $2$? The answer is essentially yes. Suppose there are $m$ machines.
+Take $m(m-1)$ jobs each with processing time $1$, and let the last job 
+in the order have processing time $m$. Then the list scheduling algorithm 
+will try to balance the $m(m-1)$ jobs among the $m$ machines first. Then 
+we are forced to run the last job with processing time $m$ last on one 
+of the machines, and that machine has load $2m - 1$. An optimal schedule 
+instead places the job with processing time $m$ on its own machine, 
+and balances the load of the $m(m-1)$ jobs between the remaining $m-1$ 
+machines. This gives a makespan of $m$ instead. 
+
+It can be shown that Algorithm~\ref{algo:6.1} is in fact a 
+$(2 - \frac1m)$-approximation, and the above example shows that this is 
+exactly a tight bound. 
+
+We now consider the {\bf Longest Processing Time first (LPT)} rule.
+
+\begin{algo}[LPT]{algo:6.3}
+    Sort the $n$ jobs in decreasing order of $p_j$, then run 
+    Algorithm~\ref{algo:6.1}.
+\end{algo}
+
+This is equivalent to the following procedure: at time $t = 0$, 
+assign the $m$ longest jobs to the $m$ machines. Afterwards, 
+whenever a machine is freed, the longest job among those not yet processed is 
+put on the machine. This heuristic tries to place the shorter jobs more towards 
+the end of the schedule, where they can be used for balancing the loads.
+
+\begin{exercise}{exercise:6.4}
+    Show that if an optimal schedule results in at most two jobs on any
+    machine, then LPT is optimal.
+\end{exercise}
+
+Under the LPT rule in the case that $n \geq m+1$, we also have an additional 
+lower bound on OPT. This is given by $\text{OPT} \geq 2p_{m+1}$ because 
+at least one machine must run two jobs by the time it gets to the 
+$(m+1)$-th job, and that machine has load at least $2p_{m+1}$ as the 
+jobs are in decreasing order of the processing times. 
+
+\begin{theo}{theo:6.5}
+    Algorithm~\ref{algo:6.3} is a $\frac32$-approximation for $(P_m~\|~C_{\max})$.
+\end{theo}
+\begin{pf}
+    This is the same proof as Theorem~\ref{theo:6.2}, except that we now 
+    have $p_j \leq p_{m+1} \leq \text{OPT}/2$. 
+\end{pf}
+
+This is actually a very crude bound. We give a more sophisticated analysis 
+showing that the LPT rule is a $(\frac43 - \frac{1}{3m})$-approximation, 
+and that this bound is tight.  
+
+\begin{theo}{theo:6.6}
+    For $(P_m~\|~C_{\max})$, we have 
+    \[ \frac{C_{\max}(\text{LPT})}{C_{\max}(\text{OPT})} \leq 
+    \frac43 - \frac{1}{3m}. \] 
+\end{theo}
+\begin{pf}
+    We proceed by contradiction. Suppose there are counterexamples with 
+    ratio strictly larger than $\frac43 - \frac1{3m}$. Among these 
+    counterexamples, there must be a counterexample with the least 
+    number of jobs. 
+
+    Suppose this smallest counterexample has $n$ jobs. This counterexample 
+    has a useful property: under LPT, the shortest job is the last job 
+    to start its processing and also the last job to finish its processing. 
+    To see why this is true, note that by the definition of LPT, 
+    the shortest job is the last to finish its processing. On the other hand, 
+    if this job was not last to finish processing, then the deletion of 
+    this smallest job would result in a counterexample with fewer jobs since 
+    $C_{\max}(\text{LPT})$ remains the same while $C_{\max}(\text{OPT})$ 
+    either stays the same or decreases, which is a contradiction to our 
+    assumption that our counterexample was minimal. 
+
+    Therefore, for our smallest counterexample, the starting time of the 
+    shortest job is $C_{\max}(\text{LPT}) - p_n$. At this point, all other 
+    machines are busy, so we have 
+    \[ C_{\max}(\text{LPT}) - p_n \leq \frac1m \sum_{j=1}^{n-1} p_j. \] 
+    The right-hand side is an upper bound on the starting time of the 
+    shortest job, and is achieved when scheduling the first $n-1$ jobs 
+    according to LPT results in each machine having exactly the same 
+    amount of processing to do. Then we have 
+    \[ C_{\max}(\text{LPT}) \leq p_n + \frac1m \sum_{j=1}^{n-1} p_j 
+    = p_n\left(1 - \frac1m \right) + \frac1m \sum_{j=1}^n p_j. \] 
+    We also know that $C_{\max}(\text{OPT}) \geq \frac1m \sum_{j=1}^n p_j$, 
+    so for the counterexample, we obtain 
+    \[ \frac43 - \frac1{3m} < \frac{C_{\max}(\text{LPT})}{C_{\max}(\text{OPT})} 
+    \leq \frac{p_n(1 - \frac1m) + \frac1m \sum_{j=1}^n p_j}{C_{\max}(\text{OPT})} 
+    \leq \frac{p_n(1 - \frac1m)}{C_{\max}(\text{OPT})} + 1. \] 
+    Rearranging gives us $C_{\max}(\text{OPT}) < 3p_n$. Note that this 
+    is a strict inequality. Since $p_n$ is the shortest job, this implies that 
+    for the smallest counterexample, the optimal schedule results in at 
+    most two jobs on each machine. But by Exercise~\ref{exercise:6.4}, 
+    LPT is optimal under this condition, which is a contradiction. 
+\end{pf}
+
+\begin{exmp}{exmp:6.7}
+    We consider an example where LPT performs very badly and attains the 
+    worst case bound. Suppose there are $m = 4$ parallel machines with the 
+    following $n = 9$ jobs. 
+    \begin{align*}
+        \begin{array}{c|ccccccccc}
+            j & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ \hline 
+            p_j & 7 & 7 & 6 & 6 & 5 & 5 & 4 & 4 & 4
+        \end{array}
+    \end{align*}
+    Then the following schedule is optimal with $C_{\max} = 12$.
+    \begin{center} 
+        \begin{tikzpicture}[/pgfgantt/y unit chart=0.7cm] 
+            \begin{ganttchart}[
+                title/.style={draw=none},
+                canvas/.append style={draw=none}, 
+                bar top shift=0.1, bar height=0.6,
+                y unit title=0.7cm,
+            ]{1}{12}
+                \ganttbar{Machine 1}{1}{7} \ganttbar[inline]{7}{1}{7} \ganttbar[inline]{5}{8}{12} \\ 
+                \ganttbar{Machine 2}{1}{7} \ganttbar[inline]{7}{1}{7} \ganttbar[inline]{5}{8}{12} \\ 
+                \ganttbar{Machine 3}{1}{6} \ganttbar[inline]{6}{1}{6} \ganttbar[inline]{6}{7}{12} \\ 
+                \ganttbar{Machine 4}{1}{4} \ganttbar[inline]{4}{1}{4} \ganttbar[inline]{4}{5}{8} \ganttbar[inline]{4}{9}{12} \\
+                \gantttitlelist{1,...,12}{1}
+            \end{ganttchart}
+        \end{tikzpicture}
+    \end{center}
+    \vspace{-0.4cm}
+    On the other hand, LPT gives the following schedule which has $C_{\max} = 15$, 
+    which is the worst case we could possibly have from Theorem~\ref{theo:6.6}.
+    \begin{center} 
+        \begin{tikzpicture}[/pgfgantt/y unit chart=0.7cm] 
+            \begin{ganttchart}[
+                title/.style={draw=none},
+                canvas/.append style={draw=none}, 
+                bar top shift=0.1, bar height=0.6,
+                y unit title=0.7cm,
+            ]{1}{12}
+                \ganttbar{Machine 1}{1}{7} \ganttbar[inline]{7}{1}{7} \ganttbar[inline]{4}{8}{11} \ganttbar[inline]{4}{12}{15} \\ 
+                \ganttbar{Machine 2}{1}{7} \ganttbar[inline]{7}{1}{7} \ganttbar[inline]{4}{8}{11} \\ 
+                \ganttbar{Machine 3}{1}{6} \ganttbar[inline]{6}{1}{6} \ganttbar[inline]{5}{7}{11} \\ 
+                \ganttbar{Machine 4}{1}{6} \ganttbar[inline]{6}{1}{6} \ganttbar[inline]{5}{7}{11} \\
+                \gantttitlelist{1,...,15}{1}
+            \end{ganttchart}
+        \end{tikzpicture}
+    \end{center}
+    \vspace{-0.4cm}
+\end{exmp}
+
+Now, consider the same problem with the jobs subject to precedence constraints,
+namely $(P_m~|~\text{prec}~|~C_{\max})$. From a complexity point of view, this 
+problem has to be at least as hard as the problem without precedence constraints.
+To obtain some insights into the effects of precedence constraints, we consider 
+a number of special cases. 
+
