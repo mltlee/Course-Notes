@@ -274,6 +274,252 @@ metric space, then the Cauchy sequence also converges.
     so $f \in L^p(E)$. Finally, observe that 
     \[ \|f_{n_m} - f\|_p = \left\| \sum_{k=m}^\infty (f_{n_{k+1}} 
     - f_{n_k}) \right\|_p \leq \sum_{k=m}^\infty \|f_{n_{k+1}} - f_{n_k}\|_p 
-    \to 0, \] 
-    which completes the proof. 
+    \to 0. \] 
+    Then applying Lebesgue's Dominated Convergence Theorem to 
+    $f_{n_{m+1}}^p \to f^p$ with $|f_{n_{m+1}}|^p \leq g^p \in L^1(E)$ implies 
+    that $f^p \in L^1(E)$, which is equivalent to saying that 
+    $f \in L^p(E)$. This completes the proof. 
+\end{pf}
+
+\begin{cor}{cor:3.12}
+    Let $1 \leq p < \infty$ and let $(f_n)_{n=1}^\infty \subseteq L^p(E)$ 
+    be a Cauchy sequence with limit $f \in L^p(E)$. Then there exists a 
+    subsequence $(f_{n_k})_{k=1}^\infty$ such that $f_{n_k}(x) \to f(x)$ 
+    for almost every $x \in E$. 
+\end{cor}
+\begin{pf}
+    Take the subsequence $(f_{n_k})_{k=1}^\infty$ from the proof of the 
+    previous theorem. 
+\end{pf}
+
+\begin{remark}{remark:3.13}
+    We know that if $f_n \to f$ with respect to $\|\cdot\|_p$ for 
+    $1 \leq p < \infty$, then $f_{n_k}(x) \to f(x)$ for almost every 
+    $x \in E$ for some subsequence $(f_{n_k})_{k=1}^\infty$. But 
+    does this imply that $f_n \to f$ for the original sequence? 
+
+    The answer is no. Define $(f_n)_{n=1}^\infty$ by $f_1 = \chi_{[0, 1]}$,
+    $f_2 = \chi_{[0, 1/2]}$, $f_3 = \chi_{[1/2, 1]}$, $f_4 = \chi_{[0, 1/3]}$,
+    $f_5 = \chi_{[1/3, 2/3]}$, $f_6 = \chi_{[2/3, 1]}$, and so on. Then 
+    $\|f_n\|_p \to 0$ for $1 \leq p < \infty$, but $f_n$ does not converge 
+    for any $x \in [0, 1]$. Therefore, we really need a subsequence 
+    $(f_{n_k})_{k=1}^\infty$ in general. 
+\end{remark}
+
+Let $E \in {\cal L}$ with $m(E) > 0$. We now consider the space $L^\infty(E)$.
+
+\begin{defn}{defn:3.14}
+    A measurable function $f : E \to \C$ is called {\bf essentially bounded} 
+    if there exists $A > 0$ such that $|f| \leq A$ almost everywhere. 
+    That is, we have $m\{x \in E : |f(x)| > A\} = 0$. 
+
+    When $f : E \to \C$ is essentially bounded, the {\bf essential supremum} 
+    of $|f|$ is defined to be 
+    \[ \|f\|_\infty = \esssup_{x\in E} |f(x)| = 
+    \inf\{A \geq 0 \mid m\{x \in E : |f(x)| > A\} = 0\}. \] 
+    Then the space $L^\infty(E)$ is given by 
+    \[ L^\infty(E) = \{f : E \to \C \mid f \text{ is measurable and } 
+    \|f\|_\infty < \infty\}. \] 
+\end{defn}
+
+Similar to $(L^p(E), \|\cdot\|_p)$ for $1 \leq p < \infty$, we have that 
+$L^\infty(E)$ equipped with the essential supremum is a normed vector space. 
+In fact, it is a Banach space. 
+
+\begin{prop}{prop:3.15}
+    $(L^\infty(E), \|\cdot\|_\infty)$ is a normed vector space. 
+\end{prop}
+\begin{pf}
+    Let $\alpha \in \C$ and $f, g \in L^\infty(E)$. Note that $|f| > A$ 
+    if and only if $|\alpha f| \geq |\alpha|A$ for all $\alpha \in 
+    \C \setminus \{0\}$, so $\|\alpha f\|_\infty = |\alpha|\|f\|_\infty$ 
+    and thus $\alpha f \in L^\infty(E)$. To see that $f + g \in L^\infty(E)$, 
+    there exist $A, B > 0$ such that $|f(x)| \leq A$ and $|g(x)| \leq B$
+    for almost every $x \in E$. Then for almost every $x \in E$, we get 
+    \[ |f(x) + g(x)| \leq |f(x)| + |g(x)| \leq A + B < \infty, \] 
+    which implies that $f + g \in L^\infty(E)$. 
+
+    Now, we check that $\|\cdot\|_\infty$ is a norm. It is clear that 
+    $\|f\|_\infty \geq 0$. We claim that $|f| \leq \|f\|_\infty$ and 
+    $|g| \leq \|g\|_\infty$ almost everywhere. Indeed, observe that 
+    \[ m\{x \in E : |f(x)| > \|f\|_\infty + 1/n\} = 0 \] 
+    by the definition of $\|f\|_\infty$, and thus 
+    \[ m\{x \in E : |f(x)| > \|f\|_\infty\} = m\!\left( \bigcup_{n=1}^\infty 
+    \{x \in E : |f(x)| > \|f\|_\infty + 1/n\} \right) = 0. \] 
+    In particular, if $\|f\|_\infty = 0$, then $|f| = 0$ almost everywhere 
+    and hence $f = 0$ almost everywhere. Moreover, we have  
+    \[ |f + g| \leq |f| + |g| \leq \|f\|_\infty + \|g\|_\infty \] 
+    almost everywhere, which implies that 
+    \[ m\{x \in E : |f(x) + g(x)| > \|f\|_\infty + \|g\|_\infty\} = 0. \] 
+    This means that $\|f + g\|_\infty \leq \|f\|_\infty + \|g\|_\infty$, 
+    so $\|\cdot\|_\infty$ is a norm as desired. 
+\end{pf}
+
+\begin{theo}{theo:3.16}
+    $(L^\infty(E), \|\cdot\|_\infty)$ is a Banach space. 
+\end{theo}
+\begin{pf}
+    Let $(f_n)_{n=1}^\infty$ be a Cauchy sequence in $(L^\infty(E), 
+    \|\cdot\|_\infty)$. Pick a subsequence $(f_{n_k})_{k=1}^\infty$ such that 
+    \[ \sum_{k=1}^\infty \|f_{n_{k+1}} - f_{n_k}\|_\infty < \infty. \] 
+    Then we have 
+    \[ g(x) = |f_{n_1}(x)| + \sum_{k=1}^\infty |f_{n_{k+1}}(x) - f_{n_k}(x)|
+    < \infty \] 
+    for almost every $x \in E$. This means that 
+    \[ \lim_{m\to\infty} f_{n_m}(x) = \lim_{m\to\infty} 
+    \left( f_{n_1}(x) + \sum_{k=1}^{m-1} (f_{n_{k+1}}(x) - f_{n_k}(x)) \right) \] 
+    exists for almost every $x \in E$. Define $f : E \to \C$ by 
+    \[ f(x) = \begin{cases}
+        \lim_{m\to\infty} f_{n_m}(x), & \text{if it converges,} \\ 
+        0, & \text{otherwise.} 
+    \end{cases} \] 
+    Then we have $\|f - f_{n_m}\|_\infty \to 0$ because for 
+    $x \in \{y \in E | \lim_{m\to\infty} f_{n_m}(y) = f(y)\} =: A$, 
+    we get 
+    \[ |f_{n_m}(x) - f(x)| \leq \sum_{k=m}^\infty |f_{n_{k+1}}(x) - f_{n_k}(x)|, \] 
+    which converges uniformly for $x \in A$. Since $m(E \setminus A) = 0$, 
+    this gives as $\|f - f_{n_m}\|_\infty \to 0$ as claimed. Finally, we obtain 
+    \[ 0 \leq \lim_{n\to\infty} \|f_n - f\|_\infty \leq 
+    \lim_{n\to\infty} (\|f_n - f_{n_m}\|_\infty + \|f_{n_m} - f\|_\infty) 
+    = 0. \qedhere \] 
+\end{pf}
+
+\begin{remark}{remark:3.17}
+    If $m(E) < \infty$, then $L^\infty(E) \subseteq L^2(E) \subseteq L^1(E)$. 
+    Indeed, if $f \in L^\infty(E)$, then 
+    \[ \|f\|_2^2 = \int_E |f|^2\dd m \leq \|f\|_\infty^2 \int_E 1\dd m 
+    = \|f\|_\infty^2 m(E), \] 
+    and similarly, we have $\|f\|_1 \leq \|f\|_\infty m(E)$. 
+
+    This result is not true without the assumption that $m(E) < \infty$. 
+    For example, let $E = \R$, and define $f(x) = 1$ for all $x \in \R$, 
+    $g(x) = 1/x$ for $x \geq 1$ and $g(x) = 0$ otherwise, and 
+    $h(x) = x^{-1/2}$ on $(0, 1)$ and $h(x) = 0$ otherwise. Then 
+    $f \in L^\infty(\R) \setminus (L^1(\R) \cup L^2(\R))$, 
+    $g \in L^2(\R) \setminus L^1(\R)$, and $h \in L^1(\R) \setminus 
+    (L^2(\R) \cup L^\infty(\R))$. 
+\end{remark}
+
+\subsection{Density and Approximation Results} \label{subsec:3.3}
+We now consider the density of certain spaces in $L^p(\R)$, where 
+$1 \leq p \leq \infty$. 
+
+\begin{defn}{defn:3.18}
+    The space of compactly supported continuous functions is given by 
+    \[ C_c(\R) = \{f : \R \to \C \mid \text{$f$ is continuous and 
+    there exists a compact subset $K \subseteq \R$ with $f|_{\R \setminus K}
+    = 0$}\}. \] 
+    The space of simple and measurable functions is given by 
+    \[ S(\R) = \{f : \R \to \C \mid \text{$f$ is simple and measurable}\}. \] 
+    The space of simple and measurable functions which are also Lebesgue 
+    integrable is defined by 
+    \[ S_1(\R) = S(\R) \cap L^1(\R) = \left\{ \varphi = \sum_{i=1}^n 
+    \alpha_i \chi_{E_i} : \alpha_i \in \C,\, m(E_i) < \infty \right\}. \] 
+\end{defn}
+
+Note that for $1 \leq p \leq \infty$, we have $C_c(\R) \subseteq L^p(\R)$ and 
+$S_1(\R) \subseteq L^p(\R)$ as subspaces. Moreover, we have $S(\R) \subseteq 
+L^\infty(\R)$ as a subspace. None of these are closed subspaces though. 
+
+\begin{theo}{theo:3.19}
+    $S(\R)$ is dense in $L^p(\R)$ for $1 \leq p \leq \infty$. That is, 
+    for $f \in L^p(\R)$, there exists a sequence $(\varphi_n)_{n=1}^\infty$ 
+    of simple measurable functions in $L^p(\R)$ such that 
+    $\varphi_n \to f$ with respect to $\|\cdot\|_p$. 
+\end{theo}
+\begin{pf}
+    Let $f \in L^p(\R)$. Since $f$ is measurable, we know from Theorem~\ref{theo:2.43} 
+    that we can approximate $f$ using simple measurable functions. In particular, 
+    there exists a sequence $(\varphi_n)_{n=1}^\infty$ of simple measurable 
+    functions such that $\varphi_n \to f$ pointwise and 
+    \[ |\varphi_1| \leq |\varphi_2| \leq \cdots \leq |f|. \] 
+    When $p = \infty$, we have $\varphi_n \to f$ almost uniformly. 
+    This means that $\|\varphi_n - f\|_\infty \to 0$. On the other hand, 
+    if $1 \leq p < \infty$, then we have $|f - \varphi_n|^p \to 0$ 
+    pointwise, and we know that 
+    \[ |f - \varphi_n|^p \leq (2|f|)^p \in L^1(\R) \] 
+    since $f \in L^p(\R)$. This means that $\varphi_n \in L^p(\R)$, 
+    and applying Lebesgue's Dominated Convergence Theorem (Theorem~\ref{theo:2.58})
+    implies that 
+    \[ \|f - \varphi_n\|_p^p = \int_{\R} |f - \varphi_n|^p\dd m \to 0. \qedhere \] 
+\end{pf}
+
+\begin{theo}{theo:3.20}
+    $C_c(\R)$ is dense in $L^p(\R)$ for $1 \leq p < \infty$. 
+\end{theo}
+\begin{pf}
+    Let $\eps > 0$ and $f \in L^p(\R)$ where $1 \leq p < \infty$. We need 
+    to find $g \in C_c(\R)$ such that $\|f - g\|_p < \eps$. 
+
+    Since $L_p(\R)$ is the closure of the simple integrable functions, 
+    it suffices to assume that $f = \varphi$ is simple. Indeed, if we 
+    can find a simple function $\varphi$ such that $\|f - \varphi\|_p < \eps/2$
+    and a function $g \in C_c(\R)$ such that $\|\varphi - g\|_p < \eps/2$, 
+    then the triangle inequality gives us the result. So we have 
+    \[ \varphi = \sum_{i=1}^n \alpha_i \chi_{E_i} \] 
+    where $\alpha \in \C$ and $E_i \in {\cal L}$ with $m(E_i) < \infty$. 
+
+    We can further reduce this problem to approximating $\varphi = \chi_E$ 
+    for $E \in {\cal L}$ with $m(E) < \infty$, because the triangle inequality 
+    again assures us that 
+    \[ \left\| \sum_{i=1}^n \alpha_i \chi_{E_i} - \sum_{i=1}^n 
+    \alpha_i g_i \right\|_p \leq \sum_{i=1}^n |\alpha_i| \|\chi_{E_i} 
+    - g_i\|_p \] 
+    for some $g_i \in C_c(\R)$. 
+
+    Finally, fix $E \in {\cal L}$ with $m(E) < \infty$. We can write 
+    $E = \bigcup_{n\in\N} E \cap (-n, n)$, and observe that 
+    $m(E) = \lim_{n\to\infty} m(E_n)$ by the continuity of measure. 
+    We leave it as an exercise to show that 
+    \[ \chi_E = \lim_{n\to\infty} \chi_{E_n} \] 
+    with respect to $\|\cdot\|_p$. So without loss of generality, 
+    we can assume that $E \in {\cal L}$ is bounded, say $E \subseteq 
+    (-n, n)$ for some $n \in \N$. We will find $g \in C_c(\R)$ 
+    such that $\|\chi_E - g\|$ is bounded above by $\eps$ multiplied 
+    by a constant. 
+
+    Recall from the structure theorem of Lebesgue measurable sets 
+    (Theorem~\ref{theo:2.22}) that there exists a closed set $F$ and 
+    an open set $G$ such that $F \subseteq E \subseteq G$ and 
+    $m(G \setminus F) < \eps$. We may assume without loss of generality 
+    that $G \subseteq (-n, n)$ because we can chop off elements outside 
+    of this interval otherwise. 
+
+    We now design a $g \in C_c(\R)$ such that 
+    \begin{enumerate}[(i)]
+        \item $g(x) \in [0, 1]$ for all $x \in \R$; 
+        \item $g(x) = 1$ for all $x \in F$; and 
+        \item $g(x) = 0$ for all $x \in G^c$. 
+    \end{enumerate}
+    Given such a function $g \in C_c(\R)$, we are done because 
+    \[ \|\chi_E - g\|_p^p = \int_G |\chi_E - g|^p \dd m 
+    = \int_F 0\dd m + \int_{G\setminus F} |\chi_E - g|^p\dd m 
+    \leq 0 + m(G \setminus F) 2^p < 2^p\eps. \] 
+    To construct this function, recall that for $S \subseteq \R$ with 
+    $S \neq \varnothing$, we define 
+    \[ d(x, S) = \inf\{|x - y| : y \in S\} \] 
+    for any fixed $x \in \R$. We leave it as an exercise to show that 
+    $d(\cdot, S) : \R \to [0, \infty)$ is continuous. Then define 
+    \[ g(x) = \frac{d(x, G^c)}{d(x, G^c) + d(x, F)}. \] 
+    This is well-defined since $F \cap G^c = \varnothing$ 
+    and so $d(x, G^c) + d(x, F) \neq 0$. Moreover, it is continuous 
+    because it is the composition of continuous functions. Finally, 
+    it is easily seen that $g$ satisfies all three properties above, 
+    which completes the proof.
+\end{pf}
+
+We note that $C_c(\R)$ is \emph{not} dense in $L^\infty(\R)$; this can be 
+seen by taking the function $f(x) = 1$ for all $x \in \R$. 
+
+\begin{cor}{cor:3.21}
+    Let $a < b$ be finite. Then $C[a, b]$ is dense in $L^p[a, b]$ for 
+    $1 \leq p \leq \infty$. 
+\end{cor}
+\begin{pf}
+    Repeat the same argument as Theorem~\ref{theo:3.20} by reducing it to 
+    the case where $f = \chi_E$ with $E \subseteq (a + 1/n, b - 1/n)$. 
+    The case where $p = \infty$ is not an issue here because we have 
+    $L^1[a, b] \supseteq L^p[a, b] \supseteq L^\infty[a, b] \supseteq 
+    C[a, b]$, and being dense in $L^1[a, b]$ implies being dense in 
+    $L^\infty[a, b]$ because $L^1[a, b]$ is a larger space. 
 \end{pf}
