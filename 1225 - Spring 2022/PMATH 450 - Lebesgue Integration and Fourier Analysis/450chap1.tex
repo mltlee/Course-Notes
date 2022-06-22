@@ -65,7 +65,7 @@ We now want to solve this with our given initial and boundary conditions.
 As we would expect, this is very difficult! This is a PDE, and solving an
 ODE is already a tall order. 
 
-\subsection{Solving the Heat Equation}
+\subsection{Solving the Heat Equation} \label{subsec:1.2}
 For simplicity, we will instead consider the $1$-dimensional heat equation. 
 Let us take a thin rod over the interval $[-\pi, \pi]$. Suppose that this 
 rod is laterally insulated so that heat only flows in the $x$-direction. 
@@ -196,7 +196,7 @@ This leads us to a few questions.
     \end{enumerate}
 \end{enumerate}
 
-\subsection{Basic Notation}
+\subsection{Basic Notation} \label{subsec:1.3}
 We will get into answering the above questions later. First, we will make 
 some definitions.
 
@@ -273,11 +273,11 @@ Fourier series for $f$ converge? For $f \in C(\T)$, do we have
     f(\theta) = \lim_{N\to\infty} \sum_{n=-N}^N \hat f(n)e^{in\theta} 
 \end{equation}
 for all $\theta \in [-\pi, \pi]$, meaning that we have pointwise convergence? 
-Denoting $s_N(f)$ to be the $N$-th partial sum of the Fourier series, do we have 
+Denoting $S_N(f)$ to be the $N$-th partial sum of the Fourier series, do we have 
 \begin{align}
-    \lim_{N\to\infty} \|f - s_N(f)\|_2 &= 0, \label{eq:1.6} \\ 
-    \lim_{N\to\infty} \|f - s_N(f)\|_1 &= 0, \label{eq:1.7} \\ 
-    \lim_{N\to\infty} \|f - s_N(f)\|_\infty &= 0, \label{eq:1.8}
+    \lim_{N\to\infty} \|f - S_N(f)\|_2 &= 0, \label{eq:1.6} \\ 
+    \lim_{N\to\infty} \|f - S_N(f)\|_1 &= 0, \label{eq:1.7} \\ 
+    \lim_{N\to\infty} \|f - S_N(f)\|_\infty &= 0, \label{eq:1.8}
 \end{align}
 for all $f \in C(\T)$? We will show later that $\eqref{eq:1.8}$ implies both 
 $\eqref{eq:1.5}$ and $\eqref{eq:1.6}$, and that $\eqref{eq:1.6}$ implies 
@@ -287,7 +287,7 @@ we will prove later.
 
 \begin{fact}{fact:1.4}
     There exists $f \in C(\T)$ and $\theta_0 \in \T$ such that 
-    \[ \left| \lim_{N\to\infty} s_N(f)(\theta_0) \right| = \infty. \] 
+    \[ \left| \lim_{N\to\infty} S_N(f)(\theta_0) \right| = \infty. \] 
     That is, the Fourier series diverges.
 \end{fact} 
 
@@ -296,7 +296,7 @@ result due to Carleson.
 
 \begin{fact}[Carleson]{fact:1.5}
     For all $f \in C(\T)$, we have 
-    \[ \lim_{N\to\infty} s_n(f)(\theta) = f(\theta) \] 
+    \[ \lim_{N\to\infty} S_N(f)(\theta) = f(\theta) \] 
     for ``almost all'' $\theta \in [-\pi, \pi]$. 
 \end{fact} 
 
@@ -304,16 +304,16 @@ Note that ``almost all'' is a measure theoretic notion which we will define
 more rigorously later. We list one more useful fact. 
 
 \begin{fact}{fact:1.6}
-    The sequence $\{s_n(f)\}_{N=1}^\infty$ is Cauchy with respect to 
+    The sequence $\{S_N(f)\}_{N=1}^\infty$ is Cauchy with respect to 
     $\|\cdot\|_2$ on $C(\T)$, so 
-    \[ \lim_{N,M\to\infty} \|s_N(f) - s_M(f)\|_2 = 0. \] 
-    In fact, we have $\|f - s_n(f)\|_2 \to 0$ (mean square convergence). 
+    \[ \lim_{N,M\to\infty} \|S_N(f) - S_M(f)\|_2 = 0. \] 
+    In fact, we have $\|f - S_N(f)\|_2 \to 0$ (mean square convergence). 
 \end{fact} 
 
 But wait! We know that $(C(\T), \|\cdot\|_2)$ is a normed vector space, 
 but it isn't complete! Using metric space theory from PMATH 351, there 
 exists a completion $L^2(\T) = \overline{C(\T)}$ of $C(\T)$ with respect to 
-$\|\cdot\|_2$, so $s_n(f)$ is actually converging in this larger space. 
+$\|\cdot\|_2$, so $S_N(f)$ is actually converging in this larger space. 
 
 What exactly is $L^2(\T)$? It's the space of ``Lebesgue measurable functions''
 $f : [-\pi, \pi] \to \C$ that are ``square integrable'' with respect to 

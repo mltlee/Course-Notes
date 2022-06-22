@@ -1,0 +1,335 @@
+\section{Fourier Analysis on the Circle} \label{sec:4}
+
+\subsection{General Problem of Fourier Analysis} \label{subsec:4.1}
+Recall that we defined $\T = \{z \in \C : |z| = 1\}$, which we can 
+identify with the interval $[-\pi, \pi]$ via the map $\theta \mapsto 
+e^{i\theta}$. We also identify the endpoints so that $\pi = -\pi$. 
+We are interested in studying $(L^p(\T), \|\cdot\|_p)$, where
+\[ \|f\|_p = \left( \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta)|^p \dd\theta 
+\right)^{\!1/p} \]
+for $1 \leq p < \infty$, and $(L^\infty(\T), \|\cdot\|_\infty)$ is defined 
+as usual. Note that we have introduced a new normalization here, which is 
+merely for cosmetic purposes to ensure that the identity function 
+has norm $1$. 
+
+\begin{exercise}{exercise:4.1}
+    Show that for all $p \in (1, \infty)$, we have 
+    \[ C(\T) \subseteq L^\infty(\T) \subseteq L^p(\T) \subseteq L^1(\T), \] 
+    and that each of these inclusions are dense. Moreover, prove that 
+    \[ \|f\|_\infty \geq \|f\|_p \geq \|f\|_1. \]  
+\end{exercise}
+
+Recall that at the beginning of the course in Section~\ref{subsec:1.3}, we 
+discussed Fourier coefficients of functions. We now write down a slightly more 
+rigorous definition.
+
+\begin{defn}{defn:4.2}
+    Let $f \in L^1(\T)$. For each $n \in \Z$, we define the {\bf $n$-th 
+    Fourier coefficient} of $f$ by 
+    \[ \hat f(n) = \frac1{2\pi} \int_{-\pi}^\pi f(\theta) e^{-in\theta} \dd\theta. \] 
+    The {\bf Fourier series} of $f$ is the series $\sum_{n\in\Z} \hat f(n) 
+    e^{in\theta}$, and we write 
+    \[ f \sim \sum_{n\in\Z} \hat f(n) e^{in\theta}. \] 
+\end{defn}
+
+The general problem of Fourier analysis is to answer the following questions: 
+\begin{itemize}
+    \item Given $f \in L^p(\T)$ or $f \in C(\T)$, to what extent does the 
+    sequence $(\hat f(n))_{n\in\Z}$ determine $f$? 
+    \item Given a sequence $(a_n)_{n\in\Z}$, are there necessary or sufficient 
+    conditions in which there exists a (possibly unique) function $f \in 
+    L^p(\T)$ such that $a_n = \hat f(n)$ for all $n \in \Z$? 
+    \item To what extent does the Fourier series represent $f$? Do we have 
+    \[ f(\theta) = \sum_{n\in\Z} \hat f(n) e^{in\theta} \] 
+    either pointwise, pointwise almost everywhere, or convergence with 
+    respect to $\|\cdot\|_p$? 
+\end{itemize}
+
+\subsection{$L^2$-convergence of Fourier Series} \label{subsec:4.2}
+It turns out that the theory for functions in $L^2(\T)$ is the most 
+``beautiful'' and ``clean''. This is because $L^2(\T)$ is a Hilbert space! 
+In fact, most of the theory for $L^2(\T)$ follows from general Hilbert 
+space theory. 
+
+\begin{defn}{defn:4.3}
+    Let $(H, \langle \cdot, \cdot \rangle)$ be a Hilbert space. 
+    \begin{itemize}
+        \item Let $x, y \in H$. We say that $x$ and $y$ are {\bf orthogonal}
+        if $\langle x, y \rangle = 0$, and we write $x \perp y$. 
+        Note that this implies that $\|x + y\|^2 = \|x\|^2 + \|y\|^2$.
+
+        Given a subset $S \subseteq H$, the {\bf orthogonal complement} of $S$ 
+        is defined to be 
+        \[ S^\perp = \{x \in H \mid \langle x, y \rangle = 0 \text{ for all }
+        y \in S\}. \] 
+        Note that $S^\perp$ is always a closed subspace. 
+
+        \item An {\bf orthonormal system} in $H$ is a family $\{e_n\}_{n\in S} 
+        \subseteq H$ such that for all $n, m \in S$, we have 
+        \[ \langle e_n, e_m \rangle = \delta_{nm} = \begin{cases} 
+            1, & \text{if } n = m, \\ 
+            0, & \text{if } n \neq m. 
+        \end{cases} \] 
+        In particular, this means that $\|e_n\| = 1$ for all $n \in S$ 
+        and $e_n \perp e_m$ whenever $n \neq m$. 
+
+        \item An {\bf orthonormal basis} in $H$ is an orthonormal system 
+        $\{e_n\}_{n\in S}$ such that $\Span\{e_n \mid n \in S\}$ is 
+        dense in $H$ with respect to the norm $\|\cdot\|$ induced by the 
+        inner product. 
+    \end{itemize}
+\end{defn}
+
+\begin{exmp}{exmp:4.4}
+    Let $S \neq \varnothing$ be a countable set. Then the space of 
+    square-summable sequences, denoted 
+    \[ \ell^2(S) = \left\{ a = (a_n)_{n\in S} : a_n \in \C,\; 
+    \sum_{n\in S} |a_n|^2 < \infty \right\}, \] 
+    is a Hilbert space with the inner product 
+    \[ \langle a, b \rangle = \sum_{n\in S} a_n \overline{b_n}. \] 
+    The norm induced by the inner product is given by 
+    \[ \|a\| = \langle a, a \rangle^{1/2} = \left( \sum_{n\in S} |a_n|^2 
+    \right)^{\!1/2}. \] 
+    For each $n \in S$, let $\delta_n$ be the sequence with 
+    $1$ in the $n$-th entry and $0$ in every other entry. Then 
+    it is easy to see that $(\delta_n)_{n\in S}$ is an orthonormal 
+    system in $\ell^2(S)$. In fact, its span is dense in $\ell^2(S)$, 
+    so it forms an orthonormal basis. 
+\end{exmp}
+
+In this section, our interest is $(L^2(\T), \|\cdot\|_2)$. 
+Note that the sequence of functions $\{e_n\}_{n\in \Z}$ defined by 
+$e_n(\theta) = e^{in\theta}$ is an orthonormal system in $L^2(\T)$. We will 
+show later that this is in fact an orthonormal basis for $L^2(\T)$. First, 
+we will prove Parseval's Theorem. Recall that a topological space is 
+called separable if it contains a countable dense subset. 
+
+\begin{theo}[Parseval's Theorem]{theo:4.5}
+    Let $(H, \langle \cdot, \cdot \rangle)$ be a separable Hilbert space. 
+    Let $\{e_n\}_{n\in S}$ be an orthonormal system in $H$, and let 
+    \[ K = \overline{\Span\{e_n \mid n \in S\}}^{\|\cdot\|} \subseteq H. \] 
+    For $n \in S$ and $x \in H$, set $\hat x(n) = \langle x, e_n \rangle$. 
+    \begin{enumerate}[(1)]
+        \item For any $x \in H$, we have 
+        \[ \sum_{n\in S} |\hat x(n)|^2 \leq \|x\|^2 < \infty. \] 
+        \item The map $P : H \to H$ defined by 
+        \[ Px = \sum_{n\in S} \hat x(n) e_n = \sum_{n\in S} 
+        \langle x, e_n \rangle e_n \] 
+        satisfies the following properties: 
+        \begin{enumerate}[(a)]
+            \item For any $P \in B(H, H)$, we have $\|P\| \leq 1$, 
+            and $\|P\| = 1$ if $S \neq \varnothing$. 
+            \item We have $PH = K$ and $P^2 = P$ (so $P$ is idempotent). 
+            \item For all $x \in H$, we have $(x - Px) \perp K$. 
+            \item We have $\ker(P) = K^\perp = \{x \in H \mid \langle x, k 
+            \rangle = 0 \text{ for all } k \in K\}$. 
+        \end{enumerate}
+        Note that properties (b) and (c) imply that $P$ is the orthogonal 
+        projection of $H$ onto $K$. 
+        \item For all $x \in H$, $Px$ is the closest point in $K$ to $x$. 
+        That is, we have 
+        \[ \|x - Px\| = \inf_{k\in K} \|x - k\|. \] 
+    \end{enumerate}
+\end{theo}
+\begin{pf}
+    We first assume that $|S| < \infty$. In this case, we have 
+    $K = \Span\{e_n \mid n \in S\}$ (meaning that there is no need to 
+    take the closure with respect to $\|\cdot\|$), and for all $x \in H$, 
+    the map $P : H \to H$ in the theorem is well-defined and linear. 
+    To see that $P^2 = P$, note that 
+    \[ P^2x = P(Px) = P\left( \sum_{n\in S} \hat x(n) e_n \right) 
+    = \sum_{n\in S} \hat x(n) e_n = Px \] 
+    by pushing the map $P$ to each $e_n$. Moreover, it is clear that $PH = K$. 
+
+    Next, we see that 
+    \[ \|Px\|^2 = \langle Px, Px \rangle = \sum_{n\in S} |\hat x(n)|^2 
+    = \sum_{n\in S} \langle x, e_n \rangle \overline{\langle x, e_n \rangle} 
+    = \left\langle x, \sum_{n\in S} \langle x, e_n \rangle e_n \right\rangle 
+    = \langle x, Px \rangle \leq \|x\|\|Px\|, \] 
+    where the final inequality follows from Cauchy-Schwarz. Rearranging 
+    this yields $\|Px\|(\|x\| - \|Px\|) \geq 0$, and hence $\|Px\| \leq \|x\|$. 
+    This means that $\|P\| \leq 1$, and $\|Pe_n\| = \|e_n\| = 1$ implies that 
+    $\|P\| = 1$ when $S \neq \varnothing$. Our work above also shows that 
+    \[ \sum_{n\in S} |\hat x(n)|^2 \leq \|x\|\|Px\| \leq \|x\|^2 < \infty. \] 
+    For all $n_0 \in S$, notice that we have 
+    \[ \langle x - Px, e_{n_0} \rangle = \hat x(n_0) - \hat x(n_0) = 0, \] 
+    so $(x - Px) \perp \Span\{e_n \mid n \in S\} = K$ for all $x \in H$. 
+    Note that $x \in \ker(P)$ if and only if $\hat x(n) = \langle x, e_n 
+    \rangle = 0$ for all $n \in S$. This is equivalent to saying that 
+    $x \perp K$; that is, $x \in K^\perp$. 
+
+    Finally, for any $k \in K$, we have 
+    \[ \|x - k\|^2 = \|(x - Px) + (Px - k)\|^2 = \|x - Px\|^2 + 
+    \|Px - k\|^2 \geq \|x - Px\|^2, \] 
+    which implies that $\|x - Px\| = \inf_{k\in K} \|x - k\|$. 
+
+    Suppose now that $S$ is an infinite set. We leave it as an exercise 
+    to show that the separability of $H$ implies that $|S| = |\N|$. 
+    Without loss of generality, we will assume that $S = \N$, 
+    so our orthonormal system is $\{e_n\}_{n=1}^\infty$. For each 
+    $N \in \N$, let $K_N = \Span\{e_1, \dots, e_n\} \subseteq K$. 
+    Let $P_N : H \to K_N$ be the corresponding projection 
+    \[ P_Nx = \sum_{n=1}^N \hat x(n) e_n. \] 
+    For all $N \in \N$, our above work shows that 
+    \[ \sum_{n=1}^N |\hat x(n)|^2 \leq \|x\|^2 < \infty, \] 
+    and taking $N \to \infty$ gives us 
+    \[ \sum_{n=1}^\infty |\hat x(n)|^2 \leq \|x\|^2 < \infty. \] 
+    For all $x \in H$, we claim that $(P_Nx)_{N=1}^\infty$ is a Cauchy 
+    sequence. Taking $M < N$, we see that 
+    \[ \|P_nx - P_mx\|^2 = \left\| \sum_{n=M+1}^N \hat x(n) e_n \right\|^{2}
+    = \sum_{n=M+1}^N |\hat x(n)|^2, \] 
+    which converges to $0$ as $M, N \to \infty$. Then we see that 
+    \[ \lim_{N\to\infty} P_Nx = \sum_{n=1}^\infty \hat x(n) e_n \] 
+    exists in $K$. We define the map $P : H \to K$ by 
+    \[ Px = \lim_{N\to\infty} P_Nx = \sum_{n=1}^\infty \hat x(n) e_n, \] 
+    which is linear. Moreover, we have $\|Px\| = \lim_{N\to\infty} 
+    \|P_Nx\| \leq \|x\|$, so $P$ is bounded. 
+
+    Note that $Px = x$ for all $x \in \Span\{e_1, \dots, e_N\}$ and $N \in \N$, 
+    so taking $N \to \infty$ gives $Px = x$ for all $x \in K$. Also, we have 
+    \[ \langle x - Px, e_n \rangle = \langle x, e_n \rangle - \langle x, 
+    e_n \rangle = 0 \] 
+    as before, so $(x - Px) \perp \overline{\Span\{e_n \mid n \in \N\}}^{\|\cdot\|} = K$. 
+    Since $Px \in K$, this gives us $x \perp Px$, and thus 
+    \[ \|x\|^2 = \|x - Px\|^2 + \|Px\|^2. \] 
+    The rest of the proof is the same as the $|S| < \infty$ case. 
+\end{pf}
+
+\begin{cor}{cor:4.6}
+    If $\{e_n\}_{n=1}^\infty$ is an orthonormal basis for a separable 
+    Hilbert space $(H, \langle \cdot, \cdot \rangle)$, then for all $x \in H$, 
+    we have 
+    \[ \|x\|^2 = \sum_{n\in S} |\hat x(n)|^2. \] 
+\end{cor}
+\begin{pf}
+    Note that $(x - Px) \perp K$ for all $x \in H$ where $P$ and $K$ 
+    are as in Parseval's Theorem (Theorem~\ref{theo:4.5}). But 
+    $\{e_n\}_{n=1}^\infty$ is an orthonormal basis, which means that 
+    $H = K$. Then $x - Px = 0$ and hence $\|x - Px\| = 0$
+    for all $x \in H$. From this, we obtain 
+    \[ \|x\|^2 = \|Px\|^2 + \|x - Px\|^2 = \|Px\|^2 = \sum_{n\in S} |\hat x(n)|^2. 
+    \qedhere \] 
+\end{pf}
+
+Now, we return to the case $(L^2(\T), \|\cdot\|_2)$ where 
+\[ \|f\|_2^2 = \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta)|^2\dd \theta. \] 
+We had an orthonormal system $\{e_n\}_{n\in\Z}$ in $L^2(\T)$ given by 
+$e_n(\theta) = e^{in\theta}$. For $f \in L^2(\T)$, we have 
+\[ \hat f(n) = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta) e^{-in\theta}\dd\theta 
+= \langle f, e_n \rangle. \] 
+We define the $N$-th partial sum of the Fourier series of $f$ as 
+\[ S_N f(\theta) = \sum_{n=-N}^N \hat f(n) e^{in\theta}. \] 
+In particular, denoting $\Pol(\T) = \Span\{e_n \mid n \in \Z\}$ as the 
+``trigonometric functions on the circle'', we have $\Pol(\T) 
+\subseteq C(\T) \subseteq L^2(\T)$ and $S_Nf \in \Pol(\T)$ for all 
+$N \in \N$. From Parseval's Theorem, we see that 
+\[ S_N : L^2(\T) \to \Span\{e_n \mid n \in \Z,\, |n| \leq N\} \subseteq 
+\Pol(\T) \subseteq L^2(\T) \] 
+is the orthogonal projection of $L^2(\T)$ onto $\Span\{e_n \mid n \in \Z,\, 
+|n| \leq N\}$.
+
+\begin{theo}{theo:4.7}
+    The family $\{e_n\}_{n\in\Z}$ is an orthonormal basis for $L^2(\T)$. 
+    In particular, if $f \in L^2(\T)$, then $f$ is the $\|\cdot\|_2$-limit 
+    of its partial sums $(S_Nf)_{N=1}^\infty$. That is, with respect to 
+    $\|\cdot\|_2$, we have 
+    \[ f = \sum_{n\in\Z} \hat f(n) e_n = \lim_{N\to\infty} S_N f. \] 
+\end{theo}
+\begin{pf}
+    We already know that $\{e_n\}_{n\in\Z}$ is an orthonormal system for 
+    $L^2(\T)$. Consider the set 
+    \[ K = \overline{\Span\{e_n \mid n \in \Z\}}^{\|\cdot\|_2} 
+    = \overline{\Pol(\T)}^{\|\cdot\|_2} \subseteq L^2(\T). \] 
+    To show that $\{e_n\}_{n\in\Z}$ is an orthonormal basis for $L^2(\T)$, 
+    our aim is to show that $K = L^2(\T)$. 
+    
+    It suffices to prove that $\Pol(\T) \subseteq C(\T)$ is dense 
+    in $C(\T)$ with respect to $\|\cdot\|_\infty$. Indeed, suppose that 
+    $\Pol(\T)$ is dense in $C(\T)$ with respect to $\|\cdot\|_\infty$. 
+    Let $\eps > 0$ and let $f \in L^2(\T)$. From Corollary~\ref{cor:3.21}, 
+    we know that $C[-\pi, \pi]$ is dense in $L^2[-\pi, \pi]$ with respect 
+    to $\|\cdot\|_2$. Hence, there exists $g \in C(\T)$ such that 
+    $\|g - f\|_2 < \eps$. Choose $p \in \Pol(\T)$ such that $\|p - g\|_\infty 
+    < \eps$, which exists by our above assumption. Then we obtain 
+    \[ \|p - g\|_2 \leq \|p - g\|_\infty < \eps, \] 
+    and the triangle inequality implies that $\|f - p\|_2 < 2\eps$. 
+
+    To show that $\Pol(\T)$ is dense in $C(\T)$ with respect to 
+    $\|\cdot\|_\infty$, we recall the Stone-Weierstrass Theorem. 
+    It states that if $X$ is a compact metric space and ${\cal A} \subseteq C(X)$
+    is an algebra which is self-adjoint, separates points, and contains a 
+    non-zero constant function, then ${\cal A}$ is dense in $C(X)$ with respect 
+    to $\|\cdot\|_\infty$. Recall that ${\cal A} \subseteq C(X)$ separates 
+    points if for any distinct points $x, y \in X$, there exists a 
+    function $f \in {\cal A}$ such that $f(x) \neq f(y)$. 
+
+    In our case, we have $X = \T \subseteq \C$ and ${\cal A} = \Pol(\T)$. 
+    It is clear that $\Pol(\T)$ is an algebra, and it is self-adjoint 
+    since $\overline{e_n} = e_{-n}$. It also contains $1 = e_0 \in \Pol(\T)$. 
+    Finally, we see that $\Pol(\T)$ separates points because if 
+    $\theta_1, \theta_2 \in \T$ are distinct, then 
+    \[ e_1(\theta_1) = e^{i\theta_1} \neq e^{i\theta_2} = e_1(\theta_2). \] 
+    It follows from Stone-Weierstrass that $\Pol(\T)$ is dense in $C(\T)$ 
+    with respect to $\|\cdot\|_\infty$, which shows that $\{e_n\}_{n\in\Z}$
+    is an orthonormal basis for $L^2(\T)$. 
+
+    Now, let $f \in L^2(\T)$. Our goal is to show that $\|f - S_Nf\|_2 \to 0$. 
+    Let $\eps > 0$. From our work above, we can find $p \in \Pol(\T)$ 
+    such that $\|f - p\|_2 < \eps$. By choosing $N \geq \deg(p)$, we have 
+    \begin{align*}
+        \|f - S_Nf\| &\leq \|f - p\|_2 + \|p - S_Nf\|_2 \\ 
+        &= \|f - p\|_2 + \|S_Np - S_Nf\|_2 \\ 
+        &\leq \|f - p\|_2 + \|S_N\| \|f - p\|_2 \\ 
+        &< 2\eps 
+    \end{align*}
+    since $\|S_N\| \leq 1$. It follows that $f = \lim_{N\to\infty} S_Nf$ 
+    with respect to $\|\cdot\|_2$. 
+\end{pf}
+
+\begin{cor}[Plancharel Identity]{cor:4.8}
+    For any $f \in L^2(\T)$, we have 
+    \[ \|f\|_2^2 = \sum_{n\in\Z} |\hat f(n)|^2. \] 
+\end{cor}
+\begin{pf}
+    We know that $S_Nf \to f$ with respect to $\|\cdot\|_2$. Applying 
+    Parseval's Theorem gives us 
+    \[ \|f\|_2 = \lim_{N\to\infty} \|S_N f\|_2 
+    = \lim_{N\to\infty} \sum_{n=-N}^N |\hat f(n)|^2 = 
+    \sum_{n\in\Z} |\hat f(n)|^2. \qedhere \] 
+\end{pf}
+
+\begin{defn}{defn:4.9}
+    Let $(H_1, \|\cdot\|_{H_1})$ and $(H_2, \|\cdot\|_{H_2})$ be Hilbert 
+    spaces. A {\bf unitary isomorphism} from $H_1$ to $H_2$ is a 
+    linear map $U : H_1 \to H_2$ which is surjective and isometric. That is, 
+    for all $x \in H_1$, we have 
+    \[ \|Ux\|_{H_2} = \|x\|_{H_1}. \] 
+    Note that isometric implies injective, so $U$ is a bijection. 
+\end{defn}
+
+In particular, Plancharel's Theorem (Corollary~\ref{cor:4.8}) says that 
+the function $U : L^2(\T) \to \ell^2(\Z)$ defined by $f \mapsto 
+(\hat f(n))_{n\in\Z}$ is a unitary isomorphism. In particular, for 
+$f, g \in L^2(\T)$, we have 
+\[ \langle Uf, Ug \rangle = \sum_{n\in\Z} \hat f(n) \overline{\hat g(n)} 
+= \lim_{N\to\infty} \sum_{n=-N}^N \hat f(n) \overline{\hat g(n)} 
+= \lim_{N\to\infty} \langle S_n f, g \rangle 
+= \langle f, g \rangle 
+= \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta) \overline{g(\theta)} \dd\theta, \] 
+so $U$ preserves inner products. In fact, this property is equivalent to being 
+surjective and isometric. 
+
+\subsection{Pointwise and Uniform Convergence of Fourier Series} \label{subsec:4.3}
+So far, we know that if $f \in L^2(\T)$, then the Fourier coefficients 
+$(\hat f(n))_{n\in\Z}$ allow us to completely recover $f$ in terms of 
+$L^2$-convergence. Namely, we have 
+\[ S_Nf(\theta) = \sum_{n=-N}^N \hat f(n) e^{in\theta} \] 
+where $\lim_{N\to\infty} \|f - S_Nf\|_2 = 0$. Moreover, by abstract 
+measure theory, we know that for all $f \in L^2(\T)$, there exists a subsequence 
+$(N_k)_{k=1}^\infty$ with $N_k < N_{k+1}$ for all $k \in \N$ such that 
+\[ f(\theta) = \lim_{k\to\infty} S_{N_k}f(\theta) = \lim_{k\to\infty} 
+\sum_{n=-N_k}^{N_k} \hat f(n) e^{in\theta} \] 
+for almost every $\theta \in [-\pi, \pi]$. 
+
+Our fundamental problem is the following: for all $f \in L^2(\T)$, do we have 
+$S_Nf \to f$ almost everywhere (that is, without passing to a subsequence)? 
