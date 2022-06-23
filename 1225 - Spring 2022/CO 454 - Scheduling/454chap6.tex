@@ -1,6 +1,8 @@
 \section{Parallel Machine Models} \label{sec:6}
 
-\subsection{Makespan without Constraints} \label{subsec:6.1}
+\subsection{Makespan without Preemptions} \label{subsec:6.1}
+
+\subsubsection{List Scheduling and Longest Processing Time} \label{subsubsec:6.1.1}
 The makespan is not a very interesting objective for a single machine. 
 However, for parallel machine models, minimizing the makespan has the effect 
 of balancing the load over the various machines, which is an important 
@@ -195,7 +197,7 @@ and that this bound is tight.
     \vspace{-0.4cm}
 \end{exmp}
 
-\subsection{Makespan with Precedence Constraints} \label{subsec:6.2}
+\subsubsection{Makespan with Precedence Constraints} \label{subsubsec:6.1.2}
 Now, consider the same problem with the jobs subject to precedence constraints,
 namely $(P_m~|~\text{prec}~|~C_{\max})$. From a complexity point of view, this 
 problem has to be at least as hard as the problem without precedence constraints.
@@ -383,7 +385,7 @@ the processing time of the job itself is also included in the total. The LNS nam
 is clearly not appropriate for this generalization with arbitrary processing times,
 as it refers to a number of jobs rather than to a total amount of processing.
 
-\subsection{Makespan with Machine Dependent Constraints} \label{subsec:6.3}
+\subsubsection{Makespan with Machine Dependent Constraints} \label{subsubsec:6.1.3}
 We consider another generalization of the $(P_m~||~C_{\max})$ problem 
 where each job $j$ is only allowed to be run on a subset $M_j$ of the $m$ 
 parallel machines. We will again consider the case with unit processing times, 
@@ -496,7 +498,7 @@ broken arbitrarily. This heuristic may be referred to as the LFM-LFJ heuristic.
 However, we find again that the LFM-LFJ does not yield an optimal schedule for 
 Example~\ref{exmp:6.14}.
 
-\subsection{Makespan with Preemptions} \label{subsec:6.4}
+\subsection{Makespan with Preemptions} \label{subsec:6.2}
 We now consider the same problem with preemptions allowed, namely the 
 $(P_m~|~\text{prmp}~|~C_{\max})$ problem. Usually, but not always, allowing 
 preemptions simplifies the analysis of a problem. This is indeed the case for 
@@ -543,7 +545,8 @@ bound. We leave its proof as an exercise.
 Having a lower bound allows for the construction of a very simple algorithm
 that minimizes the makespan. The fact that this algorithm actually produces
 a schedule with a makespan that is equal to the lower bound shows that the
-algorithm yields an optimal schedule.
+algorithm yields an optimal schedule. This algorithm is also known 
+as {\bf McNaughton's wrap-around rule}. 
 
 \begin{algo}[Minimizing Makespan with Preemptions]{algo:6.16}
     \begin{enumerate}
@@ -562,5 +565,370 @@ It is clear that the resulting schedule is feasible. Part of a job may appear
 at the end of the schedule for machine $i$ while the remaining part may appear
 at the beginning of the schedule for machine $i + 1$. As preemptions are allowed
 and the processing time of each job is less than $C^*_{\max}$, such a schedule 
-is feasible. Moreover, this schedule as $C_{\max} = C^*_{\max}$, so it is 
+is feasible. Moreover, this schedule has $C_{\max} = C^*_{\max}$, so it is 
 also optimal. 
+
+Next, we consider the {\bf Longest Remaining Processing Time first (LRPT)} 
+rule. This schedule is the preemptive version of LPT (Algorithm~\ref{algo:6.3}).
+This schedule is structurally appealing, but it is mainly of academic interest. 
+From a practical point, it has a serious drawback. In the deterministic case, 
+the number of preemptions needed is usually infinite. 
+
+\begin{exmp}{exmp:6.17}
+    Consider two jobs with unit processing time on a single machine. 
+    Under LRPT, the two jobs continuously have to rotate and wait for their 
+    next turn on the machine. That is, a job stays on the machine for a 
+    time period $\eps$ and after every time period $\eps$, the job 
+    waiting preempts the machine. The makespan is equal to $2$, and is 
+    independent of the schedule. However, the sum of completion times is 
+    $4 - \eps$, while under the non-preemptive schedule, it is $3$. 
+    This suggests that LRPT is a bad rule for $(P_m~|~\text{prmp}~|~\sum C_j)$, 
+    but we are not interested in this problem at the moment. 
+\end{exmp}
+
+We will now assume that we are working under a discrete time framework. 
+All processing times are assumed to be integer, and the decision-maker 
+is only allowed to preempt a machine at integer times. 
+The following is an example of the LRPT rule under discrete time. 
+
+\begin{exmp}{exmp:6.18}
+    Suppose there are two machines, and three jobs $1, 2, 3$ with processing 
+    times $8, 7, 6$ respectively. Then the schedule under LRPT is depicted 
+    below and has makespan $11$. 
+    \begin{center} 
+        \begin{tikzpicture}[/pgfgantt/y unit chart=0.7cm] 
+            \begin{ganttchart}[
+                title/.style={draw=none},
+                canvas/.append style={draw=none}, 
+                bar top shift=0.1, bar height=0.6,
+                y unit title=0.7cm,
+            ]{1}{11}
+                \ganttbar{Machine 1}{1}{5} \ganttbar[inline]{1}{1}{5} \ganttbar[inline]{3}{6}{7} \ganttbar[inline]{2}{8}{10} \ganttbar[inline]{1}{11}{11} \\
+                \ganttbar{Machine 2}{1}{2} \ganttbar[inline]{2}{1}{2} \ganttbar[inline]{3}{3}{4} \ganttbar[inline]{2}{5}{6} \ganttbar[inline]{1}{7}{8} \ganttbar[inline]{3}{9}{10} \\
+                \gantttitlelist{1,...,11}{1}
+            \end{ganttchart}
+        \end{tikzpicture}
+    \end{center}
+\end{exmp}
+
+To prove that LRPT is optimal for $(P_m~|~\text{prmp}~|~C_{\max})$ under 
+discrete time, we require some special notation. 
+
+Suppose that at integer time $t$, the remaining processing times of the 
+$n$ jobs are $p_1(t), \dots, p_n(t)$. We let $\overline p(t) = 
+(p_1(t), \dots, p_n(t))$ be the vector of processing times. Let 
+$p_{(j)}$ denote the $j$-th largest element of $\overline p(t)$. We say that 
+$\overline p(t)$ {\bf majorizes} $\overline q(t)$, written $\overline p(t) \geq_m 
+\overline q(t)$, if for all $1 \leq k \leq n$, we have 
+\[ \sum_{j=1}^k p_{(j)}(t) \geq \sum_{j=1}^k q_{(j)}(t). \] 
+
+\begin{exmp}{exmp:6.19}
+    Consider the vectors $\overline p(t) = (4, 8, 2, 4)$ and $\overline q(t) = 
+    (3, 0, 6, 6)$. Placing the elements of the vectors in decreasing order 
+    yields $(8, 4, 4, 2)$ and $(6, 6, 3, 0)$, and it is easily seen that 
+    $\overline p(t) \geq_m \overline q(t)$. 
+\end{exmp}
+
+\begin{lemma}{lemma:6.20}
+    If $\overline p(t) \geq_m \overline q(t)$, then LRPT applied to 
+    $\overline p(t)$ results in a makespan that is greater or equal to 
+    the makespan obtained from applying LRPT to $\overline q(t)$. 
+\end{lemma}
+\begin{pf}
+    We proceed by induction on the \emph{total} amount of remaining processing.
+    To show that the lemma holds for $\overline p(t)$ and $\overline q(t)$ 
+    with total processing time $\sum_{j=1}^n p_j(t)$ and $\sum_{j=1}^n q_j(t)$ 
+    respectively, we assume that the result holds for all pairs of vectors 
+    with total remaining processing time at most $\sum_{j=1}^n p_j(t) - 1$ 
+    and $\sum_{j=1}^n q_j(t) - 1$, respectively. The base case can be 
+    easily checked by considering the two vectors $(1, 0, \dots, 0)$ and 
+    $(1, 0, \dots, 0)$. 
+
+    If LRPT is applied for one time unit on $\overline p(t)$ and $\overline q(t)$ 
+    respectively, then the vectors of remaining processing times at time 
+    $t+1$ are $\overline p(t+1)$ and $\overline q(t+1)$ respectively. It is 
+    clear that 
+    \begin{align*}
+        \sum_{j=1}^n p_{(j)}(t+1) &\leq \sum_{j=1}^n p_{(j)}(t) - 1, \\ 
+        \sum_{j=1}^n q_{(j)}(t+1) &\leq \sum_{j=1}^n q_{(j)}(t) - 1.
+    \end{align*}
+    It can be shown that if $\overline p(t) \geq_m \overline q(t)$, then 
+    $\overline p(t+1) \geq_m \overline q(t+1)$. Notice that LRPT results in a 
+    larger makespan at time $t + 1$ due to the induction hypothesis, 
+    and so it also results in a larger makespan at time $t$. 
+
+    If there are fewer than $m$ jobs remaining to be processed, then 
+    it is clear that the lemma holds. 
+\end{pf}
+
+\begin{theo}{theo:6.21}
+    LRPT is optimal for $(P_m~|~\text{prmp}~|~C_{\max})$ in discrete time. 
+\end{theo}
+\begin{pf}
+    The first step of the induction is shown as follows. Suppose no more than
+    $m$ jobs have processing times remaining and that these jobs all have only 
+    one unit of processing time left. Then clearly LRPT is optimal in this case.
+
+    Assume that LRPT is optimal for any vector $\overline p(t)$ such that 
+    \[ \sum_{j=1}^n p_{(j)}(t) \leq N-1. \] 
+    Now, consider a vector $\overline p(t)$ with 
+    \[ \sum_{j=1}^n p_{(j)}(t) = N. \] 
+    We again proceed by induction on the total amount of remaining processing.
+    Here, we assume towards a contradiction that LRPT is not optimal 
+    for $\overline p(t)$. Since LRPT is not optimal, then there must be 
+    some other rule, say R, that is optimal. Note that R does not act according to 
+    LRPT at time $t$, but from time $t + 1$ onwards, it must act according to 
+    LRPT due to the induction hypothesis. We compare applying LRPT at time 
+    $t$ to $\overline p(t)$ as opposed to applying R at time $t$ to 
+    the same vector $\overline p(t)$. Let $\overline p(t+1)$ and 
+    $\overline p'(t+1)$ denote the vectors of remaining processing times 
+    at time $t+1$ after applying LRPT and R. It is clear that 
+    $\overline p'(t+1) \geq_m \overline p(t+1)$. From Lemma~\ref{lemma:6.20}, 
+    it follows that the makespan under R is larger than the makespan under 
+    LRPT. This is a contradiction, which completes the proof. 
+\end{pf}
+
+Notice that when we multiply all processing times by a large integer $K$,
+the problem intrinsically does not change, as the relative lengths of the 
+processing times remains the same. The optimal policy is again LRPT. But now, 
+there are many more preemptions (at integral time units). Multiplying all 
+processing times by $K$ has the effect that the time slots become smaller 
+relative to the processing times and the decision maker is allowed to preempt 
+after shorter intervals. Letting $K \to \infty$ shows that LRPT is optimal in 
+continuous time as well. 
+
+\subsection{Dynamic Programming and PTAS for Makespan} \label{subsec:6.3}
+We now return to the $\NP$-hard problem $(P~||~C_{\max})$, where the 
+number of machines is \emph{not} fixed. We first focus on a special 
+case where the processing times $p_j$ take on $k$ distinct values. We use 
+dynamic programming algorithm to solve this special case in $n^{O(k)}$ time. 
+Assume that we are given a target schedule length $T$.
+
+Suppose that the $k$ distinct values are $b_1, \dots, b_k$. Let $n_i = 
+|\{j \in [n] : p_j = b_i\}|$ be the total number of jobs with processing 
+time $b_i$. The key observation is that a subset of jobs can be described with a 
+$k$-dimensional vector $\mathbf x = (x_1, \dots, x_k)$ where $x_i$ is the number 
+of jobs of processing time $b_i$. 
+
+We define $M(\mathbf x)$ to be the minimum number of machines needed 
+to schedule all jobs in $\mathbf x$ with makespan $\leq T$. Next, we define 
+$Q$ to be the set of vectors $\mathbf a = (a_1, \dots, a_k)$ that can be 
+scheduled on {\bf one} machine with makespan $\leq T$. That is, we have 
+\[ Q = \left\{ \mathbf a = (a_1, \dots, a_k) : \sum_{i=1}^k a_i b_i \leq T \right\}. \] 
+We will exclude the zero vector $\mathbf 0$ from $Q$, as it is not useful to us.
+We now state the dynamic programming algorithm for our special case.  
+
+\begin{algo}[Dynamic programming for special case of $(P~||~C_{\max})$]{algo:6.22}
+    Initially, set $M(\mathbf a) = 1$ if $\mathbf a \in Q$, and 
+    set $M(\mathbf 0) = 0$. We wish to compute $M(n_1, \dots, n_k)$. 
+    We can do this via a $k$-dimensional table with $n_1 \times \cdots \times 
+    n_k$ entries via the recursive relation 
+    \[ M(x_1, \dots, x_k) = 1 + \min\{M(x_1 - a_1, \dots, x_k - a_k) : 
+    \mathbf a \in Q\}. \]  
+\end{algo}
+
+We see that there are at most $n^k$ entries in the table, and that the 
+computation of each entry relies on $O(n^k)$ other entries. Therefore, 
+the total computation time of Algorithm~\ref{algo:6.22} is $n^{O(k)}$. 
+
+It remains to handle the assumption that we know the target schedule length $T$. 
+The easiest way to do this is to perform a binary search on all possible values 
+of $T$. We will go into more detail on this later when we discuss the PTAS 
+for the more general case of this problem. 
+
+\begin{exmp}{exmp:6.23}
+    Suppose there are two distinct values of jobs, namely $b_1 = 1$ 
+    and $b_2 = 10$. Moreover, suppose that $n_1 = n_2 = 5$, and 
+    our target schedule length is $12$. First, observe that 
+    \[ Q = \{(1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (0, 1), (1, 1), (2, 1)\} \] 
+    is the set of schedules that have makespan $\leq T$ on one machine. 
+    Then $M(0, 0) = 0$ and $M(\mathbf a) = 1$ for all $\mathbf a \in Q$. 
+    We then use the relation $M(\mathbf x) = 1 + \min\{M(\mathbf x - \mathbf a) 
+    : \mathbf a \in Q\}$ to compute the rest of the table, as follows. 
+    \begin{align*}
+        \begin{array}{c|c|c|c|c|c|c} 
+            M(x_1, x_2) & x_2 = 0 & x_2 = 1 & x_2 = 2 & x_2 = 3 & x_2 = 4 & x_2 = 5 \\ \hline 
+            x_1 = 0 & 0 & 1 & 2 & 3 & 4 & 5 \\ \hline 
+            x_1 = 1 & 1 & 1 & 2 & 3 & 4 & 5 \\ \hline 
+            x_1 = 2 & 1 & 1 & 2 & 3 & 4 & 5 \\ \hline 
+            x_1 = 3 & 1 & 2 & 2 & 3 & 4 & 5 \\ \hline 
+            x_1 = 4 & 1 & 2 & 2 & 3 & 4 & 5 \\ \hline 
+            x_1 = 5 & 1 & 2 & 3 & 3 & 4 & 5 
+        \end{array}
+    \end{align*}
+\end{exmp}
+
+We now discuss the general case $(P~||~C_{\max})$ without the assumption 
+where the processing times $p_j$ take on $k$ distinct values. In this 
+case, we will focus mainly on the larger jobs. We will round and scale 
+these jobs so that there is at most a constant number of sizes of large 
+jobs, and apply the dynamic programming algorithm (Algorithm~\ref{algo:6.22}) 
+to these rounded jobs. We then finish up by scheduling the small jobs greedily 
+via the list scheduling algorithm (Algorithm~\ref{algo:6.1}).
+
+We consider a {\bf relaxed decision procedure (RDP)} for the problem, 
+which takes as inputs an error parameter $\eps > 0$ and a target makespan $T$. 
+It returns ``no'' if the optimal makespan is $>T$, and returns ``yes'' 
+if the optimal makespan is $\leq (1+\eps)T$ along with such a schedule. 
+Using this RDP, we obtain a $(1+\eps)$-approximation algorithm for 
+$(P~||~C_{\max})$, which also takes $\eps > 0$ and $T$ as input. 
+
+\begin{algo}[PTAS for $(P~||~C_{\max})$]{algo:6.24}
+    \begin{enumerate}[(1)]
+        \item Partition the jobs into small jobs $\{j : p_j \leq \eps T\}$ 
+        and large jobs $\{j : p_j > \eps T\}$. 
+        \item Call the RDP on the large jobs. Note that this can be done 
+        by running the dynamic programming algorithm (Algorithm~\ref{algo:6.22}) 
+        after we perform rounding and scaling to the large jobs. 
+        \item If the RDP returns ``no'', then output ``no schedule of 
+        length $\leq T$ exists''. If the RDP returns ``yes'' and a schedule 
+        $\hat S$, apply list scheduling (Algorithm~\ref{algo:6.1}) to place 
+        the small jobs into $\hat S$. Call this schedule $S^\text{new}$. 
+        \item If the makespan of $S^{\text{new}}$ is $>(1+\eps)T$, then 
+        output ``no schedule of length $\leq T$ exists''. Otherwise, 
+        return ``yes'' and the schedule $S^\text{new}$. 
+    \end{enumerate}
+\end{algo}
+
+Note that this algorithm can terminate at three points: Step 3 when the 
+RDP returns ``no'', and Step 4 depending on the makespan of $S^{\text{new}}$. 
+To prove correctness, it suffices to consider when the makespan of 
+$S^{\text{new}}$ is $>(1+\eps)T$; it is clear that the other outputs are correct. 
+Note that the last job to complete in $S^{\text{new}}$ must be a small job, 
+because if the last job were a large job, then the algorithm would have terminated 
+at Step 3. Call this last job $\ell$, and note that $C_\ell > (1+\eps)T$ 
+by assumption. Then the starting time of job $\ell$ is $S_\ell \geq 
+C_\ell - \eps T > T$, meaning that all machines are busy at time $S_\ell$. 
+Then the optimal makespan is $\geq S_\ell > T$, so the output is correct. 
+
+We now say a few words on how we can obtain the target makespan $T$. 
+Let $\alpha = \max(p_{\max}, \frac1m \sum_{j=1}^n p_j)$. One can argue 
+similar to Lemma~\ref{lemma:6.15} that $\alpha$ is a lower bound on the 
+optimal makespan OPT for $(P~||~C_{\max})$. This tells us that 
+\[ \alpha - 1 < \text{OPT} < 2\alpha, \] 
+where the upper bound is obtained by our list scheduling result, namely 
+Theorem~\ref{theo:6.2}. This means that we can start with the search 
+space $(\alpha - 1, 2\alpha)$, and fix $T = \frac32\alpha$. Given 
+$\eps > 0$, set $\hat \eps = \eps/3$. Then, call RDP with inputs 
+$\hat \eps$ and $T$. If the output is ``no'', then we know that 
+$\text{OPT} \in (\frac32\alpha, 2\alpha)$. On the other hand, if the 
+output is ``yes'', we obtain a schedule with makespan $\leq (1 + 
+\hat \eps) \frac32\alpha$. We can continue this binary search until the 
+length of the search interval is $\leq \hat\eps \alpha$. 
+
+\subsection{Total Completion Time without Preemptions} \label{subsec:6.4}
+Consider $m$ machines in parallel and $n$ jobs. Assume that the 
+jobs are ordered such that $p_1 \geq \cdots \geq p_n$. Recall from 
+Theorem~\ref{theo:2.2} that the SPT rule is optimal for $(1~||~\sum C_j)$. 
+This result can be proved in a different way fairly easily. 
+
+Let $p_{(j)}$ denote the processing time of the job in the $j$-th position 
+in the sequence. Then the total completion time is can be expressed as 
+\[ \sum C_j = np_{(1)} + (n-1)p_{(2)} + \cdots + 2p_{(n-1)} + p_{(n)}. \] 
+There are $n$ coefficients $n, n-1, \dots, 1$ to be assigned to 
+$n$ different processing times. In order to minimize the above sum, 
+it follows that the smallest processing time $p_n$ should be assigned to 
+the largest coefficient $n$, the second smallest processing time $p_{n-1}$ 
+should be assigned to the second largest coefficient $n-1$, and so on.
+This implies that SPT is optimal. We can extend this type of argument 
+to the parallel machine setting. 
+
+\begin{theo}{theo:6.25}
+    The SPT rule is optimal for $(P_m~||~\sum C_j)$. 
+\end{theo}
+\begin{pf}
+    In the case of parallel machines, there are $nm$ coefficients that
+    processing times can be assigned to. In particular, there are $m$ 
+    copies of each of $n, n-1, \dots, 1$. The processing times have to be 
+    assigned to a subset of these coefficients in order to minimize the sum of 
+    the products. 
+
+    We may assume without loss of generality that $n/m$ is an integer 
+    because if not, then we can add a number of dummy jobs of processing time 
+    $0$. This does not change the problem because these jobs can be 
+    instantaneously processed at time $0$ and would not contribute to the 
+    objective function. 
+
+    In a similar manner to above, we see that the set of $m$ longest processing 
+    times have to be assigned to the $m$ copies of $1$, and so on until the 
+    $m$ shortest processing times are assigned to the $m$ copies of $n$. 
+    We claim that this class of schedules includes SPT. According to the 
+    SPT rule, the smallest job has to go on machine $1$ at time $0$, the 
+    second smallest job goes on machine $2$ at time $0$, and so on. Next, 
+    the $(m+1)$-th smallest job follows the smallest job on machine $1$, 
+    the $(m+2)$-th smallest job follows the second smallest job on machine $2$, 
+    and so on. We see that this assignment satisfies the properties outlined 
+    above, so SPT is optimal. 
+\end{pf}
+
+From the proof of Theorem~\ref{theo:6.25}, we see that the SPT is not the only 
+schedule that is optimal. Many more schedules also minimize the total 
+completion time. It turns out that it is fairly easy to characterize the 
+class of schedules that minimizes the total completion time; we will 
+show this on Assignment 8. 
+
+Unfortunately, we cannot generalize Theorem~\ref{theo:2.3}, which states that 
+the WSPT rule is optimal for $(1~||~\sum w_j C_j)$, to the parallel 
+machine setting. This is shown in the following example. 
+
+\begin{exmp}{exmp:6.26}
+    Consider two machines and three jobs as below. 
+    \begin{align*}
+        \begin{array}{c|ccc}
+            j & 1 & 2 & 3 \\ \hline 
+            p_j & 1 & 1 & 3 \\ 
+            w_j & 1 & 1 & 3
+        \end{array}
+    \end{align*}
+    Scheduling jobs $1$ and $2$ at time $0$ and job $3$ at time $1$ 
+    results in a total weighted completion time of $14$, while 
+    scheduling job $3$ at time $0$ and jobs $1$ and $2$ on the other machine 
+    yields a total weighted completion time of $12$. Note that with this 
+    set of data, any schedule is WSPT. However, changing the weights of jobs 
+    $1$ and $2$ to be $1 - \eps$ shows that WSPT does not 
+    necessarily yield an optimal schedule. 
+\end{exmp}
+
+In the literature, it has been shown that the WSPT heuristic is nonetheless 
+a good one for the total weighted completion time on parallel machines. 
+A worst case analysis of this heuristic yields the bound 
+\[ \frac{\sum w_j C_j(\text{WSPT})}{\sum w_j C_j(\text{OPT})} < 
+\frac12 (1 + \sqrt2). \] 
+We now consider the model $(R_m~||~\sum C_j)$. Recall from Section~\ref{subsec:1.2}
+that the machines in the $R_m$ environment are entirely unrelated. For example, 
+machine $1$ may be able to process job $1$ in a short time and may need a long 
+time for job $2$, while machine $2$ may be able to process job $2$ in a 
+short time while taking a long time for job $1$. Note that identical 
+parallel machines where jobs $j$ are restricted to machine sets $M_j$ 
+is also a special case of this. Indeed, the processing time of a job $j$ 
+on a machine that is not part of $M_j$ can be considered very long, 
+making it impossible to process the job on such a machine. 
+
+We can formulate the $(R_m~||~\sum C_j)$ problem as an integer program 
+with a special structure that makes it possible to solve the problem in 
+polynomial time. Recall that if job $j$ is processed on machine $i$ 
+and there are $k-1$ jobs following job $j$ on this machine $i$, then 
+job $j$ contributes $kp_{ij}$ to the value of the objective function. 
+Let $x_{ikj} = 1$ if job $j$ is scheduled as the $k$-th to last job 
+on machine $i$, and $x_{ikj} = 0$ otherwise. Then the integer 
+program is as follows: 
+\begin{align*}
+    \min\quad & \sum_{i=1}^m \sum_{j=1}^n \sum_{k=1}^n kp_{ij} x_{ikj} \\ 
+    \text{s.t.}\quad & \sum_{i=1}^m \sum_{k=1}^n x_{ikj} = 1, && j \in [n] \\ 
+    & \sum_{j=1}^n x_{ikj} \leq 1, && i \in [m],\; k \in [n] \\ 
+    & x_{ij} \in \{0, 1\}, && i \in [m],\; k \in [n],\; j \in [n]. 
+\end{align*}
+The constraints make sure that each job is scheduled exactly once, and each
+position on each machine is taken by at most one job. Note that the processing
+times only appear in the objective function.
+
+This is a so-called weighted bipartite matching problem, which has 
+$n$ jobs on one side and $nm$ positions on the other side (each machine can 
+process at most $n$ jobs). If job $j$ is matched with (assigned to) 
+position $ik$, then there is a cost $kp_{ij}$. The objective is to 
+determine the matching in this bipartite graph with a minimum cost. 
+It is known from the theory of network flows that the integrality constraints 
+on the $x_{ikj}$ may be replaced by non-negativity constraints
+without changing the feasible set.  This weighted bipartite matching problem
+then reduces to a regular linear program for which there exist polynomial time
+algorithms. Note that the optimal schedule does not have to be a non-delay schedule.
