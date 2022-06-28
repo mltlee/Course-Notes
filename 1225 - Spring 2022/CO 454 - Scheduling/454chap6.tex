@@ -739,9 +739,9 @@ for the more general case of this problem.
 \begin{exmp}{exmp:6.23}
     Suppose there are two distinct values of jobs, namely $b_1 = 1$ 
     and $b_2 = 10$. Moreover, suppose that $n_1 = n_2 = 5$, and 
-    our target schedule length is $12$. First, observe that 
+    our target schedule length is $T = 12$. First, observe that 
     \[ Q = \{(1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (0, 1), (1, 1), (2, 1)\} \] 
-    is the set of schedules that have makespan $\leq T$ on one machine. 
+    is the set of schedules that have makespan $\leq 12$ on one machine. 
     Then $M(0, 0) = 0$ and $M(\mathbf a) = 1$ for all $\mathbf a \in Q$. 
     We then use the relation $M(\mathbf x) = 1 + \min\{M(\mathbf x - \mathbf a) 
     : \mathbf a \in Q\}$ to compute the rest of the table, as follows. 
