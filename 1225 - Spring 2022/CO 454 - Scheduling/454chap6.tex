@@ -916,7 +916,7 @@ program is as follows:
     \min\quad & \sum_{i=1}^m \sum_{j=1}^n \sum_{k=1}^n kp_{ij} x_{ikj} \\ 
     \text{s.t.}\quad & \sum_{i=1}^m \sum_{k=1}^n x_{ikj} = 1, && j \in [n] \\ 
     & \sum_{j=1}^n x_{ikj} \leq 1, && i \in [m],\; k \in [n] \\ 
-    & x_{ij} \in \{0, 1\}, && i \in [m],\; k \in [n],\; j \in [n]. 
+    & x_{ikj} \in \{0, 1\}, && i \in [m],\; k \in [n],\; j \in [n]. 
 \end{align*}
 The constraints make sure that each job is scheduled exactly once, and each
 position on each machine is taken by at most one job. Note that the processing
