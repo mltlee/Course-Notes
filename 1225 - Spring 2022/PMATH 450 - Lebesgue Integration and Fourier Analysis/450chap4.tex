@@ -20,8 +20,9 @@ has norm $1$.
 \end{exercise}
 
 Recall that at the beginning of the course in Section~\ref{subsec:1.3}, we 
-discussed Fourier coefficients of functions. We now write down a slightly more 
-rigorous definition.
+discussed Fourier coefficients of continuous functions. We now write down a 
+slightly more rigorous definition, allowing for Lebesgue integrable 
+functions instead of only continuous ones.
 
 \begin{defn}{defn:4.2}
     Let $f \in L^1(\T)$. For each $n \in \Z$, we define the {\bf $n$-th 
@@ -333,3 +334,163 @@ for almost every $\theta \in [-\pi, \pi]$.
 
 Our fundamental problem is the following: for all $f \in L^2(\T)$, do we have 
 $S_Nf \to f$ almost everywhere (that is, without passing to a subsequence)? 
+It turns out the answer is yes! However, this result is far beyond the 
+scope of the course. We state it to give some context. 
+
+\begin{theo}[Carleson's Theorem]{theo:4.10}
+    Let $f \in L^p(\T)$ where $p \in (1, \infty]$. Then $S_n f \to f$ 
+    almost everywhere, and $\|S_N f - f\|_p \to 0$. 
+\end{theo}
+
+In other words, there is no need to pass to a subsequence to get convergence 
+almost everywhere. However, notice that in the above theorem, we had $p > 1$. 
+The bad news is that everything falls apart when $p = 1$. 
+
+\begin{theo}[Kolmogorov's Counterexample]{theo:4.11}
+    There exists $f \in L^1(\T)$ such that $S_N f(\theta)$ diverges for 
+    all $\theta \in [-\pi, \pi]$, and $S_n f \nrightarrow f$ in $\|\cdot\|_1$. 
+\end{theo}
+
+This result is again beyond the scope of the course, but it tells us that 
+the topic of pointwise convergence is a very delicate and difficult one. 
+
+Now, we will investigate the pointwise convergence of Fourier series for 
+more ``regular'' functions. For example, if $f \in C(\T)$ or $f \in C^1(\T)$ 
+(so that $f'$ exists and is continuous), is it true that $S_N f(\theta) \to 
+f(\theta)$ for all $\theta \in [-\pi, \pi]$? 
+
+\begin{lemma}{lemma:4.12}
+    Let $f \in L^2(\T)$, and suppose that $(S_N f)_{N=1}^\infty 
+    \subseteq \Pol(\T)$ is Cauchy with respect to $\|\cdot\|_\infty$. 
+    Then there exists $g \in C(\T)$ such that $f = g$ almost everywhere 
+    and $\|f - S_N f\|_\infty \to 0$. 
+\end{lemma}
+\begin{pf}
+    Since $(S_N f)_{N=1}^\infty \subseteq \Pol(\T) \subseteq C(\T)$ is 
+    Cauchy in $\|\cdot\|_\infty$, there exists a function $g \in C(\T)$ such 
+    that $\|g - S_N f\|_\infty \to 0$. Moreover, by Theorem~\ref{theo:4.7}, 
+    we know that $\|f - S_N f\|_2 \to 0$. To show that $f = g$
+    almost everywhere, note that $f, g \in L^2(\T)$, so it is enough 
+    to show that $\|g - f\|_2 \to 0$. Indeed, we see that 
+    \[ \|g - f\|_2 \leq \|g - S_N f\|_2 + \|S_N f - f\|_2 
+    \leq \|g - S_N f\|_\infty + \|S_N f - f\|_2 \to 0. \]
+    This means that $f = g$ almost everywhere and $f \in L^\infty(\T)$, 
+    with $\|f - S_N f\|_\infty = \|g - S_N f\|_\infty \to 0$. 
+\end{pf}
+
+\begin{cor}{cor:4.13}
+    Let $f \in C(\T)$, and suppose that its Fourier coefficients satisfy 
+    $\hat f \in \ell^1(\Z)$ (that is, $\sum_{n\in\Z} |\hat f(n)| < \infty$). 
+    Then $S_N f \to f$ uniformly. 
+\end{cor}
+\begin{pf}
+    Note that $|\hat f(n) e^{in\theta}| = |\hat f(n)|$, so the Fourier series 
+    \[ \sum_{n\in\Z} \hat f(n) e^{in\theta} \] 
+    converges absolutely with respect to $\|\cdot\|_\infty$. This 
+    means that $(S_N f)_{N=1}^\infty$ is Cauchy in $\|\cdot\|_\infty$, 
+    and applying Lemma~\ref{lemma:4.12} gives the result. 
+\end{pf}
+
+Now, we consider the convergence of a function under some differentiability 
+and ``smoothness'' conditions. Here, we do not mean smooth in the sense 
+that the function is infinitely differentiable, but more so how nicely 
+it behaves. More specifically, we will discuss pointwise convergence 
+when the function is continuously differentiable everywhere, 
+and when the function is locally Lipschitz at a point. 
+
+\begin{prop}{prop:4.14}
+    Let $f \in C^1(\T)$. Then $S_N f \to f$ uniformly. 
+\end{prop}
+\begin{pf}
+    By Corollary~\ref{cor:4.13}, it suffices to show that $\hat f \in 
+    \ell^1(\Z)$. We will first compute the Fourier coefficients of 
+    $f'$, and see how they relate with the Fourier coefficients of $f$. 
+    Observe that 
+    \begin{align*}
+        \widehat{f'}(n) 
+        &= \frac1{2\pi} \int_{-\pi}^\pi f'(\theta) e^{-in\theta}\dd\theta \\
+        &= \frac1{2\pi} f(\theta) e^{-in\theta} \bigg|_{-\pi}^\pi 
+        + \frac{in}{2\pi} \int_{-\pi}^\pi f(\theta) e^{-in\theta}\dd\theta \\ 
+        &= 0 + in \hat f(n).
+    \end{align*}
+    Note that by assumption, we have $f' \in C(\T) \subseteq L^2(\T)$, which 
+    means that $\widehat{f'} \in \ell^2(\Z)$. This tells us that 
+    \[ \sum_{n\in\Z} |\widehat{f'}(n)|^2 = \sum_{n\in\Z} n^2 |\hat f(n)|^2 < \infty. \] 
+    Applying the Cauchy-Schwarz inequality, we obtain 
+    \[ \sum_{n\in\Z} |\hat f(n)| 
+    = |\hat f(0)| + \sum_{n\neq 0} |n| |\hat f(n)| \left| \frac1n \right| 
+    \leq |\hat f(0)| + \left( \sum_{n\neq 0} |n^2| |\hat f(n)|^2 \right)^{\!1/2}
+    \left( \sum_{n\neq 0} \frac{1}{n^2} \right)^{\!1/2} < \infty, \] 
+    and thus $\hat f \in \ell^1(\Z)$. The result follows. 
+\end{pf}
+
+What happens if $f'$ exists but is not continuous? What if $f$ is not even
+differentiable everywhere? The previous arguments will no longer apply. 
+
+\begin{theo}{theo:4.15}
+    Let $f \in L^1(\T)$, and assume that $f$ is differentiable at a point 
+    $\theta_0 \in [-\pi, \pi]$. Then $S_N f(\theta_0) \to f(\theta_0)$. 
+\end{theo}
+\begin{pf}
+    We will prove something stronger: if $f \in L^1(\T)$ and 
+    $f$ is locally Lipschitz at $\theta_0 \in [-\pi, \pi]$, then 
+    \[ f(\theta_0) = \lim_{N\to\infty} S_N f(\theta_0). \] 
+    Recall that $f$ is {\bf locally Lipschitz} at $\theta_0 \in [-\pi, \pi]$ 
+    if there exists $L > 0$ and $\delta > 0$ such that $0 < 
+    |\theta - \theta_0| < \delta$ implies $|f(\theta) - f(\theta_0)| 
+    \leq L|\theta - \theta_0|$. Note that the existence of $f'(\theta_0)$ 
+    implies that $f$ is locally Lipschitz at $\theta_0$, which then 
+    implies that $f$ is continuous at $\theta_0$. 
+
+    We will assume without loss of generality that $\theta_0 = 0$ 
+    and $f(\theta_0) = 0$. This is because we can replace $f$ with 
+    $\tilde f(\theta) = f(\theta + \theta_0) - f(\theta_0)$, and on 
+    Assignment 4, we will show that the Fourier coefficients of 
+    $\tilde f$ can be computed in terms of those of $f$. 
+
+    Our goal now is to show that 
+    \[ S_N f(0) = \sum_{n=-N}^N \hat f(n) \to f(0) = 0. \] 
+    We will show this using a clever proof due to P. R. Chernoff. 
+    Define the function 
+    \[ g(\theta) = \begin{cases}
+        f(\theta)/(e^{i\theta} - 1), & \text{if } \theta \in [-\pi, \pi] 
+        \setminus \{0\}, \\ 
+        0, & \text{if } \theta = 0. 
+    \end{cases} \] 
+    Note that $g$ is measurable. The value $g(0)$ is irrelevant, but 
+    we note that if $f$ is differentiable, then it is natural to take 
+    $g(0) = f'(0)/i$ since $g$ would then be continuous at $0$. 
+
+    We claim that $g \in L^1(\T)$. The hard part here is the behaviour 
+    of $g$ when $\theta$ is close to $0$. But since $f$ is locally Lipschitz 
+    at $0$, there exists $L > 0$ and $\delta > 0$ such that 
+    $0 < |\theta| < \delta$ implies $|f(\theta)| \leq L|\theta|$. 
+    Then we get 
+    \[ \|g\|_1 = \frac1{2\pi} \int_{|\theta|\leq\delta} |g(\theta)|\dd\theta 
+    + \frac1{2\pi} \int_{|\theta|>\delta} |g(\theta)|\dd\theta. \] 
+    The second integral is finite because $f \in L^1(\T)$ and 
+    $1/|e^{i\theta}-1| \leq C$ for some constant $C$ when $|\theta| > \delta$. 
+    We shall denote the value of the integral by $C'$. Now, we obtain 
+    \begin{align*}
+        \|g\|_1 &= \frac1{2\pi} \int_{|\theta|\leq\delta} |g(\theta)|\dd\theta + C' \\ 
+        &\leq \frac{1}{2\pi} \int_{|\theta|\leq\delta} \frac{|f(\theta)|}{|e^{i\theta} - 1|}\dd\theta + C' \\ 
+        &\leq \frac{1}{2\pi} \int_{|\theta|\leq\delta} \frac{L|\theta|}{|e^{i\theta} - 1|}\dd\theta + C' < \infty 
+    \end{align*}
+    since $L|\theta|/|e^{i\theta} - 1|$ is continuous at $\theta$, so we indeed 
+    have $g \in L^1(\T)$. 
+
+    Note that $f(\theta) (e^{i\theta} - 1)g(\theta)$ for all $\theta \in 
+    [-\pi, \pi]$, so we can write $f = (e_1 - 1)g$. Moreover, we can compute 
+    \[ \hat f(n) = \widehat{e_1g}(n) - \hat g(n) = \hat g(n-1) - \hat g(n), \] 
+    which implies that 
+    \[ S_N f(0) = \sum_{n=-N}^N \hat f(n) = 
+    \sum_{n=-N}^N (\hat g(n-1) - \hat g(n)) = \hat g(-N-1) - \hat g(N). \] 
+    On Assignment 4, we will show that $g \in L^1(\T)$ implies that 
+    $\hat g \in c_0(\Z)$ where $c_0(\Z) \subseteq \ell^\infty(\Z)$ is the 
+    closed subspace of sequences $a = (a_n)_{n\in\Z}$ which vanish at infinity.
+    That is, $a = (a_n)_{n\in\Z}$ satisfies $\|a\|_\infty = \sup_{n\in\Z} 
+    |a_n| < \infty$ and 
+    \[ \lim_{n\to\infty} a_n = \lim_{n\to\infty} a_{-n} = 0. \]  
+    In particular, we get $\hat g(N) \to 0$ and $\hat g(-N) \to 0$ 
+    as $N \to \infty$, and thus $S_N f \to 0$, as desired. 
+\end{pf}
