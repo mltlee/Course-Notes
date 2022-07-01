@@ -494,3 +494,263 @@ differentiable everywhere? The previous arguments will no longer apply.
     In particular, we get $\hat g(N) \to 0$ and $\hat g(-N) \to 0$ 
     as $N \to \infty$, and thus $S_N f \to 0$, as desired. 
 \end{pf}
+
+\begin{exmp}{exmp:4.16}
+    Consider the function $f$ on $\T$ defined by 
+    \[ f(\theta) = \begin{cases}
+        1, & \text{if } \theta \in [0, \pi], \\ 
+        0, & \text{if } \theta \in (-\pi, \theta). 
+    \end{cases} \] 
+    We will find its Fourier coefficients and investigate the pointwise 
+    convergence of the Fourier series of $f$. First, we see that 
+    \[ \hat f(0) = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta)\dd\theta 
+    = \frac{1}{2\pi} \int_0^\pi 1\dd\theta = \frac12. \] 
+    When $n \neq 0$, we obtain 
+    \begin{align*}
+        \hat f(n) 
+        &= \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta) e^{-in\theta}\dd\theta \\
+        &= \frac{1}{2\pi} \int_0^\pi e^{-in\theta}\dd\theta \\
+        &= -\frac{1}{2\pi in} e^{-in\theta} \bigg|_0^\pi \\
+        &= \frac{1}{2\pi in} (1 - (-1)^n).
+    \end{align*}
+    In particular, notice that $\hat f(n) = -\hat f(-n)$ for $n \neq 0$. Then 
+    the Fourier series of $f$ is given by 
+    \begin{align*}
+        \sum_{n\in\Z} \hat f(n) e^{in\theta} 
+        &= \frac12 + \frac{1}{2\pi i} \sum_{n\in\Z\setminus\{0\}} \frac{1 - (-1)^n}{n} e^{in\theta} \\ 
+        &= \frac12 + \frac1\pi \sum_{n=1}^\infty \frac{1 + (-1)^n}n \sin(n\theta) \\ 
+        &= \frac12 + \frac1\pi \sum_{k=1}^\infty \frac{2}{2k-1} \sin((2k-1)\theta).  
+    \end{align*}
+    By Theorem~\ref{theo:4.15}, we know that $S_Nf(\theta) \to f(\theta)$ 
+    whenever $\theta \notin \{0, \pi, -\pi\}$ because $f$ is differentiable 
+    away from the above points. Taking $\theta = \pi/2$, we obtain 
+    \[ 1 = f(\pi/2) = \lim_{n\to\infty} S_Nf(\pi/2) = 
+    \frac12 + \frac1\pi \sum_{k=1}^\infty \frac{2}{2k-1} (-1)^{k+1}, \] 
+    which yields the familiar formula 
+    \[ \frac{\pi}{4} = 1 - \frac13 + \frac15 - \frac17 + \cdots 
+    = \sum_{k=0}^\infty \frac{(-1)^{k+1}}{2k+1}. \] 
+    However, our interest is the behaviour at $\theta_0 \in \{0, \pi, -\pi\}$, 
+    where $f$ has jump discontinuities. At these points, we find that 
+    \[ S_N f(\theta_0) = \frac12 = \frac{f(\theta_0^+) + f(\theta_0^-)}{2}, \] 
+    where $f(\theta_0^+) = \lim_{\theta\to\theta_0^+} f(\theta)$ 
+    and $f(\theta_0^-) = \lim_{\theta\to\theta_0^-} f(\theta)$. So the 
+    Fourier series does not converge to $f$ at these values, but is 
+    equal to the average of the left and right values! 
+\end{exmp}
+
+We will see in the following theorem that this sort of behaviour at jump 
+discontinuities is generic. 
+
+\begin{theo}{theo:4.17}
+    Let $f \in L^1(\T)$ and $\theta_0 \in [-\pi, \pi]$. Assume that 
+    \begin{enumerate}[(1)]
+        \item $f(\theta_0^+) = \lim_{\theta\to\theta_0^+} f(\theta)$ 
+        and $f(\theta_0^-) = \lim_{\theta\to\theta_0^-} f(\theta)$ exist, and 
+        \item $f'(\theta_0^+) = \lim_{h\to0^+} (f(\theta_0+h) - f(\theta_0^+))/h$ 
+        and $f'(\theta_0^-) = \lim_{h\to0^-} (f(\theta_0+h) - f(\theta_0^-))/h$ exist. 
+    \end{enumerate} 
+    Then we have 
+    \[ \lim_{N\to\infty} S_N f(\theta_0) = \frac{f(\theta_0^+) + f(\theta_0^-)}{2}. \]
+\end{theo}
+\begin{pf}
+    First, we define the step function 
+    \[ h(\theta) = \begin{cases}
+        f(\theta_0^-), & \text{if } \theta < \theta_0, \\ 
+        f(\theta_0), & \text{if } \theta = \theta_0, \\ 
+        f(\theta_0^+), & \text{if } \theta > \theta_0.
+    \end{cases} \] 
+    Let $\tilde h(\theta) = h(\theta + \theta_0) - f(\theta_0^-)$. 
+    By our computations in Example~\ref{exmp:4.16}, we find that 
+    \[ S_N \tilde h(\theta) \to \frac{f(\theta_0^+) - f(\theta_0^-)}{2}. \] 
+    In particular, it follows that 
+    \[ S_N h(\theta_0) = S_N \tilde h(0) + f(\theta_0^-) \to
+    \frac{f(\theta_0^+) + f(\theta_0^-)}{2}. \] 
+    Now, let $k = f - h$. We see that $k(\theta_0) = f(\theta_0) - h(\theta_0) = 0$ 
+    and $k(\theta_0^+) = k(\theta_0^-) = 0$. Moreover, 
+    $k'(\theta_0^+) = f'(\theta_0^+)$ and $k'(\theta_0^-) = f'(\theta_0^-)$ 
+    both exist, implying that $k$ is locally Lipschitz at $\theta_0$. 
+    By Theorem~\ref{theo:4.15}, we have $S_N k(\theta_0) \to k(\theta_0) = 0$ 
+    and hence $S_N f(\theta_0) - S_N h(\theta_0) \to 0$. Since 
+    $S_N h(\theta_0) \to (f(\theta_0^+) + f(\theta_0^-))/2$, we obtain 
+    the desired result.  
+\end{pf}
+
+Next, we discuss term-by-term integration of Fourier series. 
+
+\begin{theo}{theo:4.18}
+    Let $f \in L^2(\T)$. For $\theta \in [-\pi, \pi]$, define 
+    \[ g(\theta) = \int_{-\pi}^\theta f(t)\dd t. \] 
+    Then $g \in C[-\pi, \pi]$, and we have 
+    \begin{align*}
+        g(\theta) = \sum_{n\in\Z} \hat f(n) \int_{-\pi}^\theta  e^{int}\dd t 
+        = \hat f(0) (\theta + \pi) + \sum_{n\in\Z\setminus\{0\}} 
+        \frac{\hat f(n)}{in} (e^{in\theta} - (-1)^n). 
+    \end{align*}
+    Moreover, the convergence is uniform. (Note that in general, 
+    we do not have $g \in C(\T)$. This is only the case if 
+    $g(\pi) = g(-\pi) = 0$, which is equivalent to saying that 
+    $\hat f(0) = 0$. In the case that $\hat f(0) = 0$, it turns out 
+    that the above is the Fourier series for $g$.)
+\end{theo}
+\begin{pf}
+    Since $f \in L^2(\T)$, we have $S_N f \to f$ with respect to $\|\cdot\|_2$. 
+    For $N \in \N$, let 
+    \[ g_N(\theta) = \int_{-\pi}^\theta S_N f(t)\dd t = 
+    \sum_{n=-N}^N \hat f(n) \int_{-\pi}^\theta e^{int}\dd t. \] 
+    Then we obtain 
+    \[ |g(\theta) - g_N(\theta)|^2 
+    = \left| \int_{-\pi}^\theta (f(t) - S_Nf(t))\dd t \right|^2 
+    \leq \left( \int_{-\pi}^\theta |f(t) - S_Nf(t)|\dd t \right)^{\!2} 
+    \leq |\theta + \pi| \|f - S_N f\|_2^2  \to 0 \] 
+    uniformly in $\theta$, where the last inequality was due 
+    to Cauchy-Schwarz. 
+\end{pf}
+
+\subsection{Convolution and Summability Kernels} \label{subsec:4.4}
+Recall that the general problem of Fourier analysis is to try 
+and recover a function $f$ from $L^1(\T)$, $L^2(\T)$, or $C(\T)$ 
+given its Fourier transform ${\cal F}f = (\hat f(n))_{n\in\Z}$. 
+We already know the following: 
+\begin{enumerate}[(1)]
+    \item If $f \in L^2(\T)$, then we can recover $f$ as 
+    $\lim_{N\to\infty} S_N f$ in the sense of $L^2$-convergence. 
+    \item If $f$ is locally Lipschitz at a point $\theta$ (that is, 
+    $f$ is ``regular''), then $f(\theta) = \lim_{N\to\infty} S_N f(\theta)$. 
+    \item If $f \in C^1(\T)$, then $\|f - S_N f\|_\infty \to 0$. 
+\end{enumerate}
+But what if we merely assume that $f \in C(\T)$ or $f \in L^1(\T)$? 
+In the case of $L^1(\T)$, it might not seem possible to recover 
+$f$ from ${\cal F}f$ in light of Kolmogorov's counterexample 
+(Theorem~\ref{theo:4.11}). We will see that it actually is possible, 
+but we'll have to take an abstract approach to answer these questions. 
+We first take a look at the convolution of two functions. 
+
+\begin{prop}{prop:4.19}
+    Let $f \in C(\T)$ and $g \in L^1(\T)$. Define a function 
+    \[ h(\theta) = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta - t) g(t)\dd t. \] 
+    Note that this is well-defined because the function 
+    $t \mapsto f(\theta - t) g(t)$ is in $L^1(\T)$. We have 
+    \begin{enumerate}[(1)]
+        \item $h \in C(\T)$ and $\|h\|_\infty \leq \|f\|_\infty \|g\|_1$; 
+        \item $\|h\|_1 \leq \|f\|_1 \|g\|_1$ and $\|h\|_2 \leq \|f\|_2 \|g\|_1$. 
+    \end{enumerate}
+    We write $h = f \star g$, and call it the {\bf convolution} of $f$ and $g$. 
+\end{prop}
+\begin{pf}~
+    \begin{enumerate}[(1)]
+        \item Since $f \in C(\T)$ and $\T$ is compact, we know that $f$ 
+        is uniformly continuous. So for all $\eps > 0$, there exists 
+        $\delta > 0$ such that $|s - t| < \delta$ implies 
+        $|f(s) - f(t)| < \eps$. Suppose that $\theta, \theta_0 \in \T$ with 
+        $|\theta - \theta_0| < \delta$. We get 
+        \begin{align*}
+            |h(\theta) - h(\theta_0)| 
+            &= \frac{1}{2\pi} \left| \int_{-\pi}^\pi (f(\theta - t) - f(\theta_0 - t)) g(t)\dd t \right| \\ 
+            &\leq \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t) - f(\theta_0 - t)| |g(t)|\dd t \\ 
+            &< \frac{1}{2\pi} \int_{-\pi}^\pi \eps |g(t)|\dd t \leq \eps\|g\|_1, 
+        \end{align*}
+        where the second last inequality is because $|\theta - t - (\theta_0 - t)| < \delta$. 
+        So $h \in C(\T)$, and it is clear that $\|h\|_\infty \leq 
+        \|f\|_\infty \|g\|_1$ by a similar computation to above. 
+
+        \item First suppose that $g \in C(\T)$. Then we have 
+        \begin{align*}
+            \|h\|_1 &= \frac{1}{2\pi} \int_{-\pi}^\pi |h(\theta)|\dd \theta \\ 
+            &= \frac{1}{2\pi} \int_{-\pi}^\pi \left| \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta - t) g(t)\dd t \right|\textrm{d}\theta \\ 
+            &\leq \frac{1}{(2\pi)^2} \int_{-\pi}^\pi \int_{-\pi}^\pi |f(\theta - t)| |g(t)|\dd t \dd\theta \\ 
+            &= \frac{1}{(2\pi)^2} \int_{-\pi}^\pi |g(t)| \left( \int_{-\pi}^\pi |f(\theta - t)|\dd\theta \right)\textrm{d}t
+            = \|f\|_1 \|g\|_1,
+        \end{align*}
+        where the second last equality was obtained by applying Fubini's theorem
+        to interchange $\textrm{d}t$ and $\textrm{d}\theta$, 
+        noting that this is a Riemann integral since $f, g \in C(\T)$. 
+        Similarly, we have 
+        \begin{align*}
+            \|h\|_2^2 
+            &= \frac{1}{2\pi} \int_{-\pi}^\pi \frac{1}{2\pi} \left| \int_{-\pi}^\pi f(\theta - t) g(t)\dd t \right|^2 \textrm{d}\theta \\ 
+            &\leq \frac{1}{2\pi} \int_{-\pi}^\pi \left( \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t)| |g(t)|\dd t \right)^{\!2} \textrm{d}\theta \\ 
+            &\leq \frac{1}{2\pi} \int_{-\pi}^\pi \left( \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t)|^2 |g(t)|\dd t \right) \left( \frac{1}{2\pi} \int_{-\pi}^\pi |g(t)|\dd t \right)\textrm{d}\theta \\ 
+            &= \|g\|_1 \cdot \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t)|^2 |g(t)|\dd t \dd \theta = \|g\|_1 \|f\|_2^2 \|g\|_1, 
+        \end{align*}
+        where the last equality was due to Fubini, and the second inequality 
+        was from applying Cauchy-Schwarz to $|f(\theta - t)||g(t)| 
+        = |f(\theta - t)||g(t)|^{1/2} |g(t)|^{1/2}$. 
+
+        Suppose now that $g \in L^1(\T)$. Take a sequence $(g_n)_{n=1}^\infty 
+        \subseteq C(\T)$ such that $g_n \to g$ in $\|\cdot\|_1$. 
+        Then we know for $p \in \{1, 2\}$ that 
+        $\|f \star g_n\|_p \leq \|f\|_p \|g_n\|_1$.
+        We claim that $(f \star g_n)_{n=1}^\infty$ is Cauchy in $\|\cdot\|_p$ 
+        for $p \in \{1, 2\}$. Indeed, we see that 
+        \[ \|f \star g_n - f \star g_m\|_p = \|f \star (g_n - g_m)\|_p 
+        \leq \|f\|_p \|g_n - g_m\|_1 \to 0 \] 
+        since $g_n \to g$ in $\|\cdot\|_1$, and thus $\|g_n - g_m\|_1 \to 0$. 
+        This means that $h = f \star g = \lim_{n\to\infty} f \star g_n$, 
+        since the sequence $(f \star g_n)_{n=1}^\infty$ being Cauchy 
+        implies that the limit exists, and 
+        \[ \|f \star g - f \star g_n\|_p = \|f \star (g - g_n)\|_p 
+        \leq \|f\|_p \|g - g_n\|_1 \to 0. \] 
+        It follows that 
+        $\|f \star g\|_p = \lim_{n\to\infty} \|f \star g_n\|_p 
+        \leq \lim_{n\to\infty} \|f\|_p \|g_n\|_1 = \|f\|_p \|g\|_1$. \qedhere  
+    \end{enumerate}
+\end{pf}
+
+\begin{remark}{remark:4.20}
+    If $f, g \in C(\T)$, then $\star : C(\T) \times C(\T) \to C(\T)$ 
+    turns $C(\T)$ into a {\bf commutative algebra} over $\C$. That is, 
+    for all $f, g, h \in C(\T)$ and $\alpha \in \C$, we have 
+    \begin{itemize}
+        \item $f \star g = g \star f$; 
+        \item $f \star (g + h) = f \star g + f \star h$; 
+        \item $(f \star g) \star h = f \star (g \star h)$; and 
+        \item $\alpha(f \star g) = (\alpha f) \star g$. 
+    \end{itemize}
+    It can be seen that $f \star g = g \star f$ by making a substitution 
+    $s = \theta - t$. Note that $(C(\T), \star, +)$ does {\bf not} have a unit.
+\end{remark}
+
+\begin{theo}{theo:4.21}
+    The convolution product $\star$ extends continuously to a multiplication 
+    \begin{align*}
+        \star : L^1(\T) \times L^1(\T) &\to L^1(\T) \\ 
+        (f, g) &\mapsto f \star g = g \star f
+    \end{align*}
+    satisfying $\|f \star g\|_1 \leq \|f\|_1 \|g\|_1$. Moreover, for $f, g \in L^1(\T)$, 
+    the function 
+    \[ t \mapsto f(\theta - t) g(t) \] 
+    is in $L^1(\T)$ for almost every $\theta \in [-\pi, \pi]$, and for such 
+    $\theta$, we have 
+    \[ (f \star g)(\theta) = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta - t)g(t)\dd t. \] 
+\end{theo}
+\begin{pf}
+    It turns out that the integrability of the function 
+    \[ t \mapsto f(\theta - t) g(t) \] 
+    is highly non-trivial and requires a measure theoretic version of 
+    Fubini, which is typically seen in PMATH 451. We will therefore 
+    content ourselves to abstractly define $f \star g$ for 
+    $f, g \in L^1(\T)$ via a limiting process. 
+
+    Let $(f_n)_{n=1}^\infty, (g_n)_{n=1}^\infty \subseteq C(\T)$ 
+    be sequences such that $f_n \to f$ and $g_n \to g$ in $\|\cdot\|_1$. 
+    Note that $(f_n \star g_n)_{n=1}^\infty$ is Cauchy in $\|\cdot\|_1$. 
+    Indeed, we see that  
+    \begin{align*}
+        \|f_n \star g_n - f_m \star g_m\|_1 
+        &= \|(f_n - f_m) \star g_n + f_m \star (g_n - g_m)\|_1 \\ 
+        &\leq \|(f_n - f_m) \star g_n\|_1 + \|f_m \star (g_n - g_m)\|_1 \\ 
+        &\leq \|f_n - f_m\|_1 \|g_n\|_1 + \|f_m\|_1 \|g_n - g_m\|_1 \to 0 
+    \end{align*}
+    as $m, n \to \infty$ because $(f_n)_{n=1}^\infty$ and $(g_n)_{n=1}^\infty$ 
+    are Cauchy. We define $f \star g = \lim_{n\to\infty} 
+    f_n \star g_n \in L^1(\T)$. To see this is well-defined, we show that 
+    $f \star g$ is independent of the choice of $(f_n)_{n=1}^\infty$ 
+    and $(g_n)_{n=1}^\infty$. Suppose that $(\tilde f_n)_{n=1}^\infty$ 
+    and $(\tilde g_n)_{n=1}^\infty$ also satisfy $\tilde f_n \to f$ and 
+    $\tilde g_n \to g$ in $\|\cdot\|_1$. Then we obtain 
+    \[ \|f_n \star g_n - \tilde f_n \star \tilde g_n\|_1 
+    \leq \|f_n - \tilde f_n\|_1 \|g_n\|_1 + \|\tilde f_n\|_1 
+    \|g_n - \tilde g_n\|_1 \to 0, \] 
+    and thus $f \star g = \lim_{n\to\infty} f_n \star g_n = 
+    \lim_{n\to\infty} \tilde f_n \star \tilde g_n$. 
+\end{pf}
