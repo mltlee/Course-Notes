@@ -667,7 +667,7 @@ We first take a look at the convolution of two functions.
         Similarly, we have 
         \begin{align*}
             \|h\|_2^2 
-            &= \frac{1}{2\pi} \int_{-\pi}^\pi \frac{1}{2\pi} \left| \int_{-\pi}^\pi f(\theta - t) g(t)\dd t \right|^2 \textrm{d}\theta \\ 
+            &= \frac{1}{2\pi} \int_{-\pi}^\pi \left| \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta - t) g(t)\dd t \right|^2 \textrm{d}\theta \\ 
             &\leq \frac{1}{2\pi} \int_{-\pi}^\pi \left( \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t)| |g(t)|\dd t \right)^{\!2} \textrm{d}\theta \\ 
             &\leq \frac{1}{2\pi} \int_{-\pi}^\pi \left( \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t)|^2 |g(t)|\dd t \right) \left( \frac{1}{2\pi} \int_{-\pi}^\pi |g(t)|\dd t \right)\textrm{d}\theta \\ 
             &= \|g\|_1 \cdot \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t)|^2 |g(t)|\dd t \dd \theta = \|g\|_1 \|f\|_2^2 \|g\|_1, 

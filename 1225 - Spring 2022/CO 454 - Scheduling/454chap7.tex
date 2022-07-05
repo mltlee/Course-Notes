@@ -439,7 +439,7 @@ Putting everything together, we can now formulate the MIP as follows:
 \begin{align*}
     \min\quad & \sum_{i=1}^{m-1} \sum_{j=1}^n x_{j1} p_{ij} + \sum_{j=1}^{n-1} I_{mj} \\ 
     \text{s.t.}\quad & \sum_{j=1}^n x_{jk} = 1, && k \in [n] \\ 
-    & \sum_{i=k}^n x_{jk} = 1, && k \in [n] \\ 
+    & \sum_{k=1}^n x_{jk} = 1, && j \in [n] \\ 
     & I_{ik} + \sum_{j=1}^n x_{j,k+1} p_{ij} + W_{i,k+1} - W_{ik} 
     - \sum_{j=1}^n x_{jk} p_{i+1,j} - I_{i+1,k} = 0, && k \in [n-1],\; i \in [m-1] \\
     & W_{i1} = 0, && i \in [m-1] \\
