@@ -1,0 +1,274 @@
+\section{Convolution and Summability Kernels} \label{sec:5}
+
+\subsection{Convolution} \label{subsec:5.1}
+Recall that the general problem of Fourier analysis is to try 
+and recover a function $f$ from $L^1(\T)$, $L^2(\T)$, or $C(\T)$ 
+given its Fourier transform ${\cal F}f = (\hat f(n))_{n\in\Z}$. 
+We already know the following: 
+\begin{enumerate}[(1)]
+    \item If $f \in L^2(\T)$, then we can recover $f$ as 
+    $\lim_{N\to\infty} S_N f$ in the sense of $L^2$-convergence. 
+    \item If $f$ is locally Lipschitz at a point $\theta$ (that is, 
+    $f$ is ``regular''), then $f(\theta) = \lim_{N\to\infty} S_N f(\theta)$. 
+    \item If $f \in C^1(\T)$, then $\|f - S_N f\|_\infty \to 0$. 
+\end{enumerate}
+But what if we merely assume that $f \in C(\T)$ or $f \in L^1(\T)$? 
+In the case of $L^1(\T)$, it might not seem possible to recover 
+$f$ from ${\cal F}f$ in light of Kolmogorov's counterexample 
+(Theorem~\ref{theo:4.11}). We will see that it actually is possible.
+We first take a look at the convolution of two functions. 
+
+\begin{prop}{prop:5.1}
+    Let $f \in C(\T)$ and $g \in L^1(\T)$. Define a function 
+    \[ h(\theta) = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta - t) g(t)\dd t. \] 
+    Note that this is well-defined because the function 
+    $t \mapsto f(\theta - t) g(t)$ is in $L^1(\T)$. We have 
+    \begin{enumerate}[(1)]
+        \item $h \in C(\T)$ and $\|h\|_\infty \leq \|f\|_\infty \|g\|_1$; 
+        \item $\|h\|_1 \leq \|f\|_1 \|g\|_1$ and $\|h\|_2 \leq \|f\|_2 \|g\|_1$. 
+    \end{enumerate}
+    We write $h = f \star g$, and call it the {\bf convolution} of $f$ and $g$. 
+\end{prop}
+\begin{pf}~
+    \begin{enumerate}[(1)]
+        \item Since $f \in C(\T)$ and $\T$ is compact, we know that $f$ 
+        is uniformly continuous. So for all $\eps > 0$, there exists 
+        $\delta > 0$ such that $|s - t| < \delta$ implies 
+        $|f(s) - f(t)| < \eps$. Suppose that $\theta, \theta_0 \in \T$ with 
+        $|\theta - \theta_0| < \delta$. We get 
+        \begin{align*}
+            |h(\theta) - h(\theta_0)| 
+            &= \frac{1}{2\pi} \left| \int_{-\pi}^\pi (f(\theta - t) - f(\theta_0 - t)) g(t)\dd t \right| \\ 
+            &\leq \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t) - f(\theta_0 - t)| |g(t)|\dd t \\ 
+            &< \frac{1}{2\pi} \int_{-\pi}^\pi \eps |g(t)|\dd t \leq \eps\|g\|_1, 
+        \end{align*}
+        where the second last inequality is because $|\theta - t - (\theta_0 - t)| < \delta$. 
+        So $h \in C(\T)$, and it is clear that $\|h\|_\infty \leq 
+        \|f\|_\infty \|g\|_1$ by a similar computation to above. 
+
+        \item First suppose that $g \in C(\T)$. Then we have 
+        \begin{align*}
+            \|h\|_1 &= \frac{1}{2\pi} \int_{-\pi}^\pi \left| \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta - t) g(t)\dd t \right|\textrm{d}\theta \\ 
+            &\leq \frac{1}{(2\pi)^2} \int_{-\pi}^\pi \int_{-\pi}^\pi |f(\theta - t)| |g(t)|\dd t \dd\theta \\ 
+            &= \frac{1}{(2\pi)^2} \int_{-\pi}^\pi |g(t)| \left( \int_{-\pi}^\pi |f(\theta - t)|\dd\theta \right)\textrm{d}t
+            = \|f\|_1 \|g\|_1,
+        \end{align*}
+        where the second last equality was obtained by applying Fubini's theorem
+        to interchange $\textrm{d}t$ and $\textrm{d}\theta$, 
+        noting that this is a Riemann integral since $f, g \in C(\T)$. 
+        Similarly, we have 
+        \begin{align*}
+            \|h\|_2^2 
+            &= \frac{1}{2\pi} \int_{-\pi}^\pi \left| \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta - t) g(t)\dd t \right|^2 \textrm{d}\theta \\ 
+            &\leq \frac{1}{2\pi} \int_{-\pi}^\pi \left( \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t)| |g(t)|\dd t \right)^{\!2} \textrm{d}\theta \\ 
+            &\leq \frac{1}{2\pi} \int_{-\pi}^\pi \left( \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t)|^2 |g(t)|\dd t \right) \left( \frac{1}{2\pi} \int_{-\pi}^\pi |g(t)|\dd t \right)\textrm{d}\theta \\ 
+            &= \|g\|_1 \cdot \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta - t)|^2 |g(t)|\dd t \dd \theta = \|g\|_1 \|f\|_2^2 \|g\|_1, 
+        \end{align*}
+        where the last equality was due to Fubini, and the second inequality 
+        was from applying Cauchy-Schwarz to $|f(\theta - t)||g(t)| 
+        = |f(\theta - t)||g(t)|^{1/2} |g(t)|^{1/2}$. 
+
+        Suppose now that $g \in L^1(\T)$. Take a sequence $(g_n)_{n=1}^\infty 
+        \subseteq C(\T)$ such that $g_n \to g$ in $\|\cdot\|_1$. 
+        Then we know for $p \in \{1, 2\}$ that 
+        $\|f \star g_n\|_p \leq \|f\|_p \|g_n\|_1$.
+        We claim that $(f \star g_n)_{n=1}^\infty$ is Cauchy in $\|\cdot\|_p$ 
+        for $p \in \{1, 2\}$. Indeed, we see that 
+        \[ \|f \star g_n - f \star g_m\|_p = \|f \star (g_n - g_m)\|_p 
+        \leq \|f\|_p \|g_n - g_m\|_1 \to 0 \] 
+        since $g_n \to g$ in $\|\cdot\|_1$, and thus $\|g_n - g_m\|_1 \to 0$. 
+        This means that $h = f \star g = \lim_{n\to\infty} f \star g_n$, 
+        since the sequence $(f \star g_n)_{n=1}^\infty$ being Cauchy 
+        implies that the limit exists, and 
+        \[ \|f \star g - f \star g_n\|_p = \|f \star (g - g_n)\|_p 
+        \leq \|f\|_p \|g - g_n\|_1 \to 0. \] 
+        It follows that 
+        $\|f \star g\|_p = \lim_{n\to\infty} \|f \star g_n\|_p 
+        \leq \lim_{n\to\infty} \|f\|_p \|g_n\|_1 = \|f\|_p \|g\|_1$. \qedhere  
+    \end{enumerate}
+\end{pf}
+
+\begin{remark}{remark:5.2}
+    If $f, g \in C(\T)$, then $\star : C(\T) \times C(\T) \to C(\T)$ 
+    turns $C(\T)$ into a {\bf commutative algebra} over $\C$. That is, 
+    for all $f, g, h \in C(\T)$ and $\alpha \in \C$, we have 
+    \begin{itemize}
+        \item $f \star g = g \star f$; 
+        \item $f \star (g + h) = f \star g + f \star h$; 
+        \item $(f \star g) \star h = f \star (g \star h)$; and 
+        \item $\alpha(f \star g) = (\alpha f) \star g$. 
+    \end{itemize}
+    It can be seen that $f \star g = g \star f$ by making a substitution 
+    $s = \theta - t$. 
+\end{remark}
+
+\begin{theo}{theo:5.3}
+    The convolution product $\star$ extends continuously to a multiplication 
+    $\star : L^1(\T) \times L^1(\T) \to L^1(\T)$ given by $(f, g) \mapsto 
+    g \star g = g \star f$, and it satisfies $\|f \star g\|_1 \leq \|f\|_1 \|g\|_1$. 
+    Moreover, for $f, g \in L^1(\T)$, the function $t \mapsto f(\theta - t) g(t)$
+    is in $L^1(\T)$ for almost every $\theta \in [-\pi, \pi]$, and for such 
+    $\theta$, we have 
+    \[ (f \star g)(\theta) = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta - t)g(t)\dd t. \] 
+\end{theo}
+\begin{pf}
+    It turns out that the integrability of the function $t \mapsto f(\theta - t) g(t)$ 
+    is highly non-trivial and requires a measure theoretic version of 
+    Fubini, which is typically seen in PMATH 451. We will therefore 
+    content ourselves to abstractly define $f \star g$ for 
+    $f, g \in L^1(\T)$ via a limiting process. 
+
+    Let $(f_n)_{n=1}^\infty, (g_n)_{n=1}^\infty \subseteq C(\T)$ 
+    be sequences such that $f_n \to f$ and $g_n \to g$ in $\|\cdot\|_1$. 
+    Note that $(f_n \star g_n)_{n=1}^\infty$ is Cauchy in $\|\cdot\|_1$. 
+    Indeed, we see that  
+    \begin{align*}
+        \|f_n \star g_n - f_m \star g_m\|_1 
+        &= \|(f_n - f_m) \star g_n + f_m \star (g_n - g_m)\|_1 \\ 
+        &\leq \|(f_n - f_m) \star g_n\|_1 + \|f_m \star (g_n - g_m)\|_1 \\ 
+        &\leq \|f_n - f_m\|_1 \|g_n\|_1 + \|f_m\|_1 \|g_n - g_m\|_1 \to 0 
+    \end{align*}
+    as $m, n \to \infty$ because $(f_n)_{n=1}^\infty$ and $(g_n)_{n=1}^\infty$ 
+    are Cauchy. We define $f \star g = \lim_{n\to\infty} 
+    f_n \star g_n \in L^1(\T)$. To see this is well-defined, we show that 
+    $f \star g$ is independent of the choice of $(f_n)_{n=1}^\infty$ 
+    and $(g_n)_{n=1}^\infty$. Suppose that $(\tilde f_n)_{n=1}^\infty$ 
+    and $(\tilde g_n)_{n=1}^\infty$ also satisfy $\tilde f_n \to f$ and 
+    $\tilde g_n \to g$ in $\|\cdot\|_1$. Then we obtain 
+    \[ \|f_n \star g_n - \tilde f_n \star \tilde g_n\|_1 
+    \leq \|f_n - \tilde f_n\|_1 \|g_n\|_1 + \|\tilde f_n\|_1 
+    \|g_n - \tilde g_n\|_1 \to 0, \] 
+    and thus $f \star g = \lim_{n\to\infty} f_n \star g_n = 
+    \lim_{n\to\infty} \tilde f_n \star \tilde g_n$. 
+\end{pf}
+
+\subsection{Properties of Summability Kernels} \label{subsec:5.2}
+From Theorem~\ref{theo:5.3}, we see that $L^1(\T)$ is an algebra under convolution. 
+Note that $L^1(\T)$ is not unital; that is, there does not exist $k \in L^1(\T)$ 
+such that $f \star k = k \star f = f$ for all $f \in L^1(\T)$. Indeed, assume 
+towards such a function $k \in L^1(\T)$ existed. Then for all $f \in L^1(\T)$, 
+we would have 
+\[ f(\theta) = (f \star k)(\theta) = \frac{1}{2\pi} \int_{-\pi}^\pi f(\theta - t)
+k(t)\dd t. \] 
+Informally, this would force $k$ to be the Dirac delta function at $0$, 
+which is given by 
+\[ \delta(t) = \begin{cases}
+    \infty, & \text{if } t = 0, \\ 
+    0, & \text{if } t \neq 0.
+\end{cases} \] 
+It is clear that this is not integrable, which is a contradiction.
+
+But $L^1(\T)$ has ``approximate'' units with respect to convolution; they are 
+called summability kernels. 
+
+\begin{defn}{defn:5.4}
+    A sequence $(k_n)_{n=1}^\infty \subseteq L^1(\T)$ is called a {\bf summability
+    kernel} if it satisfies the following properties: 
+    \begin{enumerate}[(1)]
+        \item For all $n \in \N$, we have 
+        \[ \frac{1}{2\pi} \int_{-\pi}^\pi k_n(\theta)\dd\theta = 1. \] 
+        \item The sequence $(k_n)_{n=1}^\infty$ is uniformly bounded; that is, 
+        $\sup_{n\in\N} \|k_n\|_1 = C < \infty$ for some constant $C$. 
+        \item For all $\delta > 0$, we have 
+        \[ \lim_{n\to\infty} \int_{|\theta|\geq\delta} |k_n(\theta)|\dd\theta = 0. \]
+    \end{enumerate}
+    We say that a summability kernel is {\bf even} or {\bf symmetric} if $k_n(\theta) 
+    = k_n(-\theta)$ for almost every $\theta \in [-\pi, \pi]$, and {\bf positive} 
+    if $k_n \geq 0$ for all $n \in \N$. 
+\end{defn}
+
+Pictorially, there will be very large values near $0$, but small values away from $0$. 
+Note that when $(k_n)_{n=1}^\infty$ is a positive summability kernel, then 
+condition (1) implies condition (2) with the constant $C = 1$. 
+An example of a symmetric and positive summability kernel is $(k_n)_{n=1}^\infty$ given by 
+$k_n = \pi n\chi_{[-1/n, 1/n]}$. 
+
+The following theorem tells us that summability kernels play the role of an approximate 
+unit with respect to convolution. 
+
+\begin{theo}{theo:5.5}
+    Let $(k_n)_{n=1}^\infty$ be a summability kernel. 
+    \begin{enumerate}[(1)]
+        \item If $f \in C(\T)$, then as $n \to \infty$, we have 
+        \[ \|f - f \star k_n\|_\infty \to 0. \] 
+        \item Let $p \in \{1, 2\}$ and $f \in L^p(\T)$. Then as $n \to \infty$, we have 
+        \[ \|f - f \star k_n\|_p \to 0. \] 
+    \end{enumerate}
+\end{theo}
+\begin{pf}~
+    \begin{enumerate}[(1)]
+        \item Let $f \in C(\T)$ and $\eps > 0$. By the uniform continuity of $f$, there exists 
+        $\delta > 0$ such that $|f(s) - f(t)| < \eps$ whenever $|s - t| < \delta$. Then we have 
+        \begin{align*}
+            |f(\theta) - (f \star k_n)(\theta)| 
+            &= \frac{1}{2\pi} \left| \int_{-\pi}^\pi (f(\theta) - f(\theta - t)) k_n(t)\dd t \right| \\ 
+            &\leq \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta) - f(\theta - t)| |k_n(t)|\dd t \\ 
+            &= \frac{1}{2\pi} \int_{|t|\leq\delta} |f(\theta) - f(\theta - t)||k_n(t)|\dd t 
+            + \frac{1}{2\pi} \int_{|t|>\delta} |f(\theta) - f(\theta - t)||k_n(t)|\dd t \\ 
+            &< \eps\|k_n(t)\|_1 + 2\|f\|_\infty \int_{|t|>\delta} |k_n(t)|\dd t, 
+        \end{align*}
+        where the first equality is due to property (1) of being a summability kernel, which 
+        states that 
+        \[ \frac{1}{2\pi} \int_{-\pi}^\pi k_n(t)\dd t = 1. \] 
+        Taking $n \to \infty$, property (3) of being a summability kernel tells us that 
+        \[ \int_{|t|>\delta} |k_n(t)|\dd t \to 0, \] 
+        and thus $|f(\theta) - (f \star k_n)(\theta)| \leq C\eps$ uniformly in $\theta$. 
+        Hence, we have $\|f - f \star k_n\|_\infty \to 0$. 
+
+        \item Let $p \in \{1, 2\}$, and let $f \in L^p(\T)$. Let $\eps > 0$. Then by 
+        Corollary~\ref{cor:3.21}, we can find $g \in C(\T)$ such that $\|f - g\|_p < \eps$. 
+        Choose sufficiently large $n \in \N$ such that 
+        \[ \|g - g \star k_n\|_\infty < \eps, \] 
+        which exists since $\|g - g \star k_n\|_\infty \to 0$ by part (1). Then we obtain 
+        \begin{align*}
+            \|f - f \star k_n\|_p 
+            &\leq \|f - g\|_p + \|g - g \star k_n\|_p + \|g \star k_n - f \star k_n\|_p \\ 
+            &< \eps + \|g - g \star k_n\|_\infty + \|(g - f) \star k_n\|_p \\ 
+            &< \eps + \eps + \|g - f\|_p \|k_n\|_1 \\ 
+            &< 2\eps + C\eps \\ 
+            &= (C + 2)\eps. \qedhere 
+        \end{align*}
+    \end{enumerate}
+\end{pf}
+
+\subsection{The Fej\'er Kernel and Dirichlet Kernel} \label{subsec:5.3}
+We now look at some applications of summability kernels. First, we consider 
+Ces\`aro summation of Fourier series. Given a series $\sum_{n=0}^\infty a_n$
+where $(a_n)_{n=0}^\infty \subseteq \C$, we know that it may or may not converge. 
+That is, the $N$-th partial sum $S_N = \sum_{n=0}^N a_n$ may or may not converge 
+as a sequence in $\C$. A simple example of this is $a_n = (-1)^n$, where it is 
+clear that $\sum_{n=0}^\infty (-1)^n$ does not converge. 
+
+\begin{defn}{defn:5.6}
+    Let $\sum_{n=0}^\infty a_n$ be a series with $(a_n)_{n=0}^\infty \subseteq \C$, 
+    and suppose that it has partial sums $(S_N)_{N=0}^\infty$. The 
+    {\bf $N$-th Cesa\`ro sum mean} of the series is given by 
+    \[ \sigma_N = \frac{1}{N+1} \sum_{k=0}^N S_k. \] 
+\end{defn}
+
+How are the convergence properties of the partial sums $(S_N)_{N=0}^\infty$ 
+and the Ces\`aro means $(\sigma_N)_{N=0}^\infty$ related? It turns out 
+that if the partial sums converge, then the Ces\`aro means converge to the 
+same limit. But the converse fails, because taking our example $a_n = (-1)^n$ 
+above, we find that 
+\[ \sigma_N = \frac{1}{N+1}(1 + 0 + 1 + 0 + \cdots) \to \frac12. \] 
+In some sense, the Ces\`aro means allow us to make sense of convergence of 
+typically non-convergent series. 
+
+\begin{lemma}{lemma:5.7}
+    Let $(a_n)_{n=0}^\infty$ be a sequence. Let $(S_N)_{N=0}^\infty$ denote the 
+    partial sums and $(\sigma_N)_{N=0}^\infty$ denote the Ces\`aro means. 
+    If $\lim_{N\to\infty} S_N = L$, then $\lim_{N\to\infty} \sigma_N = L$. 
+\end{lemma}
+\begin{pf}
+    Let $\eps > 0$. Since $S_N \to L$, there exists $N \in \N$ such that 
+    $|S_k - L| < \eps$ for all $k \geq N$. Let $M = \sup_{k\in\N} |S_k| < \infty$. 
+    Then we have 
+    \begin{align*}
+        |\sigma_n - L| &= \left| \frac{1}{n+1} \sum_{k=0}^n (S_k - L) \right| \\
+        &\leq \frac{1}{n+1} \sum_{k=0}^n |S_k - L| \\ 
+        &= \frac{1}{n+1} \sum_{k=0}^{N-1} |S_k - L| + \frac{1}{n+1} \sum_{k=N}^n |S_k - L| \\ 
+        &\leq \frac{1}{n+1} N(M + L) + \frac{1}{n+1} (n - N + 1)\eps . 
+    \end{align*}
+    Taking $n \to \infty$, we obtain $|\sigma_n - L| \to 0 + \eps = \eps$. 
+\end{pf}
