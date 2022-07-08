@@ -268,7 +268,231 @@ typically non-convergent series.
         |\sigma_n - L| &= \left| \frac{1}{n+1} \sum_{k=0}^n (S_k - L) \right| \\
         &\leq \frac{1}{n+1} \sum_{k=0}^n |S_k - L| \\ 
         &= \frac{1}{n+1} \sum_{k=0}^{N-1} |S_k - L| + \frac{1}{n+1} \sum_{k=N}^n |S_k - L| \\ 
-        &\leq \frac{1}{n+1} N(M + L) + \frac{1}{n+1} (n - N + 1)\eps . 
+        &\leq \frac{1}{n+1} N(M + |L|) + \frac{1}{n+1} (n - N + 1)\eps . 
     \end{align*}
     Taking $n \to \infty$, we obtain $|\sigma_n - L| \to 0 + \eps = \eps$. 
 \end{pf}
+
+\begin{defn}{defn:5.8}
+    Let $f \in L^1(\T)$, and suppose that its Fourier series is $\sum_{n\in\Z}
+    \hat f(n) e^{in\theta}$. The {\bf $N$-th Ces\`aro mean} of the Fourier 
+    series is 
+    \[ \sigma_N f(\theta) = \frac{1}{N+1} \sum_{k=0}^N S_k f(\theta). \] 
+\end{defn}
+
+Observe that 
+\begin{align*}
+    \sigma_N f(\theta) 
+    &= \frac{1}{N+1} \sum_{k=0}^N \sum_{n=-k}^k \hat f(n) e^{in\theta} \\ 
+    &= \frac{1}{N+1} \sum_{n=-N}^N \sum_{k=|n|}^N \hat f(n) e^{in\theta} \\ 
+    &= \frac{1}{N+1} \sum_{n=-N}^N (N + 1 - |n|) \hat f(n) e^{in\theta} \\ 
+    &= \sum_{n=-N}^N \left( 1 - \frac{|n|}{N+1} \right) \hat f(n) e^{in\theta}. 
+\end{align*}
+In particular, by looking at the Ces\`aro means $\sigma_N f$ instead of 
+the partial sums $S_N f$, we are only slightly adjusting the Fourier 
+coefficients via the map 
+\[ \hat f(n) \mapsto \left( 1 + \frac{|n|}{N+1} \right) \hat f(n), \] 
+where $|n| \leq N$. 
+
+\begin{theo}[Fej\'er's Theorem]{theo:5.9}
+    Let $f \in L^1(\T)$. 
+    \begin{enumerate}[(1)]
+        \item We have $\|\sigma_N f - f\|_1 \to 0$ as $N \to \infty$. (The same 
+        is true if we replace $p = 1$ with $p = 2$.)
+        \item If we know furthermore that $f \in C(\T)$, then $\|\sigma_N f - f\|_\infty
+        \to 0$ as $N \to \infty$. 
+    \end{enumerate}
+\end{theo}
+
+We should contrast part (1) of Fej\'er's Theorem with Kolmogorov's counterexample 
+(Theorem~\ref{theo:4.11}). The behaviour seems to be much better with Ces\`aro means 
+than with partial sums. Before we prove Fej\'er's Theorem, we will look at some 
+powerful consequences of it. 
+
+\begin{cor}{cor:5.10}
+    Any function $f \in L^1(\T)$ is uniquely determined by its Fourier transform 
+    ${\cal F}f = (\hat f(n))_{n\in\Z} \in c_0(\Z)$. More precisely, the 
+    map ${\cal F} : L^1(\T) \to c_0(\Z)$ is an injective algebra homomorphism. 
+\end{cor}
+\begin{pf}
+    We will show that the kernel of ${\cal F} : L^1(\T) \to c_0(\Z)$ is the zero 
+    function, which is equivalent to the fact that ${\cal F}$ is injective. 
+    Indeed, note that for $f \in L^1(\T)$, we have $\hat f(n) = 0$ for all $n \in \Z$ 
+    if and only if 
+    \[ \left( 1 - \frac{|n|}{N+1} \right) \hat f(n) = 0 \] 
+    for all $n \in \Z$ and $N \in \N$. This is equivalent to the fact that 
+    $\sigma_N f = 0$, and we have $f = \lim_{N\to\infty} \sigma_N f = 0$ by 
+    Fej\'er's Theorem. 
+\end{pf}
+
+Another consequence is a more constructive proof of the Stone-Weierstrass Theorem. 
+
+\begin{cor}[Stone-Weierstrass]{cor:5.11}
+    The trigonometric polynomials $\Pol(\T)$ are uniformly dense in $C(\T)$. 
+\end{cor}
+\begin{pf}
+    Let $f \in C(\T)$. By Fej\'er's Theorem, we have $\|f - \sigma_N f\|_\infty \to 0$, 
+    where $\sigma_N f \in \Pol(\T)$. 
+\end{pf}
+
+To prove Fej\'er's Theorem, we first introduce the Fej\'er kernel. 
+
+\begin{defn}{defn:5.12}
+    The Fej\'er kernel $(K_N)_{N=0}^\infty \subseteq \Pol(\T) \subseteq C(\T)$ is 
+    defined to be 
+    \[ K_N(t) = \sum_{n=-N}^N \left( 1 - \frac{|n|}{N+1} \right) e^{int}. \] 
+\end{defn}
+
+Now, given $f \in L^1(\T)$, we can use the equation we derived above to see that 
+\begin{align*}
+    \sigma_N f (\theta) 
+    &= \sum_{n=-N}^N \left( 1 - \frac{|n|}{N+1} \right) \hat f(n) e^{in\theta} \\ 
+    &= \sum_{n=-N}^N \left( 1 - \frac{|n|}{N+1} \right) \frac{1}{2\pi} 
+    \int_{-\pi}^\pi f(t) e^{in(\theta - t)}\dd t \\ 
+    &= \frac{1}{2\pi} \int_{-\pi}^\pi f(t) \sum_{n=-N}^N \left( 1 - 
+    \frac{|n|}{N+1} \right) e^{in(\theta - t)}\dd t \\ 
+    &= \frac{1}{2\pi} \int_{-\pi}^\pi f(t) K_N(\theta - t) = (f \star K_N)(\theta). 
+\end{align*}
+If $(K_N)_{N=0}^\infty$ is a summability kernel, then Fej\'er's Theorem will follow 
+immediately from Theorem~\ref{theo:5.5}. This is indeed the case. 
+We first introduce an auxiliary kernel, known as the Dirichlet kernel, which 
+we will need later on. 
+
+\begin{defn}{defn:5.13}
+    The {\bf Dirichlet kernel} $(D_N)_{N=0}^\infty$ is defined to be 
+    \[ D_N(\theta) = \sum_{k=-N}^N e^{ik\theta} = 1 + \sum_{k=1}^N 2\cos(k\theta). \] 
+\end{defn}
+
+Using the identity $\sin(A+B) - \sin(A-B) = 2\sin(B)\cos(A)$, we find that 
+\begin{align*}
+    \sin(\theta/2) D_N(\theta) 
+    &= \sin(\theta/2) + \sum_{k=1}^N 2\sin(\theta/2) \cos(k\theta) \\ 
+    &= \sin(\theta/2) + \sum_{k=1}^N \sin((k+1/2)\theta) - \sin((k-1/2)\theta) \\ 
+    &= \sin((N + 1/2)\theta).     
+\end{align*}
+Thus, we obtain the formula 
+\[ D_N(\theta) = \frac{\sin((N + 1/2)\theta)}{\sin(\theta/2)}. \] 
+Moreover, it can be seen with a direct computation that 
+\[ S_N f(\theta) = \frac{1}{2\pi} \int_{-\pi}^\pi f(t) D_N(\theta - t)\dd t 
+= (f \star D_N)(\theta). \] 
+Using this fact, we obtain 
+\[ f \star K_N = \sigma_N f = \frac{1}{N+1} \sum_{k=0}^N S_k f 
+= \frac{1}{N+1} \sum_{k=0}^N f \star D_k. \] 
+It follows from this that 
+\[ K_N = \frac{1}{N+1} \sum_{k=0}^N D_k. \] 
+In other words, $K_N$ is the $N$-th Ces\`aro mean of the $D_k$. Finally, 
+we can use this fact to show that the Fej\'er kernel is indeed a 
+summability kernel. 
+
+\begin{prop}{prop:5.14} 
+    The Fej\'er kernel $(K_N)_{N=0}^\infty$ is a positive and symmetric summability kernel. 
+\end{prop}
+\begin{pf}
+    We first prove a nice formula for $(K_N)_{N=0}^\infty$. 
+
+    {\sc Claim.} For all $N \geq 0$, we have 
+    \[ K_N(\theta) = \frac{\sin^2((N+1)\theta/2)}{(N+1)\sin^2(\theta/2)}. \] 
+    {\sc Proof of Claim.} Recall that 
+    \[ K_N(\theta) = \frac{1}{N+1} \sum_{k=0}^N D_k(\theta) 
+    = \frac{1}{N+1} \sum_{k=0}^N \frac{\sin((k+1/2)\theta)}{\sin(\theta/2)}. \] 
+    Multiplying both sides by $(N+1) \sin^2(\theta/2)$ and using the  
+    identity $\sin(A) \sin(B) = \frac12(\cos(B-A) - \cos(B+A))$, we get 
+    \begin{align*}
+        (N+1) \sin^2(\theta/2) K_N(\theta) 
+        &= \sum_{k=0}^N \sin(\theta/2) \sin((k+1/2)\theta) \\ 
+        &= \sum_{k=0}^N \frac12 \cos(k\theta) - \cos((k+1)\theta) \\ 
+        &= \frac12(1 - \cos(N+1)\theta) = \sin^2((N+1)\theta). 
+    \end{align*}
+    Rearranging this gives us the result. \hfill $\blacksquare$
+    
+    With this identity, we can now verify that $(K_N)_{N=0}^\infty$ is a 
+    positive and symmetric summability kernel. Just by looking at the 
+    formula, we have $K_N(\theta) \geq 0$ and $K_N(\theta) = K_N(-\theta)$. 
+    For all $N \geq 0$, it can be shown through a computation that 
+    \[ \frac{1}{2\pi} \int_{-\pi}^\pi K_N(t)\dd t = 1. \] 
+    Pick $\delta > 0$, and observe that 
+    \[ \sup_{\delta \leq |\theta| \leq \pi} K_N(\theta) 
+    = \sup_{\delta \leq |\theta| \leq \pi} \frac{1}{N+1} \cdot 
+    \frac{\sin^2((N+1)\theta/2)}{\sin^2(\theta/2)} \leq 
+    \frac{1}{N+1} \cdot \frac{1}{\sin^2(\delta/2)} \to 0 \] 
+    as $N \to \infty$. That is, we have $K_N \to 0$ uniformly away from 
+    the interval $[-\delta, \delta]$, which implies that 
+    \[ \lim_{N\to\infty} \int_{|\theta|\geq\delta} K_N(\theta)\dd\theta = 0. \] 
+    We conclude that $(K_N)_{N=0}^\infty$ is a summability kernel. 
+\end{pf}
+
+Can we play the same game with the Dirichlet kernel $(D_N)_{N=0}^\infty$? 
+Using the fact that $S_N = f \star D_N$ and applying Theorem~\ref{theo:5.5} would 
+be very nice for us. Unfortunately, the Dirichlet kernel $(D_N)_{N=0}^\infty$ is 
+\emph{not} a summability kernel. This can be seen from the following theorem, 
+which states that $D_N$ grows like the logarithm. 
+
+\begin{prop}{prop:5.15}
+    \begin{enumerate}[(1)]
+        \item $D_N$ is symmetric. 
+        \item We have $\|D_N\|_\infty = D_N(0) = 2N+1$. 
+        \item For all $N \geq 0$, we have 
+        \[ \frac{1}{2\pi} \int_{-\pi}^\pi D_N(t)\dd t = 1. \] 
+        \item For all $N \geq 0$, we have 
+        \[ \|D_N\|_1 \geq \frac{4}{\pi^2} \log(2N+2). \] 
+        (The values $L_N = \|D_N\|_1$ are known as the {\bf Lebesgue numbers}; 
+        it is known that $L_N = O(\log N)$.)
+    \end{enumerate}
+\end{prop}
+\begin{pf}
+    Property (1) is clear by looking at any of the formulas. Property (2) can be 
+    seen by applying the triangle inequality to the formula 
+    \[ D_N(\theta) = 1 + \sum_{k=1}^N 2\cos(k\theta), \] 
+    and property (3) can be seen by a direct computation. 
+
+    To prove (4), note that $D_N$ is symmetric and $\lvert \sin(t/2) \rvert \leq t/2$, 
+    so we obtain 
+    \[ \|D_N\|_1 = \frac1\pi \int_0^\pi |D_N(t)|\dd t 
+    = \frac1\pi \int_0^\pi \frac{\lvert\sin((N+1/2)t)\rvert}{\lvert\sin(t/2)\rvert}\dd t 
+    \geq \frac{2}{\pi} \int_0^\pi \frac{\lvert\sin((N+1/2)t)\rvert}{t}\dd t. \] 
+    Next, we break up this integral into $2N+1$ different ones over the intervals 
+    $[\frac{k\pi}{2N+1}, \frac{(k+1)\pi}{2N+1}]$. We also note that 
+    $\frac1t \geq \frac{2N+1}{(k+1)\pi}$ on each of these intervals, which implies that 
+    \begin{align*}
+        \|D_N\|_1 
+        &\geq \frac{2}{\pi} \int_0^\pi \frac{\lvert\sin((N+1/2)t)\rvert}{t}\dd t \\ 
+        &= \frac{2}{\pi} \sum_{k=0}^{2N} \int_{\frac{k\pi}{2N+1}}^{\frac{(k+1)\pi}{2N+1}} 
+        \frac{\lvert\sin((N+1/2)t)\rvert}{t}\dd t \\ 
+        &\geq \frac{2}{\pi} \sum_{k=0}^{2N} \frac{2N+1}{(k+1)\pi} 
+        \int_{\frac{k\pi}{2N+1}}^{\frac{(k+1)\pi}{2N+1}} \lvert\sin((N+1/2)t)\rvert\dd t. 
+    \end{align*}
+    The period of each of the sine functions in the integrand is equal to 
+    $\frac{4\pi}{2N+1}$. This means that all of these integrals are equal to 
+    \[ \int_0^{\frac{\pi}{2N+1}} \sin((N+1/2)t)\dd t = \frac{2}{2N+1}. \] 
+    It follows that 
+    \begin{align*}
+        \|D_N\|_1 \geq \frac{2}{\pi} \sum_{k=0}^{2N} \frac{2N+1}{(k+1)\pi} \cdot \frac{2}{2N+1} 
+        = \frac{4}{\pi^2} \sum_{k=0}^{2N} \frac{1}{k+1} 
+        \geq \frac{4}{\pi^2} \int_1^{2N+2} \frac1x\dd x 
+        = \frac{4}{\pi^2} \log(2N+2), 
+    \end{align*}
+    where the final inequality was from applying the integral test. 
+\end{pf}
+
+Let $f \in C(\T)$. We consider the convergence of the Fourier series of $f$ at $0$. 
+We have 
+\[ S_N f(0) = (f \star D_N)(0) = \frac{1}{2\pi} \int_{-\pi}^\pi f(t) D_N(-t)\dd t 
+= \frac{1}{2\pi} \int_{-\pi}^\pi f(t) D_N(t)\dd t, \] 
+where the last equality is because $D_N$ is even. This implies that 
+\[ |S_N f(0)| = \left| \frac{1}{2\pi} \int_{-\pi}^\pi f(t) D_N(t)\dd t \right| 
+\leq \|f\|_\infty \|D_N\|_1 = \|f\|_\infty L_N. \] 
+In particular, the map $\varphi_N$ sending $f$ to $S_N f(0)$ is a bounded 
+linear functional for all $N \in \N$ with 
+\[ \|\varphi_N\|_{C(\T)^*} \leq L_N \sim \log N. \] 
+We claim that $L_N = \|\varphi_N\|$. To see this, let $g_N = \text{sign}(D_N) \in L^\infty(\T)$. 
+Note that $g_N \notin C(\T)$, but we have 
+\[ S_N g_N(0) = \frac{1}{2\pi} \int_{-\pi}^\pi \text{sign}(D_N(t))D_N(t) \dd t
+= \frac{1}{2\pi} \int_{-\pi}^\pi |D_N(t)|\dd t = \|D_N\|_1. \] 
+Fix $\eps > 0$. We can find a continuous approximation $g \in C(\T)$ such that 
+$\|g\|_\infty \leq 1$ and $g = \text{sign}(D_N)$ except on a set of measure 
+$< \eps/\|D_N\|_1$ using a similar construction to the one in Theorem~\ref{theo:3.20}.
+Using the reverse triangle inequality, we have 
+\[ |\varphi_N(g)| = |S_N g(0)| = |S_N g_N(0) + S_N (g - g_N)(0)| 
+\geq \|D_N\|_1 - C\eps. \] 
+This proves the claim. In particular, given any $N \in \N$, we can always find a 
+function $g_N \in C(\T)$ such that $\|g_N\|_\infty = 1$ and $S_N g_N(0) \sim \log N$.
