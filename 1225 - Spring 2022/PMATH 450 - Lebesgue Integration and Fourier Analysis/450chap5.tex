@@ -181,10 +181,12 @@ Pictorially, there will be very large values near $0$, but small values away fro
 Note that when $(k_n)_{n=1}^\infty$ is a positive summability kernel, then 
 condition (1) implies condition (2) with the constant $C = 1$. 
 An example of a symmetric and positive summability kernel is $(k_n)_{n=1}^\infty$ given by 
-$k_n = \pi n\chi_{[-1/n, 1/n]}$. 
+$k_n = \pi n\chi_{[-1/n, 1/n]}$. We leave it as an exercise to verify this. 
 
 The following theorem tells us that summability kernels play the role of an approximate 
-unit with respect to convolution. 
+unit with respect to convolution. This will allow us to use summability 
+kernels to try and answer our main question, which is to recover a function 
+from its Fourier transform. 
 
 \begin{theo}{theo:5.5}
     Let $(k_n)_{n=1}^\infty$ be a summability kernel. 
@@ -306,8 +308,13 @@ where $|n| \leq N$.
 
 We should contrast part (1) of Fej\'er's Theorem with Kolmogorov's counterexample 
 (Theorem~\ref{theo:4.11}). The behaviour seems to be much better with Ces\`aro means 
-than with partial sums. Before we prove Fej\'er's Theorem, we will look at some 
-powerful consequences of it. 
+than with partial sums, because this tells us that Ces\`aro means always 
+converge with respect to $\|\cdot\|_1$ even when this fails for the partial 
+sums. The case where $p = 2$ is less interesting because we already have this 
+for partial sums by Theorem~\ref{theo:4.7}, and we know that the limit of the 
+Ces\`aro means coincides with the limit of the partial sums by Lemma~\ref{lemma:5.7}.
+
+Before we prove Fej\'er's Theorem, we will look at some powerful consequences of it.
 
 \begin{cor}{cor:5.10}
     Any function $f \in L^1(\T)$ is uniquely determined by its Fourier transform 
@@ -325,15 +332,15 @@ powerful consequences of it.
     Fej\'er's Theorem. 
 \end{pf}
 
-Another consequence is a more constructive proof of the Stone-Weierstrass Theorem. 
+Another consequence is a more constructive proof of the Stone-Weierstrass 
+Theorem, which follows immediately from Fej\'er's Theorem because 
+given a function $f \in C(\T)$, the Ces\`aro means $(\sigma_N f)_{N=0}^\infty$
+are trigonometric polynomials and we have $\|f - \sigma_N f\|_\infty \to 0$ 
+by part (2). 
 
 \begin{cor}[Stone-Weierstrass]{cor:5.11}
     The trigonometric polynomials $\Pol(\T)$ are uniformly dense in $C(\T)$. 
 \end{cor}
-\begin{pf}
-    Let $f \in C(\T)$. By Fej\'er's Theorem, we have $\|f - \sigma_N f\|_\infty \to 0$, 
-    where $\sigma_N f \in \Pol(\T)$. 
-\end{pf}
 
 To prove Fej\'er's Theorem, we first introduce the Fej\'er kernel. 
 
@@ -401,7 +408,7 @@ summability kernel.
         (N+1) \sin^2(\theta/2) K_N(\theta) 
         &= \sum_{k=0}^N \sin(\theta/2) \sin((k+1/2)\theta) \\ 
         &= \sum_{k=0}^N \frac12 \cos(k\theta) - \cos((k+1)\theta) \\ 
-        &= \frac12(1 - \cos(N+1)\theta) = \sin^2((N+1)\theta). 
+        &= \frac12(1 - \cos(N+1)\theta) = \sin^2((N+1)\theta/2). 
     \end{align*}
     Rearranging this gives us the result. \hfill $\blacksquare$
     
@@ -422,10 +429,10 @@ summability kernel.
 \end{pf}
 
 Can we play the same game with the Dirichlet kernel $(D_N)_{N=0}^\infty$? 
-Using the fact that $S_N = f \star D_N$ and applying Theorem~\ref{theo:5.5} would 
-be very nice for us. Unfortunately, the Dirichlet kernel $(D_N)_{N=0}^\infty$ is 
-\emph{not} a summability kernel. This can be seen from the following theorem, 
-which states that $D_N$ grows like the logarithm. 
+If $(D_N)_{N=0}^\infty$ were a summability kernel, then using the fact that 
+$S_N f = f \star D_N$ and applying Theorem~\ref{theo:5.5} would 
+be very nice for us. Unfortunately, this is not the case. This can be seen 
+from the following theorem, which states that $D_N$ grows like the logarithm. 
 
 \begin{prop}{prop:5.15}
     \begin{enumerate}[(1)]
