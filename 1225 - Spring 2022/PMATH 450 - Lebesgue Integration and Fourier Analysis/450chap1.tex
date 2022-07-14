@@ -175,8 +175,8 @@ satisfied too. Thus, we instead consider formal infinite sums to get
 Assuming that the initial condition holds, this means we can write 
 \[ f(x) = u(x, 0) = C_0 + \sum_{n=1}^\infty (C_n\cos(nx) + D_n\sin(nx)). \] 
 The above form is known as a {\bf Fourier series}. Now, we recall that 
-we can write $\cos(nx) = (e^{inx} + e^{-inx})/2$ and $\sin(nx) = 
-(e^{inx} - e^{-inx})/2$, so if we let 
+we can write $\cos(nx) = \frac12(e^{inx} + e^{-inx})$ and $\sin(nx) = 
+\frac{1}{2i}(e^{inx} - e^{-inx})$, so if we let 
 \[ A_n = \begin{cases} 
     C_0, & \text{if } n = 0, \\ 
     (C_n - iD_n)/2, & \text{if } n > 0, \\ 
@@ -270,14 +270,14 @@ f(\theta)e^{-in\theta}\dd\theta. \]
 We now revisit the questions we asked earlier. In what sense does the 
 Fourier series for $f$ converge? For $f \in C(\T)$, do we have 
 \begin{equation}\label{eq:1.5}
-    f(\theta) = \lim_{N\to\infty} \sum_{n=-N}^N \hat f(n)e^{in\theta} 
+    f(\theta) = \lim_{N\to\infty} \sum_{n=-N}^N \hat f(n)e^{in\theta} \tag{A}
 \end{equation}
 for all $\theta \in [-\pi, \pi]$, meaning that we have pointwise convergence? 
 Denoting $S_N(f)$ to be the $N$-th partial sum of the Fourier series, do we have 
 \begin{align}
-    \lim_{N\to\infty} \|f - S_N(f)\|_2 &= 0, \label{eq:1.6} \\ 
-    \lim_{N\to\infty} \|f - S_N(f)\|_1 &= 0, \label{eq:1.7} \\ 
-    \lim_{N\to\infty} \|f - S_N(f)\|_\infty &= 0, \label{eq:1.8}
+    \lim_{N\to\infty} \|f - S_N(f)\|_2 &= 0, \label{eq:1.6} \tag{B} \\ 
+    \lim_{N\to\infty} \|f - S_N(f)\|_1 &= 0, \label{eq:1.7} \tag{C} \\ 
+    \lim_{N\to\infty} \|f - S_N(f)\|_\infty &= 0, \label{eq:1.8} \tag{D}
 \end{align}
 for all $f \in C(\T)$? We will show later that $\eqref{eq:1.8}$ implies both 
 $\eqref{eq:1.5}$ and $\eqref{eq:1.6}$, and that $\eqref{eq:1.6}$ implies 
