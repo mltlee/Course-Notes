@@ -443,7 +443,7 @@ from the following theorem, which states that $D_N$ grows like the logarithm.
         \item For all $N \geq 0$, we have 
         \[ \|D_N\|_1 \geq \frac{4}{\pi^2} \log(2N+2). \] 
         (The values $L_N = \|D_N\|_1$ are known as the {\bf Lebesgue numbers}; 
-        it is known that $L_N = O(\log N)$.)
+        it is known that $L_N \leq 2 + \log N$ and hence $L_N = O(\log N)$.)
     \end{enumerate}
 \end{prop}
 \begin{pf}
@@ -498,8 +498,128 @@ Note that $g_N \notin C(\T)$, but we have
 Fix $\eps > 0$. We can find a continuous approximation $g \in C(\T)$ such that 
 $\|g\|_\infty \leq 1$ and $g = \text{sign}(D_N)$ except on a set of measure 
 $< \eps/\|D_N\|_1$ using a similar construction to the one in Theorem~\ref{theo:3.20}.
-Using the reverse triangle inequality, we have 
-\[ |\varphi_N(g)| = |S_N g(0)| = |S_N g_N(0) + S_N (g - g_N)(0)| 
-\geq \|D_N\|_1 - C\eps. \] 
+Since $S_N(g - g_N)(0) \in (-\eps, 0)$, we obtain 
+\[ \varphi_N(g) = S_N g(0) = S_N g_N(0) + S_N (g - g_N)(0) 
+\geq \|D_N\|_1 - \eps. \] 
 This proves the claim. In particular, given any $N \in \N$, we can always find a 
 function $g_N \in C(\T)$ such that $\|g_N\|_\infty = 1$ and $S_N g_N(0) \sim \log N$.
+
+\subsection{Failure of Pointwise Convergence for Continuous Functions} \label{subsec:5.4}
+We are now ready to discuss the pointwise converge of the Fourier series of a 
+continuous function. In the previous section, we showed that 
+the family of bounded linear functionals $\varphi_N : C(\T) \to \C$ given by 
+\[ \varphi_N(f) = S_N f(0) = (f \star D_N)(0) \] 
+is unbounded in $C(\T)^* = B(C(\T), \C)$ with 
+$\|\varphi_N\| = \|D_N\|_1 = L_N \to \infty$ as $N \to \infty$. This 
+suggests that the pointwise convergence of the Fourier series might not 
+behave too well! 
+
+We would like to find a single function $g \in C(\T)$ such that 
+$\varphi_N(g) = S_N g(0)$ diverges as $N \to \infty$. This is hard to explicitly
+cook up because our previous construction used a continuous approximation for 
+$\text{sign}(D_N)$, whose periodicity varies with $N$. 
+First, we recall the Baire Category Theorem from PMATH 351. 
+
+\begin{theo}[Baire Category Theorem]{theo:5.16}
+    Let $(X, d)$ be a complete metric space. Then the intersection of 
+    every countable family of dense open subsets of $X$ is open in $X$. 
+    That is, if we have $(V_n)_{n=1}^\infty$ where $V_n \subseteq X$ is 
+    open and $\overline{V_n} = X$ for all $n \in \N$, then 
+    $\bigcap_{n=1}^\infty V_n$ is a dense $G_\delta$-set. 
+\end{theo}
+
+This leads us to the Principle of Uniform Boundedness, which is 
+also known as the Banach-Steinhaus Principle. 
+
+\begin{theo}[Principle of Uniform Boundedness]{theo:5.17}
+    Let $X$ and $Y$ be Banach spaces. Let $(T_\alpha)_{\alpha\in A} 
+    \subseteq B(X, Y)$ be a family of bounded linear maps. Then either: 
+    \begin{enumerate}[(1)]
+        \item $(T_\alpha)_{\alpha \in A}$ is uniformly bounded (that is, 
+        $\sup_{\alpha \in A} \|T_\alpha\| = M < \infty$); or 
+        \item there exists a dense $G_\delta$-set $E \subseteq X$ such that 
+        $\sup_{\alpha \in A} \|T_\alpha x\| = \infty$ for all $x \in E$. 
+    \end{enumerate}
+\end{theo}
+\begin{pf}
+    Define $f : X \to [0, \infty]$ by 
+    \[ f(x) = \sup_{\alpha\in A} \|T_\alpha x\|. \] 
+    Note that $x \mapsto \|T_\alpha x\|$ is continuous for all $\alpha \in A$. 
+    Then $f$ is the supremum of continuous maps, and hence is 
+    lower semicontinuous (exercise). This implies that $f^{-1}(\beta, \infty]$ 
+    is open for all $\beta \geq 0$. 
+
+    For each $n \in \N$, define the open set $V_n \subseteq X$ by 
+    \[ V_n = f^{-1}(n, \infty] = \{x \in X : f(x) > n\}. \] 
+    {\sc Case 1.} Suppose that there exists $N \in \N$ such that 
+    $V_N$ is not dense in $X$. 
+    Then there exists a point $x_0 \in X$ and $r > 0$ such that $B_r(x_0) 
+    \cap V_N = \varnothing$. Then $\varphi(x) \leq N$ for all $x \in 
+    B_r(x_0)$, and hence $\|T_\alpha x\| \leq N$ for all $x \in B_r(x_0)$
+    and $\alpha \in A$. Now, given $z \in B_r(0)$, we have 
+    for all $\alpha \in A$ that 
+    \[ \|T_\alpha z\| \leq \|T_\alpha (x_0 + z)\| + \|T_\alpha x_0\| 
+    \leq N + N = 2N. \] 
+    It follows that $\|T_\alpha z\| \leq 2N/r$ for all $z$ with 
+    $\|z\| \leq 1$, so $(T_\alpha)_{\alpha \in A}$ is uniformly bounded. 
+
+    {\sc Case 2.} Suppose that $\overline{V_n} = X$ for all $n \in \N$. 
+    By the Baire Category Theorem, we have that $E = \bigcap_{n=1}^\infty V_n$ 
+    is dense in $X$. In particular, for all $x \in E$, we know by 
+    construction that 
+    \[ f(x) = \sup_{\alpha \in A} \|T_\alpha x\| > n \] 
+    for all $n \in \N$, and thus $f(x) = \infty$. 
+\end{pf}
+
+\begin{remark}{remark:5.18}
+    In order to check that $(T_\alpha)_{\alpha \in A} \subseteq 
+    B(X, Y)$ is uniformly bounded, it suffices to prove that 
+    $(T_\alpha x)_{\alpha \in A}$ is uniformly bounded for all $x \in X$. 
+    This is because (2) of the Principle of Uniform Boundedness would fail, 
+    so we must have (1). 
+\end{remark}
+
+We can now apply the Principle of Uniform Boundedness to prove the 
+non-convergence of Fourier series of general continuous functions. 
+
+\begin{cor}{cor:5.19}
+    There exists a dense $G_\delta$-set $E \subseteq C(\T)$ such that 
+    $(S_N f(0))_{N=0}^\infty$ diverges for all $f \in E$. 
+\end{cor}
+\begin{pf}
+    From our previous discussion, we know that the maps 
+    $\varphi_N : C(\T) \to \C$ defined by 
+    $\varphi_N(f) = S_N f(0)$ are bounded linear functionals satisfying 
+    $\|\varphi_N\| = \|D_N\|_1$. Since $\sup_{N\geq 0} \|\varphi_N\| = \infty$, the 
+    Banach-Steinhaus Principle implies that 
+    \[ \sup_{N\geq 0} |\varphi_N(f)| = \sup_{N\geq 0} |S_N f(0)| = +\infty \] 
+    for all $f \in E$, where $E \subseteq C(\T)$ is some dense 
+    $G_\delta$-set. 
+\end{pf}
+
+Can we find an explicit example witnessing Corollary~\ref{cor:5.19}? This 
+is tricky because almost every function $f \in C(\T)$ one can write down 
+is piecewise smooth, and the convergence is well understood for those. 
+
+An explicit example is due to Fej\'er. First, we will need a simple lemma. 
+
+\begin{lemma}{lemma:5.20}
+    For all $n \in \N$, put $q_n \in C(\T)$ defined by 
+    \[ q_n(t) = \sum_{k=1}^n \frac{\sin(kt)}{k}. \] 
+    Then $(q_n)_{n=1}^\infty$ is uniformly bounded on $[-\pi, \pi]$. 
+\end{lemma}
+\begin{pf}
+    Note that the naive approach using 
+    the triangle inequality will fail because it will yield the harmonic 
+    series. The main idea is to verify that $q_n(t) = S_N f(t)$ where 
+    \[ f(t) = \begin{cases}
+        i(\pi - x), & \text{if } x \in (0, \pi), \\ 
+        -i(\pi + x), & \text{if } x \in (-\pi, 0),
+    \end{cases} \] 
+    and $f/(2i)$ is the ``sawtooth'' function. Observe that $f$ is 
+    piecewise continuously differentiable, and has left and right 
+    derivatives at its jump discontinuities. This means that 
+    $(q_n(t))_{n=1}^\infty$ is bounded for all $t \in [-\pi, \pi]$. 
+    It only remains to show that it is bounded uniformly in $t \in [-\pi, \pi]$ 
+    and $n \in \N$, which we will achieve on Assignment 5. 
+\end{pf}
