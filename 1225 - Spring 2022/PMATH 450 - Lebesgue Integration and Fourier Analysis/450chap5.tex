@@ -207,7 +207,7 @@ from its Fourier transform.
             &\leq \frac{1}{2\pi} \int_{-\pi}^\pi |f(\theta) - f(\theta - t)| |k_n(t)|\dd t \\ 
             &= \frac{1}{2\pi} \int_{|t|\leq\delta} |f(\theta) - f(\theta - t)||k_n(t)|\dd t 
             + \frac{1}{2\pi} \int_{|t|>\delta} |f(\theta) - f(\theta - t)||k_n(t)|\dd t \\ 
-            &< \eps\|k_n(t)\|_1 + 2\|f\|_\infty \int_{|t|>\delta} |k_n(t)|\dd t, 
+            &< \eps\|k_n\|_1 + 2\|f\|_\infty \int_{|t|>\delta} |k_n(t)|\dd t, 
         \end{align*}
         where the first equality is due to property (1) of being a summability kernel, which 
         states that 
@@ -622,4 +622,173 @@ An explicit example is due to Fej\'er. First, we will need a simple lemma.
     $(q_n(t))_{n=1}^\infty$ is bounded for all $t \in [-\pi, \pi]$. 
     It only remains to show that it is bounded uniformly in $t \in [-\pi, \pi]$ 
     and $n \in \N$, which we will achieve on Assignment 5. 
+\end{pf}
+
+Next, we define some parameters. For each $j \in \N$, choose 
+$\lambda_j > 0$ and integers $n_j < N_j$ satisfying 
+\begin{enumerate}[(1)]
+    \item $\sum_{j=1}^\infty \lambda_j < \infty$, 
+    \item $\lim_{j\to\infty} \lambda_j \log(n_j) = +\infty$, and 
+    \item $N_j + n_j < N_{j+1} - n_{j+1}$ for all $j \in \N$. 
+\end{enumerate}
+For example, we could pick $\lambda_j = 1/j^2$, $n_j = 2^{j^3}$, and 
+$N_j = 2^{j^3+1}$ for all $j \in \N$. 
+
+Then for all $n, N \in \N$, define 
+\[ p(N, n)(t) = 2ie^{iNt} \sum_{k=1}^n \frac{\sin(kt)}{k}. \] 
+In particular, we have $p(N, n)(t) = 2ie^{iNt} q_n(t)$ where $q_n(t)$ is 
+uniformly bounded in $n$ and $t$ by Lemma~\ref{lemma:5.20}, so 
+there exists $C > 0$ such that $\|q_n\|_\infty \leq C$. Note that 
+$p(N, n) \in \Pol(\T)$ whose Fourier coefficients lie in 
+$[N - n, N + n] \cap \Z$. Then, set 
+\[ f = \sum_{j=1}^\infty \lambda_j p(N_j, n_j). \] 
+Observe that 
+\[ \sum_{j=1}^\infty \lambda_j \|p(N_j, n_j)\|_\infty 
+= 2 \sum_{j=1}^\infty \lambda_j \|q_n\|_\infty \leq 
+2C \sum_{j=1}^\infty \lambda_j < \infty \] 
+by property (1) above. It follows from the Weierstrass $M$-test that 
+$f \in C(\T)$. 
+
+Finally, we claim that $(S_N f(0))_{N=0}^\infty$ diverges. To see 
+this, note that the Fourier coefficients of the functions $p(N_j, n_j)$ 
+do not overlap. Recall that by property (3), we have $N_j + n_j < 
+N_{j+1} - n_{j+1}$, and hence 
+\[ [N_j - n_j, N_j + n_j] \cap [N_{j+1} - n_{j+1}, N_{j+1} + n_{j+1}] = 
+\varnothing. \] 
+Next, we consider $S_{N_j+n_j} f(0) - S_{N_j} f(0)$. This is equal 
+to the sum of $\hat f(n)$ from $n = N_j+1$ to $N_j + n_j$, so we get 
+\[ S_{N_j+n_j} f(0) - S_{N_j} f(0) = 2i \lambda_j \sum_{k=1}^{n_j} \frac1k. \] 
+But by the integral test, we obtain 
+\[ \sum_{k=1}^{n_j} \frac1k \geq \int_1^{n_j+1} \frac1x\dd x = 
+\log(n_j+1), \]
+and thus $|S_{N_j+n_j} f(0) - S_{N_j} f(0)| \geq 2\lambda_j \log(n_j) 
+\to +\infty$ by assumption (2). This means $(S_N f(0))_{N=0}^\infty$ 
+is not Cauchy, so it does not converge! 
+
+\subsection{Range of the Fourier Transform} \label{subsec:5.5} 
+Let ${\cal F} : L^1(\T) \to c_0(\Z)$ denote the Fourier transform 
+sending $f \in L^1(\T)$ to its Fourier coefficients $(\hat f(n))_{n\in\Z}$. 
+We know that $(c_0(\Z), \|\cdot\|_\infty)$ is a Banach space.
+Recall from Assignment 4 that ${\cal F}$ is continuous with 
+$\|{\cal F}f\|_\infty \leq \|f\|_1$ and ${\cal F}(fg) = 
+{\cal F}(f) {\cal F}(g)$ for all $f, g \in L^1(\T)$. By Corollary~\ref{cor:5.10},
+we also know that ${\cal F}$ is an injective algebra homomorphism.
+
+But is ${\cal F}$ surjective? That is, given $(a_n)_{n\in\Z} \in c_0(\Z)$, 
+does there exist a function $f \in L^1(\T)$ such that $a_n = \hat f(n)$ for all 
+$n \in \Z$? 
+
+\begin{prop}{prop:5.21}
+    The Fourier transform ${\cal F} : L^1(\T) \to c_0(\Z)$ has dense range. 
+\end{prop}
+\begin{pf}
+    Recall that $\Pol(\T) \subseteq L^1(\T)$. Observe that 
+    \[ {\cal F}(\Pol(\T)) = c_{00}(\Z) = 
+    \{a = (a_n)_{n\in\Z} \mid a_n \neq 0 \text{ only finitely often}\} 
+    \subseteq c_0(\Z). \] 
+    But we have $\overline{c_{00}(\Z)}^{\|\cdot\|_\infty} = c_0(\Z)$ 
+    since every sequence in $c_0(\Z)$ can be approximated by 
+    members of $c_{00}(\Z)$ with respect to $\|\cdot\|_\infty$. 
+\end{pf}
+
+Due to Proposition~\ref{prop:5.21}, it might seem plausible to expect 
+that ${\cal F} : L^1(\T) \to c_0(\Z)$ is surjective. However, it turns 
+out this is not the case. 
+
+\begin{theo}{theo:5.22}
+    Let $f \in L^1(\T)$ be such that $\hat f(n) = -\hat f(n) \geq 0$ for all 
+    $n > 0$. Then 
+    \[ \sum_{n=1}^\infty \frac{\hat f(n)}{n} < \infty. \] 
+\end{theo}
+\begin{pf}
+    Let $f \in L^1(\T)$ satisfy $\hat f(n) = -\hat f(n) \geq 0$ for all 
+    $n > 0$, and put 
+    \[ F(t) = \int_{-\pi}^t f(\tau)\dd\tau. \] 
+    We claim that $F \in C(\T)$ and $\hat F(n) = \frac{1}{in} \hat f(n)$
+    for all $n > 0$. 
+    In the case where $f \in C(\T)$, this is easily checked by 
+    computing $\hat F(n)$ using integration by parts. For the 
+    general case where $f \in L^1(\T)$, take a sequence $(f_i)_{i=1}^\infty$
+    such that $f_i \to f$ with respect to $\|\cdot\|_1$, and set 
+    \[ F_i(t) = \int_{-\pi}^t f_i(\tau)\dd\tau. \] 
+    Then we get 
+    \[ |F_i(t) - F(t)| \leq \int_{-\pi}^t |f_i(\tau) - f(\tau)|\dd\tau 
+    \leq \|f_i - f\|_1, \] 
+    so $\|F_i - F\|_\infty \leq \|f_i - f\| \to 0$. Then 
+    $\|F_i - F\|_1 \to 0$, and so 
+    \[ \hat F(n) = \lim_{i\to\infty} \hat F_i(n) = \lim_{n\to\infty} 
+    \frac{\hat f_i(n)}{in} = \frac{\hat f(n)}{in}, \] 
+    which proves the claim. Now, since $F \in C(\T)$, we see from 
+    Fej\'er's Theorem (Theorem~\ref{theo:5.9}) that 
+    \begin{align*}
+        F(0) = \lim_{N\to\infty} (F \star K_N)(0) 
+        &= \lim_{N\to\infty} \sum_{n=-N}^N \left( 1 - \frac{|n|}{N+1} \right) \hat F(n) \\ 
+        &= \hat F(0) + \lim_{N\to\infty} \sum_{\substack{n=-N \\ n\neq0}}^N 
+        \left( 1 - \frac{|n|}{N+1} \right) \frac{\hat f(n)}{in}.
+    \end{align*}
+    Using our assumption that $\hat f(n) = -\hat f(n) \geq 0$ for all $n > 0$, 
+    we have 
+    \[ C := i(F(0) - \hat F(0)) = \lim_{N\to\infty} 2 
+    \sum_{n=1}^N \left( 1 - \frac{n}{N+1} \right) \frac{\hat f(n)}{n} 
+    \geq 0. \] 
+    Then for all $M \in \N$, we get 
+    \[ \sum_{n=1}^M \frac{\hat f(n)}{n} 
+    = \lim_{N\to\infty} \sum_{n=1}^M \left(1 - \frac{n}{N+1} \right)
+    \frac{\hat f(n)}{n} \leq \lim_{N\to\infty} \sum_{n=1}^N
+    \left(1 - \frac{n}{N+1} \right) \frac{\hat f(n)}{n} \leq \frac{C}{2}. \] 
+    Taking $M \to \infty$ gives us the result. 
+\end{pf}
+
+Theorem~\ref{theo:5.22} tells us that an odd function has a required decay 
+weight on the Fourier coefficients. This leads us to the non-surjectivity 
+of the Fourier transform.
+
+\begin{cor}{cor:5.23}
+    Let $(a_n)_{n=1}^\infty$ be a sequence satisfying 
+    \begin{enumerate}[(1)]
+        \item $a_n \geq 0$ for all $n \in \N$, 
+        \item $\lim_{n\to\infty} a_n = 0$, and 
+        \item $\sum_{n=1}^\infty a_n/n = +\infty$. 
+    \end{enumerate}
+    Extend this sequence to $(a_n)_{n\in\Z}$ by setting 
+    $a_0 = 0$ and $a_{-n} = -a_n$ for all $n > 0$. Then 
+    $(a_n)_{n\in\Z} \in c_0(\Z) \setminus {\cal F}(L^1(\T))$, so 
+    ${\cal F} : L^1(\T) \to c_0(\Z)$ is not surjective. 
+\end{cor}
+
+For example, we see from Corollary~\ref{cor:5.23} that 
+\[ \sum_{n=2}^\infty \frac{\sin(nt)}{\log n} \] 
+is not the Fourier series of a function in $L^1(\T)$. Indeed, by setting 
+$a_n = 1/\log n$ and $a_{-n} = -1/\log n$ for $n \geq 2$, we have 
+\[ \sum_{n=2}^\infty \frac{a_n}{n} = \sum_{n=2}^\infty \frac{1}{n\log n} 
+= +\infty. \] 
+There is another ``abstract'' proof of the non-surjectivity of 
+${\cal F} : L^1(\T) \to c_0(\Z)$. For that, one needs some 
+more functional analysis typically covered in PMATH 453. 
+
+\begin{theo}{theo:5.24}
+    Let $X$ and $Y$ be Banach spaces, and let $T \in B(X, Y)$ be 
+    bijective. Then $T^{-1} \in B(Y, X)$.
+\end{theo}
+
+We omit the proof of Theorem~\ref{theo:5.24}. Note that $T^{-1}$ always 
+exists as a linear map when $T$ is bijective. But the crucial point here is 
+that $T^{-1}$ is bounded with $\|T^{-1}y\| \leq C\|y\|$ for all $y \in Y$. 
+
+\begin{cor}{cor:5.25}
+    The Fourier transform ${\cal F} : L^1(\T) \to c_0(\Z)$ is not surjective.
+\end{cor}
+\begin{pf}
+    Suppose towards a contradiction that ${\cal F}$ were surjective. 
+    Combined with Corollary~\ref{cor:5.10}, this means that 
+    ${\cal F}$ is bijective. So there exists $C > 0$ such that 
+    $\|{\cal F}^{-1}\| \leq C$.
+
+    For each $N \in \N$, let $d_N = \chi_{[-N,N]\cap \Z} \in c_0(\Z)$. 
+    One can compute that ${\cal F}(D_N) = d_N$. Note that 
+    $\|d_N\|_\infty = 1$, which implies that 
+    \[ \|D_N\|_1 = \|{\cal F}^{-1}(d_N)\|_1 \leq 
+    \|{\cal F}^{-1}\| \|d_N\|_\infty \leq C \] 
+    for all $N \in \N$. This contradicts the fact that $\|D_N\|_1 
+    \sim \log(2N+2)$ from Proposition~\ref{prop:5.15}.
 \end{pf}
