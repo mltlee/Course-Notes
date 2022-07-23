@@ -792,3 +792,113 @@ that $T^{-1}$ is bounded with $\|T^{-1}y\| \leq C\|y\|$ for all $y \in Y$.
     for all $N \in \N$. This contradicts the fact that $\|D_N\|_1 
     \sim \log(2N+2)$ from Proposition~\ref{prop:5.15}.
 \end{pf}
+
+For general functions $f \in L^1(\T)$, is there a required decay rate on
+the Fourier coefficients? 
+
+\begin{theo}{theo:5.26}
+    Let $(a_n)_{n\in\Z} \in c_0(\Z)$ satisfy the properties 
+    \begin{enumerate}[(1)]
+        \item $a_n = a_{-n} \geq 0$ for all $n \geq 0$, 
+        \item $a_n \leq \frac12(a_{n+1} + a_{n-1})$ (which can be thought of 
+        as convexity).
+    \end{enumerate}
+    Then there exists a function $f \in L^1(\T)$ such that $f \geq 0$ 
+    almost everywhere and $\hat f(n) = a_n$ for all $n \in \Z$. 
+\end{theo}
+
+To construct such a sequence in Theorem~\ref{theo:5.26}, take a convex 
+function $g : [0, \infty) \to [0, \infty)$ such that $\lim_{x\to\infty}
+g(x) = 0$. Then define $a_n = g(n)$. For example, given $c > 0$, one can take 
+$g(x) = 1/(x+1)^c$ and hence $a_n = 1/(n+1)^c$. This shows that there is 
+no specific decay rate for sequences of Fourier coefficients, because 
+we can take $c > 0$ as small as we like. 
+
+To prove Theorem~\ref{theo:5.26}, we first need a simple lemma. 
+
+\begin{lemma}{lemma:5.27}
+    Let $(b_n)_{n=1}^\infty$ be a sequence such that $b_1 \geq b_2 \geq 
+    \cdots \geq 0$ and $\sum_{n=1}^\infty b_n < \infty$. Then 
+    $\lim_{n\to\infty} nb_n = 0$. That is, $b_n$ must decay faster than 
+    $1/n$. 
+\end{lemma}
+\begin{pf}
+    Let $\eps > 0$. Then there exists $M \in \N$ such that 
+    \[ \sum_{k=M+1}^\infty b_k < \eps. \] 
+    Taking $n > M$, we have 
+    \[ nb_n = (n-M)b_n + Mb_n = \sum_{k=M+1}^n b_n + Mb_n 
+    \leq \sum_{k=M+1}^n b_k + Mb_n < \eps + Mb_n. \] 
+    This implies that $\limsup_{n\to\infty} nb_n < \eps$. 
+\end{pf}
+
+Now, we are ready to prove the theorem. 
+
+\textsc{Proof of Theorem~\ref{theo:5.26}.} Suppose that $(a_n)_{n\in\Z}$ 
+is given as in the theorem. From assumption (2), we have 
+\[ a_n - a_{n+1} \leq a_{n-1} - a_n. \] 
+Letting $b_n = a_n - a_{n+1}$, we see that $(b_n)_{n\geq0}$ is a 
+non-increasing sequence with $\lim_{n\to\infty} b_n = 0$ so that 
+$b_n \geq 0$ for all $n \geq 0$. Moreover, observe that 
+\[ \sum_{n=0}^\infty b_n = \sum_{n=0}^\infty (a_n - a_{n+1}) 
+= \lim_{N\to\infty} (a_0 - a_{N+1}) = a_0. \]  
+So by Lemma~\ref{lemma:5.27}, we have $\lim_{n\to\infty} n(a_n - a_{n+1}) = 0$.
+
+{\sc Claim 1.} We have 
+\[ \sum_{n=1}^\infty n(a_{n-1} + a_{n+1} - 2a_n) < \infty. \] 
+{\sc Proof of Claim 1.} We will show that for all $N \geq 1$, we have 
+\begin{equation}\label{eq:5.1} 
+    \sum_{n=1}^N n(a_{n-1} + a_{n+1} - 2a_n) = a_0 - a_N - N(a_N - a_{N+1}). \tag{$\star$} 
+\end{equation}  
+We proceed by induction. For $N = 1$, this is clear. Assume that $\eqref{eq:5.1}$
+holds for some $N \geq 1$. Then 
+\begin{align*}
+    \sum_{n=1}^{N+1} n(a_{n-1} + a_{n+1} - 2a_n) 
+    &= a_0 - a_N - Na_N + Na_{N+1} + (N+1)(a_N + a_{N+2} - 2a_{N+1}) \\ 
+    &= a_0 - (N+2)a_{N+1} + (N+1)a_{N+2} \\ 
+    &= a_0 - a_{N+1} - (N+1)(a_{N+1} - a_{N+2}). 
+\end{align*} 
+So $\eqref{eq:5.1}$ holds by induction, so in particular, taking $N \to \infty$ 
+shows that 
+\[ \sum_{n=1}^\infty n(a_{n-1} + a_{n+1} - 2a_n) = a_0 < \infty, \] 
+which proves the claim. \hfill$\blacksquare$
+
+Given $j \geq 0$ and $N \geq 1$, observe that $\eqref{eq:5.1}$ also gives us 
+the useful identity 
+\begin{align*}
+    \sum_{n=1}^N n(a_{n-1} + a_{n+1} - 2a_n) 
+    &= \sum_{n=1}^j n(a_{n-1} + a_{n+1} - 2a_n) - 
+    \sum_{n=j+1}^N n(a_{n-1} + a_{n+1} - 2a_n) \\ 
+    &= a_j - a_N - N(a_N - a_{N+1}) + j(a_j - a_{j+1}). 
+\end{align*}
+Then taking $N \to \infty$ shows that 
+\begin{equation}\label{eq:5.2}
+    \sum_{n=j+1}^\infty n(a_{n-1} + a_{n+1} - 2a_n) 
+    = a_j + j(a_j - a_{j+1}). \tag{$\star\star$}
+\end{equation}
+To finish off the proof, consider the function $f \in L^1(\T)$ defined by 
+\[ f = \sum_{n=1}^\infty n(a_{n-1} + a_{n+1} - 2a_n)K_{n-1}. \] 
+We claim that $f$ is well-defined with $f \geq 0$ almost everywhere 
+and $\hat f(j) = a_{|j|}$ for all $j \in \Z$. 
+
+Recall that the Fej\'er kernel satisfies $\|K_n\|_1 = 1$ for all $n \geq 0$, 
+so by Claim 1, we get  
+\[ \sum_{n=1}^\infty n(a_{n-1} + a_{n+1} - 2a_n)\|K_{n-1}\|_1 < \infty. \] 
+By the Weierstrass $M$-test, the limit $f \in L^1(\T)$ exists. 
+Moreover, we have $f \geq 0$ since $a_{n-1} + a_{n+1} - 2a_n \geq 0$ by 
+assumption (2) and $K_{n-1} \geq 0$ for all $n \geq 1$. Finally, 
+fix $j \in \Z$. Note that we have 
+\[ \widehat{K}_{n-1} = \begin{cases}
+    1 - \frac{|j|}{n}, & \text{if } n \geq |j| + 1, \\ 
+    0, & \text{otherwise.} 
+\end{cases} \] 
+From this, we obtain 
+\begin{align*}
+    \hat f(j) &= \sum_{n=1}^\infty n(a_{n-1} + a_{n+1} - 2a_n) \widehat{K}_{n-1}(j) \\ 
+    &= \sum_{n=|j|+1}^\infty n(a_{n-1} + a_{n+1} - 2a_n) \left(1 - \frac{|j|}{n} \right) \\ 
+    &= a_{|j|} + |j|(a_{|j|} - a_{|j|+1}) - |j| \sum_{n=|j|+1}^\infty 
+    (a_{n-1} + a_{n+1} - 2a_n) \\ 
+    &= a_{|j|} + |j|(a_{|j|} - a_{|j|+1}) - |j|(a_{|j|} - a_{|j|+1}) \\ 
+    &= a_{|j|}, 
+\end{align*}
+where the second equality followed from equation $\eqref{eq:5.2}$. 
+This completes the proof of the theorem. \qed 

@@ -1,0 +1,131 @@
+\section{Fourier Transforms on the Line} \label{sec:6}
+
+\subsection{The Fourier Transform and the Riemann-Lebesgue Lemma} \label{subsec:6.1}
+So far, we have looked at functions $f \in L^1(\T)$, which are 
+$2\pi$-periodic, measurable, and integrable on $\R$. We studied their 
+Fourier coefficients $(\hat f(n))_{n\in\Z} \in c_0(\Z)$, and the 
+``reconstruction'' problem of recovering $f$ from ${\cal F}f = 
+(\hat f(n))_{n\in\Z}$.
+
+But what happens if $f$ is not periodic? For example, what if 
+$f \in L^1(\R)$ or $f \in L^2(\R)$? Can we still represent $f$ as a 
+``sum'' of complex exponentials $x \mapsto e^{inx}$ for $x \in \R$? 
+
+There is now a big issue: the functions $x \mapsto e^{inx}$ no longer 
+belong to $L^1(\R)$ or $L^2(\R)$. In particular, the set 
+$\{x \mapsto e^{inx} : n \in \Z\}$ no longer forms an orthonormal 
+basis for $L^2(\R)$! 
+
+Nonetheless, for all $t \in \R$, the function $x \mapsto e^{itx}$ 
+defines a bounded continuous function. So for all $f \in L^1(\R)$, the 
+integrals 
+\[ \int_{\R} f(x) e^{-itx}\dd x \] 
+are well-defined. This leads us to the following definition. 
+
+\begin{defn}{defn:6.1}
+    Given $f \in L^1(\R)$, its {\bf Fourier transform} is the function 
+    $\hat f : \R \to \C$ given by 
+    \[ \hat f(t) = \int_{\R} f(x) e^{-itx}\dd x. \] 
+\end{defn}
+
+Up to a scaling factor of $2\pi$, we see that $(\hat f(t))_{t\in\R}$ 
+is a continuous analogue of the collection of Fourier coefficients of $f$. 
+
+\begin{exmp}{exmp:6.2}
+    Fix $A \in \R$ and let $f = \chi_{[-A, A]}$. Then the Fourier transform 
+    of $f$ is 
+    \[ \hat f(t) = \int_{-A}^A e^{-itx}\dd x = \frac{1}{-it} e^{-itx} 
+    \bigg|_{-A}^A = \frac{e^{iAt} - e^{-iAt}}{it} = \frac{2\sin(At)}{t}. \] 
+    Observe that 
+    \[ \hat f \in C_0(\R) = \{f : \R \to \C \mid f \text{ continuous and } 
+    \textstyle\lim_{t\to\pm\infty} f(t) = 0\}, \] 
+    but $\hat f \notin L^1(\R)$. On the other hand, we have $\hat f \in 
+    L^2(\R)$ with $\|\hat f\|_2 = 2\pi\|f\|_2$. 
+\end{exmp}
+
+Later on, we'll see that these observed properties between $f$ and $\hat f$ 
+are in fact generic. We now discuss some basic properties of the Fourier 
+transform on $\R$. 
+
+\begin{theo}{theo:6.3}
+    Let $f \in L^1(\R)$. Let $\alpha \in \R$ and $\lambda > 0$.
+    \begin{enumerate}[(a)]
+        \item If $g(x) = f(x)e^{i\alpha x}$, then $\hat g(t) = \hat f(t-\alpha)$. 
+        \item If $g(x) = f(x-\alpha)$, then $\hat g(t) = e^{-i\alpha t} \hat f(t)$. 
+        \item If $g(x) = \overline{f(-x)}$, then $\hat g(t) = \overline{\hat f(t)}$. 
+        \item If $g(x) = f(x/\lambda)$, then $\hat g(t) = \lambda \hat f(\lambda t)$. 
+        \item If $g(x) = -ixf(x)$ and $g \in L^1(\R)$, then $\hat f$ is differentiable 
+        and $\hat f'(t) = \hat g(t)$. 
+    \end{enumerate}    
+\end{theo}
+\begin{pf}~
+    \begin{enumerate}[(a)]
+        \item We have 
+        \[ \hat g(t) = \int_{\R} f(x) e^{i\alpha x} e^{-itx}\dd x = 
+        \int_{\R} f(x) e^{-i(t-\alpha)x}\dd x = \hat f(t - \alpha). \] 
+        \item Using the substitution $x \mapsto x + \alpha$, we get 
+        \[ \hat g(t) = \int_{\R} f(x-\alpha) e^{-itx}\dd x 
+        = \int_{\R} f(x) e^{-it(x+\alpha)}\dd x = e^{-i\alpha t} \hat f(t). \] 
+        \item Make the substitution $x \mapsto -x$ to obtain 
+        \[ \hat g(t) = \int_{\R} \overline{f(-x)} e^{-itx}\dd x 
+        = \overline{\int_{\R} f(-x) e^{itx}\dd x} = 
+        \overline{\int_{\R} f(x) e^{-itx}\dd x} = \overline{\hat f(t)}. \] 
+        \item Letting $z = x/\lambda$, we get 
+        \[ \hat g(t) = \int_{\R} f(x/\lambda) e^{-itx}\dd x 
+        = \int_{\R} f(z) e^{-it\lambda z} \dd z 
+        = \lambda \int_{\R} f(z) e^{-i(\lambda t)z}\dd z 
+        = \lambda \hat f(\lambda t). \] 
+        \item Let $(h_n)_{n=1}^\infty \subseteq \R \setminus \{0\}$ be a 
+        sequence such that $h_n \to 0$. Then we have 
+        \[ \frac{\hat f(t + h_n) - \hat f(t)}{h_n} 
+        = \int_{\R} f(x) \left( \frac{e^{-i(t+h_n)x} - e^{-itx}}{h_n} \right) \textrm{d}x 
+        = \int_{\R} f(x) e^{-itx} \left( \frac{e^{-ih_nx} - 1}{h_n} \right) \textrm{d}x. \] 
+        Set $\varphi_n(x) = (e^{-ih_nx} - 1)/h_n$. It can be seen that 
+        for all $x \in \R$, we have $|\varphi_n(x)| \leq |x|$ and 
+        $\varphi_n(x) \to -ix$ as $n \to \infty$. This means that 
+        \[ |f(x) e^{-itx} \varphi_n(x)| \leq |xf(x)| = |g(x)| \in L^1(\R), \] 
+        so by the Dominated Convergence Theorem (Theorem~\ref{theo:2.58}), we get 
+        \begin{align*}
+            \hat f'(t) 
+            &= \lim_{n\to\infty} \frac{\hat f(t + h_n) - \hat f(t)}{h_n} \\
+            &= \lim_{n\to\infty} \int_{\R} f(x) e^{-itx} \varphi_n(x)\dd x \\ 
+            &= \int_{\R} f(x) e^{-itx} (-ix)\dd x \\ 
+            &= \int_{\R} g(x) e^{-itx}\dd x = \hat g(t). \qedhere 
+        \end{align*}
+    \end{enumerate}
+\end{pf}
+
+\begin{theo}[Riemann-Lebesgue Lemma]{theo:6.4}
+    Let $f \in L^1(\R)$. Then $\hat f \in C_0(\R)$ and $\|\hat f\|_\infty 
+    \leq \|f\|_1$. In particular, if ${\cal F} : L^1(\R) \to C_0(\R)$ 
+    denotes the Fourier transform, then ${\cal F}$ is a continuous linear map. 
+\end{theo}
+\begin{pf}
+    Let $f \in L^1(\R)$. Then for all $t \in \R$, we have 
+    \[ |\hat f(t)| = \left| \int_{\R} f(x) e^{-itx}\dd x \right| \leq 
+    \int_{\R} |f(x)|\dd x = \|f\|_1, \] 
+    which tells us that $\|\hat f\|_\infty \leq \|f\|_1$. To see that 
+    $\hat f$ is continuous, fix $t \in \R$ and take a sequence $t_n \to t$. 
+    Then
+    \[ |\hat f(t_n) - \hat f(t)| = \left| \int_{\R} f(x) (e^{-it_nx} - e^{-itx})\dd x \right|. \] 
+    Note that $f(x)(e^{-it_nx} - e^{-itx}) \to 0$ pointwise in $x \in \R$ 
+    and is dominated by $2|f| \in L^1(\R)$. It follows from the Dominated 
+    Convergence Theorem that $|\hat f(t_n) - \hat f(t)| \to 0$ as $n \to \infty$. 
+
+    Finally, to see that $\hat f \in C_0(\R)$, fix $t \neq 0$. We have 
+    \begin{align*}
+        \hat f(t) &= \int_{\R} f(x) e^{-itx}\dd x \tag{A} \label{eq:5.3} \\ 
+        &= -\int_{\R} f(x) e^{i\pi-itx}\dd x \\ 
+        &= -\int_{\R} f(x) e^{-it(x-\pi/t)}\dd x \\ 
+        &= -\int_{\R} f(z + \pi/t) e^{-itz}\dd z, \tag{B} \label{eq:5.4}
+    \end{align*}
+    where the last equality was obtained by making the substitution $z = 
+    x - \pi/t$. We see that $2\hat f(t)$ can be obtained by 
+    adding the results from $\eqref{eq:5.3}$ and $\eqref{eq:5.4}$ together, 
+    so we get 
+    \[ 2\hat f(t) = \int_{\R} (f(x) - f(x + \pi/t)) e^{-itx}\dd x. \] 
+    Note that as $|t| \to \infty$, we have $\pi/t \to 0$. It follows from 
+    Exercise 57 of Chapter 18 in Carothers (which we proved on Assignment 4)
+    that 
+    \[ |2\hat f(t)| \leq \int_{\R} |f(x) - f(x + \pi/t)|\dd x \to 0. \qedhere \] 
+\end{pf}
