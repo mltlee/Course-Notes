@@ -129,3 +129,327 @@ transform on $\R$.
     that 
     \[ |2\hat f(t)| \leq \int_{\R} |f(x) - f(x + \pi/t)|\dd x \to 0. \qedhere \] 
 \end{pf}
+
+\subsection{Convolutions in $L^1(\R)$} \label{subsec:6.2}
+The story here is essentially identical to that of $L^1(\T)$ and our 
+study of convolution there. For the moment, let $f, g \in C_c(\R)$, 
+and note that $C_c(\R) \subseteq L^1(\R) \cap L^2(\R) \cap L^\infty(\R)$.
+We define $f \star g : \R \to \C$ by 
+\begin{align*}
+    (f \star g)(x) &= \int_{\R} f(y)g(x - y)\dd y 
+    = \int_{\R} f(-y) g(x+y) \dd y 
+    = \int_{\R} f(x-y) g(y) \dd y = (g \star f)(x), 
+\end{align*}
+where we made the substitutions $y \mapsto -y$ and $y \mapsto x+y$ above. 
+Note that $f \star g = g \star f$ is also well-defined in the case where 
+$f \in L^\infty(\R)$ and $g \in L^1(\R)$, or when both $f, g \in L^2(\R)$. 
+
+\begin{prop}{prop:6.5}
+    Let $f, g \in C_c(\R)$. Then 
+    \begin{enumerate}[(1)]
+        \item $f \star g = g \star f \in C_c(\R)$; 
+        \item $\|f \star g\|_p \leq \|f\|_p \|g\|_1$ for $p = 1, 2, \infty$; and 
+        \item $\|f \star g\|_\infty \leq \|f\|_2 \|g\|_2$. 
+    \end{enumerate}
+\end{prop}
+
+We'll omit the proof of (2) as it is identical to the proofs of the 
+statements for $L^1(\T)$ from Proposition~\ref{prop:5.1}. The proof 
+was based on the uniform continuity of $f \in C(\T)$, and one can 
+repeat the argument for $f \in C_c(\R)$ as well because $f$ is then 
+uniformly continuous on $\R$. 
+
+To prove (1) and (3), we'll first need a lemma. 
+
+\begin{lemma}{lemma:6.6}
+    Given $f : \R \to \C$ and $y \in \R$, let $f_y(x) = f(x-y)$. 
+    If $f \in L^p(\R)$, then the map $y \mapsto f_y$ is uniformly 
+    continuous as a map $\R \to L^p(\R)$ for all $p \in [1, \infty)$. 
+    That is, for all $\eps > 0$, there exists $\delta > 0$ such that 
+    $|s - t| < \delta$ implies $\|f_s - f_t\|_p < \eps$. 
+\end{lemma}
+\begin{pf}
+    Let $\eps > 0$. Let $f \in L^p(\R)$ for $p \in [1, \infty)$, and choose 
+    $g \in C_c(\R)$ such that $\|f - g\|_p < \eps$. Assume that 
+    $\text{supp}(g) \subseteq [-A, A]$ for some $A > 0$. 
+    By the uniform continuity of $g$, there exists $0 < \delta < A$ 
+    such that $|g(s) - g(t)| < \eps$ whenever $|s - t| < \delta$. Then we 
+    have 
+    \[ \|g_s - g_t\|_p^p = \int_{\R} |g(x-s) - g(x-t)|^p\dd x 
+    < \eps^p \int_{\text{supp}(g_s-g_t)} 1\dd x \leq \eps^p(2A + \delta) 
+    < 3A \eps^p. \] 
+    Since $\|\cdot\|_p$ is translation invariant, it follows that 
+    \begin{align*}
+        \|f_s - f_t\|_p &\leq \|f_s - g_s\|_p + \|g_s - g_t\|_p 
+        + \|g_t - f_t\|_p \\ 
+        &= \|f - g\|_p + \|g_s - g_t\|_p + \|f - g\|_p \\ 
+        &< 2\eps + (3A)^{1/p} \eps. \qedhere 
+    \end{align*} 
+\end{pf}
+
+{\sc Proof of Proposition~\ref{prop:6.5}.} Let $f, g \in C_c(\R)$. 
+Note that when $|x|$ is large, we have 
+\[ (f \star g)(x) = \int_{\R} f(y) g(x-y)\dd y = 0, \] 
+because eventually the support of $f$ and the support of $y \mapsto g(x-y)$ 
+will not overlap. That is, $f \star g$ is compactly supported. So if we 
+can establish continuity, then $f \star g \in C_c(\R)$. 
+
+Put $\check g(y) = g(-y)$. Then we see that 
+\[ (f \star g)(x) = \int_{\R} f(y) g(x-y)\dd y = \int_{\R} 
+f(y) \check g(y-x)\dd y = \langle \check g_x, \overline f \rangle_{L^2(\R)}. \] 
+Now, suppose that $x \to x_0 \in \R$. Using Cauchy-Schwarz and 
+Lemma~\ref{lemma:6.6}, we get 
+\begin{align*}
+    |(f \star g)(x) - (f \star g)(x_0)| 
+    &= |\langle \check g_x - \check g_{x_0}, \overline f \rangle| \\
+    &\leq \| \check g_x - \check g_{x_0} \|_2 \| \overline f \|_2 \to 0. 
+\end{align*}
+Thus, $f \star g$ is continuous and $f \star g \in C_c(\R)$. 
+Moreover, for all $x \in \R$, we see from Cauchy-Schwarz that
+\[ |(f \star g)(x)| = |\langle \check g_x, \overline f \rangle_{L^2(\R)}|
+\leq \|\check g_x\|_2 \|\overline f\|_2 = \|g\|_2 \|f\|_2, \] 
+so $\|f \star g\|_\infty \leq \|g\|_2 \|f\|_2$. \qed 
+
+We know that $C_c(\R)$ is dense in $L^p(\R)$ for $p \in [1, \infty)$. 
+Then the inequality $\|f \star g\|_1 \leq \|f\|_1 \|g\|_1$ together 
+with density tells us that $f \star g$ makes sense for $f, g \in L^1(\R)$. 
+In particular, we can continuously extend convolution to $L^1(\R)$, 
+and $L^1(\R)$ is an algebra under convolution!  
+
+Moreover, the inequality $\|f \star g\|_\infty \leq \|f\|_2 \|g\|_2$ 
+implies that $f \star g$ is well-defined for $f, g \in L^2(\R)$ and 
+$f \star g \in C_0(\R)$. Indeed, one can take sequences $f_n \to f$ 
+and $g_n \to g$, then show that $f \star g$ is the uniform limit of 
+$f_n \star g_n$ with an argument similar to that of Theorem~\ref{theo:5.3}.
+
+\begin{prop}{prop:6.7}
+    The Fourier transform ${\cal F} : L^1(\R) \to C_0(\R)$ which 
+    maps $f \in L^1(\R)$ to ${\cal F}f = (\hat f(t))_{t\in\R}$ given by 
+    \[ \hat f(t) = \int_{\R} f(x) e^{-itx}\dd x \] 
+    is an algebra homomorphism. That is, for any $f, g \in L^1(\R)$, 
+    we have ${\cal F}(f \star g) = {\cal F}(f) {\cal F}(g) \in C_0(\R)$. 
+\end{prop}
+\begin{pf}
+    By the density of $C_c(\R)$ in $L^1(\R)$ and the continuity of ${\cal F} : 
+    L^1(\R) \to C_0(\R)$, it suffices to prove this for $f, g \in C_c(\R)$. 
+    In this case, we have for all $t \in \R$ that 
+    \begin{align*}
+        (\widehat{f \star g})(t) 
+        &= \int_{\R} \left( \int_{\R} f(y)g(x-y)\dd y \right) e^{-itx}\dd x \\ 
+        &= \int_{\R} \int_{\R} f(y) g(x-y) e^{-itx}\dd x \dd y \\ 
+        &= \int_{\R} f(y) e^{-ity} \hat g(t) \dd y = \hat f(t) \hat g(t),
+    \end{align*}
+    where we applied Fubini for the second equality. 
+\end{pf}
+
+\subsection{Fourier Inversion Theorem} \label{subsec:6.3}
+Let $f \in L^1(\R)$. 
+\begin{enumerate}[(1)]
+    \item Is $f$ uniquely determined by its Fourier transform 
+    ${\cal F}f = (\hat f(t))_{t\in\R}$? That is, if $\hat f(t) = \hat g(t)$
+    for all $t \in \R$, then do we have $f = g$ almost everywhere? 
+    Equivalently, is ${\cal F} : L^1(\R) \to C_0(\R)$ injective? 
+    \item If the answer to the previous question is yes, then how do we reconstruct 
+    $f$ from $\hat f$? 
+\end{enumerate}
+Recall that if $f \in L^1(\T)$ and we assume moreover that $\hat f = 
+(\hat f(n))_{n\in\Z} \in \ell^1(\Z)$ (a strong assumption), then we know 
+from our study of Fourier series that 
+\[ g(x) = \sum_{n\in\Z} \hat f(n) e^{inx} \] 
+converges absolutely for $x \in [-\pi, \pi]$ and $f = g$ almost everywhere. 
+In this special situation, $f$ is recovered almost everywhere by simply 
+summing the Fourier series of $f$!
+
+For the Fourier transform on $\R$, the ``continuous'' version of the above holds. 
+This is the Fourier inversion theorem on $L^1(\R)$. 
+
+\begin{theo}[Fourier Inversion Theorem on $L^1(\R)$]{theo:6.8}
+    Let $f \in L^1(\R)$, and assume that $\hat f \in L^1(\R)$ as well. Define 
+    \[ g(x) = \frac{1}{2\pi} \int_{\R} \hat f(t) e^{itx}\dd t. \] 
+    Then $g \in C_0(\R)$ and $g = f$ almost everywhere. That is, for 
+    almost every $x \in \R$, we have 
+    \[ f(x) = \frac{1}{2\pi} \int_{\R} \hat f(t) e^{itx}\dd t. \]
+\end{theo}
+
+As an immediate consequence, we get an affirmative answer to our first 
+question above. 
+
+\begin{cor}{cor:6.9}
+    The Fourier transform ${\cal F} : L^1(\R) \to C_0(\R)$ is injective.
+\end{cor}
+\begin{pf}
+    If $f, g \in L^1(\R)$ satisfies $\hat f = \hat g$, then 
+    $\widehat{f-g} = 0 \in L^1(\R)$. It follows from the Fourier inversion 
+    theorem (Theorem~\ref{theo:6.8}) that 
+    \[ (f - g)(x) = \frac{1}{2\pi} \int_{\R} 0 e^{itx}\dd x = 0 \] 
+    for almost every $x \in \R$, so $f = g$ almost everywhere. 
+\end{pf}
+
+The second question is partially answered by the Fourier inversion theorem. 
+During the proof, we will develop a technique involving Ces\`aro summation 
+and summability kernels that will fully answer the second question. 
+
+Before we get to the proof, let's see why the theorem should hold heuristically 
+by giving an engineer's ``proof''. Assume that $f \in L^1(\R)$ is bounded 
+and continuous, and for $A > 0$, set $f_A = f\chi_{[-A, A]}$. Then 
+we have $\lim_{A\to\infty} f_A = f$ in $L^1(\R)$. If we regard $f_A$ as a
+$2\pi A$-periodic function, then $f_A$ has Fourier series 
+\[ \sum_{n\in\Z} c_n e^{i(n/A)x}, \] 
+where the coefficients $c_n$ are 
+\[ c_n = \frac{1}{2\pi A} \int_{-\pi A}^{\pi A} f_A(x) e^{-i(n/A)x} \dd x 
+= \frac{1}{2\pi A} \hat f_A(n/A). \] 
+Moreover, if $f$ is sufficiently nice (for example, $f \in C^1(\R)$), then 
+\[ f_A(x) = \sum_{n\in\Z} c_n e^{i(n/A)x} = \frac{1}{2\pi} 
+\sum_{n\in\Z} \frac{1}{A} \hat f_A(n/A) e^{i(n/A)x}. \] 
+This is a Riemann sum with respect to an infinite partition of $\R$ 
+with common width $1/A$ and boundary points $n/A$ for $n \in \Z$. 
+Then as $A \to \infty$, we have 
+\[ \frac{1}{2\pi} \sum_{n\in\Z} \frac{1}{A} \hat f_A(n/A) e^{i(n/A)x} 
+\to \frac{1}{2\pi} \int_{\R} \hat f(t) e^{itx}\dd t. \] 
+We saw above that $f_A \to f$, so we get 
+\[ f(x) = \frac{1}{2\pi} \int_{\R} \hat f(t) e^{itx}\dd t. \] 
+Of course, this is all mathematical nonsense, and we are assuming far 
+too many conditions on our function $f \in L^1(\R)$. To make this rigorous, 
+we will need to take a more devious approach. 
+
+We start with a pair of functions where the Fourier inversion theorem 
+can be verified directly. Let $H(t) = e^{-|t|}$. For $\lambda > 0$, 
+set $H_\lambda(t) = H(\lambda t) = e^{-\lambda|t|}$, and define 
+\[ h_\lambda(x) = \frac{1}{2\pi} \int_{\R} H_\lambda(t) e^{itx}\dd x. \] 
+
+\begin{lemma}{lemma:6.10}
+    For all $x \in \R$, we have 
+    \[ h_\lambda(x) = \frac{\lambda}{\pi} \cdot \frac{1}{x^2 + \lambda^2}. \] 
+\end{lemma}
+\begin{pf}
+    By directly computing the integral, we get 
+    \begin{align*}
+        h_{\lambda}(x) &= \frac{1}{2\pi} \int_{\R} e^{-\lambda|t|+itx}\dd t \\ 
+        &= \frac{1}{2\pi} \left( \int_0^\infty e^{(-\lambda+ix)t}\dd t 
+        + \int_{-\infty}^0 e^{(\lambda+ix)t} \dd t \right) \\ 
+        &= \frac{1}{2\pi} \left( \frac{1}{-\lambda+ix} (-1) + \frac{1}{\lambda+ix} \right) \\ 
+        &= \frac{1}{2\pi} \left( \frac{-(\lambda + ix) + (-\lambda+ix)}{-x^2-\lambda^2} \right) \\ 
+        &= \frac{1}{2\pi} \cdot \frac{-2\lambda}{-x^2-\lambda^2} \\
+        &= \frac{\lambda}{\pi} \cdot \frac{1}{x^2+\lambda^2}. \qedhere 
+    \end{align*}
+\end{pf}
+Here, we see that $0 \leq H_\lambda(t) \leq 1$ and $H_\lambda(t) \to 1$ 
+as $t \to 0$. Moreover, we have $h_\lambda \geq 0$ and 
+\[ \|h_\lambda\|_1 = \int_{\R} h_\lambda(x) \dd x = 
+\frac{1}{\pi} \lim_{R\to0} \int_{-R}^R \frac{1}{\lambda} \cdot 
+\frac{1}{1 + (x/\lambda)^2}\dd x = \frac{1}{\pi} \lim_{R\to0} 
+\arctan(x/\lambda) \bigg|_{-R}^R = 1. \] 
+The following theorem shows us that $(h_\lambda)_{\lambda > 0}$ acts like a 
+summability kernel for the Fourier transform. 
+
+\begin{theo}{theo:6.11}
+    Let $p \in [1, \infty)$. If $f \in L^p(\R)$, then 
+    $\|f \star h_\lambda - f\|_p \to 0$ as $\lambda \to 0$. Moreover, if 
+    $f$ is continuous at $x \in \R$ and $\|f\|_\infty < \infty$, then 
+    \[ f(x) = \lim_{\lambda\to 0} (f \star h_\lambda)(x). \] 
+\end{theo}
+\begin{pf}
+    Suppose that $f$ is continuous at $x \in \R$, and $\|f\|_\infty < \infty$. 
+    Using the fact that $\|h_\lambda\|_1 = 1$ and the substitution 
+    $s = y/\lambda$, we have  
+    \begin{align*}
+        |(f \star h_\lambda)(x) - f(x)| 
+        &= \left| \int_{\R} (f(x-y) - f(x)) h_\lambda(y)\dd y \right| \\
+        &\leq \int_{\R} |f(x-y) - f(x)| h_\lambda(y) \dd y \\ 
+        &= \int_{\R} |f(x-y) - f(x)| \lambda h_1(y/\lambda) \dd y \\ 
+        &= \int_{\R} |f(x-\lambda s) - f(x)| h_1(s)\dd s. 
+    \end{align*}
+    We have a bound on the integrand given by 
+    \[ |f(x-\lambda s) - f(x)| h_1(s) \leq 2\|f\|_\infty h_1(s). \] 
+    Moreover, by taking a sequence $\lambda_n \to 0$, we see that 
+    \[ |f(x - \lambda_n s) - f(x)| h_1(s) \to 0 \] 
+    since $f$ is continuous. It follows from the Dominated Convergence 
+    Theorem that 
+    \[ |(f \star h_\lambda)(x) - f(x)| \to 0. \] 
+    We now prove the first part of the theorem. Let $\eps > 0$, 
+    and choose $f_0 \in C_c(\R)$ such that $\|f - f_0\|_p < \eps$. Then 
+    \[ \|f \star h_\lambda - f\|_p \leq 
+    \|f \star h_\lambda - f_0 \star h_\lambda\|_p + \|f_0 \star h_\lambda 
+    - f_0\|_p + \|f_0 - f\|_p < 2\eps + \|f_0 \star h_\lambda - f_0\|_p, \] 
+    so it suffices to prove this for $f = f_0 \in C_c(\R)$ by density. 
+    First, we have 
+    \begin{align*}
+        \|f \star h_\lambda - f\|_p^p 
+        &= \int_{\R} \left| \int_{\R} (f(x-y) - f(x)) h_\lambda(y) \dd y 
+        \right|^p \textrm{d}x \\ 
+        &\leq \int_{\R} \int_{\R} |f(x-y) - f(x)|^p h_\lambda(y)\dd y \dd x. 
+    \end{align*}
+    The inequality is clear for $p = 1$. For $p = 2$, this is obtained by 
+    applying Cauchy-Schwarz to the pair $y \mapsto (f(x-y) - f(x))(h_\lambda(y))^{1/2}$ 
+    and $(h_\lambda(y))^{1/2}$, and using the fact that $\|h_\lambda\|_1 = 1$. 
+    Next, by Fubini and the substitution $s = y/\lambda$, we have 
+    \begin{align*}
+        \|f \star h_\lambda - f\|_p^p 
+        &\leq \int_{\R} \int_{\R} |f(x-y) - f(x)|^p h_\lambda(y)\dd y \dd x \\ 
+        &= \int_{\R} \left( \int_{\R} |f(x-y) - f(x)|^p \dd x \right) h_\lambda(y) \dd y \\ 
+        &= \int_{\R} \|f_y - f\|_p^p h_\lambda(y)\dd y \\ 
+        &= \int_{\R} \|f_{\lambda s} - f\|_p^p h_1(s)\dd s. 
+    \end{align*}
+    Similar to the argument above, we have 
+    \[ \|f_{\lambda s} - f\|_p^p h_1(s) \leq 2^p \|f\|_p h_1(s) \] 
+    and taking a sequence $\lambda_n \to 0$ gives us
+    \[ \|f_{\lambda_n s} - f\|_p^p h_1(s) \to 0, \] 
+    so it follows from the Dominated Convergence Theorem that 
+    \[ \|f \star h_\lambda - f\|_p^p \to 0. \qedhere \] 
+\end{pf}
+
+The following lemma is an approximate version of the Fourier inversion theorem 
+in view of Theorem~\ref{theo:6.11}, noting that $H_\lambda \approx 1$ and 
+$f \star h_\lambda \approx f$. 
+
+\begin{lemma}{lemma:6.12}
+    If $f \in L^1(\R)$, then for all $\lambda > 0$ and $x \in \R$, we have 
+    \[ (f \star h_\lambda)(x) = \frac{1}{2\pi} \int_{\R} H_\lambda(t) 
+    \hat f(t) e^{itx}\dd x. \] 
+\end{lemma}
+\begin{pf}
+    Let $f \in L^1(\R)$. Then we have 
+    \begin{align*}
+        (f \star h_\lambda)(x) 
+        &= \frac{1}{2\pi} \int_{\R} f(x-y) \int_{\R} H_\lambda(t) e^{ity} \dd t \dd y \\ 
+        &= \frac{1}{2\pi} \int_{\R} \int_{\R} f(x-y) H_\lambda(t) e^{ity} \dd y \dd t \\ 
+        &= \frac{1}{2\pi} \int_{\R} \int_{\R} f(z) H_\lambda(t) e^{it(x-z)} \dd z \dd t \\ 
+        &= \frac{1}{2\pi} \int_{\R} \hat f(t) H_\lambda(t) e^{itx} \dd t, 
+    \end{align*}
+    where we used Fubini for the second equality and the substitution 
+    $z = x - y$ for the third equality. 
+    
+    \newpage 
+    However, we note that the use of Fubini here was not fully rigorous, 
+    as Fubini applies to integrals over compact intervals. To fix this, 
+    we can take a sequence $f_n \in C_c(\R)$ with $f_n \to f$ in $L^1(\R)$. 
+    Then we have $(f \star h_\lambda)(x) = \lim_{n\to\infty} (f_n \star 
+    h_\lambda)(x)$. Also, we see that 
+    \begin{align*}
+        (f_n \star h_\lambda)(x) 
+        &= \frac{1}{2\pi} \int_{\R} f_n(x-y) \lim_{N\to\infty} \int_{-N}^N H_\lambda(t) e^{ity} \dd t \dd y \\ 
+        &= \lim_{N\to\infty} \frac{1}{2\pi} \int_{\R} f_n(x-y) \int_{-N}^N H_\lambda(t) e^{ity} \dd t \dd y \\
+        &= \lim_{N\to\infty} \int_{-N}^N H_\lambda(t) \frac{1}{2\pi} \int_{\R} f_n(x-y) e^{ity} \dd y \dd t \\ 
+        &= \lim_{N\to\infty} \frac{1}{2\pi} \int_{-N}^N H_\lambda(t) \hat f_n(t) e^{itx} \dd t \\ 
+        &= \frac{1}{2\pi} \int_{\R} H_\lambda(t) \hat f_n(t) e^{itx} \dd t,
+    \end{align*}
+    where the second and final equalities were obtained by the Dominated Convergence 
+    Theorem. Then the continuity of ${\cal F} : L^1(\R) \to C_0(\R)$ tells us that 
+    as $n \to \infty$, we have 
+    \[ (f_n \star h_\lambda)(x) 
+    = \frac{1}{2\pi} \int_{\R} H_\lambda(t) \hat f_n(t) e^{itx} \dd t
+    \to \frac{1}{2\pi} \int_{\R} H_\lambda(t) \hat f(t) e^{itx} \dd t. \qedhere \] 
+\end{pf}
+
+With all these tools, the Fourier inversion theorem follows quickly. 
+
+{\sc Proof of Theorem~\ref{theo:6.8}.} Suppose that $f \in L^1(\R)$ with 
+$\hat f \in L^1(\R)$ as well. Take a sequence $\lambda_n \to 0$. 
+Note that $H_{\lambda_n}(t) \hat f(t) e^{itx} \to \hat f(t) e^{itx}$ 
+as $\lambda_n \to 0$, and that this is bounded above by $|\hat f| \in L^1(\R)$. 
+Then by Lemma~\ref{lemma:6.12} and the Dominated Convergence Theorem, we have 
+\[ (f \star h_{\lambda_n})(x) = \frac{1}{2\pi} \int_{\R} H_{\lambda_n}(t) 
+\hat f(t) e^{itx} \dd x \to \frac{1}{2\pi} \int_{\R} \hat f(t) e^{itx} \dd x = g(x). \]
+We also know that $f = \lim_{n\to\infty} f \star h_{\lambda_n}$, so 
+we have $f = \lim_{n\to\infty} f \star h_{\lambda_n} = g$ pointwise 
+almost everywhere. \qed 
