@@ -391,7 +391,7 @@ summability kernel for the Fourier transform.
         &= \int_{\R} \|f_{\lambda s} - f\|_p^p h_1(s)\dd s. 
     \end{align*}
     Similar to the argument above, we have 
-    \[ \|f_{\lambda s} - f\|_p^p h_1(s) \leq 2^p \|f\|_p h_1(s) \] 
+    \[ \|f_{\lambda s} - f\|_p^p h_1(s) \leq 2^p \|f\|_p^p h_1(s) \] 
     and taking a sequence $\lambda_n \to 0$ gives us
     \[ \|f_{\lambda_n s} - f\|_p^p h_1(s) \to 0, \] 
     so it follows from the Dominated Convergence Theorem that 
@@ -405,7 +405,7 @@ $f \star h_\lambda \approx f$.
 \begin{lemma}{lemma:6.12}
     If $f \in L^1(\R)$, then for all $\lambda > 0$ and $x \in \R$, we have 
     \[ (f \star h_\lambda)(x) = \frac{1}{2\pi} \int_{\R} H_\lambda(t) 
-    \hat f(t) e^{itx}\dd x. \] 
+    \hat f(t) e^{itx}\dd t. \] 
 \end{lemma}
 \begin{pf}
     Let $f \in L^1(\R)$. Then we have 
@@ -453,3 +453,238 @@ Then by Lemma~\ref{lemma:6.12} and the Dominated Convergence Theorem, we have
 We also know that $f = \lim_{n\to\infty} f \star h_{\lambda_n}$, so 
 we have $f = \lim_{n\to\infty} f \star h_{\lambda_n} = g$ pointwise 
 almost everywhere. \qed 
+
+\subsection{Plancherel's Theorem on the Line} \label{subsec:6.4}
+Recall from Corollary~\ref{cor:4.8} that if $f \in L^2(\T) \subseteq L^1(\T)$, 
+then ${\cal F}f = (\hat f(n))_{n\in\Z} \in \ell^2(\Z)$ and we have 
+\[ \|f\|_{L^2(\T)}^2 = \frac{1}{2\pi} \int_{-\pi}^\pi |f(t)|^2\dd t 
+= \sum_{n\in\Z} |\hat f(n)|^2 = \|\hat f\|_{\ell^2(\Z)}. \] 
+In fact, ${\cal F}_{\T} : L^2(\T) \to \ell^2(\Z)$ is a unitary isomorphism. 
+
+Does this also hold true for ${\cal F}_{\R}$, the Fourier transform on $\R$? 
+One big problem: we don't have $L^2(\R) \subseteq L^1(\R)$ as in the case of 
+$\T$ (nor do we have $L^1(\R) \subseteq L^2(\R)$). In particular, 
+the integral 
+\[ \int_{\R} f(x) e^{-itx}\dd x \] 
+might not be well-defined if $f \in L^2(\R) \setminus L^1(\R)$. To fix this, 
+we will restrict our attention to the dense subspace $L^1(\R) \cap L^2(\R) 
+\subseteq L^2(\R)$, where the Fourier transform is well-defined. 
+
+\begin{prop}{prop:6.13}
+    Let $f \in L^1(\R) \cap L^2(\R)$, and let $\hat f \in C_0(\R)$ be its 
+    Fourier transform. Then $\hat f \in L^2(\R)$ and 
+    \[ \frac{1}{2\pi} \int_{\R} |\hat f(t)|^2\dd t = \int_{\R} |f(x)|^2\dd x. \] 
+\end{prop}
+
+Before we prove this, we'll first fix some notation to improve clarity, 
+because unlike the case of $\T$, the Fourier transform is not a sequence 
+indexed by the integers, so it is harder to distinguish. 
+
+Given a function $x \mapsto f(x) \in L^1(\R)$, let $\hat \R$ be the copy of 
+$\R$ associated with the Fourier transform $\hat f$. That is, we have 
+$\hat f \in C_0(\hat \R)$, and $t \in \hat \R$ gets mapped to $\hat f(t)$.
+As usual, $(L^2(\R), \|\cdot\|_{L^2(\R)})$ has norm 
+\[ \|f\|_{L^2(\R)}^2 = \int_{\R} |f(x)|^2\dd x. \] 
+On the other hand, $(L^2(\hat \R), \|\cdot\|_{L^2(\hat\R)})$ has norm 
+\[ \|g\|_{L^2(\hat \R)}^2 = \frac{1}{2\pi} \int_{\hat \R} |g(t)|^2 \dd t. \]   
+Then Proposition~\ref{prop:6.13} tells us that ${\cal F} : 
+(L^1(\R) \cap L^2(\R), \|\cdot\|_{L^2(\R)}) \to (L^2(\hat \R), 
+\|\cdot\|_{L^2(\hat\R)})$ is an isometry! 
+
+\textsc{Proof of Proposition~\ref{prop:6.13}.} Fix $f \in L^1(\R) 
+\cap L^2(\R)$, and define $\tilde f \in L^1(\R) \cap L^2(\R)$ by 
+\[ \tilde f(x) = \overline{f(-x)}. \] 
+Note that convolving functions in $L^1(\R)$ yields a function in $L^1(\R)$, 
+and convolving functions in $L^2(\R)$ gives a function in $C_0(\R)$. 
+In particular, if we set $g = f \star \tilde f$, then $g \in 
+L^1(\R) \cap C_0(\R)$. 
+
+Recall the functions $H_\lambda(t) = e^{-\lambda|t|}$ and 
+$h_\lambda = \frac{\lambda}{\pi} \frac{1}{x^2 + \lambda^2}$ we defined 
+in Section~\ref{subsec:6.3}. By Lemma~\ref{lemma:6.12}, we have 
+\[ (g \star h_\lambda)(x) = \frac{1}{2\pi} \int_{\hat \R} H_\lambda(t)
+\hat g(t) e^{itx} \dd t. \]
+Now, set $x = 0$ and take $\lambda \to 0$. By Theorem~\ref{theo:6.11}, 
+it follows that 
+\[ (g \star h_\lambda)(0) \to g(0) = (f \star \tilde f)(0) 
+= \int_{\R} f(y) \tilde f(-y) \dd y = \int_{\R} f(y) \overline{f(y)} \dd y 
+= \|f\|_{L^2(\R)}^2. \] 
+On the other hand, observe that 
+\[ \hat g(t) = (\widehat{f \star \tilde f})(t) = \hat f(t) \hat{\tilde f}(t) 
+= \hat f(t) \overline{\hat f(t)} = |\hat f(t)|^2, \] 
+so we obtain 
+\begin{align*}
+    (g \star h_\lambda)(0) 
+    &= \frac{1}{2\pi} \int_{\hat \R} H_\lambda(t) \hat g(t) \dd t 
+    = \frac{1}{2\pi} \int_{\hat \R} H_\lambda(t) |\hat f(t)|^2\dd t. 
+\end{align*}
+But $|\hat f(t)|^2 \in L^1(\R)$ and $H_\lambda(t) \to 1$ pointwise as
+$\lambda \to 0$, so by the Monotone Convergence Theorem, we obtain 
+\[ (g \star h_\lambda)(0) = 
+\frac{1}{2\pi} \int_{\hat \R} H_\lambda(t) |\hat f(t)|^2\dd t 
+\to \frac{1}{2\pi} \int_{\hat \R} |\hat f(t)|^2\dd t 
+= \|\hat f\|_{L^2(\hat\R)}^2. \] 
+Thus, we have $\|f\|_{L^2(\R)}^2 = \|\hat f\|_{L^2(\hat\R)}^2$, as desired. \qed
+
+Similar to our study with convolutions where we extended $\star$ 
+to an operation on all of $L^1(\T)$, we now extend the Fourier transform 
+to all of $L^2(\R)$. 
+
+\begin{theo}[Plancherel's Theorem on $\R$]{theo:6.14}
+    The Fourier transform ${\cal F} : L^1(\R) \cap L^2(\R) \to L^2(\R)$ 
+    extends uniquely to a unitary transformation ${\cal F}_2 
+    : L^2(\R) \to L^2(\R)$. Moreover, for each $f \in L^2(\R)$, we have 
+    $\hat f = \lim_{A\to\infty} \varphi_A$ where 
+    \[ \varphi_A(t) = \int_{-A}^A f(x) e^{-itx}\dd x, \] 
+    and $f = \lim_{A\to\infty} \psi_A$ where 
+    \[ \psi_A(x) = \frac{1}{2\pi} \int_{-A}^A \hat f(t) e^{itx}\dd t. \] 
+    (This is the concrete way to interpret the extension of ${\cal F}$ 
+    as a limit.)
+\end{theo}
+\begin{pf}
+    Let $Y = {\cal F}(L^1(\R) \cap L^2(\R)) \subseteq L^2(\hat \R)$. 
+    We already know from Proposition~\ref{prop:6.13} that 
+    ${\cal F} : L^1(\R) \cap L^2(\R) \to Y$ is linear and isometric. 
+    Since $\overline{L^1(\R) \cap L^2(\R)} = L^2(\R)$, we can define 
+    ${\cal F}_2 : L^2(\R) \to \overline{Y}$ by setting 
+    \[ {\cal F}_2(f) = \lim_{n\to\infty} {\cal F}(f_n) \] 
+    for any sequence $(f_n)_{n=1}^\infty \subseteq L^1(\R) \cap L^2(\R)$ 
+    such that $f_n \to f$ in $\|\cdot\|_{L^2(\R)}$. We leave it 
+    as an exercise to check that ${\cal F}_2$ is well-defined and isometric. 
+
+    Next, we check that $\overline{Y} = L^2(\hat \R)$; that is, 
+    ${\cal F}(L^1(\R) \cap L^2(\R))$ is dense in $L^2(\hat \R)$. 
+    Since $L^1(\R) \cap L^2(\R) \subseteq L^2(\R)$ is dense, it suffices 
+    to show that any $f \in L^1(\hat \R) \cap L^2(\hat \R)$ is in $\overline{Y}$. 
+    For any such $f$, we have by Lemma~\ref{lemma:6.12} that 
+    \[ (f \star h_\lambda)(x) = \frac{1}{2\pi} \int_{\R} \hat f(t) e^{itx} H_\lambda(t)\dd t. \] 
+    If we put $g(t) = \frac{1}{2\pi} f(-t)H_\lambda(t)$, then we have $g \in 
+    L^1(\R) \cap L^2(\R)$ because $\hat f$ is bounded and continuous, 
+    and $H_\lambda \in L^1(\R) \cap L^2(\R)$. Moreover, note that 
+    \[ \hat g(x) = \int_{\R} g(t) e^{-itx}\dd t = 
+    \frac{1}{2\pi} \int_{\R} \hat f(-t) H_\lambda(t) e^{-itx}\dd t = 
+    (f \star h_\lambda)(x), \] 
+    so $f \star h_\lambda \in Y$ for all $\lambda > 0$. By Theorem~\ref{theo:6.11},
+    we have $\|f - f \star h_\lambda\|_2 \to 0$ as $\lambda \to 0$, 
+    so $f \in \overline{Y}$. 
+
+    For $A > 0$, let $f \in L^2(\R)$ and note that 
+    \[ \varphi_A(t) = \int_{-A}^A f(x) e^{-itx}\dd x = 
+    (\widehat{f\chi_{[-A, A]}})(t) \] 
+    since $f\chi_{[-A, A]} \in L^1(\R) \cap L^2(\R)$ and 
+    $f\chi_{[-A, A]} \to f$ in $L^2(\R)$ as $A \to \infty$. Then we get 
+    \[ \|\hat f - \varphi_A\|_{L^2(\hat\R)} = 
+    \|\hat f - \widehat{f\chi_{[-A, A]}}\|_{L^2(\hat\R)} = 
+    \|f - f\chi_A\|_{L^2(\R)} \to 0. \] 
+    Similarly, we have 
+    \[ \psi_A(x) = \frac{1}{2\pi} \int_{-A}^A \hat f(t) e^{itx} \dd t = 
+    \widehat{\hat f \chi_{[-A, A]}}(-x). \] 
+    Since $\hat f\chi_{[-A, A]} \to \hat f$ in $L^2(\hat \R)$ as $A \to \infty$, 
+    we have by symmetry that 
+    \[ \psi_A \to \hat{\hat{f}}(-x) = f. \qedhere \] 
+\end{pf}
+
+\subsection{Applications of Plancherel's Theorem} \label{subsec:6.5}
+Suppose that we want to evaluate the integral 
+\[ I = \int_{\R} \left( \frac{\sin t}{t} \right)^{\!2}\textrm{d}t. \] 
+This can be done using methods from complex analysis: the integrand has a 
+pole at $0$, so we just need to compute the residue there. But we can 
+also evaluate this as an application of Plancherel's Theorem. 
+
+In Example~\ref{exmp:6.2}, we showed that for $A > 0$ and 
+$f = \chi_{[-A, A]} \in L^1(\R) \cap L^2(\R)$, we have 
+\[ \hat f(t) = \frac{2\sin(At)}{t}. \] 
+By Plancherel's Theorem, we know that 
+\[ \int_{\R} |f(x)|^2 \dd x = \frac{1}{2\pi} |\hat f(t)|^2 \dd t. \] 
+Note that $f(x)^2 = \chi_{[-A, A]}(x)^2 = \chi_{[-A, A]}(x) = f(x)$, 
+so the left-hand side is equal to 
+\[ \int_{\R} |f(x)|^2 \dd x = \int_{-A}^A 1\dd x = 2A, \] 
+while the right-hand side is 
+\[ \frac{1}{2\pi} |\hat f(t)|^2 \dd t 
+= \frac{1}{2\pi} \int_{\R} \left( \frac{2\sin(At)}{t} \right)^{\!2} \textrm{d}t 
+= \frac{2}{\pi} \int_{\R} \left( \frac{\sin(At)}{t} \right)^{\!2} \textrm{d}t. \] 
+By plugging in $A = 1$, we find that $I = \pi$. 
+
+We also give a nice application of Plancherel's Theorem in representation 
+theory of groups. Recall that for $\alpha \in \R$ and $f \in L^2(\R)$, 
+we write $f_\alpha(x) = f(x - \alpha)$ and we have $f_\alpha \in L^2(\R)$. 
+In the language of representation theory, we say that $\R$ 
+acts on $L^2(\R)$ by translation. 
+
+\begin{defn}{defn:6.15}
+    Let $M \subseteq L^2(\R)$ be a closed subspace. We say that $M$ is
+    {\bf translation invariant} if for all $\alpha \in \R$ and $f \in M$, 
+    we also have $f_\alpha \in M$. 
+\end{defn}
+
+We would like to classify all the closed, translation invariant subspaces 
+$M \subseteq L^2(\R)$. We have trivial examples $M = L^2(\R)$ and $M = \{0\}$. 
+But it turns out there are many more, and we can describe all of them 
+with the help of Plancherel's Theorem! 
+
+\begin{theo}{theo:6.16}
+    Let $E \subseteq \hat \R$ be a measurable set, and let 
+    \[ M_E = \{f \in L^2(\R) \mid \hat f \chi_E = 0\}. \] 
+    Then $M_E$ is a closed, translation invariant subspace. Moreover, 
+    every closed, translation invariant subspace $M \subseteq L^2(\R)$ 
+    is of the form $M = M_E$ for some measurable set $E \subseteq \hat \R$. 
+    Also, for measurable sets $E, F \subseteq \hat \R$, we have 
+    $M_E = M_F$ if and only if $m(E\,\Delta\,F) = 0$, if and only if 
+    $\chi_E = \chi_F$ almost everywhere. 
+\end{theo}
+\begin{pf}
+    First, suppose that $E \subseteq \hat \R$ is measurable. Let 
+    $\alpha \in \R$, and let $e_\alpha(t) = e^{i\alpha t}$. Recall that 
+    $\hat f_\alpha(t) = e^{-i\alpha t} \hat f(t)$, so $\hat f_\alpha 
+    = e_{-\alpha} \hat f$. Now, consider 
+    \[ M_E = \{f \in L^2(\R) \mid \hat f \chi_E = 0\}
+    = \{f \in L^2(\R) \mid \hat f = 0 \text{ almost everywhere on $E$}\}. \] 
+    It is clear that $M_E = \overline{M_E}$ is a closed subspace. Also, 
+    we have $\hat f = 0$ almost everywhere on $E$ if and only if 
+    $e_\alpha \hat f = 0$ everywhere on $E$, if and only if 
+    $\hat f_\alpha = 0$ almost everywhere on $E$ (using the fact that 
+    $|e_\alpha(t)| = 1$). Thus, $M_E$ is translation invariant. 
+
+    Conversely, let $M \subseteq L^2(\R)$ be a closed, translation invariant
+    subspace. We want to show that $M = M_E$ for some measurable set 
+    $E \subseteq \hat \R$.  
+
+    Let $\hat M = {\cal F}(M) \subseteq L^2(\R)$ be the image of $M$ under the 
+    Fourier transform. Since ${\cal F}$ is unitary, we see that $\hat M$ 
+    is a closed subspace. Also, since $\hat f_\alpha = e_{-\alpha} \hat f$, 
+    we have that $\hat M$ is invariant under multiplication by $e_\alpha$. 
+    
+    We now use a standard fact about Hilbert spaces. Let $K \subseteq H$ 
+    be a closed subspace of a Hilbert space $H$. Then for each 
+    $f \in H$, there exists a unique $Pf \in K$ such that $f - Pf 
+    \perp K$; that is, $H \cong K \oplus K^\perp$ where each $f \in H$ 
+    has the unique decomposition 
+    \[ f = Pf + (1 - P)f. \] 
+    The map $P : H \to K$ is called the {\bf orthogonal projection} of $H$ 
+    onto $K$. 
+
+    Now, consider the orthogonal projection $P : L^2(\hat\R) \to \hat M$.
+    Then for all $f, g \in L^2(\hat \R)$ and $\alpha \in \R$, we have 
+    \[ \langle f - Pf, e_\alpha P_g \rangle_{L^2(\hat\R)} = 
+    \frac{1}{2\pi} \int_{-\pi}^\pi (f(t) - Pf(t)) e^{-i\alpha t} 
+    \overline{P_g(t)}\dd t = 0. \] 
+    This means that $(f - Pf) \overline{Pg} \in L^1(\hat \R)$ has $0$ 
+    as its Fourier transform. Then $(f - Pf) \overline{Pg} = 0$ almost 
+    everywhere, and hence $(f - Pf) Pg = 0$ almost everywhere as well. 
+    So for all $f, g \in L^2(\hat \R)$, we have 
+    \[ f(Pg) = PfPg = (Pf)g, \] 
+    where the last equality was obtained by exchanging the roles of $f$ and $g$. 
+
+    Take $g \in L^2(\hat \R)$ such that $g(t) > 0$ for all $t \in \hat \R$. 
+    Put $\varphi = (Pg)/g$, which is a measurable function. Then 
+    for all $f \in L^2(\hat \R)$, we have 
+    \[ Pf = \frac{Pg}{g} f = \varphi f \] 
+    by using the relation $f(Pg) = (Pf)g$ above. Since $P^2 f = Pf$, 
+    we get $\varphi^2 f = \varphi f$ for all $f \in L^2(\hat\R)$, and thus 
+    $\varphi = \varphi^2$. Consider the measurable set 
+    \[ E = \{ t \in \hat\R \mid \varphi(t) = 0 \}. \] 
+    Then $f \in \hat M$ if and only if $f = \varphi f$, if and only if 
+    $(1 - \varphi)f = \chi_E f = 0$. This means that 
+    \[ M = \{f \in L^2(\hat \R) \mid \hat f\chi_E = 0\} = M_E, \] 
+    which completes the proof. 
+\end{pf}
