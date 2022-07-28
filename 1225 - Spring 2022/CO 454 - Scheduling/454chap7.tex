@@ -22,7 +22,9 @@ It may be possible for one job to ``pass'' another while they are
 waiting in queue for a machine that is busy. This means that the 
 machines might not be operating according to the ``first come first 
 served'' principle, and that the sequence in which the jobs go through the 
-machines may change from one machine to another. Changing the sequence of the 
+machines may change from one machine to another. 
+
+Changing the sequence of the 
 jobs waiting in a queue between two machines may at times result in a smaller 
 makespan. However, it can be shown that there always exists an optimal 
 schedule without job sequence changes between the first two machines 
@@ -30,7 +32,23 @@ and the last two machines. This implies that there are optimal schedules for
 $(F_2~||~C_{\max})$ and $(F_3~||~C_{\max})$ that do not require 
 sequence changes between machines. There are examples of flow shops with 
 four machines in which the optimal schedule does require a job sequence 
-change between the second and third machine. 
+change between the second and third machine. For instance, pick an 
+integer $B \geq 3$ and consider the following instance of $(F_4~||~C_{\max})$
+with $2$ jobs. 
+\begin{align*}
+    \begin{array}{c|cc}
+        j & 1 & 2 \\ \hline 
+        p_{1j} & 1 & B \\ 
+        p_{2j} & B & 1 \\ 
+        p_{3j} & B & 1 \\ 
+        p_{4j} & 1 & B
+    \end{array}
+\end{align*}
+Then there are two possible permutation schedules, namely $1, 2$ and $2, 1$, 
+and it can be checked that both schedules have makespan $3B + 2$. 
+On the other hand, if we perform a sequence change between machines $2$ and 
+$3$, then we obtain a makespan of $2B + 4$, which is strictly less than 
+$3B + 2$ when $B \geq 3$. 
 
 Finding an optimal schedule when sequence changes are allowed is significantly
 harder than finding an optimal schedule when sequence changes are not
@@ -108,21 +126,6 @@ We illustrate this directed graph below.
     completion time of that node. It follows that the makespan is 
     $C_{\max} = 34$, and it is determined by the two critical paths given in red.
     \begin{center}
-        \begin{tikzpicture}[/pgfgantt/y unit chart=0.65cm] 
-            \begin{ganttchart}[
-                title/.style={draw=none},
-                canvas/.append style={draw=none}, 
-                bar top shift=0.1, bar height=0.6,
-                y unit title=0.65cm,
-                x unit=0.37cm
-            ]{1}{40}
-                \ganttbar{$M_1$}{1}{5} \ganttbar[inline]{5}{1}{5} \ganttbar[inline]{5}{6}{10} \ganttbar[inline]{3}{11}{13} \ganttbar[inline]{6}{14}{19} \ganttbar[inline]{3}{20}{22} \\ 
-                \ganttbar{$M_2$}{6}{9} \ganttbar[inline]{4}{6}{9} \ganttbar[inline]{4}{11}{14} \ganttbar[inline]{2}{15}{16} \ganttbar[inline]{4}{20}{23} \ganttbar[inline]{4}{24}{27} \\ 
-                \ganttbar{$M_3$}{10}{13} \ganttbar[inline]{4}{10}{13} \ganttbar[inline]{4}{15}{18} \ganttbar[inline]{3}{19}{21} \ganttbar[inline]{4}{24}{27} \ganttbar[inline]{1}{28}{28} \\ 
-                \ganttbar{$M_4$}{14}{16} \ganttbar[inline]{3}{14}{16} \ganttbar[inline]{6}{19}{24} \ganttbar[inline]{3}{25}{27} \ganttbar[inline]{2}{28}{29} \ganttbar[inline]{5}{30}{34} \\ 
-                \gantttitlelist{1,...,34}{1}
-            \end{ganttchart}
-        \end{tikzpicture}
         \begin{tikzpicture}              
             \node [circle, draw=black] (11) at (0, 8) {$5$};  
             \node [circle, draw=black] (12) at (1.5, 8) {$5$}; 
@@ -205,6 +208,21 @@ We illustrate this directed graph below.
             \draw[->, draw=red, line width=0.5mm] (43) -- (44);
             \draw[->, draw=red, line width=0.5mm] (44) -- (45);
         \end{tikzpicture} 
+        \begin{tikzpicture}[/pgfgantt/y unit chart=0.65cm] 
+            \begin{ganttchart}[
+                title/.style={draw=none},
+                canvas/.append style={draw=none}, 
+                bar top shift=0.1, bar height=0.6,
+                y unit title=0.65cm,
+                x unit=0.37cm
+            ]{1}{34}
+                \ganttbar{$M_1$}{1}{5} \ganttbar[inline]{5}{1}{5} \ganttbar[inline]{5}{6}{10} \ganttbar[inline]{3}{11}{13} \ganttbar[inline]{6}{14}{19} \ganttbar[inline]{3}{20}{22} \\ 
+                \ganttbar{$M_2$}{6}{9} \ganttbar[inline]{4}{6}{9} \ganttbar[inline]{4}{11}{14} \ganttbar[inline]{2}{15}{16} \ganttbar[inline]{4}{20}{23} \ganttbar[inline]{4}{24}{27} \\ 
+                \ganttbar{$M_3$}{10}{13} \ganttbar[inline]{4}{10}{13} \ganttbar[inline]{4}{15}{18} \ganttbar[inline]{3}{19}{21} \ganttbar[inline]{4}{24}{27} \ganttbar[inline]{1}{28}{28} \\ 
+                \ganttbar{$M_4$}{14}{16} \ganttbar[inline]{3}{14}{16} \ganttbar[inline]{6}{19}{24} \ganttbar[inline]{3}{25}{27} \ganttbar[inline]{2}{28}{29} \ganttbar[inline]{5}{30}{34} \\ 
+                \gantttitlelist{1,...,34}{1}
+            \end{ganttchart}
+        \end{tikzpicture}
     \end{center}
 \end{exmp}
 
