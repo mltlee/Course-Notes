@@ -1,0 +1,192 @@
+\section{Additional Topics} \label{sec:10}
+
+\subsection{Weighted Vertex Cover} \label{subsec:10.1}
+Given a graph $G = (V, E)$ with vertex weights $w_i \geq 0$, the 
+weighted vertex cover problem is to find a minimum weight subset of 
+vertices $S \subseteq V$ such that every edge is incident to at least 
+one vertex in $S$. 
+
+Let $x_i = 1$ if vertex $i$ is chosen to be in the vertex cover, and 
+$x_i = 0$ otherwise. Then an integer linear programming formulation for the 
+weighted vertex cover is given as follows. 
+\begin{align*}
+    \min\quad & \sum_{i\in V} w_i x_i \\ 
+    \text{s.t.}\quad & x_i + x_j \geq 1, && \text{for all } (i, j) \in E, \\  
+    & x_i \geq 0 \text{ and integer}, && \text{for all } i \in V. 
+\end{align*}
+Note that there is no need for an upper bound on $x_i$ because this is 
+a minimization problem, which implicitly forces the restriction $x_i \leq 1$.
+Then the LP relaxation simply removes the integrality constraint above. 
+
+\begin{lemma}{lemma:10.1}
+    If $x^*$ is optimal for the LP relaxation, then $S = \{i \in V : x_i^* \geq 1/2\}$ 
+    is a vertex cover whose weight is at most twice the minimum possible weight. 
+\end{lemma}
+\begin{pf}
+    To see that $S$ is a vertex cover, let $(i, j)$ be an edge in $G$. Then the 
+    first constraint tells us that $x_i^* + x_j^* \geq 1$. We must have at least 
+    one of $x_i^* \geq 1/2$ or $x_j^* \geq 1/2$ for otherwise $x_i^* < 1/2$ 
+    and $x_j^* < 1/2$ would imply $x_i^* + x_j^* < 1$. Thus, the edge 
+    $(i, j)$ is covered. 
+
+    Next, we check that $S$ has the desired weight. If $S^*$ is an optimal 
+    vertex cover, then 
+    \[ \sum_{i\in S^*} w_i \geq \sum_{i\in S} w_i x_i^* \geq \frac{1}{2} \sum_{i\in S} w_i, \] 
+    where the first inequality is because the $x_i^*$ is an optimal solution to the 
+    LP relaxation whereas the first sum corresponds to an optimal solution 
+    to the IP, and the second inequality is because 
+    $x_i^* \geq 1/2$ for all $i \in S$. 
+\end{pf}
+
+Since the LP relaxation can be solved in polynomial time, this gives us a 
+$2$-approximation algorithm for weighted vertex cover. 
+
+\subsection{LP-based Approximation Algorithm for Makespan on Unrelated Machines}
+\label{subsec:10.2}
+The $(R~||~C_{\max})$ problem is $\NP$-hard, but the approach we used for the 
+weighted vertex cover problem gives us some inspiration to find a similar 
+LP-based approximation algorithm. In this section, we will discuss a 
+$2$-approximation algorithm for $(R~||~C_{\max})$. 
+
+First, we make an attempt at formulating the problem as an integer linear program. 
+Call it $(\text{IP}_1)$. 
+\begin{align*}
+    \min\quad & C \\ 
+    \text{s.t.}\quad & \sum_{j=1}^n p_{ij} x_{ij} \leq C, && \text{for all } i = 1, \dots, m, \\ 
+    & \sum_{i=1}^m x_{ij} = 1, && \text{for all } j = 1, \dots, n, \\ 
+    & x_{ij} \geq 0 \text{ and integer}, && \text{for all } i = 1, \dots, m,\; j = 1, \dots, n. 
+\end{align*}
+We make a quick aside on designing LP-based approximation algorithms for 
+minimization problems. Note that $\text{OPT}(\text{LP}) \leq 
+\text{OPT}(\text{IP})$ in general, so the goal is to find a schedule 
+$S$ such that 
+\[ C_{\max}(S) \leq \alpha \cdot \text{OPT}(\text{LP}) \leq 
+\alpha \cdot \text{OPT}(\text{IP}) \] 
+for some factor $\alpha = 1 + \eps$ where $\eps > 0$. 
+
+The {\bf integrality gap} (or {\bf integrality ratio}) of an LP relaxation is 
+given by 
+\[ \text{IR}(\text{LP}) = \max_I
+\frac{\text{OPT}(\text{IP})}{\text{OPT}(\text{LP})}, \] 
+where the maximum runs all over all instances $I$ of the problem. In particular, 
+if $\text{IR}(\text{LP}) > \alpha$, then we could not hope to design an 
+$\alpha$-approximation algorithm using the LP relaxation because we 
+cannot prove the approximation guarantee of $\alpha$. 
+
+Let us return to our original integer linear program $(\text{IP}_1)$. 
+The LP relaxation of $(\text{IP}_1)$, say $(\text{LP}_1)$, replaces the 
+last constraint with $x_{ij} \geq 0$.
+
+It turns out that $(\text{LP}_1)$ is not enough for a $2$-approximation 
+algorithm because the integrality gap is unbounded. Indeed, consider the instance 
+of $(R~||~C_{\max})$ where there are $m \geq 3$ machines and $1$ job 
+which has $p_{i1} = m$ for all $i = 1, \dots, m$. Then the optimal solution 
+to the LP relaxation takes $x_{i1} = 1/m$ for all $i = 1, \dots, m$ 
+and has value $1$, whereas the optimal solution to the IP has optimal 
+value $m$ by taking $x_{i1} = 1$ for some $i = 1, \dots, m$. In particular, 
+$(\text{LP}_1)$ has integrality gap at least $m \geq 3$. 
+
+Why does $(\text{IP}_1)$ have such a large integrality ratio? A handwavy 
+explanation is that there are large values of $p_{ij}$ that cannot be 
+used for solving the IP, but can be exploited by the LP relaxation. 
+
+Therefore, we need a new plan. Fix $\alpha = 2$, and suppose that we 
+know the optimal makespan $C$ (which is $\NP$-hard to compute). 
+We give a subroutine that takes an instance of $(R~||~C_{\max})$ 
+and parameter $C$ as input, which either 
+\begin{enumerate}[(i)]
+    \item finds a schedule $S$ with $C_{\max}(S) \leq \alpha C$, or 
+    \item certifies that the optimal makespan is greater than $C$. 
+\end{enumerate}
+Given the parameter $C$, we define the set $S_C = \{(i, j) : p_{ij} \leq C\}$.
+The idea is that we are throwing away all the irrelevant jobs! We then 
+give an integer linear program $(\text{IP}_C)$ as follows.
+\begin{align*}
+    \min\quad & 0 \\ 
+    \text{s.t.}\quad & \sum_{j=1}^n p_{ij} x_{ij} \leq C, && \text{for all } i = 1, \dots, m, \\ 
+    & \sum_{(i, j) \in S_C} x_{ij} = 1, && \text{for all } j = 1, \dots, n, \\ 
+    & x_{ij} \geq 0 \text{ and integer}, && \text{for all } i = 1, \dots, m,\; j = 1, \dots, n. 
+\end{align*}
+In particular, in the second constraint, we are only summing over the 
+relevant jobs in $S_C$. Moreover, the objective does not matter now 
+since we are only looking for a feasible solution. Let $(\text{LP}_C)$ denote 
+the LP relaxation of $(\text{IP}_C)$.
+
+\begin{theo}{theo:10.2}
+    Suppose that $(\text{LP}_C)$ has a feasible solution for some $C$.
+    Then there is an efficient algorithm that finds a schedule $S$ 
+    with $C_{\max}(S) \leq 2C$. 
+\end{theo}
+\begin{pf}
+    Let $x^*$ be a basic feasible solution (BFS) of $(\text{LP}_C)$. 
+
+    Recall from CO 250 that for an LP with constraints $\{Ax \geq b,\; 
+    x \geq 0\}$ where $A$ is a $p \times q$ matrix, a BFS $x^*$ has at most 
+    $p$ non-zero entries. (The proof of this can be derived by writing 
+    the LP in standard equality form.)
+
+    Let $G = (V, E^*)$ be the bipartite graph which has a node corresponding 
+    to each machine $i$ and a node corresponding to each job $j$. 
+    There is an edge $(i, j) \in E^*$ if and only if $x_{ij}^* > 0$. 
+
+    Note that $G$ has $m + n$ nodes and $(\text{LP}_C)$ has $m + n$ 
+    constraints. Since $x^*$ is a BFS, we see from the fact from CO 250 
+    that $G$ has at most $m + n$ edges. 
+
+    We may assume without loss of generality that $G$ is connected. 
+    Indeed, if $G$ were not connected, then we could consider the connected 
+    components of $G$ one by one and apply the rounding algorithm to each. 
+
+    Then a result from graph theory says that a connected graph $(U, F)$ 
+    with $|F| \leq |U|$ has at most one cycle, so in particular, $G$ 
+    has at most one cycle. 
+
+    We are now ready to state the rounding algorithm. 
+    \begin{enumerate}
+        \item Call a job node $j$ a {\bf leaf} if $\deg_G(j) = 1$. 
+        Assign each leaf job to the unique machine $i$ adjacent to $j$ 
+        in $G$. (Due to the second set of constraints, note that the unique edge 
+        $(i, j)$ incident to a leaf job $j$ has $x_{ij}^* = 1$.) 
+        
+        Delete all leaf jobs from $G$ to obtain a graph $G'$ where $\deg_{G'}(j) \geq 2$ 
+        for all job nodes $j$, and the number of edges is at most the number of 
+        nodes. We'll maintain this inequality throughout because whenever 
+        we delete a node, we also delete at least one edge. 
+
+        \item If $G'$ has a cycle $Q$ (and there is at most one), then pick a 
+        maximum matching $\hat M$ of $Q$. Assign jobs to the machines according 
+        to this matching, and delete the job nodes afterwards. 
+
+        \item For any remaining machine node $i$ with $\deg_{G'}(i) = 1$, 
+        assign its unique job node neighbour $j$ to machine $i$. Delete 
+        the job node together with the machine node in this case. 
+    \end{enumerate}
+    At termination, the algorithm has assigned each job to some machine. 
+
+    Note that after Step 1, each machine is assigned to at most one job. 
+    This can be seen by handling the unique cycle of $G'$ 
+    (if it exists) at the very last step. 
+
+    Moreover, the makespan of the resulting schedule is at most $2C$. 
+    Indeed, at Step 1, the load of any machine $i$ is at most the 
+    load assigned to machine $i$ by $(\text{LP}_C)$, which is at most $C$. 
+    The later stages put at most one job on machine $i$. Since 
+    $p_{ij} \leq C$ for all considered jobs in $(\text{LP}_C)$, our 
+    claim follows. 
+\end{pf}
+
+Based on Theorem~\ref{theo:10.2}, we get an algorithm that uses 
+binary search to handle the parameter $C$. Assuming that the values of 
+$p_{ij}$ are integral, perform the following steps: 
+\begin{enumerate}
+    \item Set $L = 1$ and $U = np_{\max}$ where $p_{\max} = \max\{p_{ij}\}$. 
+    \item While $U - L > 1$, do the following: 
+    \begin{enumerate}[(a)]
+        \item Let $C = (L + U)/2$. 
+        \item If $(\text{LP}_C)$ is feasible, set $U = C$; otherwise, set $L = C$. 
+    \end{enumerate}
+\end{enumerate}
+Let $C^*$ be the value of $C$ at the end of the while loop. Note that 
+$C^*$ is the minimum value of $C$ such that $(\text{LP}_C)$ is feasible. 
+By Theorem~\ref{theo:10.2}, we can find a schedule $S$ with makespan 
+at most $2C^*$ efficiently. 
