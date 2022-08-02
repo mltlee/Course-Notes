@@ -274,8 +274,9 @@ Johnson's rule.
 Note that Johnson's rule is equivalent to the following algorithm. 
 Partition the jobs into two sets: $S_1$ contains all jobs $j$ with 
 $a_j \leq b_j$, and $S_2$ contains all jobs $j$ with $a_j > b_j$. 
-Place the jobs in $S_1$ first in SPT order, and the jobs in $S_2$ last 
-in LPT order. In this sense, this is also called the SPT(1)-LPT(2) rule. 
+Place the jobs in $S_1$ first in SPT order of the $a_j$, and the jobs in 
+$S_2$ last in LPT order of the $b_j$. In this sense, this is also called 
+the SPT(1)-LPT(2) rule. 
 
 Let us now show that Johnson's rule is indeed optimal for 
 $(F_2~||~C_{\max})$. We first prove a key lemma. 

@@ -221,7 +221,7 @@ algorithm.
     completed (that is, the set of all schedulable jobs).
 \end{algo}
 
-So $(1~|~\text{prec}~|~C_{\max})$ and $(P_\infty~|~\text{prec}~|~C_{\max})$,
+So $(1~|~\text{prec}~|~C_{\max})$ and $(P_\infty~|~\text{prec}~|~C_{\max})$
 are easy. But we stated earlier that $(P_m~|~\text{prec}~|~C_{\max})$ is 
 strongly $\NP$-hard for $2 \leq m < n$. Even $(P_m~|~p_j = 1, \text{prec}~|~C_{\max})$,
 where the processing times are all unit, is not easy. However, by constraining 
@@ -700,7 +700,7 @@ continuous time as well.
 \subsection{Dynamic Programming and PTAS for Makespan} \label{subsec:6.3}
 We now return to the $\NP$-hard problem $(P~||~C_{\max})$, where the 
 number of machines is \emph{not} fixed. We first focus on a special 
-case where the processing times $p_j$ take on $k$ distinct values. We use 
+case where the processing times $p_j$ take on $k$ distinct values. We use a
 dynamic programming algorithm to solve this special case in $n^{O(k)}$ time. 
 Assume that we are given a target schedule length $T$.
 
