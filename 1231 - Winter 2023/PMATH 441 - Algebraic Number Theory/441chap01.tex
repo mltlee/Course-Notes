@@ -43,7 +43,7 @@ Note that in the above definition, we do not insist that $f(x) \in \Z[x]$
 is irreducible.
 
 It is not hard to see that $n$ and $\sqrt{n}$ are algebraic integers for 
-all $n \in \mathbb{Z}^+$. By our previous work, we see that $(1 + \sqrt{5})/2$ 
+all $n \in \mathbb{Z}$. By our previous work, we see that $(1 + \sqrt{5})/2$ 
 is an algebraic integer. It can also be shown that $i$, $1 + i$ and 
 $\zeta_n = e^{2\pi i/n}$ are all algebraic integers.
 
@@ -57,7 +57,12 @@ theorem gives us a simple test to do so.
     its minimal polynomial over $\Q$ has integer coefficients.
 \end{theo}
 
-For example, let us now consider $\beta = (1 + \sqrt{3})/2$ (noting that 
+An easy corollary we can obtain is that the only algebraic integers 
+in $\Q$ are the ordinary integers. Indeed, the minimal polynomial of 
+a rational number $q \in \Q$ is $m(x) = x - q$, which is in $\Z[x]$ 
+if and only if $q \in \Z$. 
+
+For another example, let us consider $\beta = (1 + \sqrt{3})/2$ (noting that 
 $3 \not\equiv 1 \pmod 4$ here). Performing the same manipulations as before, 
 we deduce that $4\beta^2 - 4\beta - 2 = 0$ and hence $\beta^2 - \beta - 1/2 = 0$. 
 In fact, $m(x) = x^2 - x - 1/2$ is the minimal polynomial for $\beta$ over 
@@ -66,7 +71,8 @@ irreducible since we know the roots are $(1 \pm \sqrt{3})/2$, which are
 not in $\Q$. By applying Theorem~\ref{theo:1.2}, it follows that $\beta$ is 
 \emph{not} an algebraic integer. 
 
-Another easy corollary we can obtain is that the only algebraic integers 
-in $\Q$ are the ordinary integers. Indeed, the minimal polynomial of 
-a rational number $q \in \Q$ is $m(x) = x - q$, which is in $\Z[x]$ 
-if and only if $q \in \Z$. 
+A concern one might have is that $\beta = (1 + \sqrt{3})/2$ also seems to be 
+integer-like, and so we shouldn't dismiss it. However, we shouldn't expect 
+it to work that nicely because it behaves more like a rational; we were 
+more lucky with $\alpha = (1 + \sqrt{5})/2$ because it happened to be the 
+case that $5 \equiv 1 \pmod 4$, as we observed earlier.
