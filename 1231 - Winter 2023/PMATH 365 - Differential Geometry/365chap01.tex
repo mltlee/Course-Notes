@@ -1,0 +1,41 @@
+\section{Submanifolds of $\R^n$}\label{sec:1}
+
+\subsection{Preliminaries}\label{subsec:1.1}
+To begin, we'll recall some facts about the topology of $\R^n$ and 
+vector-valued functions. 
+
+In this course, we'll be working with the metric topology with respect 
+to the Euclidean norm (or metric). Let $\mathbf{x}, \mathbf{y} \in \R^n$.
+The {\bf Euclidean norm} is defined to be 
+\[ \|\mathbf x\| = \sqrt{x_1^2 + \cdots + x_n^2}, \] 
+and {\bf Euclidean distance} is given by 
+\[ \dist(\mathbf x, \mathbf y) = \|y - x\| = \sqrt{(y_1 - x_1)^2 + 
+\cdots + (y_n - x_n)^2}. \] 
+We define the {\bf open ball} of radius $r > 0$ centered at $\mathbf x \in \R^n$ by 
+\[ B_r(\mathbf x) := \{\mathbf y \in \R^n : \dist(\mathbf x, \mathbf y) < r\} \subset \R^n. \] 
+A {\bf topology} on $\R^n$ is a collection $\mathcal{U} = \{U_\alpha\}_{\alpha \in A}$ 
+of subsets $U_\alpha \subset \R^n$ that satisfy the following properties.
+\begin{enumerate}[(i)]
+    \item $\varnothing$ and $\R^n$ are in ${\cal U}$. 
+    \item For any subcollection $\mathcal{V} = \{U_\beta\}_{\beta \in B}$ 
+    with $U_\beta \in {\cal U}$ for all $\beta \in B$, we have 
+    $\bigcup_{\beta \in B} U_\beta \in {\cal U}$. 
+    \item For any \emph{finite} subcollection $\{U_{\alpha_1}, \dots, 
+    U_{\alpha_m}\} \subset {\cal U}$, we have $\bigcap_{i=1}^m 
+    U_{\alpha_i} \in {\cal U}$. 
+\end{enumerate}
+The sets $U_\alpha \in {\cal U}$ are called the {\bf open sets} of the topology; 
+their complements $F_\alpha = \R^n \setminus U_\alpha$ are called the 
+{\bf closed sets}. Note that by properties (i) and (iii), the sets 
+$\varnothing$ and $\R^n$ are both open and closed. 
+
+Under the metric topology, we say that a set $A \subset \R^n$ is {\bf open} 
+if $A = \varnothing$ or if for all $p \in A$, there exists $r > 0$ 
+such that $B_r(p) \subset A$. Moreover, $A$ is {\bf closed} if its 
+complement $A^c = \R^n \setminus A$ is open. (We leave it as an 
+exercise to show that this is indeed a topology.)
+
+For example, the open balls $B_r(\mathbf x)$ are open sets for all 
+$\mathbf x \in \R^n$ and $r > 0$. Indeed, for any point $\mathbf p \in 
+B_r(\mathbf x)$, one sees that by picking $r' = (r - \|\mathbf p - 
+\mathbf x\|)/2$, we have $B_{r'}(\mathbf p) \subset B_r(\mathbf x)$. 
