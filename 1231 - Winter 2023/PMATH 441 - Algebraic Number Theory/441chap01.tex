@@ -28,8 +28,7 @@ this simplification work?
 \end{enumerate}
 More generally, why do we want to work with $\Z[\alpha] = \Z + \Z\alpha 
 + \cdots + \Z\alpha^{n-1}$? This is because it allows us to do 
-finite-dimensional $\Z$-linear algebra (actually module theory, since 
-$\Z$ is not a field).
+finite-dimensional ``linear algebra'' over $\Z$.
 
 \subsection{Algebraic Integers}\label{subsec:1.2}
 Now that we are properly motivated, let's introduce the algebraic integers.
@@ -76,3 +75,115 @@ integer-like, and so we shouldn't dismiss it. However, we shouldn't expect
 it to work that nicely because it behaves more like a rational; we were 
 more lucky with $\alpha = (1 + \sqrt{5})/2$ because it happened to be the 
 case that $5 \equiv 1 \pmod 4$, as we observed earlier.
+
+With these examples out of the way, let's jump into the proof of the theorem. 
+Recall that for a polynomial $f(x) = a_n x^n + \cdots + a_1 x + a_0 \in \Z[x]$, 
+the {\bf content} of $f(x)$ is 
+\[ \Content(f(x)) = \gcd(a_n, a_{n-1}, \dots, a_0). \] 
+We say that $f(x)$ is {\bf primitive} if $\Content(f(x)) = 1$. Moreover, 
+an equivalent formulation of Gauss' lemma states that if $f(x), g(x) \in \Z[x]$ 
+are primitive, then $f(x)g(x)$ is also primitive.
+
+\begin{pf}[Theorem~\ref{theo:1.2}]
+    $(\Leftarrow)$ This is immediate by considering the minimal polynomial 
+    of $\alpha$ over $\Q$, say $m(x) \in \Z[x]$, which is monic and satisfies 
+    $m(\alpha) = 0$. 
+
+    $(\Rightarrow)$ Let $\alpha \in \C$ be an algebraic integer and let
+    $m(x) \in \Q[x]$ be its minimal polynomial. Let $f(x) \in \Z[x]$ be 
+    monic such that $f(\alpha) = 0$. Then by the properties of a minimal 
+    polynomial, we have $m(x) \mid f(x)$. That is, we can write $f(x) = 
+    m(x)g(x)$ for some $g(x) \in \Q[x]$. 
+
+    Let $N_1, N_2 \in \N$ be minimal such that $N_1 m(x), N_2 g(x) \in \Z[x]$. 
+    Note that if $p$ is a prime dividing all coefficients of $N_1 m(x)$, 
+    then $(N_1/p)m(x) \in \Z[x]$, and in fact, we also have $N_1/p \in \Z$ 
+    since $m(x)$ is monic. This contradicts the minimality of $N_1$, so 
+    $N_1 m(x)$ must be primitive. Similarly, $N_2 g(x)$ is primitive by 
+    the same argument, noting that $g(x)$ is monic since $f(x)$ and $m(x)$ are. 
+
+    Now, observe that $N_1 N_2 f(x) = (N_1 m(x))(N_2 g(x))$ is primitive by 
+    Gauss' lemma. Again, we note that $f(x)$ is monic, so equating contents 
+    gives us $N_1 N_2 = 1$. It follows that $N_1 = N_2 = 1$, and 
+    in particular, we have $m(x) \in \Z[x]$ as desired. \qed
+\end{pf}
+
+\subsection{Rings of Integers}\label{subsec:1.3}
+We now work through an example which is considered a rite of passage through 
+algebraic number theory. Let $d \in \Z$ be square-free where $d \neq 1$. 
+Recall that being square-free means that there is no multiplicity in its 
+prime factorization. Consider the field extension
+\[ K = \Q(\sqrt{d}) = \{a + b\sqrt{d} : a, b \in \Q\}. \] 
+In particular, $K/\Q$ is a finite extension and hence algebraic. We wish to 
+find all the algebraic integers in $K$.
+
+Suppose that $\alpha = a + b\sqrt{d}$ is an algebraic integer, and let 
+$\overline\alpha = a - b\sqrt{d}$ be its complex conjugate. Using some 
+Galois theory, the minimal polynomial of $\alpha$ is 
+\[ m(x) = (x - \alpha)(x - \overline\alpha) = x^2 - 2ax + a^2 - db^2. \] 
+We know that $m(x) \in \Z[x]$ by Theorem~\ref{theo:1.2}, so we must have 
+$2a$, $a^2 - db^2 \in \Z$. Next, we have 
+\[ 4(a^2 - db^2) = (2a)^2 - d(2b)^2 \in \Z, \] 
+so $d(2b)^2 \in \Z$. Then by a denominator argument, we find that 
+$2b \in \Z$ as well since $d$ is square-free.
+
+Write $u = 2a$ and $v = 2b$ so that $a = u/2$ and $b = v/2$. We obtain 
+\[ a^2 - db^2 = \left(\frac{u}{2}\right)^2 - d\left(\frac{v}{2}\right)^2 
+= \frac{u^2 - dv^2}{4} \in \Z, \] 
+so $u^2 - dv^2 \equiv 0 \pmod 4$. We now consider what form $\alpha$ 
+can take under a few cases. Note that the $d \equiv 0 \pmod 4$ case is 
+impossible since $d$ is square-free. 
+
+\textbf{Case 1.} If $d \equiv 1 \pmod 4$, then $u^2 \equiv v^2 \pmod 4$. 
+Recall that the square of an even number is $0 \pmod 4$ and the square 
+of an odd number is $1 \pmod 4$, so this is equivalent to $u \equiv v \pmod 2$. 
+That is, we have $\alpha = a + b\sqrt{d} = (u/2) + (v/2)\sqrt{d}$ for $u$ 
+and $v$ with the same parity.
+
+\textbf{Case 2.} If $d \equiv 2 \pmod 4$ or $d \equiv 3 \pmod 4$, then 
+it can be shown that $u^2 - dv^2 \equiv 0 \pmod 4$ is equivalent to having 
+$u \equiv v \equiv 0 \pmod 2$. This means that $\alpha = a' + b'\sqrt{d}$ for 
+some $a', b' \in \Z$. 
+
+We leave it as an exercise to check that these conditions are also sufficient, 
+which can be done by reversing the arguments above.
+
+More generally, given a finite field extension $K/\Q$, we want to describe 
+all the algebraic integers in $K$. This leads us to the following definitions.
+
+\begin{defn}{defn:1.3}
+    We call a finite field extension $K$ of $\Q$ a {\bf number field}.
+    For a number field $K$, we call 
+    \[ \mathcal{O}_K = \{\alpha \in K : \alpha \text{ an algebraic integer}\} \] 
+    the {\bf ring of integers} of $K$.
+\end{defn}
+
+Obviously, we'll need to prove that ${\cal O}_K$ is indeed a ring (namely, 
+a subring of $\C$). To do this, we'll define 
+\[ \mathbb{A} = \{z \in \C : z \text{ an algebraic integer}\} \] 
+and show that $\mathbb{A}$ is a ring, which will imply that ${\cal O}_K 
+= \mathbb{A} \cap K$ is a ring too. 
+
+Before that, let's move on to some more definitions. Recall that in 
+Section~\ref{subsec:1.1}, we wanted to work with 
+\[ \Z[\alpha] = \Z + \Z\alpha + \cdots + \Z\alpha^{n-1} \] 
+where $\alpha \in \mathbb{A}$ in order to do ``linear algebra'' over $\Z$. But $\Z$ is not a field, 
+so we'll need something more general.
+
+\begin{defn}{defn:1.4}
+    Let $R$ be a ring. An {\bf $R$-module} is an abelian group $(M, +)$ 
+    together with an operation $\cdot : R \times M \to M$ such that 
+    \begin{enumerate}[(i)]
+        \item for all $m \in M$, we have $1m = m$; 
+        \item for all $r_1, r_2 \in R$ and $m \in M$, we have 
+        $(r_1 + r_2)m = r_1m + r_2m$;
+        \item for all $r \in R$ and $m_1, m_2 \in M$, we have 
+        $r(m_1 + m_2) = rm_1 + rm_2$; 
+        \item for all $r_1, r_2 \in R$ and $m \in M$, we have 
+        $(r_1r_2)m = r_1(r_2m)$.
+    \end{enumerate}
+\end{defn}
+
+We can think of the operation $\cdot : R \times M \to M$ as the ``$R$-action 
+on $M$''. Note that if $R$ is a field, then an $R$-module is the same as 
+an $R$-vector space. 
