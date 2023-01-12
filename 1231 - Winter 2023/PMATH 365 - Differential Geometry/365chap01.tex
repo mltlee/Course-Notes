@@ -2,18 +2,18 @@
 
 \subsection{Preliminaries}\label{subsec:1.1}
 To begin, we'll recall some facts about the topology of $\R^n$ and 
-vector-valued functions. 
+vector-valued functions.
 
 In this course, we'll be working with the metric topology with respect 
-to the Euclidean norm (or metric). Let $\mathbf{x} = (x_1, \dots, x_n),\,
-\mathbf{y} = (y_1, \dots, y_n) \in \R^n$.
+to the Euclidean norm (or metric). Let $x = (x_1, \dots, x_n),\,
+y = (y_1, \dots, y_n) \in \R^n$.
 The {\bf Euclidean norm} is defined to be 
-\[ \|\mathbf x\| = \sqrt{x_1^2 + \cdots + x_n^2}, \] 
+\[ \|x\| = \sqrt{x_1^2 + \cdots + x_n^2}, \] 
 and {\bf Euclidean distance} is given by 
-\[ \dist(\mathbf x, \mathbf y) = \|\mathbf y - \mathbf x\| = \sqrt{(y_1 - x_1)^2 + 
+\[ \dist(x, y) = \|y - x\| = \sqrt{(y_1 - x_1)^2 + 
 \cdots + (y_n - x_n)^2}. \] 
-We define the {\bf open ball} of radius $r > 0$ centered at $\mathbf x \in \R^n$ by 
-\[ B_r(\mathbf x) := \{\mathbf y \in \R^n : \dist(\mathbf x, \mathbf y) < r\} \subset \R^n. \] 
+We define the {\bf open ball} of radius $r > 0$ centered at $x \in \R^n$ by 
+\[ B_r(x) := \{y \in \R^n : \dist(x, y) < r\} \subset \R^n. \] 
 A {\bf topology} on $\R^n$ is a collection $\mathcal{U} = \{U_\alpha\}_{\alpha \in A}$ 
 of subsets $U_\alpha \subset \R^n$ that satisfy the following properties.
 \begin{enumerate}[(i)]
@@ -27,15 +27,75 @@ of subsets $U_\alpha \subset \R^n$ that satisfy the following properties.
 \end{enumerate}
 The sets $U_\alpha \in {\cal U}$ are called the {\bf open sets} of the topology; 
 their complements $F_\alpha = \R^n \setminus U_\alpha$ are called the 
-{\bf closed sets}. Note that the sets $\varnothing$ and $\R^n$ are both open and closed. 
+{\bf closed sets}. 
+
+Note that the sets $\varnothing$ and $\R^n$ are both open and closed. 
+Moreover, the notion of a topology can be extended to more general sets 
+$X$, not just $\R^n$. A topology can also be defined starting with closed sets,
+but we prefer to work with open sets because many nice properties, such as 
+differentiability, are better described with them.
 
 Under the metric topology, we say that a set $A \subset \R^n$ is {\bf open} 
 if $A = \varnothing$ or if for all $p \in A$, there exists $r > 0$ 
 such that $B_r(p) \subset A$. Moreover, $A$ is {\bf closed} if its 
 complement $A^c = \R^n \setminus A$ is open. (We leave it as an 
-exercise to show that this is indeed a topology.)
+exercise to show that this is indeed a topology.) 
 
-For example, the open balls $B_r(\mathbf x)$ are open sets for all 
-$\mathbf x \in \R^n$ and $r > 0$. Indeed, for any point $\mathbf p \in 
-B_r(\mathbf x)$, one sees that by picking $r' = (r - \|\mathbf p - 
-\mathbf x\|)/2$, we have $B_{r'}(\mathbf p) \subset B_r(\mathbf x)$. 
+For example, the open balls $B_r(x)$ are open sets for all 
+$x \in \R^n$ and $r > 0$. Indeed, for any point $p \in 
+B_r(x)$, one sees that by picking $r' = (r - \|p - x\|)/2$, 
+we have $B_{r'}(p) \subset B_r(x)$. 
+
+In general, open sets are described with strict inequalities, while closed 
+sets are described using equality or inclusive inequalities. However, note 
+that most sets are neither open nor closed, such as the half-open interval 
+$U = (-1, 1]$ over $\R$. 
+
+The metric topology is not the only topology on $\R^n$; one example is 
+the one consisting of only the sets ${\cal U} = \{\varnothing, \R^n\}$.
+However, we generally want more open sets to work with since we might want to 
+know the behaviour of functions around a point $p \in \R^n$. If the 
+only non-empty open set we had was $\R^n$, then this would apply to all points 
+in $\R^n$, which does not yield a lot of information. 
+
+Let $p \in \R^n$. The previous paragraph leads us to the definition of an 
+{\bf open neighbourhood} of $p$, which is just an open set $U \subset \R^n$ 
+such that $p \in U$. 
+
+We now turn our discussion to vector-valued functions. Let $U \subset \R^n$ 
+and consider the vector-valued function 
+\begin{align*}
+    F : U \subset \R^n &\to B \subset \R^m \\ 
+    x = (x_1, \dots, x_n) &\mapsto (F_1(x), \dots, F_m(x)). 
+\end{align*}
+Then $F$ is continuous if and only if the component functions 
+$F_i : U \to \R$ are continuous for all $i = 1, \dots, m$. 
+
+We say that $F$ is a {\bf homeomorphism} if it is a continuous bijection 
+whose inverse 
+\[ F^{-1} : B \subset \R^m \to U \subset \R^n \] 
+is also continuous. For example, the identity map $\Id_{\R^n} : \R^n \to \R^n$ 
+and the function $f : \R \to \R$ defined by $f(x) = x^3$ are both homeomorphisms. 
+
+It is a known fact that homeomorphisms map open sets to open sets and closed 
+sets to closed sets. This follows from the topological characterization 
+of continuity, which states that $F$ is continuous if and only if for 
+every open (respectively closed) set $V \subset \R^m$, we have that 
+$F^{-1}(V)$ is open (respectively closed). In fact, homeomorphisms preserve 
+much more structure than this, as we'll see later. 
+
+\subsection{Topological Submanifolds of $\R^n$}\label{subsec:1.2}
+We now define the main object we'll be working with in this course.
+
+\begin{defn}{defn:1.1}
+    A {\bf $k$-dimensional topological submanifold} (or 
+    {\bf topological $k$-submanifold}) of $\R^n$ is a subset $M \subset \R^n$ 
+    such that for every $p \in M$, there exists an open neighbourhood $V$ 
+    of $p$ in $\R^n$, an open set $U \subset \R^k$, and a homeomorphism 
+    \[ \alpha : U \subset \R^k \to V \cap M \subset \R^n. \] 
+\end{defn}
+
+For example, $\R^n$ is a topological $n$-submanifold of $\R^n$ 
+by taking $U = V = \R^n$ and $\alpha = \Id_{\R^n}$. Any open set 
+$W \subset \R^n$ is a topological $n$-submanifold of $\R^n$ by 
+taking $U = V = W$ and $\alpha = \Id_W$. 
