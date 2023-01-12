@@ -105,7 +105,7 @@ Note that we always set $d(s) = 0$. We now make some observations:
 \subsection{Dijkstra's Algorithm}\label{subsec:1.3}
 In 1959, Dijkstra came up with the following algorithm to solve the 
 shortest paths problem. The main idea is to maintain a set $A \subseteq V$ 
-of "explored" nodes; that is, a set of nodes for which we already know the 
+of ``explored'' nodes; that is, a set of nodes for which we already know the 
 shortest-path distances. We'll also maintain labels $d'(v)$ for $v \in 
 V \setminus A$ with upper bounds on the shortest-path distances from $s$. 
 
@@ -115,7 +115,7 @@ all $e \in E$, and a start vertex $v \in V$.
 {\bf Output.} For all $v \in V$, the length $d(v)$ for the shortest-path from 
 $s$ to $v$.
 \begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
-    \item {\bf Initialization.} $A \gets \{s\}$, $d(s) \gets 0$, and $d'(v) \gets \infty$ 
+    \item {\bf Initialization.} Set $A \gets \{s\}$, $d(s) \gets 0$, and $d'(v) \gets \infty$ 
     for all $v \in V \setminus A$.
 
     \item While $A \neq V$:
