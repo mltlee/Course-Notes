@@ -101,3 +101,78 @@ Note that we always set $d(s) = 0$. We now make some observations:
     such that $d(v) = d(w) + \ell_{(w, v)}$ and $(w, v) \in E$. This can 
     be seen by chopping off the last edge from a shortest path from $s$ to $v$.
 \end{enumerate}
+
+\subsection{Dijkstra's Algorithm}\label{subsec:1.3}
+In 1959, Dijkstra came up with the following algorithm to solve the 
+shortest paths problem. The main idea is to maintain a set $A \subseteq V$ 
+of "explored" nodes; that is, a set of nodes for which we already know the 
+shortest-path distances. We'll also maintain labels $d'(v)$ for $v \in 
+V \setminus A$ with upper bounds on the shortest-path distances from $s$. 
+
+{\bf Input.} A directed graph $G = (V, E)$, edge lengths $\ell_e \geq 0$ for 
+all $e \in E$, and a start vertex $v \in V$. 
+
+{\bf Output.} For all $v \in V$, the length $d(v)$ for the shortest-path from 
+$s$ to $v$.
+\begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
+    \item {\bf Initialization.} $A \gets \{s\}$, $d(s) \gets 0$, and $d'(v) \gets \infty$ 
+    for all $v \in V \setminus A$.
+
+    \item While $A \neq V$:
+    \begin{enumerate}[label={Step 2.\arabic*.}]
+        \item {\bf Push down the upper bounds.} For each $v \in V \setminus A$, compute 
+        \[ d'(v) \gets \min\left\{ d'(v), \min_{\substack{u\in A \\ (u, v) \in E}} 
+        \{ d(u) + \ell_{(u, v)} \} \right\}. \] 
+        \item {\bf Add a new vertex.} Set $w \gets \argmin_{v \in V \setminus A} d'(v)$, 
+        $A \gets A \cup \{w\}$, and $d(w) \gets d'(w)$. 
+    \end{enumerate}
+\end{enumerate}
+
+Suppose that for each vertex $w \in V$, we keep track of the node $u$ 
+determining its upper bound $d'(w)$. That is, the node $u$ is such that 
+$(u, w) \in E$ and $d'(w) = d(u) + \ell_{(u, w)}$. Then at the end of the 
+algorithm, a shortest path from $s$ to $w$ can be obtained as a shortest path 
+from $s$ to $u$ adjoined with the edge $(u, w) \in E$. Moreover, these edges 
+selected by Dijkstra's algorithm form an arborescence, which is a nice graph 
+structure that we'll discuss more later. 
+
+Next, let's prove the correctness of Dijkstra's algorithm. In particular, 
+we need to show that for every $v \in V$, the distance from $s$ to $v$ 
+is computed correctly. We'll assume that the graph is connected; that is, 
+for every $v \in V$, there is an $s, v$-path in $G$. (Note that the 
+algorithm won't terminate otherwise, but it can be adjusted to deal 
+with this.)
+
+\begin{pf}[correctness of Dijkstra's algorithm]
+    We proceed by induction on $|A|$, and show that at each point in time, 
+    $d(v)$ is computed correctly for all $v \in A$. The case where $|A| = 1$ 
+    is clear because at the start of the algorithm, we initialize $A = \{s\}$ 
+    with $d(s) = 0$, which is correct. 
+
+    Assume that $d(v)$ is computed correctly for every $v \in A$ when 
+    that $|A| = k$. Suppose that we are adding a new vertex $w$ to $A$ 
+    in Step 2.2 of the algorithm. Consider the vertex $u \in A$ such that 
+    $(u, w) \in E$ and 
+    \[ d'(w) = d(u) + \ell_{(u, w)}. \] 
+    Specifically, this is the vertex $u$ determining the upper bound 
+    $d'(w)$ which we discussed in the paragraph following the description 
+    of the algorithm. 
+
+    For the sake of contradiction, assume that the distance from $s$ to $w$ 
+    is not $d'(w)$. Let $P_u$ be a shortest path from $s$ to $u$, and 
+    let $P'$ be a shortest path from $s$ to $w$. Then by our 
+    assumption, we know that 
+    \[ \ell(P') < \ell(P_u) + \ell_{(u, w)} = d'(w). \] 
+    Now, let $x, y \in V$ be such that $(x, y) \in E$ lies on the shortest 
+    path $P'$ from $s$ to $w$, with $x \in A$ and $y \in V \setminus A$. 
+    (This exists because at some point, the path must exit $A$ to get 
+    from $s$ to $w$.) Then we obtain 
+    \[ d'(y) \leq d(x) + \ell_{(x,y)} \leq \ell(P') < \ell(P_u) 
+    + \ell_{(u, w)} = d'(w), \] 
+    where the first inequality is because of how $d'(y)$ is computed in 
+    Step 2.1, and the second inequality is because the shortest path 
+    from $x$ to $y$ adjoined with the edge $(x, y)$ is part of the path $P'$, 
+    noting that $\ell_e \geq 0$ for all $e \in E$. But this contradicts 
+    our choice of $w = \argmin_{v\in V \setminus A} \{d'(v)\}$ in Step 2.2 
+    since $y \in V \setminus A$ but $d'(y) < d'(w)$. \qed
+\end{pf}
