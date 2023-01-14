@@ -28,7 +28,8 @@ this simplification work?
 \end{enumerate}
 More generally, why do we want to work with $\Z[\alpha] = \Z + \Z\alpha 
 + \cdots + \Z\alpha^{n-1}$? This is because it allows us to do 
-finite-dimensional ``linear algebra'' over $\Z$.
+finite-dimensional ``linear algebra'' over $\Z$ (which is actually module 
+theory, as we'll see soon).
 
 \subsection{Algebraic Integers}\label{subsec:1.2}
 Now that we are properly motivated, let's introduce the algebraic integers.
@@ -186,4 +187,159 @@ so we'll need something more general.
 
 We can think of the operation $\cdot : R \times M \to M$ as the ``$R$-action 
 on $M$''. Note that if $R$ is a field, then an $R$-module is the same as 
-an $R$-vector space. 
+an $R$-vector space, so this definition indeed captures the essence of doing
+linear algebra. Let's go over a few examples of $R$-modules. 
+\begin{enumerate}[(1)]
+    \item Every ring $R$ is an $R$-module over itself with operation 
+    $r \cdot m = rm$.
+    \item If $S$ is a subring of $R$, then $R$ is an $S$-module with 
+    operation $s \cdot r = sr$. 
+    \item Thinking in the linear algebra setting, we can view $\R^n$ as an 
+    $R$-module for every ring $R$ with operation $r \cdot [x_1, \dots, x_n]^T 
+    = [rx_1, \dots, rx_n]^T$. 
+    \item Let $R = \Z$ and let $(M, +)$ be an $R$-module. For $n \in \N$, 
+    observe that 
+    \begin{align*}
+        n \cdot m &= (1 + \cdots + 1) \cdot m \\
+        &= 1 \cdot m + \cdots + 1 \cdot m \\ 
+        &= m + \cdots + m \\ 
+        &= nm.
+    \end{align*}
+    Similarly, we can show that $(-n) \cdot m = -(n \cdot m) = -nm$. Therefore, 
+    the only possible $\Z$-action on $M$ is the one we expect, namely that 
+    of repeated addition. In particular, the $\Z$-module structure does not 
+    impose anything on $M$; it is just an abelian group. 
+\end{enumerate}
+
+We now do a quick crash course in module theory and list more definitions.
+
+\begin{defn}{defn:1.5}
+    Let $R$ be a ring, and let $M$ be an $R$-module.
+    \begin{enumerate}[(1)]
+        \item We say that $N \subseteq M$ is an {\bf $R$-submodule} of $M$ 
+        if $N$ is an $R$-module under the same operations as $M$. That is, 
+        $N$ is an additive subgroup of $M$ closed under the $R$-action. 
+
+        \item Let $M_1$ and $M_2$ be $R$-modules. Then $f : M_1 \to M_2$ 
+        is a {\bf homomorphism} if 
+        \begin{enumerate}[(i)]
+            \item $f(m_1 + m_2) = f(m_1) + f(m_2)$ for all $m_1, m_2 \in M_1$; 
+            \item $f(rm) = rf(m)$ for all $r \in R$ and $m \in M_1$. 
+        \end{enumerate}
+        If $f$ is also bijective, then we call it an {\bf isomorphism}. 
+        
+        \item We say that $M$ is {\bf finitely generated} if there exists 
+        $m_1, \dots, m_n \in M$ such that 
+        \[ M = Rm_1 + \cdots + Rm_n := \{r_1 m_1 + 
+        \cdots + r_n m_n : r_1, \dots, r_n \in R\}. \] 
+    \end{enumerate}
+\end{defn}
+
+For example, if we view $R$ as an $R$-module over itself, then the $R$-submodules 
+are precisely the ideals of $R$. Indeed, by definition, ideals are 
+additive subgroups that are closed under multiplication by $R$. In this course, 
+there is no need to specify left or right ideals because we assume that every 
+ring is commutative and unital.
+
+Let's move back to number theory! We give a definition that takes the idea of 
+algebraic integers and generalizes it to arbitrary rings. Note that 
+in this course, the notation $R \subseteq S$ means that $R$ is a subring of $S$ 
+under the same operations. 
+
+\begin{defn}{defn:1.6}
+    Let $R \subseteq S$ be integral domains. We say that $\alpha \in S$ 
+    is {\bf integral} over $R$ if there exists a monic polynomial 
+    $f(x) \in R[x]$ such that $f(\alpha) = 0$.
+\end{defn}
+
+If we take $R = \Z$ and $S = \C$, then being integral is the same as 
+being an algebraic integer. All of these definitions are handy to know
+for a course in commutative algebra, but why are we moving in this direction? 
+The following theorem gives us a nice characterization of being integral, 
+which allows us to apply it to our number theory setting for algebraic integers.
+
+\begin{theo}{theo:1.7}
+    Let $R \subseteq S$ be integral domains. Then $\alpha \in S$ is integral 
+    over $R$ if and only if $R[\alpha] = \{f(\alpha) : f(x) \in R[x]\}$ is 
+    finitely generated as an $R$-module. 
+\end{theo}
+\begin{pf}[Theorem~\ref{theo:1.7}]
+    $(\Rightarrow)$ Let $\alpha \in S$ be integral over $R$. Then we can write 
+    \[ \alpha^n + a_{n-1} \alpha^{n-1} + \cdots + a_1 \alpha + a_0 = 0 \] 
+    for some $a_i \in R$, as $\alpha$ is the root of some monic polynomial over 
+    $R$. In particular, we have 
+    \[ \alpha^n = -a_{n-1} \alpha^{n-1} - \cdots - a_1 \alpha - a_0, \] 
+    so every element in $R[\alpha]$ can be written as a linear combination 
+    of elements from $\{1, \alpha, \dots, \alpha^{n-1}\}$. In other words, 
+    $R[\alpha] = R + R\alpha + \cdots + R\alpha^{n-1}$ is finitely generated. 
+
+    $(\Leftarrow)$ Since $R$ is finitely generated, we can write it in the form 
+    \[ R[\alpha] = Rf_1(\alpha) + \cdots + Rf_n(\alpha) \] 
+    for some polynomials $f_i(x) \in R[x]$. Take $N = \max_{1\leq i \leq n} 
+    \{\deg f_i(x)\}$. Note that $\alpha^{N+1} \in R[\alpha]$, so we have 
+    \[ \alpha^{N+1} = r_1 f_1(\alpha) + \cdots + r_n f_n(\alpha) \] 
+    for some $r_i \in R$. Next, consider the polynomial 
+    \[ g(x) = x^{N+1} - r_1 f_1(x) - \cdots - r_n f_n(x) \in R[x]. \] 
+    Note that $g(\alpha) = 0$ and $g(x)$ is monic by our choice of $N$, so we conclude that 
+    $\alpha$ is integral over $R$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+As we have seen in a course in Galois theory, finding a polynomial 
+$f(x) \in \Z[x]$ which has $\alpha$ as a root is generally a difficult task.
+Showing that $\Z[\alpha]$ is finitely generated is often easier than doing this!
+
+For a number field $K$, we still haven't shown that ${\cal O}_K$ is a ring. 
+We mentioned our approach before, which is to show that 
+$\mathbb{A} = \{z \in \C : z \text{ an algebraic integer}\}$ is a 
+subring of $\C$, which implies that ${\cal O}_K = \mathbb{A} \cap K$ is also 
+a ring. Let's try to do this now with the machinery we have. 
+
+\begin{theo}{theo:1.8}
+    The algebraic integers $\mathbb{A}$ form a subring of $\C$.
+\end{theo}
+\begin{pf}[Theorem~\ref{theo:1.8}]
+    Let $\alpha, \beta \in \mathbb{A}$. By the subring test, it suffices to show that 
+    $\alpha - \beta$ and $\alpha\beta$ are elements of $\mathbb{A}$. By 
+    Theorem~\ref{theo:1.7}, we just need to show that $\Z[\alpha - \beta]$ 
+    and $\Z[\alpha\beta]$ are finitely generated $\Z$-modules. 
+
+    We know that $\Z[\alpha]$ and $\Z[\beta]$ are finitely generated 
+    $\Z$-modules again by Theorem~\ref{theo:1.7}, so 
+    we can write $\Z[\alpha] = \Z\alpha_1 + \cdots + \Z\alpha_n$ and 
+    $\Z[\beta] = \Z\beta_1 + \cdots + \Z\beta_m$ for some 
+    $\alpha_i \in \Z[\alpha]$ and $\beta_j \in \Z[\beta]$. Then 
+    \[ \Z[\alpha, \beta] = \{f(\alpha, \beta) : f(x, y) \in \Z[x, y]\} \] 
+    is also finitely generated as a $\Z$-module by 
+    $\{\alpha_i \beta_j : 1 \leq i \leq n,\, 1 \leq j \leq m\}$. We have 
+    that $\Z[\alpha-\beta]$ and $\Z[\alpha\beta]$ are $\Z$-submodules of 
+    the finitely generated $\Z$-module $\Z[\alpha, \beta]$. \qed
+\end{pf}
+
+In our attempted argument above, we may have lost track of the goal. 
+We see that $\Z[\alpha, \beta]$ is an extremely large $\Z$-module, and in 
+fact, it is not true in general that a submodule of a finitely generated 
+$R$-module is also finitely generated!
+
+For example, take $R = \Z[x_1, x_2, \dots]$. Then $R$ is a finitely generated 
+$R$-module since $R = R1$. However, consider the ideal $I = 
+\langle x_1, x_2, \dots \rangle$, which is a submodule of $R$ as we 
+discussed before. Then $I$ is not finitely generated because any 
+possible generating set would only give us finitely many indeterminates. 
+
+To get out of this mess, we need a new definition. 
+
+\begin{defn}{defn:1.9}
+    Let $R$ be a ring. We say that $R$ is {\bf Noetherian} if every 
+    submodule (ideal) of $R$ (as an $R$-module) is finitely generated. 
+\end{defn}
+
+Now, the submodules of $\Z$ are the most finitely generated we could 
+possibly get since $\Z$ is a PID (namely, every submodule is 
+generated by a single element), so $\Z$ is Noetherian. In particular, the 
+following theorem is enough to rescue our proof of Theorem~\ref{theo:1.8},
+so $\mathbb{A}$ is a ring and so is ${\cal O}_K$ for a number field $K$. 
+
+\begin{theo}{theo:1.10}
+    Let $R$ be a Noetherian ring, and let $M$ be a finitely generated $R$-module. 
+    Then every submodule of $M$ is also finitely generated. 
+\end{theo}
