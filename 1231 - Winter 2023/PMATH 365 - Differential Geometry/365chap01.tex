@@ -93,9 +93,71 @@ We now define the main object we'll be working with in this course.
     such that for every $p \in M$, there exists an open neighbourhood $V$ 
     of $p$ in $\R^n$, an open set $U \subset \R^k$, and a homeomorphism 
     \[ \alpha : U \subset \R^k \to V \cap M \subset \R^n. \] 
+    The homeomorphism $\alpha$ is called a {\bf coordinate chart} 
+    (or {\bf patch}) on $M$.
 \end{defn}
+
+Note that the open neighbourhood $V \subset \R^n$ of $p$, the 
+open set $U \subset \R^k$, and the map $\alpha$ do not need to be unique.
+But we'll see later that the dimension $k$ must be unique and is completely 
+determined by $M$.
 
 For example, $\R^n$ is a topological $n$-submanifold of $\R^n$ 
 by taking $U = V = \R^n$ and $\alpha = \Id_{\R^n}$. Any open set 
 $W \subset \R^n$ is a topological $n$-submanifold of $\R^n$ by 
 taking $U = V = W$ and $\alpha = \Id_W$. 
+
+Let's now consider some non-trivial examples. Consider 
+\[ M = \{(x, y) \in \R^2 : y = x^2\} \subset \R^2, \] 
+which is the graph of the parabola $f(x) = x^2$. Then $M$ is a 
+topological $1$-submanifold of $\R^2$ by considering the map 
+$\alpha : \R^1 \to M \subset \R^2,\, t \mapsto (t, t^2)$.
+The inverse $\alpha^{-1} : M \to \R^1$ is just the projection of the 
+first coordinate, which is continuous. 
+
+More generally, let $U \subset \R^k$ be an open set. Consider the graph of a 
+continuous function 
+\[ F : U \subset \R^k \to \R^{n-k},\, x \mapsto (F_1(x), \dots, F_{n-k}(x)). \]
+In other words, we are looking at the set 
+\[ G = \{(x, y) \in \R^k \times \R^{n-k} : y = F(x),\, x \in U\} \subset \R^n. \] 
+We claim that $G$ is a $k$-dimensional topological submanifold of $\R^n$. To 
+see this, define $\alpha : U \subset \R^k \to G \subset \R^n$ by 
+$x \mapsto (x, F(x))$. Then $\alpha$ is continuous since $F$ is continuous, 
+and it is a bijection since we are restricted to $G$. Moreover, 
+it has continuous inverse $\alpha^{-1} : G \subset \R^n \to 
+U \subset \R^k,\, (x, y) \mapsto x$. 
+
+Here are two more examples of this in action. 
+\begin{enumerate}[(1)]
+    \item Let $M = \{(x, y, z) \in \R^3 : z = x^2 + y^2\} \subset \R^3$. 
+    Then $M$ is the graph of the continuous function $f(x, y) = x^2 + y^2$, 
+    so it is a $2$-dimensional topological submanifold of $\R^3$. 
+    \item Observe that $M = \{(x, y, z) \in \R^3 : y = x^2,\, z = x^3\} 
+    \subset \R^3$ is the graph of the continuous function $F(t) = (t^2, t^3)$, 
+    so it is a $1$-dimensional topological submanifold of $\R^3$.
+\end{enumerate}
+In all the examples above, we only needed one coordinate chart which 
+worked for all points. However, this is not always the case! Consider 
+the unit circle 
+\[ \mathbb{S}^1 := \{(x, y) \in \R^2 : x^2 + y^2 = 1 \} \subset \R^2. \] 
+Note that $\mathbb{S}^1$ is compact. Therefore, by Heine-Borel, 
+it is closed and bounded. Recall that homeomorphisms preserve closed sets, 
+so it is impossible to find a unique chart $\alpha$. Indeed, if we had 
+such a homeomorphism $\alpha : U \subset \R^1 \to \mathbb{S}^1 \subset \R^2$ 
+for some open set $U$, then $U = \alpha^{-1}(\mathbb{S}^1)$ would be 
+a compact subset of $\R^1$. But the only open and compact subset of 
+$\R^n$ is $\varnothing$, which is a contradiction! 
+
+Nonetheless, two coordinate charts are enough to cover all points on 
+$\mathbb{S}^1$. Define 
+\begin{align*}
+    V_1 = \R^2 \setminus \{(x, 0) \in \R^2 : x \leq 0\}, \\ 
+    V_2 = \R^2 \setminus \{(x, 0) \in \R^2 : x \geq 0\},
+\end{align*}
+which are both open sets. Then the homeomorphism 
+\[ \alpha_1 : U_1 = (-\pi, \pi) \to \mathbb{S}^1 \cap V_1,\,
+ t \mapsto (\cos t, \sin t) \]
+covers all points on $\mathbb{S}^1$ except for $(-1, 0)$, while 
+\[ \alpha_2 : U_2 = (0, 2\pi) \to \mathbb{S}^1 \cap V_2,\,
+ t \mapsto (\cos t, \sin t) \]
+covers all points on $\mathbb{S}^1$ except for $(1, 0)$. 
