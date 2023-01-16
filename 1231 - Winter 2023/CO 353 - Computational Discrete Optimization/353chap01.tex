@@ -175,4 +175,51 @@ with this.)
     noting that $\ell_e \geq 0$ for all $e \in E$. But this contradicts 
     our choice of $w = \argmin_{v\in V \setminus A} \{d'(v)\}$ in Step 2.2 
     since $y \in V \setminus A$ but $d'(y) < d'(w)$. \qed
-\end{pf}
+\end{pf}\vspace{-0.25cm}
+
+The {\bf running time} of an algorithm is the number of elementary operations 
+that the algorithm performs as a function of the input size. The {\bf input 
+size} is the number of bits needed to specify the input. 
+\begin{itemize}
+    \item For example, in order to specify an integer $n \geq 0$ in binary, 
+    we require about $\log_2(n)$ bits. 
+    \item To specify a graph $G = (V, E)$ with integral edge lengths 
+    $\ell_e \geq 0$ for each $e \in E$, we require approximately 
+    $|V| + |E| + \sum_{e\in E} \log_2(\ell_e)$ bits. Note that we can 
+    specify an edge with two pointers to the endpoints.
+\end{itemize} 
+We will need big-$O$ notation to describe running time, because we are 
+interested in the asymptotic behaviour of algorithms. For two functions
+$f : \R^+ \to \R^+$ and $g : \R^+ \to \R^+$, we say that $f(n) = 
+O(g(n))$ if there exist constants $n_0 \in \N$ and $c \geq 0$ such that 
+$f(n) \leq c \cdot g(n)$ for all $n \geq n_0$. For example, we have 
+$2n^2 + 1 = O(n^2)$ and $\log(n) = O(n)$. An algorithm is then considered 
+{\bf efficient} if its running time is bounded above by a polynomial function 
+of the input size. 
+
+Let's consider the running time of Dijkstra's algorithm by looking 
+at a naive implementation. For ease of notation, we will write 
+$|V| = n$ and $|E| = m$. Note that in the case that $G = (V, E)$ is connected, 
+we have $m \geq n-1$. 
+\begin{itemize}
+    \item Step 1 can be performed using $O(n)$ operations since we are only
+    assigning values for each vertex. 
+    \item In Step 2, there are at most $n$ iterations. 
+    \begin{itemize}
+        \item Step 2.1 can be performed using $O(m)$ operations because 
+        each edge will participate in at most one comparison throughout the 
+        entire iteration. 
+        \item Step 2.2 takes $O(n)$ operations in order to determine the 
+        vertex of minimum upper bound. 
+    \end{itemize}
+\end{itemize}
+Therefore, the running time of the naive implementation is 
+$O(n + mn + n^2) = O(mn)$, which is polynomial in the input size.  
+
+We note that there are better implementations of Dijkstra's algorithm 
+than the naive one that we have just stated. For Step 2.1, we can 
+use $m$ \textsc{Decrease-Key} calls and for Step 2.2, we can use 
+$n$ \textsc{Extract-Min} calls. In particular, by using Fibonacci heaps, 
+\textsc{Decrease-Key} has running time $O(1)$ and \textsc{Extract-Min} 
+has running time $O(\log n)$, which brings the total running time down to 
+$O(m + n\log n)$.
