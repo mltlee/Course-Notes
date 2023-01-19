@@ -231,7 +231,7 @@ there are examples where the resulting spanning trees do not coincide.
 Moreover, Dijkstra's algorithm takes a directed graph as input, 
 whereas Prim's algorithm takes an undirected graph. 
 
-Next, let's prove that this indeed gives us a minimum spanning tree. 
+Next, let's prove that Prim's algorithm always gives us a minimum spanning tree. 
 For simplicity, we will assume that all edge costs $c_e$ for 
 $e \in E$ are distinct. 
 
@@ -255,7 +255,7 @@ As a consequence, we also have the following useful result.
 \end{cor}
 
 As usual, let's consider the running time, denoting $|V| = n$ 
-and $|E| = m$ as before. For an efficient implementation, 
+and $|E| = m$. For an efficient implementation, 
 we keep track of a key $d'(v)$ for each $v \in V \setminus A$. 
 Once a vertex $w$ is added to $A$ in Step 2.2, we update the keys via 
 $d'(v) \gets \min\{d'(v), c_{wv}\}$ for each $v \in V \setminus A$. 
