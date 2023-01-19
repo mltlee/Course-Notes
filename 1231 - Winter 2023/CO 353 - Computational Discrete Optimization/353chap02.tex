@@ -51,7 +51,7 @@ In an introductory graph theory course, such as MATH 239,
 it is shown that every tree on $n$ vertices has $n-1$ edges. The following 
 theorem then gives us a useful characterization of trees. 
 
-\begin{theo}{theo:2.1}
+\begin{theo}[Fundamental Theorem of Trees]{theo:2.1}
     Let $T = (V, F)$ be a graph. The following are equivalent:
     \begin{enumerate}[(i)]
         \item $T$ is a tree. 
@@ -75,10 +75,196 @@ defined to be the set
 The following theorem will be extremely important for finding a minimum 
 spanning tree. 
 
-\begin{theo}{theo:2.2}
+\begin{theo}[Cut Property]{theo:2.2}
     Suppose that the costs $c_e \geq 0$ for $e \in E$ are distinct. 
     Let $S \subseteq V$ be such that $S \neq \varnothing$ and $S \neq V$, 
     and let 
     \[ e = \argmin_{f \in \delta(S)} c_f. \] 
     Then every minimum spanning tree contains the edge $e$. 
 \end{theo}
+\begin{pf}[Theorem~\ref{theo:2.2}]
+    We proceed by contradiction. Let $S \subseteq V$ be such that $S 
+    \neq \varnothing$ and $S \neq V$, and let $e = \argmin_{f\in S} c_f$. 
+    Suppose that there is a minimum spanning tree $T = (V, F)$ such that 
+    $e \notin F$. 
+
+    Consider the graph $(V, F \cup \{e\})$. Note that $|F \cup \{e\}| = |V|$ 
+    and this graph is connected, so it cannot be a tree by Theorem~\ref{theo:2.1}. 
+    In particular, it must contain a cycle $C$. 
+
+    Next, note that $|C \cap \delta(S)|$ must be even because for any 
+    edge leaving the cut $\delta(S)$, there must be another edge coming back 
+    into the cut. Moreover, since $e \in C \cap \delta(S)$, we have 
+    $C \cap \delta(S) \neq \varnothing$. This implies that 
+    $|C \cap \delta(S)| \geq 2$, so there is another edge $e' \neq e$ 
+    with $e' \in C \cap \delta(S)$.
+
+    Consider now the graph $T' = (V, (F \cup \{e\}) \setminus \{e'\})$. 
+    Then $|(F \cup \{e\}) \setminus \{e'\}| = |F| = |V| - 1$ and $T'$ is 
+    connected because if a path between two vertices used the edge $e'$, 
+    then we could go along the edges in $C \setminus \{e'\}$ instead. 
+    So by Theorem~\ref{theo:2.1}, $T'$ is also a spanning tree. 
+    Finally, observe that 
+    \[ c(T) - c(T') = c_{e'} - c_e > 0 \] 
+    because we have $e = \argmin_{f\in S} c_f$ and $e' \neq e$ with 
+    $e' \in \delta(S)$, as well as the assumption that the edge 
+    costs $c_e$ for $e \in E$ were distinct. But $T'$ has lower cost 
+    than $T$, contradicting our assumption that $T$ was a minimum 
+    spanning tree. \qed
+\end{pf}\vspace{-0.25cm}
+
+The following property relating cycles to minimum spanning trees 
+can also be proved similarly to Theorem~\ref{theo:2.2}. 
+The main idea is to try to create shortcuts using the edges in the cycle. 
+
+\begin{theo}[Cycle Property]{theo:2.3}
+    Let $G = (V, E)$ be connected with distinct edge costs 
+    $c_e$ for $e \in E$. Let $C$ be a cycle in $G$ and let 
+    \[ e = \argmax_{f\in C} c_f. \] 
+    Then no minimum spanning tree contains the edge $e$. 
+\end{theo}
+
+\subsection{Prim's Algorithm}\label{subsec:2.3}
+Prim's algorithm takes the idea of the cut property (Theorem~\ref{theo:2.2}) 
+and uses it to compute a minimum spanning tree starting from an arbitrary 
+vertex $s \in V$. At each iteration of the algorithm, we will keep track of a 
+set of a partial tree construction $T$ and vertices $A \subseteq V$ that are 
+connected to $s$ in $T$. 
+
+\begin{mdframed}[
+    linewidth=1pt,
+    linecolor=black,
+    bottomline=false,topline=false,rightline=false,
+    innerrightmargin=0pt,innertopmargin=0pt,innerbottommargin=0pt,
+    innerleftmargin=1em,% Distance between vertical rule & proof content
+    skipabove=0.75\baselineskip
+]
+{\bf Input.} A graph $G = (V, E)$ and edge costs $c_e \geq 0$ for 
+all $e \in E$. 
+
+{\bf Output.} A minimum spanning tree of $G$.
+\begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
+    \item {\bf Initialization.} Let $s \in V$ be an arbitrary vertex, 
+    then set $A \gets \{s\}$ and $T \gets \varnothing$.
+
+    \item While $A \neq V$:
+    \begin{enumerate}[label={Step 2.\arabic*.}]
+        \item {\bf Pick an edge for the minimum spanning tree.} 
+        Set 
+        \[ e \gets \argmin_{f \in \delta(A)} c_f, \] 
+        where $e = uv$ with $u \in A$ and $v \notin A$.  
+        \item {\bf Update values.} Set $A \gets A \cup \{v\}$ and 
+        $T \gets T \cup \{e\}$. 
+    \end{enumerate}
+\end{enumerate}
+\end{mdframed}\vspace{-0.15cm}
+
+Let's run Prim's algorithm on a simple example. Consider the following 
+graph $G = (V, E)$, and suppose that at Step 1, we pick $v_1$ to be 
+the initial vertex. 
+\begin{center}
+    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+        \node[main, color=blue] (1) {$v_1$}; 
+        \node[main] (2) [right of=1] {$v_2$};
+        \node[main] (3) [right of=2] {$v_3$}; 
+        \node[main] (4) [below of=1] {$v_4$};
+        \node[main] (5) [right of=4] {$v_5$};
+
+        \draw (1) -- node[midway, above] {1} (2);
+        \draw (2) -- node[midway, above] {3} (3);
+        \draw (1) -- node[midway, left] {4} (4);
+        \draw (2) -- node[midway, above left] {2} (4);
+        \draw (2) -- node[midway, right] {5} (5);
+        \draw (3) -- node[midway, below right] {1} (5);
+        \draw (5) -- node[midway, above] {4} (4);
+    \end{tikzpicture} 
+\end{center}
+\vspace{-0.25cm}
+Then at the first iteration of Step 2.1, we have $\delta(A) = 
+\{v_1v_2, v_1v_4\}$, so we pick $e = v_1v_2$ because it has minimum cost.
+At Step 2.2, we set $A = \{v_1, v_2\}$ and $T = \{v_1v_2\}$. 
+
+\begin{center}
+    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+        \node[main, color=blue] (1) {$v_1$}; 
+        \node[main, color=blue] (2) [right of=1] {$v_2$};
+        \node[main] (3) [right of=2] {$v_3$}; 
+        \node[main] (4) [below of=1] {$v_4$};
+        \node[main] (5) [right of=4] {$v_5$};
+
+        \draw[color=blue] (1) -- node[midway, above] {1} (2);
+        \draw (2) -- node[midway, above] {3} (3);
+        \draw (1) -- node[midway, left] {4} (4);
+        \draw (2) -- node[midway, above left] {2} (4);
+        \draw (2) -- node[midway, right] {5} (5);
+        \draw (3) -- node[midway, below right] {1} (5);
+        \draw (5) -- node[midway, above] {4} (4);
+    \end{tikzpicture} 
+\end{center}
+\vspace{-0.25cm}
+The edge $v_2v_4$ is of minimum cost in the cut induced by $A$, so 
+we set $A = \{v_1, v_2, v_4\}$ and $T = \{v_1v_2, v_2v_4\}$ at the next iteration. 
+Continuing in this fashion, we obtain the following minimum spanning tree.
+
+\begin{center}
+    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+        \node[main, color=blue] (1) {$v_1$}; 
+        \node[main, color=blue] (2) [right of=1] {$v_2$};
+        \node[main, color=blue] (3) [right of=2] {$v_3$}; 
+        \node[main, color=blue] (4) [below of=1] {$v_4$};
+        \node[main, color=blue] (5) [right of=4] {$v_5$};
+
+        \draw[color=blue] (1) -- node[midway, above] {1} (2);
+        \draw[color=blue] (2) -- node[midway, above] {3} (3);
+        \draw (1) -- node[midway, left] {4} (4);
+        \draw[color=blue] (2) -- node[midway, above left] {2} (4);
+        \draw (2) -- node[midway, right] {5} (5);
+        \draw[color=blue] (3) -- node[midway, below right] {1} (5);
+        \draw (5) -- node[midway, above] {4} (4);
+    \end{tikzpicture} 
+\end{center}
+\vspace{-0.25cm}
+Note that Prim's algorithm may seen similar to Dijkstra's algorithm 
+which also yields a spanning tree in the process of computing shortest paths. 
+However, these algorithms fundamentally solve different problems, and 
+there are examples where the resulting spanning trees do not coincide. 
+Moreover, Dijkstra's algorithm takes a directed graph as input, 
+whereas Prim's algorithm takes an undirected graph. 
+
+Next, let's prove that this indeed gives us a minimum spanning tree. 
+For simplicity, we will assume that all edge costs $c_e$ for 
+$e \in E$ are distinct. 
+
+\begin{pf}[correctness of Prim's algorithm]
+    At every iteration of Step 2, we add one edge to $T$, and we run 
+    through $|V| - 1$ iterations. Therefore, $T$ has exactly 
+    $|V| - 1$ edges. Moreover, an invariant of Prim's algorithm is that 
+    all vertices in $A$ remain connected to $s$, so the final output is 
+    also connected. Therefore, we indeed obtain a spanning tree by 
+    Theorem~\ref{theo:2.1}. Finally, by the cut property (Theorem~\ref{theo:2.2})
+    and our assumption that all the edge costs are distinct, $T$ contains 
+    only the edges that are in every minimum spanning tree, so $T$ 
+    itself is a minimum spanning tree. \qed 
+\end{pf}
+
+As a consequence, we also have the following useful result. 
+
+\begin{cor}{cor:2.4}
+    Let $G = (V, E)$ be a connected graph with distinct edge costs $c_e$ for 
+    $e \in E$. Then $G$ has a unique minimum spanning tree.
+\end{cor}
+
+As usual, let's consider the running time, denoting $|V| = n$ 
+and $|E| = m$ as before. For an efficient implementation, 
+we keep track of a key $d'(v)$ for each $v \in V \setminus A$. 
+Once a vertex $w$ is added to $A$ in Step 2.2, we update the keys via 
+$d'(v) \gets \min\{d'(v), c_{wv}\}$ for each $v \in V \setminus A$. 
+
+Note that Step 1 takes $O(1)$ time, and 
+there are $n-1$ iterations of Step 2. Implementing Prim's algorithm 
+using priority queues, we note that each iteration of Step 2.1 
+involves one \textsc{Extract-Min} call, and 
+going through all iterations of Step 2.2 takes at most $m$ 
+\textsc{Decrease-Key} calls in total. We recall that by using Fibonacci heaps, 
+\textsc{Decrease-Key} is $O(1)$ and \textsc{Extract-Min} is $O(\log n)$, 
+so we have a total running time of $O(n\log n + m)$. 

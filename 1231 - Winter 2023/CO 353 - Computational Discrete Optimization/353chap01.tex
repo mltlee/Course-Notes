@@ -109,6 +109,14 @@ of ``explored'' nodes; that is, a set of nodes for which we already know the
 shortest-path distances. We'll also maintain labels $d'(v)$ for $v \in 
 V \setminus A$ with upper bounds on the shortest-path distances from $s$. 
 
+\begin{mdframed}[
+    linewidth=1pt,
+    linecolor=black,
+    bottomline=false,topline=false,rightline=false,
+    innerrightmargin=0pt,innertopmargin=0pt,innerbottommargin=0pt,
+    innerleftmargin=1em,% Distance between vertical rule & proof content
+    skipabove=0.75\baselineskip
+]
 {\bf Input.} A directed graph $G = (V, E)$, edge lengths $\ell_e \geq 0$ for 
 all $e \in E$, and a start vertex $v \in V$. 
 
@@ -127,6 +135,7 @@ $s$ to $v$.
         $A \gets A \cup \{w\}$, and $d(w) \gets d'(w)$. 
     \end{enumerate}
 \end{enumerate}
+\end{mdframed}\vspace{-0.25cm}
 
 Suppose that for each vertex $w \in V$, we keep track of the node $u$ 
 determining its upper bound $d'(w)$. That is, the node $u$ is such that 
@@ -207,7 +216,7 @@ we have $m \geq n-1$.
     \item In Step 2, there are at most $n$ iterations. 
     \begin{itemize}
         \item Step 2.1 can be performed using $O(m)$ operations because 
-        each edge will participate in at most one comparison throughout the 
+        each edge will participate in at most two comparisons throughout the 
         entire iteration. 
         \item Step 2.2 takes $O(n)$ operations in order to determine the 
         vertex of minimum upper bound. 
