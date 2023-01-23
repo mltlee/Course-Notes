@@ -123,15 +123,15 @@ all $e \in E$, and a start vertex $v \in V$.
 {\bf Output.} For all $v \in V$, the length $d(v)$ for the shortest-path from 
 $s$ to $v$.
 \begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
-    \item {\bf Initialization.} Set $A \gets \{s\}$, $d(s) \gets 0$, and $d'(v) \gets \infty$ 
+    \item {\bf (Initialization.)} Set $A \gets \{s\}$, $d(s) \gets 0$, and $d'(v) \gets \infty$ 
     for all $v \in V \setminus A$.
 
     \item While $A \neq V$:
     \begin{enumerate}[label={Step 2.\arabic*.}]
-        \item {\bf Push down the upper bounds.} For each $v \in V \setminus A$, compute 
+        \item {\bf (Push down the upper bounds.)} For each $v \in V \setminus A$, compute 
         \[ d'(v) \gets \min\left\{ d'(v), \min_{\substack{u\in A \\ (u, v) \in E}} 
         \{ d(u) + \ell_{(u, v)} \} \right\}. \] 
-        \item {\bf Add a new vertex.} Set $w \gets \argmin_{v \in V \setminus A} d'(v)$, 
+        \item {\bf (Add a new vertex.)} Set $w \gets \argmin_{v \in V \setminus A} d'(v)$, 
         $A \gets A \cup \{w\}$, and $d(w) \gets d'(w)$. 
     \end{enumerate}
 \end{enumerate}
@@ -209,7 +209,7 @@ of the input size.
 Let's consider the running time of Dijkstra's algorithm by looking 
 at a naive implementation. For ease of notation, we will write 
 $|V| = n$ and $|E| = m$. Note that in the case that $G = (V, E)$ is connected, 
-we have $m \geq n-1$. 
+we have $n-1 \leq m \leq n^2$.
 \begin{itemize}
     \item Step 1 can be performed using $O(n)$ operations since we are only
     assigning values for each vertex. 

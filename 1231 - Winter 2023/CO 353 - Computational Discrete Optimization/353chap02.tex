@@ -139,21 +139,21 @@ connected to $s$ in $T$.
     innerleftmargin=1em,% Distance between vertical rule & proof content
     skipabove=0.75\baselineskip
 ]
-{\bf Input.} A graph $G = (V, E)$ and edge costs $c_e$ for 
+{\bf Input.} A connected graph $G = (V, E)$ and edge costs $c_e$ for 
 all $e \in E$. 
 
-{\bf Output.} A minimum spanning tree of $G$.
+{\bf Output.} The edges $T$ of a minimum spanning tree of $G$.
 \begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
-    \item {\bf Initialization.} Let $s \in V$ be an arbitrary vertex, 
+    \item {\bf (Initialization.)} Let $s \in V$ be an arbitrary vertex, 
     then set $A \gets \{s\}$ and $T \gets \varnothing$.
 
     \item While $A \neq V$:
     \begin{enumerate}[label={Step 2.\arabic*.}]
-        \item {\bf Pick an edge for the minimum spanning tree.} 
+        \item {\bf (Pick an edge for the minimum spanning tree.)} 
         Set 
         \[ e \gets \argmin_{f \in \delta(A)} c_f, \] 
         where $e = uv$ with $u \in A$ and $v \notin A$.  
-        \item {\bf Update values.} Set $A \gets A \cup \{v\}$ and 
+        \item {\bf (Update values.)} Set $A \gets A \cup \{v\}$ and 
         $T \gets T \cup \{e\}$. 
     \end{enumerate}
 \end{enumerate}
@@ -267,4 +267,151 @@ involves one \textsc{Extract-Min} call, and
 going through all iterations of Step 2.2 takes at most $m$ 
 \textsc{Decrease-Key} calls in total. We recall that by using Fibonacci heaps, 
 \textsc{Decrease-Key} is $O(1)$ and \textsc{Extract-Min} is $O(\log n)$, 
-so we have a total running time of $O(n\log n + m)$. 
+so we have a total running time of $O(n\log n + m)$.
+
+\subsection{Kruskal's Algorithm}\label{subsec:2.4}
+Kruskal's algorithm is another greedy algorithm that finds a minimum 
+spanning tree. It first sorts the edges by ascending edge costs 
+and continually adds an edge to a partial tree construction $T$ as long as no 
+cycle is induced by that edge. The algorithm we give stops once we 
+go through every edge, but note that it is enough to stop once the 
+number of edges hits $|V| - 1$.
+
+\begin{mdframed}[
+    linewidth=1pt,
+    linecolor=black,
+    bottomline=false,topline=false,rightline=false,
+    innerrightmargin=0pt,innertopmargin=0pt,innerbottommargin=0pt,
+    innerleftmargin=1em,% Distance between vertical rule & proof content
+    skipabove=0.75\baselineskip
+]
+{\bf Input.} A connected graph $G = (V, E)$ and edge costs $c_e$ for 
+all $e \in E$. (We write $m = |E|$ and $n = |V|$.)
+
+{\bf Output.} The edges $T$ of a minimum spanning tree of $G$.
+\begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
+    \item {\bf (Initialization.)} Sort the edges such that 
+    $c_{e_1} \leq c_{e_2} \leq \cdots \leq c_{e_m}$. 
+    Set $T \gets \varnothing$ and $j \gets 1$. 
+
+    \item While $j \neq m+1$:
+    \begin{enumerate}[label={}]
+        \item {\bf (Add an edge if it does not form a cycle.)} 
+        If $T \cup \{e_j\}$ is acyclic, set $T \gets T \cup \{e_j\}$. 
+        \item {\bf (Go to the next edge.)} Regardless if we add an edge or not, 
+        increment $j \gets j+1$. 
+    \end{enumerate}
+\end{enumerate}
+\end{mdframed}\vspace{-0.15cm}
+
+To prove the correctness of Kruskal's algorithm, we'll again use the cut 
+property (Theorem~\ref{theo:2.2}). As with Prim's algorithm, the proof will 
+consist of two parts: proving that the result $T$ is a spanning tree, and showing 
+that it is of minimum cost. We will also assume that the edge costs $c_e$ are 
+distinct. 
+
+We use a couple of facts that will be repeated 
+many times throughout the course. These concern equivalent 
+notions to the definitions we have.
+\begin{enumerate}[(1)]
+    \item A graph $G = (V, E)$ is disconnected if and only if there exists a 
+    nontrivial cut $\varnothing \subsetneq S \subsetneq V$ such that 
+    $\delta(S) \cap E = \varnothing$. 
+    \item Let $G = (V, E)$ be a graph and let $u, v \in V$ be distinct vertices. 
+    Then $G$ has no $u, v$-path if and only if there exists $S \subseteq V$ 
+    such that $u \in S$, $v \notin S$, and $\delta(S) \cap E = \varnothing$. 
+\end{enumerate}
+
+\begin{pf}[correctness of Kruskal's algorithm]
+    Let $T$ denote the output set consisting of edges. We know that $T$ is 
+    acyclic by construction because Step 2 of the algorithm rules 
+    out all edges that create a cycle. We will show that $(V, T)$ is 
+    connected by way of contradiction, and thus it is a spanning tree 
+    by Theorem~\ref{theo:2.1}.
+
+    Suppose not, so there is a nontrivial cut $\varnothing \subsetneq S 
+    \subsetneq V$ such that $\delta(S) \cap T = \varnothing$ by (1) above. 
+    Since $G$ is connected, we have $\delta(S) \neq \varnothing$, so 
+    there exists some edge $e \in \delta(S)$. 
+
+    Let's look at the moment where $e$ was considered in the algorithm. 
+    Since $e$ was rejected, it must be that $T \cup \{e\}$ contains a cycle 
+    $C$ with $e \in C$. But $|C \cap \delta(S)|$ is even and $e \in 
+    C \cap \delta(S)$, so $|C \cap \delta(S)| \geq 2$. We then have 
+    $|(C \setminus \{e\}) \cap \delta(S)| \geq 1$. But $C \setminus \{e\} 
+    \subset T$, which contradicts the fact that $\delta(S) \cap T = \varnothing$. 
+
+    Now, we show that we have a minimum spanning tree. Consider the moment 
+    an arbitrary edge $e = uv$ is added to $T$; let $T'$ be the set of edges 
+    in $T$ before the addition of $e$ to $T$. Then $T'$ has no $u, v$-path 
+    (else a $u, v$-path adjoined with $e$ would form a cycle). Hence, 
+    by (2), there exists $S \subseteq V$ such that $u \in S$, $v \notin S$, 
+    and $\delta(S) \cap T' = \varnothing$. Due to the way that the edges 
+    are sorted in Step 1, we have 
+    \[ e = \argmin_{f\in\delta(S)} c_f. \] 
+    It follows from the cut property (Theorem~\ref{theo:2.2}) that including 
+    $e$ is the correct decision. \qed
+\end{pf}\vspace{-0.25cm}
+
+To implement Kruskal's algorithm, first observe that Step 1 takes 
+$O(m\log m)$ time to sort $m$ numbers. For Step 2, we can make use 
+of the {\sc UnionFind} data structure, which helps maintain a 
+list of connected components. It has the following methods:
+\begin{itemize}
+    \item {\sc MakeUnionFind}$(V)$ creates a {\sc UnionFind} data structure 
+    for $V$ and takes $O(n)$ time. 
+    \item {\sc Find}$(v)$ determines the name of the connected component where 
+    $v$ lies. This takes $O(\log n)$. 
+    \item {\sc Union}$(A, B)$ merges two connected components and takes 
+    $O(1)$ via a change of pointer. 
+\end{itemize}
+We initialize the data structure once with \textsc{MakeUnionFind}.
+We use {\sc Find} in every iteration of Step 2 to check that 
+$\textsc{Find}(u) \neq \textsc{Find}(v)$ for the edge $e = uv$. In this 
+case, $u$ and $v$ are in different components and we can join them with 
+{\sc Union}; otherwise we don't have to do anything. There are $m$ iterations 
+of Step 2, so in total, Kruskal's algorithm takes $O(m\log n) = O(m\log m)$ 
+time (making use of the bounds $n-1 \leq m \leq n^2$ since $G$ is connected).
+
+\subsection{Maximum Spacing Clustering}\label{subsec:2.5}
+Given a set $U = \{p_1, \dots, p_n\}$ of $n$ objects and a distance 
+$d(p_i, p_j) = d(p_j, p_i) \geq 0$ between points, we wish to find a 
+{\bf $k$-clustering} (a partition $C_1, \dots, C_k$ of the set $U$) with 
+maximum spacing 
+\[ \max_{C_1, \dots, C_k \text{ partition of } U} 
+\left\{ \min_{1\leq i<j\leq k} \left\{ \min_{p\in C_i, q \in C_j} 
+d(p, q) \right\} \right\}. \] 
+Note that $k$ is fixed above, and the term inside the maximum is the 
+{\bf spacing} of the $k$-clustering $C_1, \dots, C_k$.
+
+We can solve this with a simple adaptation of Kruskal's algorithm. 
+We can view this problem as being equivalent to working over the complete 
+graph $K_n$ on the points $p_1, \dots, p_n$,
+and the edge costs corresponding to the distances. In this case, 
+we can stop early once we hit $k$ clusters.
+
+\begin{mdframed}[
+    linewidth=1pt,
+    linecolor=black,
+    bottomline=false,topline=false,rightline=false,
+    innerrightmargin=0pt,innertopmargin=0pt,innerbottommargin=0pt,
+    innerleftmargin=1em,% Distance between vertical rule & proof content
+    skipabove=0.75\baselineskip
+]
+{\bf Input.} A set $U = \{p_1, \dots, p_n\}$ with 
+distances $d(p_i, p_j) \geq 0$ between points, and a fixed integer $k$.
+
+{\bf Output.} A $k$-clustering of $U$ with maximum spacing.
+\begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
+    \item {\bf (Initialization.)} Start with $n$ clusters, each containing 
+    its own object from $p_1, \dots, p_n$. 
+
+    \item While $\# \text{clusters} > k$:
+    \begin{enumerate}[label={}]
+        \item {\bf (Merge clusters.)} Merge the clusters $C$ and $C'$ 
+        that achieve 
+        \[ \min_{C\neq C' \text{ clusters}} \left\{ \min_{p\in C, q\in C'} 
+        d(p, q) \right\}. \] 
+    \end{enumerate}
+\end{enumerate}
+\end{mdframed}\vspace{-0.15cm}
