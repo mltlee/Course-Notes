@@ -64,7 +64,7 @@ In particular, if we know that two of the conditions hold, then the
 third one is guaranteed.
 
 \subsection{Minimum Spanning Trees}\label{subsec:2.2}
-Given a connected graph $G = (V, E)$ and edge costs $c_e \geq 0$ for each 
+Given a connected graph $G = (V, E)$ and edge costs $c_e$ for each 
 $e \in E$, our goal is to find a spanning tree $T$ of minimum cost 
 \[ c(T) := \sum_{e \in T} c_e. \] 
 First, we'll set some notation. For a vertex $v \in V$, we define 
@@ -76,7 +76,7 @@ The following theorem will be extremely important for finding a minimum
 spanning tree. 
 
 \begin{theo}[Cut Property]{theo:2.2}
-    Suppose that the costs $c_e \geq 0$ for $e \in E$ are distinct. 
+    Suppose that the costs $c_e$ for $e \in E$ are distinct. 
     Let $S \subseteq V$ be such that $S \neq \varnothing$ and $S \neq V$, 
     and let 
     \[ e = \argmin_{f \in \delta(S)} c_f. \] 
@@ -139,7 +139,7 @@ connected to $s$ in $T$.
     innerleftmargin=1em,% Distance between vertical rule & proof content
     skipabove=0.75\baselineskip
 ]
-{\bf Input.} A graph $G = (V, E)$ and edge costs $c_e \geq 0$ for 
+{\bf Input.} A graph $G = (V, E)$ and edge costs $c_e$ for 
 all $e \in E$. 
 
 {\bf Output.} A minimum spanning tree of $G$.
