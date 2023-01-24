@@ -8,7 +8,7 @@ interest to us, prime factorization. Our goal in this course is to generalize
 these topics using commutative algebra. 
 
 One naive approach would be to consider unique factorization domains, or 
-UFDs. However, the canonical example of a principal ideal domain (PID) 
+UFDs. However, the canonical example of an integral domain
 that is not a UFD is $\Z[\sqrt{5}]$, which is far too integer-like 
 to be disqualified from our discussion. 
 
@@ -551,7 +551,7 @@ recover our special case.
     transitive, we have that $\{y_i z_j : 1 \leq i \leq d,\, 1 \leq j \leq m\}$ 
     is a basis for $K$ over $\Q$. 
 
-    Let $A = [T_\alpha]_\beta \in \Q^{d\times d}$, where we consider the 
+    Let $A = [T_\alpha]_\beta \in M_d(\Q)$, where we consider the 
     restriction $T_\alpha : \Q(\alpha) \to \Q(\alpha)$. Then we have 
     \[ \alpha y_i = T_\alpha(y_i) 
     = A[y_i]_\beta \cdot \begin{bmatrix} y_1 \\ \vdots \\ y_d \end{bmatrix} 
@@ -672,21 +672,22 @@ out to be the star of the show here!
     $\rank({\cal O}_K) = n$, as desired. \qed
 \end{pf}\vspace{-0.25cm}
 
-This gives us the existence of an integral basis for ${\cal O}_K$. 
+This gives us the existence of an integral basis for ${\cal O}_K$. The existence 
+of this integral basis allows us to prove an avalanche of 
+corollaries which we'll be able to make use of later. 
 
 {\bf Warning!} Note that for a number field $K$, a $\Q$-basis consisting only of 
 algebraic integers is not necessarily an integral basis for ${\cal O}_K$. For 
-example, let $K = \Q(\sqrt{5})$. $\{1, \sqrt{5}\} \subseteq 
-\Q(\sqrt{5})$ is a $\Q$-basis of algebraic integers, but is not an integral 
-basis for ${\cal O}_K$ since $\frac{1+\sqrt{5}}{2} \in {\cal O}_K$. 
-
-Due to Theorem~\ref{theo:1.16}, we also get the following corollary. 
+example, let $K = \Q(\sqrt{5})$. Then $\{1, \sqrt{5}\} \subseteq 
+\Q(\sqrt{5})$ is a $\Q$-basis of algebraic integers for $\Q(\sqrt{5})$, 
+but is not an integral basis for ${\cal O}_K$ since $\frac12(1+\sqrt{5}) \in 
+{\cal O}_K$. 
 
 \begin{cor}{cor:1.17}
     Let $K$ be a number field with $[K : \Q] = n$, and let $R = {\cal O}_K$ be 
     its ring of integers. If $I$ is a non-zero ideal of $R$, then 
     $(I, +) \cong \Z^n$. 
-\end{cor}
+\end{cor}\vspace{-0.15cm}
 \begin{pf}[Corollary~\ref{cor:1.17}]
     Let $\{x_1, \dots, x_n\}$ be an integral basis for $R = {\cal O}_K$, 
     which exists due to Theorem~\ref{theo:1.16}. Take $a \in I$ such that 
@@ -701,15 +702,58 @@ structure theorem of finitely generated modules over PIDs, and we know that
 $\Z$ is a PID.
 
 \begin{prop}{prop:1.18}
-    If $M$ is a finitely generated $\Z$-module, then $M \cong \Z^n \times T$ 
-    where $T$ is finite. (We call $\Z^n$ the free part and $T$ the 
+    If $M$ is a finitely generated $\Z$-module, then $M \cong \Z^k \times T$ 
+    as $\Z$-modules, where $T$ is finite. (We call $\Z^k$ the free part and $T$ the 
     torsion part.)
-\end{prop}
+\end{prop}\vspace{-0.15cm}
 
-We make use this fact to prove one more corollary.
+We make use this fact to prove the following corollary.
 
 \begin{cor}{cor:1.19}
     Let $K$ be a number field with degree $[K : \Q] = n$, and let 
     $R = {\cal O}_K$ be its ring of integers. 
     If $I$ is a non-zero ideal of $R$, then $R/I$ is finite. 
-\end{cor}   
+\end{cor}\vspace{-0.15cm}
+\begin{pf}[Corollary~\ref{cor:1.19}]
+    By Proposition~\ref{prop:1.18}, we have $R/I \cong \Z^k \times T$ 
+    as $\Z$-modules, where $T$ is finite. It is enough to show that 
+    $R/I$ has no elements of infinite order, as this will imply that 
+    $R/I \cong T$ is finite. Suppose otherwise, and let $\bar{x} = 
+    x + I \in R/I$ be an element of infinite order. Let $\{x_1, \dots, x_n\}$
+    be an integral basis for $I$, which exists by Corollary~\ref{cor:1.17}. 
+    Note that $x \notin I$ for otherwise $\bar{x} = \bar{0}$, which has 
+    finite order. In particular, we see that $x$ is distinct from 
+    the $x_i$. We claim that $\{x, x_1, \dots, x_n\}$ is linearly independent 
+    over $\Z$. Consider the relation 
+    \[ cx + \sum_{i=1}^n c_i x_i = 0. \] 
+    for some $c, c_i \in \Z$. Since $\sum_{i=1}^n c_i x_i \in I$, this gives 
+    us $c\bar{x} = \bar{0}$, and thus $c = 0$ since $\bar{x}$ has infinite 
+    order. Then the linear independence of $\{x_1, \dots, x_n\}$ over $\Z$ 
+    implies that $c_1 = \cdots = c_n = 0$, so $\{x, x_1, \dots, x_n\}$ 
+    is linearly independent over $\Z$. But this contradicts the fact that $R$ 
+    has rank $n$, so the result follows. \qed
+\end{pf}\vspace{-0.25cm}
+
+We prove two more easy corollaries. 
+
+\begin{cor}{cor:1.20}
+    Let $K$ be a number field with $[K : \Q] = n$ and let $R = {\cal O}_K$. 
+    Every nonzero prime ideal of $R$ is maximal.
+\end{cor}\vspace{-0.15cm}
+\begin{pf}[Corollary~\ref{cor:1.20}]
+    Let $P$ be a prime ideal. Then $R/P$ is an integral domain, and by 
+    Corollary~\ref{cor:1.19}, it is finite. A finite integral 
+    domain is a field, which implies that $P$ must be maximal. \qed
+\end{pf}
+
+\begin{cor}{cor:1.21}
+    Let $K$ be a number field with $[K : \Q] = n$ and let $R = {\cal O}_K$. 
+    Then $R$ is Noetherian. 
+\end{cor}\vspace{-0.15cm}
+\begin{pf}[Corollary~\ref{cor:1.21}]
+    Let $I$ be an ideal of $R$. Then $I$ is a free $\Z$-module with 
+    finite rank $n$ by Corollary~\ref{cor:1.17}, so $I$ is a finitely 
+    generated $\Z$-module by using the integral basis as a generating set. 
+    Since $\Z \subseteq R$, it follows that $I$ is also a finitely 
+    generated $R$-module. \qed
+\end{pf}
