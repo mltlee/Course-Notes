@@ -29,3 +29,54 @@ so we list the problems here for reference.
     Prove that every embedding (injective ring homomorphism) $\varphi : 
     K \to \C$ can be extended to exactly $[L : K]$ embeddings $\psi : L \to \C$.
 \end{enumerate}
+
+{\bf Assignment 2.} 
+\begin{enumerate}[leftmargin=1.5cm, label={{\bf A2-\arabic*}}]
+    \item \label{A2-1} Let $K = \Q(\sqrt{-5})$. \begin{enumerate}[(a)]
+        \item Suppose that $\{a, b\} \subseteq {\cal O}_K$ is an integral basis 
+        for ${\cal O}_K$. Prove that we must have 
+        \[ \det \begin{bmatrix} a & \bar{a} \\ b & \bar{b} \end{bmatrix}^2 = -20. \]
+        Here, we mean $\overline{x + y\sqrt{-5}} = x - y\sqrt{-5}$ for $x, y \in \Q$. 
+        \item Suppose that $a, b \in {\cal O}_K$ satisfy 
+        \[ \det \begin{bmatrix} a & \bar{a} \\ b & \bar{b} \end{bmatrix}^2 = -20. \] 
+        Prove that $\{a, b\}$ is an integral basis for ${\cal O}_K$.  
+    \end{enumerate} 
+    \item \label{A2-2} Let $\alpha \in \C$ such that $\alpha^4 + 3\alpha^2 + 
+    6\alpha - 3 = 0$. \begin{enumerate}[(a)]
+        \item Compute $\Tr_{\Q(\alpha)/\Q}(\alpha)$. 
+        \item Compute $\Tr_{\Q(\alpha)/\Q}(\alpha^4 + \alpha + 2)$.
+    \end{enumerate}
+    \item \label{A2-3} Let $R$ be an integral domain and let $I$ and $J$ be 
+    ideals of $R$. Recall that 
+    \[ IJ := \{a_1b_1 + \cdots + a_nb_n : n \in \N,\, a_i \in I,\, b_i \in J\} \] 
+    is also an ideal of $R$. Now, let $X$ be the set of nonzero ideals of $R$. 
+    \begin{enumerate}[(a)]
+        \item Put a relation $\sim$ on $X$ by $I \sim J$ if and only if 
+        $\langle \alpha \rangle I = \langle \beta \rangle J$ for some 
+        nonzero $\alpha, \beta \in R$. Prove that $\sim$ is an equivalence 
+        relation on $X$. 
+        \item Prove that $I, J \in X$ are isomorphic as $R$-modules if and only if 
+        $I \sim J$. 
+        \item Prove that if $I \in X$ and there exists a nonzero $\alpha \in R$ 
+        such that $\langle \alpha \rangle I$ is principal, then $I$ 
+        itself is principal. What does this tell you about the principal 
+        ideals of $R$ relative to $\sim$?
+        \item Prove that the set of ideal classes (with respect to $\sim$) form a 
+        group under the operation $[I][J] = [IJ]$ if and only if for all 
+        $I \in X$, there exists $J \in X$ such that $IJ$ is principal.
+    \end{enumerate} 
+    \item \label{A2-4} Let $M = \Z^n$ and let $N$ be a submodule of $M$ such that $\rank(N) = n$. 
+    \begin{enumerate}[(a)]
+        \item Prove that $M/N$ is finite. 
+        \item Read Theorem 2.10 of Keith Conrad's notes, which also 
+        requires Definition 2.8. If $\{e_1, \dots, e_n\}$ is 
+        the standard integral basis for $M$, this guarantees the existence of a 
+        basis $\{d_1e_1, \dots, d_ne_n\}$ for $N$, where $d_i \in \Z$. 
+        \item Prove that $M/N \cong \Z_{d_1} \times \cdots \times \Z_{d_n}$. 
+        \item Let $\{v_1, \dots, v_n\}$ be an integral basis for $N$. 
+        Since $N \subseteq M$, we can find $a_{ij} \in \Z$ such that 
+        $v_i = \sum_{j=1}^n a_{ij} e_j$. Use this to construct the matrix 
+        $A = [a_{ij}] \in M_n(\Z)$. Prove that $[M : N] = \lvert\det(A)\rvert$, where 
+        $[M : N]$ is the index of the subgroup $N$ in $M$.
+    \end{enumerate}
+\end{enumerate}
