@@ -275,7 +275,7 @@ spanning tree. It first sorts the edges by ascending edge costs
 and continually adds an edge to a partial tree construction $T$ as long as no 
 cycle is induced by that edge. The algorithm we give stops once we 
 go through every edge, but note that it is enough to stop once the 
-number of edges hits $|V| - 1$.
+number of edges we've added hits $|V| - 1$.
 
 \begin{mdframed}[
     linewidth=1pt,
@@ -315,7 +315,7 @@ many times throughout the course. These concern equivalent
 notions to the definitions we have.
 \begin{enumerate}[(1)]
     \item A graph $G = (V, E)$ is disconnected if and only if there exists a 
-    nontrivial cut $\varnothing \subsetneq S \subsetneq V$ such that 
+    nontrivial cut $\delta(S)$ for some $\varnothing \subsetneq S \subsetneq V$ such that 
     $\delta(S) \cap E = \varnothing$. 
     \item Let $G = (V, E)$ be a graph and let $u, v \in V$ be distinct vertices. 
     Then $G$ has no $u, v$-path if and only if there exists $S \subseteq V$ 
@@ -329,17 +329,16 @@ notions to the definitions we have.
     connected by way of contradiction, and thus it is a spanning tree 
     by Theorem~\ref{theo:2.1}.
 
-    Suppose not, so there is a nontrivial cut $\varnothing \subsetneq S 
+    Suppose not, so there is a nontrivial cut $\delta(S)$ for some $\varnothing \subsetneq S 
     \subsetneq V$ such that $\delta(S) \cap T = \varnothing$ by (1) above. 
     Since $G$ is connected, we have $\delta(S) \neq \varnothing$, so 
     there exists some edge $e \in \delta(S)$. 
-
     Let's look at the moment where $e$ was considered in the algorithm. 
     Since $e$ was rejected, it must be that $T \cup \{e\}$ contains a cycle 
     $C$ with $e \in C$. But $|C \cap \delta(S)|$ is even and $e \in 
     C \cap \delta(S)$, so $|C \cap \delta(S)| \geq 2$. We then have 
     $|(C \setminus \{e\}) \cap \delta(S)| \geq 1$. But $C \setminus \{e\} 
-    \subset T$, which contradicts the fact that $\delta(S) \cap T = \varnothing$. 
+    \subseteq T$, which contradicts the fact that $\delta(S) \cap T = \varnothing$. 
 
     Now, we show that we have a minimum spanning tree. Consider the moment 
     an arbitrary edge $e = uv$ is added to $T$; let $T'$ be the set of edges 
@@ -347,8 +346,7 @@ notions to the definitions we have.
     (else a $u, v$-path adjoined with $e$ would form a cycle). Hence, 
     by (2), there exists $S \subseteq V$ such that $u \in S$, $v \notin S$, 
     and $\delta(S) \cap T' = \varnothing$. Due to the way that the edges 
-    are sorted in Step 1, we have 
-    \[ e = \argmin_{f\in\delta(S)} c_f. \] 
+    are sorted in Step 1, we have $e = \argmin_{f\in\delta(S)} c_f$. 
     It follows from the cut property (Theorem~\ref{theo:2.2}) that including 
     $e$ is the correct decision. \qed
 \end{pf}\vspace{-0.25cm}
@@ -370,8 +368,8 @@ We use {\sc Find} in every iteration of Step 2 to check that
 $\textsc{Find}(u) \neq \textsc{Find}(v)$ for the edge $e = uv$. In this 
 case, $u$ and $v$ are in different components and we can join them with 
 {\sc Union}; otherwise we don't have to do anything. There are $m$ iterations 
-of Step 2, so in total, Kruskal's algorithm takes $O(m\log n) = O(m\log m)$ 
-time (making use of the bounds $n-1 \leq m \leq n^2$ since $G$ is connected).
+of Step 2, so Kruskal's algorithm takes $O(m\log n) = O(m\log m)$ 
+time (since $n-1 \leq m \leq n^2$ when $G$ is connected).
 
 \subsection{Maximum Spacing Clustering}\label{subsec:2.5}
 Given a set $U = \{p_1, \dots, p_n\}$ of $n$ objects and a distance 
@@ -384,10 +382,11 @@ d(p, q) \right\} \right\}. \]
 Note that $k$ is fixed above, and the term inside the maximum is the 
 {\bf spacing} of the $k$-clustering $C_1, \dots, C_k$.
 
-We can solve this with a simple adaptation of Kruskal's algorithm. 
-We can view this problem as being equivalent to working over the complete 
+We can solve this problem with an adaptation of Kruskal's algorithm, 
+called the {\bf single linkage clustering algorithm}.
+We can view it as being equivalent to working over the complete 
 graph $K_n$ on the points $p_1, \dots, p_n$,
-and the edge costs corresponding to the distances. In this case, 
+and the edge costs corresponding to the distances. Here,
 we can stop early once we hit $k$ clusters.
 
 \begin{mdframed}[
