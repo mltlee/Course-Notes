@@ -110,8 +110,8 @@ Now, let's investigate some properties of the discriminant.
     so $\disc(v) = \disc(w)$. 
 
     In summary, given an integral basis $\{v_1, \dots, v_n\} \subseteq 
-    {\cal O}_K$, another subset $\{w_1, \dots, w_n\}$ is an integral 
-    basis for ${\cal O}_K$ if and only if $\disc(v) = \disc(w)$. 
+    {\cal O}_K$, another subset $\{w_1, \dots, w_n\} \subseteq {\cal O}_K$ 
+    is an integral basis for ${\cal O}_K$ if and only if $\disc(v) = \disc(w)$. 
 \end{enumerate}
 
 \subsection{Discriminant of a Number Field}\label{subsec:2.2}
@@ -173,7 +173,8 @@ Let's jump into another investigation, this one much shorter than the last.
 \begin{enumerate}[(1)]
     \item Let $\alpha \in {\cal O}_K$ with $[\Q(\alpha) : \Q] = n$. Then 
     $\{1, \alpha, \alpha^2, \dots, \alpha^{n-1}\}$ is an integral basis 
-    for $\Z[\alpha]$. 
+    for $\Z[\alpha]$. This particular basis is often called a 
+    {\bf power basis}.
 
     \item Let $\alpha \in {\cal O}_K$. Set $K = \Q(\alpha)$ and suppose that
     $[K : \Q] = n$. Then we have 
@@ -205,3 +206,90 @@ irreducible by the rational roots theorem. Then
 \[ \disc(\alpha) = -4 - 27 = -31 \] 
 is squarefree, so if $K = \Q(\alpha)$, then ${\cal O}_K = \Z[\alpha] 
 = \{a + b\alpha + c\alpha^2 : a, b, c \in \Z\}$.
+
+In this spirit of this course, let's do some more investigation. Let 
+$\alpha \in \C$ such that $K = \Q(\alpha)$, and suppose that 
+$[K : \Q] = n$. Let $p(x)$ be the minimal polynomial of $\alpha$ over 
+$\Q$, and let $\alpha = \alpha_1, \dots, \alpha_n$ be the conjugates. 
+Then we have $p(x) = (x - \alpha_1) \cdots (x - \alpha_n)$, and its 
+derivative is 
+\[ p'(x) = \sum_{i=1}^n (x - \alpha_1) \cdots (x - \alpha_{i-1}) 
+(x - \alpha_{i+1}) \cdots (x - \alpha_n). \] 
+Substituting $x = \alpha_i$ gives 
+\[ p'(\alpha_i) = (\alpha_i - \alpha_1) \cdots (\alpha_i - \alpha_{i-1}) 
+(\alpha_i - \alpha_{i+1}) \cdots (\alpha_i - \alpha_n) \] 
+because all terms with $x - \alpha_i$ vanish. Looking at the norm 
+of $p'(\alpha)$ (which is legal because $\alpha \in K$), we have 
+\begin{align*}
+    N_{K/\Q}(p'(\alpha)) 
+    &= \prod_{r=1}^n \sigma_r(p'(\alpha)) 
+    = \prod_{r=1}^n p'(\sigma_r(\alpha)) 
+    = \prod_{r=1}^n p'(\alpha_r) \\ 
+    &= \prod_{i\neq j} (\alpha_i - \alpha_j) 
+    = (-1)^{\binom{n}{2}} \prod_{i<j} (\alpha_i - \alpha_j)^2
+    = (-1)^{n(n-1)/2} \disc(p(x)) = (-1)^{n(n-1)/2} \disc(\alpha). 
+\end{align*}
+The second equality follows because the embeddings $\sigma_i$ permute the 
+roots and fix $\Q$. The fourth equality follows from our equation for 
+$p'(\alpha_i)$ above, and the fifth equality comes from considering the 
+pairs in the order $i > j$ and pulling out a $-1$ from each of them.
+Thus, one other way to compute the discriminant of $\alpha$ is 
+\[ \disc(\alpha) = (-1)^{n(n-1)/2} N_{K/\Q}(p'(\alpha)). \] 
+If all else fails, we give one more way of computing discriminants. 
+
+\begin{defn}{defn:2.5}
+    Let $f(x) = a_n x^n + \cdots + a_1 x + a_0$ and $g(x) = b_m x^m 
+    + \cdots + b_1 x + b_0$ be polynomials in $\C[x]$. The {\bf resultant}
+    of $f(x)$ and $g(x)$ is defined to be 
+    \[ \Res(f(x), g(x)) := \det\,\mleft[ \begin{array}{ccccc}
+        a_n & a_{n_1} & \cdots & & \\
+        0 & a_n & a_{n-1} & \cdots & \\ 
+        0 & 0 & a_n & a_{n-1} & \cdots \\[3pt] \hline
+        \\[-6pt]
+        b_m & b_{m_1} & \cdots & & \\
+        0 & b_m & b_{m-1} & \cdots & \\ 
+        0 & 0 & b_m & b_{m-1} & \cdots \\
+    \end{array} \mright]
+    \begin{array}{l}
+        \left.\vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}}\right\} m \text{ rows} \\ 
+        \left.\vphantom{\begin{matrix} 0 \\ \vdots \\ 0 \end{matrix}}\right\} n \text{ rows}
+    \end{array} \]
+    where we add zeroes at the end of each row if we run out of coefficients, 
+    and we ensure that the matrix is $(n+m) \times (n+m)$. 
+\end{defn}
+
+For a concrete example, we have 
+\[ \Res(x^3 + x + 2, x^2 + 4x - 1) = \det \begin{bmatrix} 
+    1 & 0 & 1 & 2 & 0 \\ 
+    0 & 1 & 0 & 1 & 2 \\ 
+    1 & 4 & -1 & 0 & 0 \\ 
+    0 & 1 & 4 & -1 & 0 \\ 
+    0 & 0 & 1 & 4 & -1
+\end{bmatrix}. \] 
+Here, we have $n = 3$ and $m = 2$. The first two rows correspond to the 
+coefficients of $x^3 + x + 2$ and the last three rows correspond to the 
+coefficients of $x^2 + 4x - 1$. 
+
+The following proposition relates the resultant to discriminants. We didn't
+prove it in class, but \href{https://www.youtube.com/watch?v=5YNje7ZIaEM}{this video}
+by Professor Yuly Billig provides a nice proof of it. 
+
+\begin{prop}{prop:2.6}
+    Let $K$ be a number field with degree $[K : \Q] = n$. Suppose that 
+    $\alpha \in {\cal O}_K$ is such that $K = \Q(\alpha)$, and let 
+    $p(x)$ be the minimal polynomial of $\alpha$. Then we have 
+    \[ \disc(\alpha) = (-1)^{n(n-1)/2} \Res(p(x), p'(x)). \]
+\end{prop}
+
+We give one example of this. Suppose $\alpha \in \C$ is a root of 
+$p(x) = x^3 - x^2 - 1$, and let $K = \Q(\alpha)$. Notice that $p(x)$ is 
+irreducible by the rational roots theorem and so $[K : \Q] = 3$. 
+Then $p'(x) = 3x^2 - 2x$ and hence 
+\[ \disc(\alpha) = (-1)^{3(3-1)/2} \det \begin{bmatrix} 
+    1 & -1 & 0 & -1 & 0 \\ 
+    0 & 1 & -1 & 0 & -1 \\
+    3 & -2 & 0 & 0 & 0 \\ 
+    0 & 3 & -2 & 0 & 0 \\ 
+    0 & 0 & 3 & -2 & 0
+\end{bmatrix} = 31, \] 
+which shows that ${\cal O}_K = \Z[\alpha]$ since $31$ is squarefree. 

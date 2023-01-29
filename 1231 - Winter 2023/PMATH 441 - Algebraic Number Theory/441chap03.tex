@@ -1,0 +1,75 @@
+\section{Prime Factorization}\label{sec:3}
+
+\subsection{Ring Theory}\label{subsec:3.1}
+Let $K$ be a number field and let $R = {\cal O}_K$ be its ring of integers. 
+Recall that in Section~\ref{subsec:1.4}, we uncovered some purely 
+ring theoretic facts about $R$. We'll restate them here as they'll be 
+very useful to us soon. Note that when we speak about rings in this 
+course, they are always commutative and unital.
+\begin{enumerate}[(1)]
+    \item Corollary~\ref{cor:1.19}: If $I$ is a nonzero ideal of $R$, then 
+    $R/I$ is finite. 
+    \item Corollary~\ref{cor:1.20}: Every nonzero prime ideal of $R$ is maximal.
+    \item Corollary~\ref{cor:1.21}: $R$ is Noetherian. 
+\end{enumerate}
+
+We now give a few characterizations of being a Noetherian ring.
+
+\begin{prop}{prop:3.1}
+    Let $R$ be a ring. The following are equivalent:
+    \begin{enumerate}[(1)]
+        \item $R$ is Noetherian. 
+        \item If $I_1 \subseteq I_2 \subseteq \cdots$ is an ascending 
+        chain of ideals of $R$, then there exists some $N \in \N$ such that 
+        $I_k = I_N$ for all $k \geq N$; that is, the chain terminates.
+        \item Every nonempty set of ideals of $R$ has a maximal element 
+        (with respect to $\subseteq$). 
+    \end{enumerate}
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.1}]
+    $(1) \Rightarrow (2)$: Let $I_1 \subseteq I_2 \subseteq \cdots$ be 
+    an ascending chain of ideals in $R$. Let $I = \bigcup_{j\in\N} I_j$, 
+    and note that $I$ is an ideal of $R$. Since $R$ is Noetherian, 
+    we see that $I$ is finitely generated, say by $a_1, \dots, a_s$. 
+    Then for each $i = 1, \dots, s$, there exists some $N_i \in \N$ such that 
+    $a_i \in I_{N_i}$. Taking $N = \max\{N_1, \dots, N_s\}$, we have 
+    $a_i \in I_N$ for all $i = 1, \dots, s$ and thus $I \subseteq I_N$. 
+    But $I_N \subseteq I$ by definition, so equality follows. In particular, 
+    we have $I_k = I_N$ for all $k \geq N$. 
+    
+    $(2) \Rightarrow (3)$: Suppose ${\cal I}$ is a nonempty set of ideals of 
+    $R$, and let $I_1 \in {\cal I}$ (which exists because ${\cal I}$ is 
+    nonempty). If $I_1$ is maximal, we're done. Otherwise, ${\cal I} \setminus 
+    \{I_1\}$ must be nonempty; we can find $I_2$ from this collection 
+    such that $I_1 \subseteq I_2$ (else $I_1$ was maximal). If 
+    $I_2$ is not maximal, pick $I_3 \in {\cal I} \setminus \{I_1, I_2\}$ 
+    such that $I_1 \subseteq I_2 \subseteq I_3$. But by assumption, this 
+    process terminates; for some $N \in \N$, we have $I_k = I_N$ 
+    for all $k \geq N$, and $I_N$ is our desired maximal element in ${\cal I}$.
+
+    $(3) \Rightarrow (1)$: Let $I$ be an ideal of $R$. Let ${\cal I}$ 
+    denote the collection of all finitely generated ideals of $R$ 
+    contained in $I$, which is nonempty because $\langle 0 \rangle 
+    \in {\cal I}$. By assumption, ${\cal I}$ has a maximal element $J$. 
+    If $J \neq I$, then we can find some $a \in I \setminus J$. Then 
+    $\langle J, a \rangle$ is also finitely generated and contained in 
+    ${\cal I}$, contradicting maximality. It follows that $J = I$ 
+    and so $I$ is finitely generated. \qed 
+\end{pf}\vspace{-0.25cm}
+
+Note that the rings that we work with in this course are not generally UFDs, 
+so we do not have the classical prime factorization from first year number 
+theory. However, the following proposition gives us the idea to 
+consider the factorization of proper ideals into prime ideals. 
+The reason why we are only considering proper ideals here is because 
+taking $I = R$ fails condition (1); every prime ideal of $R$ is proper by 
+definition.
+
+\begin{prop}{prop:3.2}
+    Let $R$ be Noetherian and let $I \neq R$ be an ideal. 
+    There exist proper ideals $P_1, \dots, P_n$ of $R$ such that 
+    \begin{enumerate}[(1)]
+        \item $I \subseteq P_i$ for all $i = 1, \dots, n$; and 
+        \item $P_1P_2 \cdots P_n \subseteq I$. 
+    \end{enumerate}
+\end{prop}
