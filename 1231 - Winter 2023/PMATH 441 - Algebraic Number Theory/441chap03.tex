@@ -73,3 +73,165 @@ definition.
         \item $P_1P_2 \cdots P_n \subseteq I$. 
     \end{enumerate}
 \end{prop}
+
+Note that the prime ideals $P_i$ above are not necessarily distinct. 
+To prove this proposition, we will use an extremely common tactic in 
+commutative algebra: we assume that the set of objects that does 
+not satisfy the property is nonempty, take a maximal element, and derive 
+a contradiction. 
+
+\begin{pf}[Proposition~\ref{prop:3.2}]
+    Let $X$ be the set of proper ideals of $R$ not having this property. 
+    By contradiction, assume that $X \neq \varnothing$. Let $I \in X$ be 
+    a maximal element (with respect to $\subseteq$). Then $I$ itself 
+    is not prime (otherwise we can simply take $P_1 = I$), so we can find 
+    $a, b \in R$ such that $ab \in I$ but $a, b \notin I$. By 
+    the maximality of $I$, we have $I + \langle a \rangle, I + \langle b 
+    \rangle \notin X$. 
+
+    Note that $(I + \langle a \rangle)(I + \langle b \rangle) 
+    \subseteq I$ since $I^2$, $\langle a \rangle I$, $\langle b \rangle I$, 
+    and $\langle ab \rangle$ are all subsets of $I$. In particular, we have 
+    $I + \langle a \rangle \neq R$ and $I + \langle b \rangle \neq R$ since 
+    multiplying by $R$ does not change an ideal. 
+
+    Therefore, we can find prime ideals $P_1, \dots, P_n, Q_1, \dots, Q_m$ 
+    of $R$ such that 
+    \begin{enumerate}[(1)]
+        \item $I + \langle a \rangle \subseteq P_i$ for all $i = 1, \dots, n$ 
+        and $I + \langle b \rangle \subseteq Q_j$ for all $j = 1, \dots, m$;
+        \item $P_1 P_2 \cdots P_n \subseteq I + \langle a \rangle$ 
+        and $Q_1 Q_2 \cdots Q_m \subseteq I + \langle b \rangle$. 
+    \end{enumerate}
+    But then we have $I \subseteq I + \langle a \rangle \subseteq P_i$ 
+    and $I \subseteq I + \langle b \rangle \subseteq Q_j$. Moreover, 
+    we see that 
+    \[ P_1 \cdots P_n Q_1 \cdots Q_m \subseteq (I + \langle a \rangle) 
+    (I + \langle b \rangle) \subseteq I. \] 
+    Here, we find that $I \notin X$, which is a contradiction. \qed 
+\end{pf}\vspace{-0.25cm}
+
+We now introduce some familiar ring theory from PMATH 347, namely the 
+notion of coprime ideals and the (generalized) Chinese remainder theorem. 
+
+\begin{defn}{defn:3.3}
+    Let $R$ be a ring, and let $I$ and $J$ be proper ideals of $R$. We say 
+    that $I$ and $J$ are {\bf coprime} if $I + J = R$.
+\end{defn}\vspace{-0.25cm}
+
+The term coprime is used interchangeably with comaximal, but being a 
+number theory course, it feels more appropriate to say coprime.
+The following proposition tells us that powers of coprime ideals are also 
+coprime. 
+
+\begin{prop}{prop:3.4}
+    Let $R$ be a ring. Let $I$ and $J$ be proper ideals such that $I + J = R$. 
+    Then for all $n, m \in \N$, we have $I^n + J^m = R$. 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.4}]
+    Suppose that $I^n + J^m \neq R$. Then we have $I^n + J^m \subseteq M$ 
+    for some maximal ideal $M$. This gives us $I^n \subseteq M$ and 
+    $J^m \subseteq M$ as well. But maximal ideals are prime. 
+    In particular, if $a \in I$, then $a^n \in M$, but since $M$ is 
+    prime, we also have $a \in M$. Thus, we have $I \subseteq M$, 
+    and by an identical argument, we obtain $J \subseteq M$. (This result 
+    also follows from another characterization of prime ideals.)
+    It follows that $I + J \subseteq M$, which is a contradiction since 
+    maximal ideals are proper by definition. \qed 
+\end{pf}\vspace{-0.25cm}
+
+This leads us to the following famous theorem that we all know and love. 
+
+\begin{theo}[Chinese Remainder Theorem]{theo:3.5}
+    Let $R$ be a ring and let $I$ and $J$ be coprime ideals of $R$. Then 
+    \[ R/IJ \cong R/I \times R/J. \]
+\end{theo}\vspace{-0.25cm}
+\newpage
+\begin{pf}[Theorem~\ref{theo:3.5}]
+    Define the map $\varphi : R \to R/I \times R/J$ by $\varphi(x) 
+    = (x+I, x+J)$. Then we have $\ker\varphi = I \cap J$. But $IJ 
+    \subseteq I+J$ always holds and since $I$ and $J$ are coprime, we obtain 
+    \begin{align*}
+        I \cap J &= (I \cap J)R \\ 
+        &= (I \cap J)(I + J) \\ 
+        &= (I \cap J)I + (I \cap J)J \subseteq IJ
+    \end{align*}
+    since $I \cap J \subseteq I$, $I \cap J \subseteq J$, and $R$ is 
+    commutative. Thus, we have $\ker\varphi = I \cap J = IJ$. To see that 
+    $\varphi$ is surjective, let $a \in I$ and $b \in J$ such that $a + b = 1$
+    (which exist because $I$ and $J$ are coprime). Then for $x, y \in R$, we have 
+    \begin{align*}
+        \varphi(ax + by) &= (ax + by + I, ax + by + J) \\ 
+        &= (by + I, ax + J) \\ 
+        &= (b + I, a + J)(y + I, x + J) \\ 
+        &= (1 + I, 1 + J)(y + I, x + J) \\ 
+        &= (y + I, x + J),
+    \end{align*}
+    where the second last equality follows from looking at $b$ modulo $I$ 
+    and $a$ modulo $J$. So $\varphi$ is surjective, and it follows from 
+    the first isomorphism theorem that $R/IJ \cong R/I \times R/J$. \qed
+\end{pf}\vspace{-0.25cm}
+
+The generalized Chinese remainder theorem then follows from a straightforward 
+induction.
+
+\begin{theo}[Generalized Chinese Remainder Theorem]{theo:3.6}
+    Let $R$ be a ring, and let $I_1, \dots, I_n$ be pairwise coprime ideals 
+    (i.e. $I_i + I_j = R$ when $i \neq j$). Then 
+    \[ R/I_1 \cdots I_n \cong R/I_1 \times \cdots \times R/I_n. \] 
+\end{theo}\vspace{-0.25cm}
+
+We end this section on ring theory with a property of finite rings. 
+
+\begin{prop}{prop:3.7}
+    Let $R$ be a finite ring. There exist distinct prime ideals $P_1, \dots, P_m$ 
+    of $R$ and $n_i \in \N$ such that 
+    \[ R \cong R/P_1^{n_1} \times \cdots \times R/P_m^{n_m}. \] 
+\end{prop}\vspace{-0.25cm}
+
+Note that if $R$ is an integral domain, then this proposition tells us 
+almost nothing as we can simply take $P_1 = \{0\}$. This is much 
+more interesting when we are not working with integral domains.
+
+\begin{pf}[Proposition~\ref{prop:3.7}]
+    We can find prime ideals $Q_1, \dots Q_k$ of $R$ such that 
+    $Q_1Q_2 \cdots Q_k = \{0\}$ by using Proposition~\ref{prop:3.2}
+    with $I = \{0\}$ and noting that finite rings are Noetherian. 
+    Grouping the $Q_i$'s with multiplicity, we can write 
+    \[ P_1^{n_1} \cdots P_m^{n_m} = \{0\} \] 
+    where $P_i \neq P_j$ for $i \neq j$. Note that each $P_i$ is prime, 
+    so $R/P_i$ is a finite integral domain and hence a field. This 
+    means that $P_i$ is also maximal. So we have $P_i + P_j = R$ 
+    for $i \neq j$ because these are each independently maximal and distinct,
+    and hence any bigger ideal must be the whole ring. By Proposition~\ref{prop:3.4},
+    we obtain $P_i^{n_i} + P_j^{n_j} = R$, and the generalized Chinese 
+    remainder theorem (Theorem~\ref{theo:3.6}) gives 
+    \[ R \cong R/P_1^{n_1} \cdots P_m^{n_m} \cong R/P_1^{n_1} \times 
+    \cdots \times R/P_n^{n_m}. \eqno\qed \]
+\end{pf}
+
+\subsection{Prime Ideals of the Ring of Integers} \label{subsec:3.2}
+Let $K$ be a number field of degree $[K : \Q] = n$, and let $R = {\cal O}_K$.
+Let $I$ be a nonzero proper ideal of $R$. We know the following facts: 
+\begin{enumerate}[(1)]
+    \item Corollary~\ref{cor:1.19}: $R/I$ is finite, which allows us to 
+    apply Proposition~\ref{prop:3.7}.
+    \item Corollary~\ref{cor:1.21}: $R$ is Noetherian, so we can apply 
+    Proposition~\ref{prop:3.2}.
+    \item {\bf Correspondence theorem for rings.} There is a one-to-one
+    correspondence between the ideals of $R$ that contain $I$ and the 
+    ideals of the quotient ring $R/I$. In other words, every ideal $\overline{J}$ 
+    of $R/I$ is of the form $\overline{J} = J/I$, where $J \subseteq R$ 
+    is an ideal such that $I \subseteq J$. Moreover, $\overline{J}$ 
+    is prime if and only if $J$ is prime. 
+    \item Since $R/I$ is finite, we have by (3), Proposition~\ref{prop:3.7},
+    and the third isomorphism theorem that 
+    \begin{align*}
+        R/I &\cong (R/I)/(P_1^{n_1}/I) \times \cdots \times (R/I)/(P_m^{n_m}/I) \\ 
+        &\cong R/P_1^{n_1} \times \cdots \times R/P_m^{n_m} 
+    \end{align*}
+    where each $P_i \subseteq R$ is prime and $I \subseteq P_i$. 
+\end{enumerate}
+Therefore, to understand the ideal $I$, we study the prime ideals $P \supseteq I$. 
+It turns out that $P \supseteq I$ if and only if $P$ is a ``prime factor'' of $I$,
+as we'll see later in the course. 
