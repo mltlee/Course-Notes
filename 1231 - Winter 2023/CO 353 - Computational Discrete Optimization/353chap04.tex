@@ -1,0 +1,103 @@
+\section{Minimum Cost Independent Sets in Matroids}\label{sec:4}
+
+\subsection{Matroids}\label{subsec:4.1}
+A {\bf matroid} $M$ is a pair $(S, {\cal I})$ where $S$ is a ground set 
+and ${\cal I} \subseteq {\cal P}(S)$ is a family of sets over the 
+ground set $S$ satisfying the following properties:
+\begin{enumerate}[(1)]
+    \item We have $\varnothing \in {\cal I}$.
+    \item {\bf Downward closed:} For every $A \in {\cal I}$ and $B \subseteq A$, 
+    we have $B \in {\cal I}$. 
+    \item {\bf Exchange property:} For every $A, B \in {\cal I}$ with 
+    $|A| > |B|$, there exists $e \in A \setminus B$ such that $B \cup \{e\} \in {\cal I}$. 
+\end{enumerate}
+The sets in the family ${\cal I}$ are called the {\bf independent sets}.
+
+This definition is rather abstract, so we'll go over some examples. 
+
+{\bf Uniform matroids.} Let $S = \{1, \dots, n\}$ and let ${\cal I} = 
+\{A \subseteq S : |A| \leq k\}$ for some fixed $k \in \Z^+$. 
+\begin{enumerate}[(1)]
+    \item We have $\varnothing \in {\cal I}$ since $|\varnothing| = 0 \leq k$. 
+    \item If $A \in {\cal I}$ and $B \subseteq A$, then $|B| \leq |A| \leq k$, 
+    so $B \in {\cal I}$. 
+    \item For every $A, B \in {\cal I}$ with $|A| > |B|$, we have 
+    $A \setminus B \neq \varnothing$, so we can pick an element $e \in A 
+    \setminus B$. Note that $|B| \leq k-1$, so $|B \cup \{e\}| \leq k$, 
+    which implies that $B \cup \{e\} \in {\cal I}$. 
+\end{enumerate}
+
+{\bf Partition matroids.} Let $S = \{1, \dots, n\}$ as before, and 
+let $S_1, \dots, S_t$ be a partition of $S$. That is, we have 
+$\bigcup_{j=1}^t S_j = S$ and $S_i \cap S_j = \varnothing$ whenever 
+$i \neq j$. Let ${\cal I} = \{A \subseteq S : |A \cap S_j| \leq r_j 
+\text{ for all } j = 1, \dots, t\}$, where $r_j \in \Z^+$ are fixed. 
+(Usually, we pick $r_j < |S_j|$, for otherwise this does not put 
+any constraints on the independent sets.)
+\begin{enumerate}[(1)]
+    \item We have $\varnothing \in {\cal I}$ since $|\varnothing \cap S_j| =
+    0 \leq r_j$ for all $j = 1, \dots, t$. 
+    \item If $A \in {\cal I}$ and $B \subseteq A$, then $|B \cap S_j| 
+    \leq |A \cap S_j| \leq r_j$ for all $j = 1, \dots, t$, so $B \in {\cal I}$.
+    \item If $A, B \in {\cal I}$ with $|A| > |B|$, then there must exist 
+    some $j \in \{1, \dots, t\}$ such that $|A \cap S_j| > |B \cap S_j|$. 
+    Then $(A \cap S_j) \setminus (B \cap S_j) \neq \varnothing$, so 
+    we can find an element $e \in (A \cap S_j) \setminus (B \cap S_j)$. 
+    Observe that 
+    \[ |(B \cup \{e\}) \cap S_k| = \begin{cases}
+        |B \cap S_k|, & \text{if } k \neq j, \\ 
+        |B \cap S_k| + 1, & \text{if } k = j. 
+    \end{cases} \] 
+    In the first case, we have $|B \cap S_k| \leq r_k$ since $B \in {\cal I}$
+    and $e \notin S_k$. For the second case, we have $|B \cap S_j| + 1 
+    \leq |A \cap S_j| \leq r_j$ since $A \in {\cal I}$ and 
+    $|A \cap S_j| > |B \cap S_j|$. It follows that 
+    $B \cup \{e\} \in {\cal I}$. 
+\end{enumerate}
+
+The following example is the setting where matroids originated from. 
+This is the prototypical example of a matroid given in introductory
+talks, and is one we can build our intuition from. 
+
+{\bf Linear matroids.} Let $\mathbb{F}$ be a field. If you don't remember 
+what a field is, just take $\mathbb{F} = \mathbb{R}$. 
+Let $S$ be a set of vectors in $\mathbb{F}^d$ and let 
+${\cal I} = \{A \subseteq S : A \text{ is a linearly independent set over }
+\mathbb{F}\}$. Verifying that this is a matroid is an exercise in 
+linear algebra, which we won't do here.
+
+{\bf Graphic matroids.} Given a graph $G = (V, E)$, let $S = E$, and let 
+${\cal I} = \{A \subseteq S : (V, A) \text{ is acyclic}\}$. Then ${\cal I}$ 
+consists of all forests (acyclic subgraphs) of $G$.
+\begin{enumerate}[(1)]
+    \item We see that $(V, \varnothing)$ is acyclic, so $\varnothing \in {\cal I}$. 
+    \item If $A \in {\cal I}$ and $B \subseteq A$, then $(V, B)$ has no cycles 
+    since $(V, A)$ has no cycles, so $B \in {\cal I}$. 
+    \item Let $A, B \in {\cal I}$ with $|A| > |B|$. Then $(V, A)$ has 
+    $|V| - |A|$ connected components. Similarly, $(V, B)$ has 
+    $|V| - |B|$ connected components, and we have $|V| - |B| > |V| - |A|$. 
+    Hence, there is a connected component $C$ of $(V, A)$ that intersects 
+    at least two connected components of $(V, B)$, say $C'_1$ and $C'_2$.
+    Then $(V, A)$ has a $u, v$-path $P$ where $u \in C'_1$ and 
+    $v \in C'_2$. Let $e \in P \cap \delta(C'_1)$, which exists because 
+    an edge must cross the boundary of the connected component to 
+    get to $C'_2$. Then $B \cup \{e\} \in {\cal I}$.
+\end{enumerate}
+
+A maximal independent set $A \in {\cal I}$ is called a {\bf basis}.
+It is important to note that maximal is different from maximum. 
+Here, we just mean that $A \cup \{e\}$ cannot be independent for any 
+$e \in S \setminus A$. 
+
+In the graphic matroid example, the bases correspond to the spanning trees.
+
+\begin{lemma}{lemma:4.1}
+    All bases for a matroid have the same cardinality.
+\end{lemma}\vspace{-0.25cm}
+\begin{pf}[Lemma~\ref{lemma:4.1}]
+    Let $M = (S, {\cal I})$ be a matroid and let $A, B \in {\cal I}$ be 
+    two bases. Suppose by way of contradiction that $|A| > |B|$. 
+    Then by the exchange property, we can find $e \in A \setminus B$ 
+    such that $B \cup \{e\} \in {\cal I}$, contradicting the maximality of $B$. \qed
+\end{pf}\vspace{-0.25cm}
+
