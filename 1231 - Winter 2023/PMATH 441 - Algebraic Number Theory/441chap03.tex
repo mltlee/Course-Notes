@@ -235,3 +235,81 @@ Let $I$ be a nonzero proper ideal of $R$. We know the following facts:
 Therefore, to understand the ideal $I$, we study the prime ideals $P \supseteq I$. 
 It turns out that $P \supseteq I$ if and only if $P$ is a ``prime factor'' of $I$,
 as we'll see later in the course. 
+
+For now, we'll introduce a couple of big ideas. Note that by the correspondence 
+theorem, the prime ideals of $R/I$ are precisely $P/I$ where $P \supseteq I$ 
+is a prime ideal. Moreover, for a prime ideal $P \supseteq I$, we know that 
+$R/P$ is a finite field, so its cardinality is $|R/P| = p^m$
+for some prime number $p \in \N$. This tells us that 
+\[ p^m + P = p^m(1 + P) = 0 + P \] 
+where the last equality is by Lagrange. Then $p^m \in P$. Since $P$ 
+is a prime ideal, we get $p \in P$ and so $\langle p \rangle \subseteq P$. 
+
+Next, we go through a computational example. Let $K = \Q(\sqrt{2})$ 
+and let $R = {\cal O}_K = \Z[\sqrt{2}]$. Let's try to find all the 
+prime ideals $P$ such that $\langle 5 \rangle \subseteq P$ 
+(or equivalently, $5 \in P$). We have the isomorphisms 
+\[ R/\langle 5 \rangle = \Z[\sqrt{2}]/\langle 5 \rangle 
+\cong \Z[x]/\langle x^2 -2, 5 \rangle \cong \Z_5[x] / \langle x^2 -2 \rangle. \] 
+Note that $x^2 - 2$ is irreducible over $\Z_5$ because it has no roots. 
+So $\langle x^2 - 2 \rangle$ is a maximal ideal of $\Z_5[x]$ and hence 
+$R/\langle 5 \rangle \cong \Z_5[x]/\langle x^2 - 2 \rangle$ is a field. 
+This tells us that $\langle 5 \rangle \subseteq R$ is maximal, so 
+the only prime ideal $P$ of $R$ sitting above $\langle 5 \rangle$ is 
+$P = \langle 5 \rangle$ itself. 
+
+That was rather simple, so let's keep going. Take $K = \Q(\sqrt{2})$ 
+and $R = {\cal O}_K = \Z[\sqrt{2}]$ as before. Now, let's try to 
+find the prime ideals such that $\langle 7 \rangle \subseteq P$. We have 
+the isomorphisms 
+\[ R/\langle 7 \rangle \cong \Z[x]/\langle x^2 - 2, 7 \rangle 
+\cong \Z_7[x]/\langle x^2 - 2 \rangle, \] 
+but this time, we have $x^2 - 2 = (x+3)(x+4)$ over $\Z_7$. Then 
+the Chinese remainder theorem implies that 
+\[ \Z_7[x]/\langle x^2 - 2 \rangle \cong \Z_7[x]/\langle x+3\rangle 
+\times \Z_7[x]/\langle x+4 \rangle \cong \Z_7 \times \Z_7, \] 
+where the last isomorphism is obtained by sending $x$ to $-3$ and $-4$ 
+respectively (or we can formally justify this using the first isomorphism
+theorem if we'd like). 
+
+The prime ideals of $\Z_7 \times \Z_7$ are 
+$P_1 = \langle (1, 0) \rangle$ and $P_2 = \langle (0, 1) \rangle$. 
+Our goal now is to retrace our isomorphisms backwards. We have 
+\begin{align*}
+    (1, 0) \in \Z_7 \times \Z_7 
+    &\mapsto (1 + \langle x+3 \rangle, 0 + \langle x+4 \rangle) \in \Z_7[x]/\langle x+3\rangle 
+    \times \Z_7[x]/\langle x+4 \rangle \\ 
+    &\mapsto x+4 + \langle x^2 + 2 \rangle \in \Z_7[x]/\langle x^2 - 2 \rangle \\ 
+    &\mapsto x+4 + \langle x^2 - 2, 7 \rangle \in \Z[x]/\langle x^2 - 2, 7 \rangle \\ 
+    &\mapsto \sqrt{2} + 4 + \langle 7 \rangle \in R/\langle 7 \rangle. 
+\end{align*}
+The trickiest one to reverse here is the second one: we needed to reverse 
+the map from the Chinese remainder theorem. We needed to find a polynomial 
+that was congruent to $1$ mod $x+3$ and congruent to $0$ mod $x+4$, 
+and $x+4$ happened to do the trick. Similarly, we have 
+\begin{align*}
+    (0, 1) \in \Z_7 \times \Z_7 
+    &\mapsto (0 + \langle x+3 \rangle, 1 + \langle x+4 \rangle) \in \Z_7[x]/\langle x+3\rangle 
+    \times \Z_7[x]/\langle x+4 \rangle \\ 
+    &\mapsto -x-3 + \langle x^2 + 2 \rangle \in \Z_7[x]/\langle x^2 - 2 \rangle \\ 
+    &\mapsto -x-3 + \langle x^2 - 2, 7 \rangle \in \Z[x]/\langle x^2 - 2, 7 \rangle \\ 
+    &\mapsto -\sqrt{2} - 3 + \langle 7 \rangle \in R/\langle 7 \rangle, 
+\end{align*}
+where $-x-3$ is congruent to $0$ mod $x+3$ and congruent to $1$ mod $x+4$. 
+Thus, the prime ideals in $R$ containing $7$ are $Q_1 = \langle \sqrt{2} + 4, 7
+\rangle$ and $Q_2 = \langle -\sqrt{2} - 3, 7 \rangle = \langle 2+\sqrt{3}, 7 \rangle$, 
+keeping in mind that we are looking for the prime ideals of $R$ and not those 
+of $R/\langle 7 \rangle$. Note that we have $(\sqrt{2} + 3)(\sqrt{2} - 3) = -7$
+so we in fact have $Q_2 = \langle 2 + \sqrt{3} \rangle$, but it doesn't 
+hurt to include the $7$ to ensure that it is actually living above 
+$\langle 7 \rangle$.
+
+The main takeaways of this computation were as follows: 
+\begin{enumerate}[(1)]
+    \item The minimal polynomial $x^2 - 2$ factored as $(x+3)(x+4)$ over $\Z_7$. 
+    \item We have $(\sqrt{2} + 3)(\sqrt{2} + 4) = 14 + 7\sqrt{2}$; the coefficients 
+    are both divisible by $7$. 
+    \item By (2), we have $Q_1Q_2 \subseteq \langle 7 \rangle$. 
+    It can be checked that $Q_1Q_2 = \langle 7 \rangle$ is the prime 
+    factorization of $\langle 7 \rangle$.
+\end{enumerate}
