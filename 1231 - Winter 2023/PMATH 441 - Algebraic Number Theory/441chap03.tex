@@ -251,7 +251,7 @@ prime ideals $P$ such that $\langle 5 \rangle \subseteq P$
 (or equivalently, $5 \in P$). We have the isomorphisms 
 \[ R/\langle 5 \rangle = \Z[\sqrt{2}]/\langle 5 \rangle 
 \cong \Z[x]/\langle x^2 -2, 5 \rangle \cong \Z_5[x] / \langle x^2 -2 \rangle. \] 
-Note that $x^2 - 2$ is irreducible over $\Z_5$ because it has no roots. 
+Note that $x^2 - 2$ is irreducible over $\Z_5[x]$ because it has no roots. 
 So $\langle x^2 - 2 \rangle$ is a maximal ideal of $\Z_5[x]$ and hence 
 $R/\langle 5 \rangle \cong \Z_5[x]/\langle x^2 - 2 \rangle$ is a field. 
 This tells us that $\langle 5 \rangle \subseteq R$ is maximal, so 
@@ -264,7 +264,7 @@ find the prime ideals such that $\langle 7 \rangle \subseteq P$. We have
 the isomorphisms 
 \[ R/\langle 7 \rangle \cong \Z[x]/\langle x^2 - 2, 7 \rangle 
 \cong \Z_7[x]/\langle x^2 - 2 \rangle, \] 
-but this time, we have $x^2 - 2 = (x+3)(x+4)$ over $\Z_7$. Then 
+but this time, we have $x^2 - 2 = (x+3)(x+4)$ over $\Z_7[x]$. Then 
 the Chinese remainder theorem implies that 
 \[ \Z_7[x]/\langle x^2 - 2 \rangle \cong \Z_7[x]/\langle x+3\rangle 
 \times \Z_7[x]/\langle x+4 \rangle \cong \Z_7 \times \Z_7, \] 
@@ -300,7 +300,7 @@ Thus, the prime ideals in $R$ containing $7$ are $Q_1 = \langle \sqrt{2} + 4, 7
 \rangle$ and $Q_2 = \langle -\sqrt{2} - 3, 7 \rangle = \langle 2+\sqrt{3}, 7 \rangle$, 
 keeping in mind that we are looking for the prime ideals of $R$ and not those 
 of $R/\langle 7 \rangle$. Note that we have $(\sqrt{2} + 3)(\sqrt{2} - 3) = -7$
-so we in fact have $Q_2 = \langle 2 + \sqrt{3} \rangle$, but it doesn't 
+so we in fact have $Q_2 = \langle 2 + \sqrt{3} \rangle$. However, it doesn't 
 hurt to include the $7$ to ensure that it is actually living above 
 $\langle 7 \rangle$.
 
@@ -313,3 +313,139 @@ The main takeaways of this computation were as follows:
     It can be checked that $Q_1Q_2 = \langle 7 \rangle$ is the prime 
     factorization of $\langle 7 \rangle$.
 \end{enumerate}
+
+We'll do one more example. This time, we find the prime ideals such 
+that $P \supseteq \langle 2 \rangle$. We have the isomorphisms 
+\begin{align*}
+    R/\langle 2 \rangle \cong \Z[x]/\langle x^2-2, 2 \rangle 
+    \cong \Z_2[x]/\langle x^2 \rangle.
+\end{align*}
+Since this quotient ring only consists of $4$ elements, let's just look 
+at the elements explicitly. Let $P$ be a prime ideal of $\Z_2[x]/\langle x^2 \rangle$. 
+Being an ideal, we must have $0 + \langle x^2 \rangle \in P$. But $P$ 
+is proper, so $1 + \langle x^2 \rangle \notin P$. Since 
+$(x+1 + \langle x^2 \rangle)^2 = 1 + \langle x^2 \rangle \notin P$,
+we must have $x+1 + \langle x^2 \rangle \notin P$ for otherwise $P$ 
+would not be closed under multiplication by $\Z_2[x]/\langle x^2 \rangle$.
+Also, note that $P$ cannot be the zero ideal $\{0 + \langle x^2 \rangle\}$ since 
+$\Z_2[x]/\langle x^2 \rangle$ is not an integral domain. Therefore, we must have 
+\[ P = \langle x + \langle x^2 \rangle \rangle = \{0 + \langle x^2 \rangle, 
+x + \langle x^2 \rangle\}. \] 
+Retracing isomorphisms, we have 
+$x + \langle x^2 \rangle \mapsto x + \langle x^2-2, 2 \rangle \mapsto 
+\sqrt{2} + \langle 2 \rangle$.
+It follows that $Q = \langle \sqrt{2}, 2 \rangle = \langle \sqrt{2} \rangle$ 
+is the only prime ideal of $R$ such that $2 \in Q$. Note that 
+$\langle 2 \rangle = \langle \sqrt{2} \rangle^2$ here.
+
+One observation here is that $\disc(K) = 8$ and $p \mid 8$ if and only if 
+$p = 2$. As we'll see later, the primes that divide the discriminant 
+are the only ones with multiplicity in their ideal prime factorization. 
+
+We state a fact relating the minimal polynomial of $\alpha$ and the 
+ideal prime factorization of $\langle p \rangle$ where $p$ is prime, 
+under the strong assumption that ${\cal O}_K = \Z[\alpha]$.  
+We'll prove this later, but we require a lot of machinery first.
+
+\begin{theo}{theo:3.8}
+    Let $K$ be a number field with $[K : \Q] = n$ where $K = \Q(\alpha)$
+    for some $\alpha \in \C$. 
+    Assume that ${\cal O}_K = \Z[\alpha]$. Let $m(x) \in \Z[x]$ be the 
+    minimal polynomial for $\alpha$. If $p \in \N$ is prime and $m(x)$ 
+    factors over $\Z_p[x]$ as 
+    \[ \bar{m}(x) = q_1(x)^{n_1} \cdots q_k(x)^{n_k} \in \Z_p[x] \] 
+    where $q_i(x) \neq q_j(x)$ for $i \neq j$ and each $q_i(x)$ is irreducible, then 
+    \begin{enumerate}[(1)]
+        \item the prime ideals $P \subseteq {\cal O}_K$ such that $p \in P$ 
+        are exactly $P = \langle q_i(\alpha), p \rangle$; and 
+        \item we have $\langle p \rangle = \langle q_1(\alpha), p \rangle^{n_1}
+        \cdots \langle q_k(\alpha), p \rangle^{n_k}$. 
+    \end{enumerate} 
+\end{theo}
+
+In particular, this fact gives us all the prime ideals as well as how 
+to do the ideal prime factorization! 
+
+For example, suppose that $\alpha \in \C$ satisfies $\alpha^2 + \alpha + 1 = 0$. 
+We'll assume that ${\cal O}_{\Q(\alpha)} = \Z[\alpha]$ here. The minimal 
+polynomial of $\alpha$ is $m(x) = x^2 + x + 1$. Over $\Z_3[x]$, this factors as 
+\[ \bar{m}(x) = (x+2)(x+2) \in \Z_3[x], \] 
+so by Theorem~\ref{theo:3.8}, we have $\langle 3 \rangle = \langle \alpha + 2, 3 \rangle^2$ 
+and that $\langle \alpha + 2, 3 \rangle$ is a prime ideal of ${\cal O}_K$. 
+On the other hand, $x^2 + x + 1$ is irreducible over $\Z_2[x]$ and so 
+the prime factorization of $\langle 2 \rangle$ is just itself since 
+$\langle \alpha^2 + \alpha + 1, 2 \rangle = \langle 2 \rangle$.
+
+\subsection{Dedekind Domains} \label{subsec:3.3}
+Dedekind domains are the rings where ideal prime factorization happens! 
+Before we give the definition, we'll give some motivation for the 
+desired properties.
+
+Let $R \subseteq S$ be integral domains. 
+\begin{enumerate}[(1)]
+    \item Recall that $\alpha \in S$ is {\bf integral} over $R$ 
+    (see Definition~\ref{defn:1.6}) if there exists a monic polynomial 
+    $f(x) \in R[x]$ such that $f(\alpha) = 0$. By Theorem~\ref{theo:1.7},
+    this is equivalent to $R[\alpha]$ being finitely generated as an $R$-module.
+    \item We say that $S$ is {\bf integral} over $R$ if all elements of 
+    $S$ are integral over $R$. 
+\end{enumerate}
+
+We now introduce a few more related definitions.
+
+\begin{defn}{defn:3.9}
+    Let $R \subseteq S$ be integral domains. 
+    \begin{enumerate}[(1)]
+        \item The {\bf integral closure} of $R$ in $S$ is 
+        $\{\alpha \in S : \alpha \text{ is integral over } R\}$.
+        \item We say that $R$ is {\bf integrally closed} if the integral 
+        closure of $R$ in its field of fractions is $R$ itself. 
+    \end{enumerate}
+\end{defn}\vspace{-0.25cm}
+
+For example, we see that $\Z$ is integrally closed because its field 
+of fractions is $\Q$, and the only algebraic integers in $\Q$ 
+are the ordinary integers.
+
+Consider a number field $K$ and let $R = {\cal O}_K$ be its ring of 
+integers. Let $F$ be the field of fractions of $R$. Note that 
+if $x \in K$, there exists $0 \neq N \in \Z$ such that $Nx \in R$ 
+by part (a) of \ref{A1-1}. This means that $x \in F$, and thus $K = F$. 
+So the field of fractions of the ring of integers is precisely the number field.
+
+\begin{prop}{prop:3.10}
+    Let $K$ be a number field. Then ${\cal O}_K$ is integrally closed. 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.10}]
+    We give a sketch of the proof up to writing down some generating sets.
+    Suppose that $\alpha \in K$ is in the integral closure of ${\cal O}_K$, so 
+    there exists some monic polynomial 
+    \[ f(x) = x^n + a_{n-1} x^{n-1} + \cdots + a_0 \in {\cal O}_K[x] \] 
+    with $f(\alpha) = 0$. Since $a_i \in {\cal O}_K$ 
+    (i.e. $a_i$ is integral over $\Z$), it follows from Theorem~\ref{theo:1.7}
+    that $\Z[a_i]$ is a finitely generated $\Z$-module. This implies that 
+    $\Z[a_{n-1}, a_{n-2}, \dots, a_0]$ is also finitely generated. 
+    But we can write 
+    \[ \alpha^n = -a_{n-1} \alpha^{n-1} - \cdots - a_1\alpha - a_0, \] 
+    so $\Z[\alpha, a_{n-1}, \dots, a_1, a_0]$ is also finitely generated. 
+    Note that $\Z[\alpha] \subseteq \Z[\alpha, a_{n-1}, \dots, a_1, a_0]$.
+    Since $\Z$ is Noetherian, we have by Theorem~\ref{theo:1.10} that 
+    $\Z[\alpha]$ is also finitely generated, so $\alpha \in {\cal O}_K$
+    by Theorem~\ref{theo:1.7}. \qed
+\end{pf}\vspace{-0.25cm}
+
+With this result, we are now ready to state the definition of a Dedekind domain. 
+
+\begin{defn}{defn:3.11}
+    Let $R$ be an integral domain. We say that $R$ is a {\bf Dedekind domain} if 
+    \begin{enumerate}[(1)]
+        \item $R$ is Noetherian;
+        \item $R$ is integrally closed; and 
+        \item every nonzero prime ideal of $R$ is maximal.
+    \end{enumerate}
+\end{defn}\vspace{-0.25cm}
+
+In particular, we see that ${\cal O}_K$ satisfies all three of these 
+properties (by Corollary~\ref{cor:1.21}, Proposition~\ref{prop:3.10}, 
+and Corollary~\ref{cor:1.20} respectively), so this is the type of object we 
+want to study. 
