@@ -626,18 +626,22 @@ factorization because no primes can live above it.
     Proposition~\ref{prop:3.17}, we have $P \mid I$, so there exists an ideal 
     $J$ such that $I = PJ$.
 
-    Note that $I = PJ \subseteq J$. If $I = J$, then $IR = IP$.
+    Note that $I = PJ \subseteq J$. If $I = J$, then $I = IR = IP$.
     Cancellation of ideals (Proposition~\ref{prop:3.15}) implies that 
-    $P = R$, which is a contradiction. Therefore, we must have $I \subsetneq J$. 
+    $P = R$, which is a contradiction since prime ideals are proper. Therefore, 
+    we must have $I \subsetneq J$. 
     By the maximality of $I$ in $X$, we have $J \notin X$, so $J$ 
     can be written as a product of primes. Then $I = PJ$ is also a product 
-    of primes, which is a contradiction! 
+    of primes, which is a contradiction! So $X = \varnothing$ and 
+    every nonzero proper ideal of $R$ can be written as a product of 
+    prime ideals.
 
     {\bf Uniqueness.} Suppose that $I = P_1P_2 \cdots P_n = Q_1Q_2 \cdots Q_m$ 
     where $P_i$ and $Q_j$ are prime ideals. Note that 
-    \[ Q_1 Q_2 \cdots Q_m = P_1 P_2 \cdots P_n \subseteq P_1. \] 
+    \[ Q_1 Q_2 \cdots Q_m = P_1 P_2 \cdots P_n \subseteq P_1. \] \newpage
     Since $P_1$ is prime, we have (without loss of generality) that 
-    $Q_1 \subseteq P_1$. Then by ideal cancellation, we obtain 
+    $Q_1 \subseteq P_1$. But $Q_1$ is prime and hence maximal, so 
+    $Q_1 = P_1$. Then by ideal cancellation, we obtain 
     \[ P_2 \cdots P_n = Q_2 \cdots Q_m. \] 
     Continuing inductively, we find that $P_i = Q_i$ (up to reordering) 
     and $n = m$. \qed 
