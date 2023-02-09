@@ -1,4 +1,4 @@
-\section{Minimum Cost Independent Sets in Matroids}\label{sec:4}
+\section{Maximum Weight Independent Sets in Matroids}\label{sec:4}
 
 \subsection{Matroids}\label{subsec:4.1}
 A {\bf matroid} $M$ is a pair $(S, {\cal I})$ where $S$ is a ground set 
@@ -59,12 +59,15 @@ The following example is the setting where matroids originated from.
 This is the prototypical example of a matroid given in introductory
 talks, and is one we can build our intuition from. 
 
-{\bf Linear matroids.} Let $\mathbb{F}$ be a field. If you don't remember 
-what a field is, just take $\mathbb{F} = \mathbb{R}$. 
+{\bf Linear matroids.} Let $\mathbb{F}$ be a field. (If you don't remember 
+what a field is, it's a set together with two operations satisfying 
+some nice axioms; for example, $\mathbb{F} = \mathbb{R}$ is a field under 
+the usual addition and multiplication.) 
 Let $S$ be a set of vectors in $\mathbb{F}^d$ and let 
 ${\cal I} = \{A \subseteq S : A \text{ is a linearly independent set over }
 \mathbb{F}\}$. Verifying that this is a matroid is an exercise in 
-linear algebra, which we won't do here.
+linear algebra, which we won't do here. Such a matroid is said to be 
+representable over $\mathbb{F}$.
 
 {\bf Graphic matroids.} Given a graph $G = (V, E)$, let $S = E$, and let 
 ${\cal I} = \{A \subseteq S : (V, A) \text{ is acyclic}\}$. Then ${\cal I}$ 
@@ -91,6 +94,18 @@ $e \in S \setminus A$.
 
 In the graphic matroid example, the bases correspond to the spanning trees.
 
+Before we move on, we give a few non-examples of matroids. 
+\begin{enumerate}[(1)]
+    \item Let $S = \{1, 2\}$ and ${\cal I} = \{\{1\}, \{2\}, \{1, 2\}\}$. 
+    Then $(S, {\cal I})$ is not a matroid since $\varnothing \notin {\cal I}$. 
+    It fails the downward closed property too by considering $\varnothing 
+    \subseteq \{1\}$, where $\{1\} \in {\cal I}$.
+    \item Let $S = \{1, 2, 3\}$ and ${\cal I} = \{\varnothing, \{1\}, \{2\}, \{3\}, 
+    \{1, 2\}\}$. Then $|\{1, 2\}| > |\{3\}|$, but neither $\{1, 3\}$ nor 
+    $\{2, 3\}$ are independent sets. Hence, $(S, {\cal I})$ fails the exchange 
+    property and is not a matroid.
+\end{enumerate}
+
 \begin{lemma}{lemma:4.1}
     All bases for a matroid have the same cardinality.
 \end{lemma}\vspace{-0.25cm}
@@ -101,3 +116,141 @@ In the graphic matroid example, the bases correspond to the spanning trees.
     such that $B \cup \{e\} \in {\cal I}$, contradicting the maximality of $B$. \qed
 \end{pf}\vspace{-0.25cm}
 
+\subsection{Maximum Weight Independent Sets} \label{subsec:4.2}
+In the maximum weight independent sets problem, we are given a matroid 
+$M = (S, {\cal I})$ and weights $w_e$ for each $e \in S$. The goal 
+is to find a maximum weight independent set; that is, a set $A \in {\cal I}$ 
+achieving the maximum value of 
+\[ w(A) := \sum_{e\in A} w_e. \]
+Note that we may assume that $w_e > 0$ for all $e \in S$. Indeed, if 
+$A \in {\cal I}$, then by the downward closed property, we have 
+$A \setminus \{e \in S : w_e \leq 0\} \in {\cal I}$ as well. But 
+\[ w(A \setminus \{e \in S : w_e \leq 0\}) \geq w(A), \] 
+so we can simply throw away any elements in $S$ with $w_e \leq 0$ 
+and still remain independent.
+
+We now give a greedy algorithm to solve the maximum weight independent 
+sets problem under the assumption that $w_e > 0$ for all $e \in S$. 
+We notice that it is extremely similar to Kruskal's algorithm.
+
+\begin{mdframed}[
+    linewidth=1pt,
+    linecolor=black,
+    bottomline=false,topline=false,rightline=false,
+    innerrightmargin=0pt,innertopmargin=0pt,innerbottommargin=0pt,
+    innerleftmargin=1em,% Distance between vertical rule & proof content
+    skipabove=0.75\baselineskip
+]
+{\bf Input.} A matroid $M = (S, {\cal I})$ and weights $w_e > 0$ for all 
+$e \in S$.
+
+{\bf Output.} A maximum weight independent set of $M$.
+\begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
+    \item Sort the elements in $S$ such that 
+    $w_{e_1} \geq w_{e_2} \geq \cdots \geq w_{e_{|S|}}$. 
+    Set $A \gets \varnothing$ and $i \gets 1$. 
+
+    \item While $i \neq |S|+1$:
+    \begin{enumerate}[label={}]
+        \item If $A \cup \{e_i\} \in {\cal I}$, then set $A \gets A \cup \{e_i\}$.
+        \item Regardless if we add an element or not, increment $i \gets i+1$.
+    \end{enumerate}
+\end{enumerate}
+\end{mdframed}\vspace{-0.15cm}
+It is crucial that we have the assumption $w_e > 0$ for $e \in S$ here, 
+because otherwise our greedy algorithm may keep adding negative weight 
+elements that keep the set independent, lowering the total weight.
+
+\begin{pf}[correctness of the greedy algorithm]
+    Let $A$ denote the output the greedy algorithm. Let $A^*$ be a 
+    maximum weight independent set of $M$. It is clear from the construction 
+    in Step 2 that $A \in {\cal I}$. Moreover, $A$ is a basis of $M$ 
+    because we iterate through every element of $S$ and no element 
+    can be further included in $A$ to keep it independent. Similarly, 
+    $A^*$ is a basis of $M$. Otherwise, if $A^* \cup \{e\} \in {\cal I}$ 
+    for some $e \in S$, then $w(A^* \cup \{e\}) > w(A^*)$ using the 
+    assumption that $w_e > 0$, and so $A^*$ was not a maximum weight 
+    independent set in the first place. Therefore, we have $|A| = |A^*| = k$ 
+    since bases of matroids share the same cardinality by Lemma~\ref{lemma:4.1}.
+
+    Write $A = \{g_1, \dots, g_k\}$ and $A^* = \{g_1^*, \dots, g_k^*\}$ 
+    where the elements are sorted such that $w_{g_1} \geq \cdots \geq 
+    w_{g_k}$ and $w_{g_1^*} \geq \cdots \geq w_{g_k^*}$. Our aim is to show 
+    that $w(A) \geq w(A^*)$. Towards a contradiction, suppose that 
+    $w(A) < w(A^*)$ and consider the smallest $j \in \{1, \dots, k\}$ such that 
+    \[ w(\{g_1, \dots, g_j\}) < w(\{g_1^*, \dots, g_j^*\}). \] 
+    Let $A_{j-1} = \{g_1, \dots, g_{j-1}\}$ and $A_j^* = \{g_1^*, \dots, g_j^*\}$. 
+    These are both independent by the downward closed property and we have 
+    $|A_j^*| = j > j-1 = |A_{j-1}|$, so it follows by the exchange property 
+    that there is some $e \in A_j^* \setminus A_{j-1}$ such that $A_{j-1} 
+    \cup \{e\} \in {\cal I}$. Then we obtain 
+    \[ w_e \geq w_{g_j}^* > w_{g_j}. \] 
+    The first inequality is because $e \in \{g_1^*, \dots, g_j^*\}$ and 
+    the edges are sorted by descending weight, and the second inequality 
+    is because $w(\{g_1, \dots, g_j\}) < w(\{g_1^*, \dots, g_j^*\})$ 
+    while $w(\{g_1, \dots, g_{j-1}\}) \geq w(\{g_1^*, \dots, g_{j-1}^*\})$
+    by the way we picked $j$. In particular, let's consider the iteration 
+    where $e$ was considered for the greedy algorithm. It must have been 
+    before $g_j$ because $w_e > w_{g_j}$. But if $B \cup \{e\} 
+    \notin {\cal I}$ for $B \subseteq A_{j-1}$, then $A_{j-1} 
+    \cup \{e\} \notin {\cal I}$ as well, which is a contradiction. \qed
+\end{pf}\vspace{-0.25cm}
+
+The running time of Step 1 is $O(|S|\log|S|)$ for sorting the elements in $S$. 
+In Step 2, there are $|S|$ calls to an independence oracle that tells us 
+``yes'' or ``no'' to whether a set is independent, but we do not 
+necessarily know the complexity of this oracle. When we discussed Kruskal's 
+algorithm, we could efficiently play the role as oracle by using the \textsc{UnionFind} 
+data structure, but this is not always the case.
+
+\subsection{Maximum Weight Common Independent Sets} \label{subsec:4.3}
+In the maximum weight \emph{common} independent set problem, we are given 
+two matroids $M' = (S, {\cal I}')$ and $M'' = (S, {\cal I}'')$ sharing a 
+ground set $S$ with weights $w_e$ for $e \in S$. The goal is to find 
+a set $A$ such that $A \in {\cal I}'$ and $A \in {\cal I}''$ and 
+achieving maximum value 
+\[ w(A) = \sum_{e\in A} w_e. \] 
+We note that this problem can be solved efficiently with linear programming, 
+but we won't state the algorithm here. The extension of this problem 
+to even just three matroids becomes NP-hard. For now, we'll give a few 
+examples of applications of the two matroid problem. 
+
+{\bf Bipartite graphs.} Let $G = (V, E)$ be a bipartite graph with 
+bipartition $(U, W)$. Recall that a bipartite graph is such that 
+the vertices are partitioned as $V = U \cup W$, and every edge has 
+one endpoint in $U$ and one endpoint in $W$. A {\bf matching} is a set 
+of edges $M \subseteq E$ such that for every $v \in V$, we have 
+$|M \cap \delta(v)| \leq 1$. In other words, every vertex participates 
+in at most one edge. 
+
+Suppose that for a bipartite graph, we want to find a matching $M \subseteq E$
+achieving the maximum weight
+\[ w(M) = \sum_{e\in M} w_e. \] 
+We can formulate this problem as a maximum weight common independent set instance. 
+Define matroids $M' = (E, {\cal I}')$ and $M'' = (E, {\cal I}'')$, where 
+\begin{align*}
+    {\cal I}' &= \{A \subseteq E : |A \cap \delta(u)| \leq 1 \text{ for all } u \in U\}, \\ 
+    {\cal I}'' &= \{A \subseteq E : |A \cap \delta(w)| \leq 1 \text{ for all } w \in W\}.
+\end{align*}
+We see that $\{\delta(u)\}_{u\in U}$ and $\{\delta(w)\}_{w\in W}$ define 
+partitions on $E$, and so $M'$ and $M''$ are particular examples of partition 
+matroids. Moreover, $M$ is a matching if and only if $M \in {\cal I}'$ and 
+$M \in {\cal I}''$. 
+
+{\bf Arborescences.} Let $G = (V, E)$ be a directed graph with edge costs 
+$c_e \geq 0$ for all $e \in E$. Let $r \in V$ be a distinguished vertex. 
+We can define matroids $M' = (E, {\cal I}')$ 
+and $M'' = (E, {\cal I}'')$ where 
+\begin{align*}
+    {\cal I}' &= \{A \subseteq E : (V, A) \text{ is acyclic when ignoring directions}\}, \\ 
+    {\cal I}'' &= \{A \subseteq E : |\delta^{\text{in}}(v) \cap A| \leq 1 - \delta_{vr} \text{ for all } v \in V\}.
+\end{align*}
+Here, $\delta^{\text{in}}(v)$ denotes the set of edges incoming to $v$, 
+and $\delta_{vr}$ is the Kronecker delta so that 
+\[ 1 - \delta_{vr} = \begin{cases}
+    1, & \text{if } v \neq r, \\ 
+    0, & \text{if } v = r.
+\end{cases} \] 
+We see that $M' = (E, {\cal I}')$ is a graphic matroid and $M'' = 
+(E, {\cal I}'')$ is a partition matroid, with $T$ being an arborescence 
+rooted at $r$ if and only if $T$ is a basis for both $M'$ and $M''$. 
