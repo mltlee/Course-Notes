@@ -67,7 +67,7 @@ definition.
 
 \begin{prop}{prop:3.2}
     Let $R$ be Noetherian and let $I \neq R$ be an ideal. 
-    There exist proper ideals $P_1, \dots, P_n$ of $R$ such that 
+    There exist prime ideals $P_1, \dots, P_n$ of $R$ such that 
     \begin{enumerate}[(1)]
         \item $I \subseteq P_i$ for all $i = 1, \dots, n$; and 
         \item $P_1P_2 \cdots P_n \subseteq I$. 
@@ -447,5 +447,244 @@ With this result, we are now ready to state the definition of a Dedekind domain.
 
 In particular, we see that ${\cal O}_K$ satisfies all three of these 
 properties (by Corollary~\ref{cor:1.21}, Proposition~\ref{prop:3.10}, 
-and Corollary~\ref{cor:1.20} respectively), so this is the type of object we 
-want to study. 
+and Corollary~\ref{cor:1.20} respectively). 
+
+Why is this definition of a Dedekind domain the right type one 
+for prime factorization? 
+\begin{enumerate}[(1)]
+    \item Being Noetherian gives us the existence of prime 
+    factorization by using the classic Noetherian contradiction proof technique.
+    \item Because every nonzero prime is maximal, primes can't be factored further.
+    \item It turns out that being integrally closed will give us the uniqueness 
+    of prime factorization!
+\end{enumerate}
+Now, our goal is to explore the connection between being integrally closed 
+and prime factorization. The following lemma will be a useful ``contradiction 
+getter'' soon. In particular, if $\lambda \in F \setminus R$ is a root of a 
+monic polynomial with coefficients in $R$, this will contradict the 
+fact that $R$ is integrally closed.
+
+\begin{lemma}{lemma:3.12}
+    Let $R$ be a Dedekind domain, let $I$ be a nonzero proper ideal, and 
+    let $F$ be the field of fractions of $R$. Then there exists 
+    $\lambda \in F \setminus R$ such that $\lambda I \subseteq R$.     
+\end{lemma}\vspace{-0.25cm}
+\begin{pf}[Lemma~\ref{lemma:3.12}]
+    Let $0 \neq a \in I$. Note that $R$ is Noetherian since it is a Dedekind 
+    domain, so by Proposition~\ref{prop:3.2}, we can find nonzero 
+    prime ideals $P_1, \dots, P_r$ of $R$ such that $P_1 P_2 \cdots P_r 
+    \subseteq \langle a \rangle$. Moreover, assume that $r$ is minimal
+    (i.e. pick the smallest number of prime ideals possible). Let 
+    $M$ be a maximal ideal such that $I \subseteq M$. 
+
+    Since $P_1 P_2 \cdots P_r \subseteq I \subseteq M$ and $M$ is prime, 
+    it follows by the ideal-wise characterization of a prime ideal 
+    that there is some $i \in \{1, \dots, r\}$ with $P_i \subseteq M$. 
+    Without loss of generality, assume that $P_1 \subseteq M$. Note that 
+    $P_1$ is prime and hence maximal since $R$ is a Dedekind domain, so 
+    $P_1 = M$. 
+
+    {\bf Case 1.} If $r = 1$, then $P_1 \subseteq \langle a \rangle 
+    \subseteq I \subseteq M = P_1$ and we get equality throughout. 
+    This gives us $I = \langle a \rangle$, so we can take 
+    $\lambda = 1/a \in F \setminus R$ (where we know $a$ is not a unit 
+    for otherwise $I = R$).
+
+    {\bf Case 2.} If $r > 1$, then by the minimality of $r$, there exists 
+    some element $b \in P_2 \cdots P_r \setminus \langle a \rangle$. Then we have 
+    $bP_1 \subseteq P_1 P_2 \cdots P_r \subseteq \langle a \rangle$. Moreover, we see that 
+    $bI \subseteq bM = bP_1 \subseteq \langle a \rangle$, so we may 
+    take $\lambda = b/a$. Note that this works because if $x \in I$, then 
+    $\lambda x = \frac{b}{a} x$. But $bx \in I \subseteq \langle a \rangle$, 
+    so we can write $bx = ar$ for some $r \in R$, giving us $\lambda x = 
+    \frac{ar}{a} = r \in R$. Also, since $b \notin \langle a \rangle$, 
+    we have $\lambda \notin R$ as well. \qed 
+\end{pf}\vspace{-0.25cm}
+
+Equipped with this ``contradiction getter'', we can prove an extremely useful result
+using the integrally closed property of a Dedekind domain. 
+
+\begin{prop}{prop:3.13}
+    Let $R$ be a Dedekind domain, and let $I$ be a nonzero proper ideal. 
+    Then there exists a nonzero ideal $J$ of $R$ such that $IJ$ is principal.
+\end{prop}\vspace{-0.25cm}\newpage 
+\begin{pf}[Proposition~\ref{prop:3.13}]
+    Let $0 \neq a \in I$ and consider the nonzero ideal 
+    \[ J = \{x \in R : xI \subseteq \langle a \rangle\}. \] 
+    We already know it is nonzero because $a \in J$, so just verify the ideal 
+    properties. 
+    
+    Note that $IJ \subseteq \langle a \rangle$. Consider the ``fractional ideal'' 
+    $A = \frac1a IJ \subseteq R$ (this trick will come up a lot). If $A = R$, 
+    then $IJ = aR = \langle a \rangle$ and we are already done. 
+
+    Now suppose that $A \neq R$. We'll show that this case is actually impossible. 
+    We leave it as an exercise that $A$ is a nonzero ideal of $R$. Then by 
+    Lemma~\ref{lemma:3.12}, there exists $\lambda \in F \setminus R$ 
+    such that $\lambda A \subseteq R$, where $F$ is the field of 
+    fractions of $R$. 
+
+    Notice that $J = \frac1a aJ \subseteq A$ since $a \in I$, and so 
+    $\lambda J \subseteq \lambda A \subseteq R$. Moreover, if we write 
+    $\lambda A = \frac{\lambda}{a} IJ \subseteq R$, then multiplying 
+    both sides by $a$ gives us $\lambda IJ \subseteq aR = \langle a \rangle$. 
+    In particular, we can regroup $\lambda IJ$ as $(\lambda J)I$ by 
+    commutativity with $(\lambda J)I \subseteq \langle a \rangle$, and we see 
+    by the definition of $J$ that $\lambda J \subseteq J$.
+
+    Since $R$ is Noetherian, $J$ is finitely generated, say by 
+    $\alpha_1, \dots, \alpha_n$. We can find $B \in M_m(R)$ such that 
+    \[ \begin{bmatrix} \lambda\alpha_1 \\ \vdots \\ \lambda\alpha_m \end{bmatrix} 
+    = B \begin{bmatrix} \alpha_1 \\ \vdots \\ \alpha_m \end{bmatrix}. \] 
+    Note that $(\alpha_1, \dots, \alpha_m)^T$ is nonzero and rearranging 
+    the above gives us 
+    \[ (\lambda I - B) \begin{bmatrix} \alpha_1 \\ \vdots \\ \alpha_m \end{bmatrix}
+    = 0. \] 
+    This means that $\lambda I - B$ is not invertible, and so 
+    $\det(\lambda I - B) = 0$. But $\det(xI - B)$ is the characteristic 
+    polynomial of $B$; in particular, it is a polynomial with coefficients 
+    in $R$ having $\lambda$ as a root. This is a contradiction because 
+    $\lambda \notin R$ and $R$ is integrally closed. \qed
+\end{pf}\vspace{-0.25cm}
+
+By Proposition~\ref{prop:3.13} and what we proved in \ref{A2-3}, it now 
+makes sense to make the following definition. We won't be using this 
+immediately, but it will come up later in the course.
+
+\begin{defn}{defn:3.14}
+    Let $R$ be a Dedekind domain and let $X$ be the set of nonzero ideals of $R$. 
+    Put an equivalence relation on $X$ by $I \sim J$ if and only if 
+    there exist $\alpha, \beta \in R \setminus \{0\}$ such that 
+    $\alpha I = \beta J$. Then 
+    \[ G := \{ [I] : I \in X \} \] 
+    is a group under the operation $[I][J] = [IJ]$, called the {\bf ideal 
+    class group} of $R$. The identity is the equivalence class of 
+    principal ideals. 
+\end{defn}\vspace{-0.25cm}
+
+The following result, which we will call cancellation of ideals, is our 
+best friend for proving the uniqueness of prime factorization! 
+It allows us to inductively chop off ideals. 
+
+\begin{prop}[Cancellation of Ideals]{prop:3.15}
+    Let $R$ be a Dedekind domain. Let $A$, $B$, and $C$ be nonzero ideals. 
+    If $AB = AC$, then $B = C$. 
+\end{prop}\vspace{-0.25cm}\newpage
+\begin{pf}[Proposition~\ref{prop:3.15}]
+    By Proposition~\ref{prop:3.13}, we can find a nonzero ideal $J$ 
+    such that $JA = \langle a \rangle$ for some $0 \neq a \in R$. We have 
+    $AB = AC$, and multiplying by $J$ gives us 
+    $\langle a \rangle B = JAB = JAC = \langle a \rangle C$. 
+    Then $aB = aC$, and hence $B = C$ since $R$ is an integral domain. \qed
+\end{pf}\vspace{-0.25cm}
+
+The following definition is a very natural one to make. 
+
+\begin{defn}{defn:3.16}
+    Let $R$ be a ring and let $A$ and $B$ be ideals of $R$. We say that 
+    $A$ {\bf divides} $B$, written $A \mid B$, if there exists an 
+    ideal $C$ such that $B = AC$. 
+\end{defn}\vspace{-0.25cm}
+
+The next result tells us that in a Dedekind domain, the factors of a 
+ideal are precisely the ideals living above. 
+
+\begin{prop}{prop:3.17}
+    Let $R$ be a Dedekind domain. Let $A$ and $B$ be nonzero proper ideals of $R$. 
+    Then $A \mid B$ if and only if $B \subseteq A$. 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.17}]
+    $(\Rightarrow)$ If $A \mid B$, then $B = AC$ for some ideal $C$ and $AC \subseteq A$.
+
+    $(\Leftarrow)$ Suppose that $B \subseteq A$. By Proposition~\ref{prop:3.13},
+    we can find a nonzero ideal $J$ such that $JA = \langle a \rangle$ for some 
+    $0 \neq a \in R$. Note that $JB \subseteq JA = \langle a \rangle$. 
+    Consider the fractional ideal $C = \frac1a JB$ (verify that this is 
+    indeed an ideal of $R$). Note that $JAC = \langle a \rangle \frac1a JB = JB$,
+    so by ideal cancellation (Proposition~\ref{prop:3.15}), we have 
+    $AC = B$ and thus $A \mid B$. \qed
+\end{pf}\vspace{-0.25cm}
+
+We are ready to prove the golden result that every nonzero proper ideal 
+of a Dedekind domain can be uniquely factored into primes. Note that $\{0\}$ 
+is prime but cannot be uniquely factored, while $R$ does not have a prime 
+factorization because no primes can live above it. 
+
+\begin{theo}{theo:3.18}
+    Let $R$ be a Dedekind domain and let $I$ be a nonzero proper ideal. 
+    Then $I$ can be written uniquely (up to reordering) as a product 
+    of prime ideals. 
+\end{theo}\vspace{-0.25cm}
+\begin{pf}[Theorem~\ref{theo:3.18}]
+    {\bf Existence.} We use the Noetherian contradiction method 
+    we alluded to before. Let $X$ be the set of proper nonzero ideals of $R$ 
+    which cannot be written as a product of prime ideals. Suppose that 
+    $X \neq \varnothing$. Let $I \in X$ be maximal (with respect to 
+    $\subseteq$). Then $I$ is not a prime ideal and hence not a maximal ideal 
+    (since being prime is the same as being maximal in a Dedekind domain).
+    Let $P$ be a maximal ideal such that $I \subsetneq P$. By 
+    Proposition~\ref{prop:3.17}, we have $P \mid I$, so there exists an ideal 
+    $J$ such that $I = PJ$.
+
+    Note that $I = PJ \subseteq J$. If $I = J$, then $IR = IP$.
+    Cancellation of ideals (Proposition~\ref{prop:3.15}) implies that 
+    $P = R$, which is a contradiction. Therefore, we must have $I \subsetneq J$. 
+    By the maximality of $I$ in $X$, we have $J \notin X$, so $J$ 
+    can be written as a product of primes. Then $I = PJ$ is also a product 
+    of primes, which is a contradiction! 
+
+    {\bf Uniqueness.} Suppose that $I = P_1P_2 \cdots P_n = Q_1Q_2 \cdots Q_m$ 
+    where $P_i$ and $Q_j$ are prime ideals. Note that 
+    \[ Q_1 Q_2 \cdots Q_m = P_1 P_2 \cdots P_n \subseteq P_1. \] 
+    Since $P_1$ is prime, we have (without loss of generality) that 
+    $Q_1 \subseteq P_1$. Then by ideal cancellation, we obtain 
+    \[ P_2 \cdots P_n = Q_2 \cdots Q_m. \] 
+    Continuing inductively, we find that $P_i = Q_i$ (up to reordering) 
+    and $n = m$. \qed 
+\end{pf}
+
+\subsection{Ideal Norm} \label{subsec:3.4}
+In the previous section, we proved that every nonzero proper ideal of a 
+Dedekind domain has a unique prime factorization, which is great. 
+But \emph{how} do we actually find such a prime factorization?
+
+Let's start by proposing a potential tool we could use. 
+
+\begin{defn}{defn:3.19}
+    Let $K$ be a number field and let $R = {\cal O}_K$ be its ring of integers. 
+    The {\bf norm} of a nonzero ideal $I$ is 
+    \[ N(I) := |R/I|. \] 
+\end{defn}\vspace{-0.25cm}
+Note that this is always finite because $R/I$ is finite by Corollary~\ref{cor:1.19}.
+
+Assume for now that the ideal norm is multiplicative; that is, 
+$N(IJ) = N(I)N(J)$ for nonzero ideals $I$ and $J$. Suppose that 
+$n = N(I) = |R/I|$. We know from Theorem~\ref{theo:3.18} that $I$ has a 
+unique prime factorization $I = P_1^{n_1} \cdots P_k^{n_k}$. Using our
+assumption that the ideal norm is multiplicative, we have 
+\[ N(I) = N(P_1)^{n_1} \cdots N(P_k)^{n_k}. \] 
+But we previously saw that $N(P_i) = |R/P_i| = p_i^{m_i}$ where 
+$p_i \in \N$ is prime with $p_i \in P_i$. For a prime $p \in \N$ 
+such that $p \mid n$, it must be the case that $p = p_i$ for some $i \in 
+\{1, \dots, k\}$. Then $p \in P_i$ implies that $\langle p \rangle 
+\subseteq P_i$, so $P_i \mid \langle p \rangle$ by Proposition~\ref{prop:3.17}.
+So if we could factor each $\langle p_i \rangle$, then we could find 
+candidates for the $P_i$'s and factor $I$. The value of $N(I)$ could 
+help us to find the $n_i$'s as well. 
+
+Therefore, we have two goals in mind: 
+\begin{enumerate}[(1)]
+    \item Prove that the ideal norm is multiplicative.
+    \item Show that $\langle p \rangle$ is easily factored for ``almost all''
+    primes $p \in \N$ (namely, we get something similar to 
+    Theorem~\ref{theo:3.8} in most cases).
+\end{enumerate}
+Let's work towards the first goal. Suppose that $I = P_1^{n_1} \cdots P_k^{n_k}$
+where $P_i$ are distinct prime ideals (so $P_i$ and $P_j$ are pairwise 
+for $i \neq j$). Then the Chinese remainder theorem (Theorem~\ref{theo:3.6})
+gives us 
+\[ R/I \cong R/P_1^{n_1} \times \cdots \times R/P_k^{n_k}, \] 
+and thus $N(I) = N(P_1^{n_1}) \cdots N(P_k^{n_k})$. Therefore, to 
+prove that the ideal norm is multiplicative, it is enough to show that 
+$N(P_i^{n_i}) = N(P_i)^{n_i}$. This innocent looking result requires a 
+lot of machinery, namely localization, local rings, and discrete valuation rings.
