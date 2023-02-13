@@ -120,17 +120,17 @@ an \textsc{MMSteinerT} instance. Moreover, if $\textsf{OPT}$ is an optimal solut
 $(G, c, T)$ and $\textsf{OPT}'$ is an optimal solution for $(G', c', T')$, 
 then $c(\textsf{OPT}) \geq c'(\textsf{OPT}')$ by part (a) of Lemma~\ref{lemma:5.1},
 and $c'(\textsf{OPT}') \geq c(\textsf{OPT})$ by part (b). This gives us 
-\[ c(\textsf{OPT}) = c'(\textsf{OPT}'), \] 
+$c(\textsf{OPT}) = c'(\textsf{OPT}')$,
 so given an oracle to solve \textsc{MMSteinerT}, we can also solve 
 \textsc{MSteinerT} instances efficiently by creating a new instance 
 of \textsc{MMSteinerT} and feeding it as input to the oracle.
 
+\subsection{An Approximation Algorithm for the Metric Problem} \label{subsec:5.3}
 Let's now try to solve \textsc{MMSteinerT} for a given instance $(G', c', T')$;
 that is, $G'$ is a complete graph and the costs $c'$ satisfy the triangle 
 inequality. Unfortunately, since \textsc{MSteinerT} is NP-hard, so is 
-\textsc{MMSteinerT}, because our work above just showed that these 
-problems are equivalent! As such, we don't know how 
-to solve it efficiently. If there is an efficient algorithm to solve it, this 
+\textsc{MMSteinerT}, because these problems are equivalent! As such, we don't 
+know how to solve it efficiently. If there is an efficient algorithm to solve it, this 
 shows that $\text{P} = \text{NP}$, resolving the major million dollar problem!
 
 Although we can't find the optimal solution efficiently, we can get an 
@@ -159,7 +159,7 @@ this graph below when $|T'| = 3$.
         \node[main, fill=blue] (2) at (-2, -1.4) {};
         \node[main, fill=blue] (3) at (2, -1.4) {};
 
-        \draw (u) -- (1) node[midway, right] {1};
+        \draw (u) -- (1) node[midway, below right] {1};
         \draw (u) -- (2) node[midway, below right] {1};
         \draw (u) -- (3) node[midway, below left] {1};
         \draw (1) -- (2) node[midway, above left] {2};
