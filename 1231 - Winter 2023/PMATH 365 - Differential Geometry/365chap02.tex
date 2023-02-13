@@ -1,0 +1,91 @@
+\section{Curves in $\R^n$}\label{sec:2}
+
+Tangent spaces: Let $M \subset \R^n$ with class $C^r$ of dimension $k$. For a chart 
+$\alpha : U \subset \R^k \to V \subset M \subset \R^n$, we have for all $p \in V$ that 
+\[ T_p(M) := \alpha_*(T_{x_0}(\R^k)), \] 
+where $p = \alpha(x_0)$. We showed that 
+\[ T_p(M) = {\rm span}_{\R} \left\{ \frac{\partial\alpha}{\partial x_1}(x_0), \dots, 
+\frac{\partial\alpha}{\partial x_k}(x_0) \right\} \subset T_p(\R^n), \] 
+which is a $k$-dimensional subspace of $T_p(\R^n)$. 
+
+Examples: 
+\begin{enumerate}[(1)]
+    \item Let $U \subset \R^n$ be an open set. Then $\alpha : U \subset \R^n \to V = U \subset \R^n$ 
+    given by $x \mapsto x$ yields $D\alpha(x) = I_{n\times n}$ for all $x \in U$, so 
+    \[ T_x(U) = \alpha_*(T_x(\R^n)) \] 
+    by definition. Then for all $(x; v) \in T_x(\R^n)$, we get 
+    \[ \alpha_*(x; v) = (\alpha(x); D\alpha(x)v) = (x; v). \] 
+    That is, we have $T_x(U) = T_x(\R^n)$. 
+
+    \item We saw two different ways of seeing if something is a submanifold. If $f : U \subset \R^k 
+    \to \R^{n-k}$ is a function of a class $C^r$ and 
+    \[ M = \{(x, f(x)) \in \R^n : x \in U\} \subset \R^n \] 
+    its graph, then $M$ is a $k$-dimensional submanifold of $\R^n$ of class $C^r$. We can parameterize 
+    all points in $M$ with the map $\alpha : U \subset \R^k \to M \subset \R^n$ defined by 
+    $\alpha(x) = (x, f(x))$. The derivative matrix is 
+    \[ D\alpha(x) = \begin{bmatrix} 
+        I_{k\times k} \\\hline Df(x)
+    \end{bmatrix} \]
+    for all $x \in U$. Let $p \in M$ so that $p = (x_0, f(x_0))$ for some $x_0 \in U$. Then 
+    \begin{align*} 
+        T_p(M) &= \alpha_*(T_{x_0}(\R^k)) \\
+        &= \{\alpha_*(x_0; v) : v \in T_{x_0}(\R^k)\} \\
+        &= \{(\alpha(x_0); D\alpha(x_0)v) : v \in \R^k\} \\ 
+        &= \{(p; w) : w = (v, Df(x_0)v),\, v \in \R^k\}, 
+    \end{align*} 
+    since $\alpha(x_0) = p$ and $D\alpha(x)$ is the block matrix with $I_{k\times k}$ 
+    upstairs and $Df(x)$ downstairs. Also, 
+    \[ T_p(M) = {\rm span}_{\R} \left\{ \frac{\partial\alpha}{\partial x_1}(x_0), \dots, 
+    \frac{\partial\alpha}{\partial x_k}(x_0) \right\} = {\rm span}_{\R} 
+    \left\{ \begin{bmatrix} e_i \\\hline \partial f(x_0)/\partial x_i \end{bmatrix} : 
+    i = 1, \dots, k \right\}. \] 
+
+    \item Let $U \subset \R^n$ be open. If $F : U \subset \R^n \to \R^{n-k}$ is a function of 
+    class $C^r$ with $DF(p)$ having rank $n-k$ for all $p \in U$, then 
+    \[ M = \{x \in U : F(x) = 0\} \] 
+    is a $k$-dimensional submanifold of $\R^n$ of class $C^r$. In this case, we leave it as an 
+    exercise to show that 
+    \[ T_p(M) = \ker(DF(p)). \] 
+    In particular, if $k = n-1$, then $F : U \subset \R^n \to \R$ is a scalar function and 
+    \[ T_p(M) = \ker(\nabla F(p)). \] 
+    Then $\nabla F(p)$ is the normal vector of $T_p(M)$. 
+
+    For example, take the $n$-sphere 
+    \[ S^n = \{x \in \R^{n+1} : \|x\|^2 = 1\}, \] 
+    which is the zero set of the function $F : \R^{n+1} \to \R$ defined by $F(x) = \|x\|^2 - 1 
+    = x_1^2 + \cdots + x_{n+1}^2 - 1$. The derivative matrix is just the gradient; that is, 
+    \[ DF(x) = \nabla F(x) = \begin{bmatrix} 2x_1 & \cdots & 2x_{n+1} \end{bmatrix} = 2x. \] 
+\end{enumerate}
+
+\subsection{}\label{subsec:2.1}
+What is a curve? Intuitively, it is a $1$-dimensional subset of $\R^n$. 
+
+The level sets $f(x, y) = k$ of a two variable function in $\R^2$ are curves. 
+For example, for $f(x, y) = x^2 + y^2$, we see that $C \colon x^2 + y^2 = k$ for $k > 0$ 
+is a circle centered at $(0, 0)$ of radius $k^{1/2}$. 
+
+The intersection of two surfaces in $\R^3$ is also a curve. For example, 
+take $z = x^2 + y^2$ and $z = 2$. Their intersection is the circle 
+$C \colon x^2 + y^2 = 2$ in the plane $z = 2$.
+
+For our purposes, we'll work with parametrized curves $\gamma : I = (\alpha, \beta) \subset 
+\R \to \R^n$ of class $C^r$. (In practice, we need $r \geq n$ when working over $\R^n$.)
+
+Example: {\bf Circular helix.} Let $\gamma(t) = (a\cos t, a\sin t, bt)$ for $t \in \R$ and $a, b > 0$. 
+Note that $x^2 + y^2 = a^2$, so $\gamma(t)$ lies above the circle $x^2 + y^2 = a^2$ in the $xy$-plane. 
+We have $\gamma(0) = (a, 0, 0)$ and $\gamma(\pi/2) = (0, a, b\pi/2)$. (The circular helix 
+looks like a spiral along the cylinder.)
+
+\begin{defn}{defn:2.1}
+    A parameterized curve $\gamma : (\alpha, \beta) \to \R^n$ of class $C^r$ is called 
+    {\bf regular} if for all $t \in (\alpha, \beta)$, we have 
+    \[ \gamma'(t) = \frac{{\rm d}\gamma}{{\rm d}t}(t) \neq 0. \] 
+    We call $\|\gamma'(t)\|$ the {\bf speed of $\gamma$ 
+    at $\gamma(t)$} and we say that $\gamma$ is {\bf unit speed} if $\|\gamma'(t)\| = 1$ for all 
+    $t \in (\alpha, \beta)$. 
+\end{defn}\vspace{-0.25cm}
+Note that unit speed implies regular because $\|x\| = 0$ if and only if $x = 0$. 
+
+Example: Let $a > 0$ and take $\gamma(t) = (a\cos t, a\sin t)$ for $t \in \R$, which is a 
+parametrization of the circle of radius $a$. Then $\gamma'(t) = (-a\sin t, a\cos t) \neq (0, 0)$ 
+for all $t \in \R$ and $\|\gamma'(t)\| = a$, so $\gamma$ is unit speed if and only if $a = 1$.  

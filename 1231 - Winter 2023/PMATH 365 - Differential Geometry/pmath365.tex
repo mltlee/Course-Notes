@@ -293,17 +293,17 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \label{#2}}{\end{mdframed}}
 
 % new proof environment
-\makeatletter
-\newenvironment{pf}[1][\proofname]{\par
-  \pushQED{\qed}%
-  \normalfont \topsep0\p@\relax
-  \trivlist
-  \item[\hskip\labelsep\scshape
-  #1\@addpunct{.}]\ignorespaces
-}{%
-  \popQED\endtrivlist\@endpefalse
-}
-\makeatother
+\newenvironment{pf}[1][\proofname]
+  {\par\noindent\normalfont\textsc{Proof of #1.}\par\nopagebreak%
+  \begin{mdframed}[
+     linewidth=1pt,
+     linecolor=black,
+     bottomline=false,topline=false,rightline=false,
+     innerrightmargin=0pt,innertopmargin=0pt,innerbottommargin=0pt,
+     innerleftmargin=1em,% Distance between vertical rule & proof content
+     skipabove=0.75\baselineskip
+   ]}
+  {\end{mdframed}}
 
 % 1-inch margins
 \topmargin 0pt
@@ -370,5 +370,6 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \fancyhead[R]{Section \thesection: \nouppercase\leftmark}
 
 \input{365chap01.tex}\newpage
+\input{365chap02.tex}\newpage
 
 \end{document}
