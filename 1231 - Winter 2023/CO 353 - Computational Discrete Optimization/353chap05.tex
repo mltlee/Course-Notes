@@ -103,6 +103,101 @@ The following lemma tells us that $(G', c', T')$ is in fact an instance of
         with $K$ as the edges and look at the connected component containing 
         the terminals in $T$. Construct a spanning tree $F$ on this connected 
         component. Then $c(F) \leq c(K) \leq c'(F')$ and $F$ connects 
-        the terminals in $T$, so it is a Steiner tree for $(G, c, T)$. \qed
+        the terminals in $T$, so it is a Steiner tree for $(G, c, T)$. 
+        \item Let $u, v, w \in V$ be distinct. Consider a shortest $u,v$-path 
+        $P_1$, a shortest $v,w$-path $P_2$, and a shortest $u,w$-path $P_3$ 
+        in $G$ with respect to the original costs $c$. By definition, we have 
+        $c'_{uv} = c(P_1)$, $c'_{vw} = c(P_2)$, and $c'_{uw} = c(P_3)$. 
+        Note that $P_1$ together with $P_2$ yields a $u,w$-path. Since $P_3$ 
+        is a shortest $u,w$-path, it cannot be more expensive than 
+        the aforementioned $u,w$-path, so we obtain 
+        \[ c'_{uv} + c'_{vw} = c(P_1) + c(P_2) \geq c(P_3) = c'_{uw}, \] 
+        so the triangle inequality holds. \qed
     \end{enumerate} 
 \end{pf}\vspace{-0.25cm}
+Therefore, given an \textsc{MSteinerT} instance, we can efficiently construct 
+an \textsc{MMSteinerT} instance. Moreover, if $\textsf{OPT}$ is an optimal solution for 
+$(G, c, T)$ and $\textsf{OPT}'$ is an optimal solution for $(G', c', T')$, 
+then $c(\textsf{OPT}) \geq c'(\textsf{OPT}')$ by part (a) of Lemma~\ref{lemma:5.1},
+and $c'(\textsf{OPT}') \geq c(\textsf{OPT})$ by part (b). This gives us 
+\[ c(\textsf{OPT}) = c'(\textsf{OPT}'), \] 
+so given an oracle to solve \textsc{MMSteinerT}, we can also solve 
+\textsc{MSteinerT} instances efficiently by creating a new instance 
+of \textsc{MMSteinerT} and feeding it as input to the oracle.
+
+Let's now try to solve \textsc{MMSteinerT} for a given instance $(G', c', T')$;
+that is, $G'$ is a complete graph and the costs $c'$ satisfy the triangle 
+inequality. Unfortunately, since \textsc{MSteinerT} is NP-hard, so is 
+\textsc{MMSteinerT}, because our work above just showed that these 
+problems are equivalent! As such, we don't know how 
+to solve it efficiently. If there is an efficient algorithm to solve it, this 
+shows that $\text{P} = \text{NP}$, resolving the major million dollar problem!
+
+Although we can't find the optimal solution efficiently, we can get an 
+approximate solution that isn't too far from optimal in polynomial time. 
+Consider the {\bf induced subgraph} of $G'$ on the vertices $T'$, given by 
+\[ G'[T'] = (T', \{uv : u, v \in T' \text{ with } u\neq v\}), \] 
+which is the complete graph on the vertices in $T'$. The idea is to find a 
+minimum spanning tree $F''$ in $G'[T']$ with respect to the costs $c'$. 
+We have already seen that this can be done in polynomial time by using 
+Prim's algorithm or Kruskal's algorithm. Note that $F''$ is a Steiner 
+tree of $(G', c', T')$ of cost $c'(F'')$. 
+
+We cannot hope that $F''$ is an optimal solution in general. For example, 
+consider the complete graph $G' = (V', E')$, and let $u \in V'$. Set 
+$T' = V' \setminus \{u\}$, and define edge costs by 
+\[ c'_{vw} = \begin{cases}
+    1, & \text{if } v=u \text{ or } w=u, \\ 
+    2, & \text{otherwise.}
+\end{cases} \] 
+It can be checked that these satisfy the triangle inequality. We illustrate 
+this graph below when $|T'| = 3$. 
+\begin{center}
+    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+        \node[main] (u) at (0, 0) {$u$}; 
+        \node[main, fill=blue] (1) at (0, 2) {};
+        \node[main, fill=blue] (2) at (-2, -1.4) {};
+        \node[main, fill=blue] (3) at (2, -1.4) {};
+
+        \draw (u) -- (1) node[midway, right] {1};
+        \draw (u) -- (2) node[midway, below right] {1};
+        \draw (u) -- (3) node[midway, below left] {1};
+        \draw (1) -- (2) node[midway, above left] {2};
+        \draw (1) -- (3) node[midway, above right] {2};
+        \draw (2) -- (3) node[midway, below] {2};
+    \end{tikzpicture} 
+\end{center}\vspace{-0.25cm}
+For this graph, we see that the optimal solution is $\textsf{OPT}' = 
+|T'|$ by taking all the edges with $u$ as an endpoint with cost $1$. 
+On the other hand, the induced subgraph $G'[T']$ does not contain $u$, 
+so a minimum spanning tree takes only the edges of cost $2$, and there are 
+$|T'| - 1$ of them. Therefore, we have 
+\[ c'(F'') = 2(|T'| - 1) > |T'| = c(\textsf{OPT}') \] 
+when $|T'| \geq 3$, and as $|T'| \to \infty$, we see that 
+\[ \frac{c'(F'')}{c'(\textsf{OPT}')} = \frac{2(|T'| - 1)}{|T'|} \to 2. \] 
+Fortunately, when using this strategy, this error is the worst it could get.
+
+\begin{lemma}{lemma:5.2}
+    Let $F''$ be a minimum spanning tree for $G'[T']$, and let $\textsf{OPT}'$ be 
+    an optimal solution for $(G', c', T')$. Then $c'(F'') \leq 2c'(\textsf{OPT}')$.
+\end{lemma}\vspace{-0.25cm}
+\begin{pf}[Lemma~\ref{lemma:5.2}]
+    Let $P$ be an Euler tour on the optimal solution $\textsf{OPT}'$, which is 
+    a Steiner tree. That is, $P$ is a path where the starting vertex is 
+    the same as the finish vertex, and it visits all the terminals in $T'$.
+    Note that $P$ uses every edge in $\textsf{OPT}'$ at most twice, so 
+    $c'(P) \leq 2c'(\textsf{OPT}')$. Let 
+    \[ F^* := \{uv : u, v \in T' \text{ where } u \text{ and } v \text{ 
+        are consecutive terminals on the tour $P$}\}. \] 
+    Then $F^*$ is a set of edges in $G'[T']$. For every edge $uv \in F^*$, 
+    we have by the triangle inequality that 
+    \[ c'_{uv} \leq c'(P_{uv}), \] 
+    where $P_{uv}$ is the part of the Euler tour 
+    $P$ between $u$ and $v$. This gives 
+    \[ \sum_{e\in F^*} c'_e \leq c'(P) \leq 2c'(\textsf{OPT}'). \] 
+    Note that $F^*$ connects all the vertices in $G'[T']$ since $P$ connects 
+    all the vertices in $T'$. Thus, $G'[T']$ has a spanning tree $\overline{F}$ 
+    such that $\overline{F} \subseteq F^*$, so $c'(\overline{F}) \leq 
+    2c'(\textsf{OPT}')$. But $F''$ is a minimum spanning tree of $G'[T']$, 
+    so we deduce that $c'(F'') \leq c'(\overline{F}) \leq 2c'(\textsf{OPT}')$. \qed
+\end{pf}
