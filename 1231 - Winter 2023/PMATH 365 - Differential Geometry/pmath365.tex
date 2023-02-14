@@ -20,6 +20,7 @@
 \usepackage{xcolor}
 \usepackage{microtype}
 \usepackage[framemethod=TikZ]{mdframed}
+\usepackage{mleftright}
 
 % some useful math commands
 \newcommand{\eps}{\varepsilon}
@@ -294,7 +295,7 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 
 % new proof environment
 \newenvironment{pf}[1][\proofname]
-  {\par\noindent\normalfont\textsc{Proof of #1.}\par\nopagebreak%
+  {\par\noindent\normalfont\textbf{Proof of #1.}\par\nopagebreak%
   \begin{mdframed}[
      linewidth=1pt,
      linecolor=black,
