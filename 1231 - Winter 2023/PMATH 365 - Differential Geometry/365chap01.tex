@@ -478,10 +478,325 @@ As usual, let's go over some examples.
 Not every topological submanifold of $\R^n$ is of class $C^r$ 
 for some $r \geq 1$. For example, consider the graph 
 \[ M = \{(x, |x|) : x \in \R\} \] 
-of the function $f(x) = |x|$ on $\R$. Since $f$ is continuous, we know that 
+of the function $f(x) = |x|$ on $\R$, which fails to be differentiable 
+at $x = 0$. Since $f$ is continuous, we know that 
 $M$ is a $1$-dimensional topological submanifold of $\R^2$. Note that $f$ is 
 smooth away from $x = 0$, so $M \setminus \{(0, 0)\}$ is a smooth $1$-dimensional
-submanifold of $\R^2$. However, we claim that it cannot be a submanifold of 
-class $C^r$ on any neighbourhood of the point $(0, 0)$. 
+submanifold of $\R^2$. 
 
-% TODO: Continue from end of Lecture 7
+However, we claim that it cannot be a submanifold of 
+class $C^r$ on any neighbourhood of the point $(0, 0)$. 
+Suppose otherwise, so there exists an open set $U \subset \R^1$, 
+an open neighbourhood $V \subset M$ of $(0, 0)$, and a homeomorphism 
+$\alpha : U \subset \R^1 \to V \subset M \subset \R^2$ of class $C^r$ 
+for some $r \geq 1$. Moreover, assume that $D\alpha(t)$ is of rank $1$ 
+for all $t \in U$. Since $k = 1$, we have 
+\[ D\alpha(t) = \frac{{\rm d}\alpha}{{\rm d}t} = \alpha'(t) \neq 0 \] 
+for all $t \in U$ using the rank $1$ assumption. But $\alpha'(t)$ 
+is tangent to $M$ at $\alpha(t)$. There are two possibilities: 
+\begin{itemize}
+    \item If $\alpha(t)$ is on the line $y = x$, then $\alpha'(t)$ 
+    is a direction vector of $y = x$, so for some $c : I 
+    \subset \R \to \R$, we have 
+    \[ \alpha'(t) = c(t) \begin{pmatrix} 1 \\ 1 \end{pmatrix}. \tag{1.4.1} \label{eq:1.4.1}\] 
+    Since $\alpha(t)$ is of class $C^r$ for some $r \geq 1$, we know that 
+    $\alpha'(t)$ is continuous, so $c : I \to \R$ is also continuous.
+    \item If $\alpha(t)$ is on $y = -x$, then $\alpha'(t)$ is a 
+    direction vector of $y = -x$, so for some $d : I' \subset \R \to \R$, 
+    we have 
+    \[ \alpha'(t) = d(t) \begin{pmatrix} 1 \\ -1 \end{pmatrix}. \tag{1.4.2} \label{eq:1.4.2} \] 
+    The same argument as above shows that $d : I' \to \R$ is continuous.
+\end{itemize}
+However, since $\alpha$ is a bijection, we have $(0, 0) = \alpha(t_0)$ 
+for some $t_0 \in U$. By the continuity of $\alpha'(t)$, we obtain 
+\[ \lim_{t\to t_0^-} \alpha'(t) = \lim_{t\to t_0^+} \alpha'(t). \] 
+Without loss of generality, assume that $\alpha(t)$ is moving along $M$ 
+from left to right. (Otherwise, we can simply parametrize in the other 
+direction.) Then if $t < t_0$, equation $\eqref{eq:1.4.2}$ holds, whereas if 
+$t > t_0$, equation $\eqref{eq:1.4.1}$ holds. This means that 
+\[ \lim_{t\to t_0^-} \alpha'(t) = \lim_{t\to t_0^-} d(t) \begin{pmatrix} 1 \\ -1 \end{pmatrix} 
+= \lim_{t\to t_0^+} c(t) \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \lim_{t\to t_0^+} \alpha'(t). \] 
+But the above vectors are not parallel to each other, so the only way that 
+these limits are equal is if $\lim_{t\to t_0^-} d(t) = 
+\lim_{t\to t_0^+} c(t) = 0$. This implies that $\alpha'(t_0)$ is the zero 
+vector, which is a contradiction to the fact that $D\alpha(t) = \alpha'(t)$ 
+has rank $1$ for all $t \in U$! This concludes the example that not 
+every topological submanifold is a submanifold of class $C^r$ for some $r \geq 1$. 
+
+In the definition of a submanifold of class $C^r$, it is important that 
+$\alpha$ is a homeomorphism and not just a function of class $C^r$ 
+with $D\alpha(x)$ of rank $k$ for all $x \in U$. These conditions alone
+don't even ensure that $\alpha$ is injective! For example, take the 
+$\alpha$-curve $C = \{(x, y) \in \R^2 : y^2 = x^2(x+1)\} \subset \R^2$ 
+which we introduced back in Section~\ref{subsec:1.3}, which could be 
+parametrized using $\alpha(t) = (t^2 - 1, t(t^2-1))$ for $t \in \R$. 
+We saw that this map was not injective, but it is smooth with derivative matrix 
+\[ D\alpha(t) = \frac{{\rm d}\alpha}{{\rm d}t} = \begin{pmatrix} 2t \\ 3t^2 - 1 \end{pmatrix} 
+\neq \begin{pmatrix} 0 \\ 0 \end{pmatrix} \] 
+for all $t \in \R$. A map satisfying these two conditions is said to be 
+an {\bf immersion}, and a topological submanifold whose maps 
+are immersions is called an {\bf immersed manifold}. We record this in 
+the definition below. 
+
+\begin{defn}{defn:1.8}
+    Let $U \subset \R^k$ be open with $k \leq n$. A map $\alpha : U 
+    \subset \R^k \to \R^n$ is an {\bf immersion} (of class $C^r$) if 
+    \begin{enumerate}[(1)]
+        \item $\alpha$ is of class $C^r$; and 
+        \item $D\alpha(x)$ has rank $k$ for all $x \in U$. 
+    \end{enumerate}
+\end{defn}\vspace{-0.25cm}
+We give some examples of immersions. 
+\begin{enumerate}[(1)]
+    \item {\bf Canonical immersion.} The inclusion map $\iota : \R^k \to \R^n$ defined by 
+    $(x_1, \dots, x_k) \mapsto (x_1, \dots, x_k, 0, \dots, 0)$
+    is an immersion of class $C^\infty$.
+    Indeed, we see that $\iota$ is smooth and its derivative matrix is
+    \[ D\iota = \mleft[ \begin{array}{ccc}
+        1 & \cdots & 0 \\ 
+        \vdots & \ddots & \vdots \\ 
+        0 & \cdots & 1 \\ \hline 
+        0 & \cdots & 0 \\ 
+        \vdots & \ddots & \vdots \\ 
+        0 & \cdots & 0 \\ 
+    \end{array} \mright] \]
+    which has rank $k$ because it contains the $k \times k$ identity matrix.
+
+    \item The parametrization $\alpha(t) = (t^2 - 1, t(t^2 - 1))$ of the 
+    $\alpha$-curve is an immersion of class $C^\infty$. 
+    
+    \item The charts $\alpha : U \to V$ of class $C^r$ of a submanifold 
+    $M \subset \R^n$ of class $C^r$ are immersions of class $C^r$. 
+\end{enumerate}
+Recall that a {\bf diffeomorphism} is a differentiable bijection 
+(of class $C^r$) whose inverse is also differentiable (of class $C^r$). The 
+following proposition tells us that up to a diffeomorphism (by composition), 
+every immersion is locally the canonical immersion.
+
+\begin{prop}{prop:1.9}
+    Let $U \subset \R^k$ be open and $\alpha : \R^k \to \R^n$ be an immersion 
+    of class $C^r$. Then up to a local diffeomorphism, $\alpha$ is the 
+    canonical immersion $\iota : \R^k \to \R^n$ defined by 
+    $\iota(x_1, \dots, x_k) = (x_1, \dots, x_k, 0, \dots, 0)$. 
+\end{prop}\vspace{-0.25cm}
+In order to prove this, we require the Inverse Function Theorem. 
+
+\begin{theo}[Inverse Function Theorem]{theo:1.10}
+    Let $U \subset \R^\ell$ be open and let $F : U \subset \R^\ell \to \R^\ell$ 
+    be of class $C^r$. Suppose that for some $x_0 \in U$, the $\ell \times \ell$ 
+    derivative matrix $DF(x_0)$ is invertible (that is, $\det(DF(x_0)) \neq 0$). 
+    Then $F$ is invertible in an open neighbourhood $U_0 \subset U$ of $x_0$ and 
+    $F^{-1} : V_0 = F(U_0) \subset \R^\ell \to U_0 \subset \R^\ell$ 
+    is also of class $C^r$.
+\end{theo}\vspace{-0.25cm}
+
+Note that when we take $\ell = 1$ in the Inverse Function Theorem 
+and we have a function $f : U \subset \R^1 \to \R^1$, then $Df(x) = f'(x)$. 
+If $f'(x_0) \neq 0$, then either $f'(x) > 0$ around $x_0$ or $f'(x) < 0$. 
+In particular, $f$ is increasing or decreasing around $x_0$, which implies 
+that it is strictly monotone and thus invertible around $x_0$. 
+
+\begin{pf}[Proposition~\ref{prop:1.9}]
+    Suppose that $\alpha : U \subset \R^k \to \R^n$ is an immersion given by 
+    \[ x = (x_1, \dots, x_k) \mapsto (f_1(x), \dots, f_n(x)). \] 
+    The derivative matrix of $\alpha$ is the $n \times k$ matrix 
+    \[ D\alpha(x) = \begin{bmatrix}
+        \nabla f_1(x) \\ \vdots \\ \nabla f_n(x) 
+    \end{bmatrix} \] 
+    and $D\alpha(x)$ has rank $k$ for all $x \in U$ by definition. Then 
+    $k$ of the rows of $D\alpha(x)$ are linearly independent. Without loss of 
+    generality, we can assume that these are the first $k$ rows after possibly 
+    permuting the variables in $\R^n$. We now divide $\alpha$ into 
+    the parts 
+    \[ \alpha(x) = (\alpha_1(x), \alpha_2(x)), \] 
+    where $\alpha_1 : U \subset \R^k \to \R^k$ corresponds to the first 
+    $k$ component functions of $\alpha$, and $\alpha_2 : U \subset \R^k \to \R^{n-k}$ 
+    corresponds to the remaining $n-k$ component functions. Then we can write 
+    \[ D\alpha(x) = \mleft[ \begin{array}{c} D\alpha_1(x) \\ \hline D\alpha_2(x) \end{array} \mright] \]
+    where $D\alpha_1(x)$ is a $k \times k$ matrix and $D\alpha_2(x)$ is an 
+    $(n-k) \times k$ matrix. Notice that $D\alpha_1(x)$ has rank $k$, which 
+    implies that $D\alpha_1(x)$ is invertible. By the Inverse Function Theorem 
+    (Theorem~\ref{theo:1.10}), there exist open neighbourhoods $U_0 \subset U$ 
+    of $x_0$ and $V_0 \subset \R^k$ of $\alpha_1(x_0)$ such that 
+    \[ \alpha_1|_{U_0} : U_0 \subset U \subset \R^k \to V_0 \subset \R^k \] 
+    is invertible with inverse 
+    $(\alpha_1|_{U_0})^{-1} : V_0 \subset \R^k \to U_0 \subset U \subset \R^k$ 
+    of class $C^r$. Hence, $\alpha_1|_{U_0}$ is a diffeomorphism of class $C^r$. 
+    Now, consider the composition $\alpha \circ \alpha_1^{-1} : 
+    V_0 \subset \R^k \to \R^n$ which yields 
+    \[ x \mapsto \alpha(\alpha_1^{-1}(x)) = (\alpha_1(\alpha_1^{-1}(x)), 
+    \alpha_2(\alpha_1^{-1}(x))) =: (x, f(x)) \]  
+    where $f : V_0 \subset \R^k \to \R^{n-k}$. So up to the diffeomorphism, 
+    $\alpha$ is the parametrization of the graph of a function of class $C^r$ 
+    (because the composition is of class $C^r$). 
+
+    If $f(x) = 0$ for all $x \in V_0$, then we are already done. Otherwise, 
+    compose the above function with $h : V_0 \times \R^{n-k} \subset \R^n 
+    \to \R^n$ defined by 
+    \[ (x_1, \dots, x_k, x_{k+1}, \dots, x_n) \mapsto 
+    (x_1, \dots, x_k, x_{k+1} - f_{k+1} \circ \alpha^{-1}(x), \dots, 
+    x_n - f_n \circ \alpha^{-1}(x)), \] 
+    which is a diffeomorphism of class $C^r$. For $x \in V_0$, we obtain 
+    $h \circ \alpha \circ \alpha^{-1}(x) = (x, 0) = \iota(x)$ as desired. \qed 
+\end{pf}\vspace{-0.25cm}
+As a consequence, we have the following result. 
+
+\begin{cor}{cor:1.11}
+    The image of an immersion of class $C^r$ is locally the graph of a 
+    function of class $C^r$ (up to diffeomorphism). In particular, 
+    any submanifold of $\R^n$ of class $C^r$ is locally the graph of a 
+    function of class $C^r$.
+\end{cor}\vspace{-0.25cm} \newpage
+\begin{pf}[Corollary~\ref{cor:1.11}]
+    From the proof of Proposition~\ref{prop:1.9}, we had a map
+    $\alpha \circ \alpha_1^{-1} : V_0 \subset \R^k \to \R^n$ which sent 
+    $x \mapsto (x, f(x))$ by taking $f = \alpha_2 \circ \alpha_1^{-1}$ which 
+    was of class $C^r$. Then $\alpha(V_0)$ is the graph of $f$ in $\R^n$. 
+    
+    If $M \subset \R^n$ is a $k$-dimensional submanifold of class $C^r$, 
+    then for all $p \in M$, there exists a coordinate chart 
+    \[ \alpha : U \subset \R^k \to V \subset M \] 
+    with $p \in V$. Set $x_0 = \alpha^{-1}(p)$. Using the above notation, 
+    there exist open sets $U_0, V_0 \subset \R^k$ with $x_0 \in U_0$ 
+    and a diffeomorphism $\alpha_1 : U_0 \subset \R^k \to V_0 \subset \R^k$ 
+    such that 
+    \begin{align*} 
+        \tilde\alpha := \alpha \circ \alpha_1^{-1} : V_0 \subset \R^k 
+        &\to \alpha(U_0) \subset M \\ 
+        x &\mapsto (x, f(x)) 
+    \end{align*}
+    is of class $C^r$ since $\alpha$ and $\alpha_1^{-1}$ are of 
+    class $C^r$. (Note that $\alpha(U_0)$ is open in $M$ since $\alpha$ 
+    is a homeomorphism.) This implies that $f$ is of class $C^r$, so $M$ 
+    is locally the graph of the $C^r$ function $f : V_0 \subset \R^k \to \R^{n-k}$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+We now introduce the notion of an embedding.
+\begin{defn}{defn:1.12}
+    Let $U \subset \R^k$ be open and $\alpha : U \subset \R^k \to \R^n$ 
+    be a map. Then $\alpha$ is an {\bf embedding} of class $C^r$ if 
+    \begin{enumerate}[(1)]
+        \item $\alpha$ is a homeomorphism onto its image; 
+        \item $\alpha$ is of class $C^r$; 
+        \item $D\alpha(x)$ has rank $k$ for all $x \in U$. 
+    \end{enumerate}
+\end{defn}\vspace{-0.25cm}
+In other words, an embedding is just an immersion that is homeomorphic onto 
+its image. In particular, submanifolds of $\R^n$ of class $C^r$ are subsets 
+of $\R^n$ that are locally the image of an embedding of class $C^r$. 
+
+The following proposition tells us that embeddings are in fact 
+diffeomorphisms onto their images. 
+\begin{prop}{prop:1.13}
+    Let $U \subset \R^k$ be open, and let $\alpha : U \subset \R^k \to 
+    \R^n$ be an embedding of class $C^r$. Then 
+    \[ \alpha^{-1} : \alpha(U) \subset \R^n \to U \subset \R^k \] 
+    is also of class $C^r$. 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:1.13}]
+    Note that $\alpha$ is an immersion of class $C^r$, so we can write it as 
+    $\alpha(x) = (\alpha_1(x), \alpha_2(x))$,
+    where $\alpha_1 : U \subset \R^k \to \R^k$ is locally invertible. 
+    Letting $\pi : \R^n \to \R^k$ be the projection $(y_1, \dots, y_n) 
+    \mapsto (y_1, \dots, y_k)$, we have 
+    \begin{align*} 
+        \alpha^{-1} : \alpha(U) \subset \R^n &\to U \subset \R^k \\ 
+        (\alpha_1(x), \alpha_2(x)) &\mapsto x = \alpha_1^{-1} \circ 
+        \pi(x_1, \dots, x_n).
+    \end{align*}
+    But $\alpha_1^{-1}$ and $\pi$ are both of class $C^r$, so 
+    $\alpha^{-1}$ is also of class $C^r$. \qed 
+\end{pf}\vspace{-0.25cm}
+We now introduce atlases, which we could've done a while ago when we 
+defined topological submanifolds at the beginning. However, we can now 
+talk about atlases of class $C^r$.
+
+\begin{defn}{defn:1.14}
+    Let $M \subset \R^n$ be a $k$-dimensional topological submanifold. 
+    An {\bf atlas} of $M$ is a collection of charts 
+    \[ \{\alpha_a : U_a \subset \R^k \to V_a \subset M\}_{a \in A} \] 
+    such that $\bigcup_{a \in A} V_a = M$, where each $U_a \subset \R^k$ 
+    and $V_a \subset M$ is open. Moreover, if all the charts in the atlas 
+    are of class $C^r$, then it is called an 
+    {\bf atlas of class $C^r$}, or a {\bf smooth atlas} if it is of 
+    class $C^\infty$. 
+\end{defn}\vspace{-0.25cm}
+We look at some examples of atlases. 
+\begin{enumerate}[(1)]
+    \item Let $U \subset \R^n$ be open. Then $\alpha = \Id_U$ is a smooth 
+    chart for $U$ such that every point in $U$ is contained in $\alpha(U) = U$. 
+    Therefore, $\{\alpha = \Id_U : U \to U\}$ is a smooth atlas for $U$. 
+    \item Consider the graph $M$ of a function $F : U \subset \R^k \to \R^{n-k}$ 
+    of class $C^r$, where $U \subset \R^k$ is open. Then 
+    $M = \{(x, F(x)) : x \in U\}$ is a $k$-dimensional 
+    submanifold of class $C^r$. It admits the chart $\alpha : U \subset \R^k 
+    \to M \subset \R^n$ defined by $x \mapsto (x, F(x))$ of class $C^r$, 
+    so $\{\alpha : U \to M\}$ is an atlas of class $C^r$ for $M$. 
+    \item Recall that the points on the circle $\mathbb{S}^1 = 
+    \{(x, y) : x^2 + y^2 = 1\} \subset \R^2$ can be described using 
+    the charts $\alpha_1 : (-\pi, \pi) \to \mathbb{S}^1 \setminus \{(-1, 0)\}$ 
+    and $\alpha_2 : (0, 2\pi) \to \mathbb{S}^1 \setminus \{(1, 0)\}$ 
+    via $t \mapsto (\cos t, \sin t)$. Then $\{\alpha_1, \alpha_2\}$ 
+    is a smooth atlas for $\mathbb{S}^1$. 
+\end{enumerate}
+Note that if $M$ is compact (that is, closed and bounded), then any atlas 
+of $M$ must contain at least two charts. Moreover, atlases are not unique in general! 
+For example, consider $\{\alpha : \R \to M,\, t \mapsto (t, 0)\}$ 
+and $\{\beta : \R \to M,\, t \mapsto (-t, 0)\}$, which are both smooth 
+atlases for the $x$-axis $M$ in $\R^2$. 
+
+We now give an alternate definition of a $k$-dimensional submanifold 
+of $\R^n$ of class $C^r$. We will soon prove that this is equivalent to the 
+original definition.
+
+\begin{defn}{defn:1.15}
+    Let $M \subset \R^n$ be such that $M$ is locally given by the zero set 
+    $\{F \equiv 0\}$ of a $C^r$ map $F : V \subset \R^n \to \R^{n-k}$ 
+    with maximal rank. That is, 
+    $DF(x)$ has rank $n - k$ for all $x \in V \cap M$, where $V \cap M 
+    = F^{-1}(0)$ holds for an appropriately chosen neighbourhood $V$ 
+    of every point in $M$. Then $M$ is called a 
+    {\bf $k$-dimensional submanifold of $\R^n$ of class $C^r$}.
+\end{defn}\vspace{-0.25cm} 
+This alternate definition is useful, because it is generally easier to show 
+that a given subset is locally the zero set of a function than to 
+explicitly exhibit charts covering the space. 
+\begin{enumerate}[(1)]
+    \item Consider the circle $\mathbb{S}^1 = \{(x, y) \in \R^2 : x^2 + y^2 = 1\}$, 
+    which is given by the equation $x^2 + y^2 = 1$, which we can rearrange as 
+    $x^2 + y^2 - 1 = 0$.
+    Define $F : \R^2 \to \R$ via $F(x, y) = x^2 + y^2 - 1$. Then $\mathbb{S}^1 
+    = F^{-1}(0)$, so we can take $V = \R^2$ in the definition. Also, we have 
+    \[ DF(x, y) = \begin{bmatrix}
+        2x & 2y 
+    \end{bmatrix}, \] 
+    which has rank $1$ for every point since $(0, 0) \notin \mathbb{S}^1$. 
+    Thus, under the alternate definition, $\mathbb{S}^1$ is a smooth $1$-dimensional
+    submanifold of $\R^2$. 
+
+    \item More generally, the $n$-sphere $\mathbb{S}^n = \{(x_1, \dots, 
+    x_{n+1}) \in \R^{n+1} : x_1^2 + \cdots + x_{n+1}^2 = 1\} \subset \R^{n+1}$ 
+    can be viewed as the zero set of the smooth function $F : \R^{n+1} \to \R$ 
+    given by $F(x_1, \dots, x_{n+1}) = x_1^2 + \cdots + x_{n+1}^2 - 1$. 
+    Here, we can take $V = \R^{n+1}$ in the definition. Since 
+    \[ DF(x) = \begin{bmatrix} 2x_1 & \cdots & 2x_{n+1} \end{bmatrix} \] 
+    has rank $1$ for all $x \in \mathbb{S}^n$, we see that $\mathbb{S}^n$ 
+    is a smooth $n$-dimensional submanifold of $\R^{n+1}$. 
+
+    \item Consider the twisted cubic $M = \{(x, y, z) : y = x^2,\, z = x^3\} \subset \R^3$.
+    We have seen that this is a smooth $1$-dimensional submanifold of $\R^3$. 
+    For all $(x, y, z) \in M$, we have $y = x^2$ and $z = x^3$. Rearranging 
+    gives $y - x^2 = 0$ and $z - x^3 = 0$, so we can view $M$ has the zero 
+    set of the smooth function $F(x, y, z) = (y-x^2, z-x^3)$ defined for all 
+    $(x, y, z) \in \R^3$. This time, we have $V = \R^3$, and $F : 
+    \R^3 \to \R^2$ so that $n = 3$ and $k = 1$. The derivative matrix of $F$ is 
+    \[ DF(x, y, z) = \begin{bmatrix} 
+        -2x & 1 & 0 \\ 
+        -3x^2 & 0 & 1 
+    \end{bmatrix} \] 
+    which is rank $2$ for all $(x, y, z) \in M$ because the last two columns 
+    are the $2 \times 2$ identity matrix. Hence, $M$ is a smooth $1$-dimensional 
+    submanifold of $\R^3$.     
+
+    % TODO: Continue from end of Lecture 10 / start of Lecture 11
+\end{enumerate}
