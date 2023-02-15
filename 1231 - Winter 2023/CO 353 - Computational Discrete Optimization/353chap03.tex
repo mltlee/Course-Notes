@@ -235,7 +235,7 @@ algorithm.
 \begin{lemma}{lemma:3.2}
     For every arborescence $T$ rooted at $r$, we have 
     \[ c(T) = c'(T) + \sum_{\substack{v\in V \\ v\neq r}} y_v. \] 
-\end{lemma}\vspace{-0.15cm}
+\end{lemma}\vspace{-0.25cm}
 \begin{pf}[Lemma~\ref{lemma:3.2}]
     Splitting the sum to correspond to the individual vertices, we have 
     \[ c(T) = \sum_{e\in T} c_e = \sum_{(u, v) \in T} c_{(u,v)} 
@@ -252,7 +252,7 @@ algorithm.
         = c'(T) + \sum_{\substack{v\in V\\ v \neq r}} y_v,
     \end{align*}
     which is the desired result. \qed
-\end{pf}
+\end{pf}\vspace{-0.25cm}
 
 Since the sum of the vertex costs does not depend on the arborescence 
 $T$, we obtain the following corollary. 
@@ -478,9 +478,9 @@ entering $C$. To resolve this, we have the following lemma.
     also a minimum cost arborescence with exactly one edge incoming to $C$. \qed
 \end{pf}\vspace{-0.25cm}
 
-Another concern: does an arborescence $F'$ rooted at $r$ in the graph 
-$G'$ might not give us an arborescence $F$ rooted at $r$ in $G$? It turns 
-out this is always the case; we leave the proof of the following lemma 
+Another potential concern: could it be that an arborescence $F'$ rooted at $r$ in the graph 
+$G'$ doesn't lead to an arborescence $F$ rooted at $r$ in $G$? It turns 
+out that this is impossible; we leave the proof of the following lemma 
 as an exercise. The idea is to consider the edges in the cycle $C$, which 
 we know have reduced edge costs $c'_e = 0$. 
 

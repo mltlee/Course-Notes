@@ -58,7 +58,7 @@ theorem then gives us a useful characterization of trees.
         \item $T$ is connected and $|F| = |V| - 1$. 
         \item $T$ is acyclic and $|F| = |V| - 1$. 
     \end{enumerate}
-\end{theo}
+\end{theo}\vspace{-0.25cm}
 
 In particular, if we know that two of the conditions hold, then the 
 third one is guaranteed.
@@ -81,7 +81,7 @@ spanning tree.
     and let 
     \[ e = \argmin_{f \in \delta(S)} c_f. \] 
     Then every minimum spanning tree contains the edge $e$. 
-\end{theo}
+\end{theo}\vspace{-0.25cm}
 \begin{pf}[Theorem~\ref{theo:2.2}]
     We proceed by contradiction. Let $S \subseteq V$ be such that $S 
     \neq \varnothing$ and $S \neq V$, and let $e = \argmin_{f\in S} c_f$. 
@@ -129,7 +129,7 @@ Prim's algorithm takes the idea of the cut property (Theorem~\ref{theo:2.2})
 and uses it to compute a minimum spanning tree starting from an arbitrary 
 vertex $s \in V$. At each iteration of the algorithm, we will keep track of a 
 set of a partial tree construction $T$ and vertices $A \subseteq V$ that are 
-connected to $s$ in $T$. 
+connected to $s$ in $T$. We finish once we have reached all the vertices in $G$.
 
 \begin{mdframed}[
     linewidth=1pt,
@@ -245,14 +245,14 @@ $e \in E$ are distinct.
     and our assumption that all the edge costs are distinct, $T$ contains 
     only the edges that are in every minimum spanning tree, so $T$ 
     itself is a minimum spanning tree. \qed 
-\end{pf}
+\end{pf}\vspace{-0.25cm}
 
 As a consequence, we also have the following useful result. 
 
 \begin{cor}{cor:2.4}
     Let $G = (V, E)$ be a connected graph with distinct edge costs $c_e$ for 
     $e \in E$. Then $G$ has a unique minimum spanning tree.
-\end{cor}
+\end{cor}\vspace{-0.25cm}
 
 As usual, let's consider the running time, denoting $|V| = n$ 
 and $|E| = m$. For an efficient implementation, 
@@ -321,7 +321,7 @@ notions to the definitions we have.
     Then $G$ has no $u, v$-path if and only if there exists $S \subseteq V$ 
     such that $u \in S$, $v \notin S$, and $\delta(S) \cap E = \varnothing$. 
 \end{enumerate}
-
+\newpage
 \begin{pf}[correctness of Kruskal's algorithm]
     Let $T$ denote the output set consisting of edges. We know that $T$ is 
     acyclic by construction because Step 2 of the algorithm rules 

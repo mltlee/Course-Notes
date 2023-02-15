@@ -185,8 +185,8 @@ Fortunately, when using this strategy, this error is the worst it could get.
     Let $P$ be an Euler tour on the optimal solution $\textsf{OPT}'$, which is 
     a Steiner tree. That is, $P$ is a path where the starting vertex is 
     the same as the finish vertex, and it visits all the terminals in $T'$.
-    Note that $P$ uses every edge in $\textsf{OPT}'$ at most twice, so 
-    $c'(P) \leq 2c'(\textsf{OPT}')$. Let 
+    Note that $P$ uses every edge in $\textsf{OPT}'$ exactly twice, so 
+    $c'(P) = 2c'(\textsf{OPT}')$. Let 
     \[ F^* := \{uv : u, v \in T' \text{ where } u \text{ and } v \text{ 
         are consecutive terminals on the tour $P$}\}. \] 
     Then $F^*$ is a set of edges in $G'[T']$. For every edge $uv \in F^*$, 
@@ -194,7 +194,7 @@ Fortunately, when using this strategy, this error is the worst it could get.
     \[ c'_{uv} \leq c'(P_{uv}), \] 
     where $P_{uv}$ is the part of the Euler tour 
     $P$ between $u$ and $v$. This gives 
-    \[ \sum_{e\in F^*} c'_e \leq c'(P) \leq 2c'(\textsf{OPT}'). \] 
+    \[ \sum_{e\in F^*} c'_e \leq c'(P) = 2c'(\textsf{OPT}'). \] 
     Note that $F^*$ connects all the vertices in $G'[T']$ since $P$ connects 
     all the vertices in $T'$. Thus, $G'[T']$ has a spanning tree $\overline{F}$ 
     such that $\overline{F} \subseteq F^*$, so $c'(\overline{F}) \leq 
