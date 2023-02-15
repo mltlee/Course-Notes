@@ -1,0 +1,116 @@
+\section{Complexity Theory} \label{sec:6}
+
+\subsection{The Complexity Class $\Poly$} \label{subsec:6.1}
+The complexity class $\Poly$ consists of all problems that can be solved
+efficiently (in polynomial time). 
+\begin{itemize}
+    \item The problem $\textsc{MST}$ of finding a minimum spanning tree is in $\Poly$ 
+    using Prim's or Kruskal's algorithm. 
+    \item The problem $\textsc{ShortestPaths}$ is in $\Poly$ using Dijkstra's algorithm.
+    \item The problem $\textsc{MCA}$ of finding a minimum cost arborescence is in 
+    $\Poly$ by using Edmonds' algorithm. 
+    \item However, we are unsure whether or not $\textsc{MSteinerT}$ and $\textsc{MMSteinerT}$
+    are in $\Poly$. We'll discuss this further when we introduce the class $\NP$.
+\end{itemize}
+
+Let $X$ be a minimization problem. The {\bf decision problem} corresponding 
+to $X$ takes as input an instance of $X$ and a number $k$, and answers 
+if there is a feasible solution for the given instance of value at most $k$. 
+
+For example, the decision version of the $\textsc{MSteinerT}$ problem, 
+which we'll call $\textsc{DecisionMSteinerT}$, takes as input a graph 
+$G = (V, E)$, costs $c_e \geq 0$ for $e \in E$, terminals $T \subseteq V$, 
+and a number $k$. To solve the problem, we should output ``yes'' if there 
+exists a Steiner tree of cost at most $k$, and output ``no'' otherwise. 
+
+We'll be working with linear programs a lot later in this course. Therefore, 
+we should note that solving a linear program is in $\Poly$. 
+\begin{itemize}
+    \item It is still not known whether the simplex algorithm can be implemented 
+    to give a polynomial running time in the worst case. The hard part is the choice of 
+    the pivoting rule; it is known that Bland's rule, which ensures that 
+    the simplex algorithm never cycles, is quite inefficient.
+    \item There are other algorithms that can solve linear programs in 
+    polynomial time. The first one to be discovered was the ellipsoid method, 
+    but it is also inefficient in practice. 
+\end{itemize} 
+
+\subsection{Polynomial Time Reductions} \label{subsec:6.2}
+We have seen a glimpse of reductions when we discussed 
+$\textsc{MSteinerT}$ and $\textsc{MMSteinerT}$ in Section~\ref{subsec:5.2}. 
+Given two problems $X$ and $Y$, we say that $X$ {\bf reduces} in polynomial 
+time to $Y$, denoted by $X \leq_P Y$, if one can solve $X$ by using a 
+polynomial number of basic operations and a polynomial number of calls 
+to an oracle that solves $Y$. Intuitively, this means that $X$ is ``not 
+harder'' than $Y$, because if we know how to solve $Y$, then we have 
+a way to solve $X$. We look at some examples of reductions.
+\begin{itemize}
+    \item We can show that $\textsc{MST} \leq_P \textsc{MSteinerT}$. 
+    Suppose we are given an instance of $\textsc{MST}$, namely a graph 
+    $G = (V, E)$ and edge costs $c_e$ for each $e \in E$. Then we can 
+    construct an instance of $\textsc{MSteinerT}$ by simply setting 
+    $T = V$. We can pass $(G, c, T)$ to an oracle that solves $\textsc{MSteinerT}$
+    and output that result. 
+    Overall, this process involved a polynomial number of operations 
+    (assigning $T = V$), and then a polynomial number of calls to 
+    the oracle (only one call was needed here).
+
+    \item Next, let's show that $\textsc{MST} \leq_P \textsc{MCA}$. As before, 
+    suppose we are given an instance of $\textsc{MST}$, so a graph $G = (V, E)$ 
+    and edge costs $c_e$ for each $e \in E$. We now construct 
+    an instance of $\textsc{MCA}$ as follows. Let $r$ be an 
+    arbitrary node in $V$. Let $G' = (V', E')$ where 
+    $V' = V$ and 
+    \[ E' = \{(u, v) : uv \in E\} \cup \{(v, u) : uv \in E\}. \] 
+    Set edge costs $c'_{(u,v)} = c'_{(v,u)} = c_{uv}$ for all $uv \in E$.
+    Feed this instance $(G', c', r)$ of $\textsc{MCA}$ to the oracle that 
+    solves it and output the obtained arborescence, ignoring directions.
+\end{itemize}
+However, these reductions were a bit silly. We already know that we can solve 
+$\textsc{MST}$ in polynomial time; we didn't even need the oracles for the 
+other problems! In particular, any problem in $\Poly$ reduces to 
+any other problem simply by using the polynomial time algorithm that solves it.
+
+Suppose that $X$ and $Y$ are problems such that $X \leq_P Y$. We make two 
+easy observations: 
+\begin{itemize}
+    \item If $Y \in \Poly$, then $X \in \Poly$ because adding a polynomial 
+    to a product of polynomials is still a polynomial. 
+    \item If $X \notin \Poly$, then $Y \notin \Poly$. This is just the 
+    contrapositive of the previous point, but this statement 
+    is slightly more interesting. 
+\end{itemize}
+
+\subsection{The Complexity Class $\NP$} \label{subsec:6.3}
+Let $X$ be a decision problem. An {\bf efficient certifier} $B$ for the 
+problem $X$ is an algorithm with polynomial running time which takes 
+two inputs $s$ and $t$, where $s$ is an instance of $X$ and $t$ is a 
+{\bf certificate}. 
+\begin{itemize}
+    \item If $s$ is a ``yes'' instance of $X$, then there exists a certificate 
+    $t$ whose size is polynomial in the size of $s$ such that $B(s, t)$ 
+    returns ``yes''.
+    \item If $s$ is a ``no'' instance of $X$, then $B(s, t)$ returns ``no'' 
+    for all certificates $t$. 
+\end{itemize}
+Recall that the $\textsc{DecisionMSteinerT}$ problem takes as input a 
+graph $G = (V, E)$, costs $c_e \geq 0$ for $e \in E$, terminals $T \subseteq V$, 
+and a number $k$. This is a ``yes'' instance if there exists a Steiner tree 
+of cost at most $k$, and a ``no'' instance otherwise. 
+
+For this problem, 
+a certificate $t$ is an edge set $F$, and the efficient certifier 
+outputs ``yes'' if $F$ is a Steiner tree with $c(F) \leq k$, and outputs ``no'' 
+otherwise. For checking that $F$ is a Steiner tree, it needs to verify that 
+the edges form a  tree and the terminals are all connected, both of which can be 
+done in polynomial time.
+
+The complexity class $\NP$ is the class of all decision problems that admit 
+an efficient certifier. In other words, $\NP$ consists of problems where 
+``yes'' instances can be verified efficiently with a ``short'' certificate.
+
+Clearly, if a decision problem is in $\Poly$, then it is in $\NP$. 
+The verifier can use the polynomial time algorithm that solves the 
+decision problem and completely ignore the certificate.
+Conversely, it is not known whether every decision problem in $\NP$ 
+also lies in $\Poly$. This is the famous $\Poly = \NP$ problem. 

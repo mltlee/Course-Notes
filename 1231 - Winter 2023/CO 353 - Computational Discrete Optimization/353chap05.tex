@@ -35,7 +35,7 @@ Note that we have already seen some particular instances of this problem before.
     \item If $|T| = 2$, then this is the shortest path problem.
     \item If $T = V$, then this is the minimum spanning tree problem.
 \end{itemize}
-However, it turns out that this problem is NP-hard in general!
+However, it turns out that this problem is $\NP$-hard in general!
 
 \subsection{Minimum Metric Steiner Tree Problem} \label{subsec:5.2}
 This problem is a minimum Steiner tree problem where we impose the additional 
@@ -128,10 +128,10 @@ of \textsc{MMSteinerT} and feeding it as input to the oracle.
 \subsection{An Approximation Algorithm for the Metric Problem} \label{subsec:5.3}
 Let's now try to solve \textsc{MMSteinerT} for a given instance $(G', c', T')$;
 that is, $G'$ is a complete graph and the costs $c'$ satisfy the triangle 
-inequality. Unfortunately, since \textsc{MSteinerT} is NP-hard, so is 
+inequality. Unfortunately, since \textsc{MSteinerT} is $\NP$-hard, so is 
 \textsc{MMSteinerT}, because these problems are equivalent! As such, we don't 
 know how to solve it efficiently. If there is an efficient algorithm to solve it, this 
-shows that $\text{P} = \text{NP}$, resolving the major million dollar problem!
+shows that $\Poly = \NP$, resolving the major million dollar problem!
 
 Although we can't find the optimal solution efficiently, we can get an 
 approximate solution that isn't too far from optimal in polynomial time. 
@@ -200,4 +200,38 @@ Fortunately, when using this strategy, this error is the worst it could get.
     such that $\overline{F} \subseteq F^*$, so $c'(\overline{F}) \leq 
     2c'(\textsf{OPT}')$. But $F''$ is a minimum spanning tree of $G'[T']$, 
     so we deduce that $c'(F'') \leq c'(\overline{F}) \leq 2c'(\textsf{OPT}')$. \qed
-\end{pf}
+\end{pf}\vspace{-0.25cm}
+Let $\alpha \geq 1$. An {\bf $\alpha$-approximation algorithm} for a minimization problem is an 
+algorithm that outputs a feasible solution with value at most 
+$\alpha \cdot z(\textsf{OPT})$, where $z$ denotes the objective 
+function and $\textsf{OPT}$ is an optimal solution 
+for the minimization problem.
+
+Similarly, for $\alpha \leq 1$, an $\alpha$-approximation algorithm for a 
+maximization problem outputs a feasible solution with 
+value at least $\alpha \cdot z(\textsf{OPT})$, where $z$ is the objective 
+function and $\textsf{OPT}$ is an optimal solution 
+for the maximization problem.
+
+From Lemma~\ref{lemma:5.2}, we see that the following is an efficient 
+$2$-approximation algorithm for $\textsc{MMSteinerT}$.
+
+\begin{mdframed}[
+    linewidth=1pt,
+    linecolor=black,
+    bottomline=false,topline=false,rightline=false,
+    innerrightmargin=0pt,innertopmargin=0pt,innerbottommargin=0pt,
+    innerleftmargin=1em,% Distance between vertical rule & proof content
+    skipabove=0.75\baselineskip
+]
+{\bf Input.} A complete graph $G = (V, E)$, costs $c_e \geq 0$ for each $e \in E$ 
+satisfying the triangle inequality, and terminals $T \subseteq V$. 
+
+{\bf Output.} A minimum cost Steiner tree connecting the terminals in $T$.
+\begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
+    \item Construct the induced subgraph $G[T]$.
+    \item Compute a minimum spanning tree $F''$ in $G[T]$ and output $F''$.
+\end{enumerate}
+\end{mdframed}\vspace{-0.35cm}
+We will say more on approximation algorithms later. Before that, we will 
+discuss some complexity theory in the next section.
