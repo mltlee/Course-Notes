@@ -367,7 +367,8 @@ In particular, this fact gives us all the prime ideals as well as how
 to do the ideal prime factorization! 
 
 For example, suppose that $\alpha \in \C$ satisfies $\alpha^2 + \alpha + 1 = 0$. 
-We'll assume that ${\cal O}_{\Q(\alpha)} = \Z[\alpha]$ here. The minimal 
+Note that ${\cal O}_{\Q(\alpha)} = \Z[\alpha]$ because 
+$\disc(x^2 + x + 1) = -3$ is squarefree. The minimal 
 polynomial of $\alpha$ is $m(x) = x^2 + x + 1$. Over $\Z_3[x]$, this factors as 
 \[ \bar{m}(x) = (x+2)(x+2) \in \Z_3[x], \] 
 so by Theorem~\ref{theo:3.8}, we have $\langle 3 \rangle = \langle \alpha + 2, 3 \rangle^2$ 
@@ -692,3 +693,341 @@ and thus $N(I) = N(P_1^{n_1}) \cdots N(P_k^{n_k})$. Therefore, to
 prove that the ideal norm is multiplicative, it is enough to show that 
 $N(P_i^{n_i}) = N(P_i)^{n_i}$. This innocent looking result requires a 
 lot of machinery, namely localization, local rings, and discrete valuation rings.
+
+To end this section, we prove a useful relationship between the ideal norm 
+of a principal ideal and the field norm.
+Let $\{v_1, \dots, v_n\}$ be an integral basis for $R = {\cal O}_K$ 
+and recall that a nonzero ideal $I$ of $R$ has an integral basis 
+$\{w_1, \dots, w_n\}$ because of Corollary~\ref{cor:1.17}. By taking 
+$M = R$ and $N = I$ in \ref{A2-4}, we obtain 
+\begin{align*}
+    \disc(w_1, \dots, w_n) &= [R : I]^2 \cdot \disc(v_1, \dots, v_n) \\ 
+    &= N(I)^2 \cdot \disc(v_1, \dots, v_n).
+\end{align*}
+If $I = \langle \alpha \rangle$ where $\alpha \neq 0$, then 
+$w_i = \alpha v_i$ is an integral basis for $I$. (Linear independence 
+comes from $R$ being an integral domain, and spanning comes from 
+the fact that $I = \alpha R$.) Our calculation above shows that 
+\[ \disc(\alpha v_1, \dots, \alpha v_n) = N(I)^2 \cdot \disc(K). \] 
+On the other hand, we can also see that 
+\begin{align*}
+    \disc(\alpha v_1, \dots, \alpha v_n) 
+    &= \det\,[\sigma_i(\alpha v_j)]^2 \\ 
+    &= \det\,[\sigma_i(\alpha) \sigma_i(v_j)]^2 \\ 
+    &= (\sigma_1(\alpha) \cdots \sigma_n(\alpha))^2 \cdot \det\,[\sigma_i(v_j)]^2 \\ 
+    &= N_{K/\Q}(\alpha)^2 \cdot \disc(K). 
+\end{align*}
+In particular, we have $N(I)^2 = N_{K/\Q}(\alpha)^2$ and thus 
+\[ N(\langle \alpha \rangle) = |N_{K/\Q}(\alpha)|. \] 
+
+\subsection{Localization} \label{subsec:3.5}
+We introduce local rings, which will lead us to the notion of localization.
+
+\begin{defn}{defn:3.20}
+    A {\bf local ring} is a ring which has a unique maximal ideal.
+\end{defn}\vspace{-0.25cm}
+
+The following is a useful characterization of a local ring. 
+
+\begin{prop}{prop:3.21}
+    A ring $R$ is local if and only if $I = R \setminus R^\times$ is an 
+    ideal of $R$. In this case, $I$ is the unique maximal ideal. 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.21}]
+    $(\Rightarrow)$ Let $R$ be a local ring and $M$ be a maximal ideal of $R$. 
+    Note that $M \subseteq I$ because maximal ideals are proper and cannot 
+    contain units. Conversely, if $\alpha \in I$, we see that $\langle \alpha \rangle$ 
+    is proper. But $M$ is the unique maximal ideal, so $\langle \alpha \rangle 
+    \subseteq M$ and thus $I \subseteq M$. 
+
+    $(\Leftarrow)$ Suppose that $I = R \setminus R^\times$ is an ideal of $R$. 
+    Then for all maximal ideals $M$, we have $M \subseteq I$. But $M$ 
+    being maximal means that $M = I$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+Every field $F$ is a local ring because the units 
+are $F^\times = F \setminus \{0\}$, and $F \setminus F^\times = \{0\}$ 
+is the only maximal ideal. 
+
+Another example of a local ring is $\Z_{p^n}$ where $n > 1$. Indeed, 
+observe that $x \notin \Z_{p^n}^\times$ if and only if $\gcd(x, p^n) \neq 1$. 
+In particular, the non-units are the multiples of $p$, which form 
+an ideal. 
+
+However, this is not the type of example that we want. How can we 
+construct local integral domains? The answer is localization!
+
+\begin{defn}{defn:3.22}
+    Let $R$ be an integral domain, let $K$ be the field of fractions of $R$, 
+    and let $P$ be a prime ideal of $R$. The {\bf localization} of $R$ 
+    at $P$ is defined to be
+    \[ R_P = \left\{\frac{a}{b} \in K : b \notin P \right\}. \] 
+\end{defn}\vspace{-0.25cm}
+
+Let's make a few remarks about the localization by a prime ideal. 
+\begin{enumerate}[(1)]
+    \item Note that we are using lazy notation here; it is possible to have 
+    $\frac{a}{b} \in R_P$ where $b \in P$. We only require the existence 
+    of elements $c, d \in R$ such that $\frac{a}{b} = \frac{c}{d}$ where $d \notin P$. 
+    For a simple example, take $R = \Z$ and $P = \langle 2 \rangle$. 
+    Observe that we have $\frac{4}{6} = \frac{2}{3} \in \Z_{\langle 2 \rangle}$
+    even though $6 \in \langle 2 \rangle$. 
+
+    \item Let $\frac{a}{b}, \frac{c}{d} \in K$ where $b, d \notin P$. Note that 
+    $bd \notin P$ since $P$ is a prime ideal, so $\frac{a}{b} + \frac{c}{d} 
+    = \frac{ad+bc}{bd} \in R_P$ and $\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd} \in R_P$. 
+    In particular, $R_P$ is a subring of $K$. 
+
+    \item It is clear that $PR_P$ is an ideal of $R$. We show that 
+    $PR_P = R_P \setminus R_P^\times$ and so $R_P$ is a local ring by 
+    Proposition~\ref{prop:3.21}. 
+    (It better be if we're going to call it the localization!)
+    
+    First, we show that every element of $R_P \setminus PR_P$ is a unit. 
+    Let $\frac{a}{b} \in R_P$ where $b \notin P$, and suppose that $\frac{a}{b} 
+    \notin PR_P$. Note that $a \notin P$ for otherwise $\frac{a}{b} = \frac{a}{1} 
+    \frac{1}{b} \in PR_P$ by definition. This implies that $\frac{b}{a} \in R_P$ 
+    and so $\frac{a}{b}$ is a unit. 
+
+    On the other hand, every element of $PR_P$ is not a unit. Let 
+    $\frac{a}{b} \in P$ where $a \in P$ and $b \notin P$, and let 
+    $\frac{c}{d} \in R_P$ where $c \in R$ and $d \notin P$. Suppose 
+    by way of contradiction that $\frac{a}{b} \cdot \frac{c}{d} = \frac{1}{1}$.
+    Then there must exist some $u \notin P$ such that $uac = ubd$. But this is 
+    a contradiction because $uac \in P$, but $ubd \notin P$. 
+
+    We denote the unique maximal ideal $PR_P$ by $P_P = 
+    \{\frac{a}{b} : a \in P,\, b \notin P\}$. 
+\end{enumerate}
+
+We have now shown that if $R$ is an integral domain, then $R_P$ is a local ring. 
+But what if $R$ is a Dedekind domain? Then $R_P$ is of course local, but 
+as we might expect, there is much more!
+
+\subsection{Discrete Valuation Rings} \label{subsec:3.6}
+We mentioned discrete valuation rings as another tool we needed to 
+prove the multiplicativity of the ideal norm. We now give the definition. 
+
+\begin{defn}{defn:3.23}
+    A {\bf discrete valuation ring (DVR)} is an integral domain $R$ such that 
+    \begin{enumerate}[(1)]
+        \item $R$ is not a field;
+        \item $R$ is Noetherian;
+        \item $R$ is a local ring;
+        \item the unique maximal ideal $M$ of $R$ is principal.
+    \end{enumerate}
+    If $M = \langle \pi \rangle$, we call $\pi$ a {\bf uniformizer}.
+\end{defn}\vspace{-0.25cm}
+Our goal is to show that if $R$ is a Dedekind domain and $P$ is a nonzero 
+prime ideal, then $R_P$ is a DVR! Note that we are excluding the case 
+where $P = \{0\}$ because we would then have $R_P = K$, which is a field 
+and hence not a DVR. 
+
+We first prove Nakayama's lemma, which will allow us 
+to prove an important property of a DVR.
+
+\begin{lemma}[Nakayama]{lemma:3.24}
+    Let $R$ be a ring. Let $I$ be a nonzero proper ideal of $R$ and $M$ 
+    be a finitely generated $R$-module such that $IM = M$. There exists 
+    $a \in R$ such that 
+    \begin{enumerate}[(1)]
+        \item $a + I = 1 + I$; and 
+        \item $aM = \{0\}$ (that is, $a$ annihilates the module).
+    \end{enumerate}
+\end{lemma}\vspace{-0.25cm}
+\begin{pf}[Lemma~\ref{lemma:3.24}]
+    Since $M$ is a finitely generated $R$-module, we can write 
+    $M = Rx_1 + \cdots + Rx_n$ for some $x_i \in M = IM$. In particular, 
+    each $x_i$ can be written in the form 
+    \[ x_i = a_{i1} x_1 + \cdots + a_{in} x_n \] 
+    where $a_{ij} \in I$. Let $A = [a_{ij}] \in M_n(I)$ and 
+    $v = [x_1, \dots, x_n]^T$ so that $Av = v$. Consider the characteristic 
+    polynomial $f(x) = \det(xI_n - A)$ of $A$.
+    Note that Cayley-Hamilton holds for commutative rings with unity, so
+    $f(A) = 0$. Writing $f(x) = x^n + c_{n-1} x^{n-1} + \cdots + c_1 x + c_0$ 
+    where $c_i \in I$, we obtain 
+    \begin{align*}
+        0 = f(A)v &= (A^n + c_{n-1} A^{n-1} + \cdots + c_1 A + c_0 I_n) v \\ 
+        &= v + c_{n-1}v + \cdots + c_1 v + c_0 v \\ 
+        &= f(1) v,
+    \end{align*}
+    where the second equality follows from the fact that $Av = v$. 
+    Letting $a = f(1)$, we have $av = 0$, which implies that 
+    $ax_i = 0$ for all $i = 1, \dots, n$. But $M = Rx_1 + \cdots + Rx_n$,
+    so $aM = \{0\}$. Finally, since $c_i \in I$, we have 
+    $a = f(1) = 1 + c_{n-1} + \cdots + c_1 + c_0 \equiv 1 \pmod I$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+\begin{prop}{prop:3.25}
+    Let $R$ be a DVR and let $M = \langle \pi \rangle$ be its unique maximal ideal. 
+    If $I$ is a nonzero proper ideal, then $I = M^n$ for some $n \in \N$. 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.25}]
+    Consider the fractional ideal $J = \frac{1}{\pi}R$. (This 
+    doesn't live in $R$, but in the field of fractions.) Note that $MJ = R$. 
+    Denoting $I_1 = IJ$, we see that $I = IR = IJM = I_1M \subseteq I_1$.
+    
+    Suppose that $I = I_1$. Then we see that $I = IM$, so by Nakayama's lemma 
+    (Lemma~\ref{lemma:3.24}), there exists $a \in R$ such that $a - 1 \in M$ 
+    and $aI = \{0\}$. (Note that the roles of $I$ and $M$ are switched; 
+    we had some unfortunate notation here.) But $R$ is an integral domain, 
+    so the only thing that can kill a nonzero ideal is $a = 0$. This 
+    implies that $-1 \in M$ and so $M = R$, which is a contradiction! 
+    Therefore, we have $I \subsetneq I_1$. 
+
+    If $I_1 = R$, then $I = I_1 M = RM = M$ and we are done. Otherwise, 
+    we have $I_1 \neq R$. Denoting $I_2 = I_1 J$, we see that 
+    $I_1 = I_1 R = I_1 J M = I_2 M \subseteq I_2$. An identical argument 
+    shows that $I_1 \subsetneq I_2$, and if $I_2 = R$, then 
+    $I_1 = M$ and so $I = I_1 M = M^2$. 
+    Repeating this process gives us an ascending chain of ideals 
+    \[ I \subsetneq I_1 \subsetneq I_2 \subsetneq \cdots \] 
+    and since DVRs are Noetherian, this process must terminate. \qed
+\end{pf}\vspace{-0.25cm}
+Let's take a look at some useful consequences of this proposition.
+Let $R$ be a DVR and as usual, let $M = \langle \pi \rangle$ be its 
+unique maximal ideal.
+\begin{enumerate}[(1)]
+    \item Note that if $I$ is a nonzero proper ideal of $R$, then 
+    $I = M^n = \langle \pi^n \rangle$. Therefore, being a DVR is 
+    equivalent to being a local PID that is not a field. 
+    \item Let $0 \neq x \in R$. There are two possibilities: 
+    either $x = u \in \R^\times$ or $x \notin R^\times$. In the latter case, 
+    we have that $\langle x \rangle$ is a nonzero proper ideal of $R$, so 
+    $\langle x \rangle = \langle \pi^n \rangle$ for some $n \in \N$. 
+    Then we can write $x = u\pi^n$ for some $u \in R^\times$. Since 
+    everything in the ring is a unit multiple of a power of $\pi$, it 
+    now makes sense why we call $\pi$ a uniformizer. 
+\end{enumerate}
+
+The next proposition tells us that the localization of a Noetherian integral domain
+is still Noetherian. 
+
+\begin{prop}{prop:3.26}
+    Let $R$ be a Noetherian integral domain and $P$ is a nonzero prime ideal, 
+    then $R_P$ is Noetherian. 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.26}]
+    Let $I \subseteq R_P$ be an ideal. Our goal is to show that 
+    $I$ is a finitely generated $R_P$-module. Note that 
+    $J = I \cap R$ is an ideal of $R$. Since $R$ is Noetherian, we can 
+    write $J = Rx_1 + \cdots + Rx_n$ where $x_i \in J$. 
+    
+    Let $x = \frac{a}{b} \in I$ where $a, b \in R$ and $b \notin P$. Then 
+    $a = bx \in I \cap R = J$, so we can write 
+    $a = r_1 x_1 + \cdots + r_n x_n$ for some $r_i \in R$. In particular, 
+    we have 
+    \[ x = \frac{a}{b} = \frac{r_1}{b} x_1 + \cdots + \frac{r_n}{b} x_n \] 
+    where $\frac{r_i}{b} \in R_P$ and $x_i \in J \subseteq I$, so 
+    $I = R_P x_1 + \cdots + R_P x_n$ is finitely generated as desired. \qed
+\end{pf}\vspace{-0.25cm}
+
+We are now ready to prove our goal that the localization of a Dedekind 
+domain by a prime ideal is a DVR. 
+
+\begin{theo}{theo:3.27}
+    Let $R$ be a Dedekind domain and let $P$ be a nonzero prime ideal. 
+    Then $R_P$ is a DVR. 
+\end{theo}\vspace{-0.25cm}
+\begin{pf}[Theorem~\ref{theo:3.27}]
+    Since $P$ is nonzero, we know that $R_P$ is not a field. 
+    Proposition~\ref{prop:3.26} tells us that $R_P$ is Noetherian, 
+    and we have shown that $R_P$ is local (it's a localization 
+    for goodness' sake). It suffices to prove that $P_P$, the unique 
+    maximal ideal of $R_P$, is principal. 
+
+    Since $R$ is a Dedekind domain, we know by Proposition~\ref{prop:3.13} 
+    that there exists an ideal $I$ of $R$ such that $IP = \langle \alpha 
+    \rangle$ for some $0 \neq \alpha \in P$. Consider the fractional 
+    ideal $J = \frac{1}{\alpha} I$ and note that $JP = R$. Then 
+    we can write $1 = a_1 b_1 + \cdots + a_n b_n$ where $a_i \in J$ and 
+    $b_i \in P$. Choose $i$ such that $a_i b_i \notin P$. 
+    (Such an $i$ must exist because if $a_i b_i \in P$ for all $i$, 
+    then $1 \in P$.) We see that $\frac{1}{a_i b_i} \in R_P$.
+    
+    Now, let $x \in P_P$. We have $x = a_i b_i \cdot \frac{1}{a_i b_i} x$.
+    Letting $y = \frac{1}{a_i b_i} x$, we have $y \in P_P$ since 
+    $P_P$ is an ideal of $R_P$. Then we can write $y = \frac{u}{v}$ where 
+    $u, v \in R$ with $u \in P$ and $v \notin P$. This yields 
+    \[ x = b_i \frac{a_i u}{v}. \] 
+    Since $a_i \in J$ and $u \in P$, we get $a_i u \in JP = R$, so 
+    $x \in \langle \frac{b_i}{1} \rangle \subseteq R_P$. This holds for 
+    all $x \in P_P$, so $P_P \subseteq \langle \frac{b_i}{1} \rangle$. 
+    The reverse containment follows because $b_i \in P$ and $1 \notin P$, 
+    so $P_P = \langle \frac{b_i}{1} \rangle$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+\subsection{Multiplicativity of the Ideal Norm} \label{subsec:3.7}
+Equipped with all the tools, let's start proving that the ideal 
+norm is multiplicative.
+
+\begin{prop}{prop:3.28}
+    Let $R$ be an integral domain and $P$ be a nonzero prime ideal of $R$. 
+    For all $n \in \N$, we have 
+    \[ R/P^n \cong R_P/P_P^n. \] 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.28}]
+    We leave it as an exercise to check that the map
+    $r + P^n \mapsto \frac{r}{1} + P_P^n$
+    is a well-defined isomorphism between these quotient spaces. \qed
+\end{pf}\vspace{-0.25cm}
+
+Recall that in Section~\ref{subsec:3.4}, we showed that the Chinese 
+remainder theorem reduces the problem to proving that 
+$N(P^n) = N(P)^n$. The next result is the key to this fact. 
+
+\begin{prop}{prop:3.29}
+    Let $R$ be a DVR and let $P$ be its maximal ideal. If $R/P$ is finite, then 
+    for all $n \in \N$, we have 
+    \[ |R/P^n| = |R/P|^n. \] 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.29}]
+    We proceed by induction. The base case is obvious. Suppose that 
+    $|R/P^n| = |R/P|^n$ for some $n \geq 1$. Consider the map 
+    $\varphi : R/P^{n+1} \to R/P^n$ defined by 
+    \[ \varphi(r + P^{n+1}) = r + P^n. \]
+    Since $P^{n+1} \subseteq P^n$, we see that $\varphi$ is well-defined. 
+    It is easily verified that $\varphi$ is a surjective homomorphism. 
+    Moreover, the kernel of $\varphi$ consists of the elements 
+    already living in $P^n$, namely $\ker\varphi = P^n/P^{n+1}$. 
+    By the first isomorphism theorem, we get 
+    \[ (R/P^{n+1})/(P^n/P^{n+1}) \cong R/P^n. \] 
+    Therefore, we have $|R/P^{n+1}| = |P^n/P^{n+1}| \cdot |R/P|^n$ by the 
+    inductive hypothesis. (Note that we could've used the third 
+    isomorphism theorem to get this isomorphism as well, but modding 
+    out by $P^{n+1}$ would seemingly come out of nowhere.) 
+    To finish off the proof, it is enough to show that $|P^n/P^{n+1}| 
+    = |R/P|$. We'll do this using linear algebra. Consider the 
+    field $F = R/P$, and let $V = P^n/P^{n+1}$ be an $F$-vector space 
+    where scalar multiplication is defined by 
+    \[ (r + P)(a + P^{n+1}) = ra + P^{n+1}. \] 
+    (Check that this is well-defined.) Write $P = \langle \pi \rangle$ 
+    and let $x \in V$. Then $x = a + P^{n+1}$ for some $a \in P^n$. 
+    But then $a \in \langle \pi^n \rangle$ and so $a = c\pi^n$ for some $c \in R$. 
+    This gives us 
+    \[ x = c\pi^n + P^{n+1} = (c + P)(\pi^n + P^{n+1}). \] 
+    In particular, we see that $V$ is spanned by $\pi^n + P^{n+1}$, which 
+    shows that $\dim_F(V) = 1$ and $V \cong F$. From this, we deduce that 
+    $|R/P| = |F| = |V| = |P^n/P^{n+1}|$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+We finally have the multiplicativity of the ideal norm, whose usefulness 
+has been greatly motivated by our work on the assignments.
+
+\begin{theo}{theo:3.30}
+    Let $R = {\cal O}_K$. If $I$ and $J$ are nonzero ideals of $R$, then 
+    \[ N(IJ) = N(I) N(J). \] 
+\end{theo}\vspace{-0.25cm}
+\begin{pf}[Theorem~\ref{theo:3.30}]
+    Let $P$ be a nonzero prime ideal. It suffices to show that $N(P^n) = N(P)^n$.
+    Observe that 
+    \begin{align*}
+        N(P^n) = |R/P^n| 
+        = |R_P/P_P^n|  
+        = |R_P/P_P|^n 
+        = |R/P|^n  
+        = N(P)^n
+    \end{align*}
+    where the second and fourth equalities follow from Proposition~\ref{prop:3.28},
+    and the third equality follows from Proposition~\ref{prop:3.29}. \qed 
+\end{pf}\vspace{-0.25cm}
