@@ -115,3 +115,150 @@ so we list the problems here for reference.
     and $\theta^2 = A + B\alpha + C\beta$ for some $a, b, c, A, B, C \in \Z$. 
     Try to write $A, B, C$ in terms of $a, b, c$.
 \end{enumerate}
+
+{\bf Assignment 4.} 
+\begin{enumerate}[leftmargin=1.5cm, label={{\bf A4-\arabic*}}]
+    \item \label{A4-1} \begin{enumerate}[(a)]
+        \item Prove that every UFD is integrally closed.
+        \item Prove that every PID is a Dedekind domain.
+        \item Give an example of a UFD that is not a Dedekind domain.
+    \end{enumerate}
+    \item \label{A4-2} Let $K = \Q(\alpha)$ where $\alpha$ is a root of 
+    $f(x) = x^3 - x^2 - 3$. Note that $\disc(f(x)) = -255$. Factor 
+    $\langle p \rangle$ as a product of prime ideals in ${\cal O}_K$ 
+    for all $p \in \{2, 3, 5, 7\}$. Which of these primes divide $255$? 
+    How does this affect the corresponding prime factorization?
+    \item \label{A4-3} Suppose that $[K : \Q] = n$ and let $P$ be a nonzero prime 
+    ideal of ${\cal O}_K$. Prove that $P$ contains a prime number $p \in \N$ 
+    and that ${\cal O}_K/P$ contains at most $p^n$ elements. 
+    \item \label{A4-4} Let $\alpha$ be a root of $f(x) = x^3 - 2x - 3$. 
+    \begin{enumerate}[(a)]
+        \item Prove that $R := \Z[\alpha]$ is a Dedekind domain.
+        \item Let $I = \langle \alpha - 5 \rangle \subseteq R$. Prove that $|R/I| = 112$. 
+        \item Factor $\langle 2 \rangle$ as a product of prime ideals. 
+        \item Factor $\langle 7 \rangle$ as a product of prime ideals. 
+        \item Factor $I$ as a product of prime ideals. 
+    \end{enumerate}
+\end{enumerate}
+
+{\bf Assignment 5.} This assignment was a guided reading exercise on the geometry 
+of numbers, following Marcus' \emph{Number Fields} pages 93 to 99.
+\begin{enumerate}[leftmargin=1.5cm, label={{\bf A5-\arabic*}}]
+    \item \label{A5-1} A {\bf lattice} in $\R^n$ is defined to be a subset 
+    $L$ of $\R^n$ of the form $L = \Span_{\Z}\{v_1, \dots, v_n\}$, where 
+    $\{v_1, \dots, v_n\}$ is a basis for $\R^n$ over $\R$. We define the 
+    {\bf volume} of $L$ by 
+    \[ \Vol(L) = \lvert\det\,[v_1|\cdots|v_n]\rvert. \] 
+    \begin{enumerate}[(a)]
+        \item Prove that the definition of the volume of a lattice is 
+        independent of the choice of basis. 
+        \item Let $M \subseteq L$ be lattices in $\R^n$. Prove that 
+        \[ \Vol(M) = [L : M] \cdot \Vol(L). \] 
+    \end{enumerate}
+    \item \label{A5-2} Let $K$ be a number field and let $R = {\cal O}_K$. 
+    Suppose that $\sigma_1, \dots, \sigma_r$ are the real-valued embeddings 
+    of $K$ in $\C$ and that $\tau_1, \dots, \tau_{2s}$ are the non-real-valued 
+    (i.e. complex) embeddings of $K$ in $\C$. Assume that $\tau_{i+1} = 
+    \overline{\tau_i}$ for all odd $i$. Consider the {\bf Minkowski map} $\psi : 
+    K \to \R^n$ given by 
+    \[ \psi(\alpha) = (\sigma_1(\alpha), \dots, \sigma_r(\alpha), 
+    \Re(\tau_1(\alpha)), \Im(\tau_1(\alpha)), \Re(\tau_3(\alpha)), 
+    \Im(\tau_3(\alpha)), \dots). \]
+    \begin{enumerate}[(a)]
+        \item Prove that $\psi(R)$ is a lattice in $\R^n$. We will denote 
+        this lattice by $M_K$ and we call it the {\bf Minkowski lattice} of $K$.
+        \item Prove that 
+        \[ \Vol(M_K) = \frac{1}{2^s} \lvert\disc(K)\rvert^{1/2}. \] 
+        \item Let $I$ be a nonzero ideal of $R$ so that $L_I := \psi(I)$ 
+        is a sublattice of $M_K$. Prove that 
+        \[ \Vol(L_I) = \frac{1}{2^s} \lvert\disc(K)\rvert^{1/2} N(I). \] 
+    \end{enumerate}
+    \item \label{A5-3} We now take a look at Minkowski's lemma. Let 
+    $L$ be a lattice in $\R^n$ and let $E \subseteq \R^n$ be such that 
+    \begin{enumerate}[(1)]
+        \item $E$ is convex (for all $a, b \in E$ and $t \in [0, 1]$, we have 
+        $(1-t)a + tb \in E$); 
+        \item $E$ is Lebesgue measurable; 
+        \item if $a \in E$, then $-a \in E$.
+    \end{enumerate}
+    Furthermore, assume that $E$ is large; more precisely, assume that 
+    $m(E) > 2^n \Vol(L)$ where $m(E)$ denotes the Lebesgue measure of $E$. 
+    It turns out that $E$ is so big that it must contain a nonzero vector from $L$.
+    If $E$ is compact, then the strict inequality can be weakened to $\geq$.
+    \begin{enumerate}[(a)]
+        \item Read about what Lebesgue measure is from page 96 of Marcus. 
+        \item Read the proof of Minkowski's lemma from pages 96 and 97 of Marcus.
+    \end{enumerate}
+    \item \label{A5-4} Let $K$, $R$, $r$, and $s$ be as in \ref{A5-2}. 
+    For $x = (x_1, \dots, x_n) \in \R^n$, let 
+    \[ N(x) = x_1 x_2 \cdots x_r (x_{r+1}^2 + x_{r+2}^2) \cdots (x_{n-1}^2 + x_n^2). \] 
+    \begin{enumerate}[(a)]
+        \item Prove that if $\alpha \in R$ and $x = \psi(\alpha)$, then 
+        $N(x) = N_{K/\Q}(\alpha)$. 
+        \item Let $A \subseteq \R^n$ be compact and satisfy conditions (1), 
+        (2), and (3) from \ref{A5-3}, where $A$ has positive Lebesgue measure. 
+        Additionally, assume that $|N(a)| \leq 1$ for all $a \in A$. Prove that 
+        if $L$ is a lattice in $\R^n$, then there exists a nonzero vector $x \in L$ 
+        with 
+        \[ |N(x)| \leq \frac{2^n}{m(A)} \Vol(L). \] 
+        {\bf Hint:} You can freely use the fact that if $A \subseteq \R^n$ is 
+        Lebesgue measurable and $t \in \R$, then $tA$ is Lebesgue measurable 
+        with $m(tA) = |t|^n m(A)$.
+    \end{enumerate}
+    \item \label{A5-5} Let $K$, $R$, $r$, and $s$ be as in \ref{A5-2}. 
+    Consider the set 
+    \[ A = \left\{ x \in \R^n : |x_1| + \cdots + |x_r| + 2 
+    \left( \sqrt{ x_{r+1}^2 + x_{r+2}^2 } + \cdots + \sqrt{ x_{n-1}^2 + x_n^2 } 
+    \right) \leq n \right\}. \] 
+    It can be shown that $A$ satisfies the hypotheses from part (b) of \ref{A5-4}.
+    \begin{enumerate}[(a)]
+        \item From pages 98 and 99 of Marcus, read the integration-based argument that 
+        \[ m(A) = \frac{n^n}{n!} 2^r \left( \frac{\pi}{2} \right)^s. \] 
+        \item Prove that every lattice $L$ in $\R^n$ contains a nonzero vector $x \in L$ 
+        such that 
+        \[ |N(x)| \leq \frac{n!}{n^n} \left( \frac{8}{\pi} \right)^s \Vol(L). \] 
+        \item Prove that every ideal class of $R$ (as per \ref{A2-3}) contains 
+        an ideal $I$ such that 
+        \[ N(I) \leq \frac{n!}{n^n} \left( \frac{4}{\pi} \right)^s \lvert\disc(K)\rvert^{1/2}. \] 
+    \end{enumerate} 
+\end{enumerate}
+
+{\bf Assignment 6.} 
+\begin{enumerate}[leftmargin=1.5cm, label={{\bf A6-\arabic*}}]
+    \item \label{A6-1} Let $\alpha \in \C$ be an algebraic integer and let 
+    $S = \Z[\alpha]$. Suppose that $f(x) \in \Z[x]$ is the minimal polynomial of 
+    $\alpha$ and let $p \in \N$ be prime. Suppose the irreducible 
+    factorization of $f(x) \in \Z_p[x]$ is 
+    \[ f(x) = p_1(x)^{n_1} p_2(x)^{n_2} \cdots p_k(x)^{n_k} \in \Z_p[x]. \] 
+    Prove that the prime ideals of $S$ containing $p$ are exactly 
+    \[ P_i = \langle p_i(\alpha), p \rangle. \] 
+    {\bf Hint:} Retrace isomorphisms. 
+    \item \label{A6-2} Let $S = \Z[\sqrt{5}]$ and let $P = \langle \sqrt{5}+1, 2 \rangle$. 
+    \begin{enumerate}[(a)]
+        \item Prove that $P$ is the only prime ideal of $S$ containing $2$. 
+        \item Prove that $S_P$ is not a DVR. 
+        \item Prove that $\langle 2 \rangle \neq P^2$. Why does this not 
+        contradict our prime factorization fact (Theorem~\ref{theo:3.8})?
+    \end{enumerate}
+    \item \label{A6-3} \begin{enumerate}[(a)]
+        \item Let $\alpha \in \C$ be a root of the irreducible polynomial 
+        $f(x) = x^3 - x^2 - 8x - 18$, whose discriminant is 
+        $-9300 = -2^2 \cdot 3 \cdot 5^2 \cdot 31$. Let $K = \Q(\alpha)$, 
+        let $R = {\cal O}_K$, and let $S = \Z[\alpha]$. Use the DVR 
+        characterization (Theorem~\ref{theo:3.31}) to prove that $R = S$. 
+        \item Let $\alpha \in \C$ be a root of the irreducible polynomial 
+        $f(x) = x^3 - 6x - 16$, whose discriminant is 
+        $-6048 = -2^5 \cdot 3^3 \cdot 7$. Let $K = \Q(\alpha)$, 
+        let $R = {\cal O}_K$, and let $S = \Z[\alpha]$. Use the DVR 
+        characterization (Theorem~\ref{theo:3.31}) to prove that $R \neq S$. 
+    \end{enumerate}
+    \item \label{A6-4} Let $p \in \N$ be a prime number and let $\alpha \in \C$ 
+    be the root of a $p$-Eisenstein polynomial (i.e. a monic, integer polynomial 
+    which is irreducible by $p$-Eisenstein). Let $R = {\cal O}_{\Q(\alpha)}$ 
+    and $S = \Z[\alpha]$. 
+    \begin{enumerate}[(a)]
+        \item Prove that there is exactly one prime ideal $P$ of $S$ that contains $p$. 
+        \item Let $P$ be the prime ideal from part (a). Prove that $S_P$ is a DVR 
+        and prove that $\alpha$ is a uniformizer for $S_P$. 
+    \end{enumerate}
+\end{enumerate}
