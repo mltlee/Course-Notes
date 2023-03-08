@@ -80,6 +80,8 @@ easy observations:
     contrapositive of the previous point, but this statement 
     is slightly more interesting. 
 \end{itemize}
+Moreover, if $X \leq_P Y$ and $Y \leq_P Z$, then $X \leq_P Z$ since the composition 
+of polynomials is a polynomial.
 
 \subsection{The Complexity Class $\NP$} \label{subsec:6.3}
 Let $X$ be a decision problem. An {\bf efficient certifier} $B$ for the 
@@ -114,3 +116,37 @@ The verifier can use the polynomial time algorithm that solves the
 decision problem and completely ignore the certificate.
 Conversely, it is not known whether every decision problem in $\NP$ 
 also lies in $\Poly$. This is the famous $\Poly = \NP$ problem. 
+
+\subsection{$\NP$-hardness and $\NP$-completeness} \label{subsec:6.4}
+A problem $X$ is said to be {\bf $\NP$-hard} if for every problem $Y \in \NP$, 
+we have $Y \leq_P X$. Furthermore, we say that $X$ is {\bf $\NP$-complete} if $X \in \NP$ 
+and $X$ is $\NP$-hard. We can think of $\NP$-complete problems as the 
+``hardest problems in $\NP$''.
+
+One of the most famous problems in complexity theory is $\textsc{3-SAT}$; 
+it is the first problem proved to be $\NP$-complete. This is the 
+Cook-Levin theorem, and it involved some work with Turing machines. 
+
+In the $\textsc{3-SAT}$ problem, we are given boolean variables $x_1, \dots, x_n$ and clauses 
+$C_1, \dots, C_k$ that are disjunctions of the form $t_1 \vee t_2 \vee t_3$ 
+where $t_1, t_2, t_3 \in \{x_1, \dots, x_n\} \cup \{\overline{x_1}, \dots, \overline{x_n}\}$. 
+The goal is to determine if there is a truth assignment to the boolean variables 
+$x_1, \dots, x_n$ such that $C_1 \wedge C_2 \wedge \cdots \wedge C_k$ is satisfied. 
+
+For example, given the variables $x_1, x_2, x_3, x_4$ and the clauses 
+\[ (x_1 \vee \overline{x_2} \vee x_3) \wedge (\overline{x_1} \vee x_2 \vee x_4) 
+\wedge (\overline{x_1} \vee \overline{x_3} \vee \overline{x_4}), \] 
+we see that the assignment $x_1 = x_2 = \textsf{False}$ and 
+$x_3 = x_4 = \textsf{True}$ does the trick. 
+
+There has been a lot of growth in the field of complexity theory, so 
+there is a wide array of $\NP$-complete problems to work with. 
+To prove that a given problem $X$ is $\NP$-complete, it suffices 
+to do the following: 
+\begin{enumerate}[(i)]
+    \item Show that $X \in \NP$. 
+    \item Find another $\NP$-complete problem $Y$ and show that $Y \leq_P X$. 
+    This will imply that $X$ is $\NP$-hard because we have $Z \leq_P Y$ for all 
+    $Z \in \NP$ and hence $Z \leq_P X$ by transitivity.
+\end{enumerate}
+
