@@ -1222,5 +1222,191 @@ where $R \neq S$ for $R = {\cal O}_{\Q(\alpha)}$ and $S = \Z[\alpha]$.
         which leads to another contradiction. 
     \end{itemize}
     Therefore, our assumption that $P_P$ was principal must be incorrect. 
-    Then $S_P$ is not a DVR and $S \neq R$.
+    Then $S_P$ is not a DVR and we must have $S \neq R$.
 \end{enumerate}
+For more practice on these types of problems, we refer to \href{lmfdb.org}{lmfdb.org}. 
+In the ``Number Fields'' section, there is a giant database of irreducible polynomials, 
+and the website supplies discriminants of the number fields along with an integral basis. 
+If the integral basis is a power basis, then $R = S$; otherwise, we have $R \neq S$.
+We can then use the DVR characterization to verify this.
+
+Now that we have seen why the DVR characterization is useful through our many examples, 
+let's get back on track to proving it. 
+We first consider why the condition $[R : S] = n < \infty$ is useful. Recall that 
+$K = \Frac({\cal O}_K) = \Frac(R)$, which we argued at the beginning of Section~\ref{subsec:3.3}. 
+Then for all $r \in R$, we have $nr \in S$ by 
+Lagrange since $n(r + S) = nr + S = 0 + S$. In particular, if $x = \frac{a}{b} \in \Frac(R)$, 
+then we have $x = \frac{na}{nb} \in \Frac(S)$, which implies that $\Frac(R) \subseteq \Frac(S)$. 
+The reverse inclusion is obvious since $S \subseteq R$, so $\Frac(S) = \Frac(R) = K$. 
+Consequently, if $P$ is a nonzero prime ideal of $S$, then $\Frac(S_P) = K$.
+
+The following result from commutative algebra will be of great help to us. We leave out 
+some of the details because we are more interested in its application. 
+
+\begin{lemma}[Lying-Over Theorem]{lemma:3.33}
+    Let $S \subseteq R$ be integral domains such that $R$ is integral over $S$, 
+    and let $P$ be a prime ideal of $S$. Then there exists a prime ideal $Q$ 
+    of $R$ such that $P = S \cap Q$. 
+\end{lemma}\vspace{-0.25cm}\newpage
+\begin{pf}[Lemma~\ref{lemma:3.33}]
+    Define $R_P := \{\frac{a}{b} : a \in R,\, b \in S \setminus P\}$. 
+    We leave it as an exercise to verify that $R_P$ is a local ring. 
+    Note that this is \emph{not} the localization of $R$ by $P$ since $P$ is a prime 
+    ideal of $S$, not $R$. Therefore, despite having the same notation, we cannot immediately 
+    conclude that $R_P$ is a local ring from our discussion in Section~\ref{subsec:3.5}. This set 
+    is almost $S_P$, but we allow for the numerator to be in $R$.
+
+    Clearly, we have $S_P \subseteq R_P$. Moreover, $R_P$ is integral over $S_P$; 
+    this can be verified using the finitely generated module characterization 
+    (Theorem~\ref{theo:1.7}). 
+    Let $M$ be the unique maximal ideal of $R_P$. Consider $Q = M \cap R$. By \ref{A1-3}, 
+    $Q$ is a prime ideal of $R$. Moreover, we have 
+    \begin{align*}
+        Q \cap S &= (M \cap R) \cap S \\ 
+        &= (M \cap S_P) \cap S \\
+        &= P_P \cap S = P.
+    \end{align*}
+    The second equality uses the fact that $R \supseteq S$ and $S_P \supseteq S$, so 
+    intersecting with $R$ and $S_P$ is redundant. Then $R_P$ being integral over $S_P$ 
+    implies that $M \cap S_P$ is maximal by \ref{A1-3}, so $M \cap S_P$ is in fact 
+    the unique maximal ideal $P_P$. Finally, the last equality is because we are left 
+    with only the numerator part. \qed 
+\end{pf}\vspace{-0.25cm}
+We now prove the DVR characterization, with most of the heavy lifting being done 
+by the lying-over theorem. 
+\begin{pf}[Theorem~\ref{theo:3.31}]
+    \begin{enumerate}[(1)]
+        \item $(\Rightarrow)$ If $S = R$, then $S_P$ is a DVR for all nonzero prime ideals 
+        $P$ of $S$ by Theorem~\ref{theo:3.27}.
+
+        $(\Leftarrow)$ Suppose that $S_P$ is a DVR for all nonzero prime ideals $P$ of $S$. 
+        Note that $R = {\cal O}_K$ is integral over $S$ since $S \supseteq \Z$. Let 
+        $P$ be a nonzero prime ideal of $S$. By the lying-over theorem (Lemma~\ref{lemma:3.33}), 
+        there exists a prime ideal $Q$ of $R$ such that $P = Q \cap S$. 
+
+        {\bf Claim 1.} We have $S_P = R_Q$. 
+
+        {\bf Proof of Claim 1.} $(\subseteq)$ Let $x \in S_P$. Then we can write 
+        $x = \frac{a}{b}$ where $a, b \in S$ and $b \notin P$. In particular, we have 
+        $a, b \in R$ and $b \notin Q$, so $x \in R_Q$. 
+
+        $(\supseteq)$ We prove the contrapositive. Suppose that $\alpha \in K \setminus S_P$. 
+        Since $K = \Frac(S_P)$, we can write $\alpha = u\pi^n$ for some $u \in S_P^\times$ 
+        and $n \in \Z$, where $\pi$ is a uniformizer for $S_P$. But $\alpha \notin S_P$, 
+        which implies that $n < 0$ (otherwise, we would have $\pi^n \in S_P$). 
+        Then $-1 - n \geq 0$, and so 
+        \[ \pi^{-1-n} \cdot \pi^n = \pi^{-1} \in S_P[\alpha], \] 
+        where $\pi^{-1-n} \in S_P$ and $\pi^n \in S_P[\alpha]$. This implies that $S_P[\alpha] = K$
+        as we can generate all negative powers of $\pi$ using $\pi^{-1} \in S_P[\alpha]$. 
+        However, observe that $S_P \subseteq R_Q \subsetneq K$ since $Q$ is nonzero. This 
+        means that $\alpha \notin R_Q$, because $\alpha \in R_Q$ would imply $R_Q = K$.
+        \hfill $\blacksquare$
+
+        Note that if $y \in R$, then we can write $y = \frac{a}{b}$ for some $a, b \in S$
+        since $R \subseteq \Frac(R) = \Frac(S) = K$. Fix $y \in R$ and consider 
+        the set of potential denominators
+        \[ D = \{b \in S : by \in S\}. \] 
+        We leave it as an exercise to verify that $D$ is an ideal of $S$. 
+
+        {\bf Claim 2.} We have $D = S$. 
+
+        {\bf Proof of Claim 2.} Assume towards a contradiction that $D \neq S$. Let 
+        $P$ be a prime ideal of $S$ containing $D$. By the lying-over theorem 
+        (Lemma~\ref{lemma:3.33}), we can find a prime ideal $Q$ of $R$ with $P = S \cap Q$. 
+        By Claim 1, we have $S_P = R_Q$. Moreover, if $y = \frac{a}{b}$ for some $a, b \in S$, 
+        then $by = a \in S$ and hence $b \in D \subseteq P$. This implies that 
+        $y \notin S_P = R_Q$, which is a contradiction since $y \in R \subseteq R_Q$. 
+        Thus, we must have $D = S$. 
+        \hfill $\blacksquare$
+
+        In particular, we have $1 \in D$, so for any $y \in R$, we also have $y \in S$. 
+        Therefore, we obtain $R = S$. 
+
+        \item Let $P$ be a prime ideal of $S$ containing a prime $p \in \N$ such that 
+        $p \nmid n$. Since $\gcd(p, n) = 1$, we see that $n \notin P$ for 
+        otherwise we would have $1 \in P$ by B\'ezout. Let $Q$ be a prime ideal of 
+        $R$ such that $P = Q \cap S$ obtained from the lying-over theorem 
+        (Lemma~\ref{lemma:3.33}). 
+
+        {\bf Claim 3.} We have $S_P = R_Q$. 
+
+        Note that this appears to be the same as Claim 1, but we have different hypotheses. 
+
+        {\bf Proof of Claim 3.} $(\subseteq)$ The proof of this inclusion is identical to
+        that of Claim 1.
+
+        $(\supseteq)$ Let $x \in R_Q$. Then we can write $x = \frac{a}{b}$ for some 
+        $a, b \in R$ with $b \notin Q$. By Lagrange, we have $na, nb \in S$. 
+        Moreover, since $b \notin P$ and $n \notin P$, it follows that $nb \notin P$ 
+        since $P$ is a prime ideal. This implies that $x = \frac{a}{b} = 
+        \frac{na}{nb} \in S_P$. \hfill $\blacksquare$ 
+
+        This claim is enough to conclude the result because $R_Q$ 
+        is a DVR by Theorem~\ref{theo:3.27}. \qed 
+    \end{enumerate}
+\end{pf}
+
+\subsection{The Kummer-Dedekind Theorem} \label{subsec:3.9}
+Recall from Section~\ref{subsec:3.4} that we had two goals: proving that the ideal 
+norm was multiplicative, and proving that $\langle p \rangle$ is usually easy 
+to factor. The second goal is now in reach: this is the Kummer-Dedekind theorem. 
+
+\begin{theo}[Kummer-Dedekind]{theo:3.34}
+    Let $K$ be a number field, which can be written as $K = \Q(\alpha)$ for some 
+    $\alpha \in {\cal O}_K$. Let $R = {\cal O}_K$, let $S = \Z[\alpha]$, and let 
+    $m(x) \in \Z[x]$ be the minimal polynomial of $\alpha$. Let $p \in \N$ 
+    be a prime such that $p \nmid [R : S]$. Suppose that $m(x) \in \Z_p[x]$ factors 
+    into irreducibles as 
+    \[ m(x) = p_1(x)^{e_1} p_2(x)^{e_2} \cdots p_k(x)^{e_k} \in \Z_p[x]. \] 
+    Let $P_i = \langle p_i(\alpha), p \rangle \subseteq R$. Then the prime 
+    factorization of $\langle p \rangle$ in $R$ is 
+    \[ \langle p \rangle = P_1^{e_1} P_2^{e_2} \cdots P_k^{e_k}. \] 
+\end{theo}\vspace{-0.25cm}
+\begin{pf}[Theorem~\ref{theo:3.34}]
+    Consider the homomorphism $\varphi : \Z[x] \to R/P_i$ given by 
+    \[ \varphi(f(x)) = f(\alpha) + P_i. \] 
+    Note that $\langle p_i(x), p \rangle \subseteq \ker\varphi$. Moreover, we see that 
+    \[ \Z[x]/\langle p_i(x), p \rangle \cong \Z_p[x]/\langle p_i(x) \rangle \] 
+    is a field since $p_i(x) \in \Z_p[x]$ is irreducible, so $\langle p_i(x), p \rangle$ 
+    is maximal. In particular, we either have $\ker\varphi = \langle p_i(x), p \rangle$ or 
+    $\ker\varphi = \Z[x]$. 
+
+    We claim that $\varphi$ is surjective. To see this, note that 
+    $p \nmid [R : S] = [R : \Z[\alpha] + pR] \cdot [\Z[\alpha] + pR : S]$ 
+    so that $p$ does not divide either of these degrees. Next, 
+    we can write $[R : pR]$ in two different ways. One way is 
+    \[ [R : pR] = [R : \Z[\alpha] + pR] \cdot [\Z[\alpha] + pR : pR], \] 
+    and a second way is given by 
+    \[ [R : pR] = |R/pR| = N(\langle p \rangle) = |N_{K/\Q}(p)| = p^{[K \colon \Q]}. \] 
+    Since $p \nmid [R : \Z[\alpha] + pR]$, it must be that $[R : \Z[\alpha] + pR] = 1$ 
+    and hence $R = \Z[\alpha] + pR$. 
+    Then a general element in $R/P_i$ is of the form $f(\alpha) + pr + P_i = 
+    f(\alpha) + P_i$. We see that $\varphi(f(x)) = f(\alpha) + P_i$,
+    so $\varphi$ is surjective as claimed.
+
+    By the first isomorphism theorem, we see that either 
+    $R/P_i \cong \Z[x]/\langle p_i(x), p \rangle$ or $P_i = R$. 
+    Separating these two cases, we let $P_1, \dots, P_r$ be such that 
+    \[ R/P_i \cong \Z[x]/\langle p_i(x), p \rangle, \] 
+    and let $P_{r+1} = \cdots = P_k = R$. Note that for $1 \leq i \leq r$, 
+    we have that $P_i = \langle p_i(x), p \rangle$ is a 
+    prime ideal of $R$ since $\Z[x]/\langle p_i(x), p \rangle \cong 
+    \Z_p[x]/\langle p_i(x) \rangle$ is a field. Set $f_i = \deg(p_i(x))$ so that 
+    \[ N(P_i) = |R/P_i| = p^{f_i}. \] 
+    {\bf Exercise:} Check that $P_1^{e_1} \cdots P_k^{e_k} = 
+    \langle p_1(\alpha), p \rangle^{e_1} \cdots \langle p_k(\alpha), p \rangle^{e_k} 
+    \subseteq \langle p \rangle$. 
+    (Hint: If we select a single $p$, we are done; otherwise, we get $p_1(\alpha)^{e_1} 
+    \cdots p_k(\alpha)^{e_k}$.)
+
+    Hence, we have that $P_1^{e_1} \cdots P_r^{e_r} \subseteq \langle p \rangle$ 
+    as the tail end of the $P_i$ consists of just $R$. This implies that 
+    $\langle p \rangle \mid P_1^{e_1} \cdots P_r^{e_r}$ by Proposition~\ref{prop:3.17},
+    so the prime factorization of $\langle p \rangle$ is 
+    \[ \langle p \rangle = P_1^{d_1} \cdots P_r^{d_r} \] 
+    for some $0 \leq d_i \leq e_i$. Taking norms, we obtain 
+    \[ p^{[K\colon\Q]} = N(P_1)^{d_1} \cdots N(P_r)^{d_r} = p_1^{f_1d_1} \cdots p_r^{f_rd_r} \]  
+    and hence $[K : \Q] = f_1d_1 + \cdots + f_rd_r$. But we also know that $[K : \Q] 
+    = \deg(m(x)) = f_1e_1 + \cdots + f_ke_k$. Since $0 \leq d_i \leq e_i$, this forces us 
+    to have $r = k$ and $d_i = e_i$ for all $1 \leq i \leq k$. \qed 
+\end{pf}
