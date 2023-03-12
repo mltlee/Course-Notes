@@ -123,10 +123,6 @@ we have $Y \leq_P X$. Furthermore, we say that $X$ is {\bf $\NP$-complete} if $X
 and $X$ is $\NP$-hard. We can think of $\NP$-complete problems as the 
 ``hardest problems in $\NP$''.
 
-One of the most famous problems in complexity theory is $\textsc{3-SAT}$; 
-it is the first problem proved to be $\NP$-complete. This is the 
-Cook-Levin theorem, and it involved some work with Turing machines. 
-
 In the $\textsc{3-SAT}$ problem, we are given boolean variables $x_1, \dots, x_n$ and clauses 
 $C_1, \dots, C_k$ that are disjunctions of the form $t_1 \vee t_2 \vee t_3$ 
 where $t_1, t_2, t_3 \in \{x_1, \dots, x_n\} \cup \{\overline{x_1}, \dots, \overline{x_n}\}$. 
@@ -137,16 +133,210 @@ For example, given the variables $x_1, x_2, x_3, x_4$ and the clauses
 \[ (x_1 \vee \overline{x_2} \vee x_3) \wedge (\overline{x_1} \vee x_2 \vee x_4) 
 \wedge (\overline{x_1} \vee \overline{x_3} \vee \overline{x_4}), \] 
 we see that the assignment $x_1 = x_2 = \textsf{False}$ and 
-$x_3 = x_4 = \textsf{True}$ does the trick. 
+$x_3 = x_4 = \textsf{True}$ does the trick.
 
-There has been a lot of growth in the field of complexity theory, so 
-there is a wide array of $\NP$-complete problems to work with. 
-To prove that a given problem $X$ is $\NP$-complete, it suffices 
-to do the following: 
+The $\textsc{3-SAT}$ problem is one of the most famous in computer science 
+because it is one of the first problems shown to be $\NP$-complete, 
+due to Cook and Levin in 1973.
+
+\begin{theo}[Cook-Levin]{theo:6.1}
+    $\textsc{3-SAT}$ is $\NP$-complete.
+\end{theo}
+
+There has been a lot of growth in computational complexity theory in 
+the past few decades, so we now have a large variety of $\NP$-complete 
+problems to work with. To prove that a given problem $X$ is $\NP$-complete, 
+it suffices to do the following: 
 \begin{enumerate}[(i)]
-    \item Show that $X \in \NP$. 
+    \item Show that $X \in \NP$. This part is typically easy to prove. 
     \item Find another $\NP$-complete problem $Y$ and show that $Y \leq_P X$. 
     This will imply that $X$ is $\NP$-hard because we have $Z \leq_P Y$ for all 
     $Z \in \NP$ and hence $Z \leq_P X$ by transitivity.
 \end{enumerate}
+We now take a look at the decision vertex cover problem, which we denote by
+\textsc{DecVC}. Here, we are given a graph $G = (V, E)$ and a number 
+$\ell$. The goal is to determine whether if there is a vertex set $U \subseteq V$ 
+such that $|U| \leq \ell$ and every edge $e \in E$ has at least one 
+endpoint in $U$.
 
+For example, the following graph has the vertex cover in blue with $\ell = 3$.
+\begin{center}
+    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+        \node[main] (1) at (4, 2) {}; 
+        \node[main, fill=blue] (2) at (6, 2) {};
+        \node[main, fill=blue] (3) at (3, 0.5) {};
+        \node[main] (4) at (6, 0.5) {};
+        \node[main, fill=blue] (5) at (4, -1) {};
+
+        \draw (1) -- (3); \draw (1) -- (5); \draw (2) -- (3);
+        \draw (2) -- (4); \draw (3) -- (4); \draw (4) -- (5);
+    \end{tikzpicture} 
+\end{center}\vspace{-0.25cm}
+On the other hand, the complete graph $K_5$ has no vertex cover with size 
+at most $\ell = 3$. 
+
+\begin{prop}{prop:6.2}
+    \textsc{DecVC} is $\NP$-complete.
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:6.2}]
+    We use the recipe that we supplied above. First, we show 
+    that $\textsc{DecVC} \in \NP$. Consider a subset of vertices $U \subseteq V$ 
+    to be our certificate. It is easy to verify that $|U| \leq \ell$. We can 
+    iterate through the edge set and determine if one of the endpoints 
+    is in $U$. Overall, the certifier can be implemented in linear time. 
+    
+    Now, we reduce a known $\NP$-complete problem to $\textsc{DecVC}$. 
+    Here, we only have $\textsc{3-SAT}$ at our disposal, so let's show that 
+    $\textsc{3-SAT} \leq_p \textsc{DecVC}$. 
+
+    Suppose that are are given an instance of \textsc{3-SAT}. In particular, 
+    we have variables $x_1, \dots, x_n$ and clauses $C_1, \dots, C_k$ 
+    of the form $t_1 \vee t_2 \vee t_3$ where $t_1, t_2, t_3 \in 
+    \{x_1, \dots, x_n\} \cup \{\overline{x_1}, \dots, \overline{x_n}\}$. 
+    We construct an instance of \textsc{DecVC} as follows:
+    \begin{itemize}
+        \item Let's start with the graph $G = (V, E)$. For every clause 
+        $C_i = t_1 \vee t_2 \vee t_3$ where $i = 1, \dots, k$, introduce the 
+        vertices $(t_1, i)$, $(t_2, i)$, and $(t_3, i)$. Add edges between 
+        each pair of vertices to form a triangle. 
+
+        Next, for each variable $x_j$ appearing in clause $C_{i_1}$ as $x_j$
+        and in clause $C_{i_2}$ as $\overline{x_j}$ where $i_1 \neq i_2$, 
+        include an edge between $(x_j, i_1)$ and $(\overline{x_j}, i_2)$.
+        
+        \item Let $\ell = 2k$ be twice the number of clauses.
+    \end{itemize}
+    Next, we show that the original \textsc{3-SAT} instance is a ``yes'' 
+    instance if and only if the constructed \textsc{DecVC} instance 
+    is a ``yes'' instance. In particular, if we have an oracle that 
+    solves \textsc{DecVC}, then we can also solve \textsc{3-SAT} efficiently. 
+
+    $(\Rightarrow)$ Suppose that the original \textsc{3-SAT} instance 
+    is a ``yes'' instance. Then there is some truth assignment $v$ to 
+    the variables $x_1, \dots, x_n$ such that $C_1 \wedge \cdots \wedge C_k$ 
+    is satisfied. For each clause $C_i = t_1 \vee t_2 \vee t_3$, there exists 
+    $t \in \{t_1, t_2, t_3\}$ such that $t = \textsf{True}$ for the assignment 
+    $v$. Let $y_i$ denote this $t$ for all $i = 1, \dots, k$. 
+
+    Let $U = V \setminus \{(y_i, i) : i = 1, \dots, k\}$ and observe that 
+    $|U| = |V| - k = 3k - k = 2k = \ell$. Moreover, we claim that $U$ is a 
+    vertex cover for $G = (V, E)$. Suppose otherwise, so there is some $e \in E$ 
+    with both endpoints not in $U$. By construction, these endpoints are 
+    $(y_i, i)$ and $(y_j, j)$ for some $i \neq j$. It is clear that 
+    this edge is not one from the triangle between $(t_1, i)$, $(t_2, i)$
+    and $(t_3, i)$ for a clause $C_i = t_1 \vee t_2 \vee t_3$ since $i \neq j$.
+    Moreover, it cannot be an edge between $(x_t, i)$ and $(\overline{x_t}, j)$ 
+    for some variable $x_t$ since $v$ would not be a valid truth assignment.
+    Therefore, both cases are impossible, so $U$ must be a vertex cover. 
+    That is, our constructed \textsc{DecVC} instance is a ``yes'' instance.
+
+    $(\Leftarrow)$ Suppose now that our constructed \textsc{DecVC} instance 
+    is a ``yes'' instance. Let $U$ be a vertex cover in $G$ such that 
+    $|U| \leq \ell = 2k$. By construction of the graph $G = (V, E)$, 
+    it must be the case that $|U| = 2k$ because for each clause 
+    $C_i = t_1 \vee t_2 \vee t_3$, the vertex cover must take two 
+    out of three of the vertices $(t_1, i)$, $(t_2, i)$, and $(t_3, i)$. 
+
+    Let $(y_i, i)$ be the vertex that is not in $U$ from $y_i \in 
+    \{t_1, t_2, t_3\}$. Define an truth assignment $v$ to $x_1, \dots, x_n$ 
+    such that $y_i = \textsf{True}$ for all $i = 1, \dots, k$. Suppose that 
+    $v$ is not well-defined. That is, there is a variable $x_t$ which 
+    needs to be assigned both \textsf{True} and \textsf{False}. 
+    Then we have $y_i = x_t$ and $y_j = \overline{x_t}$ for some $i \neq j$. 
+    By construction of $G = (V, E)$, there is an edge between $(y_i, i)$ 
+    and $(y_j, j)$. Neither of these endpoints are in $U$, which 
+    contradicts the fact that $U$ is a vertex cover.
+
+    Therefore, the truth assignment $v$ is well-defined, and it corresponds 
+    to satisfying each clause $C_i$. This means that the original 
+    \textsc{3-SAT} instance is a ``yes'' instance, as desired. \qed 
+\end{pf}\vspace{-0.25cm}
+In Section~\ref{sec:5}, we claimed that the Steiner tree problem 
+was $\NP$-hard. Let's now prove this. First, we state the 
+decision Steiner tree problem, denoted \textsc{DecSteinerTree}. 
+We are given a graph $G = (V, E)$, terminals $T \subseteq V$, 
+edge costs $c_e \geq 0$ for each $e \in E$, and a number $k$. 
+The goal is to determine whether there is a Steiner tree $F \subseteq E$ 
+such that $c(F) \leq k$. 
+
+\begin{prop}{prop:6.3}
+    \textsc{DecSteinerTree} is $\NP$-complete.
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:6.3}]
+    We see that $\textsc{DecSteinerTree} \in \NP$ by taking a subset 
+    $F \subseteq E$ as a certificate. It is easy to check that $c(F) \leq k$
+    and that there is a $u, v$-path in $F$ for every $u, v \in T$ in 
+    polynomial time. 
+
+    Next, we show that $\textsc{DecVC} \leq_p \textsc{DecSteinerTree}$, 
+    where we know that $\textsc{DecVC}$ is $\NP$-complete from 
+    Proposition~\ref{prop:6.2}. Suppose that we are given a graph 
+    $G = (V, E)$ and a number $\ell$ from $\textsc{DecVC}$. We 
+    construct a \textsc{DecSteinerTree} instance as follows: 
+    \begin{itemize}
+        \item Let $G' = (V', E')$ where $V' = \{r\} \cup V \cup \{t_e : 
+        e \in E\}$ and 
+        \[ E' = \{rv : v \in V\} \cup \{vt_e : e \in E \text{ and $v$ 
+        is an endpoint of $e$}\}. \]
+        In particular, we can view the graph $G'$ as one consisting of three 
+        ``layers'': one with the new vertex $r$ at the top, the original 
+        vertices $V$ in the middle, and new vertices $t_e$ corresponding to 
+        each edge $e \in E$ at the bottom. There is an edge from $r$ to 
+        each original vertex $v \in V$, and an edge from each $v \in V$ 
+        to $t_e$ if $v$ is an endpoint of $e$. 
+        \item The terminals will be $T = \{r\} \cup \{t_e : e \in E\}$; namely, 
+        the edges in the top and bottom layers.
+        \item We assign edge costs via 
+        \[ c_e = \begin{cases}
+            100|V|, & \text{if } e \in \{vt_e : e \in E \text{ and $v$ 
+            is an endpoint of $e$}\}, \\ 
+            1, & \text{otherwise.}
+        \end{cases} \]
+        \item Finally, we set $k = 100|V||E| + \ell$. 
+    \end{itemize}\newpage 
+    We claim that the original \textsc{DecVC} instance is a ``yes'' instance 
+    if and only if the \textsc{DecSteinerTree} instance is a 
+    ``yes'' instance. 
+
+    $(\Rightarrow)$ Suppose that the original \textsc{DecVC} instance is a 
+    ``yes'' instance. Then there is a vertex cover $U \subseteq V$ 
+    of $G = (V, E)$ such that $|U| \leq \ell$. For each $e \in E$, let 
+    $u_e \in U$ be a vertex such that $e \in \delta(u_e)$ (when both 
+    endpoints are in $U$, we can arbitrarily pick one).
+
+    Consider the set of edges
+    $F := \{ru : u \in U\} \cup \{t_e u_e : e \in E\} \subseteq E'$. 
+    Note that this has cost 
+    $c(F) = |U| + 100|V||E| \leq \ell + 100|V||E| = k$ and that 
+    $F$ is a Steiner tree of $G' = (V', E')$ with respect to the 
+    terminals $T = \{r\} \cup \{t_e : e \in E\}$, so the \textsc{DecSteinerTree}
+    instance is a ``yes'' instance.
+
+    $(\Leftarrow)$ Suppose that the \textsc{DecSteinerTree} instance 
+    is a ``yes'' instance. Moreover, towards a contradiction, assume 
+    that the original \textsc{DecVC} instance is a ``no'' instance. 
+    There exists a Steiner tree $F \subseteq E'$ for $G' = (V', E')$ 
+    with respect to $T$ such that $c(F) \leq k = \ell + 100|V||E|$. 
+
+    Let $\overline{E} = \{vt_e : e \in E \text{ and $v$ is an endpoint of $e$}\}$ 
+    and observe that 
+    \[ c(F \cap \overline{E}) \geq 100|V||E| \] 
+    since $100|V|$ is the cost of each edge incident to $t_e$ for $e \in E$, 
+    and the number of terminals is $|E|$. This bound together with
+    $c(F) \leq \ell + 100|V||E|$ implies that $c(F \setminus \overline{E}) \leq \ell$. 
+
+    We may assume that $\ell \leq |V|$, for otherwise \textsc{DecVC} 
+    is always a ``yes'' instance. Every vertex $t_e$ corresponding to $e \in E$ 
+    is incident to exactly one edge of $F$, because adding even one 
+    extra edge incident to $t_e$ leads to 
+    \[ c(F) \geq 100|V||E| + 100|V| > 100|V||E| + \ell = k, \] 
+    which is a contradiction. Construct the set 
+    \[ U = \{v \in V : v \text{ is an endpoint of an edge in } F \setminus \overline{E}\}. \] 
+    Note that $|U| \leq c(F \setminus \overline{E}) \leq \ell$ since 
+    each edge from $F \setminus \overline{E}$ has cost $1$. Moreover, 
+    $U$ is a vertex cover for the original $\textsc{DecVC}$ instance. 
+    Otherwise, there would exist some terminal $t_e$
+    such that $t_e$ is adjacent only to $u_e$ in $F$. But $u_e$ 
+    is only adjacent to terminals of the form $t_g$ where $g \in E$. 
+    This implies that $u_e$ is not connected to $r$, which is a contradiction. \qed
+\end{pf}\vspace{-0.25cm}
