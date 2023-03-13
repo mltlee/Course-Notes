@@ -1409,4 +1409,40 @@ to factor. The second goal is now in reach: this is the Kummer-Dedekind theorem.
     and hence $[K : \Q] = f_1d_1 + \cdots + f_rd_r$. But we also know that $[K : \Q] 
     = \deg(m(x)) = f_1e_1 + \cdots + f_ke_k$. Since $0 \leq d_i \leq e_i$, this forces us 
     to have $r = k$ and $d_i = e_i$ for all $1 \leq i \leq k$. \qed 
-\end{pf}
+\end{pf}\vspace{-0.25cm}
+
+In summary, let $K$ be a number field, which can be written as $K = \Q(\alpha)$ for some 
+$\alpha \in {\cal O}_K$. Let $R = {\cal O}_K$, let $S = \Z[\alpha]$, and suppose 
+we want to factor some nonzero proper ideal $I$ of $R$. 
+
+We know that in theory, a prime factorization $I = P_1^{e_1} P_2^{e_2} \cdots P_k^{e_k}$ 
+exists (by Theorem~\ref{theo:3.18}), and by the multiplicativity of the ideal norm
+(Theorem~\ref{theo:3.30}), we have 
+\[ N(I) = N(P_1)^{e_1} N(P_2)^{e_2} \cdots N(P_k)^{e_k}. \] 
+Moreover, we know that $N(P_i) = |R/P_i| = p_i^{f_i}$ for some prime $p_i \in \N$ 
+since $R/P_i$ is a finite field. 
+
+By Langrange, we know that $p_i \in P_i$, so $\langle p_i \rangle \subseteq P_i$ and hence 
+$P_i \mid \langle p_i \rangle$. These $P_i$'s are the candidates of the prime factors 
+of $I$. As long as $p_i \nmid [R : S]$, the Kummer-Dedekind theorem tells us that 
+$\langle p_i \rangle$ factors like the minimal polynomial of $\alpha$ in $\Z_{p_i}[x]$. 
+In addition, if we have $P_i = \langle q_i(\alpha), p_i \rangle$ in the case where 
+$p_i \nmid [R : S]$, then 
+\[ N(P_i) = |\Z_{p_i}[x]/\langle q_i(x) \rangle| = p_i^{\deg(q_i(x))}. \] 
+This helps us determine the multiplicities $e_i$. 
+
+We go through an example of factoring an ideal. Let $f(x) = x^3 - x^2 + 3$, which is 
+irreducible by the rational roots theorem and has discriminant $-231 = -3 \cdot 7 \cdot 11$.
+Let $\alpha$ be a root of $f(x)$, let $K = \Q(\alpha)$, and let $R = {\cal O}_K$. 
+Let's factor the ideal $I = \langle \alpha + 2 \rangle$. (This example is a 
+bit artificial, but demonstrates all the techniques we need to use 
+in general. Since $\disc(f(x)) = -231$ is squarefree, we could just apply 
+Theorem~\ref{theo:3.8}.) 
+
+Note that $K = \Q(\alpha + 2)$, and the minimal polynomial of $\alpha + 2$ is simply $f(x - 2)$ 
+because $x \mapsto x + k$ is an isomorphism for any $k \in \Z$. This implies that 
+\[ N(I) = |N_{K/\Q}(\alpha + 2)| = |f(-2)| = 9 = 3^2. \] 
+Therefore, we only need to factor $\langle 3 \rangle$. Since $3^2 \nmid \disc(f(x))$, 
+we have $3 \nmid [R : S]$. Then $f(x) = x^3 - x^2 = x^2(x - 1)$ over $\Z_3[x]$, 
+so Kummer-Dedekind implies that $\langle 3 \rangle = \langle \alpha, 3 \rangle^2 
+\langle \alpha - 1, 3 \rangle$. 
