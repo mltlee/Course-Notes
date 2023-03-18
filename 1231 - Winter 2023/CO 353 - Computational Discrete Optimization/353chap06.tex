@@ -250,13 +250,13 @@ at most $\ell = 3$.
     Therefore, the truth assignment $v$ is well-defined, and it corresponds 
     to satisfying each clause $C_i$. This means that the original 
     \textsc{3-SAT} instance is a ``yes'' instance, as desired. \qed 
-\end{pf}\vspace{-0.25cm}
+\end{pf}\vspace{-0.15cm}
 In Section~\ref{sec:5}, we claimed that the Steiner tree problem 
-was $\NP$-hard. Let's now prove this. First, we state the 
+was $\NP$-hard. First, we state the 
 decision Steiner tree problem, denoted \textsc{DecSteinerTree}. 
-We are given a graph $G = (V, E)$, terminals $T \subseteq V$, 
-edge costs $c_e \geq 0$ for each $e \in E$, and a number $k$. 
-The goal is to determine whether there is a Steiner tree $F \subseteq E$ 
+Given a graph $G = (V, E)$, terminals $T \subseteq V$, 
+edge costs $c_e \geq 0$ for each $e \in E$, and a number $k$,
+we wish to determine whether there is a Steiner tree $F \subseteq E$ 
 such that $c(F) \leq k$. 
 
 \begin{prop}{prop:6.3}
@@ -292,8 +292,8 @@ such that $c(F) \leq k$.
             is an endpoint of $e$}\}, \\ 
             1, & \text{otherwise.}
         \end{cases} \]
-        \item Finally, we set $k = 100|V||E| + \ell$. 
-    \end{itemize}\newpage 
+        \item Finally, we set $k = 100|V||E| + \ell$.
+    \end{itemize}
     We claim that the original \textsc{DecVC} instance is a ``yes'' instance 
     if and only if the \textsc{DecSteinerTree} instance is a 
     ``yes'' instance. 
