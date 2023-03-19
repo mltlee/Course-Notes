@@ -1,0 +1,165 @@
+\section{Ideal Class Group}\label{sec:4}
+
+\subsection{Preliminaries}\label{subsec:4.1}
+Let $K$ be a number field and let $R = {\cal O}_K$. Recall from 
+\ref{A2-3} that if $X$ is the set of nonzero ideals of $R$, then we can put 
+an equivalence relation on $X$ by $I \sim J$ if and only if $\alpha I = \beta J$ 
+for some nonzero $\alpha, \beta \in R$. Then 
+\[ G_K := \{[I] : I \in X\} \] 
+is a group under the operation $[I][J] = [IJ]$, called the {\bf ideal 
+class group} of $K$. The identity element is the equivalence class 
+of nonzero principal ideals. In fact, this construction works for 
+all Dedekind domains because nonzero ideals are invertible due to 
+Proposition~\ref{prop:3.13}.
+
+\begin{defn}{defn:4.1}
+    Let $K$ be a number field. The {\bf class number} of $K$ is defined to be 
+    \[ \cl(K) = |G_K|. \] 
+\end{defn}\vspace{-0.25cm}
+
+The ideal class group $G_K$ is structural information that is attached to 
+the number field $K$ or the ring of integers ${\cal O}_K$. The class 
+number $\cl(K)$ is a measure (in terms of complexity) of how far away 
+${\cal O}_K$ is from being a PID because we have that $\cl(K) = 1$ 
+if and only if ${\cal O}_K$ is a PID. 
+
+The next result tells us that $\cl(K)$ is also a measure of how far away
+${\cal O}_K$ is from being a UFD, and so having unique prime factorization 
+of elements!
+
+\begin{prop}{prop:4.2}
+    Let $R$ be a Dedekind domain. Then $R$ is a PID if and only if $R$ is a UFD.
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:4.2}]
+    $(\Rightarrow)$ This holds for any ring $R$. 
+
+    $(\Leftarrow)$ Suppose that $R$ is a UFD and let $I$ be a nonzero proper ideal 
+    of $R$. By Proposition~\ref{prop:3.13}, we can find an ideal $J$ of $R$ 
+    such that $IJ = \langle \alpha \rangle$, where $\alpha \in I$ is nonzero. 
+    But we can write $\alpha = p_1^{n_1} \cdots p_k^{n_k}$ for some 
+    prime elements $p_i \in R$ and $n_i \in \N$. Then 
+    \[ IJ = \langle \alpha \rangle = \langle p_1^{n_1} \cdots p_k^{n_k} \rangle 
+    = \langle p_1 \rangle^{n_1} \cdots \langle p_k \rangle^{n_k}, \] 
+    where each $\langle p_i \rangle$ is a prime ideal of $R$. It follows that 
+    \[ I = \langle p_{i_1} \rangle^{m_1} \cdots \langle p_{i_\ell} \rangle^{m_\ell} 
+    = \langle p_{i_1}^{m_1} \cdots p_{i_\ell}^{m_\ell} \rangle \] 
+    for some $i_1, \dots, i_\ell \in \{1, \dots, k\}$, so $I$ 
+    is principal and $R$ is a PID. \qed 
+\end{pf}\vspace{-0.25cm}
+
+At this point, it is not obvious that $\cl(K) < \infty$. Therefore, 
+our next goal is to show that $G_K$ is a finite group. 
+
+\begin{prop}{prop:4.3}
+    Let $K$ be a number field and let $R = {\cal O}_K$. Then there exists
+    $\lambda > 0$ such that for all nonzero ideals $I$ of $R$, there 
+    is an nonzero element $\alpha \in I$ satisfying 
+    \[ N(\langle \alpha \rangle) \leq \lambda N(I). \] 
+\end{prop}\vspace{-0.25cm}
+
+Note that we always have $N(I) \leq N(\langle \alpha \rangle)$ since 
+$\langle \alpha \rangle \subseteq I$ and hence $I \mid \langle \alpha \rangle$. 
+This proposition gives us an inequality in the other direction up to 
+some $\lambda > 0$. 
+
+\begin{pf}[Proposition~\ref{prop:4.3}]
+    Let $n = [K : \Q]$, let $\{v_1, \dots, v_n\}$ be an integral basis for 
+    ${\cal O}_K$, and let $\sigma_1, \dots, \sigma_n$ be the embeddings 
+    of $K$ in $\C$. Pick $m \in \N$ such that $m^n \leq N(I) < (m+1)^n$. 
+    Consider the elements of the form 
+    \[ m_1 v_1 + \cdots + m_n v_n, \] 
+    where $0 \leq m_i \leq m$ and $m_i \in \Z$. There are $(m+1)^n$ 
+    such elements. Since $(m+1)^n > N(I) = |R/I|$, there exist 
+    two such elements that are congruent modulo $I$. Subtracting these 
+    yields a nonzero $\alpha \in I$ of the form 
+    $\alpha = m_1 v_1 + \cdots + m_n v_n$
+    where $0 \leq |m_i| \leq m$. Then we obtain 
+    \begin{align*}
+        N(\langle \alpha \rangle) = |N_{K/\Q}(\alpha)| 
+        &= \left| \prod_{i=1}^n \sigma_i(\alpha) \right| 
+        = \prod_{i=1}^n |\sigma_i(\alpha)| \\ 
+        &\leq \prod_{i=1}^n \sum_{j=1}^n |m_j \sigma_i(v_j)| 
+        \leq \prod_{i=1}^n \sum_{j=1}^n m|\sigma_i(v_j)| \\ 
+        &= m^n \prod_{i=1}^n \sum_{j=1}^n |\sigma_i(v_j)| 
+        \leq N(I) \prod_{i=1}^n \sum_{j=1}^n |\sigma_i(v_j)|.
+    \end{align*}
+    Taking $\lambda = \prod_{i=1}^n \sum_{j=1}^n |\sigma_i(v_j)|$ 
+    gives the result. \qed 
+\end{pf}\vspace{-0.25cm}
+The next result tells us that every ideal class has a representative 
+whose norm is bounded.
+
+\begin{prop}{prop:4.4}
+    Let $K$ be a number field and let $R = {\cal O}_K$. Let $\lambda > 0$ 
+    be as in Proposition~\ref{prop:4.3}. For all nonzero ideals $I$ of $R$, 
+    there exists an ideal $J$ of $R$ such that $[I] = [J]$ and $N(J) \leq \lambda$. 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:4.4}]
+    Let $I$ be a nonzero ideal of $R$. Consider the ideal class $[I]^{-1} = 
+    [I']$ represented by some ideal $I'$ of $R$. By Proposition~\ref{prop:3.13},
+    we can find an ideal $J$ of $R$ such that $I'J = \langle \alpha \rangle$, 
+    where $\alpha \in I$ is the nonzero element chosen as in 
+    Proposition~\ref{prop:4.3}. Taking norms gives us 
+    \[ N(I') N(J) = N(\langle \alpha \rangle) \leq \lambda N(I'), \] 
+    and thus $N(J) \leq \lambda$. Moreover, we have $[I'][J] 
+    = [\langle \alpha \rangle] = [\langle 1 \rangle]$, so 
+    $[J] = [I']^{-1} = [I]$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+This gives us the finiteness of the ideal class group. 
+
+\begin{cor}{cor:4.5}
+    Let $K$ be a number field. Then $G_K$ is finite. 
+\end{cor}\vspace{-0.25cm}
+\begin{pf}[Corollary~\ref{cor:4.5}]
+    Let $[I] \in G_K$ be an ideal class. By Proposition~\ref{prop:4.4}, 
+    we may assume that $N(I) \leq \lambda$. Suppose that the 
+    prime factorization of $I$ is $I = P_1^{n_1} \cdots P_k^{n_k}$,
+    where $N(P_i) = p_i^{f_i}$ for all $i = 1, \dots, k$. Since $p_i \in P_i$, 
+    we have $P_i \mid \langle p_i \rangle$. Note that we must have 
+    $p_i \leq \lambda$. Moreover, there are only finitely many 
+    prime ideals $Q$ of $R$ such that $p \in Q$, where $p \in \N$ is prime 
+    with $p \leq \lambda$. \qed 
+\end{pf}\newpage 
+
+\subsection{Minkowski's Bound} \label{subsec:4.2}
+We know that the ideal class group is finite, but what now? The bound 
+$\lambda$ we found has a couple of problems: 
+\begin{enumerate}[(1)]
+    \item It is difficult to compute; we require an integral basis
+    for ${\cal O}_K$, the embeddings of $K$ in $\C$, and there are a large 
+    amount of sums and products.
+    \item In addition, $\lambda$ can be significantly larger than needed. 
+\end{enumerate}
+It turns out that there is a much better bound, obtained from 
+our work on the geometry of numbers in Assignment 5. 
+
+\begin{theo}[Minkowski]{theo:4.6}
+    Let $K$ be a number field with $[K : \Q] = n$, and let $R = {\cal O}_K$.
+    Let $s$ is the number of pairs of nonreal embeddings of $K$ in $\C$. 
+    Then every ideal class of $R$ contains an ideal $I$ such that 
+    \[ N(I) \leq \frac{n!}{n^n} \left( \frac{4}{\pi} \right)^{\!s} \lvert\disc(K)\rvert^{1/2}. \]
+\end{theo}\vspace{-0.25cm}
+
+The main thing to notice is that $n!/n^n$ approaches $0$ extremely quickly, 
+so this bound tends to be small. This helps us narrow down the 
+primes to look at. 
+
+Let's take a look at an example. Let $K = \Q(\alpha)$, where $\alpha$ 
+is a root of the $2$-Eisenstein polynomial $f(x) = x^3 - 2x - 2$. 
+with discriminant $-76 = -2^2 \cdot 19$. By \ref{A6-4}, we have 
+${\cal O}_K = \Z[\alpha]$. 
+
+Since $\disc(f(x)) = -76 < 0$, we see that $f(x)$ must have a pair of 
+nonreal roots, because if they were all real, then $\disc(f(x))$ would 
+be positive. But $\deg(f(x)) = 3$, so this gives us $s = 1$. 
+Then the Minkowski bound is 
+\[ B_K = \frac{3!}{3^3} \left( \frac{4}{\pi} \right)^{\!1} \sqrt{76} \approx 2.467. \] 
+By Theorem~\ref{theo:4.6}, we have $G_K = \{[I] : N(I) \leq 2\}$.
+It follows that $G_K$ is generated by the prime ideals $P$ such that $N(P) = 2$.
+But working modulo $2$, we have $f(x) = x^3 \in \Z_2[x]$. Then Kummer-Dedekind 
+gives us $\langle 2 \rangle = \langle \alpha, 2 \rangle^3 = \langle \alpha \rangle^3$, 
+where $2 = \alpha^3 - 2\alpha \in \langle \alpha \rangle$. Therefore, 
+we have $G_K = \{[\langle 1 \rangle], [\langle \alpha \rangle]\} = 
+\{[\langle 1 \rangle]\}$ and $\cl(K) = 1$, which shows that ${\cal O}_K$ 
+is a PID. 

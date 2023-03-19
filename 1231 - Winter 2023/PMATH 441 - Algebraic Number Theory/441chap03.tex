@@ -904,8 +904,8 @@ The next proposition tells us that the localization of a Noetherian integral dom
 is still Noetherian. 
 
 \begin{prop}{prop:3.26}
-    Let $R$ be a Noetherian integral domain and $P$ is a nonzero prime ideal, 
-    then $R_P$ is Noetherian. 
+    Let $R$ be a Noetherian integral domain and $P$ is a nonzero prime ideal. 
+    Then $R_P$ is Noetherian. 
 \end{prop}\newpage
 \begin{pf}[Proposition~\ref{prop:3.26}]
     Let $I \subseteq R_P$ be an ideal. Our goal is to show that 
@@ -1422,13 +1422,14 @@ exists (by Theorem~\ref{theo:3.18}), and by the multiplicativity of the ideal no
 Moreover, we know that $N(P_i) = |R/P_i| = p_i^{f_i}$ for some prime $p_i \in \N$ 
 since $R/P_i$ is a finite field. 
 
-By Langrange, we know that $p_i \in P_i$, so $\langle p_i \rangle \subseteq P_i$ and hence 
+By Lagrange, we know that $p_i \in P_i$, so $\langle p_i \rangle \subseteq P_i$ and hence 
 $P_i \mid \langle p_i \rangle$. These $P_i$'s are the candidates of the prime factors 
 of $I$. As long as $p_i \nmid [R : S]$, the Kummer-Dedekind theorem tells us that 
 $\langle p_i \rangle$ factors like the minimal polynomial of $\alpha$ in $\Z_{p_i}[x]$. 
 In addition, if we have $P_i = \langle q_i(\alpha), p_i \rangle$ in the case where 
 $p_i \nmid [R : S]$, then 
-\[ N(P_i) = |\Z_{p_i}[x]/\langle q_i(x) \rangle| = p_i^{\deg(q_i(x))}. \] 
+\[ N(P_i) = |\Z_{p_i}[x]/\langle q_i(x) \rangle| = p_i^{\deg(q_i(x))}. 
+\tag{$\star$} \] 
 This helps us determine the multiplicities $e_i$. 
 
 We go through an example of factoring an ideal. Let $f(x) = x^3 - x^2 + 3$, which is 
@@ -1442,7 +1443,112 @@ Theorem~\ref{theo:3.8}.)
 Note that $K = \Q(\alpha + 2)$, and the minimal polynomial of $\alpha + 2$ is simply $f(x - 2)$ 
 because $x \mapsto x + k$ is an isomorphism for any $k \in \Z$. This implies that 
 \[ N(I) = |N_{K/\Q}(\alpha + 2)| = |f(-2)| = 9 = 3^2. \] 
-Therefore, we only need to factor $\langle 3 \rangle$. Since $3^2 \nmid \disc(f(x))$, 
+Hence, we only need to factor $\langle 3 \rangle$. Since $3^2 \nmid \disc(f(x))$, 
 we have $3 \nmid [R : S]$. Then $f(x) = x^3 - x^2 = x^2(x - 1)$ over $\Z_3[x]$, 
 so Kummer-Dedekind implies that $\langle 3 \rangle = \langle \alpha, 3 \rangle^2 
 \langle \alpha - 1, 3 \rangle$. 
+
+Next, we need to consider which of these prime factors contain 
+$\alpha + 2$, because $P \mid \langle \alpha + 2 \rangle$ if and only if 
+$\langle \alpha + 2 \rangle \subseteq P$. We see that $\alpha + 2 
+\notin \langle \alpha, 3 \rangle$, because otherwise, we would have 
+$(\alpha + 3) - (\alpha - 2) = 1 \in \langle \alpha, 3 \rangle$. 
+On the other hand, we have $\alpha + 2 = \alpha - 1 + 3 \in \langle 
+\alpha - 1, 3 \rangle$, which implies that $I = \langle \alpha-1, 3 
+\rangle^{e_1}$ for some $e_1 \in \N$. 
+
+Taking norms above and making use of equation $(\star)$, we have that 
+\[ 9 = N(\langle \alpha - 1, 3 \rangle)^{e_1} = (3^{\deg(x-1)})^{e_1} 
+= 3^{e_1}, \]
+so we have $e_1 = 2$ and $I = \langle \alpha-1, 3 \rangle^2$. 
+
+We make one last remark. Suppose that $K$ is a number field with 
+$[K : \Q] - n$, and that $p \in \N$ is a prime with 
+$\langle p \rangle = P_1^{e_1} \cdots P_k^{e_k}$ and $N(P_i) = p^{f_i}$
+for all $i = 1, \dots, k$. Taking norms, we have 
+\[ p^n = N(\langle p \rangle) = p^{f_1e_1} \cdots p^{f_ke_k}, \]
+which implies that $n = f_1 e_1 + \cdots + f_k e_k$. 
+
+\subsection{Ramification} \label{subsec:3.10}
+The Kummer-Dedekind theorem tells us how to factor the ideal 
+$\langle p \rangle$ in the case that $p \nmid [\mathcal{O}_K : \Z[\alpha]]$, 
+but what if we had $p \mid [\mathcal{O}_K : \Z[\alpha]]$? These 
+primes can be thought of as badly behaved. 
+
+\begin{defn}{defn:3.35}
+    Let $K$ be a number field and let $p \in \N$ be prime. Suppose that 
+    $\langle p \rangle = P_1^{e_1} \cdots P_k^{e_k}$ is the prime 
+    factorization of $\langle p \rangle$ in $R = {\cal O}_K$, 
+    and write $N(P_i) = p^{f_i}$ for all $i = 1, \dots, k$. 
+    \begin{enumerate}[(1)]
+        \item We call $e_i$ the {\bf ramification index} of $P_i$ over $p$.
+        \item We call $f_i$ the {\bf residue field degree} of $P_i$ over $p$. 
+        \item We say that $p$ is {\bf ramified} in $K$ if there exists 
+        $i = 1, \dots, k$ such that $e_i > 1$. Otherwise, we say that $p$ 
+        is {\bf unramified} in $K$. 
+    \end{enumerate}
+\end{defn}\vspace{-0.25cm}
+The ramified primes are precisely the ones with multiplicity in their 
+ideal prime factorization, and these are the ``problematic'' or 
+``complicated'' primes. The following result gives us a way of 
+easily detecting these. 
+
+\begin{theo}{theo:3.36}
+    Let $K$ be a number field and let $p \in \N$ be prime. Then $p$ 
+    is ramified in $K$ if and only if $p \mid \disc(K)$. 
+\end{theo}\vspace{-0.25cm}
+\begin{pf}[Theorem~\ref{theo:3.36}]
+    $(\Leftarrow)$ This is beyond the scope of the course. However, it is within 
+    reach with a couple weeks of algebra.
+
+    $(\Rightarrow)$ Suppose that $p$ is ramified in $K$. 
+    Then there exists a prime ideal $P$ of ${\cal O}_K$ such that $p \in P$ 
+    and $P^2 \mid \langle p \rangle$. We write $\langle p \rangle = PI$ 
+    where $I$ is another ideal of ${\cal O}_K$. 
+
+    Note that if $Q \subseteq {\cal O}_K$ is a prime ideal with $p \in Q$, 
+    then $I \subseteq Q$. Indeed, we have $Q \mid \langle p \rangle$, 
+    which implies that $Q \mid I$, and hence $I \subseteq Q$ by Proposition 
+    \ref{prop:3.17}. We could have $Q = P$, but this is fine since 
+    there is a copy of $P$ in $I$ due to ramification. 
+
+    Moreover, we have $\langle p \rangle \subsetneq I$ because otherwise, 
+    applying ideal cancellation (Proposition~\ref{prop:3.15}) to 
+    $\langle p \rangle = PI$ would imply that 
+    $P = R$. Therefore, we can pick an element $\alpha \in I \setminus \langle p \rangle$.
+    
+    Let $\{v_1, \dots, v_n\}$ be an integral basis for ${\cal O}_K$. 
+    Let $\sigma_1, \dots, \sigma_n$ be the embeddings of $K$ in $\C$. 
+    We can write 
+    \[ \alpha = m_1 v_1 + \cdots + m_n v_n \] 
+    for some $m_i \in \Z$. Note that we cannot have $p \mid m_i$ 
+    for all $i = 1, \dots, n$ because this would imply $\alpha \in \langle p \rangle$. 
+    Hence, we may assume without loss of generality that $p \nmid m_1$. 
+    From elementary column operations, we have
+    \begin{align*}
+        \disc(\alpha, v_2, \dots, v_n) &= \disc(m_1v_1, v_2, \dots, v_n) \\ 
+        &= m_1^2 \disc(v_1, \dots, v_n) \\ 
+        &= m_1^2 \disc(K). 
+    \end{align*}
+    To complete the proof, it is enough to show that $p \mid 
+    \disc(\alpha, v_2, \dots, v_n)$ since $p \nmid m_1$. We may extend 
+    each embedding $\sigma_i : K \to \C$ to $\sigma_i : L \to L$ where $K \subseteq L$
+    and $L/\Q$ is a Galois extension. In particular, we can take 
+    $L$ to be the Galois closure of $K$ (obtained by adjoining 
+    all the conjugates) so that $\sigma_i \in \Gal(L/\Q)$.
+
+    Let $S = {\cal O}_L$. Suppose that $Q$ is a prime ideal of $S$ 
+    such that $p \in Q$. By \ref{A1-3}, we see that $Q \cap {\cal O}_K$ 
+    is a prime ideal of ${\cal O}_K$ containing $p$, which implies that 
+    $I \subseteq Q \cap {\cal O}_K$ by our previous remark. In particular, 
+    we have $\alpha \in Q$. Similarly, for any $\sigma \in \Gal(L/\Q)$, 
+    we have $\alpha \in \sigma^{-1}(Q)$, where $\sigma^{-1}(Q)$ 
+    is a prime ideal of $S$ using the fact that $\sigma(S) = S$. 
+    This means that $\sigma(\alpha) \in Q$. 
+
+    Note that the entire first column of the matrix 
+    corresponding to $\disc(\alpha, v_2, \dots, v_n)$ 
+    consists of $\alpha \in Q$ and $\sigma_i(\alpha) \in Q$. 
+    This implies that $\disc(\alpha, v_2, \dots, v_n) \in Q \cap \Z = p\Z$ 
+    and thus $p \mid \disc(\alpha, v_2, \dots, v_n)$. \qed 
+\end{pf}
