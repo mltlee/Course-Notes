@@ -1,0 +1,181 @@
+\section{Dirichlet's Unit Theorem}\label{sec:5}
+
+\subsection{Motivation}\label{subsec:5.1}
+We begin with a simple example. Let $K = \Q(\sqrt{2})$ and 
+$R = {\cal O}_K = \Z[\sqrt{2}]$. We compute the group of units $R^\times$.
+
+From ring theory, we know that $a + b\sqrt{2} \in R^\times$ if and only if 
+$|a^2 - 2b^2| = 1$. By inspection, we have that $\pm 1$ and $1 + \sqrt{2}$ 
+are units of $R$.
+
+{\bf Claim.} If $u \in R^\times$ with $u > 1$, then $u \geq 1 + \sqrt{2}$. 
+
+{\bf Proof of Claim.} Suppose that $u \in R^\times$ with $1 < u \leq 1 + \sqrt{2}$. 
+To prove the claim, it suffices to show that $u = 1 + \sqrt{2}$. 
+Write $u = a + b\sqrt{2}$ for some $a, b \in \Z$ and note that 
+\[ |a^2 - 2b^2| = |a - b\sqrt{2}||a + b\sqrt{2}| = 1. \] 
+Since $u = a + b\sqrt{2} > 1$, we must have $|a - b\sqrt{2}| < 1$, or 
+equivalently, $-1 < a - b\sqrt{2} < 1$. Adding these inequalities together with 
+$1 < u \leq 1 + \sqrt{2}$ yields $0 < 2a < 2+\sqrt{2}$,
+which implies that $a = 1$ since $a \in \Z$. But then $1 < 1 + b\sqrt{2} 
+\leq 1 + \sqrt{2}$, and the only solution is $b = 1$. We conclude that 
+$a = b = 1$ and $u = 1 + \sqrt{2}$. \hfill$\blacksquare$
+
+Suppose now that $u \in \R^\times \setminus \{\pm1\}$. By considering 
+$\pm u$ and $\pm 1/u$, we may assume that $u > 1$. By the claim, we have 
+$u \geq 1 + \sqrt{2}$. In particular, we can find $k \in \N$ such that 
+\[ (1 + \sqrt{2})^k \leq u < (1 + \sqrt{2})^{k+1}. \] 
+Dividing through by $(1 + \sqrt{2})^k$, we have $1 \leq u(1 + \sqrt{2})^{-k} 
+< 1 + \sqrt{2}$. Then the claim tells us that $1 = u(1 + \sqrt{2})^{-k}$ 
+and thus $u = (1 + \sqrt{2})^k$. By considering $\pm u$ and $\pm 1/u$ as before, 
+we can conclude that 
+\[ R^\times = \{\pm(1 + \sqrt{2})^k : k \in \Z\}. \] 
+In fact, this argument can be generalized to compute ${\cal O}_K^\times$ 
+where $K = \Q(\sqrt{m^2+1})$ for some $m \in \Z$.
+
+\subsection{The Unit Theorem} \label{subsec:5.2}
+The following definition is the idea of $\Z$-linear independence 
+with respect to multiplication instead of addition. 
+
+\begin{defn}{defn:5.1}
+    Let $\eps_1, \dots, \eps_m \in \C \setminus \{0\}$. We say
+    $\eps_1, \dots, \eps_m$ are {\bf multiplicatively independent} 
+    if for $n_1, \dots, n_m \in \Z$, we have 
+    $\eps_1^{n_1} \cdots \eps_m^{n_m} = 1$ if and only if 
+    $n_1 = \cdots = n_m = 0$. 
+\end{defn}\vspace{-0.25cm}
+
+This leads us to Dirichlet's unit theorem, which allows us to characterize 
+the units of a ring of integers.
+
+\begin{theo}[Dirichlet's Unit Theorem]{theo:5.2}
+    Let $K$ be a number field with $[K : \Q] = n$ and let $R = {\cal O}_K$. 
+    Let $r$ be the number of real embeddings of $K$ in $\C$, 
+    and let $s$ be the number of complex embedding pairs of $K$ in $\C$. 
+    Let $m = r + s - 1$. Then there exists multiplicatively independent 
+    $\eps_1, \dots, \eps_m \in K$ such that 
+    \[ R^\times = \{\zeta \eps_1^{n_1} \cdots \eps_m^{n_m} : n_i \in \Z,\, 
+    \zeta \text{ a root of unity in $K$}\}. \] 
+    We call $\eps_1, \dots, \eps_m$ a {\bf fundamental system of units} for $K$.
+\end{theo}\vspace{-0.25cm}
+
+In our above example, the multiplicatively independent set consisted 
+of just $\eps_1 = 1 + \sqrt{2}$ and the roots of unity in 
+$K = \Q(\sqrt{2})$ are $\pm 1$, so the result we got is in line with 
+the theorem. 
+\newpage
+Let's make some observations on what Dirichlet's unit theorem tells us.
+\begin{enumerate}[(1)]
+    \item Note that $n = r + 2s$. 
+    \item Suppose that $\eps_1^{n_1} \cdots \eps_m^{n_m} = \eps_1^{k_1} 
+    \cdots \eps_m^{k_m}$. We can write this as 
+    \[ \eps_1^{n_1-k_1} \cdots \eps_m^{n_m-k_m} = 1. \] 
+    But $\eps_1, \dots, \eps_m$ are multiplicatively independent, 
+    so $n_i - k_i = 0$ and hence $n_i = k_i$ for all $i = 1, \dots, m$. 
+    So multiplicative independence gives us the unique representation 
+    of products in this form, similar to linear independence.
+    \item Suppose now that $\zeta_1 \eps_1^{n_1} \cdots \eps_m^{n_m} 
+    = \zeta_2 \eps_1^{k_1} \cdots \eps_m^{k_m}$ for some roots of 
+    unity $\zeta_1$ and $\zeta_2$. We can find $N \in \N$ such that 
+    $\zeta_1^N = \zeta_2^N = 1$, which gives us 
+    \[ \eps_1^{Nn_1} \cdots \eps_m^{Nn_m} = \eps_1^{Nk_1} \cdots \eps_m^{Nk_m}. \] 
+    By (2), we have $Nn_i = Nk_i$ and hence $n_i = k_i$ for all $i = 1, \dots, m$. 
+    But then $\zeta_1 = \zeta_2$ as well, so we also have unique representations 
+    in the form $\zeta\eps_1^{n_1} \cdots \eps_m^{n_m}$. 
+    \item {\bf Exercise.} By applying Dirichlet's unit theorem, we have 
+    \[ R^\times \cong T \times \Z^m, \] 
+    where $T$ is the group of roots of unity in $K$.
+    This can be done by identifying $\zeta\eps_1^{n_1} \cdots \eps_m^{n_m}$ 
+    with $(\zeta, (n_1, \dots, n_m))$. In other words, we are identifying
+    $\eps_i$ with the standard basis vector $e_i$. 
+    \item Suppose that $r > 0$ so that $K$ has a real embedding $\sigma : K \to \R$. 
+    Let $\zeta \in K$ be a root of unity with $\zeta^\ell = 1$ for some 
+    $\ell \in \N$. Then we have 
+    \[ \sigma(\zeta)^\ell = \sigma(\zeta^\ell) = \sigma(1) = 1. \] 
+    Then $\sigma(\zeta)$ is a real root of unity, so $\sigma(\zeta) \in \{\pm1\}$. 
+    But $\sigma$ is injective and fixes $\Q$, so we must have $\zeta \in \{\pm1\}$.
+    Therefore, in the case that $r > 0$, the group of roots of unity 
+    is simply $\{\pm1\}$.
+\end{enumerate}
+To prove Dirichlet's unit theorem, we need the Minkowski business that 
+we worked with on Assignment 5.
+\begin{enumerate}[(1)]
+    \item A {\bf lattice} in $\R^n$ is a set $L = \Span_{\Z}\{v_1, \dots, v_k\}$
+    where $\{v_1, \dots, v_k\} \subseteq \R^n$ is $\R$-linearly independent. 
+    We say that $L$ is a {\bf full lattice} if $k = n$. (This is a slight 
+    relaxation of the definition we gave in \ref{A5-1}. The definition of 
+    lattice we gave there required that $k = n$, which corresponds to 
+    a full lattice here.)
+    \item Let $K$ be a number field with $[K : \Q] = n$, and let $r$ and 
+    $s$ be as usual. Let $\sigma_1, \dots, \sigma_r$ be the real embeddings 
+    of $K$ in $\C$, and let $\sigma_{r+1}, \dots, \sigma_{r+s}$ be the 
+    representatives of the complex pair embeddings of $K$ in $\C$. 
+    Define a map $\psi : K \to \R^n$ by 
+    \[ \psi(x) = (\sigma_1(x), \dots, \sigma_r(x), \dots, \Re(\sigma_{r+1}(x)), 
+    \Im(\sigma_{r+1}(x)), \dots, \Re(\sigma_{r+s}(x)), \Im(\sigma_{r+s}(x))). \]
+    Through an abuse of notation, we will write 
+    \[ \psi(x) = (\sigma_1(x), \dots, \sigma_r(x), \sigma_{r+1}(x), \dots, \sigma_{r+s}(x)) \] 
+    where we identify each $\sigma_{r+j}(x) = a + bi$ with the pair $(a, b)$.
+    We call $\psi$ the {\bf Minkowski embedding}. Note that $\psi$ is 
+    an embedding of additive groups; in other words, it is a map 
+    $(K, +) \to (\R^n, +)$. 
+
+    We then define $M_K := \psi({\cal O}_K)$, which we saw was a full lattice 
+    in $\R^n$ by \ref{A5-2}. We call $M_K$ the {\bf Minkowski lattice} of $K$.
+\end{enumerate}
+The Minkowski lattice $M_K$ gives us a way to geometrically 
+visualize ${\cal O}_K$. For example, consider $K = \Q(\sqrt{2})$. 
+Since $\Q$ is dense in $\R$, viewing $K$ on the real line is not of much help. 
+But drawing $M_K$ in $\R^2$ gives us a parallelogram type shape, which is a 
+lot easier to visualize.
+
+Next, note that $R^\times$ is a multiplicative group and $\R^n$ is an additive 
+group, so the restriction of the Minkowski embedding $\psi : R^\times \to 
+\psi(R^\times)$ is not a homomorphism. But we can use logarithms to transform 
+multiplication into addition!
+
+From now on, we fix the following notation. 
+\begin{itemize}
+    \item Let $K$ be a number field with $[K : \Q] = n$. 
+    \item Let $r$ be the number of real embeddings of $K$ in $\C$, and let 
+    $s$ be the number of complex embedding pairs of $K$ in $\C$. 
+    Let $\sigma_1, \dots, \sigma_r$ denote the real embeddings, and 
+    let $\sigma_{r+1}, \dots, \sigma_{r+s}$ be the complex pair representatives.
+    \item Let $\psi : K \to \R^n$ be the Minkowski embedding, where we 
+    use the abuse of notation 
+    \[ \psi(x) = (\sigma_1(x), \dots, \sigma_{r+s}(x)) \]
+    that we discussed above by identifying the real and imaginary parts 
+    of $\sigma_{r+s}(x)$ with just $\sigma_{r+s}(x)$ itself.
+    \item Let $\varphi : K^\times \to \R^{r+s}$ be the map 
+    \[ \varphi(x) = (\log|\sigma_1(x)|, \dots, \log|\sigma_{r+s}(x)|). \] 
+    Here, there is no abuse of notation, and $|\cdot|$ denotes the 
+    complex modulus.
+\end{itemize}
+
+\begin{prop}{prop:5.3}
+    The restriction $\varphi : R^\times \to \R^{r+s}$ is a group homomorphism.
+\end{prop}\vspace{-0.25cm}
+
+We leave the proof of Proposition~\ref{prop:5.3} as an exercise; 
+it really just uses logarithm properties.
+
+\begin{prop}{prop:5.4}
+    We have $\varphi(R^\times) \subseteq H$, where $H$ is the hyperplane 
+    \[ H = \{x \in \R^{r+s} : x_1 + \cdots + x_r + 2x_{r+1} + \cdots + 2x_{r+s} = 0\}. \] 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:5.4}]
+    Consider a point $\varphi(a) = (\log|\sigma_1(a)|, \dots, \log|\sigma_{r+s}(a)|)$
+    where $a \in R^\times$. Note that 
+    \begin{align*}
+        &\log|\sigma_1(a)| + \cdots + \log|\sigma_r(a)| + 
+        2\log|\sigma_{r+1}(a)| + \cdots + 2\log|\sigma_{r+s}(a)| \\
+        &= \log|\sigma_1(a) \cdots \sigma_r(a) \sigma_{r+1}(a)^2 \cdots 
+        \sigma_{r+s}(a)^2| \\ 
+        &= \log |N_{K/\Q}(a)| \\ 
+        &= \log 1 = 0, 
+    \end{align*}
+    where the second equality follows from part (a) of \ref{A5-4}, so 
+    $\varphi(a) \in H$. \qed 
+\end{pf}\vspace{-0.25cm}
+Recall that the dimension of a hyperplane is always one less than the ambient 
+space. In particular, we see that $\dim_{\R}(H) = r + s - 1 = m$. 
