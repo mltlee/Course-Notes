@@ -179,3 +179,175 @@ it really just uses logarithm properties.
 \end{pf}\vspace{-0.25cm}
 Recall that the dimension of a hyperplane is always one less than the ambient 
 space. In particular, we see that $\dim_{\R}(H) = r + s - 1 = m$. 
+
+We now state a couple of facts about lattices: 
+\begin{enumerate}[(1)]
+    \item If $L \subseteq \R^n$ is a lattice and $X \subseteq L$ is bounded, then 
+    $X$ is finite. 
+    \item We say that $A \subseteq \R^n$ is {\bf discrete} if for all $a \in A$, 
+    there exists $\eps > 0$ such that $B_\eps(a) \cap A = \{a\}$ (intuitively, 
+    the points are spread out). It is known 
+    that every discrete subgroup $L \subseteq \R^n$ is a lattice; 
+    in fact, this is an equivalent definition of a lattice.
+\end{enumerate}
+
+\begin{prop}{prop:5.5}
+    The kernel of $\varphi : K^\times \to \R^{r+s}$ is finite. 
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:5.5}]
+    We know that $\ker\varphi \subseteq \{x \in K^\times : |\sigma_i(x)| = 1 
+    \text{ for all } i = 1, \dots, r+s\} =: X$. Then $\psi(X) \subseteq M_K$ 
+    is bounded as each component of the Minkowski map is in the interval $[-1, 1]$. 
+    By fact (1) above, we have that $\psi(X)$ is finite. But $\psi$ is injective, 
+    so $X$ is finite, and hence $\ker\varphi \subseteq X$ is finite. \qed  
+\end{pf}\vspace{-0.25cm}
+
+We recall the following result from Galois theory. 
+
+\begin{prop}{prop:5.6}
+    Let $F$ be a field. Then every finite subgroup $G \subseteq F^\times$ is cyclic.
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:5.6}]
+    By the fundamental theorem of finite abelian groups, we can write 
+    \[ G \cong \Z_{n_1} \times \cdots \times \Z_{n_k} \] 
+    where each $n_i$ is a prime power. Let $N = n_1 \cdots n_k = |G|$ and 
+    $M = \lcm(n_1, \dots, n_k)$. It is clear that $M \leq N$. Conversely, every element 
+    of $G$ (of which there are $N$ of them) are roots of $x^M - 1$, which has at most 
+    $M$ roots. This means that $N \leq M$, so $M = N$. It follows that the $n_i$'s 
+    are powers of distinct primes, so $G \cong \Z_{n_1} \times \cdots \times \Z_{n_k} 
+    \cong \Z_N$ is cyclic. \qed 
+\end{pf}\vspace{-0.25cm}
+
+Next, let's look at the structure of the kernel of $\varphi$. 
+
+\begin{prop}{prop:5.7}
+    We have $\ker\varphi = \{\zeta \in K : \zeta \text{ a root of unity}\}$.
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:5.7}]
+    We know from Proposition~\ref{prop:5.5} that $\ker\varphi$ is finite. Write 
+    $N = \lvert\ker\varphi\rvert$. By Lagrange, we know that if $x \in \ker\varphi$, 
+    then $x^N = 1$. Conversely, if $\zeta \in K$ with $\zeta^\ell = 1$, we have 
+    \[ \sigma_i(\zeta)^\ell = \sigma_i(\zeta^\ell) = \sigma_i(1) = 1 \] 
+    for all $i = 1, \dots, r+s$. Then 
+    \[ \varphi(\zeta) = (\log |\sigma_1(\zeta)|, \dots, \log|\sigma_{r+s}(\zeta)|) = (0, \dots, 0), \]
+    which implies that $\zeta \in \ker\varphi$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+Since $K$ is a field and $\ker\varphi \subseteq K^\times$ is a finite subgroup, 
+we see that $\ker\varphi$ is cyclic by Proposition~\ref{prop:5.6}.
+
+\begin{prop}{prop:5.8}
+    We have that $\varphi(R^\times) \subseteq \R^{r+s}$ is a lattice.
+\end{prop}\vspace{-0.25cm}\newpage
+\begin{pf}[Proposition~\ref{prop:5.8}]
+    It is enough to show that $\varphi(R^\times)$ is discrete because it is 
+    clear that $\varphi(R^\times)$ being the image of a group under a 
+    homomorphism is a subgroup of $\R^{r+s}$, and so we can apply fact (2)
+    about lattices.
+
+    Fix $N \in \N$ and consider the $N$-cube $X = [-N, N]^{r+s} \subseteq \R^{r+s}$. 
+    Let $Y = \varphi^{-1}(X)$. For all $u \in Y$, we have $\varphi(u) \in X$, 
+    implying that $\lvert\log|\sigma_i(u)|\rvert \leq N$. Then there must exist 
+    some $N' \in \N$ such that $|\sigma_i(u)| \leq N'$ for all $u \in Y$.
+    (This is because the logarithm is increasing, so if we could find arbitrarily 
+    large $|\sigma_i(u)|$, then $\lvert\log |\sigma_i(u)|\rvert$ would also be 
+    arbitrarily large.) It follows that $\psi(Y) \subseteq M_K$ is finite by 
+    lattice fact (1). But $\psi$ is injective, so $Y$ is finite. 
+    By a set counting argument (exercise), it follows that $\varphi(R^\times) \cap X$ 
+    is finite. But every finite set is discrete, so we are done. \qed 
+\end{pf}\vspace{-0.25cm}
+
+The following result is then enough to prove Dirichlet's unit theorem. 
+
+\begin{prop}{prop:5.9}
+    We have $W := \Span_{\R} \varphi(R^\times) = H$. 
+\end{prop}\vspace{-0.25cm}
+
+We'll save the proof of Proposition~\ref{prop:5.9} for later, as it is quite tricky. 
+First, let's see how it implies Dirichlet's unit theorem (Theorem~\ref{theo:5.2}). 
+
+\begin{pf}[Dirichlet]
+    We know that $\varphi(R^\times) \subseteq \R^{r+s}$ is a lattice by 
+    Proposition~\ref{prop:5.8}, so we can write $\varphi(R^\times) = 
+    \Span_{\Z}\{u_1, \dots, u_k\}$ where $\{u_1, \dots, u_k\}$ is $\R$-linearly independent. 
+    Then by Proposition~\ref{prop:5.9}, we have 
+    \[ H = \Span_{\R} \varphi(R^\times) = \Span_{\R}\{u_1, \dots, u_k\} \cong \Z^k. \] 
+    This means that $\{u_1, \dots, u_k\}$ is a basis for $H$, so $k = \dim_{\R} H = r + s - 1$.
+    This gives us $\varphi(R^\times) \cong \Z^{r+s-1}$. Combining this with the first 
+    isomorphism theorem, it follows that there exists an isomorphism  
+    \[ \rho : R^\times/\ker\varphi \to \Z^{r+s-1}. \] 
+    For all $i = 1, \dots, r+s-1$, we can pick a representative $\eps_i \ker\varphi \in 
+    R^\times/\ker\varphi$ such that $\rho(\eps_i \ker\varphi) = e_i$, where $e_i$ 
+    is the $i$-th standard basis vector in $\Z^{r+s-1}$. For all $u \in R^\times$, we 
+    can write 
+    \[ \rho(u\ker\varphi) = n_1 e_1 + \cdots + n_m e_m \] 
+    for some $n_i \in \Z$. But then $u\ker\varphi = \eps_1^{n_1} \cdots \eps_m^{n_m} 
+    \ker\varphi$ since $\varphi$ is an isomorphism. In particular, there 
+    exists $\zeta \in \ker\varphi$ such that $u = \zeta \eps_1^{n_1} \cdots \eps_m^{n_m}$. 
+    Note that $\eps_1, \dots, \eps_m$ is a multiplicatively independent set since 
+    the standard basis vectors $e_i$ are $\Z$-linearly independent, which completes the proof. \qed 
+\end{pf}\vspace{-0.25cm}
+
+Finally, we prove Proposition~\ref{prop:5.9} using Minkowski's lemma (\ref{A5-3}),
+which states that if a Lebesgue 
+measurable set is compact, convex, and symmetric about the origin with ``large'' 
+volume, then it contains some nonzero point from the lattice.
+
+\begin{pf}[Proposition~\ref{prop:5.9}]
+    We already know that $W \subseteq H$. To prove that $H \subseteq W$, we show that 
+    $W^\perp \subseteq H^\perp$. Suppose that $z = (z_1, \dots, z_{r+s}) \in \R^{r+s}$ 
+    with $z \notin H^\perp$. We claim that $z \notin W^\perp$. 
+
+    Define the map $f : K^\times \to \R$ by $f(x) = z \cdot \varphi(x)$, where $\cdot$ 
+    denotes the dot product in $\R^{r+s}$. Let $C = (2/\pi)^s \lvert\disc(K)\rvert^{1/2}$ 
+    and pick any positive $c_1, \dots, c_{r+s} \in \R$ such that 
+    \[ C = c_1 \cdots c_r c_{r+1}^2 \cdots c_{r+s}^2. \] 
+    This is always possible since $C \in \R$; one possible choice is $c_1 = C$ and 
+    $c_i = 1$ otherwise. 
+    Then the set 
+    \[ A := \{(x_1, \dots, x_n) \in \R^n : |x_i| \leq c_i \text{ for all $i = 1, \dots, r$ 
+    and $x_i^2 + x_{i+s}^2 \leq c_i^2$ for all $i = r+1, \dots, r+s$}\} \] 
+    is compact, convex, symmetric about the origin, and Lebesgue measurable. In particular, 
+    we have
+    \[ m(A) = \left( \prod_{i=1}^r 2c_i \right) \left( \prod_{i=r+1}^{r+s} \pi c_i^2 \right) 
+    = 2^r \pi^s C = 2^{r+s} \lvert\disc(K)\rvert = 2^n \frac{\lvert\disc(K)\rvert}{2^s} 
+    = 2^n \Vol(M_K). \] 
+    By Minkowski's lemma (\ref{A5-3}), there exists a nonzero $a \in A \cap M_K$. We write 
+    $a = \psi(b)$ for some $b \in {\cal O}_K$. 
+
+    We have that $|N_{K/\Q}(b)| = N(a) \leq c_1 \cdots c_r c_{r+1}^2 
+    \cdots c_{r+s}^2 = C$, where $N(\cdot)$ denotes the map from \ref{A5-4} and 
+    the inequality is from the fact that $a \in A$.
+
+    {\bf Claim.} We have $|\sigma_i(b)| \geq c_i/C$ for all $i = 1, \dots, r$
+    and $|\sigma_i(b)|^2 \geq c_i^2/C$ for all $i = r+1, \dots, r+s$.
+
+    {\bf Proof of Claim.} Since $a = \psi(b) = (\sigma_1(b), \dots, \sigma_{r+s}(b)) \in A$, 
+    we have that $|\sigma_i(b)| \leq c_i$ for all $i = 1, \dots, r$ and 
+    $|\sigma_i(b)|^2 \leq c_i^2$ for all $i = r+1, \dots, r+s$. 
+
+    Suppose towards a contradiction that there exists $i = 1, \dots, r$ with 
+    $|\sigma_i(b)| < c_i/C$. Then we have 
+    \[ 1 \leq |N_{K/\Q}(b)| = |\sigma_1(b)| \cdots |\sigma_r(b)| |\sigma_{r+1}(b)|^2 
+    \cdots |\sigma_{r+s}(b)|^2 < \frac{c_1 \cdots c_r c_{r+1}^2 \cdots c_{r+s}^2}{C} 
+    = \frac{C}{C} = 1, \] 
+    which is a contradiction. If we assume there exists $i = r+1, \dots, r+s$ 
+    such that $|\sigma_i(b)| < c_i^2/C$, the same argument applies. \hfill $\blacksquare$ 
+
+    There are finitely many nonzero principal ideals of ${\cal O}_K$ 
+    with norm at most $C$, say $\langle b_1 \rangle, \dots, \langle b_\ell \rangle$. 
+    Without loss of generality, suppose that $\langle b \rangle = \langle b_1 \rangle$. 
+    Then we can write $b = ub_1$ for some $u \in R^\times$. 
+    
+    Let $L = z_1 \log c_1 + \cdots + z_{r+s} \log c_{r+s}$. Note that 
+    \begin{align*}
+        f(b) = f(ub_1) &= z \cdot \varphi(ub_1) \\ 
+        &= z \cdot (\varphi(u) + \varphi(b_1)) \\ 
+        &= z \cdot \varphi(u) + z \cdot \varphi(b_1) \\ 
+        &= f(u) + f(b_1). 
+    \end{align*}
+    From this, it can be shown using the claim and the triangle inequality that 
+    \[ |f(u) - L| \leq |f(b_1)| + \left( \sum_{i=1}^r |z_i| + \frac12 \sum_{i=r+1}^{r+s} |z_i| \right) 
+    \cdot \log C =: B. \] 
+    Note that $B$ does not depend on the choice of $c_1, \dots, c_{r+s}$.
+\end{pf}\vspace{-0.25cm}    
