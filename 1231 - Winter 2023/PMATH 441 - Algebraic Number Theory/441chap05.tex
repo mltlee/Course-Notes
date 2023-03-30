@@ -298,7 +298,7 @@ volume, then it contains some nonzero point from the lattice.
     $W^\perp \subseteq H^\perp$. Suppose that $z = (z_1, \dots, z_{r+s}) \in \R^{r+s}$ 
     with $z \notin H^\perp$. We claim that $z \notin W^\perp$. 
 
-    Define the map $f : K^\times \to \R$ by $f(x) = z \cdot \varphi(x)$, where $\cdot$ 
+    Define $f : K^\times \to \R$ by $f(x) = z \cdot \varphi(x)$, where $\cdot$ 
     denotes the dot product in $\R^{r+s}$. Let $C = (2/\pi)^s \lvert\disc(K)\rvert^{1/2}$ 
     and pick any positive $c_1, \dots, c_{r+s} \in \R$ such that 
     \[ C = c_1 \cdots c_r c_{r+1}^2 \cdots c_{r+s}^2. \] 
@@ -310,7 +310,7 @@ volume, then it contains some nonzero point from the lattice.
     is compact, convex, symmetric about the origin, and Lebesgue measurable. In particular, 
     we have
     \[ m(A) = \left( \prod_{i=1}^r 2c_i \right) \left( \prod_{i=r+1}^{r+s} \pi c_i^2 \right) 
-    = 2^r \pi^s C = 2^{r+s} \lvert\disc(K)\rvert = 2^n \frac{\lvert\disc(K)\rvert}{2^s} 
+    = 2^r \pi^s C = 2^{r+s} \lvert\disc(K)\rvert^{1/2} = 2^n \cdot \frac1{2^s}\lvert\disc(K)\rvert^{1/2}
     = 2^n \Vol(M_K). \] 
     By Minkowski's lemma (\ref{A5-3}), there exists a nonzero $a \in A \cap M_K$. We write 
     $a = \psi(b)$ for some $b \in {\cal O}_K$. 
