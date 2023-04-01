@@ -312,7 +312,7 @@ all $e \in E$, and a cut requirement function $f : 2^V \to \{0, 1\}$.
 \begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
     \item Let $F = \varnothing$ and let $y_S = 0$ for all $S \in \mathcal{K}$.
     Let $\mathcal{D}$ be the collection of minimal violated sets with respect 
-    to $F$. (At this stage, these are the isolated vertices.)
+    to $F$. (At this stage, these are the sets of isolated vertices in ${\cal K}$.)
 
     \item While $\mathcal{D} \neq \varnothing$:
     \begin{enumerate}[label={Step 2.\arabic*.}]
@@ -329,4 +329,257 @@ all $e \in E$, and a cut requirement function $f : 2^V \to \{0, 1\}$.
     for the network design problem, update $F := F \setminus \{e_i\}$.
 \end{enumerate}
 \end{mdframed}\vspace{-0.25cm}
+Let's look at an example of applying the primal-dual algorithm. 
 
+{\bf Shortest $s,t$-paths.} Recall that this problem can be modelled 
+as a network design problem with the proper cut requirement function 
+$f : 2^V \to \{0, 1\}$ defined by 
+\[ f(S) = \begin{cases}
+    1 & \text{if } |S \cap \{s, t\}| = 1, \\ 
+    0 & \text{otherwise.}
+\end{cases} \] 
+Consider the following graph $G = (V, E)$, where we want to find the shortest 
+path from $s$ to $t$.
+\begin{center}
+    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+        \node[main, fill=yellow] (s) at (0, 0) {$s$}; 
+        \node[main] (a) at (2, 0) {$a$};
+        \node[main, fill=yellow] (t) at (6, 0) {$t$};
+        \node[main] (b) at (1.5, -2) {$b$};
+        \node[main] (c) at (5.5, -2) {$b$};
+
+        \draw (s) -- (a) node[midway, above] {2};
+        \draw (s) -- (b) node[midway, below left] {3};
+        \draw (a) -- (t) node[midway, above] {4};
+        \draw (b) -- (c) node[midway, below] {4};
+        \draw (c) -- (t) node[midway, below right] {2};
+    \end{tikzpicture} 
+\end{center}\vspace{-0.25cm}
+At Step 1, we initialize $F = \varnothing$ and $y_S = 0$ for all $S \in {\cal K}$. 
+The collection of minimal violated sets with respect to $F = \varnothing$ is 
+${\cal D} = \{\{s\}, \{t\}\}$, because at this point, every set $S \in {\cal K}$ 
+is violated, and these are the minimal sets containing exactly one of $s$ or $t$.
+
+Next, we enter the while loop. We grow the $y_S$ values for $S \in {\cal D}$ 
+uniformly until an edge becomes tight. This happens when $y_{\{s\}} = y_{\{t\}} = 2$, 
+where both the edges $sa$ and $ct$ become tight. We update 
+$F = \{sa, ct\}$, and the collection of minimal violated sets with respect to 
+$F = \{sa, ct\}$ is ${\cal D} = \{\{s, a\}, \{c, t\}\}$.
+
+\begin{center}
+    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+        \node[main, fill=yellow] (s) at (0, 0) {$s$}; 
+        \node[main] (a) at (2, 0) {$a$};
+        \node[main, fill=yellow] (t) at (6, 0) {$t$};
+        \node[main] (b) at (1.5, -2) {$b$};
+        \node[main] (c) at (5.5, -2) {$c$};
+        \node[draw, color=red, inner sep=0pt, circle, yscale=0.95, fit={(s)}] {};
+        \node[draw, color=red, inner sep=0pt, circle, yscale=0.95, fit={(t)}] {};
+        \node[color=red] (iter1s) at (-0.5, 0.25) {\small $2$};
+        \node[color=red] (iter1t) at (6.5, 0.25) {\small $2$};
+
+        \draw [color=red] (s) -- (a) node[midway, above] {2};
+        \draw (s) -- (b) node[midway, below left] {3};
+        \draw (a) -- (t) node[midway, above] {4};
+        \draw (b) -- (c) node[midway, below] {4};
+        \draw [color=red] (c) -- (t) node[midway, below right] {2};
+    \end{tikzpicture} 
+\end{center}\vspace{-0.25cm}
+
+During the next iteration, we increase the $y_S$ values for $S \in {\cal D}$ 
+again until another edge becomes tight. This happens when $y_{\{s, a\}} 
+= y_{\{c, t\}} = 1$, in which case edges $sb$ and $at$ become tight since 
+$y_{\{s\}} + y_{\{s, a\}} = 2 + 1 = 3 = c_{sb}$ and 
+$y_{\{t\}} + y_{\{s,a\}} + y_{\{c,t\}} = 2 + 1 + 1 = 4 = c_{at}$.
+We update $F = \{sa, ct, sb, at\}$. There are no more violated 
+sets, so we exit the while loop since ${\cal D} = \varnothing$. 
+
+\begin{center}
+    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+        \node[main, fill=yellow] (s) at (0, 0) {$s$}; 
+        \node[main] (a) at (2, 0) {$a$};
+        \node[main, fill=yellow] (t) at (6, 0) {$t$};
+        \node[main] (b) at (1.5, -2) {$b$};
+        \node[main] (c) at (5.5, -2) {$c$};
+        \node[draw, color=red, inner sep=0pt, circle, yscale=0.95, fit={(s)}] (iter1sc) {};
+        \node[draw, color=red, inner sep=0pt, circle, yscale=0.95, fit={(t)}] (iter1tc) {};
+        \node[color=red] (iter1s) at (-0.5, 0.25) {\small $2$};
+        \node[color=red] (iter1t) at (6.5, 0.25) {\small $2$};
+        \node[draw, color=blue, inner sep=0pt, ellipse, yscale=1, fit={(s) (a) (iter1sc) (iter1s)}] {};
+        \node[draw, color=blue, inner sep=0pt, ellipse, yscale=1, fit={(t) (c) (iter1tc) (iter1t)}] {};
+        \node[color=blue] (iter2s) at (-0.5, 0.75) {\small $1$};
+        \node[color=blue] (iter2t) at (7, 0.25) {\small $1$};
+
+        \draw [color=red] (s) -- (a) node[midway, above] {2};
+        \draw [color=blue] (s) -- (b) node[midway, below left] {3};
+        \draw [color=blue] (a) -- (t) node[midway, above] {4};
+        \draw (b) -- (c) node[midway, below] {4};
+        \draw [color=red] (c) -- (t) node[midway, below right] {2};
+    \end{tikzpicture} 
+\end{center}\vspace{-0.25cm}
+
+Now, we go to the reverse delete step. We initially have $F = \{sa, ct, sb, at\}$. 
+Going backwards, we see that $at$ cannot be removed as $F \setminus \{at\}$ 
+is no longer feasible for the shortest $s,t$-path problem. Next, we 
+see that $sb$ can be removed and so can $ct$, so our final result is 
+$F = \{sa, at\}$. 
+
+\subsection{Efficiency of the Primal-Dual Algorithm} \label{subsec:7.5}
+In order to implement the primal-dual algorithm efficiently, we will 
+only keep track of the nonzero values $y_S$ for $S \in {\cal K}$. 
+There are up to $2^{|V|}$ entries in $y$, so it will be extremely 
+inefficient to set all of them to $0$ at the start of the algorithm.
+We only need $y$ to keep track of tightness; that is, whether or not
+$c_e = \sum_{S \in {\cal K}\,:\,e \in \delta(S)} y_S$. 
+
+The computation of ${\cal D}$ in each iteration of Step 2 
+can be done efficiently using Lemma~\ref{lemma:7.1}, which states that 
+\[ \mathcal{D} = \{S \subseteq V : \text{$S$ is a connected component of $(V, F)$ 
+such that $f(S) = 1$}\}. \]
+Note that $(V, F)$ has exactly $|V|$ components at the start of the 
+algorithm, and in each iteration of Step 2, the number of connected 
+components of $(V, F)$ decreases. Hence, there are at most 
+$|V|$ iterations of Step 2. Moreover, we have that $|{\cal D}| \leq |V|$, 
+so during each iteration, at most $|V|$ of the $y_S$ values become nonzero.
+Therefore, at the end of the algorithm, there are at most $|V| \times |V| = 
+|V|^2$ nonzero $y_S$ values for $S \in {\cal K}$. 
+
+We cannot actually implement continuous growth, so we need a different 
+way of doing so. Instead, the $y_S$ values will be increased by 
+\[ \min_{e\in E} \left\{ \frac{1}{|\{S \in {\cal D} : e \in \delta(S)\}|} 
+\left( c_e - \sum_{S \in {\cal K}\,:\,e \in \delta(S)} y_S \right) \right\} \] 
+at once, and this value can be efficiently computed.
+
+Finally, reverse delete can be implemented efficiently by computing 
+${\cal D}$ with respect to $F \setminus \{e_i\}$ for each edge $e_i$ 
+and checking whether or not ${\cal D}$ is empty.
+
+\subsection{Approximation Guarantee of the Primal-Dual Algorithm} \label{subsec:7.6}
+Let $F \subseteq E$ be the set of edges returned by the primal-dual algorithm, 
+and let $y$ be the solution to the dual LP at the end of the algorithm. 
+We will show that 
+\[ \sum_{e \in F} c_e \leq 2 \sum_{S \in {\cal K}} y_S, \] 
+Assuming this, we obtain 
+\[ \sum_{e \in F} c_e \leq 2 \sum_{S \in {\cal K}} y_S \leq 2 \cdot 
+\text{OPT}_{\text{dual LP}} = 2 \cdot \text{OPT}_{\text{primal LP}} 
+\leq 2 \cdot \text{OPT}_{\text{primal IP}}. \] 
+Note that if $e \in F$, then we are guaranteed that $e$ is tight, so 
+\[ c_e = \sum_{S \in {\cal K}\,:\,e \in \delta(S)} y_S. \]
+This gives us one part of complementary slackness. However, it does not 
+need to be true in general that for every $S \in {\cal K}$ with 
+$y_S > 0$, we have $|F \cap \delta(S)| = 1$. It might not even be true that 
+for every $S \in {\cal K}$ with $y_S > 0$, we have $|F \cap \delta(S)| \leq 2$,
+which would immediately imply that $\sum_{e \in F} c_e \leq 2 \sum_{S \in {\cal K}} y_S$.
+
+Let's fix some notation. Let $t$ be the number of iterations of Step 2. 
+For each $i = 1, \dots, t$:
+\begin{itemize}
+    \item Let ${\cal D}_i$ be the collection of minimal violated sets 
+    at the beginning of the $i$-th iteration of Step 2.
+    \item Let $\Delta_i$ be the ``duration'' of the $i$-th iteration of 
+    Step 2. That is, $\Delta_i$ is equal to how much we increased 
+    the $y_S$ values for $S \in {\cal D}_i$, while others stay fixed. 
+    \item Let $F_i \subseteq E$ be the set of edges in $F$ at the 
+    start of the $i$-th iteration of Step 2.
+\end{itemize}
+
+\begin{lemma}{lemma:7.3}
+    For every $i = 1, \dots, t$, we have that
+    \[ \sum_{S \in {\cal D}_i} |F \cap \delta(S)| \leq 2|{\cal D}_i|. \] 
+\end{lemma}\vspace{-0.25cm}
+
+Before we prove the lemma, let's see how this implies the desired inequality. 
+
+\begin{theo}{theo:7.4}
+    We have the inequality
+    \[ \sum_{e \in F} c_e \leq 2 \sum_{S \in {\cal K}} y_S. \] 
+    In particular, the primal-dual algorithm is a $2$-approximation algorithm 
+    for the network design problem. 
+\end{theo}\vspace{-0.25cm}
+\begin{pf}[Theorem~\ref{theo:7.4}]
+    Since $y_S$ increases by $\Delta_i$ at iteration $i$ whenever $S$ 
+    is a minimal violated set for every $S \in {\cal K}$, we have 
+    \[ y_S = \sum_{i=1,\dots, t\,:\,S \in {\cal D}_i} \Delta_i. \] 
+    Then we obtain 
+    \begin{align*}
+        c(F) = \sum_{e \in F} c_e 
+        &= \sum_{e \in F} \sum_{S \in {\cal K}\,:\,e\in\delta(S)} y_S \\
+        &= \sum_{S \in {\cal K}} |\delta(S) \cap F| y_S \\ 
+        &= \sum_{S \in {\cal K}} |\delta(S) \cap F| \sum_{i=1,\dots, t\,:\,S \in {\cal D}_i} \Delta_i \\ 
+        &= \sum_{i=1}^t \Delta_i \sum_{S \in {\cal D}_i} |\delta(S) \cap F| \\ 
+        &\leq \sum_{i=1}^t \Delta_i \cdot 2|{\cal D}_i| \\ 
+        &= 2 \sum_{S \in {\cal K}} \sum_{i=1,\dots, t\,:\,S \in {\cal D}_i} \Delta_i \\ 
+        &= 2 \sum_{S \in {\cal K}} y_S,
+    \end{align*}
+    where the inequality follows from Lemma~\ref{lemma:7.3}. \qed 
+\end{pf}\vspace{-0.15cm}
+
+We now prove the lemma, which did the bulk of the work in giving us the 
+approximation guarantee. 
+
+\begin{pf}[Lemma~\ref{lemma:7.3}]
+    Let $G' = (U, H)$ be the graph obtained from the original graph 
+    $G = (V, E)$ after contracting the connected components of $(V, F_i)$ 
+    independently. For each $u \in U$, let $S_u \subseteq V$ denote the 
+    vertices of $G$ that were contracted to obtain $u$ in $G'$. 
+    Note that $H$ has no edges in $F_i$ as they have been contracted, 
+    but $H$ may contain parallel edges. Proving the lemma is now equivalent 
+    to showing that 
+    \[ \sum_{u\in U\,:\,S_u \in {\cal D}_i} |\delta(S_u) \cap F| \leq 
+    2 \cdot |\{u\in U : S_u \in {\cal D}_i\}|. \] 
+    {\bf Claim 1.} $(U, F \cap H)$ does not contain any cycles. 
+
+    {\bf Proof of Claim 1.} Suppose by way of contradiction that 
+    $(U, F \cap H)$ contains some cycle $C'$. Let $g$ be the last 
+    edge from $C'$ that was added to $F$. We consider the point 
+    in time when $g$ was considered during the reverse delete step. 
+    Note that $g$ is contained in some cycle $C$ formed by some 
+    of the edges in $C' \cup F_i$. When $g$ is considered during 
+    reverse delete, all the edges in $C$ are still present. 
+    It follows that $g$ is removed during reverse delete, contradicting 
+    the fact that $g$ is part of the final output $F$ of the algorithm. 
+    \hfill $\blacksquare$
+
+    {\bf Claim 2.} For every $u \in U$ such that $S_u \notin {\cal K}$, 
+    we have $|\delta(S_u) \cap F| \geq 2$ or $|\delta(S_u) \cap F| = 0$. 
+    In particular, for every $u \in U$ with $S_u \notin {\cal D}_i$,
+    we have $|\delta(S_u) \cap F| \geq 2$ or $|\delta(S_u) \cap F| = 0$.
+
+    {\bf Proof of Claim 2.} Assume that there is some $u \in U$ 
+    with $S_u \notin {\cal K}$ such that $|\delta(S_u) \cap F| = 1$. 
+    Let $g$ be the edge in $\delta(S_u) \cap F$. Since $g$ was not 
+    removed during reverse delete, there is some $S \subseteq U$ 
+    such that $\delta(\bigcup_{v\in S} S_v) \cap F = \{g\}$ 
+    and $\bigcup_{v\in S} S_v \in {\cal K}$. 
+    
+    Let $C_1, \dots, C_k \subseteq U$ denote the connected components 
+    of $(U, F \cap H)$. Since $\delta(\bigcup_{v\in S} S_v) \cap F = \{g\}$, 
+    we see for every connected component $C_i$ such that 
+    $u \notin C_i$, we have $C_i \subseteq S$ or $C_i \cap S = \varnothing$. 
+    Then without loss of generality, we may write 
+    $S = \{u\} \cup \bigcup_{j \in J} C_j$
+    where $J \subseteq \{1, \dots, k\}$ and $u \notin C_j$ for all $j \in J$. 
+    Since $C_j$ are connected components of $(U, F \cap H)$ and 
+    $F$ is a feasible solution for the network design problem, we have 
+    $\bigcup_{v \in C_j} S_v \notin {\cal K}$ for all $j = 1, \dots, k$. 
+    Moreover, we have $S_u \notin {\cal K}$ by assumption. But then 
+    \[ \bigcup_{v \in S} S_v = S_u \cup \bigcup_{j \in J} \bigcup_{v \in C_j} S_v \notin {\cal K} \] 
+    since the cut requirement function $f : 2^V \to \{0, 1\}$ is proper. 
+    This is a contradiction. \hfill $\blacksquare$
+    
+    We'll call the connected components consisting of only vertex trivial 
+    as they have no edges. Combining the claims, we have that 
+    \begin{align*}
+        \sum_{u\in U\,:\,S_u\in {\cal D}_i} |\delta(S_u) \cap F| 
+        &= \sum_C \sum_{u\in C\,:\,S_u \in {\cal D}_i} |\delta(S_u) \cap F| \\ 
+        &= \sum_C \left( \sum_{u\in C} |\delta(S_u) \cap F| - \sum_{u\in C\,:\,S_u \notin {\cal D}_i} |\delta(S_u) \cap F| \right) \\ 
+        &\leq \sum_C \left( 2(|C| - 1) - \sum_{u\in C\,:\,S_u \notin {\cal D}_i} 2 \right) \\ 
+        &\leq 2 \cdot \sum_C (|C| - |\{u \in C : S_u \notin {\cal D}_i\}|) \\ 
+        &= 2 \cdot \sum_C |\{u \in C: S_u \in {\cal D_i}\}| \leq 2 \cdot |\{u \in U : S_u \in {\cal D}_i\}|, 
+    \end{align*}
+    where the sums over $C$ above range over the nontrivial connected components $C$ of 
+    $(U, F \cap H)$. We use both Claim 1 and Claim 2 in the first inequality. 
+    Claim 1 guarantees that in a connected component $C$ of $(U, F \cap H)$, 
+    the edges of $F$ form a tree. This means that $F$ has exactly 
+    $|C| - 1$ edges with at least one of the endpoints in $C$. \qed 
+\end{pf}
