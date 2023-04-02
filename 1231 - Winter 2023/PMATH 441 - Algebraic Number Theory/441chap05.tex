@@ -295,11 +295,15 @@ volume, then it contains some nonzero point from the lattice.
 
 \begin{pf}[Proposition~\ref{prop:5.9}]
     We already know that $W \subseteq H$. To prove that $H \subseteq W$, we show that 
-    $W^\perp \subseteq H^\perp$. Suppose that $z = (z_1, \dots, z_{r+s}) \in \R^{r+s}$ 
+    $W^\perp \subseteq H^\perp$, noting that orthogonal complements reverse 
+    inclusion. To do this, we'll proceed by contrapositive. 
+    Suppose that $z = (z_1, \dots, z_{r+s}) \in \R^{r+s}$ 
     with $z \notin H^\perp$. We claim that $z \notin W^\perp$. 
 
-    Define $f : K^\times \to \R$ by $f(x) = z \cdot \varphi(x)$, where $\cdot$ 
-    denotes the dot product in $\R^{r+s}$. Let $C = (2/\pi)^s \lvert\disc(K)\rvert^{1/2}$ 
+    Define the map $f : K^\times \to \R$ by $f(x) = z \cdot \varphi(x)$, where $\cdot$ 
+    denotes the dot product in $\R^{r+s}$. If we can show that 
+    there exists some $u \in R^\times$ such that $f(u) \neq 0$, then we're done. 
+    Let $C = (2/\pi)^s \lvert\disc(K)\rvert^{1/2}$ 
     and pick any positive $c_1, \dots, c_{r+s} \in \R$ such that 
     \[ C = c_1 \cdots c_r c_{r+1}^2 \cdots c_{r+s}^2. \] 
     This is always possible since $C \in \R$; one possible choice is $c_1 = C$ and 
@@ -339,15 +343,73 @@ volume, then it contains some nonzero point from the lattice.
     Without loss of generality, suppose that $\langle b \rangle = \langle b_1 \rangle$. 
     Then we can write $b = ub_1$ for some $u \in R^\times$. 
     
-    Let $L = z_1 \log c_1 + \cdots + z_{r+s} \log c_{r+s}$. Note that 
+    Let $L = z \cdot (\log c_1, \dots, \log c_{r+s}) = z_1 \log c_1 + \cdots + z_{r+s} \log c_{r+s}$. Note that 
     \begin{align*}
         f(b) = f(ub_1) &= z \cdot \varphi(ub_1) \\ 
-        &= z \cdot (\varphi(u) + \varphi(b_1)) \\ 
-        &= z \cdot \varphi(u) + z \cdot \varphi(b_1) \\ 
+        &= z \cdot (\varphi(u) + \varphi(b_1)) \\
         &= f(u) + f(b_1). 
     \end{align*}
     From this, it can be shown using the claim and the triangle inequality that 
     \[ |f(u) - L| \leq |f(b_1)| + \left( \sum_{i=1}^r |z_i| + \frac12 \sum_{i=r+1}^{r+s} |z_i| \right) 
     \cdot \log C =: B. \] 
-    Note that $B$ does not depend on the choice of $c_1, \dots, c_{r+s}$.
-\end{pf}\vspace{-0.25cm}    
+    Note that $B$ depends only on $z$ and $C$, and not the choice of 
+    $c_1, \dots, c_{r+s}$.
+
+    {\bf Case 1.} If $r + s - 1 = 0$, then $\dim_{\R} H = r + s - 1 = 0$ 
+    so that $W \subseteq H = \{0\}$, and hence $W = H$. 
+
+    {\bf Case 2.} Suppose that $r + s - 1 > 0$. By replacing $z \notin H^\perp$
+    with a multiple of $[1, \dots, 1, 2, \dots, 2]^T \in H^\perp$ 
+    (where $1$ appears $r$ times and $2$ appears $s$ times), we 
+    may assume that there exists $p, q \in \{1, \dots, r+s\}$ such that 
+    $z_p = 0$ and $z_q \neq 0$. Now, we pick representatives $c_1, \dots, 
+    c_{r+s}$ with $C = c_1 \cdots c_r c_{r+1}^2 \cdots c_{r+s}^2$ such that 
+    \begin{enumerate}[(1)]
+        \item $c_q$ is arbitrarily large; 
+        \item $c_p$ is arbitrarily small; 
+        \item $c_i = 1$ for all $i \in \{p, q\}$. 
+    \end{enumerate}
+    Note that we have $L = z \cdot (\log c_1, \dots, \log c_{r+s}) 
+    = z_q \log c_q$ since $z_p = 0$ and $c_i = 1$ for all $i \notin \{p, q\}$. 
+    By a careful choice of $c_p$ and $c_q$, we may assume that $|L| = |z_q \log c_q| > B$. 
+    But we also have $|f(u) - L| \leq B$, which implies that $f(u) \neq 0$. 
+    We conclude that $f(u) = z \cdot \varphi(u) \neq 0$, so $z \notin W^\perp$. \qed 
+\end{pf}\newpage  
+
+We revisit the example from the end of Section~\ref{subsec:4.2}. 
+Let $K = \Q(\alpha)$ where $\alpha \in \C$ is a root of $f(x) = x^3 + 4x + 1$. 
+The discriminant of $f(x)$ is $-283$, which is prime, so $R = {\cal O}_K = \Z[\alpha]$. 
+We claimed that $R$ was not a PID. We had reduced the problem to determining 
+if the ideal $P = \langle \alpha + 1, 2 \rangle$ was principal or not, 
+and now we have the tools to show that it is in fact not principal.
+
+Suppose that $P = \langle \alpha + 1, 2 \rangle$ were principal with 
+$P = \langle \beta \rangle$. Note that $\alpha \in R^\times$ since 
+the constant term of $f(x)$ is $1$ and hence $|N_{K/\Q}(\alpha)| = 1$.
+In particular, we also have $P = \langle \alpha^t \beta \rangle$ for all $t \in \Z$. 
+
+Let $\alpha_1, \alpha_2, \alpha_3$ be the roots of $f(x)$ where $\alpha_1 \in \R$ 
+and $\alpha_2, \alpha_3 \in \C \setminus \R$ with $\overline{\alpha_2} = \alpha_3$. 
+The embeddings of $K$ in $\C$ are $\sigma_i(\alpha) = \alpha_i$ for $i \in \{1, 2, 3\}$. 
+Using a computer, we find that 
+\[ \alpha_1 \approx 0.24627 \approx 1/4. \] 
+This implies that $1 = |N_{K/\Q}(\alpha)| = |\alpha_1||\alpha_2|^2 \approx 
+|\alpha_2|^2/4$, so $|\alpha_2| \approx 2$. Then we have 
+\[ \varphi(\alpha) \approx (\log 1/4, \log 2) = (-\log 4, \log 2). \] 
+Write $\varphi(\beta) = (\log |\beta_1|, \log |\beta_2|)$ where 
+$\beta_1 = \sigma_1(\beta)$ and $\beta_2 = \sigma_2(\beta)$. This yields 
+\[ \varphi(\alpha^t \beta) = t\varphi(\alpha) + \varphi(\beta) 
+\approx (-t \log 4 + \log |\beta_1|, t\log 2 + \log|\beta_2|). \] 
+As we alluded to before, we now reduce to the ``small'' cases where 
+\[ 0 \leq \log |\beta_1| \leq \log 4, \] 
+or equivalently, $1 \leq |\beta_1| \leq 4$. But we also have 
+$2 = N(P) = |N_{K/\Q}(\beta)| = |\beta_1||\beta_2|^2$, which combined with
+\[ |\beta_2|^2 \leq |\beta_1||\beta_2|^2 \leq 4|\beta_2|^2 \] 
+gives $\frac{1}{\sqrt{2}} \leq |\beta_2| \leq \sqrt{2}$. In \ref{A9-2}, 
+we show that the only possibilities are $\beta \in \{1, 3 + \alpha^2\}$. 
+
+It is clear that $P \neq \langle 1 \rangle$, and we have $P \neq 
+\langle 3 + \alpha^2 \rangle$ by checking that $|N_{K/\Q}(3+\alpha^2)| \neq 2$. 
+It follows that $P$ is not principal, so $R$ is not a PID. 
+
+
