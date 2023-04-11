@@ -1,0 +1,283 @@
+\section{Uncapacitated Facility Location Problem} \label{sec:8}
+
+\subsection{Formulation} \label{subsec:8.1}
+In the uncapacitated facility location problem, we are given a set $F$ 
+of possible facility locations, a set $D$ of clients, facility opening 
+costs $f_i$ for all $i \in F$, and assignment costs $c_{ij}$ for all 
+$i \in F$ and $j \in D$, corresponding to assigning client $j$ to 
+facility $i$. Intuitively, we can view $c_{ij}$ as the distance from client 
+$j$ to facility $i$. 
+
+We will assume that the assignment costs in this problem are metric and satisfy 
+the triangle inequality. That is, for facilities $i, h \in F$ and 
+clients $j, k \in D$, we have 
+\[ c_{ij} \leq c_{ik} + c_{hk} + c_{hj}. \] 
+The goal is to open a subset of facilities $F' \subseteq F$ such that 
+we minimize 
+\[ \sum_{i \in F'} f_i + \sum_{j \in D} \min_{i\in F'} c_{ij}. \] 
+In other words, we are picking facilities such that we minimize the 
+facility opening costs while still being ``close'' to the clients. 
+For each client $j \in D$, the term $\min_{i\in F'} c_{ij}$ can be thought of as 
+picking the closest facility $i$ in $F'$ with respect to $j$. 
+ 
+Define the following binary variables.
+\begin{itemize}
+    \item For all $i \in F$, let $y_i$ be $1$ if facility $i$ is selected to be 
+    open, and $0$ otherwise.
+    \item For all $i \in F$ and $j \in D$, let $x_{ij}$ be $1$ if client $j$ is 
+    assigned to facility $i$, and $0$ otherwise. 
+\end{itemize}
+Then an IP formulation of the uncapacitated facility problem is as follows:
+\begin{align*}
+    \min\quad & \sum_{i\in F} f_i y_i + \sum_{i\in F} \sum_{j\in D} c_{ij} x_{ij} \\ 
+    \text{subject to}\quad & \sum_{i\in F} x_{ij} = 1
+    && \text{for all $j \in D$} \\
+    & x_{ij} \leq y_i && \text{for all $i \in F$ and $j \in D$} \\
+    & x_{ij} \in \{0, 1\} && \text{for all $i \in F$ and $j \in D$} \\ 
+    & y_i \in \{0, 1\} && \text{for all $i \in F$}
+\end{align*}
+The first constraint requires that every client is assigned to 
+exactly one facility. The second constraint says that we can only 
+assign a client to a facility if the facility is open. 
+
+\subsection{Primal-Dual Algorithm}
+Since this problem is $\NP$-hard, we will give a primal-dual approach to solve it. 
+We will be considering the LP relaxation, which replaces the constraints 
+$x_{ij} \in \{0, 1\}$ and $y_i \in \{0, 1\}$ with $x_{ij} \geq 0$ and 
+$y_i \geq 0$ respectively.
+\begin{align*}
+    \min\quad & \sum_{i\in F} f_i y_i + \sum_{i\in F} \sum_{j\in D} c_{ij} x_{ij} \\ 
+    \text{subject to}\quad & \sum_{i\in F} x_{ij} = 1
+    && \text{for all $j \in D$} \\
+    & x_{ij} \leq y_i && \text{for all $i \in F$ and $j \in D$} \\
+    & x_{ij} \geq 0 && \text{for all $i \in F$ and $j \in D$} \\ 
+    & y_i \geq 0 && \text{for all $i \in F$}
+\end{align*}
+The dual of the LP relaxation is 
+\begin{align*}
+    \min\quad & \sum_{j\in D} v_j \\ 
+    \text{subject to}\quad & \sum_{j\in D} w_{ij} \leq f_i
+    && \text{for all $i \in F$} \\
+    & v_j - w_{ij} \leq c_{ij} && \text{for all $i \in F$ and $j \in D$} \\
+    & w_{ij} \geq 0 && \text{for all $i \in F$ and $j \in D$}
+\end{align*}
+We give some intuition for the dual LP. 
+\begin{itemize} 
+    \item We can think of $v_j$ as the price that client $j$ is willing to pay 
+    towards its part of the cost of the solution. If the facility costs are all 
+    zero, then $v_j = \min_{i\in F} c_{ij}$. 
+    \item When there are nonzero facility costs, the facility opening cost $f_i$ 
+    is split into nonnegative ``cost shares'' $w_{ij}$ among the clients so that 
+    $\sum_{j\in D} w_{ij} \leq f_i$. A client $j$ will only need to pay this 
+    share if it is assigned to facility $i$. 
+    \item Each client $j$ is willing to pay the lowest cost over all facilities 
+    of its service cost and its share of the facility cost, so we have 
+    $v_j = \min_{i \in F} (c_{ij} + w_{ij})$. Hence, by considering the constraint 
+    $v_j \leq c_{ij} + w_{ij}$ (which we rearranged as $v_j - w_{ij} \leq c_{ij}$ 
+    above), the objective function maximizing $\sum_{j\in D} v_j$ forces 
+    $v_j$ to be equal to the smallest $c_{ij} + w_{ij}$ over all facilities $i \in F$.
+\end{itemize} 
+We'll say that a dual feasible solution $(v, w)$ is {\bf maximal} if we cannot 
+increase any value of $v_j$ and still derive a set of $w_{ij}$ that gives a 
+feasible solution. This dual solution will have some nice structure. First, we 
+state a few definitions. 
+\begin{itemize}
+    \item We say that a client $j \in D$ is a {\bf neighbour} of a 
+    facility $i \in F$ if $v_j \geq c_{ij}$. Let 
+    $N(j) = \{i \in F : v_j \geq c_{ij}\}$ be the neighbours of a client 
+    $j \in D$, and $N(i) = \{j \in D : v_j \geq c_{ij}\}$ be the 
+    neighbours of a facility $i \in F$. 
+    \item A client $j \in D$ {\bf contributes} to a facility $i \in F$
+    if $w_{ij} > 0$. 
+    \item A facility $i \in F$ is {\bf tight} if $\sum_{j\in D} w_{ij} = f_i$.
+\end{itemize}
+Given dual variables $v$, we can obtain a feasible set of cost shares 
+$w$ (if they exist) by setting $w_{ij} = \max(0, v_j - c_{ij})$. If we 
+derive $w$ in this way and client $j$ contributes to facility $i$, then $j$ 
+neighbours $i$ since $w_{ij} > 0$ implies that $v_j > c_{ij}$. Moreover, when 
+$j \in N(i)$, we see that $w_{ij} = \max(0, v_j - c_{ij}) > 0$ implies
+$w_{ij} = v_j - c_{ij}$, or equivalently $v_j = c_{ij} + w_{ij}$. 
+
+Let $T = \{i \in F : \sum_{j\in D} w_{ij} = f_i\}$ be the set of all tight 
+facilities; that is, the sum of the cost shares is equal to the facility 
+opening cost and the dual constraint is tight. Note that in a maximal dual 
+solution $(v, w)$, every client must neighbour some facility in $T$. 
+To see this, we claim that in a maximal dual solution, we must have 
+$v_j = \min_{i\in F} (c_{ij} + w_{ij})$ and some facility $i \in F$ 
+attaining the minimum must be in $T$. For this facility $i$, we have 
+$v_j \geq c_{ij}$ and so $j \in N(i)$. 
+
+To prove the claim, note that if $v_j < \min_{i\in F} (c_{ij} + w_{ij})$, 
+then we can increase $v_j$ and still remain feasible, so $(v, w)$ is 
+not a maximal dual solution. Now, suppose that $v_j = \min_{i\in F} 
+(c_{ij} + w_{ij})$, but all facilities $i \in F$ attaining the 
+minimum are not in $T$. Since $\sum_{j\in D} w_{ij} < f_i$ for all 
+$i \in F$ attaining the minimum, we can increase $v_j$ and $w_{ij}$ 
+for these facilities $i$ and so $(v, w)$ is again not a maximal dual solution.
+
+For a facility $i \in T$, we have that 
+\[ f_i + \sum_{j \in N(i)} c_{ij} = \sum_{j \in N(i)} (w_{ij} + c_{ij}) 
+= \sum_{j\in N(i)} v_j. \] 
+The first equality follows since $w_{ij} > 0$ implies $j \in N(i)$, 
+and so $\sum_{j\in D} w_{ij} = \sum_{j \in N(i)} w_{ij} = f_i$. 
+The second equality comes from the fact that $j \in N(i)$ implies 
+$v_j = w_{ij} + c_{ij}$. 
+
+Since all clients have a neighbour in $T$, 
+it might appear that we have an optimal algorithm by opening all the 
+facilities in $T$ and assigning each client to its neighbour in $T$. However, 
+it is possible that a client $j$ neighbours multiple facilities in $T$
+and contributes to many of them, therefore, using $v_j$ multiple times 
+to pay for the cost of the facilities. We repair this by opening a 
+subset of facilities $T' \subseteq T$ such that each client will contribute at 
+most one facility in $T'$. If we do this in a way that the clients 
+not neighbouring a facility in $T'$ are not too far from the facilities in $T'$, 
+we can get a decent performance guarantee. 
+
+From this analysis, we now give the primal-dual algorithm. We will construct 
+a maximal dual solution $(v, w)$ by increasing the dual variables $v_j$. 
+Let $S$ be the set of clients whose duals we are increasing, which 
+we can think of the set of clients that still need to be served. 
+We let $T$ be the set of tight facilities as above. 
+
+Initially, we have $S = D$ and $T = \varnothing$. We will increase $v_j$ uniformly 
+for all $j \in S$. When $v_j = c_{ij}$ for some $i$, we have 
+that $i \in N(j)$, and we increase $w_{ij}$ uniformly along with the $v_j$. 
+We continue increasing these values until one of two things happens: either $j$ 
+becomes a neighbour of a facility in $T$, or some facility $i$ becomes tight.
+In the first case, we remove $j$ from $S$ since it is being served by 
+that facility in $T$. In the second case, we add $i$ to $T$ 
+and remove all of its neighbouring clients $N(i)$ from $S$, as they are now 
+served by $i$. 
+
+We repeat this until $S$ becomes empty, in which case every client will 
+neighbour a facility in $T$. We select a subset $T' \subseteq T$ by iteratively 
+picking an arbitrary $i \in T$ and deleting all facilities $i'$ in $T$ such that 
+there is a client $j$ contributing to both $i$ and $i'$. We open all facilities 
+in $T'$ and assign each client to the closest open facility in $T'$. 
+
+\begin{mdframed}[
+    linewidth=1pt,
+    linecolor=black,
+    bottomline=false,topline=false,rightline=false,
+    innerrightmargin=0pt,innertopmargin=0pt,innerbottommargin=0pt,
+    innerleftmargin=1em,% Distance between vertical rule & proof content
+    skipabove=0.75\baselineskip
+]
+{\bf Input.} A set of facilities $F$, a set of clients $D$, facility 
+opening costs $f_i$ for all $i \in F$, and assignment costs for all 
+$i \in F$ and $j \in D$.
+
+{\bf Output.} A set of facilities $T' \subseteq F$ to open with 
+an approximation guarantee.
+\begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
+    \item Initialize $v_j = 0$ and $w_{ij} = 0$ for all $i \in F$ and $j \in D$. 
+    Set $S = D$ and $T = \varnothing$. 
+
+    \item While $S \neq \varnothing$:
+    \begin{enumerate}[label={Step 2.\arabic*.}]
+        \item Increase $v_j$ for all $j \in S$ and
+        $w_{ij}$ for all $i \in N(j)$ with $j \in S$ uniformly 
+        until some client $j \in S$ neighbours some facility $i \in T$ or 
+        some facility $i \notin T$ becomes tight. 
+
+        \item If some $j \in S$ neighbours some $i \in T$, set 
+        $S = S \setminus \{j\}$. 
+
+        \item If $i \notin T$ becomes tight, set $T = T \cup \{i\}$ and 
+        $S = S \setminus N(i)$.
+    \end{enumerate}
+
+    \item Let $T' = \varnothing$. While $T \neq \varnothing$, pick $i \in T$ 
+    and set $T' = T' \cup \{i\}$. Then set 
+    \[ T = T \setminus \{h \in T : \text{there exists a client $j \in D$ 
+    such that $w_{ij} > 0$ and $w_{hj} > 0$}\}. \] 
+    That is, we remove facilities $h \in T$ such that a client $j$ 
+    contributes to both $h$ and $i$. 
+\end{enumerate}
+\end{mdframed}\vspace{-0.25cm}
+
+\subsection{Approximation Guarantee of the Primal-Dual Algorithm} \label{subsec:8.3}
+We claim that the above primal-dual algorithm is a $3$-approximation algorithm for 
+the uncapacitated facility location problem, where we assume 
+that the assignment costs $c_{ij}$ are metric. As a reminder, 
+this means that for facilities $i, h \in F$ and clients $j, k \in D$, we have 
+$c_{ij} \leq c_{ik} + c_{hk} + c_{hj}$.
+
+\begin{theo}{theo:8.1}
+    The algorithm is a $3$-approximation algorithm for the 
+    uncapacitated facility location problem.
+\end{theo}\vspace{-0.25cm}
+
+To prove this, we will do this in a few steps. Let $(v, w)$ be the dual 
+solution constructed by the algorithm and let $T'$ be the output of the algorithm.
+Let $A$ be the set of clients neighbouring a facility in $T'$.
+
+\begin{lemma}{lemma:8.2}
+    We have the inequality 
+    \[ \sum_{i\in T'} f_i + \sum_{j\in A} \min_{i\in T'} c_{ij} \leq \sum_{j\in A} v_j. \] 
+\end{lemma}\vspace{-0.25cm}
+\begin{pf}[Lemma~\ref{lemma:8.2}]
+    Let $j \in A$. If $j$ contributes to some $i \in T'$, then we assign $j$ 
+    to $i$. By construction of the algorithm, any client contributes to 
+    at most one facility in $T'$, so this assignment is unique. 
+    For a client $j$ which neighbours facilities in $T'$ but does not contribute to 
+    any of them, we assign $j$ to some arbitrary neighbour in $T'$.
+    
+    Let $A(i) \subseteq N(i)$ be the neighbouring clients assigned to facility 
+    $i \in T'$. From our discussion above, we have
+    \[ \sum_{i\in T'} \left( f_i + \sum_{j\in A(i)} c_{ij} \right) 
+    = \sum_{i\in T'} \sum_{j\in A(i)} (w_{ij} + c_{ij}) 
+    = \sum_{i\in T'} \sum_{j\in A(i)} v_j, \] 
+    where the first equality holds because $i \in T'$ implies 
+    $\sum_{j\in D} w_{ij} = f_i$ and $w_{ij} > 0$ implies $j \in A(i)$. 
+    The inequality then arises from taking the minimum of $c_{ij}$ over $i \in T'$
+     in the sum. \qed 
+\end{pf}\vspace{-0.25cm}
+
+Due to Lemma~\ref{lemma:8.2}, it remains to bound the assignment costs 
+for the clients not in $A$.
+
+\begin{lemma}{lemma:8.3}
+    For all $j \in D \setminus A$, there exists a facility $i \in T'$ 
+    such that $c_{ij} \leq 3v_j$. 
+\end{lemma}\vspace{-0.25cm}
+
+This result is enough to prove the approximation guarantee in 
+Theorem~\ref{theo:8.1} since 
+\begin{align*}
+    \sum_{i\in T'} f_i + \sum_{j\in D} \min_{i\in T'} c_{ij} 
+    &= \sum_{i\in T'} f_i + \sum_{j\in A} \min_{i\in T'} c_{ij} + 
+    \sum_{j\in D \setminus A} \min_{i\in T'} c_{ij} \\ 
+    &\leq \sum_{j\in A} v_j + 3 \cdot \sum_{j\in D \setminus A} v_j \\
+    &\leq 3 \cdot \sum_{j\in D} v_j \leq 3 \cdot \text{OPT}_{\text{primal LP}} 
+    \leq 3 \cdot \text{OPT}_{\text{primal IP}}, 
+\end{align*}
+where the first inequality follows from combining Lemma~\ref{lemma:8.2} and
+Lemma~\ref{lemma:8.3}, and the last two inequalities follow 
+from weak duality and the fact that the primal LP is a relaxation of the 
+primal IP. 
+
+\begin{pf}[Lemma~\ref{lemma:8.3}]
+    Let $j \in D \setminus A$. Then $j$ is a client that does not 
+    neighbour a facility in $T'$. During the algorithm, we stopped increasing 
+    $v_j$ since $j$ neighboured some $h \in T$. But we must have $h \notin T'$, 
+    for otherwise $j$ would neighbour a facility in $T'$. The facility $h$ 
+    must have been removed from $T'$ during Step 3 of the algorithm, where 
+    there existed another client $k$ such that $k$ contributes to both 
+    $h$ and another facility $i \in T'$. We claim that the 
+    cost of assigning $j$ to this facility $i$ is at most $3v_j$. 
+    Since $c_{ij} \leq c_{hj} + c_{hk} + c_{ik}$ by the triangle inequality, 
+    it is enough to show that each of these three terms is at most $v_j$.
+
+    We have $c_{hj} \leq v_j$ because $j$ is a neighbour of $h$. Consider the 
+    point in the algorithm where we stopped increasing $v_j$. By the choice of 
+    $h$, we know that either $h$ was already in $T$, or the algorithm adds 
+    $h$ to $T$. Since the client $k$ contributes to facility $h$, either 
+    $v_k$ has already stopped increasing or we stop increasing it at the 
+    same point that we stop increasing $v_j$. Since the dual variables 
+    are increased uniformly, we have $v_j \geq v_k$. But client $k$ 
+    contributes to both facilities $h$ and $i$, so $v_k \geq c_{hk}$ 
+    and $v_k \geq c_{ik}$. It follows that $v_j \geq v_k \geq c_{hk}$ and 
+    $v_j \geq v_k \geq c_{ik}$. \qed 
+\end{pf}
