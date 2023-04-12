@@ -798,5 +798,337 @@ explicitly exhibit charts covering the space.
     are the $2 \times 2$ identity matrix. Hence, $M$ is a smooth $1$-dimensional 
     submanifold of $\R^3$.     
 
-    % TODO: Continue from end of Lecture 10 / start of Lecture 11
+    {\bf Remark.} Not all zero sets of functions of class $C^r$ are submanifolds 
+    of class $C^r$. Take the $\alpha$-curve $C = \{(x, y) \in \R^2 : y^2 = 
+    x^2(x+1)\}$, which is the zero set of the function 
+    $F : \R^2 \to \R$ defined by $(x, y) \mapsto y^2 - x^2(x+1)$. 
+    The derivative matrix of $F$ is 
+    \[ DF(x, y) = \begin{bmatrix} -3x^2 - 2x & 2y \end{bmatrix}, \] 
+    which is equal to the zero vector if and only if $(x, y) \in 
+    \{(0, 0), (-2/3, 0)\}$. We see that $(0, 0) \in C$, and this 
+    is the problematic point. 
+
+    \item {\bf (Graph of a function of class $C^r$.)} Let $f : U \subset \R^k 
+    \to \R^{n-k}$ be function of class $C^r$, where $U \subset \R^k$ is open. 
+    Let $M = \{(x, f(x)) \in \R^k \times \R^{n-k} : x \in U\} \subset \R^n$,
+    which we have already seen is a $k$-dimensional submanifold of class $C^r$. 
+    We now view this using the zero set characterization. 
+
+    For all $(x, y) \in M \subset \R^k \times \R^{n-k}$, we have 
+    $y = f(x)$ if and only if $F(x, y) := f(x) - y = 0 \in \R^{n-k}$.
+    Note that $U \times \R^{n-k}$ is an open subset of $\R^k \times \R^{n-k}$. 
+    Then $M$ is the zero set of the $C^r$ function $F : U \times \R^{n-k} 
+    \subset \R^k \times \R^{n-k} \to \R^{n-k}$ given by $(x, y) \mapsto f(x) - y$.
+
+    It remains to check the rank condition. We have that 
+    \[ DF(x, y) = \left[ \begin{array}{c|c} 
+        \dfrac{\partial F}{\partial x} & \dfrac{\partial F}{\partial y} 
+    \end{array} \right] \]
+    which has $n-k$ rows. Since $F(x, y) = f(x) - y$, we see that 
+    $\partial F/\partial x = Df(x)$ and $\partial F/\partial y = -I_{n-k}$, 
+    so $DF(x, y)$ has rank $n-k$ since $I_{n-k}$ does. 
 \end{enumerate}
+
+\begin{theo}{theo:1.16}
+    Let $M \subset \R^n$. The following are equivalent: 
+    \begin{enumerate}[(i)]
+        \item $M$ is a $k$-dimensional submanifold of class $C^r$ (using Definition~\ref{defn:1.7}).
+        \item $M$ is locally the graph of a function $f : U \subset \R^k \to \R^{n-k}$ 
+        of class $C^r$, where $U \subset \R^k$ is open. 
+        \item $M$ is locally the zero set of a $C^r$ function $F : V \subset \R^n 
+        \to \R^{n-k}$ of maximal rank, where $V \subset \R^n$ is open 
+        (using Definition~\ref{defn:1.15}).
+    \end{enumerate}
+\end{theo}\vspace{-0.25cm}
+
+Due to Corollary~\ref{cor:1.11}, we already know that (i) and (ii) are 
+equivalent. Example (4) above shows that (ii) implies (iii). Therefore, 
+it suffices to prove that (iii) implies (ii), and we will see that this is a 
+direct consequence of the Implicit Function Theorem. Let's recall what this says.
+
+Suppose that $\R^n = \R^{k+m} = \R^k \times \R^m$ has coordinates $(x, y) 
+= (x_1, \dots, x_k, y_1, \dots, y_m)$. Let $U \subset \R^n$ be an open subset 
+and $F : U \subset \R^n \to \R^m$ be a function of class $C^r$. Then the 
+derivative matrix of $F$ is 
+\[ DF(x, y) = \left[ \begin{array}{c|c} 
+    \dfrac{\partial F}{\partial x} & \dfrac{\partial F}{\partial y} 
+\end{array} \right]. \]
+where if $F_1, \dots, F_m$ are the component functions of $F$, 
+then we have $\partial F/\partial x = (\partial F_i/\partial x_j)_{1\leq i\leq m, 
+1\leq j\leq n}$ and $\partial F/\partial y = 
+(\partial F_i/\partial y_j)_{1\leq i, j\leq m}$. In particular, 
+$\partial F/\partial y$ is an $m \times m$ matrix.
+
+\begin{theo}[Implicit Function Theorem]{theo:1.17}
+    Let $(x_0, y_0) \in U$ be such that $F(x_0, y_0) = 0$. Suppose that 
+    \[ \det\left( \frac{\partial F}{\partial y}(x_0, y_0) \right) \neq 0. \] 
+    Then there exists an open neighbourhood $V_0 \subset \R^k$ of $x_0$ 
+    and a unique function $g : V_0 \to \R^m$ of class $C^r$ such that 
+    $g(x_0) = y_0$ and $F(x, g(x)) = 0$ for all $x \in V_0$. 
+\end{theo}\vspace{-0.25cm}
+
+In other words, the Implicit Function Theorem tells us that if 
+$\det(\partial F(x_0, y_0)/\partial y) \neq 0$, then 
+for all points $(x, y) \in \{F \equiv 0\}$ in an open neighbourhood of 
+$(x_0, y_0)$, we have $y = g(x)$ for some function of class $C^r$. Thus, 
+we can express the variables $(y_1, \dots, y_m)$ as functions of 
+$(x_1, \dots, x_k)$ of class $C^r$ near $(x_0, y_0)$. 
+
+Before proving the theorem, we illustrate what the result tells us 
+with a simple example. Let $F(x, y) = x^2 + y^2 - 1$ for all $(x, y) \in \R^2$. 
+Then $F : \R^2 \to \R$ is smooth and has derivative matrix 
+\[ DF(x, y) = \begin{bmatrix}
+    2x & 2y 
+\end{bmatrix}. \] 
+In this case, we have $m = 1$ and $m + k = 2$ so that $k = 1$. We are writing 
+$\R^2 = \R^1 \times \R^1$ where $x$ corresponds to the first copy of $\R^1$ 
+and $y$ corresponds to the second copy. Then $\partial F/\partial y = 2y$, 
+which is nonzero if and only if $y \neq 0$. By the Implicit Function 
+Theorem, the points on 
+\[ \{F \equiv 0\} = \{(x, y) : x^2 + y^2 - 1 = 0\} \] 
+have a $y$-coordinate that can be expressed locally as a function of $x$. 
+This is indeed true since $x^2 + y^2 - 1 = 0$ if and only if 
+$y = \pm\sqrt{1-x^2}$, which is smooth for $x \notin \{\pm1\}$ and hence 
+for $y \neq 0$ on $\{F \equiv 0\}$. These parametrize $\mathbb{S}^1 
+\setminus \{(\pm1, 0)\}$. Similarly, note that 
+$\partial F/\partial x = 2x \neq 0$ if and only if $x \neq 0$, so this 
+holds for the points $(x, y) \neq (0, \pm1)$ on $\mathbb{S}^1$. We see that 
+$\mathbb{S}^1$ can be expressed as $x = \pm\sqrt{1-y^2}$ away from 
+$(0, \pm1)$.
+
+\begin{pf}[Implicit Function Theorem (Theorem~\ref{theo:1.17})]
+    This follows from the Inverse Function Theorem (Theorem~\ref{theo:1.10}).
+    Define $H : U \subset \R^n \to \R^n = \R^k \times \R^m$ by $(x, y) 
+    \mapsto (x, F(x, y))$. The derivative matrix is
+    \[ DH = \left[ \begin{array}{c|c}
+        I_{k\times k} & 0 \\ \hline
+        \partial F/\partial x & \partial F/\partial y
+    \end{array} \right], \]
+    which is an $n \times n$ matrix. 
+    Since $I_{k\times k}$ has rank $k$ and $\partial F/\partial y$ has 
+    rank $m$ at $(x_0, y_0)$ using the fact that it is invertible there, 
+    it follows that $DH(x_0, y_0)$ has rank $k + m = n$. That is, 
+    $\det(DH(x_0, y_0)) \neq 0$ and $H$ is locally invertible with 
+    some inverse $G$ by the Inverse Function Theorem.
+
+    Write $G(u, v) = (G_1(u, v), G_2(u, v))$ where $u \in \R^k$ and
+    $v \in \R^m$, and we separate $G$ into the components $G_1(u, v) \in \R^k$ and 
+    $G_2(u, v) \in \R^m$. Then we have 
+    \begin{align*}
+        (u, v) &= H \circ G(u, v) \\ 
+        &= H(G_1(u, v), G_2(u, v)) \\ 
+        &= (G_1(u, v), F(G_1(u, v), G_2(u, v))). 
+    \end{align*}
+    This implies that $u = G_1(u, v)$, so $G(u, v) = (u, G_2(u, v))$ for some 
+    function $G : V_0 \subset \R^n \to \R^m$ of class $C^r$ (where $V_0 
+    \subset \R^n$ is open). Moreover, for all $(x, y)$ with $F(x, y) = 0$, 
+    we have $H(x, y) = (x, F(x, y)) = (x, 0)$,
+    and hence $(x, y) = G \circ H(x, y) = G(x, 0) = (x, G_2(x, 0))$. Then 
+    $y = G_2(x, 0)$ for all $(x, y) \in \{F \equiv 0\}$. By setting 
+    $g(x) := G_2(x, 0)$, we have $y = g(x)$ for all $(x, y) \in \{F \equiv 0\}$
+    near $(x_0, y_0)$, and $g$ is of class $C^r$. We see that 
+    $F(x, g(x)) = 0$.
+    For the proof of uniqueness of $g$ and more details, we refer to 
+    \emph{Topology} by Munkres, Theorem 9.2 on page 74. \qed 
+\end{pf}\vspace{-0.25cm} 
+
+Finally, we prove that the definitions are equivalent. Recall from 
+our earlier discussion that it suffices to show that (iii) implies (ii). 
+
+\begin{pf}[Theorem~\ref{theo:1.16}]
+    Suppose that $M$ is locally the zero set of a $C^r$ function $F : 
+    V \subset \R^n \to \R^{n-k}$ of maximal rank on $M \cap V$. Then 
+    for all $(x_0, y_0) \in M \cap V \subset \R^k \times \R^{n-k} = \R^n$, 
+    the derivative matrix 
+    \[ DF(x_0, y_0) = \left[ \begin{array}{c|c}
+        \!\!\dfrac{\partial F}{\partial x}(x_0, y_0) & \dfrac{\partial F}{\partial y}(x_0, y_0)\!\!
+    \end{array} \right] \] 
+    has rank $n-k$, where $\frac{\partial F}{\partial y}(x_0, y_0)$ is 
+    an $(n-k) \times (n-k)$ matrix.
+
+    After possibly permuting the variables $(x_1, \dots, x_k, y_1, \dots, 
+    y_{n-k})$ and therefore the columns of $DF(x_0, y_0)$, we may assume that 
+    $\partial F(x_0, y_0)/\partial y$ has rank $n-k$. This implies that 
+    $\det(\partial F(x_0, y_0)/\partial y) \neq 0$. By the Implicit 
+    Function Theorem (Theorem~\ref{theo:1.17}), we see that $y$ 
+    is a $C^r$ function of $x$ on $M \cap V$ near $(x_0, y_0)$. 
+    Write $y = g(x)$ for some $C^r$ function $g : V_0 \subset \R^k 
+    \to \R^m$, where $V_0$ is an open neighbourhood of $x_0$. 
+    Then $M$ is locally of the form $\{(x, g(x)) : x \in V_0\}$,
+    which implies that $M$ is locally the graph of $g$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+To end our discussion, we give one more example of how we can use the 
+zero set characterization to find charts for a submanifold $M$ 
+using the Implicit Function Theorem. Consider the special linear group 
+\[ \SL(2, \R) = \{A \in M_{2\times 2}(\R) : \det A = 1\}. \] 
+In a natural way, we can identify the matrix 
+\[ A = \begin{bmatrix}
+    a_1 & a_2 \\ a_3 & a_4 
+\end{bmatrix} \in M_{2\times 2}(\R) \] 
+with the point $(a_1, a_2, a_3, a_4) \in \R^4$, and we have 
+\[ \det A - 1 = a_1 a_4 - a_2 a_3 - 1 =: F(a_1, a_2, a_3, a_4) \] 
+so that $\SL(2, \R) = \{F \equiv 0\}$ where $F : \R^4 \to \R$ is smooth. 
+The derivative matrix of $F$ is 
+\[ DF(a_1, a_2, a_3, a_4) = \begin{bmatrix}
+    a_4 & -a_3 & -a_2 & a_1
+\end{bmatrix}, \] 
+which can have rank at most $1$ since it is a $1 \times 4$ matrix.
+In particular, $DF(a_1, a_2, a_3, a_4)$ has rank $1$ if and only if it is 
+not the zero vector, which occurs if at least one of the $a_i$ is nonzero. But 
+for all $(a_1, a_2, a_3, a_4) \in \SL(2, \R)$, we have $a_1a_4 - a_2a_3 = 1$ 
+so that at least one of the $a_i$ must be nonzero. 
+
+Suppose that $a_1 \neq 0$. Then we have $\partial F/\partial a_4 = a_1 \neq 0$, 
+so the Implicit Function Theorem tells us that $a_4$ can be expressed as a 
+smooth function of the remaining three variables on $\SL(2, \R)$. Indeed, if 
+$(a_1, a_2, a_3, a_4) \in \SL(2, \R)$ with $a_1 \neq 0$, then 
+$a_1a_4 - a_2a_3 = 1$ can be rearranged to obtain 
+\[ a_4 = \frac{a_2a_3 + 1}{a_1}. \] 
+A similar analysis can be done when the other variables are nonzero. 
+Since $DF$ has rank $1$ everywhere, it follows that $\SL(2, \R)$ is a 
+smooth submanifold of $\R^4$ of dimension $4-1 = 3$. 
+
+\subsection{Tangent vectors and tangent vector fields} \label{subsec:1.5}
+The simplest example of a tangent vector is the velocity vector of a curve. 
+
+\begin{defn}{defn:1.18}
+    Let $\gamma : (a, b) \subset \R \to \R^n$ be a map of class $C^r$. 
+    We define the {\bf velocity vector} of $\gamma$ at $\gamma(t)$ to be 
+    \[ \gamma'(t) := D\gamma(t). \] 
+\end{defn}\vspace{-0.25cm}
+
+Note that if $\gamma(t) = (\gamma_1(t), \dots, \gamma_n(t))$, then 
+$\gamma'(t) = (\gamma'_1(t), \dots, \gamma'_n(t))$. Moreover, we have 
+\[ \gamma'(t_0) = \lim_{t\to t_0} \frac{\gamma(t) - \gamma(t_0)}{t - t_0}. \] 
+Observe that $(\gamma(t) - \gamma(t_0))/(t - t_0)$ is the velocity vector 
+of the secant $L$ passing through $\gamma(t)$ and $\gamma(t_0)$. 
+Taking the limit as $t \to t_0$, it follows that $\gamma'(t_0)$ is the tangent 
+vector to the curve in $\R^n$ given by $\gamma(t)$, under the assumption
+that $\gamma'(t_0) \neq 0$. Let's look at some examples. 
+
+\begin{enumerate}[(1)]
+    \item Let $x \in \R^n$ and $0 \neq v \in \R^n$. Set $\gamma(t) = x + tv$ 
+    for $t \in \R$, which parametrizes the line $L$ in $\R^n$ passing through 
+    $x$ with direction vector $v$. We have that $\gamma'(t) = v$ for all 
+    $t \in \R$, so at every point on the line, the velocity vector coincides 
+    with the direction vector. 
+
+    \item Let $\gamma : \R \to \R^2$ be defined by $t \mapsto (\cos t, \sin t)$, 
+    which parametrizes $\mathbb{S}^1$. Note that $\gamma'(t) = 
+    (-\sin t, \cos t) \neq (0, 0)$ for all $t \in \R$. 
+
+    \item Let $\gamma : \R \to \R^2$ be given by $t \mapsto (t^2, t^3)$. 
+    This parametrizes the cusp curve $y^2 = x^3$. We have $\gamma'(t) = (2t, 3t^2)$. 
+    Observe that $\gamma'(0) = (0, 0)$ so that the velocity vector 
+    is zero at $\gamma(0) = (0, 0)$. 
+
+    \item Recall that the $\alpha$-curve can be parametrized with 
+    $\gamma : \R \to \R^2$ defined by $t \mapsto (t^2-1, t(t^2-1))$. 
+    We have $\gamma'(t) = (2t, 3t^2-1) \neq (0, 0)$ for all $t \in \R$. 
+\end{enumerate}
+
+Note that if $\gamma$ is a homeomorphism onto its image 
+\[ C = \{x \in \R^n : x = \gamma(t) \text{ for some } t \in (a, b)\} \] 
+and $D\gamma(t)$ has rank $1$ for all $t \in (a, b)$, then $C$ is a 
+$1$-dimensional submanifold of $\R^n$ of class $C^r$. In fact, we see that
+$D\gamma(t)$ has rank $1$ if and only if $\gamma'(t) \neq 0$, so $\gamma'(t)$ 
+is a direction vector for the tangent line to $\gamma$ at $\gamma(t)$. 
+In particular, the $1$-dimensional submanifold of $\R^n$ determined by $\gamma$ 
+has a well-defined tangent line $L$ at every point. We call 
+$L := \{\gamma(t_0) + s\gamma'(t_0) : s \in \R\}$
+the {\bf tangent line to $C$ at $\gamma(t_0)$}. 
+
+From example (1) above, we know that a line $\gamma(t) = x + tv$ coincides 
+with its tangent line at every point.
+
+\begin{defn}{defn:1.19}
+    Let $x \in \R^n$. A {\bf tangent vector to $\R^n$ at $x$} is defined as 
+    a pair $(x; v)$ where $v \in \R^n$. We call 
+    \[ T_x(\R^n) := \{(x; v) : v \in \R^n\} \] 
+    the {\bf tangent space to $\R^n$ at $x$}. This is the set of all 
+    tangent vectors to $\R^n$ at $x$. 
+\end{defn}\vspace{-0.25cm}
+
+We can give $T_x(\R^n)$ a vector space structure with the operations 
+$(x; v) + (x; w) = (x; v+w)$ and $c(x; v) = (x; cv)$ for all 
+$c \in \R$ and $v, w \in \R^n$. Note that $T_x(\R^n) \simeq \R^n$ as vector 
+spaces, where the isomorphism $T_x(\R^n) \to \R^n$ is given by $(x; v) \mapsto v$. 
+
+\begin{lemma}{lemma:1.20}
+    For all $x \in \R^n$, we have 
+    \[ T_x(\R^n) = \{(x; v) : v \text{ is a velocity vector of some 
+    curve $\gamma(t)$ passing through $x$}\}. \] 
+\end{lemma}\vspace{-0.25cm}
+\begin{pf}[Lemma~\ref{lemma:1.20}]
+    Let $(x; v) \in T_x(\R^n)$. Set $\gamma(t) = x + tv$ for $t \in \R$, 
+    which satisfies $\gamma'(t) = v$ for all $t \in \R$. In particular, we 
+    have $\gamma(0) = x$ and $\gamma'(0) = v$. Note that if $v \neq 0$, then 
+    $\gamma(t)$ parametrizes the line through $x$ with velocity vector $v$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+Can we get something similar for submanifolds $M \subset \R^n$? 
+Towards this direction, we make a new definition. 
+
+\begin{defn}{defn:1.21}
+    Let $U \subset \R^k$ be open and let $\alpha : U \to \R^n$ be of class $C^r$. 
+    Also, let $x \in U$ and set $p = \alpha(x)$. The map 
+    \begin{align*}
+        \alpha_* : T_x(\R^k) &\to T_p(\R^n) \\ 
+        (x; v) &\mapsto (p; D\alpha(x) v)
+    \end{align*}
+    is called the {\bf pushforward of $\alpha$ at $x$}. 
+\end{defn}\vspace{-0.25cm}
+
+Note that $\alpha_* : T_x(\R^k) \to T_p(\R^n)$ is a vector space homomorphism since it is linear; 
+in particular, it is given by multiplication by the $n\times k$ derivative matrix. 
+
+For all $(x; v) \in T_x(\R^k)$, consider the map $\gamma : (-\eps, \eps) \to \R^n$
+defined by $t \mapsto \alpha(x+tv)$
+with $\eps > 0$ such that $x + tv \in U$ for all $t \in (-\eps, \eps)$. 
+That is, the line segment $L = \{x + tv : t \in (-\eps, \eps)\}$
+is included in the open set $U$. Then for all $t_0 \in (-\eps, \eps)$, 
+the chain rule gives 
+\begin{align*}
+    \gamma'(t_0) &= D\alpha(x + t_0 v) D(x + tv)(t_0) 
+    = D\alpha(x + t_0 v) v 
+\end{align*}
+since $D(x + tv)(t_0) = v$ for all $t_0 \in \R$. In particular, we obtain 
+\begin{align*}
+    (\gamma(0); \gamma'(0)) &= (\alpha(x); D\alpha(x)v) \\ 
+    &= (p, D\alpha(x)v) \\ 
+    &= \alpha_*(x; v). 
+\end{align*}
+This tells us that $\alpha_*(x; v)$ is the velocity vector of 
+$\gamma(t) := \alpha(x + tv)$ at $p = \gamma(0)$.
+
+\begin{lemma}{lemma:1.22}
+    If $\alpha : U \subset \R^k \to \R^n$ and $\beta : V \subset \R^\ell 
+    \to \R^k$ are functions of class $C^r$ where $U \subset \R^k$ and $V 
+    \subset \R^\ell$ are open with $\beta(V) \subset U$, then 
+    $(\alpha \circ \beta)_* = \alpha_* \circ \beta_*$ on $V$. 
+\end{lemma}\vspace{-0.25cm} 
+\begin{pf}[Lemma~\ref{lemma:1.22}]
+    Note that $\alpha \circ \beta : V \subset \R^\ell \to \R^n$ is 
+    of class $C^r$. Let $x \in V$. Then for all $v \in \R^\ell$, we have 
+    \begin{align*}
+        (\alpha \circ \beta)_*(x; v) 
+        &= (\alpha \circ \beta(x); D(\alpha \circ \beta)(x)v) \\ 
+        &= (\alpha(\beta(x)); D\alpha(\beta(x))D\beta(x)v) \\ 
+        &= \alpha_*(\beta(x); D\beta(x)v) \\ 
+        &= \alpha_*(\beta_*(x; v)), 
+    \end{align*} 
+    where the second equality follows from the chain rule. \qed 
+\end{pf}\vspace{-0.25cm}
+
+From Lemma~\ref{lemma:1.22}, it now makes sense to define the following. 
+
+\begin{defn}{defn:1.23}
+    Let $M \subset \R^n$ be a $k$-dimensional submanifold of $\R^n$ 
+    of class $C^r$ for some $r \geq 1$. Let $p \in M$ and let $\alpha : 
+    U \subset \R^k \to V \subset M$ be a coordinate chart of $M$ 
+    about $p$ (i.e. $p \in V$) of class $C^r$. We define the 
+    {\bf tangent space of $M$ at $p$} to be 
+    \[ T_p(M) := \alpha_*(T_{x_0}(\R^k)) \subset T_p(\R^n), \] 
+    where $x_0 \in U$ is the unique point in $U$ such that $\alpha(x_0) = p$.  
+\end{defn}\vspace{-0.25cm}
