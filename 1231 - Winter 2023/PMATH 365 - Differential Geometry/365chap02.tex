@@ -314,3 +314,379 @@ If $b = 0$, then $\tau \equiv 0$, reflecting the fact that $\gamma$ is a
 plane curve; that is, it is a curve in the $xy$-plane. When $b > 0$, 
 then $\tau \equiv b/(a^2 + b^2) > 0$, and we have a ``right-handed'' helix 
 that ``goes up''.
+
+\begin{defn}{defn:2.8}
+    Let $\gamma : (\alpha, \beta) \to \R^3$ be a curve. We say that $\gamma$ 
+    is a {\bf plane curve} if $\gamma$ is contained in an (affine) plane 
+    $ax + by + cz = d$ in $\R^3$. 
+\end{defn}\vspace{-0.25cm}
+
+We give some examples of plane curves. 
+\begin{enumerate}[(1)]
+    \item The circle parametrized by $\gamma(t) = (\cos t, 3, \sin t)$ is a
+    curve contained in the plane $y = 3$.
+    \item Consider the curve $\gamma : \R \to \R^3$ defined by 
+    $\gamma(t) = (t^2-2t, t+1, -t^2-2)$. We see that 
+    $\gamma$ is contained in the plane 
+    $x + 2y + z = 0$ since $t^2 - 2t + 2(t+1) + (-t^2-2) = 0$,
+    so $\gamma$ is a plane curve.
+    \item {\bf (Twisted cubic.)} Consider the curve $\gamma(t) = (t^3, t^2, t)$. 
+    To see if it is a plane curve, we can try to solve for $a, b, c, d \in \R$ 
+    such that $at^3 + bt^2 + ct = d$. Comparing coefficients, we find that 
+    $a = b = c = d = 0$, so $\gamma$ is not a plane curve.
+\end{enumerate}
+
+\begin{prop}{prop:2.9}
+    Let $\gamma : (\alpha, \beta) \to \R^3$ be a unit speed curve with 
+    $\kappa(s) > 0$ for all $s \in (\alpha, \beta)$. Then $\gamma$ is a 
+    plane curve if and only if $\tau(s) = 0$ for all $s \in (\alpha, \beta)$.
+\end{prop}\vspace{-0.25cm}
+
+In particular, torsion captures how much $\gamma$ fails to be a plane curve.
+
+\begin{pf}[Proposition~\ref{prop:2.9}]
+    $(\Rightarrow)$ Suppose that $\gamma$ is a plane curve. 
+    Let $s_0 \in (\alpha, \beta)$. Note that $\gamma$ 
+    is a plane curve if and only if every point $\gamma(s)$ is contained 
+    in some fixed plane $\Pi$ in $\R^3$. This means that $\gamma(s_0) \in \Pi$. 
+    Moreover, if $\mathbf n_0$ is a unit normal to $\Pi$, then for any 
+    $s \in (\alpha, \beta)$, the vector going from $\gamma(s_0)$ to $\gamma(s)$
+    is parallel to $\Pi$ and thus perpendicular to $\mathbf n_0$. 
+    This implies that $\mathbf n_0 \cdot (\gamma(s) - \gamma(s_0)) = 0$ 
+    for all $s \in (\alpha, \beta)$, or equivalently 
+    $\mathbf n_0 \cdot \gamma(s) = \mathbf n_0 \cdot \gamma(s_0)$. 
+    Hence, we deduce that 
+    \[ 0 = \frac{{\rm d}}{{\rm d}s}(\mathbf{n}_0 \cdot \gamma(s)) 
+    = \frac{{\rm d}}{{\rm d}s}(\mathbf n_0) \cdot \gamma(s) 
+    + \mathbf n_0 \cdot \frac{{\rm d}}{{\rm d}s}(\gamma(s)) 
+    = \mathbf n_0 \cdot T(s) \] 
+    since $\frac{\rm d}{{\rm d}s}(\mathbf n_0) = \mathbf 0$ so that 
+    $\frac{\rm d}{{\rm d}s}(\mathbf n_0) \cdot \gamma(s) = 0$. 
+    Similarly, we have $\frac{\rm d^2}{{\rm d}s^2}(\mathbf n_0 \cdot 
+    \gamma(s)) = 0$, which implies that 
+    \[ \mathbf n_0 \cdot N(s) = \mathbf n_0 \cdot \frac{1}{\kappa(s)} \gamma''(s)
+    = \frac{1}{\kappa(s)} \mathbf n_0 \cdot \gamma''(s) = 0 \] 
+    using the fact that $\gamma''(s) = \kappa(s)N(s)$. This gives us 
+    $\mathbf n_0 \perp T(s)$ and $\mathbf n_0 \perp N(s)$. Since 
+    $\mathbf n_0$ is a unit vector, this means that 
+    \[ \mathbf n_0 = \pm T(s) \times N(s) = \pm B(s) \] 
+    by definition of the cross product. Then $\frac{{\rm d}B}{{\rm d}s}(s) = 0$ 
+    for all $s \in (\alpha, \beta)$, implying that $\tau(s) = 0$ for all 
+    $s \in (\alpha, \beta)$ since $N(s) \neq \mathbf 0$. 
+
+    $(\Leftarrow)$ Suppose that $\tau(s) = 0$ for all $s \in (\alpha, \beta)$.
+    Then $\frac{{\rm d}B}{{\rm d}s}(s) = \mathbf 0$ and hence 
+    $B(s) = \mathbf n_0$ for all $s \in (\alpha, \beta)$ for some $\mathbf n_0 \in \R^3$. 
+    Then $T(s) \perp \mathbf n_0$ for all $s \in (\alpha, \beta)$ so that 
+    $T(s) \cdot \mathbf n_0 = 0$. But $T(s) = \gamma'(s)$, so applying the product 
+    rule gives us
+    \[ \frac{\rm d}{{\rm d}s}(\gamma(s) \cdot \mathbf n_0)
+    = \gamma'(s) \cdot \mathbf n_0 + \gamma(s) \cdot \frac{\rm d}{{\rm d}s}(\mathbf n_0) 
+    = T(s) \cdot \mathbf n_0 = 0 \] 
+    since $\frac{\rm d}{{\rm d}s}(\mathbf n_0) = 0$ and $T(s) \cdot \mathbf n_0 = 0$.
+    It follows that $\gamma(s) \cdot \mathbf n_0 = c$ for some $c \in \R$, and thus 
+    \[ (\gamma(s) - \gamma(s_0)) \cdot \mathbf n_0 = \gamma(s) \cdot 
+    \mathbf n_0 - \gamma(s_0) \cdot \mathbf n_0 = c - c = 0 \] 
+    for all $s \in (\alpha, \beta)$. Then $\gamma$ is contained in the plane 
+    passing through $\gamma(s_0)$ normal to $\mathbf n_0$. We conclude that 
+    $\gamma$ is a plane curve. \qed 
+\end{pf}\vspace{-0.25cm}
+
+\subsection{Frenet-Serret equations and the fundamental theorem of 
+space curves} \label{subsec:2.3}
+Let $\gamma : (\alpha, \beta) \to \R^3$ be a curve of class $C^3$ and suppose 
+that $\kappa(s) > 0$ for all $s \in (\alpha, \beta)$. We have already seen that 
+$\frac{{\rm d}T}{{\rm d}s} = \kappa N$ and $\frac{{\rm d}B}{{\rm d}s} = -\tau N$.
+But what about $\frac{{\rm d}N}{{\rm d}s}$? 
+
+Since $\{T, N, B\}$ is a right-handed orthonormal basis, we have that 
+\begin{align*}
+    B &= T \times N, \\ 
+    T &= N \times B, \\ 
+    N &= B \times T. 
+\end{align*}
+Applying the product rule to $N = B \times T$ gives 
+\begin{align*} 
+    \frac{{\rm d}N}{{\rm d}s} = \frac{{\rm d}}{{\rm d}s}(B \times T) 
+    &= \frac{{\rm d}B}{{\rm d}s} \times T + B \times \frac{{\rm d}T}{{\rm d}s} \\ 
+    &= -\tau(N \times T) + \kappa(B \times N) \\
+    &= \tau(T \times N) - \kappa(N \times B) \\
+    &= \tau B - \kappa T.
+\end{align*}
+Therefore, we obtain the system of equations 
+\begin{align*}
+    \frac{{\rm d}T}{{\rm d}s} &= \kappa N, \\ 
+    \frac{{\rm d}N}{{\rm d}s} &=  - \kappa T + \tau B, \\ 
+    \frac{{\rm d}B}{{\rm d}s} &= -\tau N,
+\end{align*}
+which we can write more compactly as 
+\[ \begin{bmatrix}
+    \frac{{\rm d}T}{{\rm d}s} \\[5pt] 
+    \frac{{\rm d}N}{{\rm d}s} \\[5pt] 
+    \frac{{\rm d}B}{{\rm d}s}
+\end{bmatrix} = \begin{bmatrix}
+    0 & \kappa & 0 \\ 
+    -\kappa & 0 & \tau \\ 
+    0 & -\tau & 0 
+\end{bmatrix} \begin{bmatrix}
+    T \\ N \\ B 
+\end{bmatrix}. \] 
+These are called the {\bf Frenet-Serret equations}. Note that the above matrix 
+is skew-symmetric. 
+By solving the Frenet-Serret equations, we obtain the fundamental theorem 
+of space curves.
+
+\begin{defn}{defn:2.10}
+    A {\bf rigid motion} of $\R^3$ is a rotation followed by a translation. 
+    That is, an affine map $M : \R^3 \to \R^3$ of the form $M(v) = Av + b$
+    with $A \in \text{SO}(3)$, where $\text{SO}(3) = \{C \in M_{3\times 3}(\R) 
+    : C^TC = I,\, \det C = 1\}$ is the special orthogonal group.
+\end{defn}\vspace{-0.25cm}
+
+\begin{theo}[Fundamental Theorem of Space Curves]{theo:2.11}
+    Let $\gamma_1$ and $\gamma_2$ be two unit speed curves in $\R^3$ 
+    of class $C^3$ with the same curvature $\kappa(s) > 0$ 
+    and the same torsion $\tau(s)$ for all $s \in (\alpha, \beta)$. 
+    Then there is a rigid motion $M$ of $\R^3$ such that 
+    $\gamma_2(s) = M(\gamma_1(s))$ for all $s \in (\alpha, \beta)$.
+
+    Moreover, if $k$ and $t$ are functions of class $C^3$ with $k > 0$ 
+    everywhere, then there is a unit speed curve in $\R^3$ whose curvature 
+    is $k$ and whose torsion is $t$. 
+\end{theo}\vspace{-0.25cm}
+
+We will not give the proof here as it is quite long. However, we can 
+use it to classify curves. 
+\begin{enumerate}[(1)]
+    \item If $\gamma$ is a curve with $\kappa \equiv k > 0$ where $k$ is a 
+    constant and $\tau \equiv 0$, then $\gamma$ is (part of) a circle of 
+    radius $1/k$. 
+    \item If $\gamma$ is a unit speed curve where $\kappa \equiv k > 0$ 
+    is constant and $\tau \equiv \ell > 0$ is constant, then 
+    $\gamma$ is (part of) a circular helix. That is, there exists a rigid 
+    motion $M$ such that $M(\gamma(s)) = (a\cos(cs), a\sin(cs), bcs)$ 
+    for some $a, b > 0$ with $k = a/(a^2+b^2)$, $\ell = b/(a^2+b^2)$, 
+    and $c = (a^2+b^2)^{-1/2}$.
+\end{enumerate}
+In other words, the fundamental theorem of space curves says that 
+if we know the curvature and torsion, then we know the curve up to 
+some rigid motion.
+
+\subsection{Arclength and arclength parametrization} \label{subsec:2.4}
+We begin with the definition of arclength. 
+
+\begin{defn}{defn:2.12}
+    Let $\gamma : (\alpha, \beta) \to \R^n$ be a parametrized curve of class 
+    $C^r$. For all $\alpha < \alpha_0 \leq \beta_0 < \beta$, the 
+    {\bf arclength} between $\gamma(\alpha_0)$ and $\gamma(\beta_0)$ is 
+    defined to be 
+    \[ \int_{\alpha_0}^{\beta_0} \|\gamma'(t)\|\dd t. \] 
+\end{defn}\vspace{-0.25cm}
+That is, the arclength is the length $L$ of the curve $C$ given by $\gamma(t)$ 
+between $\gamma(\alpha_0)$ and $\gamma(\beta_0)$.
+Let's take a look at a few examples of arclength. 
+
+\begin{enumerate}[(1)]
+    \item {\bf (Circle.)} Consider $\gamma(t) = (a\cos t, a\sin t)$ where 
+    $t \in \R$ and $a > 0$, which parametrizes the circle $x^2 + y^2 = a^2$ 
+    of radius $a$ centered at $(0, 0)$. For $0 \leq t \leq 2\pi$, 
+    we get one copy of the circle, so the expected arclength 
+    should be $2\pi a$ as the radius is $a$. Indeed, we see that $\gamma'(t) 
+    = (-a\sin t, a\cos t)$ and $\|\gamma'(t)\| = a$ for all $t \in \R$, so the arclength is 
+    \[ \int_0^{2\pi} \|\gamma'(t)\|\dd t = \int_0^{2\pi} a\dd t = 2\pi a. \] 
+
+    \item {\bf (Circular helix.)} We compute the arclength $L$ of the 
+    circular helix $\gamma(t) = (a\cos t, a\sin t, bt)$ between 
+    $\gamma(0) = (a, 0, 0)$ and $\gamma(2\pi) = (a, 0, 2\pi b)$.
+    Here, we are integrating over the range $0 \leq t \leq 2\pi$. 
+    Since $\gamma'(t) = (-a\sin t, a\cos t, b)$ and 
+    \[ \|\gamma'(t)\| = \sqrt{a^2\sin^2 t + a^2\cos^2 t + b^2} = \sqrt{a^2+b^2} \] 
+    for all $t \in \R$, it follows that 
+    \[ L = \int_0^{2\pi} \|\gamma'(t)\|\dd t 
+    = \int_0^{2\pi} \sqrt{a^2+b^2}\dd t = 2\pi\sqrt{a^2+b^2}. \] 
+    Note that when $b = 0$, we obtain $2\pi a$, which makes sense as 
+    the circular helix collapses to a circle of radius $a$ in the $xy$-plane
+    where $b = 0$.
+
+    \item {\bf (Twisted cubic.)} Consider the twisted cubic 
+    $\gamma(t) = (6t, 3t^2, t^3)$ for $t \in \R$. Here, we have 
+    $t = x/6$ so that $y = x^2/12$ and $z = x^3/216$. Let's compute 
+    the arclength for $0 \leq t \leq 1$. We have $\gamma'(t) = (6, 6t, 3t^2)$
+    for all $t \in \R$, which implies that 
+    \[ \|\gamma'(t)\| = \sqrt{36+36t^2+9t^4} = \sqrt{(6+3t^2)^2} = 6 + 3t^2. \] 
+    It follows that the arclength is 
+    \[ \int_0^1 \|\gamma'(t)\|\dd t = \int_0^1 (6 + 3t^2)\dd t 
+    = 6t + t^3 \Big|_0^1 = 7. \] 
+\end{enumerate}
+
+\begin{defn}{defn:2.13}
+    The {\bf arclength} of a curve $\gamma$ of class $C^r$ starting 
+    at a point $\gamma(t_0)$ is the function $s(t)$ given by 
+    \[ s(t) := \int_{t_0}^t \|\gamma'(u)\|\dd u. \] 
+\end{defn}\vspace{-0.25cm}
+
+Given a curve $\gamma$, we are now viewing arclength as a function.
+\begin{enumerate}[(1)]
+    \item We have $s(t_0) = 0$ and $s(t) < 0$ if $t < t_0$. 
+    \item By the fundamental theorem of calculus, we know that $s(t)$ is 
+    differentiable with $\frac{{\rm d}s}{{\rm d}t} = \|\gamma'(t)\|$ for all 
+    $t$. In fact, if $\gamma(t) = (\gamma_1(t), \dots, \gamma_n(t))$, then 
+    \[ \frac{{\rm d}s}{{\rm d}t} = \sqrt{(\gamma'_1(t))^2 + \cdots + 
+    (\gamma'_n(t))^2}. \] 
+    Therefore, if $\gamma$ is smooth and $\gamma'(t) \neq 0$ for all $t$, 
+    then $\frac{{\rm d}^k s}{{\rm d}t^k}$ exists for all $k \geq 1$, 
+    so $s(t)$ is smooth.
+    \item If $\|\gamma'(t)\| = 1$ for all $t$, then we have 
+    \[ s(t) = \int_{t_0}^t 1\dd u = t - t_0, \] 
+    so $s = t - t_0$, or equivalently $t = s + t_0$. This means that 
+    $\gamma$ can be parametrized by arclength, where $\gamma(t)$ 
+    is the point on the curve at a distance of $t$ \emph{on the curve} 
+    from $\gamma(t_0)$. Thus, unit speed curves can be parametrized by 
+    arclength!
+\end{enumerate}
+
+What if we weaken the assumption that the curve is unit speed 
+and consider regular curves?
+Given a smooth regular parametrized curve $\gamma : (\alpha, \beta) \to \R^n$, 
+we have seen that the arclength function $s$ of $\gamma$ is smooth with 
+$\frac{{\rm d}s}{{\rm d}t} = \|\gamma'(t)\| > 0$ for all $t \in (\alpha, \beta)$.
+Therefore, $s$ is strictly increasing on $(\alpha, \beta)$ and its inverse 
+is smooth (by the Inverse Function Theorem). In other words, 
+$s = s(t)$ and $t = t(s)$ (where $t = s^{-1})$ are both smooth functions 
+on their domains, and one can parametrize $s$ in terms of arclength via 
+\[ \gamma(t) = \gamma(t(s)) = \tilde\gamma(s), \] 
+where $\tilde\gamma = \gamma \circ t$. So if $\gamma$ is regular, we can 
+assume without loss of generality that $\gamma$ is parametrized by arclength 
+so that 
+\begin{itemize}
+    \item $\|\gamma'(s)\| = 1$ for all $s$ (i.e. $\gamma$ is unit speed);
+    \item $\gamma'(s) \cdot \gamma''(s) = 0$ for all $s$ (by Proposition~\ref{prop:2.2}).
+\end{itemize}
+
+In practice, it is usually very difficult to find the arclength 
+parametrization of a regular curve as many functions do not 
+have elementary antiderivatives. Fortunately, we do have general formulae for 
+$T$, $N$, $B$, $\kappa$, and $\tau$, although they are quite cumbersome to 
+compute.
+
+\begin{prop}{prop:2.14}
+    Let $\gamma : (\alpha, \beta) \to \R^3$ be a regular curve of class $C^3$. 
+    Then we have 
+    \begin{align*}
+        T &= \frac{\gamma'(t)}{\|\gamma'(t)\|}, &
+        B &= \frac{\gamma'(t) \times \gamma''(t)}{\|\gamma'(t) \times \gamma''(t)\|}, \quad\quad\quad\quad\quad\quad 
+        N = B \times T, \\ 
+        \kappa &= \frac{\|\gamma'(t) \times \gamma''(t)\|}{\|\gamma'(t)\|^3}, &
+        \tau &= \frac{(\gamma'(t) \times \gamma''(t)) \cdot \gamma'''(t)}{\|\gamma'(t) \times \gamma''(t)\|^2}.
+    \end{align*}
+\end{prop}\vspace{-0.25cm}
+\newpage 
+\begin{pf}[Proposition~\ref{prop:2.14}]
+    Since $T$ is the \emph{unit} tangent vector of $\gamma$, we have 
+    $T = \gamma'(t)/\|\gamma'(t)\|$. Then $\gamma'(t) = \|\gamma'(t)\|T 
+    = \frac{{\rm d}s}{{\rm d}t} T$, which implies that 
+    \begin{align*}
+        \gamma''(t) &= \frac{{\rm d}^2 s}{{\rm d}t^2} T 
+        + \frac{{\rm d}s}{{\rm d}t} \frac{{\rm d}T}{{\rm d}t} 
+        = \frac{{\rm d}^2 s}{{\rm d}t^2} T 
+        + \left(\frac{{\rm d}s}{{\rm d}t}\right)^{\!2} \frac{{\rm d}T}{{\rm d}s}
+        = \frac{{\rm d}^2 s}{{\rm d}t^2} T 
+        + \left(\frac{{\rm d}s}{{\rm d}t}\right)^{\!2} \kappa N. 
+    \end{align*}
+    Therefore, we obtain 
+    \[ \gamma'(t) \times \gamma''(t) = 
+    \left(\frac{{\rm d}s}{{\rm d}t}\right)^{\!3} \kappa(T \times N) 
+    = \|\gamma'(t)\|^3 \kappa B, \tag{$\star$} \] 
+    and thus $\|\gamma'(t) \times \gamma''(t)\| = \|\gamma'(t)\|^3 |\kappa| \|B\| 
+    = \|\gamma'(t)\|^3 |\kappa|$ since $\|B\| = 1$. Rearranging this gives 
+    \[ \kappa = \frac{\|\gamma'(t) \times \gamma''(t)\|}{\|\gamma'(t)\|^3}, \] 
+    and putting this back into $(\star)$ yields 
+    \[ B = \frac{\gamma'(t) \times \gamma''(t)}{\kappa \|\gamma'(t)\|^3} 
+    = \frac{\gamma'(t) \times \gamma''(t)}{\|\gamma'(t) \times \gamma''(t)\|}. \] 
+    For the proof of the formula for $\tau$, we refer to \emph{Elementary 
+    Differential Geometry} by Pressley. \qed 
+\end{pf}\vspace{-0.25cm} 
+
+For example, let $\gamma(t) = (\cos t, 1-\sin t, -\cos t)$. Then 
+$\gamma'(t) = (-\sin t, -\cos t, \sin t)$ and 
+\[ \|\gamma'(t)\| = \sqrt{1 + \sin^2 t}, \] 
+which we cannot find an arclength parametrization of using elementary means. 
+Nonetheless, we can compute $T$, $N$, $B$, $\kappa$, and $\tau$ using 
+Proposition~\ref{prop:2.14}. We have $\gamma''(t) = (-\cos t, \sin t, \cos t)$ 
+so that $\gamma'(t) \times \gamma''(t) = (-1, 0, -1)$ and 
+$\|\gamma'(t) \times \gamma''(t)\| = \sqrt{2}$. The third derivative is 
+$\gamma'''(t) = (\sin t, \cos t, -\sin t)$, so 
+\[ (\gamma'(t) \times \gamma''(t)) \cdot \gamma'''(t) = -\sin t + \sin t = 0. \] 
+Putting everything together, we have 
+\begin{align*}
+    T &= \frac{1}{\sqrt{1+\sin^2 t}} (-\sin t, -\cos t, \sin t), \\ 
+    B &= -\frac{1}{\sqrt{2}}(1, 0, 1), \\ 
+    \kappa &= \frac{\sqrt{2}}{(1 + \sin^2 t)^{3/2}}, \\ 
+    N &= B \times T = -\frac{1}{\sqrt{2(1+\sin^2 t)}}(\cos t, -2\sin t, \cos t), \\ 
+    \tau &= 0.
+\end{align*}
+In particular, the curvature $\kappa$ is not constant, and $\tau = 0$ 
+so that $\gamma$ is a plane curve by Proposition~\ref{prop:2.9}.
+
+We do one more example and show that $\gamma(t) = (2\cos t, \sqrt{5}\sin t, 
+-\cos t)$ is a circle. We first observe that 
+$\gamma'(t) = (-2\sin t, \sqrt{5}\cos t, \sin t)$, so $\|\gamma'(t)\| = 
+\sqrt{5} \neq 1$ and $\gamma$ is not unit speed. We have 
+\begin{align*}
+    \gamma''(t) &= (-2\cos t, -\sqrt{5}\sin t, \cos t), \\ 
+    \gamma'''(t) &= (2\sin t, -\sqrt{5}\cos t, -\sin t), 
+\end{align*}
+so $\gamma'(t) \times \gamma''(t) = (\sqrt{5}, 0, 2\sqrt{5})$ and 
+$\|\gamma'(t) \times \gamma''(t)\| = 5$. This gives 
+\begin{align*} 
+    \kappa &= \frac{\|\gamma'(t) \times \gamma''(t)\|}{\|\gamma'(t)\|^3}
+    = \frac{5}{(\sqrt{5})^3} = \frac{1}{\sqrt{5}} > 0, \\ 
+    \tau &= \frac{(\gamma'(t) \times \gamma''(t)) \cdot \gamma'''(t)}
+    {\|\gamma'(t) \times \gamma''(t)\|^2} = \frac{0}{25} = 0. 
+\end{align*}
+We see that $\gamma$ has constant positive curvature and zero torsion.
+By the fundamental theorem of space curves (Theorem~\ref{theo:2.11}), we 
+see that $\gamma$ is a circle. It is contained in the plane with normal vector 
+\[ B = \frac{\gamma'(t) \times \gamma''(t)}{\|\gamma'(t) \times \gamma''(t)\|}
+= \frac15(\sqrt{5}, 0, 2\sqrt{5}) = \left( \frac{1}{\sqrt{5}}, 0, 
+\frac{2}{\sqrt{5}} \right), \]
+and this plane is $x + 2z = 0$.
+
+To end this section, we briefly discuss how to generalize this to higher dimensions. 
+Let $\gamma : (\alpha, \beta) \to \R^n$ be a regular curve of class $C^n$. 
+Suppose that $\{\gamma'(t), \dots, \gamma^{(n-1)}(t)\}$ is a linearly 
+independent set for all $t \in (\alpha, \beta)$. Then $\gamma$ 
+is called a {\bf Frenet curve}. 
+
+By applying Gram-Schmidt to this linearly independent set, we obtain an orthonormal 
+basis $\{e_1(t), \dots, e_n(t)\}$ of $\R^n$ for all $t \in (\alpha, \beta)$ 
+as follows. After reparametrizing, we may assume that $\gamma$ is unit speed. 
+We already know that $\|\gamma'(t)\| = 1$, so we set $e_1(t) = \gamma'(t)$ and 
+$e_2(t) = \gamma''(t)/\|\gamma(t)\| = N$. For $j = 3, \dots, n-1$, we set 
+\[ e_j = \frac{\gamma^{(j)} - \sum_{i=1}^{j-1}(\gamma^{(j)} \cdot e_i)e_i}
+{\|\gamma^{(j)} - \sum_{i=1}^{j-1}(\gamma^{(j)} \cdot e_i)e_i\|}. \] 
+Then $\{e_1, \dots, e_{n-1}\}$ is an orthonormal set that spans an 
+$(n-1)$-dimensional plane in $\R^n$. Up to a sign, there exists a unique 
+unit vector $e_n$ such that $\{e_1, \dots, e_n\}$ is an orthonormal basis 
+of $\R^n$. We pick $e_n$ such that $\det(e_1, \dots, e_n) = 1$ (such a 
+vector is unique). 
+
+\begin{theo}{theo:2.15}
+    We have that 
+    \[ \begin{bmatrix}
+        e'_1 \\[5pt] e'_2 \\[5pt] e'_3 \\[5pt] \vdots \\[5pt] e'_n 
+    \end{bmatrix} = \begin{bmatrix}
+        0 & \kappa_1 & 0 & \cdots & 0 \\ 
+        -\kappa_1 & 0 & \kappa_2 & \ddots & 0 \\ 
+        0 & -\kappa_2 & 0 & \ddots & \vdots \\ 
+        0 & 0 & \ddots & \ddots & \kappa_{n-1} \\[5pt] 
+        0 & 0 & \cdots & -\kappa_{n-1} & 0
+    \end{bmatrix} \begin{bmatrix}
+        e_1 \\[5pt] e_2 \\[5pt] e_3 \\[5pt] \vdots \\[5pt] e_n
+    \end{bmatrix}, \] 
+    where $\kappa_i$ is the {\bf $i$-th Frenet curvature}. 
+\end{theo}\vspace{-0.25cm}
+
+When $n = 3$, we are in the familiar situation where 
+$T = e_1$, $N = e_2$, and $B = e_3$ with $\kappa = \kappa_1$ and 
+$\tau = \kappa_2$. 
