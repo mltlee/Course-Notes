@@ -1132,3 +1132,151 @@ From Lemma~\ref{lemma:1.22}, it now makes sense to define the following.
     \[ T_p(M) := \alpha_*(T_{x_0}(\R^k)) \subset T_p(\R^n), \] 
     where $x_0 \in U$ is the unique point in $U$ such that $\alpha(x_0) = p$.  
 \end{defn}\vspace{-0.25cm}
+
+Note that the requirement that $M$ is of class $C^r$ with $r \geq 1$ 
+is crucial to define the tangent space. We now make some observations 
+about this definition. 
+
+\begin{enumerate}[(1)]
+    \item Since $D\alpha(x)$ has rank $k$ for all $x \in U$, we have 
+    $\dim_{\mathbb{R}}(T_pM) = k$. 
+
+    \item Let $p \in V$ and let $x_0 \in U$ be such that $p = \alpha(x_0)$. 
+    Note that we have 
+    \[ T_pM = \Span_{\R}\left\{ \frac{\partial\alpha}{\partial x_1}(x_0), 
+    \dots, \frac{\partial\alpha}{\partial x_k}(x_0) \right\}. \] 
+    Indeed, we know that we can write 
+    \[ D\alpha(x_0) = \left[ \begin{array}{c|c|c}
+        \!\!\! \dfrac{\partial\alpha}{\partial x_1}(x_0) & \cdots & 
+        \dfrac{\partial\alpha}{\partial x_k}(x_0)\!\!\! 
+    \end{array} \right]\!, \] 
+    which implies that $\alpha_*(T_{x_0}\R^k)$ is spanned by 
+    $(p; D\alpha(x_0)e_i)$ with $i = 1, \dots, k$, where $\{e_1, \dots, e_k\}$ 
+    is the standard basis of $\R^k$. In fact, this spanning set is 
+    a basis of $T_pM$ since $\dim_{\R}(T_pM) = k$ and $D\alpha(x_0)$ has rank 
+    $k$ so that its columns are linearly independent. 
+
+    \item The definition is independent of the choice of coordinate chart. 
+    To see this, suppose that $\alpha' : U' \subset \R^k 
+    \to V' \subset M$ is another coordinate chart about $p$. Then we have 
+    \[ T_pM = \Span_{\R} \left\{ \frac{\partial \alpha'}{\partial y_1}(y_0), 
+    \dots, \frac{\partial \alpha'}{\partial y_k}(y_0) \right\}, \] 
+    where $y_0 \in U'$ is the point such that $\alpha'(y_0) = p$ and 
+    $(y_1, \dots, y_k)$ are the coordinates 
+    on $U' \subset \R^k$. Given $x = (x_1, \dots, x_k) \in U$, observe that
+    \[ y = (y_1, \dots, y_k) = (\alpha')^{-1} \circ \alpha(x_1, \dots, x_k) \]
+    for some $y \in U'$, where $(\alpha')^{-1} \circ \alpha$ is of class $C^r$ 
+    since both $(\alpha')^{-1}$ and $\alpha$ are of class $C^r$. In particular, 
+    we can think of this as a $C^r$ function 
+    \[ y(x) = (\alpha')^{-1} \circ \alpha(x) \] 
+    for all $x \in W = \alpha^{-1}(V \cap V')$ and $y \in W' = (\alpha')^{-1}
+    (V \cap V')$. By the chain rule, we obtain
+    \begin{align*}
+        \frac{\partial\alpha}{\partial x_j}(x_0) 
+        &= \frac{\partial(\alpha' \circ (\alpha')^{-1} \circ \alpha)}{\partial x_j}(x_0) \\ 
+        &= \frac{\partial(\alpha'(y(x_0)))}{\partial x_j} \\ 
+        &= \sum_{i=1}^k \frac{\partial\alpha'}{\partial y_i} (y(x_0)) \cdot 
+        \frac{\partial y_i}{\partial x_j}(x_0) \\ 
+        &= \sum_{i=1}^k \frac{\partial y_i}{\partial x_j}(x_0) \cdot 
+        \frac{\partial\alpha'}{\partial y_i}(y_0), 
+    \end{align*}
+    noting that $y_0 = y(x_0)$. Since $\partial y_i(x_0)/\partial x_j \in \R$ 
+    for all $i = 1, \dots, k$, we see that 
+    \[ \frac{\partial\alpha}{\partial x_j}(x_0) \in \Span_{\R}
+    \left\{ \frac{\partial \alpha'}{\partial y_1}(y_0), 
+    \dots, \frac{\partial \alpha'}{\partial y_k}(y_0) \right\}. \] 
+    An analogous argument shows that 
+    \[ \frac{\partial\alpha'}{\partial y_i}(y_0) \in \Span_{\R}
+    \left\{ \frac{\partial \alpha}{\partial x_1}(x_0), 
+    \dots, \frac{\partial \alpha'}{\partial x_k}(x_0) \right\}. \] 
+
+    \item We now show that $T_pM$ is the space of velocity vectors of 
+    curves passing through $p$ on $M$, giving us a generalization of 
+    Lemma~\ref{lemma:1.20}. That is, we have 
+    \[ T_pM = \{(p; v) : \text{$v = \gamma'(t_0)$ for some curve $\gamma(t)$ 
+    on $M$ with $p = \gamma(t_0)$}\} \simeq \R^k. \] 
+    Indeed, let $\sigma : U \subset \R^k \to V \subset M$ be a chart of $M$ 
+    about $p$ and suppose that $p = \alpha(x_0)$ for some $x_0 \in U$. 
+    By definition, we know that $T_pM = \alpha_*(T_{x_0}\R^k)$ where 
+    \[ \alpha_*(x_0; w) = (\alpha(x_0); D\alpha(x_0)w) = 
+    (p; D\alpha(x_0)w) \] 
+    for all $(x_0; w) \in T_{x_0}\R^k$. In particular, this means that 
+    for any $(p; v) \in T_pM$, we have 
+    \[ (p; v) = (p; D\alpha(x_0)w) \] 
+    for some $w \in \R^k$. Let $\eps > 0$ be small enough so that the 
+    line segment $x_0 + tw$ over $t \in (-\eps, \eps)$ is contained in $U$. 
+    Then we see that 
+    \begin{align*}
+        \gamma : (-\eps, \eps) &\to V \subset M \\ 
+        t &\mapsto \alpha(x_0 + tw) 
+    \end{align*}
+    is a curve of class $C^r$ on $M$ such that $\gamma(0) = \alpha(x_0) = p$. 
+    Moreover, the chain rule gives 
+    \[ \gamma'(t) = D\alpha(x_0 + tw) \frac{\rm d}{{\rm d}t}(x_0 + tw) = D\alpha(x_0 + tw) w. \] 
+    For $t = 0$, we obtain $\gamma'(0) = D\alpha(x_0)w = v$. This implies 
+    that $\gamma : (-\eps, \eps) \to V$ is a curve on $M$ with $\gamma(0) = p$ 
+    and $\gamma'(0) = v$. We leave the converse as an exercise.
+\end{enumerate}
+
+Now that we have digested the definition, let's look at some examples of tangent spaces.
+\begin{enumerate}[(1)]
+    \item Let $U \subset \R^n$ be an open set. Then the identity map 
+    $\alpha : U \subset U$ which sends $x \in U$ to itself is a smooth 
+    chart with $D\alpha(x) = I_{n\times n}$ for all $x \in U$. By 
+    definition, we have  
+    \[ T_x(U) = \alpha_*(T_x\R^n). \] 
+    Then for all $(x; v) \in T_x\R^n$, we get 
+    \[ \alpha_*(x; v) = (\alpha(x); D\alpha(x)v) = (x; v). \] 
+    This implies that $T_xU = T_x\R^n$ for all $x \in U$. 
+
+    \item We saw two different ways of seeing if something is a submanifold. If $f : U \subset \R^k 
+    \to \R^{n-k}$ is a function of class $C^r$ where $U \subset \R^k$ is open and 
+    $M = \{(x, f(x)) \in \R^n : x \in U\}$ is the graph of $f$ in $\R^n$, then 
+    \begin{align*}
+        \alpha : U \subset \R^k &\to \R^n \\ 
+        x = (x_1, \dots, x_k) &\mapsto (x, f(x))
+    \end{align*}
+    is a chart of class $C^r$ with derivative matrix 
+    \[ D\alpha(x) = \left[ \begin{array}{c} 
+        I_{k\times k} \\\hline \!Df(x)\!
+    \end{array} \right] \] 
+    for all $x \in U$. Let $p \in M$ so that $p = \alpha(x_0) = (x_0, f(x_0))$ for some $x_0 \in U$. Then 
+    \begin{align*} 
+        T_pM &= \alpha_*(T_{x_0}\R^k) \\
+        &= \{\alpha_*(x_0; v) : v \in T_{x_0}\R^k\} \\
+        &= \{(\alpha(x_0); D\alpha(x_0)v) : v \in \R^k\} \\ 
+        &= \{(p; w) : w = (v, Df(x_0)v),\, v \in \R^k\}, 
+    \end{align*} 
+    since $\alpha(x_0) = p$ and $D\alpha(x)$ is a block matrix with $I_{k\times k}$ 
+    upstairs and $Df(x)$ downstairs. We also have 
+    \[ T_p(M) = {\rm span}_{\R} \left\{ \frac{\partial\alpha}{\partial x_1}(x_0), \dots, 
+    \frac{\partial\alpha}{\partial x_k}(x_0) \right\} = {\rm span}_{\R} 
+    \left\{ \left[ \begin{array}{c} 
+        e_i \\\hline \!\partial f(x_0)/\partial x_i\!
+    \end{array} \right] : 
+    i = 1, \dots, k \right\}. \] 
+
+    \item Let $U \subset \R^n$ be open. If $F : U \subset \R^n \to \R^{n-k}$ is a function of 
+    class $C^r$ with $DF$ having maximal rank $n-k$ on $M = \{F \equiv 0\}$ 
+    (so that $M$ is a $k$-dimensional submanifold of $\R^n$ by Theorem~\ref{theo:1.16}), 
+    then we leave it as an exercise to show that 
+    \[ T_pM = \ker(DF(p)). \] 
+    In particular, if $M$ has dimension $k = n-1$, then $F : U \subset \R^n \to \R$ is a 
+    scalar function. Then $DF(p) = \nabla F(p)$, which implies that 
+    \begin{align*}
+        T_pM &= \ker(DF(p)) \\ 
+        &= \{v \in \R^n : DF(p)v = 0\} \\ 
+        &= \{v \in \R^n : \nabla F(p) \cdot v = 0\}.
+    \end{align*}
+    We see that $T_pM$ is the $(n-1)$-dimensional subspace of $T_p\R^n$ 
+    which is perpendicular to $\nabla F(p)$. In other words, $T_pM$ is the 
+    hyperplane in $\R^n$ through $p$ with normal vector $\nabla F(p)$. 
+
+    For example, consider the $n$-sphere 
+    \[ M = \mathbb{S}^n = \{x \in \R^{n+1} : \|x\|^2 = 1\}, \] 
+    which is the zero set of the function $F : \R^{n+1} \to \R$ defined by $F(x) = \|x\|^2 - 1 
+    = x_1^2 + \cdots + x_{n+1}^2 - 1$. The derivative matrix is just the gradient; that is, 
+    \[ DF(x) = \nabla F(x) = \begin{bmatrix} 2x_1 & \cdots & 2x_{n+1} \end{bmatrix} = 2x. \]
+    Then $T_x\mathbb{S}^n$ is the hyperplane through $x$ with normal 
+    vector $\nabla F(x) = 2x$.  
+\end{enumerate}

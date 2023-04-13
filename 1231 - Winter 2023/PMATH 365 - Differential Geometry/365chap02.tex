@@ -1,78 +1,35 @@
 \section{Curves in $\R^n$}\label{sec:2}
 
-Tangent spaces: Let $M \subset \R^n$ with class $C^r$ of dimension $k$. For a chart 
-$\alpha : U \subset \R^k \to V \subset M \subset \R^n$, we have for all $p \in V$ that 
-\[ T_p(M) := \alpha_*(T_{x_0}(\R^k)), \] 
-where $p = \alpha(x_0)$. We showed that 
-\[ T_p(M) = {\rm span}_{\R} \left\{ \frac{\partial\alpha}{\partial x_1}(x_0), \dots, 
-\frac{\partial\alpha}{\partial x_k}(x_0) \right\} \subset T_p(\R^n), \] 
-which is a $k$-dimensional subspace of $T_p(\R^n)$. 
-
-Examples: 
-\begin{enumerate}[(1)]
-    \item Let $U \subset \R^n$ be an open set. Then $\alpha : U \subset \R^n \to V = U \subset \R^n$ 
-    given by $x \mapsto x$ yields $D\alpha(x) = I_{n\times n}$ for all $x \in U$, so 
-    \[ T_x(U) = \alpha_*(T_x(\R^n)) \] 
-    by definition. Then for all $(x; v) \in T_x(\R^n)$, we get 
-    \[ \alpha_*(x; v) = (\alpha(x); D\alpha(x)v) = (x; v). \] 
-    That is, we have $T_x(U) = T_x(\R^n)$. 
-
-    \item We saw two different ways of seeing if something is a submanifold. If $f : U \subset \R^k 
-    \to \R^{n-k}$ is a function of a class $C^r$ and 
-    \[ M = \{(x, f(x)) \in \R^n : x \in U\} \subset \R^n \] 
-    its graph, then $M$ is a $k$-dimensional submanifold of $\R^n$ of class $C^r$. We can parameterize 
-    all points in $M$ with the map $\alpha : U \subset \R^k \to M \subset \R^n$ defined by 
-    $\alpha(x) = (x, f(x))$. The derivative matrix is 
-    \[ D\alpha(x) = \begin{bmatrix} 
-        I_{k\times k} \\\hline Df(x)
-    \end{bmatrix} \]
-    for all $x \in U$. Let $p \in M$ so that $p = (x_0, f(x_0))$ for some $x_0 \in U$. Then 
-    \begin{align*} 
-        T_p(M) &= \alpha_*(T_{x_0}(\R^k)) \\
-        &= \{\alpha_*(x_0; v) : v \in T_{x_0}(\R^k)\} \\
-        &= \{(\alpha(x_0); D\alpha(x_0)v) : v \in \R^k\} \\ 
-        &= \{(p; w) : w = (v, Df(x_0)v),\, v \in \R^k\}, 
-    \end{align*} 
-    since $\alpha(x_0) = p$ and $D\alpha(x)$ is the block matrix with $I_{k\times k}$ 
-    upstairs and $Df(x)$ downstairs. Also, 
-    \[ T_p(M) = {\rm span}_{\R} \left\{ \frac{\partial\alpha}{\partial x_1}(x_0), \dots, 
-    \frac{\partial\alpha}{\partial x_k}(x_0) \right\} = {\rm span}_{\R} 
-    \left\{ \begin{bmatrix} e_i \\\hline \partial f(x_0)/\partial x_i \end{bmatrix} : 
-    i = 1, \dots, k \right\}. \] 
-
-    \item Let $U \subset \R^n$ be open. If $F : U \subset \R^n \to \R^{n-k}$ is a function of 
-    class $C^r$ with $DF(p)$ having rank $n-k$ for all $p \in U$, then 
-    \[ M = \{x \in U : F(x) = 0\} \] 
-    is a $k$-dimensional submanifold of $\R^n$ of class $C^r$. In this case, we leave it as an 
-    exercise to show that 
-    \[ T_p(M) = \ker(DF(p)). \] 
-    In particular, if $k = n-1$, then $F : U \subset \R^n \to \R$ is a scalar function and 
-    \[ T_p(M) = \ker(\nabla F(p)). \] 
-    Then $\nabla F(p)$ is the normal vector of $T_p(M)$. 
-
-    For example, take the $n$-sphere 
-    \[ S^n = \{x \in \R^{n+1} : \|x\|^2 = 1\}, \] 
-    which is the zero set of the function $F : \R^{n+1} \to \R$ defined by $F(x) = \|x\|^2 - 1 
-    = x_1^2 + \cdots + x_{n+1}^2 - 1$. The derivative matrix is just the gradient; that is, 
-    \[ DF(x) = \nabla F(x) = \begin{bmatrix} 2x_1 & \cdots & 2x_{n+1} \end{bmatrix} = 2x. \] 
-\end{enumerate}
-
-\subsection{}\label{subsec:2.1}
+\subsection{Introduction to curves}\label{subsec:2.1}
 What is a curve? Intuitively, it is a $1$-dimensional subset of $\R^n$. 
 
-The level sets $f(x, y) = k$ of a two variable function in $\R^2$ are curves. 
-For example, for $f(x, y) = x^2 + y^2$, we see that $C \colon x^2 + y^2 = k$ for $k > 0$ 
-is a circle centered at $(0, 0)$ of radius $k^{1/2}$. 
+Observe that the level sets $f(x, y) = k$ of a two variable function over $\R^2$ are curves. 
+\begin{enumerate}[(1)]
+    \item For the function $f(x, y) = x^2 + y^2$, the level sets 
+    $C = \{(x, y) \in \R^2 : x^2 + y^2 = k\}$ are circles centered at 
+    $(0, 0)$ of radius $\sqrt{k}$. 
+    \item For the function $f(x, y) = x^2 - y$, the level sets are of the form 
+    $C = \{(x, y) \in \R^2 : x^2 - y = k\}$.
+    This is simply the parabola $y = x^2 - k$.
+\end{enumerate}
 
-The intersection of two surfaces in $\R^3$ is also a curve. For example, 
-take $z = x^2 + y^2$ and $z = 2$. Their intersection is the circle 
-$C \colon x^2 + y^2 = 2$ in the plane $z = 2$.
+The intersection of two surfaces in $\R^3$ is also a curve. 
+\begin{enumerate}[(1)]
+    \item The intersection of $z = x^2 + y^2$ and $z = 2$ gives the circle 
+    $x^2 + y^2 = 2$ in the plane $z = 2$. 
 
-For our purposes, we'll work with parametrized curves $\gamma : I = (\alpha, \beta) \subset 
-\R \to \R^n$ of class $C^r$. (In practice, we need $r \geq n$ when working over $\R^n$.)
+    \item {\bf (Twisted cubic.)} Let $C = \{(x, y, z) \in \R^3 : 
+    y = x^2,\, z = x^3\}$, which is the intersection of the surfaces 
+    $y = x^2$ and $z = x^3$ in $\R^3$. This can be described using the parametrized 
+    curve $\gamma : \R \to C \subset \R^3$ defined by $t \mapsto (t, t^2, t^3)$.
+\end{enumerate}
 
-Example: {\bf Circular helix.} Let $\gamma(t) = (a\cos t, a\sin t, bt)$ for $t \in \R$ and $a, b > 0$. 
-Note that $x^2 + y^2 = a^2$, so $\gamma(t)$ lies above the circle $x^2 + y^2 = a^2$ in the $xy$-plane. 
+We will work with parametrized curves, which are 
+vector-valued functions $\gamma : I = (\alpha, \beta) \to \R^n$ of class $C^r$.
+
+{\bf (Circular helix.)} Let $\gamma(t) = (a\cos t, a\sin t, bt)$ for $t \in \R$ and $a, b > 0$. 
+Setting $x = a\cos t$ and $y = a\sin t$, we see that $x^2 + y^2 = a^2$, so 
+$\gamma(t)$ lies on the cylinder $x^2 + y^2 = a^2$ in $\R^3$. 
 We have $\gamma(0) = (a, 0, 0)$ and $\gamma(\pi/2) = (0, a, b\pi/2)$. (The circular helix 
 looks like a spiral along the cylinder.)
 
@@ -85,7 +42,275 @@ looks like a spiral along the cylinder.)
     $t \in (\alpha, \beta)$. 
 \end{defn}\vspace{-0.25cm}
 Note that unit speed implies regular because $\|x\| = 0$ if and only if $x = 0$. 
+Let's look at some examples. 
+\begin{enumerate}[(1)]
+    \item {\bf (Circle.)} Let $\gamma(t) = (\cos(ct), \sin(ct))$ for $t \in \R$, 
+    where $c \in \R$. Then $\gamma'(t) = c(-\sin(ct), \cos(ct))$ for all $t \in \R$,
+    which implies that $\|\gamma'(t)\| = c$. In particular, $\gamma$ is 
+    regular when $c \neq 0$, and is unit speed if and only if $c = 1$. 
+    
+    \item {\bf (Circular helix.)} Given $a, b > 0$, let $\gamma(t) = 
+    (a\cos t, a\sin t, bt)$ for $t \in \R$ as before. Then we have $\gamma'(t) = 
+    (-a\sin t, a\cos t, b)$ for all $t \in \R$, which implies that 
+    \[ \|\gamma'(t)\| = \sqrt{a^2 + b^2} > 0. \] 
+    This is a constant; we see that $\gamma$ is regular for all $a, b > 0$, 
+    and unit speed if and only if $a^2 + b^2 = 1$. 
 
-Example: Let $a > 0$ and take $\gamma(t) = (a\cos t, a\sin t)$ for $t \in \R$, which is a 
-parametrization of the circle of radius $a$. Then $\gamma'(t) = (-a\sin t, a\cos t) \neq (0, 0)$ 
-for all $t \in \R$ and $\|\gamma'(t)\| = a$, so $\gamma$ is unit speed if and only if $a = 1$.  
+    \item {\bf (Twisted cubic.)} Consider $\gamma(t) = (t, t^2, t^3)$ for $t \in \R$. 
+    Then $\gamma'(t) = (1, 2t, 3t^2)$ for all $t \in \R$, so 
+    \[ \|\gamma'(t)\| = \sqrt{1 + 4t^2 + 9t^4} \geq 1. \] 
+    Notice that $\gamma$ is regular, but it is not 
+    a unit speed curve since $\|\gamma'(t)\| = 1$ if and only if $t = 0$. 
+\end{enumerate}
+The following result will be useful in our study of unit speed curves. 
+
+\begin{prop}{prop:2.2}
+    Let $u : (\alpha, \beta) \to \R^n$ be a vector-valued function of class $C^r$ 
+    such that $\|u(t)\| = 1$ for all $t \in (\alpha, \beta)$. Then 
+    $u(t) \cdot u'(t) = 0$ for all $t \in (\alpha, \beta)$, so
+    we have $u'(t) = 0$ or $u(t) \perp u'(t)$.
+\end{prop}\vspace{-0.25cm} 
+\begin{pf}[Proposition~\ref{prop:2.2}]
+    Suppose that $u(t) = (u_1(t), \dots, u_n(t))$. Then 
+    $u'(t) = (u'_1(t), \dots, u'_n(t))$. Since $\|u(t)\| = 1$, we have that 
+    \[ 1 = u(t) \cdot u(t) = \sum_{i=1}^n (u_i(t))^2. \]
+    Differentiating this equation with respect to $t$ gives 
+    \begin{align*}
+        0 = \frac{\rm d}{{\rm d}t} \left( \sum_{i=1}^n (u_i(t))^2 \right)
+        = \sum_{i=1}^n \frac{\rm d}{{\rm d}t} ((u_i(t))^2) 
+        = \sum_{i=1}^n 2u_i(t)u'_i(t) = 2u(t) \cdot u'(t). 
+    \end{align*}
+    This means that $u(t) \cdot u'(t) = 0$ for all $t \in (\alpha, \beta)$, 
+    as desired. \qed 
+\end{pf}\vspace{-0.25cm} 
+
+In particular, if $\gamma$ is a unit speed curve, then $\gamma'(t) = 0$ 
+or $\gamma'(t) \perp \gamma''(t)$ by setting $u(t) = \gamma'(t)$ in 
+Proposition~\ref{prop:2.2}. Note that this result also holds if for 
+some constant $c \in \R$, we have $\|\gamma'(t)\| = c$ for all $t \in (\alpha, \beta)$.
+
+How do we measure how much a curve ``curves''? We first make a few definitions.
+
+\begin{defn}{defn:2.3}
+    Let $\gamma : (\alpha, \beta) \to \R^n$ be a unit speed curve. 
+    \begin{itemize}
+        \item We define the {\bf unit tangent vector to $\gamma$ at $\gamma(s)$} 
+        to be 
+        \[ T(s) := \gamma'(s). \] 
+        \item The {\bf curvature of $\gamma$ at $\gamma(s)$} is defined to be 
+        \[ \kappa(s) := \|\gamma''(s)\|. \] 
+        \item If $\kappa(s) > 0$, the {\bf principal unit normal to $\gamma$ 
+        at $\gamma(s)$} is 
+        \[ N(s) := \frac{\gamma''(s)}{\kappa(s)}, \] 
+        and the {\bf radius of curvature at $\gamma(s)$} is $\rho(s) := 1/\kappa(s)$. 
+    \end{itemize}
+\end{defn}
+
+We make a few remarks about these definitions.
+\begin{enumerate}[(1)]
+    \item Observe that $T(s)$ is the unique unit vector tangent to $\gamma$ 
+    at $\gamma(s)$ that points in the direction in which we are traveling 
+    along the curve.
+
+    \item Since $\gamma$ is a unit speed curve, Proposition~\ref{prop:2.2}
+    implies $\gamma'(s) \cdot \gamma''(s) = 0$. Assuming that the 
+    acceleration $\gamma''(s)$ is nonzero, we must have 
+    $\gamma'(s) \perp \gamma''(s)$ so that $T(s) \perp N(s)$. 
+
+    \item Note that $\kappa(s) \geq 0$. Whenever $\kappa(s) > 0$, 
+    we see that $N(s) = \gamma''(s)/\kappa(s)$ points in the same 
+    direction as $\gamma''(s)$, namely the direction that the velocity 
+    vectors are changing.
+\end{enumerate}
+
+Next, let's look at some simple examples. 
+\begin{enumerate}[(1)]
+    \item Let $\gamma : (\alpha, \beta) \to \R^n$ be a unit speed curve 
+    of class $C^r$ where $r \geq 2$. Then the image of $\gamma$ in $\R^n$ 
+    is a line if and only if $\kappa(s) = 0$ for all $s \in (\alpha, \beta)$. 
+
+    {\bf Proof.} Note that $\kappa(s) = 0$ if and only if $\|\gamma''(s)\| = 0$, 
+    which is equivalent to $\gamma''(s) = 0$ for all $s \in (\alpha, \beta)$. 
+    This happens if and only if $\gamma'(s) = v$ for some fixed 
+    $0 \neq v \in \R^n$ (it is nonzero since $\gamma$ is unit speed), and 
+    hence $\gamma(s) = sv + x_0$ for some $x_0 \in \R^n$ and $s \in 
+    (\alpha, \beta)$. \qed 
+
+    \item {\bf (Circle.)} For $a > 0$ and $s \in \R$, set 
+    $\gamma(s) = (a\cos(s/a), a\sin(s/a))$. Then $\gamma'(s) = 
+    (-\sin(s/a), \cos(s/a))$ with $\|\gamma'(s)\| = 1$, so 
+    $\gamma$ is unit speed with 
+    \[ T(s) = \gamma'(s) = (-\sin(s/a), \cos(s/a)). \] 
+    Next, we have $\gamma''(s) = (-\frac1a\cos(s/a), -\frac1a\sin(s/a))$, so 
+    \[ \kappa(s) = \|\gamma'(s)\| = 1/a > 0 \] 
+    and $\gamma$ has constant and positive curvature. From this, we compute 
+    \[ N(s) = \frac{\gamma''(s)}{\kappa(s)} = (-\cos(s/a), -\sin(s/a)), \]
+    and the radius of curvature at $\gamma(s)$ is $\rho(s) = 1/\kappa(s) = a$.  
+
+    \item {\bf (Helix.)} Let $a, b > 0$ and set $c = (a^2 + b^2)^{-1/2}$. Then 
+    $\gamma(s) = (a\cos(cs), a\sin(cs), bcs)$
+    for $s \in \R$ is a unit speed parametrization of the helix. Then 
+    \[ T(s) = \gamma'(s) = (-ac\sin(cs), ac\cos(cs), bc) \] 
+    and $\gamma''(s) = (-ac^2\cos(cs), -ac^2\sin(cs), 0)$, which implies that 
+    \[ \kappa(s) = \|\gamma''(s)\| = ac^2 = \frac{a}{a^2+b^2} \] 
+    for all $s \in \R$, so this has constant curvature just like the circle! 
+    Therefore, we will need more than curvature to distinguish between the two. 
+    We will need torsion, which we discuss later on. The principal unit 
+    normal to $\gamma$ at $\gamma(s)$ is 
+    \[ N(s) = \frac{\gamma''(s)}{\kappa(s)} = (-\cos(cs), -\sin(cs), 0). \] 
+\end{enumerate}
+Note that in $\R^2$, there are only two possible unit normal vectors to the 
+curve at any point. The principal unit normal points inwards. 
+
+On the other hand, in $\R^3$, there is a whole plane of normal vectors to the curve at 
+any point. It is perpendicular to the unit tangent $T$ and called the {\bf normal plane} to 
+the curve at that point. The principal unit normal $N$ is a vector in that plane.
+
+\begin{defn}{defn:2.4}
+    Let $\gamma : (\alpha, \beta) \to \R^n$ be a unit speed curve. Suppose that 
+    $\kappa(s) > 0$ where $s \in (\alpha, \beta)$.
+    \begin{itemize} 
+        \item The {\bf osculating plane to $\gamma$ at $\gamma(s)$} is defined to be
+        $\Span_{\R}\{T(s), N(s)\}$.
+        \item The {\bf osculating circle of $\gamma$ at $\gamma(s)$} is the 
+        circle of radius $\rho(s)$ in the osculating plane that passes 
+        through $\gamma(s)$ and whose center is on the ray of direction 
+        $N(s)$ starting at $\gamma(s)$. 
+    \end{itemize}
+\end{defn}\vspace{-0.25cm} 
+If $\gamma$ is a plane curve, then the osculating plane is the plane 
+which contains the curve. If $\gamma$ is a circle, then it coincides 
+with the osculating circle. The osculating circle is therefore the 
+circle that best approximates the curve around the point $\gamma(s)$. 
+
+\subsection{Binormal vectors, Frenet frames, and torsion} \label{subsec:2.2}
+We first recall the cross product in $\R^3$. Given $u, v \in \R^3$, we 
+denote the cross product of $u$ and $v$ by $u \times v$, and it is the 
+unique vector in $\R^3$ such that: 
+\begin{itemize}
+    \item $u \times v \perp u$ and $u \times v \perp v$, with $u \times v$ 
+    pointing in the direction given by the right-hand rule; 
+    \item $\|u \times v\|$ is the area of the parallelogram spanned by 
+    $u$ and $v$. 
+\end{itemize}
+Note that $u \times v = \|u\|\|v\| \sin\theta\,\mathbf n$, where $\theta$ 
+is the angle between $u$ and $v$, and $\mathbf n$ is the unit normal 
+vector perpendicular to the plane containing $u$ and $v$ (if $\theta 
+\notin \{0, \pi\}$) with direction such that 
+$\{u, v, \mathbf n\}$ is positively oriented. 
+\begin{enumerate}[(i)]
+    \item If $\theta \in \{0, \pi\}$ so that $u$ and $v$ are parallel, then 
+    $\sin\theta = 0$ and $u \times v = \mathbf 0$. In fact, we have 
+    $u \times v = \mathbf 0$ if and only if $u$ and $v$ are parallel.
+
+    \item If $\|u\| = \|v\| = 1$ and $\theta = \pi/2$, then $u \times v = \mathbf n$ 
+    so that $\|u \times v\| = 1$ and $\{u, v, u \times v\}$ is a positively 
+    oriented orthonormal basis. 
+\end{enumerate}
+Let $\mathbf i = (1, 0, 0)$, $\mathbf j = (0, 1, 0)$, and $\mathbf k 
+= (0, 0, 1)$ so that $\{\mathbf i, \mathbf j, \mathbf k\}$ is the standard 
+basis of $\R^3$. In practice, given $u = (u_1, u_2, u_3)$ and $v = (v_1, v_2, v_3)$, 
+we compute $u \times v$ via 
+\begin{align*} 
+    u \times v &= \det \begin{bmatrix} 
+        \mathbf i & \mathbf j & \mathbf k \\ 
+        u_1 & u_2 & u_3 \\ 
+        v_1 & v_2 & v_3 
+    \end{bmatrix} \\ 
+    &= (u_2v_3 - v_2u_3)\mathbf i - (u_1v_3 - v_1u_3)\mathbf j + (u_1v_2 - v_1u_2)\mathbf k \\
+    &= (u_2v_3 - v_2u_3, v_1u_3 - u_1v_3, u_1v_2 - v_1u_2).
+\end{align*}
+Finally, we observe that $v \times u = -u \times v$ because by definition, 
+$v \times u$ points in the opposite direction of $u \times v$ but has the 
+same length.
+
+\begin{defn}{defn:2.5}
+    Let $\gamma : (\alpha, \beta) \to \R^3$ be a unit speed curve with 
+    $\kappa > 0$. The {\bf unit binormal vector} is defined to be 
+    \[ B := T \times N, \] 
+    and we call $\{T, N, B\}$ the {\bf Frenet frame}. 
+\end{defn}\vspace{-0.25cm}
+
+Note that $B \perp T$ and $B \perp N$ by definition of the cross product, 
+and $\|B\|= 1$ since $\|T\| = \|N\| = 1$ with $T \perp N$. This implies that 
+$\{T, N, B\}$ is a (right-handed) orthonormal basis at every point. 
+\begin{enumerate}[(i)]
+    \item Observe that $B$ is perpendicular to the osculating plane $\Span_{\R}\{T, N\}$. 
+    \item We call $\Span_{\R}\{N, B\}$ the {\bf normal plane} because it is 
+    the plane perpendicular to $T$. 
+    \item If $\gamma$ is a curve in the $xy$-plane, then $B$ must be constantly 
+    $(0, 0, 1)$ or $(0, 0, -1)$. In general, if $\gamma$ is a plane curve, 
+    then $B(s)$ is a constant vector (exercise) so that $\frac{{\rm d}B}{{\rm d}s}$ is 
+    identically zero. In particular, $\frac{{\rm d}B}{{\rm d}s}$ measures how much 
+    a curve fails to be a plane curve (i.e. how much it twists). 
+    We will see later that $\|\frac{{\rm d}B}{{\rm d}s}\|$ is equal to the absolute value 
+    of the torsion. 
+\end{enumerate}
+
+Let's consider an example. A circle or helix can parametrized using the 
+unit speed curve 
+\[ \gamma(s) = (a\cos(cs), a\sin(cs), bcs) \] 
+for $s \in \R$, where $a > 0$, $b \geq 0$, and $c = (a^2 + b^2)^{-1/2}$. 
+We computed in an earlier example that 
+$T(s) = \gamma'(s) = c(-a\sin(cs), a\cos(cs), b)$ and 
+$N(s) = \gamma''(s)/\kappa(s) = -(\cos(cs), \sin(cs), 0)$. 
+Then the unit binormal vector is 
+\[ B = T \times N = \det \begin{bmatrix}
+    \mathbf i & \mathbf j & \mathbf k \\ 
+    -ac\sin(cs) & ac\cos(cs) & bc \\ 
+    -\cos(cs) & -\sin(cs) & 0
+\end{bmatrix} = (bc\sin(cs), -bc\cos(cs), ac). \] 
+Note that if $b = 0$, then $\gamma$ is a circle in the $xy$-plane. 
+In this case, we have $B = (0, 0, ac)$ with $c = 1/a$, so $B = (0, 0, 1)$ 
+as expected. On the other hand, if $b > 0$, then $B$ is not a constant 
+vector, so the osculating plane changes (and $\frac{{\rm d}B}{{\rm d}s} \neq 0$).
+
+We have seen that $\frac{{\rm d}B}{{\rm d}s}$ measures to what extent the curve 
+fails to be a plane curve. In addition, we have the following result. 
+
+\begin{lemma}{lemma:2.6}
+    For all $s \in (\alpha, \beta)$, we have $\frac{{\rm d}B}{{\rm d}s}(s) = 0$ 
+    or $\frac{{\rm d}B}{{\rm d}s}(s)$ is parallel to $N(s)$.
+\end{lemma}\vspace{-0.25cm}
+\begin{pf}[Lemma~\ref{lemma:2.6}]
+    Since $\|B\| = 1$, we know from Proposition~\ref{prop:2.2} that 
+    \[ \frac{{\rm d}B}{{\rm d}s}(s) \cdot B(s) = 0 \] 
+    so that $\frac{{\rm d}B}{{\rm d}s}(s) = 0$ or $\frac{{\rm d}B}{{\rm d}s}(s) \
+    \perp B(s)$. By the product rule, we obtain 
+    \begin{align*}
+        \frac{{\rm d}B}{{\rm d}s} = \frac{{\rm d}}{{\rm d}s}(T \times N) 
+        = \frac{{\rm d}T}{{\rm d}s} \times N + T \times \frac{{\rm d}N}{{\rm d}s}
+        = \kappa N \times N + T \times \frac{{\rm d}N}{{\rm d}s}
+        = T \times \frac{{\rm d}N}{{\rm d}s}, 
+    \end{align*}
+    where we used the fact that $\frac{{\rm d}T}{{\rm d}s} = \kappa N$ 
+    and $N \times N = \mathbf 0$. This implies that 
+    $\frac{{\rm d}B}{{\rm d}s} \perp T$. This combined with 
+    $\frac{{\rm d}B}{{\rm d}s} \perp B$ means that 
+    $\frac{{\rm d}B}{{\rm d}s}(s)$ is parallel to $B(s) \times T(s) = N(s)$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+In particular, we have that $\frac{{\rm d}B}{{\rm d}s}(s) = -\tau(s)N(s)$ 
+for some scalar function $\tau : (\alpha, \beta) \to \R$. 
+
+\begin{defn}{defn:2.7}
+    The scalar function $\tau : (\alpha, \beta) \to \R$ such that 
+    $\frac{{\rm d}B}{{\rm d}s} = -\tau N$
+    is called the {\bf torsion} of $\gamma$. 
+\end{defn}\vspace{-0.25cm}
+Note that $\tau$ can take both positive and negative values (and can 
+even be zero). When $\tau > 0$, this reflects the fact that the slopes 
+of lines of intersection with the osculating plane are increasing. 
+In other words, the curve is twisting ``up''. Analogously, 
+when $\tau < 0$, the curve is twisting ``down''. 
+
+Revisiting the circle and helix example above, we already computed that 
+$N(s) = -(\cos(cs), \sin(cs), 0)$ and $B(s) = 
+(bc\sin(cs), -bc\cos(cs), ac)$. This gives 
+\[ \frac{{\rm d}B}{{\rm d}s}(s) = bc^2(\cos(cs), \sin(cs), 0) = -bc^2 N(s), \] 
+so for all $s \in \R$, the torsion of $\gamma$ is given by 
+\[ \tau(s) = bc^2 = \frac{b}{a^2+b^2} \geq 0. \]
+If $b = 0$, then $\tau \equiv 0$, reflecting the fact that $\gamma$ is a 
+plane curve; that is, it is a curve in the $xy$-plane. When $b > 0$, 
+then $\tau \equiv b/(a^2 + b^2) > 0$, and we have a ``right-handed'' helix 
+that ``goes up''.
