@@ -25,7 +25,7 @@ The intersection of two surfaces in $\R^3$ is also a curve.
 \end{enumerate}
 
 We will work with parametrized curves, which are 
-vector-valued functions $\gamma : I = (\alpha, \beta) \to \R^n$ of class $C^r$.
+vector-valued functions $\gamma : I = (\alpha, \beta) \to \R^n$ of class ${\cal C}^r$.
 
 {\bf (Circular helix.)} Let $\gamma(t) = (a\cos t, a\sin t, bt)$ for $t \in \R$ and $a, b > 0$. 
 Setting $x = a\cos t$ and $y = a\sin t$, we see that $x^2 + y^2 = a^2$, so 
@@ -34,7 +34,7 @@ We have $\gamma(0) = (a, 0, 0)$ and $\gamma(\pi/2) = (0, a, b\pi/2)$. (The circu
 looks like a spiral along the cylinder.)
 
 \begin{defn}{defn:2.1}
-    A parameterized curve $\gamma : (\alpha, \beta) \to \R^n$ of class $C^r$ is called 
+    A parameterized curve $\gamma : (\alpha, \beta) \to \R^n$ of class ${\cal C}^r$ is called 
     {\bf regular} if for all $t \in (\alpha, \beta)$, we have 
     \[ \gamma'(t) = \frac{{\rm d}\gamma}{{\rm d}t}(t) \neq 0. \] 
     We call $\|\gamma'(t)\|$ the {\bf speed of $\gamma$ 
@@ -65,7 +65,7 @@ Let's look at some examples.
 The following result will be useful in our study of unit speed curves. 
 
 \begin{prop}{prop:2.2}
-    Let $u : (\alpha, \beta) \to \R^n$ be a vector-valued function of class $C^r$ 
+    Let $u : (\alpha, \beta) \to \R^n$ be a vector-valued function of class ${\cal C}^r$ 
     such that $\|u(t)\| = 1$ for all $t \in (\alpha, \beta)$. Then 
     $u(t) \cdot u'(t) = 0$ for all $t \in (\alpha, \beta)$, so
     we have $u'(t) = 0$ or $u(t) \perp u'(t)$.
@@ -126,7 +126,7 @@ We make a few remarks about these definitions.
 Next, let's look at some simple examples. 
 \begin{enumerate}[(1)]
     \item Let $\gamma : (\alpha, \beta) \to \R^n$ be a unit speed curve 
-    of class $C^r$ where $r \geq 2$. Then the image of $\gamma$ in $\R^n$ 
+    of class ${\cal C}^r$ where $r \geq 2$. Then the image of $\gamma$ in $\R^n$ 
     is a line if and only if $\kappa(s) = 0$ for all $s \in (\alpha, \beta)$. 
 
     {\bf Proof.} Note that $\kappa(s) = 0$ if and only if $\|\gamma''(s)\| = 0$, 
@@ -394,7 +394,7 @@ In particular, torsion captures how much $\gamma$ fails to be a plane curve.
 
 \subsection{Frenet-Serret equations and the fundamental theorem of 
 space curves} \label{subsec:2.3}
-Let $\gamma : (\alpha, \beta) \to \R^3$ be a curve of class $C^3$ and suppose 
+Let $\gamma : (\alpha, \beta) \to \R^3$ be a curve of class ${\cal C}^3$ and suppose 
 that $\kappa(s) > 0$ for all $s \in (\alpha, \beta)$. We have already seen that 
 $\frac{{\rm d}T}{{\rm d}s} = \kappa N$ and $\frac{{\rm d}B}{{\rm d}s} = -\tau N$.
 But what about $\frac{{\rm d}N}{{\rm d}s}$? 
@@ -445,12 +445,12 @@ of space curves.
 
 \begin{theo}[Fundamental Theorem of Space Curves]{theo:2.11}
     Let $\gamma_1$ and $\gamma_2$ be two unit speed curves in $\R^3$ 
-    of class $C^3$ with the same curvature $\kappa(s) > 0$ 
+    of class ${\cal C}^3$ with the same curvature $\kappa(s) > 0$ 
     and the same torsion $\tau(s)$ for all $s \in (\alpha, \beta)$. 
     Then there is a rigid motion $M$ of $\R^3$ such that 
     $\gamma_2(s) = M(\gamma_1(s))$ for all $s \in (\alpha, \beta)$.
 
-    Moreover, if $k$ and $t$ are functions of class $C^3$ with $k > 0$ 
+    Moreover, if $k$ and $t$ are functions of class ${\cal C}^3$ with $k > 0$ 
     everywhere, then there is a unit speed curve in $\R^3$ whose curvature 
     is $k$ and whose torsion is $t$. 
 \end{theo}\vspace{-0.25cm}
@@ -477,7 +477,7 @@ We begin with the definition of arclength.
 
 \begin{defn}{defn:2.12}
     Let $\gamma : (\alpha, \beta) \to \R^n$ be a parametrized curve of class 
-    $C^r$. For all $\alpha < \alpha_0 \leq \beta_0 < \beta$, the 
+    ${\cal C}^r$. For all $\alpha < \alpha_0 \leq \beta_0 < \beta$, the 
     {\bf arclength} between $\gamma(\alpha_0)$ and $\gamma(\beta_0)$ is 
     defined to be 
     \[ \int_{\alpha_0}^{\beta_0} \|\gamma'(t)\|\dd t. \] 
@@ -520,7 +520,7 @@ Let's take a look at a few examples of arclength.
 \end{enumerate}
 
 \begin{defn}{defn:2.13}
-    The {\bf arclength} of a curve $\gamma$ of class $C^r$ starting 
+    The {\bf arclength} of a curve $\gamma$ of class ${\cal C}^r$ starting 
     at a point $\gamma(t_0)$ is the function $s(t)$ given by 
     \[ s(t) := \int_{t_0}^t \|\gamma'(u)\|\dd u. \] 
 \end{defn}\vspace{-0.25cm}
@@ -570,7 +570,7 @@ $T$, $N$, $B$, $\kappa$, and $\tau$, although they are quite cumbersome to
 compute.
 
 \begin{prop}{prop:2.14}
-    Let $\gamma : (\alpha, \beta) \to \R^3$ be a regular curve of class $C^3$. 
+    Let $\gamma : (\alpha, \beta) \to \R^3$ be a regular curve of class ${\cal C}^3$. 
     Then we have 
     \begin{align*}
         T &= \frac{\gamma'(t)}{\|\gamma'(t)\|}, &
@@ -653,7 +653,7 @@ see that $\gamma$ is a circle. It is contained in the plane with normal vector
 and this plane is $x + 2z = 0$.
 
 To end this section, we briefly discuss how to generalize this to higher dimensions. 
-Let $\gamma : (\alpha, \beta) \to \R^n$ be a regular curve of class $C^n$. 
+Let $\gamma : (\alpha, \beta) \to \R^n$ be a regular curve of class ${\cal C}^n$. 
 Suppose that $\{\gamma'(t), \dots, \gamma^{(n-1)}(t)\}$ is a linearly 
 independent set for all $t \in (\alpha, \beta)$. Then $\gamma$ 
 is called a {\bf Frenet curve}. 

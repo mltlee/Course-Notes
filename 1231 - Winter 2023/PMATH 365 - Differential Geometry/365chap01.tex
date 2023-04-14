@@ -355,20 +355,20 @@ Similarly, $\alpha^{-1} \circ \beta : \beta^{-1}(V \cap V') \subset
 $\beta^{-1}(V \cap V')$ is a $k'$-dimensional submanifold of $\R^k$. 
 It follows that $k' \leq k$ and so $k' = k$. 
 
-\subsection{Submanifolds of $\R^n$ of class $C^r$} \label{subsec:1.4}
+\subsection{Submanifolds of $\R^n$ of class ${\cal C}^r$} \label{subsec:1.4}
 Let $U \subset \R^n$ be an open set and consider the vector-valued function 
 \begin{align*}
     F : U \subset \R^n &\to \R^m \\ 
     x = (x_1, \dots, x_n) &\mapsto (F_1(x), \dots, F_m(x)). 
 \end{align*}
-Recall that $F$ is of {\bf class $C^r$} for $r \geq 1$ if each component 
-function $F_i : U \subset \R^n \to \R$ is of class $C^r$. That is, 
+Recall that $F$ is of {\bf class ${\cal C}^r$} for $r \geq 1$ if each component 
+function $F_i : U \subset \R^n \to \R$ is of class ${\cal C}^r$. That is, 
 the partial derivatives of $F_i$ exist and are continuous up to order $r$. 
-Also, we say that $F$ is of class $C^\infty$ or {\bf smooth} if each 
+Also, we say that $F$ is of class ${\cal C}^\infty$ or {\bf smooth} if each 
 $F_i$ is smooth (the partial derivatives exist up to any order).
 \begin{enumerate}[(1)]
     \item All polynomials are smooth. 
-    \item The function $f(x) = x^{4/3}$ is of class $C^1$. Its derivative 
+    \item The function $f(x) = x^{4/3}$ is of class ${\cal C}^1$. Its derivative 
     $f'(x) = \frac43 x^{1/3}$ is continuous, but the second derivative 
     $f''(x) = \frac49 x^{-2/3}$ is not defined at $x = 0$. 
     \item The vector-valued function $F(x, y) = (2\cos x, xy - 1, e^{2\sin y+x})$ 
@@ -406,18 +406,18 @@ This leads to the following definition.
     an open neighbourhood $V$ of $p$ in $M$, an open subset $U \subset \R^k$, 
     and a homeomorphism $\alpha : U \subset \R^k \to V \subset M$ such that 
     \begin{enumerate}[(1)]
-        \item $\alpha$ is of class $C^r$ for some $r \geq 1$; 
+        \item $\alpha$ is of class ${\cal C}^r$ for some $r \geq 1$; 
         \item $D\alpha(x)$ has rank $k$ for all $x \in U$. 
     \end{enumerate}
     Then $M$ is called a {\bf $k$-dimensional submanifold of $\R^n$ of 
-    class $C^r$}. We call $\alpha$ a {\bf coordinate chart} (or 
+    class ${\cal C}^r$}. We call $\alpha$ a {\bf coordinate chart} (or 
     {\bf coordinate patch}) about $p$.
 \end{defn}\vspace{-0.25cm}
 
-Note that every submanifold of class $C^r$ is a topological submanifold. 
+Note that every submanifold of class ${\cal C}^r$ is a topological submanifold. 
 We are only imposing the extra conditions (1) and (2) on the coordinate charts. 
 We will see that condition (2) will allow us to define tangent spaces to 
-the submanifolds at every point. A submanifold of class $C^\infty$ is 
+the submanifolds at every point. A submanifold of class ${\cal C}^\infty$ is 
 called a {\bf smooth submanifold}. 
 
 As usual, let's go over some examples. 
@@ -431,20 +431,20 @@ As usual, let's go over some examples.
     is the $n \times n$ identity matrix and has rank $n$ for all $x \in U$, 
     so $U \subset \R^n$ is a smooth $n$-dimensional submanifold of $\R^n$. 
 
-    \item {\bf Graphs of functions of class $C^r$.} Let $U \subset \R^k$ 
+    \item {\bf Graphs of functions of class ${\cal C}^r$.} Let $U \subset \R^k$ 
     be an open set and consider a function 
     \begin{align*}
         F : U \subset \R^k &\to \R^{n-k} \\ 
         (x_1, \dots, x_k) &\mapsto (F_1(x), \dots, F_{n-k}(x)) 
     \end{align*} 
-    of class $C^r$ (so each $F_i$ is of class $C^r$). Let 
+    of class ${\cal C}^r$ (so each $F_i$ is of class ${\cal C}^r$). Let 
     \[ M = \{(x, F(x)) \in \R^k \times \R^{n-k} : x \in U\} \subset \R^n \] 
     be the graph of $F$. We have already seen that $M$ is a $k$-dimensional 
     submanifold of $\R^n$ by taking $V = M$ and the homeomorphism 
     $\alpha : U \subset \R^k \to V \subset \R^n$ defined by 
     \[ \alpha(x) = (x, F(x)) = (x_1, \dots, x_k, F_1(x), \dots, F_{n-k}(x)). \]
-    In particular, $\alpha$ is of class $C^r$ since the identity components 
-    are smooth and the $F_i$ are of class $C^r$. Let's look at the 
+    In particular, $\alpha$ is of class ${\cal C}^r$ since the identity components 
+    are smooth and the $F_i$ are of class ${\cal C}^r$. Let's look at the 
     derivative matrix in terms of the columns of partial derivatives. We have 
     \[ \frac{\partial\alpha}{\partial x_j} = 
     \left( 0, \dots, 0, 1, 0, \dots, 0, \frac{\partial F_1}{\partial x_j}, 
@@ -460,7 +460,7 @@ As usual, let's go over some examples.
         \partial F_{n-k}/\partial x_1 & \partial F_{n-k}/\partial x_2 & \cdots & \partial F_{n-k}/\partial x_k \\
     \end{array} \mright] = \mleft[ \begin{array}{c} I_{k\times k} \\\hline DF(x) \end{array} \mright]. \]
     This matrix has rank $k$ for all $x \in U$, so $M$ is a $k$-dimensional 
-    submanifold of class $C^r$. 
+    submanifold of class ${\cal C}^r$. 
 
     \item We saw that the circle $\mathbb{S}^1 = \{(x, y) \in \R^2 : x^2 + y^2 = 1\} 
     \subset \R^2$ was a $1$-dimensional topological submanifold using
@@ -475,7 +475,7 @@ As usual, let's go over some examples.
     and hence $D\alpha_i$ is never the zero vector. Thus, $\mathbb{S}^1$ 
     is a smooth $1$-dimensional submanifold of $\R^2$. 
 \end{enumerate}
-Not every topological submanifold of $\R^n$ is of class $C^r$ 
+Not every topological submanifold of $\R^n$ is of class ${\cal C}^r$ 
 for some $r \geq 1$. For example, consider the graph 
 \[ M = \{(x, |x|) : x \in \R\} \] 
 of the function $f(x) = |x|$ on $\R$, which fails to be differentiable 
@@ -485,10 +485,10 @@ smooth away from $x = 0$, so $M \setminus \{(0, 0)\}$ is a smooth $1$-dimensiona
 submanifold of $\R^2$. 
 
 However, we claim that it cannot be a submanifold of 
-class $C^r$ on any neighbourhood of the point $(0, 0)$. 
+class ${\cal C}^r$ on any neighbourhood of the point $(0, 0)$. 
 Suppose otherwise, so there exists an open set $U \subset \R^1$, 
 an open neighbourhood $V \subset M$ of $(0, 0)$, and a homeomorphism 
-$\alpha : U \subset \R^1 \to V \subset M \subset \R^2$ of class $C^r$ 
+$\alpha : U \subset \R^1 \to V \subset M \subset \R^2$ of class ${\cal C}^r$ 
 for some $r \geq 1$. Moreover, assume that $D\alpha(t)$ is of rank $1$ 
 for all $t \in U$. Since $k = 1$, we have 
 \[ D\alpha(t) = \frac{{\rm d}\alpha}{{\rm d}t} = \alpha'(t) \neq 0 \] 
@@ -499,7 +499,7 @@ is tangent to $M$ at $\alpha(t)$. There are two possibilities:
     is a direction vector of $y = x$, so for some $c : I 
     \subset \R \to \R$, we have 
     \[ \alpha'(t) = c(t) \begin{pmatrix} 1 \\ 1 \end{pmatrix}. \tag{1.4.1} \label{eq:1.4.1}\] 
-    Since $\alpha(t)$ is of class $C^r$ for some $r \geq 1$, we know that 
+    Since $\alpha(t)$ is of class ${\cal C}^r$ for some $r \geq 1$, we know that 
     $\alpha'(t)$ is continuous, so $c : I \to \R$ is also continuous.
     \item If $\alpha(t)$ is on $y = -x$, then $\alpha'(t)$ is a 
     direction vector of $y = -x$, so for some $d : I' \subset \R \to \R$, 
@@ -521,10 +521,10 @@ these limits are equal is if $\lim_{t\to t_0^-} d(t) =
 \lim_{t\to t_0^+} c(t) = 0$. This implies that $\alpha'(t_0)$ is the zero 
 vector, which is a contradiction to the fact that $D\alpha(t) = \alpha'(t)$ 
 has rank $1$ for all $t \in U$! This concludes the example that not 
-every topological submanifold is a submanifold of class $C^r$ for some $r \geq 1$. 
+every topological submanifold is a submanifold of class ${\cal C}^r$ for some $r \geq 1$. 
 
-In the definition of a submanifold of class $C^r$, it is important that 
-$\alpha$ is a homeomorphism and not just a function of class $C^r$ 
+In the definition of a submanifold of class ${\cal C}^r$, it is important that 
+$\alpha$ is a homeomorphism and not just a function of class ${\cal C}^r$ 
 with $D\alpha(x)$ of rank $k$ for all $x \in U$. These conditions alone
 don't even ensure that $\alpha$ is injective! For example, take the 
 $\alpha$-curve $C = \{(x, y) \in \R^2 : y^2 = x^2(x+1)\} \subset \R^2$ 
@@ -540,9 +540,9 @@ the definition below.
 
 \begin{defn}{defn:1.8}
     Let $U \subset \R^k$ be open with $k \leq n$. A map $\alpha : U 
-    \subset \R^k \to \R^n$ is an {\bf immersion} (of class $C^r$) if 
+    \subset \R^k \to \R^n$ is an {\bf immersion} (of class ${\cal C}^r$) if 
     \begin{enumerate}[(1)]
-        \item $\alpha$ is of class $C^r$; and 
+        \item $\alpha$ is of class ${\cal C}^r$; and 
         \item $D\alpha(x)$ has rank $k$ for all $x \in U$. 
     \end{enumerate}
 \end{defn}\vspace{-0.25cm}
@@ -550,7 +550,7 @@ We give some examples of immersions.
 \begin{enumerate}[(1)]
     \item {\bf Canonical immersion.} The inclusion map $\iota : \R^k \to \R^n$ defined by 
     $(x_1, \dots, x_k) \mapsto (x_1, \dots, x_k, 0, \dots, 0)$
-    is an immersion of class $C^\infty$.
+    is an immersion of class ${\cal C}^\infty$.
     Indeed, we see that $\iota$ is smooth and its derivative matrix is
     \[ D\iota = \mleft[ \begin{array}{ccc}
         1 & \cdots & 0 \\ 
@@ -563,19 +563,19 @@ We give some examples of immersions.
     which has rank $k$ because it contains the $k \times k$ identity matrix.
 
     \item The parametrization $\alpha(t) = (t^2 - 1, t(t^2 - 1))$ of the 
-    $\alpha$-curve is an immersion of class $C^\infty$. 
+    $\alpha$-curve is an immersion of class ${\cal C}^\infty$. 
     
-    \item The charts $\alpha : U \to V$ of class $C^r$ of a submanifold 
-    $M \subset \R^n$ of class $C^r$ are immersions of class $C^r$. 
+    \item The charts $\alpha : U \to V$ of class ${\cal C}^r$ of a submanifold 
+    $M \subset \R^n$ of class ${\cal C}^r$ are immersions of class ${\cal C}^r$. 
 \end{enumerate}
 Recall that a {\bf diffeomorphism} is a differentiable bijection 
-(of class $C^r$) whose inverse is also differentiable (of class $C^r$). The 
+(of class ${\cal C}^r$) whose inverse is also differentiable (of class ${\cal C}^r$). The 
 following proposition tells us that up to a diffeomorphism (by composition), 
 every immersion is locally the canonical immersion.
 
 \begin{prop}{prop:1.9}
     Let $U \subset \R^k$ be open and $\alpha : \R^k \to \R^n$ be an immersion 
-    of class $C^r$. Then up to a local diffeomorphism, $\alpha$ is the 
+    of class ${\cal C}^r$. Then up to a local diffeomorphism, $\alpha$ is the 
     canonical immersion $\iota : \R^k \to \R^n$ defined by 
     $\iota(x_1, \dots, x_k) = (x_1, \dots, x_k, 0, \dots, 0)$. 
 \end{prop}\vspace{-0.25cm}
@@ -583,11 +583,11 @@ In order to prove this, we require the Inverse Function Theorem.
 
 \begin{theo}[Inverse Function Theorem]{theo:1.10}
     Let $U \subset \R^\ell$ be open and let $F : U \subset \R^\ell \to \R^\ell$ 
-    be of class $C^r$. Suppose that for some $x_0 \in U$, the $\ell \times \ell$ 
+    be of class ${\cal C}^r$. Suppose that for some $x_0 \in U$, the $\ell \times \ell$ 
     derivative matrix $DF(x_0)$ is invertible (that is, $\det(DF(x_0)) \neq 0$). 
     Then $F$ is invertible in an open neighbourhood $U_0 \subset U$ of $x_0$ and 
     $F^{-1} : V_0 = F(U_0) \subset \R^\ell \to U_0 \subset \R^\ell$ 
-    is also of class $C^r$.
+    is also of class ${\cal C}^r$.
 \end{theo}\vspace{-0.25cm}
 
 Note that when we take $\ell = 1$ in the Inverse Function Theorem 
@@ -621,14 +621,14 @@ that it is strictly monotone and thus invertible around $x_0$.
     \[ \alpha_1|_{U_0} : U_0 \subset U \subset \R^k \to V_0 \subset \R^k \] 
     is invertible with inverse 
     $(\alpha_1|_{U_0})^{-1} : V_0 \subset \R^k \to U_0 \subset U \subset \R^k$ 
-    of class $C^r$. Hence, $\alpha_1|_{U_0}$ is a diffeomorphism of class $C^r$. 
+    of class ${\cal C}^r$. Hence, $\alpha_1|_{U_0}$ is a diffeomorphism of class ${\cal C}^r$. 
     Now, consider the composition $\alpha \circ \alpha_1^{-1} : 
     V_0 \subset \R^k \to \R^n$ which yields 
     \[ x \mapsto \alpha(\alpha_1^{-1}(x)) = (\alpha_1(\alpha_1^{-1}(x)), 
     \alpha_2(\alpha_1^{-1}(x))) =: (x, f(x)) \]  
     where $f : V_0 \subset \R^k \to \R^{n-k}$. So up to the diffeomorphism, 
-    $\alpha$ is the parametrization of the graph of a function of class $C^r$ 
-    (because the composition is of class $C^r$). 
+    $\alpha$ is the parametrization of the graph of a function of class ${\cal C}^r$ 
+    (because the composition is of class ${\cal C}^r$). 
 
     If $f(x) = 0$ for all $x \in V_0$, then we are already done. Otherwise, 
     compose the above function with $h : V_0 \times \R^{n-k} \subset \R^n 
@@ -636,24 +636,24 @@ that it is strictly monotone and thus invertible around $x_0$.
     \[ (x_1, \dots, x_k, x_{k+1}, \dots, x_n) \mapsto 
     (x_1, \dots, x_k, x_{k+1} - f_{k+1} \circ \alpha^{-1}(x), \dots, 
     x_n - f_n \circ \alpha^{-1}(x)), \] 
-    which is a diffeomorphism of class $C^r$. For $x \in V_0$, we obtain 
+    which is a diffeomorphism of class ${\cal C}^r$. For $x \in V_0$, we obtain 
     $h \circ \alpha \circ \alpha^{-1}(x) = (x, 0) = \iota(x)$ as desired. \qed 
 \end{pf}\vspace{-0.25cm}
 As a consequence, we have the following result. 
 
 \begin{cor}{cor:1.11}
-    The image of an immersion of class $C^r$ is locally the graph of a 
-    function of class $C^r$ (up to diffeomorphism). In particular, 
-    any submanifold of $\R^n$ of class $C^r$ is locally the graph of a 
-    function of class $C^r$.
+    The image of an immersion of class ${\cal C}^r$ is locally the graph of a 
+    function of class ${\cal C}^r$ (up to diffeomorphism). In particular, 
+    any submanifold of $\R^n$ of class ${\cal C}^r$ is locally the graph of a 
+    function of class ${\cal C}^r$.
 \end{cor}\vspace{-0.25cm} \newpage
 \begin{pf}[Corollary~\ref{cor:1.11}]
     From the proof of Proposition~\ref{prop:1.9}, we had a map
     $\alpha \circ \alpha_1^{-1} : V_0 \subset \R^k \to \R^n$ which sent 
     $x \mapsto (x, f(x))$ by taking $f = \alpha_2 \circ \alpha_1^{-1}$ which 
-    was of class $C^r$. Then $\alpha(V_0)$ is the graph of $f$ in $\R^n$. 
+    was of class ${\cal C}^r$. Then $\alpha(V_0)$ is the graph of $f$ in $\R^n$. 
     
-    If $M \subset \R^n$ is a $k$-dimensional submanifold of class $C^r$, 
+    If $M \subset \R^n$ is a $k$-dimensional submanifold of class ${\cal C}^r$, 
     then for all $p \in M$, there exists a coordinate chart 
     \[ \alpha : U \subset \R^k \to V \subset M \] 
     with $p \in V$. Set $x_0 = \alpha^{-1}(p)$. Using the above notation, 
@@ -665,36 +665,36 @@ As a consequence, we have the following result.
         &\to \alpha(U_0) \subset M \\ 
         x &\mapsto (x, f(x)) 
     \end{align*}
-    is of class $C^r$ since $\alpha$ and $\alpha_1^{-1}$ are of 
-    class $C^r$. (Note that $\alpha(U_0)$ is open in $M$ since $\alpha$ 
-    is a homeomorphism.) This implies that $f$ is of class $C^r$, so $M$ 
-    is locally the graph of the $C^r$ function $f : V_0 \subset \R^k \to \R^{n-k}$. \qed 
+    is of class ${\cal C}^r$ since $\alpha$ and $\alpha_1^{-1}$ are of 
+    class ${\cal C}^r$. (Note that $\alpha(U_0)$ is open in $M$ since $\alpha$ 
+    is a homeomorphism.) This implies that $f$ is of class ${\cal C}^r$, so $M$ 
+    is locally the graph of the ${\cal C}^r$ function $f : V_0 \subset \R^k \to \R^{n-k}$. \qed 
 \end{pf}\vspace{-0.25cm}
 
 We now introduce the notion of an embedding.
 \begin{defn}{defn:1.12}
     Let $U \subset \R^k$ be open and $\alpha : U \subset \R^k \to \R^n$ 
-    be a map. Then $\alpha$ is an {\bf embedding} of class $C^r$ if 
+    be a map. Then $\alpha$ is an {\bf embedding} of class ${\cal C}^r$ if 
     \begin{enumerate}[(1)]
         \item $\alpha$ is a homeomorphism onto its image; 
-        \item $\alpha$ is of class $C^r$; 
+        \item $\alpha$ is of class ${\cal C}^r$; 
         \item $D\alpha(x)$ has rank $k$ for all $x \in U$. 
     \end{enumerate}
 \end{defn}\vspace{-0.25cm}
 In other words, an embedding is just an immersion that is homeomorphic onto 
-its image. In particular, submanifolds of $\R^n$ of class $C^r$ are subsets 
-of $\R^n$ that are locally the image of an embedding of class $C^r$. 
+its image. In particular, submanifolds of $\R^n$ of class ${\cal C}^r$ are subsets 
+of $\R^n$ that are locally the image of an embedding of class ${\cal C}^r$. 
 
 The following proposition tells us that embeddings are in fact 
 diffeomorphisms onto their images. 
 \begin{prop}{prop:1.13}
     Let $U \subset \R^k$ be open, and let $\alpha : U \subset \R^k \to 
-    \R^n$ be an embedding of class $C^r$. Then 
+    \R^n$ be an embedding of class ${\cal C}^r$. Then 
     \[ \alpha^{-1} : \alpha(U) \subset \R^n \to U \subset \R^k \] 
-    is also of class $C^r$. 
+    is also of class ${\cal C}^r$. 
 \end{prop}\vspace{-0.25cm}
 \begin{pf}[Proposition~\ref{prop:1.13}]
-    Note that $\alpha$ is an immersion of class $C^r$, so we can write it as 
+    Note that $\alpha$ is an immersion of class ${\cal C}^r$, so we can write it as 
     $\alpha(x) = (\alpha_1(x), \alpha_2(x))$,
     where $\alpha_1 : U \subset \R^k \to \R^k$ is locally invertible. 
     Letting $\pi : \R^n \to \R^k$ be the projection $(y_1, \dots, y_n) 
@@ -704,12 +704,12 @@ diffeomorphisms onto their images.
         (\alpha_1(x), \alpha_2(x)) &\mapsto x = \alpha_1^{-1} \circ 
         \pi(x_1, \dots, x_n).
     \end{align*}
-    But $\alpha_1^{-1}$ and $\pi$ are both of class $C^r$, so 
-    $\alpha^{-1}$ is also of class $C^r$. \qed 
+    But $\alpha_1^{-1}$ and $\pi$ are both of class ${\cal C}^r$, so 
+    $\alpha^{-1}$ is also of class ${\cal C}^r$. \qed 
 \end{pf}\vspace{-0.25cm}
 We now introduce atlases, which we could've done a while ago when we 
 defined topological submanifolds at the beginning. However, we can now 
-talk about atlases of class $C^r$.
+talk about atlases of class ${\cal C}^r$.
 
 \begin{defn}{defn:1.14}
     Let $M \subset \R^n$ be a $k$-dimensional topological submanifold. 
@@ -717,9 +717,9 @@ talk about atlases of class $C^r$.
     \[ \{\alpha_a : U_a \subset \R^k \to V_a \subset M\}_{a \in A} \] 
     such that $\bigcup_{a \in A} V_a = M$, where each $U_a \subset \R^k$ 
     and $V_a \subset M$ is open. Moreover, if all the charts in the atlas 
-    are of class $C^r$, then it is called an 
-    {\bf atlas of class $C^r$}, or a {\bf smooth atlas} if it is of 
-    class $C^\infty$. 
+    are of class ${\cal C}^r$, then it is called an 
+    {\bf atlas of class ${\cal C}^r$}, or a {\bf smooth atlas} if it is of 
+    class ${\cal C}^\infty$. 
 \end{defn}\vspace{-0.25cm}
 We look at some examples of atlases. 
 \begin{enumerate}[(1)]
@@ -727,11 +727,11 @@ We look at some examples of atlases.
     chart for $U$ such that every point in $U$ is contained in $\alpha(U) = U$. 
     Therefore, $\{\alpha = \Id_U : U \to U\}$ is a smooth atlas for $U$. 
     \item Consider the graph $M$ of a function $F : U \subset \R^k \to \R^{n-k}$ 
-    of class $C^r$, where $U \subset \R^k$ is open. Then 
+    of class ${\cal C}^r$, where $U \subset \R^k$ is open. Then 
     $M = \{(x, F(x)) : x \in U\}$ is a $k$-dimensional 
-    submanifold of class $C^r$. It admits the chart $\alpha : U \subset \R^k 
-    \to M \subset \R^n$ defined by $x \mapsto (x, F(x))$ of class $C^r$, 
-    so $\{\alpha : U \to M\}$ is an atlas of class $C^r$ for $M$. 
+    submanifold of class ${\cal C}^r$. It admits the chart $\alpha : U \subset \R^k 
+    \to M \subset \R^n$ defined by $x \mapsto (x, F(x))$ of class ${\cal C}^r$, 
+    so $\{\alpha : U \to M\}$ is an atlas of class ${\cal C}^r$ for $M$. 
     \item Recall that the points on the circle $\mathbb{S}^1 = 
     \{(x, y) : x^2 + y^2 = 1\} \subset \R^2$ can be described using 
     the charts $\alpha_1 : (-\pi, \pi) \to \mathbb{S}^1 \setminus \{(-1, 0)\}$ 
@@ -746,17 +746,17 @@ and $\{\beta : \R \to M,\, t \mapsto (-t, 0)\}$, which are both smooth
 atlases for the $x$-axis $M$ in $\R^2$. 
 
 We now give an alternate definition of a $k$-dimensional submanifold 
-of $\R^n$ of class $C^r$. We will soon prove that this is equivalent to the 
+of $\R^n$ of class ${\cal C}^r$. We will soon prove that this is equivalent to the 
 original definition.
 
 \begin{defn}{defn:1.15}
     Let $M \subset \R^n$ be such that $M$ is locally given by the zero set 
-    $\{F \equiv 0\}$ of a $C^r$ map $F : V \subset \R^n \to \R^{n-k}$ 
+    $\{F \equiv 0\}$ of a ${\cal C}^r$ map $F : V \subset \R^n \to \R^{n-k}$ 
     with maximal rank. That is, 
     $DF(x)$ has rank $n - k$ for all $x \in V \cap M$, where $V \cap M 
     = F^{-1}(0)$ holds for an appropriately chosen neighbourhood $V$ 
     of every point in $M$. Then $M$ is called a 
-    {\bf $k$-dimensional submanifold of $\R^n$ of class $C^r$}.
+    {\bf $k$-dimensional submanifold of $\R^n$ of class ${\cal C}^r$}.
 \end{defn}\vspace{-0.25cm} 
 This alternate definition is useful, because it is generally easier to show 
 that a given subset is locally the zero set of a function than to 
@@ -798,8 +798,8 @@ explicitly exhibit charts covering the space.
     are the $2 \times 2$ identity matrix. Hence, $M$ is a smooth $1$-dimensional 
     submanifold of $\R^3$.     
 
-    {\bf Remark.} Not all zero sets of functions of class $C^r$ are submanifolds 
-    of class $C^r$. Take the $\alpha$-curve $C = \{(x, y) \in \R^2 : y^2 = 
+    {\bf Remark.} Not all zero sets of functions of class ${\cal C}^r$ are submanifolds 
+    of class ${\cal C}^r$. Take the $\alpha$-curve $C = \{(x, y) \in \R^2 : y^2 = 
     x^2(x+1)\}$, which is the zero set of the function 
     $F : \R^2 \to \R$ defined by $(x, y) \mapsto y^2 - x^2(x+1)$. 
     The derivative matrix of $F$ is 
@@ -808,16 +808,16 @@ explicitly exhibit charts covering the space.
     \{(0, 0), (-2/3, 0)\}$. We see that $(0, 0) \in C$, and this 
     is the problematic point. 
 
-    \item {\bf (Graph of a function of class $C^r$.)} Let $f : U \subset \R^k 
-    \to \R^{n-k}$ be function of class $C^r$, where $U \subset \R^k$ is open. 
+    \item {\bf (Graph of a function of class ${\cal C}^r$.)} Let $f : U \subset \R^k 
+    \to \R^{n-k}$ be function of class ${\cal C}^r$, where $U \subset \R^k$ is open. 
     Let $M = \{(x, f(x)) \in \R^k \times \R^{n-k} : x \in U\} \subset \R^n$,
-    which we have already seen is a $k$-dimensional submanifold of class $C^r$. 
+    which we have already seen is a $k$-dimensional submanifold of class ${\cal C}^r$. 
     We now view this using the zero set characterization. 
 
     For all $(x, y) \in M \subset \R^k \times \R^{n-k}$, we have 
     $y = f(x)$ if and only if $F(x, y) := f(x) - y = 0 \in \R^{n-k}$.
     Note that $U \times \R^{n-k}$ is an open subset of $\R^k \times \R^{n-k}$. 
-    Then $M$ is the zero set of the $C^r$ function $F : U \times \R^{n-k} 
+    Then $M$ is the zero set of the ${\cal C}^r$ function $F : U \times \R^{n-k} 
     \subset \R^k \times \R^{n-k} \to \R^{n-k}$ given by $(x, y) \mapsto f(x) - y$.
 
     It remains to check the rank condition. We have that 
@@ -832,10 +832,10 @@ explicitly exhibit charts covering the space.
 \begin{theo}{theo:1.16}
     Let $M \subset \R^n$. The following are equivalent: 
     \begin{enumerate}[(i)]
-        \item $M$ is a $k$-dimensional submanifold of class $C^r$ (using Definition~\ref{defn:1.7}).
+        \item $M$ is a $k$-dimensional submanifold of class ${\cal C}^r$ (using Definition~\ref{defn:1.7}).
         \item $M$ is locally the graph of a function $f : U \subset \R^k \to \R^{n-k}$ 
-        of class $C^r$, where $U \subset \R^k$ is open. 
-        \item $M$ is locally the zero set of a $C^r$ function $F : V \subset \R^n 
+        of class ${\cal C}^r$, where $U \subset \R^k$ is open. 
+        \item $M$ is locally the zero set of a ${\cal C}^r$ function $F : V \subset \R^n 
         \to \R^{n-k}$ of maximal rank, where $V \subset \R^n$ is open 
         (using Definition~\ref{defn:1.15}).
     \end{enumerate}
@@ -848,7 +848,7 @@ direct consequence of the Implicit Function Theorem. Let's recall what this says
 
 Suppose that $\R^n = \R^{k+m} = \R^k \times \R^m$ has coordinates $(x, y) 
 = (x_1, \dots, x_k, y_1, \dots, y_m)$. Let $U \subset \R^n$ be an open subset 
-and $F : U \subset \R^n \to \R^m$ be a function of class $C^r$. Then the 
+and $F : U \subset \R^n \to \R^m$ be a function of class ${\cal C}^r$. Then the 
 derivative matrix of $F$ is 
 \[ DF(x, y) = \left[ \begin{array}{c|c} 
     \dfrac{\partial F}{\partial x} & \dfrac{\partial F}{\partial y} 
@@ -863,16 +863,16 @@ $\partial F/\partial y$ is an $m \times m$ matrix.
     Let $(x_0, y_0) \in U$ be such that $F(x_0, y_0) = 0$. Suppose that 
     \[ \det\left( \frac{\partial F}{\partial y}(x_0, y_0) \right) \neq 0. \] 
     Then there exists an open neighbourhood $V_0 \subset \R^k$ of $x_0$ 
-    and a unique function $g : V_0 \to \R^m$ of class $C^r$ such that 
+    and a unique function $g : V_0 \to \R^m$ of class ${\cal C}^r$ such that 
     $g(x_0) = y_0$ and $F(x, g(x)) = 0$ for all $x \in V_0$. 
 \end{theo}\vspace{-0.25cm}
 
 In other words, the Implicit Function Theorem tells us that if 
 $\det(\partial F(x_0, y_0)/\partial y) \neq 0$, then 
 for all points $(x, y) \in \{F \equiv 0\}$ in an open neighbourhood of 
-$(x_0, y_0)$, we have $y = g(x)$ for some function of class $C^r$. Thus, 
+$(x_0, y_0)$, we have $y = g(x)$ for some function of class ${\cal C}^r$. Thus, 
 we can express the variables $(y_1, \dots, y_m)$ as functions of 
-$(x_1, \dots, x_k)$ of class $C^r$ near $(x_0, y_0)$. 
+$(x_1, \dots, x_k)$ of class ${\cal C}^r$ near $(x_0, y_0)$. 
 
 Before proving the theorem, we illustrate what the result tells us 
 with a simple example. Let $F(x, y) = x^2 + y^2 - 1$ for all $(x, y) \in \R^2$. 
@@ -920,13 +920,13 @@ $(0, \pm1)$.
         &= (G_1(u, v), F(G_1(u, v), G_2(u, v))). 
     \end{align*}
     This implies that $u = G_1(u, v)$, so $G(u, v) = (u, G_2(u, v))$ for some 
-    function $G : V_0 \subset \R^n \to \R^m$ of class $C^r$ (where $V_0 
+    function $G : V_0 \subset \R^n \to \R^m$ of class ${\cal C}^r$ (where $V_0 
     \subset \R^n$ is open). Moreover, for all $(x, y)$ with $F(x, y) = 0$, 
     we have $H(x, y) = (x, F(x, y)) = (x, 0)$,
     and hence $(x, y) = G \circ H(x, y) = G(x, 0) = (x, G_2(x, 0))$. Then 
     $y = G_2(x, 0)$ for all $(x, y) \in \{F \equiv 0\}$. By setting 
     $g(x) := G_2(x, 0)$, we have $y = g(x)$ for all $(x, y) \in \{F \equiv 0\}$
-    near $(x_0, y_0)$, and $g$ is of class $C^r$. We see that 
+    near $(x_0, y_0)$, and $g$ is of class ${\cal C}^r$. We see that 
     $F(x, g(x)) = 0$.
     For the proof of uniqueness of $g$ and more details, we refer to 
     \emph{Topology} by Munkres, Theorem 9.2 on page 74. \qed 
@@ -936,7 +936,7 @@ Finally, we prove that the definitions are equivalent. Recall from
 our earlier discussion that it suffices to show that (iii) implies (ii). 
 
 \begin{pf}[Theorem~\ref{theo:1.16}]
-    Suppose that $M$ is locally the zero set of a $C^r$ function $F : 
+    Suppose that $M$ is locally the zero set of a ${\cal C}^r$ function $F : 
     V \subset \R^n \to \R^{n-k}$ of maximal rank on $M \cap V$. Then 
     for all $(x_0, y_0) \in M \cap V \subset \R^k \times \R^{n-k} = \R^n$, 
     the derivative matrix 
@@ -951,8 +951,8 @@ our earlier discussion that it suffices to show that (iii) implies (ii).
     $\partial F(x_0, y_0)/\partial y$ has rank $n-k$. This implies that 
     $\det(\partial F(x_0, y_0)/\partial y) \neq 0$. By the Implicit 
     Function Theorem (Theorem~\ref{theo:1.17}), we see that $y$ 
-    is a $C^r$ function of $x$ on $M \cap V$ near $(x_0, y_0)$. 
-    Write $y = g(x)$ for some $C^r$ function $g : V_0 \subset \R^k 
+    is a ${\cal C}^r$ function of $x$ on $M \cap V$ near $(x_0, y_0)$. 
+    Write $y = g(x)$ for some ${\cal C}^r$ function $g : V_0 \subset \R^k 
     \to \R^m$, where $V_0$ is an open neighbourhood of $x_0$. 
     Then $M$ is locally of the form $\{(x, g(x)) : x \in V_0\}$,
     which implies that $M$ is locally the graph of $g$. \qed 
@@ -993,7 +993,7 @@ smooth submanifold of $\R^4$ of dimension $4-1 = 3$.
 The simplest example of a tangent vector is the velocity vector of a curve. 
 
 \begin{defn}{defn:1.18}
-    Let $\gamma : (a, b) \subset \R \to \R^n$ be a map of class $C^r$. 
+    Let $\gamma : (a, b) \subset \R \to \R^n$ be a map of class ${\cal C}^r$. 
     We define the {\bf velocity vector} of $\gamma$ at $\gamma(t)$ to be 
     \[ \gamma'(t) := D\gamma(t). \] 
 \end{defn}\vspace{-0.25cm}
@@ -1031,7 +1031,7 @@ that $\gamma'(t_0) \neq 0$. Let's look at some examples.
 Note that if $\gamma$ is a homeomorphism onto its image 
 \[ C = \{x \in \R^n : x = \gamma(t) \text{ for some } t \in (a, b)\} \] 
 and $D\gamma(t)$ has rank $1$ for all $t \in (a, b)$, then $C$ is a 
-$1$-dimensional submanifold of $\R^n$ of class $C^r$. In fact, we see that
+$1$-dimensional submanifold of $\R^n$ of class ${\cal C}^r$. In fact, we see that
 $D\gamma(t)$ has rank $1$ if and only if $\gamma'(t) \neq 0$, so $\gamma'(t)$ 
 is a direction vector for the tangent line to $\gamma$ at $\gamma(t)$. 
 In particular, the $1$-dimensional submanifold of $\R^n$ determined by $\gamma$ 
@@ -1071,7 +1071,7 @@ Can we get something similar for submanifolds $M \subset \R^n$?
 Towards this direction, we make a new definition. 
 
 \begin{defn}{defn:1.21}
-    Let $U \subset \R^k$ be open and let $\alpha : U \to \R^n$ be of class $C^r$. 
+    Let $U \subset \R^k$ be open and let $\alpha : U \to \R^n$ be of class ${\cal C}^r$. 
     Also, let $x \in U$ and set $p = \alpha(x)$. The map 
     \begin{align*}
         \alpha_* : T_x(\R^k) &\to T_p(\R^n) \\ 
@@ -1104,13 +1104,13 @@ $\gamma(t) := \alpha(x + tv)$ at $p = \gamma(0)$.
 
 \begin{lemma}{lemma:1.22}
     If $\alpha : U \subset \R^k \to \R^n$ and $\beta : V \subset \R^\ell 
-    \to \R^k$ are functions of class $C^r$ where $U \subset \R^k$ and $V 
+    \to \R^k$ are functions of class ${\cal C}^r$ where $U \subset \R^k$ and $V 
     \subset \R^\ell$ are open with $\beta(V) \subset U$, then 
     $(\alpha \circ \beta)_* = \alpha_* \circ \beta_*$ on $V$. 
 \end{lemma}\vspace{-0.25cm} 
 \begin{pf}[Lemma~\ref{lemma:1.22}]
     Note that $\alpha \circ \beta : V \subset \R^\ell \to \R^n$ is 
-    of class $C^r$. Let $x \in V$. Then for all $v \in \R^\ell$, we have 
+    of class ${\cal C}^r$. Let $x \in V$. Then for all $v \in \R^\ell$, we have 
     \begin{align*}
         (\alpha \circ \beta)_*(x; v) 
         &= (\alpha \circ \beta(x); D(\alpha \circ \beta)(x)v) \\ 
@@ -1125,15 +1125,15 @@ From Lemma~\ref{lemma:1.22}, it now makes sense to define the following.
 
 \begin{defn}{defn:1.23}
     Let $M \subset \R^n$ be a $k$-dimensional submanifold of $\R^n$ 
-    of class $C^r$ for some $r \geq 1$. Let $p \in M$ and let $\alpha : 
+    of class ${\cal C}^r$ for some $r \geq 1$. Let $p \in M$ and let $\alpha : 
     U \subset \R^k \to V \subset M$ be a coordinate chart of $M$ 
-    about $p$ (i.e. $p \in V$) of class $C^r$. We define the 
+    about $p$ (i.e. $p \in V$) of class ${\cal C}^r$. We define the 
     {\bf tangent space of $M$ at $p$} to be 
     \[ T_p(M) := \alpha_*(T_{x_0}(\R^k)) \subset T_p(\R^n), \] 
     where $x_0 \in U$ is the unique point in $U$ such that $\alpha(x_0) = p$.  
 \end{defn}\vspace{-0.25cm}
 
-Note that the requirement that $M$ is of class $C^r$ with $r \geq 1$ 
+Note that the requirement that $M$ is of class ${\cal C}^r$ with $r \geq 1$ 
 is crucial to define the tangent space. We now make some observations 
 about this definition. 
 
@@ -1165,9 +1165,9 @@ about this definition.
     $(y_1, \dots, y_k)$ are the coordinates 
     on $U' \subset \R^k$. Given $x = (x_1, \dots, x_k) \in U$, observe that
     \[ y = (y_1, \dots, y_k) = (\alpha')^{-1} \circ \alpha(x_1, \dots, x_k) \]
-    for some $y \in U'$, where $(\alpha')^{-1} \circ \alpha$ is of class $C^r$ 
-    since both $(\alpha')^{-1}$ and $\alpha$ are of class $C^r$. In particular, 
-    we can think of this as a $C^r$ function 
+    for some $y \in U'$, where $(\alpha')^{-1} \circ \alpha$ is of class ${\cal C}^r$ 
+    since both $(\alpha')^{-1}$ and $\alpha$ are of class ${\cal C}^r$. In particular, 
+    we can think of this as a ${\cal C}^r$ function 
     \[ y(x) = (\alpha')^{-1} \circ \alpha(x) \] 
     for all $x \in W = \alpha^{-1}(V \cap V')$ and $y \in W' = (\alpha')^{-1}
     (V \cap V')$. By the chain rule, we obtain
@@ -1210,7 +1210,7 @@ about this definition.
         \gamma : (-\eps, \eps) &\to V \subset M \\ 
         t &\mapsto \alpha(x_0 + tw) 
     \end{align*}
-    is a curve of class $C^r$ on $M$ such that $\gamma(0) = \alpha(x_0) = p$. 
+    is a curve of class ${\cal C}^r$ on $M$ such that $\gamma(0) = \alpha(x_0) = p$. 
     Moreover, the chain rule gives 
     \[ \gamma'(t) = D\alpha(x_0 + tw) \frac{\rm d}{{\rm d}t}(x_0 + tw) = D\alpha(x_0 + tw) w. \] 
     For $t = 0$, we obtain $\gamma'(0) = D\alpha(x_0)w = v$. This implies 
@@ -1230,13 +1230,13 @@ Now that we have digested the definition, let's look at some examples of tangent
     This implies that $T_xU = T_x\R^n$ for all $x \in U$. 
 
     \item We saw two different ways of seeing if something is a submanifold. If $f : U \subset \R^k 
-    \to \R^{n-k}$ is a function of class $C^r$ where $U \subset \R^k$ is open and 
+    \to \R^{n-k}$ is a function of class ${\cal C}^r$ where $U \subset \R^k$ is open and 
     $M = \{(x, f(x)) \in \R^n : x \in U\}$ is the graph of $f$ in $\R^n$, then 
     \begin{align*}
         \alpha : U \subset \R^k &\to \R^n \\ 
         x = (x_1, \dots, x_k) &\mapsto (x, f(x))
     \end{align*}
-    is a chart of class $C^r$ with derivative matrix 
+    is a chart of class ${\cal C}^r$ with derivative matrix 
     \[ D\alpha(x) = \left[ \begin{array}{c} 
         I_{k\times k} \\\hline \!Df(x)\!
     \end{array} \right] \] 
@@ -1257,7 +1257,7 @@ Now that we have digested the definition, let's look at some examples of tangent
     i = 1, \dots, k \right\}. \] 
 
     \item Let $U \subset \R^n$ be open. If $F : U \subset \R^n \to \R^{n-k}$ is a function of 
-    class $C^r$ with $DF$ having maximal rank $n-k$ on $M = \{F \equiv 0\}$ 
+    class ${\cal C}^r$ with $DF$ having maximal rank $n-k$ on $M = \{F \equiv 0\}$ 
     (so that $M$ is a $k$-dimensional submanifold of $\R^n$ by Theorem~\ref{theo:1.16}), 
     then we leave it as an exercise to show that 
     \[ T_pM = \ker(DF(p)). \] 
