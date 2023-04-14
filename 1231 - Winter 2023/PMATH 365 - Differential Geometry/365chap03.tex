@@ -1,0 +1,711 @@
+\section{Surfaces in $\R^3$}\label{sec:3}
+By a surface, we always mean a smooth $2$-dimensional submanifold of $\R^3$. 
+In particular, all the charts we use will be smooth. 
+
+Let $S$ be a surface, and let $\sigma : U \subset \R^2 \to V = \sigma(U) 
+\subset S \subset \R^3$ be a smooth coordinate charts with components 
+\[ (u, v) \mapsto (x(u, v), y(u, v), z(u, v)). \] 
+Then we know that $\sigma$ is a homeomorphism onto its image $V$, 
+$\sigma$ is smooth, and $D\sigma$ has rank $2$ on $U$. This implies that 
+$\sigma^{-1}$ is smooth as well. If we denote $\sigma_u 
+:= \frac{\partial\sigma}{\partial u}$ and $\sigma_v := 
+\frac{\partial\sigma}{\partial v}$, then the derivative matrix of $\sigma$ is 
+\[ D\sigma = \left[ \begin{array}{c|c}
+    \!\!\!\sigma_u & \sigma_v\!\!\!
+\end{array} \right]. \] 
+Since $D\sigma$ has rank $2$, we see that $\{\sigma_u, \sigma_v\}$ is 
+linearly independent on $U$. Equivalently, we have that $\sigma_u \times 
+\sigma_v \neq \mathbf 0$ on $U$. Therefore, if $p_0 = \sigma(u_0, v_0)$ 
+for some $(u_0, v_0) \in U$, then 
+\[ T_{p_0}S = \Span_{\R}\{\sigma_u(u_0, v_0), \sigma_v(u_0, v_0)\}. \] 
+Moreover, we have $\sigma_u(u_0, v_0) \times \sigma_v(u_0, v_0) \perp T_{p_0}S$. 
+
+\begin{defn}{defn:3.1}
+    For all $p_0 = \sigma(u_0, v_0) \in V = \sigma(U)$, we define 
+    the {\bf standard unit normal} to be 
+    \[ N_\sigma(u_0, v_0) := \frac{\sigma_u(u_0, v_0) \times \sigma_v(u_0, v_0)}
+    {\|\sigma_u(u_0, v_0) \times \sigma_v(u_0, v_0)\|}. \] 
+\end{defn}\vspace{-0.25cm}
+
+Since $S \subset \R^3$ and $T_{p_0}S$ is a $2$-dimensional affine subspace of 
+$T_{p_0}\R^3 \simeq \R^3$, there are only two possible \emph{unit} normal 
+directions to $T_{p_0}S$ at $p_0$. Therefore, $N_\sigma(u_0, v_0)$ is 
+uniquely determined by $S$ up to a sign. 
+
+For example, consider the paraboloid $S = \{(x, y, z) \in \R^3 : z = x^2 + y^2\}
+\subset \R^3$. This is the graph of the smooth function $f(x, y) = x^2 + y^2$, so 
+we have a smooth chart 
+\begin{align*}
+    \sigma : \R^2 &\to S \subset \R^3 \\ 
+    (u, v) &\mapsto (u, v, u^2 + v^2). 
+\end{align*}
+Then $\sigma_u = (1, 0, 2u)$ and $\sigma_v = (0, 1, 2v)$, which gives 
+\[ D\sigma = \begin{bmatrix}
+    1 & 0 \\ 
+    0 & 1 \\ 
+    2u & 2v 
+\end{bmatrix} \] 
+and $\sigma_u \times \sigma_v = (-2u, -2v, 1) \neq \mathbf 0$. At the point
+$p_0 = \sigma(u_0, v_0) = (u_0, v_0, u_0^2+v_0^2)$, we have 
+\[ T_{p_0}S = \Span_{\R}\{(1, 0, 2u_0), (0, 1, 2v_0)\}. \] 
+For example, with $p_0 = \mathbf 0 = (0, 0, 0) = \sigma(0, 0)$, we have 
+\[ T_{\mathbf 0} S = \Span_{\R}\{(1, 0, 0), (0, 1, 0)\}, \] 
+which is the $xy$-plane. Moreover, since 
+\[ \|\sigma_u \times \sigma_v\| = \sqrt{4u^2 + 4v^2 + 1} \neq 0, \] 
+we see that the standard unit normal is 
+\[ N_\sigma = \frac{1}{\sqrt{4u^2 + 4v^2 + 1}} (-2u, -2v, 1). \] 
+We have that $N_\sigma(0, 0) = (0, 0, 1)$, which is perpendicular 
+to $(1, 0, 0)$ and $(0, 1, 0)$ as expected. \newpage 
+
+What happens when we change the coordinate chart? Suppose that 
+$\tilde\sigma : \tilde U \to \tilde V$ is another coordinate chart with 
+$V \cap \tilde V \neq \varnothing$. Then we can write 
+\[ \tilde \sigma = \sigma \circ (\sigma^{-1} \circ \tilde\sigma) = \sigma \circ \Phi, \] 
+where $\Phi := \sigma^{-1} \circ \tilde\sigma : \sigma^{-1}(V \cap \tilde V) 
+\subset \R^2 \to \sigma^{-1}(V \cap \tilde V) \subset \R^2$ is a smooth
+diffeomorphism with components 
+\[ (\tilde u, \tilde v) \mapsto (u(\tilde u, \tilde v), v(\tilde u, \tilde v)). \] 
+By the chain rule, we obtain $D\tilde\sigma = D\sigma D\Phi$, or more explicitly
+\[ \left[ \begin{array}{c|c}
+    \!\!\!\tilde\sigma_{\tilde u} & \tilde\sigma_{\tilde v}\!\!\!
+\end{array} \right] = \left[ \begin{array}{c|c}
+    \!\!\!\sigma_u & \sigma_v\!\!\!
+\end{array} \right] \! D\Phi. \] 
+Here, $D\Phi$ is the change of basis matrix of $T_pS$. Note that 
+\[ D\Phi = \begin{bmatrix}
+    \partial u/\partial\tilde u & \partial u/\partial\tilde v \\
+    \partial v/\partial\tilde u & \partial v/\partial\tilde v
+\end{bmatrix}. \] 
+Moreover, we have 
+\begin{align*} 
+    \tilde\sigma_{\tilde u} &= \sigma_u \cdot \frac{\partial u}{\partial\tilde u} 
+    + \sigma_v \cdot \frac{\partial v}{\partial\tilde u}, \\ 
+    \tilde\sigma_{\tilde v} &= \sigma_u \cdot \frac{\partial u}{\partial\tilde v} 
+    + \sigma_v \cdot \frac{\partial v}{\partial\tilde v},
+\end{align*} 
+which implies that 
+\begin{align*}
+    \tilde\sigma_{\tilde u} \times \tilde\sigma_{\tilde v}
+    &= \left( \sigma_u \cdot \frac{\partial u}{\partial\tilde u} 
+    + \sigma_v \cdot \frac{\partial v}{\partial\tilde u} \right) 
+    \times \left( \sigma_u \cdot \frac{\partial u}{\partial\tilde v} 
+    + \sigma_v \cdot \frac{\partial v}{\partial\tilde v} \right) \\ 
+    &= (\sigma_u \times \sigma_u) \left( \frac{\partial u}{\partial\tilde u}
+    \frac{\partial u}{\partial\tilde v} \right) + (\sigma_u \times \sigma_v) 
+    \left( \frac{\partial u}{\partial\tilde u} \frac{\partial v}{\partial\tilde v}
+    - \frac{\partial v}{\partial\tilde u} \frac{\partial u}{\partial\tilde v} \right) 
+    + (\sigma_v \times \sigma_v) \left( \frac{\partial v}{\partial\tilde u}
+    \frac{\partial v}{\partial\tilde v} \right) \\ 
+    &= \left( \frac{\partial u}{\partial\tilde u} \frac{\partial v}{\partial\tilde v}
+    - \frac{\partial v}{\partial\tilde u} \frac{\partial u}{\partial\tilde v} \right) 
+    \sigma_u \times \sigma_v = (\det D\Phi) \sigma_u \times \sigma_v,
+\end{align*}
+where $\sigma_u \times \sigma_u = \sigma_v \times \sigma_v = \mathbf 0$. 
+It follows that 
+\[ N_{\tilde\sigma} = \frac{\tilde\sigma_{\tilde u} \times \tilde\sigma_{\tilde v}}
+{\|\tilde\sigma_{\tilde u} \times \tilde\sigma_{\tilde v}\|}
+= \frac{\det D\Phi}{\lvert\det D\Phi\rvert} \cdot \frac{\sigma_u \times \sigma_v}
+{\|\sigma_u \times \sigma_v\|} = \pm N_\sigma, \] 
+where $\pm$ is given by the sign of $\det D\Phi$. Therefore, changing the 
+coordinate chart only changes the standard unit normal up to a sign. 
+
+\subsection{First fundamental form} \label{subsec:3.1}
+Let $p_0 \in \sigma(U) \subset S$. If $p_0 = \sigma(u_0, v_0)$, then 
+\[ T_{p_0}S = \Span_{\R}\{\sigma_u(u_0, v_0), \sigma_v(u_0, v_0)\} \] 
+is a $2$-dimensional subspace of $T_{p_0}\R^3 \simeq \R^3$. Suppose that 
+the inner product on $T_{p_0}\R^3$ is the usual dot product. That is, 
+for $X, Y \in T_{p_0}\R^3 \simeq \R^3$, we have 
+\[ X \cdot Y := X^T Y = X^TIY, \] 
+where the latter is the matrix representation with respect to the standard basis.
+
+What if we restrict the dot product to $T_{p_0}S$? Since $T_{p_0}S$ is 
+$2$-dimensional, the restriction of the dot product can be represented 
+by a $2\times 2$ matrix with respect to a basis of $T_{p_0}S$. 
+
+Using the basis ${\cal B} = \{\sigma_u(u_0, v_0), \sigma_v(u_0, v_0)\}$, 
+then for all $X, Y \in T_{p_0}S$, we have 
+\begin{align*}
+    X &= a\sigma_u(u_0, v_0) + b\sigma_v(u_0, v_0), \\ 
+    Y &= c\sigma_u(u_0, v_0) + d\sigma_v(u_0, v_0)
+\end{align*}
+for some $a, b, c, d \in \R$. More concisely, we have 
+\begin{align*}
+    X &= D\sigma(u_0, v_0) \begin{bmatrix}
+        a \\ b 
+    \end{bmatrix}, \\
+    Y &= D\sigma(u_0, v_0) \begin{bmatrix}
+        c \\ d  
+    \end{bmatrix},
+\end{align*}
+which gives us 
+\begin{align*}
+    X \cdot Y = X^T Y 
+    &= \left( D\sigma(u_0, v_0) \begin{bmatrix}
+        a \\ b 
+    \end{bmatrix} \right)^{\!T} \left( D\sigma(u_0, v_0) \begin{bmatrix}
+        c \\ d  
+    \end{bmatrix} \right) \\ 
+    &= \begin{bmatrix}
+        a & b 
+    \end{bmatrix} D\sigma(u_0, v_0)^T D\sigma(u_0, v_0) \begin{bmatrix}
+        c \\ d
+    \end{bmatrix} \\ 
+    &= \begin{bmatrix}
+        a & b 
+    \end{bmatrix} \begin{bmatrix} 
+        \sigma_u \cdot \sigma_u & \sigma_u \cdot \sigma_v \\ 
+        \sigma_v \cdot \sigma_u & \sigma_v \cdot \sigma_v 
+    \end{bmatrix} \begin{bmatrix}
+        c \\ d
+    \end{bmatrix}.
+\end{align*}
+The matrix $D\sigma(u_0, v_0)^T D\sigma(u_0, v_0)$ above is our matrix representation 
+of the dot product with respect to the basis ${\cal B} = \{\sigma_u(u_0, v_0), 
+\sigma_v(u_0, v_0)\}$. 
+
+\begin{defn}{defn:3.2}
+    The {\bf first fundamental form of $\sigma$} is defined to be 
+    \[ \FFF = D\sigma(u_0, v_0)^T D\sigma(u_0, v_0) 
+    = \begin{bmatrix} 
+        \sigma_u \cdot \sigma_u & \sigma_u \cdot \sigma_v \\ 
+        \sigma_v \cdot \sigma_u & \sigma_v \cdot \sigma_v 
+    \end{bmatrix}. \] 
+\end{defn}\vspace{-0.25cm}
+
+Note that $\FFF$ is symmetric since $\sigma_u \cdot \sigma_v = \sigma_v 
+\cdot \sigma_u$. Moreover, if $\tilde\sigma = \sigma \circ \Phi$ is another 
+chart, then 
+\[ D\tilde\sigma = D\sigma D\Phi \] 
+where $D\Phi$ is a change of basis matrix, with 
+\begin{align*}
+    \tilde{\FFF} &= (D\tilde\sigma)^T D\tilde\sigma \\ 
+    &= (D\sigma D\Phi)^T (D\sigma D\Phi) \\ 
+    &= D\Phi^T (D\sigma^T D\sigma) D\Phi \\ 
+    &= D\Phi^T \FFF D\Phi.
+\end{align*}
+Therefore, $\tilde{\FFF}$ is similar to $\FFF$, and the first fundamental 
+form depends on the coordinate chart $\sigma$. 
+
+Let's compute some examples. 
+\begin{enumerate}[(1)]
+    \item {\bf (Plane.)} Let $\sigma(u, v) = p_0 + uw_1 + vw_2$ for $u, v \in \R$, 
+    where $p_0$ is a point and $w_1$ and $w_2$ are direction vectors. We can choose 
+    $w_1$ and $w_2$ such that $\{w_1, w_2\}$ is orthonormal. Then 
+    $\sigma_u = w_1$ and $\sigma_v = w_2$, so 
+    \[ \FFF = \begin{bmatrix}
+        w_1 \cdot w_1 & w_1 \cdot w_2 \\ 
+        w_2 \cdot w_1 & w_2 \cdot w_2 
+    \end{bmatrix} = \begin{bmatrix}
+        1 & 0 \\ 0 & 1
+    \end{bmatrix}. \] 
+
+    \item {\bf (Cylinder.)} Consider the cylinder $x^2 + y^2 = 1$ with 
+    coordinate chart $\tilde\sigma(u, v) = (\cos u, \sin u, v)$ where 
+    $(u, v) \in (0, 2\pi) \times \R$. We have $\tilde\sigma_u 
+    = (-\sin u, \cos u, 0)$ and $\tilde\sigma_v = (0, 0, 1)$, which yields 
+    $\sigma_u \cdot \sigma_u = \sigma_v \cdot \sigma_v = 1$ 
+    and $\sigma_u \cdot \sigma_v = 0$. In particular, we have that 
+    \[ \tilde{\FFF} = \begin{bmatrix}
+        1 & 0 \\ 0 & 1
+    \end{bmatrix}. \] 
+    This is the same first fundamental form as the plane! Here, 
+    we see that the first fundamental form alone cannot distinguish 
+    between different shapes. 
+
+    {\bf Remark.} This is not too surprising since the cylinder can be obtained 
+    from the plane by folding it smoothly (without stretching or shrinking) 
+    so that length and distances are preserved. The first fundamental 
+    form is an inner product that is the restriction of the dot product, 
+    which is used to measure lengths and distances. 
+
+    \item {\bf (Sphere.)} Consider the sphere $x^2 + y^2 + z^2 = a^2$ 
+    for some $a > 0$ and the coordinate chart 
+    \[ \sigma(\theta, \varphi) = (a\cos\theta\sin\varphi, a\sin\theta\sin\varphi, a\cos\varphi) \] 
+    for $(\theta, \varphi) \in (0, 2\pi) \times (0, \pi)$. We have 
+    \begin{align*}
+        \sigma_\theta &= (-a\sin\theta\sin\varphi, a\cos\theta\sin\varphi, 0), \\ 
+        \sigma_\varphi &= (a\cos\theta\cos\varphi, a\sin\theta\cos\varphi, -a\sin\varphi),
+    \end{align*}
+    which gives us 
+    \begin{align*}
+        \sigma_\theta \cdot \sigma_\theta &= a^2\sin^2\varphi, \\ 
+        \sigma_\theta \cdot \sigma_\varphi &= 0, \\ 
+        \sigma_\varphi \cdot \sigma_\varphi &= a^2.
+    \end{align*}
+    Therefore, the first fundamental form of $\sigma$ is 
+    \[ \FFF = \begin{bmatrix}
+        a^2\sin^2\varphi & 0 \\ 0 & a^2
+    \end{bmatrix}, \] 
+    which is different from the first fundamental form of the plane. 
+
+    {\bf Remark.} The sphere can be obtained from the plane and adding a 
+    point at $\infty$. 
+\end{enumerate}
+
+\subsection{Second fundamental form} \label{subsec:3.2}
+In the above examples, we saw that the first fundamental form $\FFF$ 
+is not enough to distinguish surfaces and capture curvature since 
+seemingly different surfaces such as planes and cylinders can 
+have the same first fundamental form. Therefore, we will introduce a 
+``second fundamental form''.
+
+Let $w_1, w_2 \in \R^3$. Recall that the {\bf scalar projection of 
+$w_1$ onto $w_2$} is 
+\[ \ell = \frac{w_1 \cdot w_2}{\|w_2\|} \] 
+because if $\theta$ is the angle between $w_1$ and $w_2$, then 
+$\cos\theta = \ell/\|w_1\|$ so that 
+\[ \ell = \cos\theta \|w_1\| = \frac{w_1 \cdot w_2}{\|w_1\|\|w_2\|}\|w_1\| 
+= \frac{w_1 \cdot w_2}{\|w_2\|}. \] 
+In particular, if $\|w_2\| = 1$, then $\ell = w_1 \cdot w_2$. 
+
+Define the vector $\Delta \sigma = \sigma(u_0 + \Delta u, v_0 + \Delta v) 
+- \sigma(u_0, v_0) \in \R^3$. Then $\Delta\sigma \cdot N_\sigma$ is 
+the scalar projection of $\Delta\sigma$ onto $N_\sigma$ (since 
+$N_\sigma$ is unit), and we call it the {\bf deviation}. This 
+measures how much $S$ moves away from the tangent plane $T_{p_0}S$ 
+to $S$ at $p_0 = \sigma(u_0, v_0)$. 
+
+By Taylor's Theorem, we have 
+\begin{align*}
+    \Delta\sigma 
+    &= \sigma(u_0 + \Delta u, v_0 + \Delta v) \\
+    &= \sigma_u \Delta u + \sigma_v \Delta v 
+    + \frac12 (\sigma_{uu} \Delta u^2 + 2\sigma_{uv} \Delta u \Delta v 
+    + \sigma_{vv} \Delta v^2) + \text{remainder}, 
+\end{align*}
+where we used the fact that $\sigma_{uv} = \sigma_{vu}$ since $\sigma$ is smooth.
+Since $T_pS \perp N_\sigma$ and $T_pS = \Span_{\R}\{\sigma_u, \sigma_v\}$, we have 
+$\sigma_u \cdot N_\sigma = \sigma_v \cdot N_\sigma = 0$. This yields 
+\begin{align*}
+    \Delta\sigma \cdot N_\sigma 
+    &= (\sigma_u \cdot N_\sigma)\Delta u + (\sigma_v \cdot N_\sigma) \Delta v 
+    + \frac12 [(\sigma_{uu} \cdot N_\sigma) \Delta u^2 + 2(\sigma_{uv} \cdot N_\sigma) 
+    \Delta u \Delta v + (\sigma_{vv} \cdot N_\sigma)\Delta v^2] + \cdots
+\end{align*}
+and so the deviation is well approximated with 
+\begin{align*} 
+    \Delta\sigma \cdot N_\sigma 
+    &\approx \frac12 [(\sigma_{uu} \cdot N_\sigma) 
+    \Delta u^2 + 2(\sigma_{uv} \cdot N_\sigma) \Delta u \Delta v + (\sigma_{vv} 
+    \cdot N_\sigma)\Delta v^2] \\
+    &= \frac12\begin{bmatrix} \Delta u & \Delta v \end{bmatrix} 
+    \begin{bmatrix}
+        \sigma_{uu} \cdot N_\sigma & \sigma_{uv} \cdot N_\sigma \\ 
+        \sigma_{vu} \cdot N_\sigma & \sigma_{vv} \cdot N_\sigma
+    \end{bmatrix} \begin{bmatrix}
+        \Delta u \\ \Delta v
+    \end{bmatrix}.
+\end{align*} 
+This matrix is reminiscent of the Hessian from multivariable calculus!
+
+\begin{defn}{defn:3.3}
+    We define the {\bf second fundamental form of $\sigma$} to be 
+    \[ \SFF := \begin{bmatrix}
+        \sigma_{uu} \cdot N_\sigma & \sigma_{uv} \cdot N_\sigma \\ 
+        \sigma_{vu} \cdot N_\sigma & \sigma_{vv} \cdot N_\sigma
+    \end{bmatrix}. \]
+\end{defn}\vspace{-0.25cm}
+
+Note that $\sigma$ is smooth, so $\sigma_{uv} = \sigma_{vu}$ and 
+$\SFF$ is symmetric. We look at some examples. 
+
+\begin{enumerate}[(1)]
+    \item {\bf (Plane.)} As before, let $\sigma(u, v) = p_0 + uw_1 + vw_2$ 
+    for $u, v \in \R$ where $p_0$ is a point and $\{w_1, w_2\}$ is orthonormal.
+    We have $\sigma_u = w_1$ and $\sigma_v = w_2$. Then 
+    $\sigma_{uu} = \sigma_{uv} = \sigma_{vv} = 0$ so that 
+    \[ \SFF = \begin{bmatrix}
+        0 & 0 \\ 0 & 0
+    \end{bmatrix}. \] 
+
+    \item {\bf (Cylinder.)} Let $\tilde\sigma(u, v) = (\cos u, \sin u, v)$ for 
+    $u, v \in \R$, and note that $\tilde\sigma_u = (-\sin u, \cos u, 0)$ 
+    and $\tilde\sigma_v = (0, 0, 1)$. Then $\tilde\sigma_u \times 
+    \tilde\sigma_v = (\cos u, \sin u, 0)$ with $\|\tilde\sigma_u \times 
+    \tilde\sigma_v\| = 1$, so we have $N_{\tilde\sigma} = (\cos u, \sin u, 0)$.
+    Moreover, we have $\tilde\sigma_{uu} = (-\cos u, -\sin u, 0)$ and 
+    $\tilde\sigma_{uv} = \tilde\sigma_{vv} = 0$, which implies that 
+    $\sigma_{uu} \cdot N_\sigma = -\cos^2 u - \sin^2 u = -1$ and the second 
+    fundamental form of $\tilde\sigma$ is 
+    \[ \tilde{\SFF} = \begin{bmatrix}
+        -1 & 0 \\ 0 & 0
+    \end{bmatrix}. \] 
+    We see that this is different from the second fundamental form of the plane.
+
+    \item {\bf (Sphere.)} Consider the sphere $x^2 + y^2 + z^2 = a^2$ where $a > 0$ 
+    with coordinate chart 
+    \[ \sigma(\theta, \varphi) = (a\cos\theta\sin\varphi, a\sin\theta\sin\varphi, a\cos\varphi) \] 
+    for $(\theta, \varphi) \in (0, 2\pi) \times (0, \pi)$. A direct 
+    computation shows that 
+    \[ \SFF = \begin{bmatrix}
+        a\sin^2\varphi & 0 \\ 0 & a
+    \end{bmatrix}. \] 
+
+    \item {\bf (Graph of a smooth function.)} Let $f : U \subset \R^2 \to \R$ 
+    be smooth where $U \subset \R^2$ is open. The graph 
+    \[ S = \{(x, y, z) \in \R^3 : z = f(x, y)\} \subset \R^3 \] 
+    of $f$ is a surface with smooth coordinate chart 
+    \begin{align*}
+        \sigma : U \subset \R^2 &\to S \subset \R^3 \\ 
+        (u, v) &\mapsto (u, v, f(u, v)). 
+    \end{align*}
+    We have $\sigma_u = (1, 0, f_u)$ and $\sigma_v = (0, 1, f_v)$ 
+    where $f_u = \frac{\partial f}{\partial u}$ and $f_v = 
+    \frac{\partial f}{\partial v}$, which implies that 
+    \[ \FFF = \begin{bmatrix}
+        1 + (f_u)^2 & f_u f_v \\ 
+        f_v f_u & 1 + (f_v)^2
+    \end{bmatrix}. \] 
+    Next, we have $\sigma_u \times \sigma_v = (-f_u, -f_v, 1)$, so 
+    \[ N_\sigma = \frac{1}{\sqrt{1+(f_u)^2 + (f_v)^2}}(-f_u, -f_v, 1). \] 
+    Moreover, we know that $\sigma_{uu} = (0, 0, f_{uu})$, 
+    $\sigma_{uv} = (0, 0, f_{uv})$, and $\sigma_{vv} = (0, 0, f_{vv})$, so 
+    \[ \SFF = \frac{1}{\sqrt{1+(f_u)^2+(f_v)^2}} \begin{bmatrix}
+        f_{uu} & f_{uv} \\ f_{vu} & f_{vv}
+    \end{bmatrix}. \]
+    In particular, the above matrix is exactly the Hessian $H(f)$ of $f$, 
+    which appears in the second derivative test. At a critical point of 
+    $f(x, y)$, we have $f_u = f_v = 0$ so that $\FFF = I_{2\times 2}$ 
+    and $\SFF = H(f)$. 
+\end{enumerate}
+
+\subsection{The shape operator} \label{subsec:3.3}
+We begin with the following observation. 
+
+\begin{lemma}{lemma:3.4}
+    We have $\det\FFF = \|\sigma_u \times \sigma_v\|^2$.
+\end{lemma}\vspace{-0.25cm} 
+\begin{pf}[Lemma~\ref{lemma:3.4}]
+    This follows directly from the cross product identity 
+    \[ (a \times b) \cdot (c \times d) = (a \cdot c)(b \cdot d) - 
+    (a \cdot d)(b \cdot c) \] 
+    for all $a, b, c, d \in \R^3$. We have that 
+    \begin{align*}
+        \|\sigma_u \cdot \sigma_v\|^2 
+        &= (\sigma_u \times \sigma_v) \cdot (\sigma_u \times \sigma_v) \\ 
+        &= (\sigma_u \cdot \sigma_u)(\sigma_v \cdot \sigma_v) 
+        - (\sigma_u \cdot \sigma_v)(\sigma_v \cdot \sigma_u) \\ 
+        &= \det\FFF. \tag*{\qed} 
+    \end{align*}
+\end{pf}\vspace{-0.25cm}
+
+Since $\sigma_u \times \sigma_v \neq \mathbf 0$ everywhere for any 
+coordinate chart $\sigma$, this means that $\FFF$ is always invertible. 
+
+\begin{defn}{defn:3.5}
+    The {\bf shape operator} (or {\bf Weingarten matrix}) is defined to be 
+    \[ {\cal W} := {\cal F}_{\text{\RN{1}}}^{-1} \SFF. \] 
+    The {\bf Gaussian curvature} is $K := \det {\cal W}$, and the {\bf mean curvature} 
+    is $H := \frac12 \tr {\cal W}$. 
+
+    Let $p_0 = \sigma(u_0, v_0)$ for some $(u_0, v_0) \in U$. Then: 
+    \begin{enumerate}[(i)]
+        \item $p_0$ is {\bf elliptic} if $K > 0$. 
+        \item $p_0$ is {\bf hyperbolic} if $K < 0$. 
+        \item $p_0$ is {\bf parabolic} if $K = 0$ and $H \neq 0$.
+        \item $p_0$ is {\bf planar} if $K = H = 0$. 
+    \end{enumerate}
+\end{defn}\vspace{-0.25cm}
+
+We compute some examples of the shape operator. 
+\begin{enumerate}[(1)]
+    \item {\bf (Plane.)} Let $\sigma(u, v) = p_0 + uw_1 + vw_2$ where 
+    $\{w_1, w_2\}$ is orthonormal and $p_0$ is a point. We found that 
+    \begin{align*}
+        \FFF &= \begin{bmatrix}
+            1 & 0 \\ 0 & 1 
+        \end{bmatrix}, \qquad \SFF = \begin{bmatrix}
+            0 & 0 \\ 0 & 0 
+        \end{bmatrix},
+    \end{align*}
+    which implies that the shape operator is 
+    \[ {\cal W} = {\cal F}_{\text{\RN{1}}}^{-1} \SFF = \begin{bmatrix}
+        0 & 0 \\ 0 & 0 
+    \end{bmatrix}. \] 
+    We have that $K = \det{\cal W} = 0$ and $H = \frac12\tr{\cal W} = 0$ 
+    everywhere, so every point on the plane is planar!
+
+    \item {\bf (Cylinder.)} For the cylinder $x^2 + y^2 = 1$ with 
+    smooth coordinate chart $\sigma(u, v) = (\cos u, \sin u, v)$ 
+    where $(u, v) \in (0, 2\pi) \times \R$, we saw that 
+    \begin{align*}
+        \FFF &= \begin{bmatrix}
+            1 & 0 \\ 0 & 1 
+        \end{bmatrix}, \qquad \SFF = \begin{bmatrix}
+            -1 & 0 \\ 0 & 0 
+        \end{bmatrix}.
+    \end{align*}
+    Then the shape operator is given by 
+    \[ {\cal W} = {\cal F}_{\text{\RN{1}}}^{-1} \SFF = \begin{bmatrix}
+        -1 & 0 \\ 0 & 0 
+    \end{bmatrix}, \] 
+    so $K = \det{\cal W} = 0$ and $H = \frac12\tr{\cal W} = -\frac12 \neq 0$. 
+    Thus, every point on the cylinder is parabolic. 
+
+    The missing points on the cylinder are covered by the 
+    chart $\sigma(u, v) = (\cos u, \sin u, v)$ over $(u, v) \in (-\pi, \pi)
+    \times \R$, which has the same first and second fundamental forms 
+    and thus the same shape operator. 
+
+    {\bf Remark.} Cylinders locally look like parabolic cylinders. For example, 
+    the set 
+    \[ S = \{(x, y, z) \in \R^3 : z = x^2\} \subset \R^3 \] 
+    is a parabolic cylinder. Since $S$ is the graph of the smooth 
+    scalar function $f : \R^2 \to \R$ defined by $(x, y) \mapsto x^2$, 
+    we see that $S$ is a surface which can be covered by the coordinate 
+    chart $\sigma(u, v) = (u, v, u^2)$ for $(u, v) \in \R^2$. Then 
+    $\sigma_u = (1, 0, 2u)$ and $\sigma_v = (0, 1, 0)$ so that 
+    \[ \FFF = \begin{bmatrix}
+        1+4u^2 & 0 \\ 0 & 1
+    \end{bmatrix}. \]
+    Moreover, we have $\sigma_{uu} = (0, 0, 2)$, $\sigma_{uv} = \sigma_{vv} 
+    = (0, 0, 0)$ and 
+    \[ N_\sigma = \frac{\sigma_u \times \sigma_v}{\|\sigma_u \times \sigma_v\|} 
+    = \frac{1}{\sqrt{1+4u^2}}(-2u, 0, 1), \] 
+    so the second fundamental form is 
+    \[ \SFF = \begin{bmatrix}
+        2/\sqrt{1+4u^2} & 0 \\ 0 & 0 
+    \end{bmatrix}. \] 
+    It follows that the shape operator is 
+    \[ {\cal W} = {\cal F}_{\text{\RN{1}}}^{-1} \SFF 
+    = \begin{bmatrix}
+        1/(1+4u^2) & 0 \\ 0 & 0 
+    \end{bmatrix} \begin{bmatrix}
+        2/\sqrt{1+4u^2} & 0 \\ 0 & 0 
+    \end{bmatrix} = \begin{bmatrix}
+        2/(1+4u^2)^{3/2} & 0 \\ 0 & 0 
+    \end{bmatrix}. \] 
+    We obtain $K = \det{\cal W} = 0$ and 
+    $H = \frac12\tr{\cal W} = 1/(1+4u^2)^{3/2} \neq 0$, so every point on $S$ 
+    is parabolic.
+
+    \item {\bf (Sphere.)} Consider the sphere $x^2 + y^2 + z^2 = a^2$ where $a > 0$ with 
+    smooth coordinate chart 
+    \[ \sigma(\theta, \varphi) = (a\cos\theta\sin\varphi, a\sin\theta\sin\varphi, a\cos\varphi) \] 
+    for $(\theta, \varphi) \in (0, 2\pi) \times (-\pi, \pi)$. We have seen that 
+    \begin{align*}
+        \FFF &= \begin{bmatrix}
+            a^2\sin^2\varphi & 0 \\ 0 & a^2
+        \end{bmatrix}, \qquad \SFF = \begin{bmatrix}
+            a\sin^2\varphi & 0 \\ 0 & a 
+        \end{bmatrix}.
+    \end{align*}
+    Then the shape operator is given by 
+    \[ {\cal W} = {\cal F}_{\text{\RN{1}}}^{-1} \SFF = \begin{bmatrix}
+        1/a & 0 \\ 0 & 1/a
+    \end{bmatrix}, \]
+    so $K = \det{\cal W} = 1/a^2$ and $H = \frac12\tr{\cal W} = 1/a$ 
+    everywhere. Thus, every point on the sphere is elliptic.
+
+    {\bf Remark.} By using different spherical coordinates, we can cover the 
+    entire sphere. In each case, we have that $K = 1/a^2$ and $H = \pm1/a$. 
+
+    \item {\bf (Saddle surface.)} Consider the surface $z = x^2 - y^2$ where 
+    $x, y \in \R$. This is the graph of the smooth function $f(x, y) = x^2 - y^2$, 
+    so we obtain the smooth coordinate chart $\sigma(u, v) = (u, v, u^2 - v^2)$ 
+    where $(u, v) \in \R^2$. A direct computation shows that 
+    \begin{align*}
+        \FFF &= \begin{bmatrix}
+            1+4u^2 & -4uv \\ -4uv & 1+4v^2
+        \end{bmatrix}, \qquad \SFF = \frac{1}{\sqrt{1+4u^2+4v^2}} \begin{bmatrix}
+            2 & 0 \\ 0 & -2
+        \end{bmatrix}.
+    \end{align*}
+    Note that to find the Gaussian curvature $K = \det{\cal W}$, we need not compute ${\cal W}$ 
+    explicitly. Recalling that the determinant is multiplicative and 
+    $\det(A^{-1}) = (\det A)^{-1}$ for a matrix $A$, we have 
+    \[ K = \det{\cal W} = \det({\cal F}_{\text{\RN{1}}}^{-1} \SFF) 
+    = \det({\cal F}_{\text{\RN{1}}}^{-1}) \det\SFF = (\det \FFF)^{-1} \det\SFF. \]
+    We see that $\det\FFF = (1+4u^2)(1+4v^2) - (-4uv)^2 = 1 + 4u^2 + 4v^2$ and 
+    \[ \det\SFF = \frac{1}{(\sqrt{1+4u^2+4v^2})^2} (2(-2) - 0^2) = 
+    -\frac{4}{1+4u^2+4v^2}, \] 
+    which implies that the Gaussian curvature is 
+    \[ K = -\frac{4}{(1+4u^2+4v^2)^2} < 0 \] 
+    for all $(u, v) \in \R^2$. Therefore, every point on the saddle surface is hyperbolic.
+    
+\end{enumerate}
+
+Let's describe a few more properties of the shape operator. First off, 
+note that although $\FFF$ and $\SFF$ are always symmetric, it is possible 
+that ${\cal W}$ is not symmetric. 
+
+For example, consider the saddle surface $z = xy$ parametrized by 
+$\sigma(u, v) = (u, v, uv)$ where $u, v \in \R$. A direct computation then gives 
+\begin{align*}
+    \FFF &= \begin{bmatrix}
+        1+v^2 & uv \\ uv & 1+u^2
+    \end{bmatrix}, \qquad \SFF = \frac{1}{(1+u^2+v^2)^{3/2}} \begin{bmatrix}
+        0 & 1 \\ 1 & 0 
+    \end{bmatrix}
+\end{align*}
+so that the shape operator is 
+\[ {\cal W} = {\cal F}_{\text{\RN{1}}}^{-1} \SFF = \frac{1}{(1+u^2+v^2)^{3/2}} \begin{bmatrix}
+    uv & 1+v^2 \\ 1+u^2 & uv 
+\end{bmatrix}. \] 
+In particular, we have $1+v^2 \neq 1+u^2$ away from points where $u = \pm v$, 
+so ${\cal W}$ is not symmetric.
+
+Nonetheless, we have the following result. 
+
+\begin{prop}{prop:3.6}
+    The shape operator ${\cal W}$ is a diagonalizable matrix with real eigenvalues.
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.6}]
+    Let $w_1$ and $w_2$ be two orthogonal unit vectors in $T_pS$ so that 
+    $w_1 \cdot w_1 = w_2 \cdot w_2 = 1$ and $w_1 \cdot w_2 = 0$. Since 
+    $w_1, w_2 \in T_pS = \Span_{\R}\{\sigma_u, \sigma_v\}$, we can write 
+    \begin{align*}
+        w_1 &= a_1\sigma_u + b_1\sigma_v, \\ 
+        w_2 &= a_2\sigma_u + b_2\sigma_v 
+    \end{align*}
+    for some $a_1, a_2, b_1, b_2 \in \R$. For $i, j \in \{1, 2\}$, observe that 
+    \[ w_i \cdot w_j = \begin{bmatrix}
+        a_i & b_i
+    \end{bmatrix} \FFF \begin{bmatrix}
+        a_j \\ b_j 
+    \end{bmatrix} = \delta_{ij}, \] 
+    where $\delta_{ij}$ is the Kronecker delta. Setting 
+    \[ C := \left[ \begin{array}{c|c} \!\!\! w_1 & w_2 \!\!\! \end{array} \right] 
+    = \begin{bmatrix}
+        a_1 & a_2 \\ b_1 & b_2 
+    \end{bmatrix}, \] 
+    we have that 
+    \[ C^T \FFF C = \begin{bmatrix}
+        a_1 & b_1 \\ a_2 & b_2 
+    \end{bmatrix} \FFF \begin{bmatrix}
+        a_1 & a_2 \\ b_1 & b_2 
+    \end{bmatrix} = \begin{bmatrix}
+        w_1 \cdot w_1 & w_1 \cdot w_2 \\ 
+        w_2 \cdot w_1 & w_2 \cdot w_2 
+    \end{bmatrix} = \begin{bmatrix}
+        1 & 0 \\ 0 & 1 
+    \end{bmatrix} = I_{2\times 2}. \] 
+    Note that the columns of $C$ are linearly independent, so $C$ is invertible. 
+    Therefore, we obtain 
+    \[ C^{-1} {\cal F}_{\text{\RN{1}}}^{-1} (C^T)^{-1} = (C^T \FFF C)^{-1} = (I_{2\times 2})^{-1} = 
+    I_{2\times 2}, \] 
+    which implies that 
+    \begin{align*}
+        C^{-1}{\cal W}C &= C^{-1}({\cal F}_{\text{\RN{1}}}^{-1} \SFF)C \\
+        &= C^{-1}{\cal F}_{\text{\RN{1}}}^{-1} (C^T)^{-1} C^T \SFF C \\ 
+        &= C^T \SFF C =: B. 
+    \end{align*}
+    This means that ${\cal W}$ is similar to $B = C^T \SFF C$. But $B$ 
+    is symmetric since 
+    \[ B^T = (C^T \SFF C)^T = C^T {\cal F}_{\text{\RN{2}}}^T (C^T)^T = C^T \SFF C = B. \] 
+    Then $B$ is diagonalizable with real eigenvalues. Since ${\cal W}$ is 
+    similar to $B$, it follows that ${\cal W}$ is also diagonalizable with 
+    real eigenvalues. \qed 
+\end{pf}\vspace{-0.25cm}
+
+Due to Proposition~\ref{prop:3.6}, it makes sense to define the following. 
+
+\begin{defn}{defn:3.7}
+    The eigenvalues $\kappa_1$ and $\kappa_2$ of ${\cal W}$ 
+    are called the {\bf principal curvatures} of the coordinate chart $\sigma$. 
+\end{defn}\vspace{-0.25cm} 
+
+Observe that we have $K = \det{\cal W} = \kappa_1\kappa_2$ and 
+$H = \frac12\tr{\cal W} = \frac12(\kappa_1 + \kappa_2)$. 
+
+Therefore, given the principal curvatures $\kappa_1$ and $\kappa_2$ 
+and a point $p_0 = \sigma(u_0, v_0)$, we see that: 
+\begin{enumerate}[(i)]
+    \item $p_0$ is elliptic when $K > 0$, which happens 
+    if and only if $\kappa_1$ and $\kappa_2$ are nonzero with the same sign. 
+    \item $p_0$ is hyperbolic when $K < 0$, which happens if and only if 
+    $\kappa_1$ and $\kappa_2$ are nonzero with opposite signs. 
+    \item $p_0$ is parabolic when $K = 0$ and $H \neq 0$, which 
+    happens if and only if $\kappa_1 = 0$ and $\kappa_2 \neq 0$ (or vice versa). 
+    \item $p_0$ is planar when $K = H = 0$, which happens if and only if 
+    $\kappa_1 = \kappa_2 = 0$. 
+\end{enumerate}
+
+{\bf Remark.} We know that $S$ is locally the graph of a function. After 
+possibly rotating and translating $S$, we can assume that it is the graph 
+of a function $f(x, y)$ near $p_0$ and that $p_0$ corresponds to a critical 
+point of $f(x, y)$. We have seen that at $p_0$, we have 
+$\FFF = I_{2\times 2}$ and $\SFF = H(f)$ so that ${\cal W} = H(f)$. 
+We can now apply the second derivative test. 
+\begin{itemize}
+    \item If $\det H(f) > 0$ and $f_{xx} > 0$, then $p_0$ is a local minimum. 
+    \item If $\det H(f) > 0$ and $f_{xx} < 0$, then $p_0$ is a local maximum. 
+    \item If $\det H(f) < 0$, then $p_0$ is a saddle point. 
+    \item If $\det H(f) = 0$, then the test is inconclusive. 
+\end{itemize}
+The first two situations correspond to elliptic points. The third 
+corresponds to hyperbolic points, and the fourth corresponds to parabolic or 
+planar points.
+
+\subsection{Normal and geodesic curvatures} \label{subsec:3.4}
+We now study in more detail the curvature of regular curves 
+or surfaces. Since any regular curve can be reparametrized using arclength 
+to be unit speed, we will assume throughout that the curves are unit speed. 
+
+Let $\gamma : (\alpha, \beta) \to \sigma(U) = V \subset S$ be a unit speed 
+curve on $S$ included in the coordinate patch $\sigma : U \subset \R^2 
+\to V \subset S \subset \R^3$. Let $p_0 = \gamma(t_0)$ be a point on the 
+curve. Since $\gamma$ is unit speed, we know by Proposition~\ref{prop:2.2} 
+that $\gamma'(t_0) \cdot \gamma''(t_0) = 0$. Under the assumption 
+$\gamma''(t_0) \neq \mathbf 0$, this means that 
+\[ \gamma'(t_0) \perp \gamma''(t_0). \]
+Therefore, we will assume that $\gamma''(t_0) \neq \mathbf 0$. 
+Since $\gamma'(t_0) \in T_{p_0}S$, we have that 
+\[ \gamma'(t_0) \perp N_\sigma \] 
+since $N_\sigma \perp T_{p_0}S$, and by the definition of cross product, we obtain 
+\[ \gamma'(t_0) \perp N_\sigma \times \gamma'(t_0). \] 
+In particular, we see that $\gamma''(t_0) \in \Span_{\R}\{N_\sigma, N_\sigma 
+\times \gamma'(t_0)\}$. We can write 
+\[ \gamma''(t_0) = \kappa_n N_\sigma + \kappa_g (N_\sigma \times \gamma'(t_0)) \] 
+for some $\kappa_n, \kappa_g \in \R$. But $\|\gamma'(t_0)\| = \|N_\sigma\| = 1$,
+so $\|N_\sigma \times \gamma'(t_0)\| = 1$. Since 
+$N_\sigma \cdot (N_\sigma \times \gamma'(t_0)) = 0$,
+we have 
+\begin{align*}
+    \gamma''(t_0) \cdot N_\sigma 
+    &= (\kappa_n N_\sigma + \kappa_g (N_\sigma \times \gamma'(t_0))) \cdot N_\sigma \\ 
+    &= \kappa_n N_\sigma \cdot N_\sigma + \kappa_g (N_\sigma \times \gamma'(t_0)) \cdot N_\sigma \\ 
+    &= \kappa_n \cdot 1 + \kappa_g \cdot 0 = \kappa_n. 
+\end{align*}
+By a similar computation, we have that 
+\[ \gamma''(t_0) \cdot (N_\sigma \times \gamma''(t_0)) = \kappa_g. \] 
+Since $\|N_\sigma\| = \|N_\sigma \times \gamma'(t_0)\| = 1$, recall from 
+Section~\ref{subsec:3.2} that $\gamma''(t_0) \cdot N_\sigma$ is the scalar 
+projection of $\gamma''(t_0)$ onto $N_\sigma$ and $\gamma''(t_0) \cdot 
+(N_\sigma \times \gamma'(t_0))$ is the scalar projection of $\gamma''(t_0)$ 
+onto $(N_\sigma \times \gamma'(t_0))$. 
+
+\begin{defn}{defn:3.8}
+    The {\bf normal curvature} is defined to be 
+    \[ \kappa_n := \gamma''(t_0) \cdot N_\sigma. \] 
+    The {\bf geodesic curvature} is defined to be 
+    \[ \kappa_g := \gamma''(t_0) \cdot (N_\sigma \times \gamma'(t_0)). \] 
+    We call $\kappa_n N_\sigma$ the {\bf normal component of $\gamma''(t_0)$}.
+\end{defn}\vspace{-0.25cm}
+
+Note that we can have $\kappa_n = 0$ or $\kappa_g = 0$, but we cannot 
+have $\kappa_n = \kappa_g = 0$ since $\gamma''(t_0) \neq \mathbf 0$. 
+Moreover, depending on where $\gamma''(t_0)$ lies in the plane 
+$\Span_{\R}\{N_\sigma, N_\sigma \times \gamma'(t_0)\}$, we may have 
+$\kappa_n < 0$ or $\kappa_g < 0$. 
+
+Since $\gamma''(t_0) \neq \mathbf 0$, we see that 
+$\kappa = \|\gamma''(t_0)\| > 0$,
+where $\kappa$ is the usual curvature of $\gamma$. Note that 
+\begin{align*}
+    \kappa^2 = \|\gamma''(t_0)\|^2 
+    &= \gamma''(t_0) \cdot \gamma''(t_0) \\
+    &= (\kappa_n N_\sigma + \kappa_g(N_\sigma \times \gamma'(t_0))) 
+    \cdot (\kappa_n N_\sigma + \kappa_g(N_\sigma \times \gamma'(t_0))) \\
+    &= \kappa_n^2 N_\sigma \cdot N_\sigma + 2\kappa_n \kappa_g 
+    (N_\sigma \cdot (N_\sigma \times \gamma'(t_0))) + \kappa_g^2 
+    (N_\sigma \times \gamma'(t_0)) \cdot (N_\sigma \times \gamma'(t_0)) \\ 
+    &= \kappa_n^2 + \kappa_g^2, 
+\end{align*}
+which implies that $\kappa = \sqrt{\kappa_n^2 + \kappa_g^2}$. 
+In particular, if $\kappa_n = 0$, then $\kappa = |\kappa_g|$, and if 
+$\kappa_g = 0$, then $\kappa = |\kappa_n|$. 
+
+\begin{defn}{defn:3.9}
+    We call $\gamma$ a {\bf geodesic} if $\kappa_g = 0$ everywhere. 
+\end{defn}\vspace{-0.25cm}
