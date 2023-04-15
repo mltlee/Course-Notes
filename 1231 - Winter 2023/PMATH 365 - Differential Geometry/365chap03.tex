@@ -1007,5 +1007,282 @@ We look at some examples of geodesics.
     \item {\bf (Lines.)} Let $\gamma(t) = p_0 + tw$ for $t \in \R$, 
     where $p_0$ is a point and $w$ is a vector with $\|w\| = 1$. 
     Then $\gamma''(t_0) = \mathbf 0$ for all $t \in \R$, so $\gamma$ is a geodesic.
-    \item {\bf (Great circles on a sphere.)} 
+    \item {\bf (Great circles on a sphere.)} Consider the sphere 
+    $x^2 + y^2 + z^2 = a^2$ for some $a > 0$. A {\bf great circle} 
+    $C$ on $S$ is given by the intersection of $S$ with a plane in $\R^3$ 
+    passing through the origin (the center of $S$). 
+
+    Let us check that great circles are geodesics by looking at intersections 
+    with vertical planes. (The other cases are proven similarly 
+    after first rotating the sphere so that the plane of intersection 
+    becomes vertical.) Recall that the sphere can be parametrized by 
+    \[ \sigma(\theta, \varphi) = (a\cos\theta\sin(\varphi/a), a\sin\theta
+    \sin(\varphi/a), a\cos(\varphi/a)), \] 
+    where $(\theta, \varphi) \in (0, 2\pi) \times (0, a\pi)$. We 
+    introduced an extra factor of $1/a$ in the 
+    angle $\varphi$ to obtain a unit speed curve.
+    A direct computation shows that the standard unit normal is 
+    \[ N_\sigma(\theta, \varphi) = -(\cos\theta \sin(\varphi/a), \sin\theta\sin(\varphi/a), 
+    a\cos(\varphi/a)). \] 
+    A vertical plane is obtained by fixing $\theta = \theta_0$. 
+    The corresponding great circle is the curve 
+    \[ C : \gamma(\varphi) = (a\cos\theta_0\sin(\varphi/a), a\sin\theta_0\sin(\varphi/a),
+    a\cos(\varphi/a)), \] 
+    which is unit speed with $\gamma''(\varphi) = 
+    -\frac1a(\cos\theta_0\sin(\varphi/a), \sin\theta_0\sin(\varphi/a), 
+    \cos(\varphi/a)) = \frac1a N_\sigma(\theta_0, \varphi) \neq \mathbf 0$.
+    We see that $\gamma''(\varphi) \parallel N_\sigma(\theta_0, \varphi)$ 
+    everywhere, so $\gamma$ is a geodesic. 
+\end{enumerate}
+
+{\bf Geodesic equations.} As we discussed earlier, the geodesics on $S$ are the solutions of the equations 
+\[ \begin{cases}
+    \gamma''(t) \cdot \sigma_u(\gamma(t)) = 0 \\ 
+    \gamma''(t) \cdot \sigma_v(\gamma(t)) = 0.
+\end{cases} \] 
+This is a second order ODE, which can be solved. Write 
+\[ \FFF = \begin{bmatrix}
+    \sigma_u \cdot \sigma_u & \sigma_u \cdot \sigma_v \\ 
+    \sigma_v \cdot \sigma_u & \sigma_v \cdot \sigma_v 
+\end{bmatrix} = \begin{bmatrix}
+    E & F \\ F & G
+\end{bmatrix} \] 
+and suppose that $\gamma(t) = \sigma(u(t), v(t))$ where $u, v : (\alpha, \beta) 
+\to \R$ are scalar functions. (We can always write $\gamma$ in this way; 
+see the discussion immediately after Definition~\ref{defn:3.9}.) The above 
+equations can be rewritten as 
+\begin{align*}
+    \gamma''(t) \cdot \sigma_u(\gamma(t)) = 0 
+    &\iff \frac{\rm d}{{\rm d}t} (Eu' + Fv') = \frac12 \begin{bmatrix}
+        u' & v' 
+    \end{bmatrix} \begin{bmatrix}
+        E_u & F_u \\ F_u & G_u 
+    \end{bmatrix} \begin{bmatrix}
+        u' \\ v' 
+    \end{bmatrix}, \\ 
+    \gamma''(t) \cdot \sigma_v(\gamma(t)) = 0 
+    &\iff \frac{\rm d}{{\rm d}t} (Fu' + Gv') = \frac12 \begin{bmatrix}
+        u' & v' 
+    \end{bmatrix} \begin{bmatrix}
+        E_v & F_v \\ F_v & G_v 
+    \end{bmatrix} \begin{bmatrix}
+        u' \\ v' 
+    \end{bmatrix},
+\end{align*}
+and we call these the {\bf geodesic equations}. \newpage
+
+\begin{pf}[the geodesic equations] 
+    Note that $\gamma(t) = \sigma(u(t), v(t))$, which gives 
+    $\gamma'(t) = \sigma_u u'(t) + \sigma_v v'(t)$ and 
+    \[ \gamma''(t) \cdot \sigma_u = \frac{\rm d}{{\rm d}t} (\gamma'(t)) \cdot \sigma_u 
+    = \frac{\rm d}{{\rm d}t} (\gamma'(t) \cdot \sigma_u) - \gamma'(t) \cdot 
+    \frac{\rm d}{{\rm d}t} (\sigma_u). \] 
+    This means that $\gamma''(t) \cdot \sigma_u = 0$ if and only if 
+    \[ \frac{\rm d}{{\rm d}t} (\gamma'(t) \cdot \sigma_u) = \gamma'(t) \cdot 
+    \frac{\rm d}{{\rm d}t} (\sigma_u). \] 
+    For the left-hand side, we see that 
+    \[ \gamma'(t) \cdot \sigma_u = (\sigma_u u'(t) + \sigma_v v'(t))
+    \cdot \sigma_u = (\sigma_u \cdot \sigma_u) u'(t) + (\sigma_v \cdot \sigma_u)v'(t) 
+    = Eu'(t) + Fv'(t). \] 
+    On the other hand, note that $\frac{{\rm d}}{{\rm d}t} [\sigma_u(u(t), v(t))]
+    = \sigma_{uu} u'(t) + \sigma_{uv} v'(t)$ and hence 
+    \begin{align*}
+        \gamma'(t) \cdot \frac{\rm d}{{\rm d}t}(\sigma_u)
+        &= (\sigma_u u'(t) + \sigma_v v'(t)) \cdot (\sigma_{uu} u'(t) + \sigma_{uv} v'(t)) \\ 
+        &= (\sigma_u \cdot \sigma_{uu}) (u'(t))^2 + (\sigma_u \cdot \sigma_{uv} 
+        + \sigma_v \cdot \sigma_{uu}) u'(t) v'(t) + (\sigma_v \cdot \sigma_{uv}) (v'(t))^2.
+    \end{align*}
+    But we notice that 
+    \begin{align*}
+        E_u &= (\sigma_u \cdot \sigma_u)_u = 2\sigma_u \cdot \sigma_{uu}, \\ 
+        F_u &= (\sigma_u \cdot \sigma_v)_u = \sigma_u \cdot \sigma_{uv} + \sigma_u \cdot \sigma_{vv}, \\ 
+        G_u &= (\sigma_v \cdot \sigma_v)_u = 2\sigma_v \cdot \sigma_{uv}, 
+    \end{align*}
+    which gives us  
+    \[ \gamma'(t) \cdot \frac{\rm d}{{\rm d}t} (\sigma_u) = \frac12 E_u (u'(t))^2 
+    + F_u u'(t)v'(t) + \frac12 G_u (v'(t))^2 = 
+    \frac12 \begin{bmatrix}
+        u' & v' 
+    \end{bmatrix} \begin{bmatrix}
+        E_u & F_u \\ F_u & G_u 
+    \end{bmatrix} \begin{bmatrix}
+        u' \\ v' 
+    \end{bmatrix}. \] 
+    This proves the first geodesic equation, and the second is proved similarly. \qed 
+\end{pf}\vspace{-0.25cm}
+
+The geodesic equations tell us the following: 
+\begin{itemize}
+    \item Geodesics \emph{always} exist because they are solutions to 
+    nice differential equations. 
+    \item Geodesics are completely determined by $\FFF$. That is, if 
+    two surfaces have coordinate patches with the same first fundamental 
+    form, then they have the ``same'' geodesics.
+\end{itemize}
+
+\begin{defn}{defn:3.15}
+    A diffeomorphism $\Phi : S_1 \to S_2$ between two surfaces $S_1$ and $S_2$ 
+    is called an {\bf isometry} if for any smooth coordinate chart 
+    $\sigma : U \subset \R^2 \to V \subset S_1 \subset \R^3$ of $S_1$ 
+    and corresponding smooth coordinate chart 
+    \[ \tilde\sigma := \Phi \circ \sigma : U \subset \R^2 \to 
+    \Phi(V) \subset S_2 \subset \R^3 \] 
+    of $S_2$, we have that $\FFF = \tilde\FFF$.  
+\end{defn}\vspace{-0.25cm}
+
+Note that translations and rotations are isometries, whereas dilations 
+and contractions are not. For another example, let $S_1 = 
+\{(x, y, z) \in \R^3 : z = 0,\, 0 < x < 2\pi\}$ be a subset of the $xy$-plane and let $S_2 = 
+\{(x, y, z) \in \R^3 : x^2 + y^2 = 1,\, x \neq 1\}$ be the upright cylinder of radius $1$ minus the line $x=1$. 
+Consider the diffeomorphism
+\begin{align*}
+    \Phi : S_1 &\to S_2 \\ 
+    (x, y, 0) &\mapsto (\cos x, \sin x, y). 
+\end{align*}
+Let $\sigma : \R^2 \to S_1$ be defined by $(u, v) \mapsto (u, v, 0)$ and let 
+\begin{align*} 
+    \tilde\sigma = \Phi \circ \sigma : \R^2 &\to S_2 \\ 
+    (u, v) &\mapsto (\cos u, \sin u, v). 
+\end{align*} 
+Then $\tilde\sigma$ is the usual parametrization of the cylinder, so 
+we have that $\FFF = \tilde\FFF = I_{2\times 2}$ and $\Phi$ 
+is an isometry.
+
+We can use isometries to find geodesics because the image of a geodesic 
+under an isometry is again a geodesic (using the fact that 
+the geodesic equations depend only on $\FFF$).
+
+\begin{enumerate}[(1)]
+    \item {\bf (Geodesics on a plane.)} For all $(x, y) \in \R^2$, set 
+    $\sigma(u, v) = p_0 + uw_1 + vw_2$ where $\{w_1, w_2\}$ is an orthonormal 
+    set of direction vectors for the plane. Then $\sigma$ is a 
+    coordinate chart for the plane such that 
+    \[ \FFF = \begin{bmatrix}
+        1 & 0 \\ 0 & 1 
+    \end{bmatrix} = \begin{bmatrix}
+        E & F \\ F & G
+    \end{bmatrix}, \] 
+    which implies that 
+    \[ \begin{bmatrix}
+        E_u & F_u \\ F_u & G_u
+    \end{bmatrix} = \begin{bmatrix}
+        E_v & F_v \\ F_v & G_v 
+    \end{bmatrix} = \begin{bmatrix}
+        0 & 0 \\ 0 & 0
+    \end{bmatrix}. \] 
+    Then the geodesic equations become 
+    \begin{align*}
+        \frac{{\rm d}}{{\rm d}t} (u') = \frac{{\rm d}}{{\rm d}t} (v') = 0, 
+    \end{align*}
+    which means that $u'' = v'' = 0$. In particular, we have 
+    $u(t) = at+b$ and $v(t) = ct+d$ for some $a, b, c, d \in \R$. Then 
+    all geodesics are of the form 
+    \[ \gamma(t) = \sigma(at+b, ct+d) \] 
+    where $\sigma(u, v) = p_0 + uw_1 + vw_2$, so $\gamma$ is a line! 
+
+    \item {\bf (Geodesics on the sphere.)} Solving the geodesic equations 
+    on the sphere $x^2 + y^2 + z^2 = a^2$ shows that the great circles 
+    are the only geodesics (see Pressley, Exercise 8.4 on page 144). 
+
+    \item {\bf (Geodesics on the cylinder.)} Consider the cylinder 
+    $x^2 + y^2 = 1$ in $\R^3$. As with our previous example, let 
+    $S_1 = \{(x, y, z) \in \R^3 : z=0,\, 0 < x < 2\pi\}$ and 
+    $S_2 = \{(x, y, z) \in \R^3 : x^2 + y^2 = 1,\, x \neq 1\}$. 
+    We saw that the map $\Phi : S_1 \to S_2$ defined by $(x, y, z) \mapsto
+    (\cos x, \sin x, y)$ is an isometry. This gives us a one-to-one correspondence 
+    between geodesics on $S_1$ and $S_2$. Therefore, the geodesics on the 
+    cylinder are the images of lines on $S_1$ under $\Phi$. 
+    In particular, they are given by 
+    \begin{align*}
+        \gamma(t) 
+        = \Phi(at+b, ct+d) = (\cos(at+b), \sin(at+b), ct+d). 
+    \end{align*}
+    This is a line if $a = 0$, a circle if $c = 0$, and a helix 
+    if $a$ and $c$ are both nonzero. 
+\end{enumerate}
+
+{\bf Geodesics as shortest paths.} Let $S$ be a surface. 
+Let $\sigma : U \subset \R^2 \to V \subset S \subset \R^3$ be a smooth 
+coordinate patch, and for simplicity, let $\gamma : [0, 1] \to V \subset S$ 
+be a unit speed curve on $S$. We can write $\gamma(t) = \sigma(u(t), v(t))$
+for some scalar functions $u, v : [0, 1] \to \R$.
+
+Suppose that $p = \gamma(0)$ and $q = \gamma(1)$. We want to find 
+necessary conditions for $\gamma$ to be the shortest path on $S$ between $p$ 
+and $q$. That is, we want $\gamma$ to have the smallest arclength 
+of any family of curves on $S$ starting at $p$ and ending at $q$. 
+We will find that if $\gamma$ minimizes distance between $p$ and 
+$q$, then $\gamma$ is a geodesic. 
+
+We start by constructing such a family. Let $\delta > 0$. For any $\eps \in (-\delta, \delta)$, we set 
+\[ \gamma_\eps(t) := \sigma(u(t) + \eps\alpha(t), v(t) + \eps\beta(t)) \] 
+where $\alpha, \beta : [0, 1] \to \R$ are smooth functions such that 
+$\alpha(0) = \beta(0) = 0$ and $\alpha(1) = \beta(1) = 0$. Then we have 
+that $\gamma_\eps(0) = \sigma(u(0), v(0)) = \gamma(0) = p$ and 
+$\gamma_\eps(1) = \sigma(u(1), v(1)) = \gamma(1) = q$ for all 
+$\eps \in (-\delta, \delta)$, so each of these curves passes through $p$ and $q$.
+Note that $\gamma(t) = \gamma_0(t)$. 
+
+The arclength of $\gamma_\eps(t)$ between $p$ and $q$ is 
+\[ L(\eps) := \int_0^1 \|\gamma'_\eps(t)\|\dd t. \] 
+If $\gamma = \gamma_0$ minimizes arclength, then it must be a global 
+minimum of $L(\eps)$; in particular, it is a critical point of $L(\eps)$, 
+which implies that for any choice of 
+$\alpha, \beta : [0, 1] \to \R$, we have 
+\[ \frac{\rm d}{{\rm d}\eps} (L(\eps)) \Big|_{\eps=0} = 0. \]
+
+\begin{prop}{prop:3.16}
+    We have $\frac{\rm d}{{\rm d}\eps} L(\eps)|_{\eps=0} = 0$ if and only 
+    if $\gamma$ is a geodesic. 
+\end{prop}\vspace{-0.25cm} 
+\begin{pf}[Proposition~\ref{prop:3.16}]
+    By a direct computation (in the notes), it can be shown that 
+    \[ \frac{\rm d}{{\rm d}\eps} (L(\eps)) \Big|_{\eps=0} 
+    = -\int_0^1 [\alpha(t) (\sigma_u \cdot \gamma''(t)) + 
+    \beta(t) (\sigma_v \cdot \gamma''(t))]\dd t. \] 
+    We know that $\gamma$ is a geodesic if and only if 
+    $\sigma_u \cdot \gamma''(t) = \sigma_v \cdot \gamma''(t) = 0$, 
+    which implies that 
+    \[ \frac{\rm d}{{\rm d}\eps} (L(\eps)) \Big|_{\eps=0} = 0. \] 
+    Conversely, suppose that $\frac{\rm d}{{\rm d}\eps} L(\eps)|_{\eps=0} = 0$
+    but $\gamma$ is not a geodesic. This means that 
+    $\sigma_u \cdot \gamma''(t_0) \neq 0$ or $\sigma_v \cdot \gamma''(t_0) \neq 0$ 
+    for some $t_0 \in [0, 1]$. Without loss of generality, 
+    suppose that $\sigma_u \cdot \gamma''(t_0) > 0$. 
+    By continuity, we have that $\sigma_u \cdot \gamma''(t) > 0$ 
+    on $[t_0 - c, t_0 + c]$ for some $c > 0$. Set $\beta \equiv 0$ 
+    and let $\alpha$ be a bump function on $[0, 1]$ such that 
+    $\alpha$ is $1$ on $[t_0 - c/2, t_0 + c/2]$ and $0$ otherwise. This 
+    gives us 
+    \[ \frac{\rm d}{{\rm d}\eps} L(\eps)|_{\eps=0} = \int_0^1 
+    \alpha(t) (\sigma_u \cdot \gamma''(t))\dd t < 0 \] 
+    since $\alpha(t) (\sigma_u \cdot \gamma''(t))$ is nonnegative 
+    on $[0, 1]$ and strictly positive on $[t_0 - c/2, t_0 + c/2]$. 
+    This gives us a contradiction, so $\gamma$ must be a geodesic. \qed 
+\end{pf}\vspace{-0.25cm}
+
+This tells us that any curve that minimizes distance is a geodesic. 
+However, it is important to note that the converse is false. Although 
+geodesics minimize arclength locally (i.e. around a point), they 
+may not do so globally. 
+For example, consider the unit sphere $\mathbb{S}^2$. Let $p$ and 
+$q$ be two points on $\mathbb{S}^2$ that are not antipodal (i.e. 
+on opposite ends of the sphere). The geodesic passing through 
+$p$ and $q$ is a great circle, but only one of the circle arcs 
+minimizes the distance between $p$ and $q$. 
+
+Another reason why we are interested in geodesics is due to the Gauss-Bonnet 
+theorem.
+\begin{enumerate}[(1)]
+    \item Draw a ``geodesic triangle'' and let $\alpha$, $\beta$, and $\gamma$ 
+    be the angles between them. Then we will have 
+    \[ \alpha + \beta + \gamma = \pi + \int_T K\dd A. \] 
+    We will define what this integral means later. 
+
+    \item If $S$ is a compact ``oriented'' surface, then Gauss-Bonnet 
+    tells us that 
+    \[ \frac{1}{2\pi} \int K\dd A = 2(g-1). \] 
+    This is called the {\bf Euler characteristic}. The
+    number $g$ is called the {\bf genus}, which is the number of 
+    holes in the surface. 
 \end{enumerate}
