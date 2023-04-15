@@ -709,3 +709,303 @@ $\kappa_g = 0$, then $\kappa = |\kappa_n|$.
 \begin{defn}{defn:3.9}
     We call $\gamma$ a {\bf geodesic} if $\kappa_g = 0$ everywhere. 
 \end{defn}\vspace{-0.25cm}
+
+Now, we show that the normal curvature $\kappa_n$ of a smooth unit 
+speed curve $\gamma : (\alpha, \beta) \to V \subset S$ only depends on 
+$\gamma'$ and $\SFF$. 
+
+First, note that since the coordinate chart $\sigma : U \subset \R^2 
+\to V = \sigma(U) \subset S$ is a diffeomorphism, we know that 
+$\sigma^{-1} : V \subset S \to U \subset \R^2$ is also smooth. We set 
+\[ \bar\gamma := \sigma^{-1} \circ \gamma : (\alpha, \beta) \to U \subset \R^2. \] 
+Then $\bar\gamma$ is a smooth curve in $U \subset \R^2$ with component functions 
+$u, v : (\alpha, \beta) \to \R$ such that 
+\[ \bar\gamma(t) = (u(t), v(t)) \] 
+for all $t \in (\alpha, \beta)$. Therefore, we can write 
+\[ \gamma(t) = \sigma \circ \bar\gamma(t) = \sigma(u(t), v(t)). \] 
+In other words, any curve $\gamma$ in the coordinate chart $\sigma : 
+U \subset \R^2 \to V \subset S$ is of the form $\gamma(t) = \sigma(u(t), v(t))$ 
+for smooth functions $u, v : (\alpha, \beta) \to \R$. By the chain rule, we have 
+\[ \gamma'(t) = \sigma_u(u(t), v(t)) u'(t) + \sigma_v(u(t), v(t)) v'(t) \] 
+with $u'(t), v'(t) \in \R$, so the components of $\gamma'(t)$ are 
+$(u'(t), v'(t))$ with respect to the basis $\{\sigma_u, \sigma_v\}$ of 
+$T_{\gamma(t)}S$. Furthermore, the product rule gives 
+\begin{align*}
+    \gamma''(t) 
+    &= \frac{{\rm d}}{{\rm d}t} (\sigma_u(u(t), v(t))) u'(t) + \sigma_u u''(t) 
+    + \frac{{\rm d}}{{\rm d}t}(\sigma_v(u(t), v(t))) v'(t) + \sigma_v v''(t) \\ 
+    &= [\sigma_{uu} u'(t) + \sigma_{uv} v'(t)] u'(t) + \sigma_u u''(t) 
+    + [\sigma_{vu} u'(t) + \sigma_{vv} v'(t)] v'(t) + \sigma_v v''(t) \\ 
+    &= [\sigma_{uu} (u'(t))^2 + 2\sigma_{uv} u'(t) v'(t) + \sigma_{vv} (v'(t))^2]
+    + \sigma_u u''(t) + \sigma_v v''(t). 
+\end{align*}
+
+\begin{prop}{prop:3.10}
+    If $\gamma(t) = \sigma(u(t), v(t))$, then 
+    \[ \kappa_n = \begin{bmatrix}
+        u' & v'
+    \end{bmatrix} \SFF \begin{bmatrix}
+        u' \\ v'
+    \end{bmatrix}. \]
+\end{prop}\vspace{-0.25cm}
+\begin{pf}[Proposition~\ref{prop:3.10}]
+    We have by definition and our above computation for $\gamma''(t)$ that 
+    \begin{align*}
+        \kappa_n &= \gamma''(t) \cdot N_\sigma \\ 
+        &= (\sigma_{uu} \cdot N_\sigma)(u'(t))^2 + 2(\sigma_{uv} \cdot N_\sigma)
+        u'(t)v'(t) + (\sigma_{vv} \cdot N_\sigma) (v'(t))^2 + 
+        (\sigma_u \cdot N_\sigma) u''(t) + (\sigma_v \cdot N_\sigma) v''(t) \\ 
+        &= (\sigma_{uu} \cdot N_\sigma)(u'(t))^2 + 2(\sigma_{uv} \cdot N_\sigma)
+        u'(t)v'(t) + (\sigma_{vv} \cdot N_\sigma) (v'(t))^2,
+    \end{align*}
+    where we used the fact that $\sigma_{u} \cdot N_\sigma = \sigma_{v} \cdot N_\sigma 
+    = 0$ since $N_\sigma \perp T_{\gamma(t)}S = \Span_{\R}\{\sigma_u, \sigma_v\}$. 
+    If we set 
+    \begin{align*}
+        L := \sigma_{uu} \cdot N_\sigma, \\ 
+        M := \sigma_{uv} \cdot N_\sigma, \\ 
+        N := \sigma_{vv} \cdot N_\sigma, 
+    \end{align*}
+    then we see that the second fundamental form is 
+    \[ \SFF = \begin{bmatrix}
+        L & M \\ M & N
+    \end{bmatrix} \] 
+    and we obtain 
+    \[ \kappa_n = L(u'(t))^2 + 2Mu'(t)v'(t) + N(v'(t))^2 = 
+    \begin{bmatrix} u' & v' \end{bmatrix} 
+    \begin{bmatrix} L & M \\ M & N \end{bmatrix} 
+    \begin{bmatrix} u' \\ v' \end{bmatrix} 
+    = \begin{bmatrix} u' & v' \end{bmatrix} \SFF
+    \begin{bmatrix} u' \\ v' \end{bmatrix}. \tag*{\qed} \] 
+\end{pf}\vspace{-0.25cm}
+
+As a corollary, we get the following classical result. 
+
+\begin{theo}[Meusnier]{theo:3.11}
+    Let $\gamma$ be a unit speed curve on $S$. Then the normal component 
+    $\kappa_n N_\sigma$ of $\gamma''$ only depends on the unit tangent 
+    vector $\gamma'$ and not on $\gamma$. (That is, $\kappa_n$ 
+    only depends on $\gamma'$ and not in $\gamma$.)
+\end{theo}\vspace{-0.25cm}
+
+Using this, we can prove the following result. 
+
+\begin{prop}{prop:3.12}
+    The principal curvatures $\kappa_1$ and $\kappa_2$ (the eigenvalues of 
+    ${\cal W} = {\cal F}_{\text{\RN{1}}}^{-1} \SFF$)
+    are the maximum and minimum values of $\kappa_n$ for any unit speed curves 
+    on $S$ passing through $p_0$. 
+\end{prop}\vspace{-0.25cm} 
+\begin{pf}[Proposition~\ref{prop:3.12}]
+    We prove this using the Lagrange multiplier method. By Meusnier's theorem 
+    (Theorem~\ref{theo:3.11}), we know that $\kappa_n$ is completely determined by 
+    $\gamma'(t) \in \Span_{\R}\{\sigma_u, \sigma_v\}$. Suppose that 
+    $\gamma'(t) = a\sigma_u + b\sigma_v$
+    where $a, b \in \R$. Since we are considering unit speed curves, we have 
+    $\|\gamma'(t)\| = 1$ and hence 
+    \[ 1 = \|\gamma'(t)\|^2 = \gamma'(t) \cdot \gamma'(t) 
+    = \begin{bmatrix}
+        a & b 
+    \end{bmatrix} \FFF \begin{bmatrix}
+        a \\ b
+    \end{bmatrix}. \] 
+    By Proposition~\ref{prop:3.10}, we also know that 
+    \[ \kappa_n = \begin{bmatrix}
+        a & b 
+    \end{bmatrix} \SFF \begin{bmatrix}
+        a \\ b 
+    \end{bmatrix}. \] 
+    For all $a, b \in \R$, define the functions 
+    \begin{align*}
+        f(a, b) &= \begin{bmatrix}
+            a & b 
+        \end{bmatrix} \SFF \begin{bmatrix}
+            a \\ b 
+        \end{bmatrix}, & 
+        g(a, b) &= \begin{bmatrix}
+            a & b 
+        \end{bmatrix} \FFF \begin{bmatrix}
+            a \\ b 
+        \end{bmatrix}.
+    \end{align*}
+    Our goal is to find the maximum and minimum values of $f(a, b)$ 
+    subject to the constraint that $g(a, b) = 1$. 
+    For ease of notation, we set 
+    \begin{align*}
+        \FFF &= \begin{bmatrix} 
+            \sigma_u \cdot \sigma_u & \sigma_u \cdot \sigma_v \\ 
+            \sigma_v \cdot \sigma_u & \sigma_v \cdot \sigma_v 
+        \end{bmatrix} = \begin{bmatrix}
+            E & F \\ F & G 
+        \end{bmatrix}, & \SFF &= \begin{bmatrix} 
+            \sigma_{uu} \cdot N_\sigma & \sigma_{uv} \cdot N_\sigma \\ 
+            \sigma_{vu} \cdot N_\sigma & \sigma_{vv} \cdot N_\sigma 
+        \end{bmatrix} = \begin{bmatrix}
+            L & M \\ M & N
+        \end{bmatrix}.
+    \end{align*}
+    Then we obtain 
+    \begin{align*}
+        f(a, b) &= \begin{bmatrix}
+            a & b 
+        \end{bmatrix} \begin{bmatrix}
+            L & M \\ M & N
+        \end{bmatrix} \begin{bmatrix}
+            a \\ b 
+        \end{bmatrix} = a^2 L + 2ab M + b^2 N, \\ 
+        g(a, b) &= \begin{bmatrix}
+            a & b 
+        \end{bmatrix} \begin{bmatrix}
+            E & F \\ F & G
+        \end{bmatrix} \begin{bmatrix}
+            a \\ b 
+        \end{bmatrix} = a^2 E + 2ab F + b^2 G.
+    \end{align*}
+    We see that 
+    \begin{align*}
+        \nabla f(a, b) &= \left( \frac{\partial f}{\partial a}, 
+        \frac{\partial f}{\partial b} \right) = (2aL + 2bM, 2aM + 2bN) 
+        = 2\SFF \begin{bmatrix} a \\ b \end{bmatrix}, \\ 
+        \nabla g(a, b) &= \left( \frac{\partial g}{\partial a}, 
+        \frac{\partial g}{\partial b} \right) = (2aE + 2bF, 2aF + 2bG) 
+        = 2\FFF \begin{bmatrix} a \\ b \end{bmatrix}.
+    \end{align*}
+    By the Lagrange multiplier method, the maximum and minimum of $f(a, b)$ 
+    subject to $g(a, b) = 1$ occur at points $(a, b) \in \R^2$ that are 
+    solutions of the system 
+    \[ \begin{cases}
+        \nabla f(a, b) = \lambda \nabla g(a, b) \\ 
+        g(a, b) = 1
+    \end{cases} \]
+    for some $\lambda \in \R$. We see that $\nabla f(a, b) = \lambda \nabla 
+    g(a, b)$ if and only if 
+    \[ \SFF \begin{bmatrix} a \\ b \end{bmatrix} = \lambda \FFF 
+    \begin{bmatrix} a \\ b \end{bmatrix}, \] 
+    and since $\FFF$ is invertible, this gives 
+    \[ {\cal W} \begin{bmatrix} a \\ b \end{bmatrix} = 
+    {\cal F}_{\text{\RN{1}}}^{-1} \SFF \begin{bmatrix} a \\ b \end{bmatrix} 
+    = \lambda \begin{bmatrix} a \\ b \end{bmatrix}. \] 
+    In particular, we have that $(a, b)^T$ is an eigenvector of ${\cal W} 
+    = {\cal F}_{\text{\RN{1}}}^{-1} \SFF$, and $\lambda$ is an 
+    eigenvalue of ${\cal W}$ so that $\lambda \in \{\kappa_1, \kappa_2\}$. 
+    Using the constraint $g(a, b) = 1$, we find that 
+    \begin{align*}
+        \kappa_n &= \begin{bmatrix} a & b \end{bmatrix} \SFF 
+        \begin{bmatrix} a \\ b \end{bmatrix} 
+        = \begin{bmatrix} a & b \end{bmatrix} \FFF 
+        \left( {\cal F}_{\text{\RN{1}}}^{-1} \SFF 
+        \begin{bmatrix} a \\ b \end{bmatrix} \right) 
+        = \begin{bmatrix} a & b \end{bmatrix} \FFF \lambda  
+        \begin{bmatrix} a \\ b \end{bmatrix} = \lambda g(a, b) = \lambda. 
+    \end{align*}
+    Therefore, the maximum and minimum values of $\kappa_n = f(a, b)$ 
+    subject to $g(a, b) = 1$ are the eigenvalues of ${\cal W}$, namely 
+    the principal curvatures $\kappa_1$ and $\kappa_2$. \qed 
+\end{pf}\vspace{-0.25cm}\newpage
+
+As a corollary, we obtain the following. 
+
+\begin{cor}{cor:3.13}
+    For $i \in \{1, 2\}$, let $(a_i, b_i)^T$ be an eigenvector of 
+    $\kappa_i$ so that ${\cal W}t_i = \kappa_i t_i$. If $\kappa_1 \neq \kappa_2$, 
+    then the vectors $X_i = a_i \sigma_u + b_i \sigma_v \in T_{p_0}S$ 
+    are perpendicular. 
+\end{cor}\vspace{-0.25cm}
+\begin{pf}[Corollary~\ref{cor:3.13}]
+    We wish to show that $X_1 \cdot X_2 = 0$. Note that 
+    \[ X_1 \cdot X_2 = \begin{bmatrix}
+        a_1 & b_1 
+    \end{bmatrix} \FFF \begin{bmatrix}
+        a_2 \\ b_2 
+    \end{bmatrix}, \] 
+    which implies that 
+    \[ \kappa_2(X_1 \cdot X_2) = \kappa_2 \begin{bmatrix}
+        a_1 & b_1 
+    \end{bmatrix} \FFF \begin{bmatrix}
+        a_2 \\ b_2 
+    \end{bmatrix} = \begin{bmatrix}
+        a_1 & b_1 
+    \end{bmatrix} \left( \kappa_2 \FFF \begin{bmatrix}
+        a_2 \\ b_2 
+    \end{bmatrix} \right). \] 
+    But $(a_i, b_i)^T$ is a $\kappa_i$-eigenvector of ${\cal W} = 
+    {\cal F}_{\text{\RN{1}}}^{-1} \SFF$, so 
+    ${\cal F}_{\text{\RN{1}}}^{-1} \SFF (a_i, b_i)^T 
+    = \kappa_i (a_i, b_i)^T$ and hence 
+    \[ \SFF \begin{bmatrix}
+        a_i \\ b_i 
+    \end{bmatrix} = \kappa_i \FFF \begin{bmatrix}
+        a_i \\ b_i 
+    \end{bmatrix} \] 
+    by left multiplying $\FFF$. Setting $t_i = (a_i, b_i)^T$ 
+    for $i \in \{1, 2\}$, this gives us
+    \begin{align*}
+        \kappa_2(X_1 \cdot X_2) 
+        &= t_1^T \SFF t_2  
+        = (t_1^T \SFF t_2)^T \\
+        &= t_2^T \SFF t_1 
+        = t_2^T (\kappa_1 \FFF t_1) \\ 
+        &= \kappa_1 t_2 \FFF t_1^T 
+        = \kappa_1 (X_2 \cdot X_1) 
+        = \kappa_1 (X_1 \cdot X_2),
+    \end{align*}
+    where the second equality follows since $t_1^T \SFF t_2$ is 
+    a real number and taking the transpose has no effect. 
+    This implies that $(\kappa_1 - \kappa_2)(t_1 \cdot t_2) = 0$, and 
+    $\kappa_1 \neq \kappa_2$ implies that $t_1 \cdot t_2 = 0$. \qed 
+\end{pf}\vspace{-0.25cm}
+
+As a consequence of Corollary~\ref{cor:3.13}, we can always pick an orthonormal 
+basis $\{t_1, t_2\}$ of $T_{p_0}S$ such that the components of $t_i$ are 
+$\kappa_i$-eigenvectors. 
+
+Note that $\gamma'(t_0) \in T_{p_0}S$ with $\|\gamma'(t_0)\| = 1$, so we 
+can write 
+\[ \gamma'(t_0) = \cos(\theta) t_1 + \sin(\theta) t_2 \] 
+whee $\theta \in [0, 2\pi)$ is the angle between $\gamma'(t_0)$ and $t_1$. 
+Moreover, if we have $\gamma'(t_0) = a\sigma_u + b\sigma_v$, then a similar 
+computation as before implies that 
+\[ \kappa_n = \begin{bmatrix} a & b \end{bmatrix} \SFF \begin{bmatrix}
+    a \\ b 
+\end{bmatrix} = \cos^2(\theta) \kappa_1 + \sin^2(\theta) \kappa_2 =: f(\theta). \] 
+It follows that the average value of the $\kappa_n$'s is 
+\begin{align*} 
+    \frac{1}{2\pi} \int_0^{2\pi} f(\theta)\dd\theta 
+    &= \frac{1}{2\pi} \int_0^{2\pi} \kappa_1 \cos^2\theta + \kappa_2 \sin^2\theta \dd\theta \\ 
+    &= \frac12 (\kappa_1 + \kappa_2) = H
+\end{align*}
+where the above integral can be solved by using the double angle formulae 
+$\cos^2\theta = \frac12(1+\cos2\theta)$ and $\sin^2\theta = \frac12(1-\cos2\theta)$. 
+From this, it makes sense why we call $H$ the mean curvature. 
+
+\subsection{Geodesics} \label{subsec:3.5}
+We will work with the same setting as before, where $S$ is a surface, 
+$\sigma : U \subset \R^2 \to V \subset S \subset \R^3$ is a smooth 
+coordinate chart, and $\gamma : (\alpha, \beta) \to V$ is a unit speed 
+curve on $S$. Recall from Definition~\ref{defn:3.9} that we called $\gamma$ a 
+geodesic if $\kappa_g = 0$ everywhere. An equivalent definition is as follows: 
+
+\begin{defn}{defn:3.14}
+    A unit speed curve $\gamma$ is a {\bf geodesic} if $\gamma''(t) = \mathbf 0$ 
+    or $\gamma''(t) \parallel N_\sigma$ (i.e. they are parallel) 
+    for all $t \in (\alpha, \beta)$.
+\end{defn}\vspace{-0.25cm} 
+
+To see that these are indeed equivalent, let's start with this new definition. 
+Then $\gamma$ is a geodesic if and only if $\sigma_u \cdot \gamma''(t) = 
+\sigma_v \cdot \gamma''(t) = 0$ for all $t \in (\alpha, \beta)$. Since 
+$\gamma''(t) \in \Span_{\R}\{N_\sigma, N_\sigma \times \gamma'(t)\}$ 
+and 
+\[ \gamma''(t) = \kappa_n N_\sigma + \kappa_g (N_\sigma \times \gamma'(t)) \] 
+with $\kappa_n = \gamma''(t_0) \cdot N_\sigma$ and 
+$\kappa_g = \gamma''(t_0) \cdot (N_\sigma \times \gamma'(t_0))$, 
+this shows that our new definition is equivalent to having $\kappa_g = 0$ 
+for all $t \in (\alpha, \beta)$.
+
+We look at some examples of geodesics. 
+\begin{enumerate}[(1)]
+    \item {\bf (Lines.)} Let $\gamma(t) = p_0 + tw$ for $t \in \R$, 
+    where $p_0$ is a point and $w$ is a vector with $\|w\| = 1$. 
+    Then $\gamma''(t_0) = \mathbf 0$ for all $t \in \R$, so $\gamma$ is a geodesic.
+    \item {\bf (Great circles on a sphere.)} 
+\end{enumerate}

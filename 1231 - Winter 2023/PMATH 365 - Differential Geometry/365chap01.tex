@@ -630,14 +630,14 @@ that it is strictly monotone and thus invertible around $x_0$.
     $\alpha$ is the parametrization of the graph of a function of class ${\cal C}^r$ 
     (because the composition is of class ${\cal C}^r$). 
 
-    If $f(x) = 0$ for all $x \in V_0$, then we are already done. Otherwise, 
+    If $f(x) = \mathbf 0$ for all $x \in V_0$, then we are already done. Otherwise, 
     compose the above function with $h : V_0 \times \R^{n-k} \subset \R^n 
     \to \R^n$ defined by 
     \[ (x_1, \dots, x_k, x_{k+1}, \dots, x_n) \mapsto 
     (x_1, \dots, x_k, x_{k+1} - f_{k+1} \circ \alpha^{-1}(x), \dots, 
     x_n - f_n \circ \alpha^{-1}(x)), \] 
     which is a diffeomorphism of class ${\cal C}^r$. For $x \in V_0$, we obtain 
-    $h \circ \alpha \circ \alpha^{-1}(x) = (x, 0) = \iota(x)$ as desired. \qed 
+    $h \circ \alpha \circ \alpha^{-1}(x) = (x, \mathbf 0) = \iota(x)$ as desired. \qed 
 \end{pf}\vspace{-0.25cm}
 As a consequence, we have the following result. 
 
@@ -751,10 +751,10 @@ original definition.
 
 \begin{defn}{defn:1.15}
     Let $M \subset \R^n$ be such that $M$ is locally given by the zero set 
-    $\{F \equiv 0\}$ of a ${\cal C}^r$ map $F : V \subset \R^n \to \R^{n-k}$ 
+    $\{F \equiv \mathbf 0\}$ of a ${\cal C}^r$ map $F : V \subset \R^n \to \R^{n-k}$ 
     with maximal rank. That is, 
     $DF(x)$ has rank $n - k$ for all $x \in V \cap M$, where $V \cap M 
-    = F^{-1}(0)$ holds for an appropriately chosen neighbourhood $V$ 
+    = F^{-1}(\mathbf 0)$ holds for an appropriately chosen neighbourhood $V$ 
     of every point in $M$. Then $M$ is called a 
     {\bf $k$-dimensional submanifold of $\R^n$ of class ${\cal C}^r$}.
 \end{defn}\vspace{-0.25cm} 
@@ -766,7 +766,7 @@ explicitly exhibit charts covering the space.
     which is given by the equation $x^2 + y^2 = 1$, which we can rearrange as 
     $x^2 + y^2 - 1 = 0$.
     Define $F : \R^2 \to \R$ via $F(x, y) = x^2 + y^2 - 1$. Then $\mathbb{S}^1 
-    = F^{-1}(0)$, so we can take $V = \R^2$ in the definition. Also, we have 
+    = F^{-1}(\mathbf 0)$, so we can take $V = \R^2$ in the definition. Also, we have 
     \[ DF(x, y) = \begin{bmatrix}
         2x & 2y 
     \end{bmatrix}, \] 
@@ -815,7 +815,7 @@ explicitly exhibit charts covering the space.
     We now view this using the zero set characterization. 
 
     For all $(x, y) \in M \subset \R^k \times \R^{n-k}$, we have 
-    $y = f(x)$ if and only if $F(x, y) := f(x) - y = 0 \in \R^{n-k}$.
+    $y = f(x)$ if and only if $F(x, y) := f(x) - y = \mathbf 0 \in \R^{n-k}$.
     Note that $U \times \R^{n-k}$ is an open subset of $\R^k \times \R^{n-k}$. 
     Then $M$ is the zero set of the ${\cal C}^r$ function $F : U \times \R^{n-k} 
     \subset \R^k \times \R^{n-k} \to \R^{n-k}$ given by $(x, y) \mapsto f(x) - y$.
@@ -860,16 +860,16 @@ then we have $\partial F/\partial x = (\partial F_i/\partial x_j)_{1\leq i\leq m
 $\partial F/\partial y$ is an $m \times m$ matrix.
 
 \begin{theo}[Implicit Function Theorem]{theo:1.17}
-    Let $(x_0, y_0) \in U$ be such that $F(x_0, y_0) = 0$. Suppose that 
+    Let $(x_0, y_0) \in U$ be such that $F(x_0, y_0) = \mathbf 0$. Suppose that 
     \[ \det\left( \frac{\partial F}{\partial y}(x_0, y_0) \right) \neq 0. \] 
     Then there exists an open neighbourhood $V_0 \subset \R^k$ of $x_0$ 
     and a unique function $g : V_0 \to \R^m$ of class ${\cal C}^r$ such that 
-    $g(x_0) = y_0$ and $F(x, g(x)) = 0$ for all $x \in V_0$. 
+    $g(x_0) = y_0$ and $F(x, g(x)) = \mathbf 0$ for all $x \in V_0$. 
 \end{theo}\vspace{-0.25cm}
 
 In other words, the Implicit Function Theorem tells us that if 
 $\det(\partial F(x_0, y_0)/\partial y) \neq 0$, then 
-for all points $(x, y) \in \{F \equiv 0\}$ in an open neighbourhood of 
+for all points $(x, y) \in \{F \equiv \mathbf 0\}$ in an open neighbourhood of 
 $(x_0, y_0)$, we have $y = g(x)$ for some function of class ${\cal C}^r$. Thus, 
 we can express the variables $(y_1, \dots, y_m)$ as functions of 
 $(x_1, \dots, x_k)$ of class ${\cal C}^r$ near $(x_0, y_0)$. 
@@ -901,7 +901,7 @@ $(0, \pm1)$.
     Define $H : U \subset \R^n \to \R^n = \R^k \times \R^m$ by $(x, y) 
     \mapsto (x, F(x, y))$. The derivative matrix is
     \[ DH = \left[ \begin{array}{c|c}
-        I_{k\times k} & 0 \\ \hline
+        I_{k\times k} & \mathbf 0_{m\times k} \\ \hline
         \partial F/\partial x & \partial F/\partial y
     \end{array} \right], \]
     which is an $n \times n$ matrix. 
@@ -921,13 +921,13 @@ $(0, \pm1)$.
     \end{align*}
     This implies that $u = G_1(u, v)$, so $G(u, v) = (u, G_2(u, v))$ for some 
     function $G : V_0 \subset \R^n \to \R^m$ of class ${\cal C}^r$ (where $V_0 
-    \subset \R^n$ is open). Moreover, for all $(x, y)$ with $F(x, y) = 0$, 
-    we have $H(x, y) = (x, F(x, y)) = (x, 0)$,
-    and hence $(x, y) = G \circ H(x, y) = G(x, 0) = (x, G_2(x, 0))$. Then 
-    $y = G_2(x, 0)$ for all $(x, y) \in \{F \equiv 0\}$. By setting 
-    $g(x) := G_2(x, 0)$, we have $y = g(x)$ for all $(x, y) \in \{F \equiv 0\}$
+    \subset \R^n$ is open). Moreover, for all $(x, y)$ with $F(x, y) = \mathbf 0$, 
+    we have $H(x, y) = (x, F(x, y)) = (x, \mathbf 0)$,
+    and hence $(x, y) = G \circ H(x, y) = G(x, \mathbf 0) = (x, G_2(x, \mathbf 0))$. Then 
+    $y = G_2(x, \mathbf 0)$ for all $(x, y) \in \{F \equiv \mathbf 0\}$. By setting 
+    $g(x) := G_2(x, \mathbf 0)$, we have $y = g(x)$ for all $(x, y) \in \{F \equiv \mathbf 0\}$
     near $(x_0, y_0)$, and $g$ is of class ${\cal C}^r$. We see that 
-    $F(x, g(x)) = 0$.
+    $F(x, g(x)) = \mathbf 0$.
     For the proof of uniqueness of $g$ and more details, we refer to 
     \emph{Topology} by Munkres, Theorem 9.2 on page 74. \qed 
 \end{pf}\vspace{-0.25cm} 
@@ -1005,10 +1005,10 @@ Observe that $(\gamma(t) - \gamma(t_0))/(t - t_0)$ is the velocity vector
 of the secant $L$ passing through $\gamma(t)$ and $\gamma(t_0)$. 
 Taking the limit as $t \to t_0$, it follows that $\gamma'(t_0)$ is the tangent 
 vector to the curve in $\R^n$ given by $\gamma(t)$, under the assumption
-that $\gamma'(t_0) \neq 0$. Let's look at some examples. 
+that $\gamma'(t_0) \neq \mathbf 0$. Let's look at some examples. 
 
 \begin{enumerate}[(1)]
-    \item Let $x \in \R^n$ and $0 \neq v \in \R^n$. Set $\gamma(t) = x + tv$ 
+    \item Let $x \in \R^n$ and $\mathbf 0 \neq v \in \R^n$. Set $\gamma(t) = x + tv$ 
     for $t \in \R$, which parametrizes the line $L$ in $\R^n$ passing through 
     $x$ with direction vector $v$. We have that $\gamma'(t) = v$ for all 
     $t \in \R$, so at every point on the line, the velocity vector coincides 
@@ -1032,7 +1032,7 @@ Note that if $\gamma$ is a homeomorphism onto its image
 \[ C = \{x \in \R^n : x = \gamma(t) \text{ for some } t \in (a, b)\} \] 
 and $D\gamma(t)$ has rank $1$ for all $t \in (a, b)$, then $C$ is a 
 $1$-dimensional submanifold of $\R^n$ of class ${\cal C}^r$. In fact, we see that
-$D\gamma(t)$ has rank $1$ if and only if $\gamma'(t) \neq 0$, so $\gamma'(t)$ 
+$D\gamma(t)$ has rank $1$ if and only if $\gamma'(t) \neq \mathbf 0$, so $\gamma'(t)$ 
 is a direction vector for the tangent line to $\gamma$ at $\gamma(t)$. 
 In particular, the $1$-dimensional submanifold of $\R^n$ determined by $\gamma$ 
 has a well-defined tangent line $L$ at every point. We call 
@@ -1063,7 +1063,7 @@ spaces, where the isomorphism $T_x(\R^n) \to \R^n$ is given by $(x; v) \mapsto v
 \begin{pf}[Lemma~\ref{lemma:1.20}]
     Let $(x; v) \in T_x(\R^n)$. Set $\gamma(t) = x + tv$ for $t \in \R$, 
     which satisfies $\gamma'(t) = v$ for all $t \in \R$. In particular, we 
-    have $\gamma(0) = x$ and $\gamma'(0) = v$. Note that if $v \neq 0$, then 
+    have $\gamma(0) = x$ and $\gamma'(0) = v$. Note that if $v \neq \mathbf 0$, then 
     $\gamma(t)$ parametrizes the line through $x$ with velocity vector $v$. \qed 
 \end{pf}\vspace{-0.25cm}
 
@@ -1221,7 +1221,7 @@ about this definition.
 Now that we have digested the definition, let's look at some examples of tangent spaces.
 \begin{enumerate}[(1)]
     \item Let $U \subset \R^n$ be an open set. Then the identity map 
-    $\alpha : U \subset U$ which sends $x \in U$ to itself is a smooth 
+    $\alpha : U \to U$ which sends $x \in U$ to itself is a smooth 
     chart with $D\alpha(x) = I_{n\times n}$ for all $x \in U$. By 
     definition, we have  
     \[ T_x(U) = \alpha_*(T_x\R^n). \] 
@@ -1257,7 +1257,7 @@ Now that we have digested the definition, let's look at some examples of tangent
     i = 1, \dots, k \right\}. \] 
 
     \item Let $U \subset \R^n$ be open. If $F : U \subset \R^n \to \R^{n-k}$ is a function of 
-    class ${\cal C}^r$ with $DF$ having maximal rank $n-k$ on $M = \{F \equiv 0\}$ 
+    class ${\cal C}^r$ with $DF$ having maximal rank $n-k$ on $M = \{F \equiv \mathbf 0\}$ 
     (so that $M$ is a $k$-dimensional submanifold of $\R^n$ by Theorem~\ref{theo:1.16}), 
     then we leave it as an exercise to show that 
     \[ T_pM = \ker(DF(p)). \] 
