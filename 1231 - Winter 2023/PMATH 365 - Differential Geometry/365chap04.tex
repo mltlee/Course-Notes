@@ -376,7 +376,7 @@ $u \in [a, b]$, we obtain a parametrization that traces the curve in the
 opposite direction, starting at $\gamma(b) = \bar\gamma(a)$ and ending 
 at $\gamma(a) = \bar\gamma(b)$. Moreover, we have $\bar\gamma'(u) = 
 -\gamma'(a+b-u)$ so that $\bar T(u) = -T(a+b-u)$ at the point 
-$p = \gamma(u) = \gamma(a+b-u)$ on the curve. This implies that 
+$p = \bar\gamma(u) = \gamma(a+b-u)$ on the curve. This implies that 
 \[ \int_{\bar\gamma} F\cdot{\rm d}r = -\int_\gamma F\cdot{\rm d}r. \] 
 We denote the reparametrization $\bar\gamma$ by $-\gamma$ and write 
 \[ \int_{-\gamma} F\cdot{\rm d}r = -\int_\gamma F\cdot{\rm d}r. \] 
@@ -708,7 +708,7 @@ examples of this.
     \begin{align*}
         \int_\Omega \Div F \dVol 
         &= \int_0^6 \int_4^5 \int_{-1}^2 2xy^2 \dd x \dd y \dd z \\ 
-        &= \int_0^6 \int_4^5 \Big[ x^2 y^2 ]_{-1}^2 \dd y \dd z \\ 
+        &= \int_0^6 \int_4^5 \Big[ x^2 y^2 \Big]_{-1}^2 \dd y \dd z \\ 
         &= 3 \int_0^6 \int_4^5 y^2 \dd y \dd z \\ 
         &= 3 \int_0^6 \left[ \frac{y^3}{3} \right]_4^5 \dd z \\ 
         &= \int_0^6 (5^3 - 4^3)\dd z = 6 \cdot 61 = 366,
