@@ -3,7 +3,7 @@ By a surface, we always mean a smooth $2$-dimensional submanifold of $\R^3$.
 In particular, all the charts we use will be smooth. 
 
 Let $S$ be a surface, and let $\sigma : U \subset \R^2 \to V = \sigma(U) 
-\subset S \subset \R^3$ be a smooth coordinate charts with components 
+\subset S \subset \R^3$ be a smooth coordinate chart with components 
 \[ (u, v) \mapsto (x(u, v), y(u, v), z(u, v)). \] 
 Then we know that $\sigma$ is a homeomorphism onto its image $V$, 
 $\sigma$ is smooth, and $D\sigma$ has rank $2$ on $U$. This implies that 
@@ -785,7 +785,7 @@ As a corollary, we get the following classical result.
     Let $\gamma$ be a unit speed curve on $S$. Then the normal component 
     $\kappa_n N_\sigma$ of $\gamma''$ only depends on the unit tangent 
     vector $\gamma'$ and not on $\gamma$. (That is, $\kappa_n$ 
-    only depends on $\gamma'$ and not in $\gamma$.)
+    only depends on $\gamma'$ and not on $\gamma$.)
 \end{theo}\vspace{-0.25cm}
 
 Using this, we can prove the following result. 
@@ -907,7 +907,7 @@ As a corollary, we obtain the following.
 
 \begin{cor}{cor:3.13}
     For $i \in \{1, 2\}$, let $(a_i, b_i)^T$ be an eigenvector of 
-    $\kappa_i$ so that ${\cal W}t_i = \kappa_i t_i$. If $\kappa_1 \neq \kappa_2$, 
+    $\kappa_i$ so that ${\cal W}(a_i, b_i)^T = \kappa_i (a_i, b_i)^T$. If $\kappa_1 \neq \kappa_2$, 
     then the vectors $X_i = a_i \sigma_u + b_i \sigma_v \in T_{p_0}S$ 
     are perpendicular. 
 \end{cor}\vspace{-0.25cm}
@@ -1254,7 +1254,7 @@ $\alpha, \beta : [0, 1] \to \R$, we have
     and let $\alpha$ be a bump function on $[0, 1]$ such that 
     $\alpha$ is $1$ on $[t_0 - c/2, t_0 + c/2]$ and $0$ otherwise. This 
     gives us 
-    \[ \frac{\rm d}{{\rm d}\eps} L(\eps)|_{\eps=0} = -\int_0^1 
+    \[ \frac{\rm d}{{\rm d}\eps} L(\eps)\Big|_{\eps=0} = -\int_0^1 
     \alpha(t) (\sigma_u \cdot \gamma''(t))\dd t < 0 \] 
     since $\alpha(t) (\sigma_u \cdot \gamma''(t))$ is nonnegative 
     on $[0, 1]$ and strictly positive on $[t_0 - c/2, t_0 + c/2]$. 
