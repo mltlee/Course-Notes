@@ -658,7 +658,7 @@ For the left-hand side of Stokes' Theorem, we first see that
 \[ \int_\Omega \Div F \dVol = \int_\Omega 2\dVol = 2 \int_\Omega \dd x \dd y \dd z \] 
 since $\Omega$ is an open subset of $\R^3$. This integral corresponds to the volume of the unit ball, which is 
 \[ \int_\Omega \dd x \dd y \dd z = \frac{4\pi}3, \] 
-Therefore, we find that $\int_\Omega \Div F = 8\pi/3$. Now, 
+Therefore, we find that $\int_\Omega \Div F \dVol = 8\pi/3$. Now, 
 to compute the right-hand side, we observe that 
 \[ F \cdot N = (-y, x, 1+2z) \cdot (x, y, z) = -yx + xy + (1+2z)z = z + 2z^2. \] 
 Using the spherical coordinates 
@@ -676,7 +676,7 @@ Therefore, we obtain
     &= 2\pi \left[ \left( -\frac12 + \frac23 \right) - \left( -\frac12 - \frac23 \right) \right]  
     = \frac{8\pi}{3}.
 \end{align*}
-This is precisely equal to $\int_\Omega \Div F$, as we expected! 
+This is precisely equal to $\int_\Omega \Div F \dVol$, as we expected! 
 
 \subsubsection{Applications} \label{subsubsec:4.3.1}
 An important application of Stokes' Theorem is to simplify the computation 
