@@ -1,0 +1,751 @@
+\section{Integration on manifolds}\label{sec:4}
+
+\subsection{Integration of scalar functions} \label{subsec:4.1}
+Let $M \subset \R^n$ be a smooth $k$-dimensional submanifold and let 
+$\alpha : U \subset \R^k \to V \subset M$ be a smooth coordinate chart. 
+If $p_0 \in V$, then $p_0 = \alpha(u_0)$ for some $u_0 \in U$ and 
+\[ T_{p_0}M = \Span_{\R}\left\{ \frac{\partial\alpha}{\partial u_1}(u_0), 
+\dots, \frac{\partial\alpha}{\partial u_k}(u_0) \right\} \subset T_{p_0}\R^n \simeq \R^n. \] 
+Moreover, recall that we can write the derivative matrix as 
+\[ D\alpha(u_0) = \left[ \begin{array}{c|c|c} 
+    \!\!\!\dfrac{\partial\alpha}{\partial u_1}(u_0) & \cdots & 
+    \dfrac{\partial\alpha}{\partial u_k}(u_0)\!\!\!
+\end{array} \right]. \]
+Note that $D\alpha(u_0)^T D\alpha(u_0)$ is a $k \times k$ matrix whose 
+$(i, j)$ entry is 
+\[ a_{ij} = \frac{\partial\alpha}{\partial u_i}(u_0) \cdot 
+\frac{\partial\alpha}{\partial u_j}(u_0). \] 
+In other words, we have that 
+\[ D\alpha(u_0)^T D\alpha(u_0) = \left[ \frac{\partial\alpha}{\partial u_i}(u_0) \cdot 
+\frac{\partial\alpha}{\partial u_j}(u_0) \right]_{1\leq i,j\leq k} \] 
+and as with surfaces, we will define this matrix to be the first fundamental 
+form of $\alpha$. 
+
+\begin{defn}{defn:4.1}
+    The matrix $\FFF = D\alpha^T D\alpha$ is called the {\bf first fundamental 
+    form of $\alpha$}.
+\end{defn}\vspace{-0.25cm}
+
+Recall from linear algebra that if $A$ is an $n \times k$ (with $n \geq k$) 
+of maximal rank $k$, then $A^T A$ is a $k \times k$ matrix of maximal rank $k$. 
+Since $D\alpha$ has maximal rank $k$ everywhere on $U$, it follows that 
+$\FFF$ has maximal rank $k$ everywhere on $U$. In other words, $\FFF$ 
+is an invertible matrix, so $\det \FFF(u_0) \neq 0$ for all $u_0 \in U$. 
+Moreover, for any two tangent vectors $X, Y \in T_{p_0}M$, we can write 
+\begin{align*}
+    X &= a_1 \frac{\partial\alpha}{\partial u_1}(u_0) + \cdots 
+    + a_k \frac{\partial\alpha}{\partial u_k}(u_0), \\ 
+    Y &= b_1 \frac{\partial\alpha}{\partial u_1}(u_0) + \cdots 
+    + b_k \frac{\partial\alpha}{\partial u_k}(u_0),
+\end{align*}
+for some $a_1, \dots, a_k, b_1, \dots, b_k \in \R$. Observe that 
+\begin{align*}
+    X \cdot Y &= \left( \frac{\partial\alpha}{\partial u_1}(u_0) + \cdots 
+    + a_k \frac{\partial\alpha}{\partial u_k}(u_0) \right) 
+    \cdot \left( b_1 \frac{\partial\alpha}{\partial u_1}(u_0) + \cdots 
+    + b_k \frac{\partial\alpha}{\partial u_k}(u_0) \right) \\
+    &= \sum_{i=1}^k \sum_{j=1}^k a_i b_j \left( \frac{\partial\alpha}{\partial u_i}(u_0) 
+    \cdot \frac{\partial\alpha}{\partial u_j}(u_0) \right) \\ 
+    &= \begin{bmatrix}
+        a_1 & \cdots & a_k 
+    \end{bmatrix} D\alpha(u_0)^T D\alpha(u_0) \begin{bmatrix}
+        b_1 \\ \vdots \\ b_k 
+    \end{bmatrix} 
+    = \begin{bmatrix}
+        a_1 & \cdots & a_k 
+    \end{bmatrix} \FFF \begin{bmatrix}
+        b_1 \\ \vdots \\ b_k 
+    \end{bmatrix}. 
+\end{align*}
+Since $(a_1, \dots, a_k)$ and $(b_1, \dots, b_k)$ are the components of 
+$X$ and $Y$ with respect to the basis 
+\[ {\cal B} = \left\{ \frac{\partial\alpha}{\partial u_1}(u_0), 
+\dots, \frac{\partial\alpha}{\partial u_k}(u_0) \right\} \] 
+of $T_{p_0}M$, this means that $\FFF$ is the matrix representation 
+of the dot product $\cdot$ in $T_{p_0}\R^n \simeq \R^n$ to $T_{p_0}M$ 
+with respect to the basis ${\cal B}$. Moreover, for any 
+$a = (a_1, \dots, a_k) \in \R^k$, we have 
+\[ a^T \FFF a = \begin{bmatrix}
+    a_1 & \cdots & a_k 
+\end{bmatrix} \FFF \begin{bmatrix}
+    a_1 \\ \vdots \\ a_k 
+\end{bmatrix} = X \cdot X \geq 0 \] 
+where $X = a_1 \frac{\partial\alpha}{\partial u_1}(u_0) + \cdots 
++ a_k \frac{\partial\alpha}{\partial u_k}(u_0)$ and $a^T \FFF a = X \cdot X = 0$ 
+if and only if $X = \mathbf 0$ (i.e. $a = \mathbf 0$) by positive 
+definiteness of the dot product. Consequently, $\FFF$ is positive 
+definite and $\det\FFF > 0$. In particular, this means that 
+$\sqrt{\det\FFF}$ is well-defined. To interpret $\sqrt{\det\FFF}$, we 
+start by looking at two familiar cases. 
+\begin{enumerate}[(1)]
+    \item If $k = 1$, then $M$ is a regular curve in $\R^n$. Suppose that 
+    it is parametrized by $\gamma : (a, b) \to \R^n$ (so that $\gamma$ 
+    plays the role of $\alpha$ in the above formulae). Then we have 
+    $D\gamma(t) = \gamma'(t)$ and 
+    \[ \FFF = D\gamma(t)^T D\gamma(t) = \gamma'(t)^T \gamma'(t) 
+    = \gamma'(t) \cdot \gamma'(t) = \|\gamma'(t)\|^2. \] 
+    In this case, $\FFF$ is a $1 \times 1$ matrix so that 
+    $\det\FFF = \FFF$ and 
+    \[ \sqrt{\det\FFF} = \|\gamma'(t)\|. \] 
+    
+    \item If $k = 2$ and $n = 3$, then $M$ is a smooth surface $S$ in $\R^3$. 
+    Let $\sigma : U \subset \R^2 \to V \subset S \subset \R^3$ be a smooth 
+    coordinate chart on $S$ (so that $\sigma$ plays the role of $\alpha$ 
+    in the above formulae). Then 
+    \[ \FFF = D\sigma^T D\sigma \] 
+    is the usual first fundamental form. We know from Lemma~\ref{lemma:3.4} that 
+    \[ \sqrt{\det\FFF} = \|\sigma_u \times \sigma_v\|, \] 
+    which is the area of the parallelogram spanned by $\sigma_u$ and $\sigma_v$. 
+\end{enumerate}
+
+More generally, one can show that if $X_1, \dots, X_k$ are $k$ linearly 
+independent vectors in $\R^n$ and $B$ is the $k \times k$ matrix whose 
+$(i, j)$-entry is $b_{ij} = X_i \cdot X_j$, then 
+$\sqrt{\det B}$ is the volume of the parallelepiped spanned by $X_1, \dots, X_k$. 
+Therefore, in our situation, $\sqrt{\det\FFF}$ is the volume of the 
+parallelepiped spanned by the elements 
+\[ {\cal B} = \left\{ \frac{\partial\alpha}{\partial u_1}(u_0), 
+\dots, \frac{\partial\alpha}{\partial u_k}(u_0) \right\}. \] 
+Given this, we can now define the integral of a scalar function of $V \subset M$. 
+
+\begin{defn}{defn:4.2}
+    Suppose that $V \subset M$ is bounded and let $f : V \to \R$ is a continuous 
+    scalar function. We define the {\bf integral of $f$ on $V$} to be 
+    \[ \int_V f\dVol := \int_U f(\alpha(u))\sqrt{\det\FFF}\dd u_1 \cdots \dd u_k. \] 
+\end{defn}\vspace{-0.25cm}
+
+Here, we can think of $\sqrt{\det\FFF}$ as some sort of correcting term. 
+
+Note that the definition of the integral of $f$ on $V$ is independent of the 
+choice of coordinate chart $\alpha$. Indeed, if $\tilde\alpha : 
+\tilde U \subset \R^k \to V \subset M$ is another coordinate chart 
+parametrizing $V$, then $\tilde\alpha = \alpha \circ \Phi$ where 
+\[ \Phi := \alpha^{-1} \circ \tilde\alpha : \tilde U \subset \R^k 
+\to U \subset \R^k \] 
+is a diffeomorphism. By the chain rule, we have $D\tilde\alpha 
+= D\alpha D\Phi$ so that 
+\[ \tilde\FFF = D\tilde\alpha^T D\tilde\alpha = (D\alpha D\Phi)^T 
+(D\alpha D\Phi) = D\Phi^T D\alpha^T D\alpha D\Phi = D\Phi^T \FFF D\Phi \] 
+and hence $\det\tilde\FFF = \det(D\Phi)^2 \det\FFF$ since determinant is 
+multiplicative and $\det D\Phi = \det D\Phi^T$.
+This gives
+\[ \sqrt{\det\tilde\FFF} = \lvert\det D\Phi\rvert \sqrt{\det \FFF}, \] 
+which implies that 
+\begin{align*}
+    \int_{\tilde U} f(\tilde\alpha(\tilde u)) \sqrt{\det\tilde\FFF} \dd\tilde u_1 \cdots \dd\tilde u_k  
+    &= \int_{\tilde U} f(\tilde\alpha(\tilde u)) \sqrt{\det\FFF} \,\lvert\det D\Phi\rvert \dd\tilde u \cdots \dd\tilde u_k \\ 
+    &= \int_U f(\alpha(u)) \sqrt{\det\FFF} \dd u_1 \cdots \dd u_k 
+\end{align*} 
+since $\lvert\det D\Phi\rvert \dd\tilde u_1 \cdots \dd\tilde u_k 
+= \dd u_1 \cdots \dd u_k$ by the change of variable formula. 
+
+We now see what the integral formula looks like in three special cases. 
+\begin{enumerate}[(1)]
+    \item If $k = 1$ so that $M$ is a regular curve $\gamma : (a, b) \to \R^n$, 
+    we denote the integral by $\int_\gamma f\dd s$ and 
+    \[ \int_\gamma f\dd s = \int_a^b f(\gamma(t))\|\gamma'(t)\|\dd t. \] 
+    In particular, if $f \equiv 1$, then we obtain 
+    \[ \int_\gamma \dd s = \int_a^b \|\gamma'(t)\| \dd t, \] 
+    which is the arclength of $\gamma$ between $\gamma(a)$ and $\gamma(b)$.
+
+    \item If $k = 2$ and $n = 3$ so that $M$ is a smooth surface $S$ in $\R^3$ 
+    and $\sigma : U \subset \R^2 \to V \subset S \subset \R^3$ is a smooth 
+    coordinate chart on $S$, then we denote the integral by $\int_V f\dd A$ 
+    and 
+    \[ \int_V f\dd A = \int_U f(\sigma(u, v)) \|\sigma_u \times \sigma_v\|\dd u \dd v. \] 
+    If $f \equiv 1$, then we obtain 
+    \[ \int_V \dd A = \int_U \|\sigma_u \times \sigma_v\|\dd u \dd v, \] 
+    which is the surface area of $V \subset S$. 
+    
+    \item If $M$ is a bounded open subset of $\R^n$, then we can pick 
+    $\alpha = \Id_M$ as the smooth coordinate chart. We have 
+    $D\alpha = I_{n\times n}$ so that $\FFF = I_{n\times n}$ and 
+    $\det\FFF = \sqrt{\det\FFF} = 1$. In this case, we simply have 
+    \[ \int_M f\dVol = \int_M f(x_1, \dots, x_n) \dd x_1 \cdots \dd x_n, \] 
+    which is the usual integral of $f$ on the region $M \subset \R^n$. 
+    Moreover, if $f \equiv 1$, then 
+    \[ \int_M \dVol = \int_M \dd x_1 \cdots \dd x_n \] 
+    is the volume of $M$. 
+    
+\end{enumerate}
+
+We illustrate this with a few examples. 
+\begin{enumerate}[(1)]
+    \item {\bf (Sphere.)} Let $S$ be the sphere $x^2 + y^2 + z^2 = a^2$ where $a > 0$, 
+    which we can parametrize using
+    \[ \sigma(\theta, \varphi) = (a\cos\theta\sin\varphi, a\sin\theta\sin\varphi, a\cos\varphi) \] 
+    where $(\theta, \varphi) \in (0, 2\pi) \times (0, \pi)$. We have
+    $\sqrt{\det\FFF} = \|\sigma_\theta \times \sigma_\varphi\| = a^2\sin\varphi > 0$. 
+    By taking $f \equiv 1$, we see that the surface area of a sphere of radius $a$ is 
+    \begin{align*}
+        \int_S \dd A &= \int_U \|\sigma_\theta \times \sigma_\varphi\|\dd\theta \dd\varphi \\
+        &= \int_0^\pi \int_0^{2\pi} a^2\sin\varphi \dd\theta \dd\varphi \\ 
+        &= 2\pi a^2 \int_0^\pi \sin\varphi\dd\varphi \\ 
+        &= 2\pi a^2(-\cos(\pi) + \cos(0)) = 4\pi a^2. 
+    \end{align*}
+    We have also seen that $K = 1/a^2$ (see example (3) on page 40) so that 
+    \[ \int_S K\dd A = \int_S \frac{1}{a^2} \dd A = \frac{1}{a^2} \int_S \dd A 
+    = \frac{1}{a^2} (4\pi a^2) = 4\pi = 4\pi(1-g), \] 
+    where $g = 0$ since the sphere has no holes. Therefore, Gauss-Bonnet 
+    (which we stated at the end of Section~\ref{subsec:3.5}, page 50) holds 
+    for spheres!
+
+    \item {\bf (Helix.)} Let $\gamma(t) = (a\cos t, a\sin t, bt)$ where 
+    $t \in [0, \pi/3]$ be a part of the helix in $\R^3$, with $a, b > 0$. 
+    Consider the scalar function $f(x, y, z) = x + y$ on $\R^3$. Since 
+    we are only taking the parameter $t$ in the bounded interval $[0, \pi/3]$, 
+    the piece of the helix is itself bounded. Moreover, $f$ is continuous 
+    everywhere, so we can integrate $f$ over $\gamma$. Since $\gamma$ is a 
+    regular curve, we know that 
+    \[ \int_\gamma f\dd s = \int_0^{\pi/3} f(\gamma(t))\|\gamma'(t)\|\dd t. \] 
+    In this case, we have $\gamma'(t) = (-a\sin t, a\cos t, b)$ so that 
+    $\|\gamma'(t)\| = \sqrt{a^2 + b^2}$ and 
+    \begin{align*}
+        \int_\gamma f\dd s &= \int_0^{\pi/3} f(\gamma(t)) \|\gamma'(t)\|\dd t \\ 
+        &= \int_0^{\pi/3} (a\cos t + a\sin t) \sqrt{a^2 + b^2}\dd t \\ 
+        &= a\sqrt{a^2 + b^2} \int_0^{\pi/3} (\cos t + \sin t)\dd t \\ 
+        &= a\sqrt{a^2 + b^2} \left[\left(\sin\left(\frac{\pi}{3}\right) - 
+        \cos\left(\frac{\pi}{3}\right)\right) - (\sin 0 - \cos 0)\right] \\
+        &= \frac{a\sqrt{a^2 + b^2}}{2} (1 + \sqrt{3}). 
+    \end{align*}
+
+    \item {\bf (Cylinder.)} Let $C$ be the part of the cylinder in $\R^3$ where 
+    $x^2 + y^2 = 1$ and $2 \leq z \leq 4$. Since we are fixing the values 
+    of $z$ to be between $2$ and $4$, we see that $C$ is bounded.  
+    It can be parametrized by 
+    \[ \sigma(u, v) = (\cos u, \sin u, v) \] 
+    where $(u, v) \in U = (0, 2\pi) \times (2, 4)$. We have previously seen that 
+    $\FFF = I_{2\times 2}$ for this coordinate chart $\sigma$ 
+    (see example (2) on page 35) so that $\sqrt{\det\FFF} = 1$. Since 
+    $C$ is a smooth surface, we can compute its surface area with 
+    \[ \int_C \dd A = \int_U \sqrt{\det\FFF} \dd u \dd v = 
+    \int_U \dd u \dd v = \int_2^4 \int_0^{2\pi} \dd u \dd v = 
+    \int_2^4 2\pi \dd v = 4\pi. \] 
+
+    Let us also integrate $f(x, y, z) = x^2 y + z$ over $C$. We have 
+    \begin{align*}
+        \int_C f\dd A &= \int_U f(\sigma(u))\sqrt{\det \FFF}\dd u \dd v \\ 
+        &= \int_2^4 \int_0^{2\pi} ((\cos u)^2 \sin u + v) \dd u \dd v \\ 
+        &= \int_2^4 \left[ -\frac13(\cos u)^3 + uv \right]_0^{2\pi} \dd v \\ 
+        &= \int_2^4 2\pi v\dd v = \pi(4^2 - 2^2) = 12\pi. 
+    \end{align*}
+
+    \item {\bf (Torus.)} We now consider the $2$-dimensional torus 
+    $\mathbb{T}^2$ in $\R^3$ described in Problem 3 of Assignment 4. It can be 
+    parametrized with 
+    \[ \sigma(\theta, \alpha) = ((b + a\cos\alpha)\cos\theta, 
+    (b + a\cos\alpha)\sin\theta, a\sin\alpha) \] 
+    where $(\theta, \alpha) \in U = (0, 2\pi) \times (0, 2\pi)$. A direct 
+    computation gives $\|\sigma_\theta \times \sigma_\alpha\| = a(b + a\cos\theta)$ 
+    and 
+    \[ K = \frac{\cos\alpha}{a(b + a\cos\alpha)}. \] 
+    Then the surface area of $\mathbb T^2$ is 
+    \begin{align*} 
+        \int_{\mathbb T^2} \dd A 
+        &= \int_0^{2\pi} \int_0^{2\pi} a(b + a\cos\alpha)\dd\theta \dd\alpha \\ 
+        &= 2\pi a \int_0^{2\pi} (b + a\cos\alpha)\dd \alpha \\ 
+        &= 2\pi a \Big[ b\alpha + a\sin\alpha \Big]_0^{2\pi} = 4\pi^2 ab. 
+    \end{align*}
+    Moreover, if we integrate over the Gaussian curvature $K$ on $\mathbb T^2$, we obtain 
+    \begin{align*}
+        \int_{\mathbb T^2} K\dd A 
+        &= \int_0^{2\pi} \int_0^{2\pi} \frac{\cos\alpha}{a(b+a\cos\alpha)} 
+        a(b+a\cos\alpha) \dd\theta \dd \alpha \\ 
+        &= 2\pi \int_0^{2\pi} \cos\alpha\dd \alpha 
+        = 2\pi(\sin(2\pi) - \sin 0) = 0 = 4\pi(1-g), 
+    \end{align*}
+    where $g = 1$ is the genus of the torus since it has a single hole. 
+    Therefore, Gauss-Bonnet also holds here!
+
+\end{enumerate}
+
+\subsection{Integrating vector fields over submanifolds} \label{subsec:4.2}
+Let $M \subset \R^n$ be a smooth $k$-dimensional submanifold. By a 
+vector field on $M$, we mean the following: 
+
+\begin{defn}{defn:4.3}
+    A {\bf vector field on $M$} is a vector-valued function $F : M \to \R^n$. 
+\end{defn}\vspace{-0.25cm}
+
+A vector field is a function that attaches to every point on $M$ 
+a vector in the ambient space $\R^n$. Therefore, it is important 
+to note in the definition that if $M$ is a submanifold of $\R^n$, then the 
+vector field $F$ also takes values in $\R^n$. 
+
+Let's consider some examples of vector fields. 
+\begin{enumerate}[(1)]
+    \item The function $F(x, y, z, w) = (x^2y - z, y\cos w, 4e^x + 1, z - 3)$ 
+    is a vector field on $\R^4$. 
+    \item If $\gamma : (a, b) \to \R^n$ is a parametrized curve in $\R^n$, 
+    then the velocity $\gamma'(t)$ and the acceleration $\gamma''(t)$ are 
+    vector fields on $\gamma$. 
+    \item If a vector field $F : M \to \R^n$ is such that $F(p) \in T_pM$ 
+    for all $p \in M$, then $F$ is called a {\bf tangent vector field}. 
+    For example, the velocity $\gamma'(t)$ is a tangent vector field 
+    on the parametrized curve $\gamma : (a, b) \to \R^n$.
+    \item If a vector field $F : M \to \R^n$ is such that $F(p) \perp T_pM$ for 
+    all $p \in M$, then $F$ is called a {\bf normal vector field}. 
+    For example, the principal unit normal $N(t)$ and binormal $B(t)$ 
+    of a regular curve $\gamma : (a, b) \to \R^n$ are normal vector fields 
+    (where they are defined, namely where the curvature is strictly positive).
+    \item If $\sigma : U \subset \R^2 \to V \subset S \subset \R^3$ is a smooth 
+    coordinate chart of a surface $S$ in $\R^3$, then $N_\sigma$ is a unit 
+    normal vector field on $V$. 
+    \item If $M$ is the zero set of a smooth scalar function $G : \R^n \to \R$ 
+    with $DG = \nabla G$ of maximal rank everywhere, then we know that $M$ is a smooth 
+    $(n-1)$-dimensional submanifold of $\R^n$. The gradient $\nabla G$ 
+    is a normal vector field on $M$ since we have 
+    \[ T_pM \simeq \{v \in \R^n : \nabla G(p) \cdot v = 0\} \] 
+    for all $p \in M$ (see the end of Section~\ref{subsec:1.5}, page 21 
+    for the discussion of this fact).
+    \begin{enumerate}[(a)]
+        \item Recall that the unit $n$-sphere $\mathbb S^n : x_1^2 + 
+        \cdots + x_{n+1}^2 = 1$ in $\R^{n+1}$ is the zero set of the function 
+        $G(x_1, \dots, x_{n+1}) = x_1^2 + \cdots + x_{n+1}^2 - 1$. Its 
+        gradient is $\nabla G(x_1, \dots, x_{n+1}) = (2x_1, \dots, 2x_{n+1})$, 
+        which is nonzero everywhere on $\mathbb S^n$. Consequently, the gradient 
+        $\nabla G$ is a nowhere vanishing normal vector field on $\mathbb S^n$. 
+        In particular, this means we can normalize it to see that 
+        \[ N(x_1, \dots, x_{n+1}) = \frac{\nabla G(x_1, \dots, x_{n+1})}
+        {\|\nabla G(x_1, \dots, x_{n+1})\|} = \frac{1}{\sqrt{x_1^2 + \cdots 
+        + x_{n+1}^2}}(x_1, \dots, x_{n+1}) \] 
+        is a unit normal vector field on $\mathbb S^n$. 
+
+        \item The paraboloid $S : z = x^2 + y^2$ in $\R^3$ is the zero 
+        set of the smooth scalar function $G(x, y, z) = x^2 + y^2 - z$ 
+        whose gradient $\nabla G(x, y, z) = (2x, 2y, -1)$. After normalizing, 
+        we see that 
+        \[ N(x, y, z) = \frac{\nabla G(x, y, z)}{\|\nabla G(x, y, z)\|} 
+        = \frac{1}{4x^2 + 4y^2 + 1} (2x, 2y, -1) \] 
+        is a unit normal vector field on $S$. 
+    \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Line integrals of vector fields} \label{subsubsec:4.2.1}
+We start by considering integrals of vector fields on curves. Let 
+$\gamma : [a, b] \to \R^n$ be a smooth regular curve in $\R^n$. Its 
+velocity is a smooth nowhere vanishing tangent vector field on $\gamma$.
+If $F$ is a vector field defined on an open subset $U$ of $\R^n$ containing 
+$\gamma$, then the restriction of $F$ to $\gamma$ is $F(\gamma(t))$ for 
+$t \in (a, b)$. Moreover, the dot product of $F$ with $\gamma'$ at points on 
+$\gamma$ is the scalar function 
+\[ f(t) = F(\gamma(t)) \cdot \gamma'(t) \] 
+with $t \in (a, b)$. If $F$ is smooth, then the scalar function $f$ is 
+also smooth and therefore integrable on $(a, b)$. We then define 
+the integral of $F$ on $\gamma$ to be $\int_a^b f(t)\dd t$. More precisely, 
+we have the following definition: 
+
+\begin{defn}{defn:4.4}
+    Let $\gamma : [a, b] \to \R^n$ be a smooth regular curve in $\R^n$, 
+    and let $F : U \to \R^n$ be a smooth vector field defined on an 
+    open set $U \subset \R^n$ containing $\gamma$. We define 
+    the {\bf line integral of $F$ on $\gamma$} to be 
+    \[ \int_\gamma F\cdot {\rm d}r := \int_a^b F(\gamma(t)) \cdot \gamma'(t) \dd t. \] 
+\end{defn}\vspace{-0.25cm}
+
+{\bf Example.} Let $\gamma(t) = (t, t^2, t^3)$ where $0 \leq t \leq 1$ 
+be (part of) the twisted cubic in $\R^3$ and let $F(x, y, z) = (8x^2yz, 5z, -4xy)$ 
+be a smooth vector field on $\R^3$. Then we have 
+\[ F(\gamma(t)) = (8(t)^2(t^2)(t^3), 5t^3, -4(t)(t^2)) = (8t^7, 5t^3, -4t^3) \] 
+and $\gamma'(t) = (1, 2t, 3t^2)$, which gives 
+\[ F(\gamma(t)) \cdot \gamma'(t) = (8t^7, 5t^3, -4t^3) \cdot 
+(1, 2t, 3t^2) = 8t^7 - 12t^5 + 10t^4. \] 
+Therefore, the line integral of $F$ on $\gamma$ is 
+\[ \int_\gamma F\cdot{\rm d}r = \int_0^1 F(\gamma(t)) \cdot \gamma'(t)\dd t 
+= \int_0^1 (8t^7 - 12t^5 + 10t^4)\dd t = \Big[ t^8 - 2t^6 + 2t^5 \Big]_0^1 
+= 1. \] 
+
+{\bf Remark.} Since $\gamma$ is regular, it has a well-defined unit tangent 
+vector field $T(t) = \gamma'(t)/\|\gamma'(t)\|$. Then 
+\[ F(\gamma(t)) \cdot \gamma'(t) = (F(\gamma(t)) \cdot T(t))\,\|\gamma'(t)\| \] 
+so that we have 
+\[ \int_\gamma F\cdot{\rm d}r := \int_a^b F(\gamma(t)) \cdot \gamma'(t)\dd t 
+= \int_a^b (F(\gamma(t)) \cdot T(t))\,\|\gamma'(t)\|\dd t = 
+\int_\gamma (F \cdot T)\dd s, \] 
+where the last integral is the line integral of the scalar function 
+$F \cdot T$ on $\gamma$ which we defined in Section~\ref{subsec:4.1}
+(see page 53). Some authors define the line integral of a vector field 
+on a regular curve as $\int_\gamma (F \cdot T)\dd s$. 
+
+By thinking of the definition in terms of the unit tangent vector, we see that 
+line integrals of vector fields are uniquely defined by the curve only 
+up to orientation. Indeed, at any point $\gamma(t)$ on $\gamma$, there are only 
+two possible \emph{unit} tangent directions, namely $T(t)$ and $-T(t)$. 
+If we reparametrize the curve as $\bar\gamma(u) = \gamma(a+b-u)$ where 
+$u \in [a, b]$, we obtain a parametrization that traces the curve in the 
+opposite direction, starting at $\gamma(b) = \bar\gamma(a)$ and ending 
+at $\gamma(a) = \bar\gamma(b)$. Moreover, we have $\bar\gamma'(u) = 
+-\gamma'(a+b-u)$ so that $\bar T(u) = -T(a+b-u)$ at the point 
+$p = \gamma(u) = \gamma(a+b-u)$ on the curve. This implies that 
+\[ \int_{\bar\gamma} F\cdot{\rm d}r = -\int_\gamma F\cdot{\rm d}r. \] 
+We denote the reparametrization $\bar\gamma$ by $-\gamma$ and write 
+\[ \int_{-\gamma} F\cdot{\rm d}r = -\int_\gamma F\cdot{\rm d}r. \] 
+So far, we have only defined line integrals of vector fields on smooth 
+regular curves. They can also be defined over piecewise smooth regular curves. 
+
+\begin{defn}{defn:4.5}
+    A parametrized curve $\gamma : [a, b] \to \R^n$ is called a {\bf 
+    piecewise smooth regular curve} if $\gamma$ is a piecewise smooth 
+    vector-valued function 
+    \[ \gamma(t) = \begin{cases}
+        \gamma_1(t), & \text{if } a = a_0 \leq t \leq a_1, \\ 
+        \gamma_2(t), & \text{if } a_1 \leq t \leq a_2, \\ 
+        \quad\vdots & \qquad\qquad \vdots \\ 
+        \gamma_\ell(t), & \text{if } a_{\ell-1} \leq t \leq a_\ell = b 
+    \end{cases} \] 
+    such that $\gamma'_i(t) \neq \mathbf 0$ for all $t \in [a_{i-1}, a_i]$ 
+    and $i = 1, \dots, \ell$. 
+\end{defn}\vspace{-0.25cm}
+
+The line integral of the vector field $F$ on the piecewise smooth regular 
+curve $\gamma$ is then defined to be 
+\[ \int_\gamma F\cdot{\rm d}r := \sum_{i=1}^\ell \int_{\gamma_i} F\cdot{\rm d}r. \] 
+
+{\bf Example.} Let $\gamma : [-1, 3] \to \R^2$ be the piecewise smooth curve 
+in $\R^2$ given by 
+\[ \gamma(t) = \begin{cases}
+    \gamma_1(t) = (t, t^2), & \text{if } -1 \leq t \leq 1, \\ 
+    \gamma_2(t) = (2-t, 1), & \text{if } 1 \leq t \leq 3. 
+\end{cases} \] 
+Consider the smooth vector field $F(x, y, z) = (x-1, 4xy)$ on $\R^2$. Then 
+we have 
+\begin{align*} 
+    \int_\gamma F\cdot{\rm d}r 
+    &= \int_{\gamma_1} F\cdot{\rm d}r + \int_{\gamma_2} F\cdot{\rm d}r \\ 
+    &= \int_{-1}^1 F(\gamma_1(t)) \cdot \gamma'_1(t)\dd t 
+    + \int_1^3 F(\gamma_2(t)) \cdot \gamma'_2(t) \dd t. 
+\end{align*} 
+Note that $F(\gamma_1(t)) = (t-1, 4t^3)$ and $F(\gamma_2(t)) = 
+(1-t, 4(2-t))$ with $\gamma'_1(t) = (1, 2t)$ and $\gamma'_2(t) = 
+(-1, 0)$. Therefore, we can compute 
+\begin{align*}
+    F(\gamma_1(t)) \cdot \gamma'_1(t) &= (t-1, 4t^3) \cdot (1, 2t) = 
+    8t^4 + t - 1, \\ 
+    F(\gamma_2(t)) \cdot \gamma'_2(t) &= (1-t, 4(2-t)) \cdot (-1, 0) = 
+    t-1, 
+\end{align*}
+and the line integral of $F$ over $\gamma$ is 
+\begin{align*} 
+    \int_\gamma F\cdot{\rm d}r 
+    &= \int_{-1}^1 (8t^4 + t - 1)\dd t + \int_1^3 (t-1)\dd t \\ 
+    &= \left[ \frac85t^5 + \frac12t^2 - t\right]_{-1}^1 + 
+    \left[ \frac12 t^2 - t \right]_1^3 \\ 
+    &= \frac65 + 2 = \frac{16}{5}. 
+\end{align*} 
+
+Recall that the Fundamental Theorem of Calculus states that if a 
+scalar one-variable function $g : [a, b] \to \R$ has an antiderivative 
+$G : [a, b] \to \R$ (i.e. $G(x) = g(x)$ for all $x \in [a, b]$), then 
+\[ \int_a^b g(x)\dd x = G(b) - G(a). \] 
+We have a very similar result for line integrals of vector fields, which we 
+call the fundamental theorem of line integrals of vector fields. 
+
+\begin{theo}[Fundamental Theorem of Line Integrals of Vector Fields]{theo:4.6}
+    Let $F : U \to \R^n$ be a vector field on an open subset $U$ of $\R^n$. 
+    If there exists a scalar function $f : U \to \R$ such that $F = \nabla f$, 
+    then we have 
+    \[ \int_\gamma F\cdot{\rm d}r = f(\gamma(b)) - f(\gamma(a)) \] 
+    for any piecewise smooth regular curve $\gamma$ in $U$. In 
+    particular, the line integral is \emph{independent of path}. 
+\end{theo}\vspace{-0.25cm}\newpage
+\begin{pf}[Theorem~\ref{theo:4.6}]
+    It is enough to prove the theorem for smooth regular curves. Suppose that 
+    $F = \nabla f = (f_{x_1}, \dots, f_{x_n})$. Then for any smooth regular 
+    curve $\gamma(t) = (x_1(t), \dots, x_n(t))$ with $t \in [a, b]$, we have 
+    \[ F(\gamma(t)) \cdot \gamma'(t) = (f_{x_1}(\gamma(t)), \dots, 
+    f_{x_n}(\gamma(t))) \cdot (x'_1(t), \dots, x'_n(t)) = 
+    \sum_{i=1}^n f_{x_i}(\gamma(t))x'_i(t) = \frac{\rm d}{{\rm d}t} f(\gamma(t)), \] 
+    where the last equality follows from the chain rule. By the Fundamental 
+    Theorem of Calculus, we have 
+    \[ \int_\gamma F\cdot{\rm d}r = \int_a^b F(\gamma(t)) \cdot \gamma'(t)\dd t 
+     = \int_a^b \frac{\rm d}{{\rm d}t} f(\gamma(t))\dd t = f(\gamma(b)) - 
+     f(\gamma(a)). \tag*{\qed} \] 
+\end{pf}\vspace{-0.25cm}
+
+{\bf Remark.} If there exists a scalar function $f : U \to \R$ such that 
+$F = \nabla f$, then Theorem~\ref{theo:4.6} tells us that 
+\[ \int_\gamma F \cdot {\rm d}r = 0 \] 
+for any closed curve $\gamma$ 
+(i.e. $\gamma(a) = \gamma(b)$) since $f(\gamma(b)) - f(\gamma(a)) = 0$. 
+In particular, if we can find a closed 
+curve $\gamma$ such that $\int_\gamma F \cdot {\rm d}r \neq 0$, then 
+this implies that $F$ cannot be the gradient of a function. 
+
+{\bf Example.} Consider the vector field 
+\[ F(x, y) = \left( -\frac{y}{x^2+y^2}, \frac{x}{x^2+y^2} \right) \] 
+on the open set $U = \R^2 \setminus \{(0, 0)\}$. If $\gamma : [0, 2\pi] 
+\to \R^2$ given by $t \mapsto (\cos t, \sin t)$ is the unit circle, then 
+\[ F(\gamma(t)) = \left( -\frac{\sin t}{(\cos t)^2 + (\sin t)^2}, 
+\frac{\cos t}{(\cos t)^2 + (\sin t)^2} \right) = (-\sin t, \cos t) = \gamma'(t) \] 
+so that $F(\gamma(t)) \cdot \gamma'(t) = \gamma'(t) \cdot \gamma'(t) = 1$ and 
+\[ \int_\gamma F\cdot {\rm d}r = \int_0^{2\pi} 1\dd t = 2\pi \neq 0. \] 
+It follows that $F$ is not the gradient of a scalar function on $U$. 
+
+\subsubsection{Integrals of vector fields over hypersurfaces} \label{subsubsec:4.2.2}
+Let us now assume that $M$ is an $(n-1)$-dimensional smooth submanifold of $\R^3$. 
+When $n = 3$, then $M$ is just a surface in $\R^3$. If $n > 3$, such an $M$ 
+is called a {\bf hypersurface}. We have seen that $M$ is locally the zero 
+set of a smooth scalar function $G : V \subset \R^n \to \R$ with $DG = 
+\nabla G$ of maximal rank everywhere on an open subset $V$ of $\R^n$, and 
+that the gradient is a normal vector field on $M \cap V = \{G \equiv 0\}$. 
+Since $\nabla G$ is nowhere vanishing on $M \cap V$, we can normalize it to 
+obtain a \emph{unit} normal vector field 
+\[ N(p) := \frac{\nabla G(p)}{\|\nabla G(p)\|}, \] 
+where $p \in M \cap V$. If $F : V \subset \R^n \to \R^n$ is a vector field on $V$, 
+we can define the integral of $F$ on a bounded subset $B$ of $M \cap V$ as follows: 
+
+\begin{defn}{defn:4.7}
+    The integral of the vector field $F : V \subset \R^n \to \R$ on the 
+    bounded subset $B$ of $M \cap V$ with unit normal vector $N$ is defined as 
+    \[ \int_B F \cdot \dVol := \int_B (F \cdot N) \dVol, \] 
+    where the second integral is the integral of the scalar function 
+    $F \cdot N$ on $B$ (as in Definition~\ref{defn:4.2}).
+\end{defn}\vspace{-0.25cm}
+
+We compute a few examples. 
+\begin{enumerate}[(1)]
+    \item {\bf (Sphere.)} Let $S$ be the sphere $x^2 + y^2 + z^2 = a^2$ in $\R^3$, where $a > 0$. 
+    This is the zero set of the function $G(x, y, z) = x^2 + y^2 + z^2 - a^2$ on 
+    $\R^3$ whose gradient $\nabla G(x, y, z) = (2x, 2y, 2z)$ is nowhere vanishing 
+    on $S$, giving us the unit normal vector field 
+    \[ N(x, y, z) = \frac{\nabla G(x, y, z)}{\|\nabla G(x, y, z)\|} 
+    = \frac{1}{\sqrt{x^2+y^2+z^2}}(x, y, z) = \frac1a(x, y, z) \] 
+    since $x^2 + y^2 + z^2 = a^2$ on $S$. Consider the smooth vector field 
+    $F(x, y, z) = (-y, x, 1)$ on $\R^3$. We will compute $\int_S F\cdot\dVol$. 
+    In this case, we have 
+    \[ F \cdot N = (-y, x, 1) \cdot \frac1a(x, y, z) = \frac1a(-yx + xy + z) 
+    = \frac1az. \] 
+    Therefore, we need to compute 
+    \[ \int_S F \cdot \dVol = \int_S (F \cdot N)\dd A = \int_S \frac1az \dd A. \] 
+    Now, we need to parametrize the sphere. Using the spherical coordinates 
+    \[ \sigma(\theta, \varphi) = (a\cos\theta\sin\varphi, a\sin\theta\sin\varphi, a\cos\varphi) \] 
+    with $(\theta, \varphi) \in U = (0, 2\pi) \times (0, \pi)$, we obtain 
+    $\|\sigma_\theta \times \sigma_\varphi\| = a^2 \sin\varphi > 0$, so 
+    \begin{align*}
+        \int_S \frac1az\dd A 
+        &= \int_U \frac1a(a\cos\varphi)\|\sigma_\theta \times \sigma_\varphi\|\dd\theta\dd\varphi \\ 
+        &= \int_0^\pi \int_0^{2\pi} a^2 \cos\varphi \sin\varphi \dd\theta\dd\varphi \\ 
+        &= 2\pi a^2 \int_0^\pi \sin\varphi \cos\varphi \dd\varphi \\ 
+        &= 2\pi a^2 \left[ \frac12 \sin^2\varphi \right]_0^\pi = \pi a^2(0 - 0) = 0. 
+    \end{align*}
+
+    \item Suppose that $S$ is a surface in $\R^3$ and $\sigma : U 
+    \subset \R^2 \to V \subset S$ is a smooth coordinate chart. The 
+    standard unit normal $N_\sigma$ is then a smooth unit normal vector 
+    field on $V$. If $F$ is any smooth vector field on $V$, its integral 
+    on a bounded subset $B$ of $V$ with the unit vector field $N_\sigma$ is 
+    \begin{align*}
+        \int_B F \cdot \dVol 
+        &= \int_B (F \cdot N_\sigma)\dd A \\ 
+        &= \int_{\sigma^{-1}(B)} F(\sigma(u, v)) \cdot 
+        \left( \frac{\sigma_u \times \sigma_v}{\|\sigma_u \times \sigma_v\|} 
+        \right) \|\sigma_u \times \sigma_v\|\dd u \dd v \\ 
+        &= \int_{\sigma^{-1}(B)} F(\sigma(u, v)) \cdot (\sigma_u \times \sigma_v)\dd u \dd v.
+    \end{align*}
+    For example, consider the half-cylinder $C = \{(x, y, z) \in \R^3 : 
+    x^2+y^2=1,\,y\geq 0,\,2\leq z \leq 4\}$ in $\R^3$. Then $C$ is bounded 
+    and can be parametrized by 
+    \[ \sigma(u, v) = (\cos u, \sin u, v) \] 
+    where $(u, v) \in U = [0, \pi] \times [2, 4]$ and $\sigma_u \times \sigma_v 
+    = (\cos u, \sin u, 0)$. Let $F(x, y, z) = (xy, 2, z-1)$. Then 
+    \[ F(\sigma(u, v)) \cdot (\sigma_u \times \sigma_v) = 
+    (\cos u \sin u, 2, v-1) \cdot (\cos u, \sin u, 0) = (\cos u)^2 \sin^2 + 2\sin u. \] 
+    The integral of $F$ on $C$ with normal vector $N_\sigma$ is 
+    \begin{align*}
+        \int_C F \cdot \dVol 
+        &= \int_U F(\sigma(u, v)) \cdot (\sigma_u \times \sigma_v)\dd u\dd v \\ 
+        &= \int_2^4 \int_0^\pi [(\cos u)^2 \sin u + 2\sin u] \dd u \dd v \\ 
+        &= \int_2^4 \left[ -\frac{(\cos u)^3}{3} - 2\cos u \right]_0^\pi \dd v \\ 
+        &= \int_2^4 \left[ \left( \frac13 + 2 \right) - \left(-\frac13 - 2\right) \right] \dd v \\ 
+        &= \int_2^4 \frac{14}{3} \dd v = \frac{14}{3}(4-2) = \frac{28}{3}. 
+    \end{align*}
+
+\end{enumerate}
+
+On a hypersurface $M$ in $\R^n$, the tangent space $T_pM$ to $M$ at any point 
+$p \in M$ is an $(n-1)$-dimensional subspace of $T_p\R^n \simeq \R^n$. 
+Hence, there is only a $1$-dimensional subspace of normal directions to $T_pM$ 
+at $p$ in $T_p\R^n$ so that there are only two \emph{unit} normal vectors 
+to $M$ at $p$; one is minus the other. To be precise, if $N$ is a unit 
+normal vector to $M$ at $p$, then $\pm N$ are the only possible unit 
+normal vectors to $M$ at $p$. 
+
+An {\bf orientation} of the tangent space $T_pM$ is a choice of unit 
+normal vector (either $N$ or $-N$). Moreover, an {\bf orientation} on the 
+hypersurface $M$ is a choice of the smooth unit normal vector field $N$ on $M$. 
+For example, if $M$ is the zero set of a smooth scalar function $G : 
+V \subset \R^n \to \R$ with $\nabla G$ of maximal rank everywhere on an open 
+subset $V$ of $\R^n$, it admits two orientations, namely 
+\[ N(p) := \pm \frac{\nabla G(p)}{\|\nabla G(p)\|}, \] 
+where $p \in M$. Similarly, if $S$ is a surface in $\R^3$ and $\sigma : 
+U \subset \R^2 \to V \subset S$ is a smooth coordinate chart, then the 
+open set $V \subset S$ admits two possible orientations, namely $\pm N_\sigma$. 
+
+\begin{defn}{defn:4.8}
+    A hypersurface $M$ in $\R^n$ is called {\bf orientable} if it admits a 
+    smooth unit normal vector $N$. A choice of a smooth unit normal vector 
+    field $N$ on $M$ is called an {\bf orientation} of $M$. 
+\end{defn}\vspace{-0.25cm}
+
+We give some examples of orientable hypersurfaces. 
+\begin{enumerate}[(1)]
+    \item The zero set $M$ of a smooth scalar function $G : V \subset \R^n 
+    \to \R$ with $\nabla G$ of maximal rank everywhere on an open 
+    set $V$ of $\R^n$ is orientable. Its two orientations are 
+    $\pm\nabla G/\|\nabla G\|$. Since any hypersurface is locally 
+    the zero set of such a function, this means that hypersurfaces 
+    are always locally orientable. 
+
+    \item If $S$ is a surface in $\R^3$ and $\sigma : U \subset \R^2 \to V \subset S$ 
+    is a smooth coordinate chart, then the open set $V \subset \R^3$ is 
+    orientable and its orientations are $\pm N_\sigma$. Hence, any 
+    surface in $\R^3$ is orientable. 
+
+    \item Although every hypersurface is locally orientable, it might not be 
+    globally orientable. For example, the M\"obius strip is \emph{not} 
+    orientable because it does not admit a smooth unit normal vector field 
+    (see Assignment 5).
+\end{enumerate}
+
+{\bf Remark.} Integrals of vector fields on orientable hypersurfaces 
+are uniquely determined by the hypersurface only up to orientation. 
+Indeed, changing the orientation changes the sign of the integral, with 
+\[ \int_M (F \cdot (-N))\dVol = -\int_M (F \cdot N)\dVol\!. \] 
+Therefore, it is important to specify an orientation when computing the 
+integral of a vector field. 
+
+\subsection{Stokes' Theorem} \label{subsec:4.3}
+We end our presentation of integration on submanifolds with Stokes' Theorem, 
+which is a generalization of the Fundamental Theorem of Calculus. 
+First, we need the following definition. 
+
+\begin{defn}{defn:4.9}
+    Let $F : U \subset \R^n \to \R^n$ be a smooth vector field on an 
+    open subset $U$ of $\R^n$. The {\bf divergence of $F$} is the 
+    scalar function on $U$ defined by 
+    \[ \Div F := \frac{\partial F_1}{\partial x_1} + \cdots + \frac{\partial F_n}{\partial x_n}. \] 
+\end{defn}\vspace{-0.25cm}
+
+We now state Stokes' Theorem. 
+
+\begin{theo}[Stokes' Theorem]{theo:4.10}
+    Suppose that $\Omega \subset \R^n$ is a bounded $n$-dimensional submanifold 
+    of $\R^n$ and that its boundary $\partial\Omega$ is an orientable 
+    $(n-1)$-dimensional submanifold of $\R^n$ whose orientation is a 
+    smooth unit vector field $N$ on $\partial\Omega$ pointing outward. 
+    Moreover, let $F$ be a smooth vector field on $\Omega$. Then we have 
+    \[ \int_\Omega \Div F \dVol = \int_{\partial\Omega} F\cdot\dVol. \] 
+\end{theo}\vspace{-0.25cm}
+
+In other words, the integral of the scalar function $\Div F$ on $\Omega$ 
+is equal to the integral of the vector field $F$ on $\partial\Omega$ 
+with unit normal vector field pointing outward. Note that since $\Omega$ 
+is an $n$-dimensional submanifold of $\R^n$, it must be an open set 
+so that the integral 
+\[ \int_\Omega \Div F \dVol \] 
+is just standard integration on a region in $\R^n$. 
+
+{\bf Example.} Let $\Omega = \{(x, y, z) \in \R^3 : x^2 + y^2 + z^2 \leq 1\}$ be the 
+unit ball in $\R^3$. Its boundary is the unit sphere $\mathbb S^2 : x^2 + y^2 + z^2 = 1$, 
+which is orientable with possible orientations $N = \pm(x, y, z)$, where 
+$(x, y, z) \in \mathbb S^2$. To verify Stokes' Theorem on $\Omega$, we need 
+to pick the unit normal vector field that is pointing outwards from the 
+unit ball, namely $N = (x, y, z)$. Consider the vector field 
+$F(x, y, z) = (-y, x, 1 + 2z)$ on $\R^3$ with 
+\[ \Div F = \frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} 
++ \frac{\partial F_3}{\partial z} = 0 + 0 + 2 = 2. \] 
+For the left-hand side of Stokes' Theorem, we first see that
+\[ \int_\Omega \Div F \dVol = \int_\Omega 2\dVol = 2 \int_\Omega \dd x \dd y \dd z \] 
+since $\Omega$ is an open subset of $\R^3$. This integral corresponds to the volume of the unit ball, which is 
+\[ \int_\Omega \dd x \dd y \dd z = \frac{4\pi}3, \] 
+Therefore, we find that $\int_\Omega \Div F = 8\pi/3$. Now, 
+to compute the right-hand side, we observe that 
+\[ F \cdot N = (-y, x, 1+2z) \cdot (x, y, z) = -yx + xy + (1+2z)z = z + 2z^2. \] 
+Using the spherical coordinates 
+\[ \sigma(\theta, \varphi) = (\cos\theta\sin\varphi, \sin\theta\sin\varphi, \cos\varphi) \] 
+where $(\theta, \varphi) \in U = (0, 2\pi) \times (0, \pi)$, we have 
+\[ (F \cdot N)(\sigma(\theta, \varphi)) = \cos \varphi + 2(\cos \varphi)^2 \] 
+and $\|\sigma_\theta \times \sigma_\varphi\| = \sin \varphi > 0$. 
+Therefore, we obtain 
+\begin{align*}
+    \int_{\mathbb S^2} (F \cdot N)\dd A 
+    &= \int_U (\cos\varphi + 2(\cos\varphi)^2)\|\sigma_\theta \times \sigma_\varphi\|\dd\theta\dd\varphi \\ 
+    &= \int_0^\pi \int_0^{2\pi} (\cos\varphi + 2(\cos\varphi)^2) \sin\varphi \dd\theta \dd \varphi \\ 
+    &= 2\pi \int_0^\pi (\cos\varphi + 2(\cos\varphi)^2) \sin\varphi\dd\varphi \\ 
+    &= 2\pi \left[ -\frac12(\cos\varphi)^2 - \frac23(\cos\varphi)^3 \right]_0^\pi \\ 
+    &= 2\pi \left[ \left( -\frac12 + \frac23 \right) - \left( -\frac12 - \frac23 \right) \right]  
+    = \frac{8\pi}{3}.
+\end{align*}
+This is precisely equal to $\int_\Omega \Div F$, as we expected! 
+
+\subsubsection{Applications} \label{subsubsec:4.3.1}
+An important application of Stokes' Theorem is to simplify the computation 
+of integrals (when possible). 
+
+Integrating a vector field over a hypersurface that is the union of several 
+hypersurfaces can be quite complicated and time consuming. However, 
+if this hypersurface bounds a region in $\R^n$ that is easy to describe, it 
+may be better to use Stokes' Theorem to convert the integral of the 
+vector field into a scalar integral of its divergence. We give a few concrete 
+examples of this. 
+\begin{enumerate}[(1)]
+    \item Suppose we want to integrate the vector field $F(x, y, z) = 
+    (x^2y^2, 3z-1, e^x\cos y)$ for $(x, y, z) \in \R^3$ over the boundary 
+    $\partial\Omega$ of the rectangular box $\Omega = [-1, 2] \times [4, 5] 
+    \times [0, 6]$, with outward unit normal vector field $N$. While the 
+    vector field $F$ is smooth and has component functions that are 
+    easy to integrate over the boundary $\partial\Omega$ of $\Omega$ 
+    which is made up of $2$ horizontal faces and $4$ vertical faces, 
+    we would need to compute $6$ integrals in this way! Instead, we can use 
+    Stokes' Theorem, which tells us that 
+    \[ \int_{\partial\Omega} F\cdot\dVol = \int_\Omega \Div F\dVol 
+    = \int_\Omega \Div F \dd x \dd y \dd z \] 
+    since $N$ is pointing outward. By setting $F(x, y, z) = 
+    (A(x, y, z), B(x, y, z), C(x, y, z))$, we see that 
+    \[ \Div F = \frac{\partial A}{\partial x} + \frac{\partial B}{\partial y} 
+    + \frac{\partial C}{\partial z} = 2xy^2 + 0 + 0 = 2xy^2. \] 
+    It follows that 
+    \begin{align*}
+        \int_\Omega \Div F \dVol 
+        &= \int_0^6 \int_4^5 \int_{-1}^2 2xy^2 \dd x \dd y \dd z \\ 
+        &= \int_0^6 \int_4^5 \Big[ x^2 y^2 ]_{-1}^2 \dd y \dd z \\ 
+        &= 3 \int_0^6 \int_4^5 y^2 \dd y \dd z \\ 
+        &= 3 \int_0^6 \left[ \frac{y^3}{3} \right]_4^5 \dd z \\ 
+        &= \int_0^6 (5^3 - 4^3)\dd z = 6 \cdot 61 = 366,
+    \end{align*}
+    and therefore $\int_{\partial\Omega} F \cdot \dVol = 366$. 
+
+    \item Consider the vector field 
+    \[ F(x, y, z) = \left( \frac{x^3}{3} + y, \frac{y^3}{3} - \sin(xz), z - x - y \right) \] 
+    for $(x, y, z) \in \R^3$ over the boundary $\partial\Omega$ of the solid cylinder 
+    \[ \Omega = \{(x, y, z) \in \R^3 : x^2 + y^2 \leq 1,\, 0 \leq z \leq 2\} \] 
+    with outward unit normal vector field $N$. The boundary of $\Omega$ 
+    is made up of two discs of radius $1$ in the horizontal planes $z = 0$ and 
+    $z = 2$, as well as the part of the cylinder $x^2 + y^2 = 1$ for which 
+    $0 \leq z \leq 2$. Therefore, computing the integral of $F$ over 
+    $\partial\Omega$ would require $3$ parametrizations. Moreover, the integral 
+    of $F$ would be quite messy to compute given the $\sin(xz)$ in the second 
+    component. Instead, we use Stokes' Theorem, which tells us that 
+    \[ \int_{\partial\Omega} F \cdot \dVol = \int_\Omega \Div F \dVol
+    = \int_\Omega \Div F \dd x \dd y \dd z \]
+    since $N$ is pointing outward. Again, we set $F(x, y, z) = 
+    (A(x, y, z), B(x, y, z), C(x, y, z))$ to get 
+    \[ \Div F = \frac{\partial A}{\partial x} + \frac{\partial B}{\partial y} 
+    + \frac{\partial C}{\partial z} = x^2 + y^2 + 1. \]
+    Since $\Omega$ is a solid cylinder, we will use cylindrical coordinates 
+    so that $x = r\cos\theta$, $y = r\sin\theta$, and $z = z$ for 
+    $0 \leq r \leq 1$, $0 \leq \theta \leq 2\pi$, and $0 \leq z \leq 2$. 
+    This gives $x^2 + y^2 + 1 = r^2 + 1$ and ${\rm d}x\dd y \dd z = 
+    r\dd r \dd\theta \dd z$, so 
+    \begin{align*}
+        \int_\Omega \Div F \dVol 
+        &= \int_0^2 \int_0^{2\pi} \int_0^1 (r^2 + 1)r \dd r \dd \theta \dd z \\ 
+        &= \int_0^2 \int_0^{2\pi} \left[ \frac14r^4 + \frac12r^2 \right]_0^1 \dd\theta \dd z \\ 
+        &= \frac34 \int_0^2 \int_0^{2\pi} \dd\theta \dd z = \frac34 \cdot 4\pi = 3\pi. 
+    \end{align*}
+    We conclude that $\int_{\partial\Omega} F \cdot \dVol = 3\pi$. 
+\end{enumerate}
+
+Stokes' Theorem can also be used to relate an integral over a region to 
+an integral over its boundary. This is the case in the proof of the 
+Gauss-Bonnet Theorem.
