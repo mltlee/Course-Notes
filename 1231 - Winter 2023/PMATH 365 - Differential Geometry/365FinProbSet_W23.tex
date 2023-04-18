@@ -1,0 +1,1438 @@
+\documentclass{article}
+\usepackage{amssymb, amsmath, hyperref, amsthm}
+\usepackage{graphicx}
+\usepackage{anysize}
+\usepackage{xcolor}
+\usepackage{enumerate}
+\marginsize{1in}{1in}{1in}{1in}
+
+\DeclareMathOperator{\R}{\mathbb{R}}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\spanning}{span}
+\DeclareMathOperator{\Jac}{Jac}
+
+\newenvironment{solution}{%
+	\color{blue} 
+	\setlength\parindent{0pt}\par\medskip\textbf{Solution.}}
+	%{%
+	%\hfill\tiny$\blacksquare$\par\medskip}
+
+\begin{document}
+	\thispagestyle{empty}
+	\begin{center}
+		{\bf PMATH 365: Suggested problems for the final}
+	\end{center}
+	
+\noindent
+To prepare for the final exam, I recommend reviewing Quizzes 1-10. I also recommend going through the following list of questions.
+
+\bigskip
+
+\noindent
+{\bf A. Differentiable maps, immersions, embeddings and submanifolds.}
+
+\begin{enumerate}	
+
+\item 
+Define the following:
+\begin{enumerate}
+\item
+A $k$-dimensional topological submanifold of $\R^n$. 
+
+\begin{solution}
+	A set $M \subset \R^n$ such that for all $p \in M$, there exists 
+	an open neighbourhood $V$ of $p$, an open set $U \subset \R^k$, and a 
+	homeomorphism $\alpha : U \subset \R^k \to V \subset M \subset \R^n$. 
+\end{solution}
+
+\item
+An immersion of class $C^r$, $r \geq 1$.
+
+\begin{solution}
+	A map $\alpha : U \subset \R^k \to \R^n$ such that $\alpha$ is of 
+	class $C^r$ and $D\alpha$ has maximal rank $k$ everywhere on $U$.
+\end{solution}
+
+\item
+An embedding of class $C^r$, $r \geq 1$.
+
+\begin{solution}
+	An immersion that is homeomorphic onto its image. 
+\end{solution}
+
+\item
+A $k$-dimensional submanifold of $\R^n$ of class $C^r$, $r \geq 1$. 
+
+\begin{solution}
+	A set $M \subset \R^n$ such that for all $p \in M$, there exists an 
+	open neighbourhood $V$ of $p$, an open set $U \subset \R^k$, and 
+	a homeomorphism $\alpha : U \subset \R^k \to V \subset M \subset \R^n$ 
+	satisfying the following properties:
+	\begin{enumerate}[(i)]
+		\item $\alpha$ is of class $C^r$; 
+		\item $D\alpha(x)$ has rank $k$ for all $x \in U$. 
+	\end{enumerate}
+\end{solution}
+
+\item 
+A coordinate chart (of class $C^r$) of a $k$-dimensional submanifold of $\R^n$ (of class $C^r$, $r \geq 1$).
+
+\begin{solution}
+	This is a homeomorphism as in (d).
+\end{solution}
+
+\item
+An atlas (of class $C^r$) of a $k$-dimensional submanifold of $\R^n$ (of class $C^r$, $r \geq 1$).
+
+\begin{solution}
+	A set of coordinate charts $\{\alpha_i : U_i \subset \R^k \to V_i \subset M 
+	\subset \R^n\}_{i\in I}$ of class $C^r$ for $M$ (where $I$ is some index set) such that 
+	$\bigcup_{i\in I} V_i = M$. 
+\end{solution} 
+
+\end{enumerate}
+
+
+\item
+What is the difference between an immersion and an embedding? Give an example of both. In particular, give an example of an immersion that is {\em not} an embedding.
+
+\begin{solution}
+	An embedding has the requirement that it is homeomorphic onto 
+	its image. The canonical immersion is the inclusion map $\iota 
+	: \R^k \to \R^n$ defined by $(x_1, \dots, x_k) \mapsto 
+	(x_1, \dots, x_k, 0, \dots, 0)$. This is an immersion of class $C^\infty$
+	since $\iota$ is smooth with 
+	\[ D\iota = \left[ \begin{array}{ccc}
+		1 & \cdots & 0 \\ 
+		\vdots & \ddots & \vdots \\ 
+		0 & \cdots & 1 \\ \hline 
+		0 & \cdots & 0 \\ 
+		\vdots & \ddots & \vdots \\ 
+		0 & \cdots & 0 
+	\end{array} \right] \] 
+	so that $D\iota$ has rank $k$ everywhere. It is also an embedding 
+	as it is homeomorphic onto its image with inverse 
+	$\iota^{-1} : \iota(\R^k) \subset \R^n \to \R^k$ given by 
+	$(x_1, \dots, x_k, 0, \dots, 0) \mapsto (x_1, \dots, x_k)$. 
+
+	For an example of an immersion that is not an embedding, consider the 
+	parametrization $\alpha(t) = (t^2-1, t(t^2-1))$ of the $\alpha$-curve, 
+	where $t \in \R$. We see that $\alpha$ is smooth with derivative matrix 
+	$D\alpha(t) = (2t, 3t^2-1) \neq (0, 0)$ for all $t \in \R$, so 
+	$\alpha$ is an immersion of class $C^\infty$. However, it is not 
+	homeomorphic onto its image since it is not injective. Indeed, we have 
+	$\alpha(1) = \alpha(-1) = (0, 0)$. 
+\end{solution}
+
+\item
+Give an example of a subset of $\R^n$ that is {\em not} a topological submanifold of $\R^n$. Explain!
+
+\begin{solution}
+	We again consider the $\alpha$-curve $C = \{(x, y) \in \R^2 : y^2 = x^2(x+1)\} \subset \R^2$, 
+	which can be parametrized by the map $\alpha : \R \to C \subset \R^2$ 
+	given by $t \mapsto (t^2-1, t(t^2-1))$. Note that if we remove the 
+	points $t = \pm1$, we see that $\alpha$ has inverse 
+	\begin{align*} 
+		\alpha^{-1} : C \setminus \{(0, 0)\} &\to \R \setminus \{\pm1\} \\ 
+		(x, y) &\mapsto 1/x.
+	\end{align*}
+	That is, $C$ is a $1$-dimensional topological submanifold of $\R^2$ 
+	away from the point $(0, 0)$. 
+
+	Now, suppose that $C$ were a topological submanifold of $\R^2$. 
+	Our discussion above means that $C$ must be $1$-dimensional. Since 
+	$(0, 0) \in C$, there exists an open neighbourhood $V$ of $(0, 0)$, 
+	an open set $U \subset \R^1$, and a homeomorphism $\alpha : 
+	U \subset \R^1 \to V \subset C \subset \R^2$. Since $\alpha$ is a homeomorphism, 
+	there exists a unique point $t_0 \in U$ such that $\alpha(t_0) = (0, 0)$. 
+	Since $U$ is open, we can pick $\varepsilon > 0$ such that $B_\varepsilon(t_0) = 
+	(t_0-\varepsilon, t_0+\varepsilon) \subset U$. Write $U' = B_\varepsilon(t_0)$ 
+	and let $V' = \alpha(U')$ so that $\alpha|_{U'} : U' \to V'$ is also a 
+	homeomorphism. 
+	
+	Observe that $V' \setminus \{(0, 0)\}$ consists of 
+	three or four connected components depending on how large $V'$ is: one on the bottom 
+	right quadrant, one on the top right quadrant, and one or two on the left 
+	of the $y$-axis. On the other hand, $U' \setminus \{t_0\}$ has two components, 
+	which is a contradiction since homeomorphisms preserve the number of 
+	connected components. Therefore, $C$ is not a topological submanifold of $\R^2$.
+\end{solution}
+
+\item
+Give an example of a subset of $\R^n$ that is a topological submanifold but {\em not} a submanifold of class $C^r$ for any $r \geq 1$. Explain!
+
+\begin{solution}
+	Let $M = \{(x, |x|) : x \in \R\} \subset \R^2$, which is the 
+	graph of $f(x) = |x|$ over $x \in \R$. In particular, since $f(x) 
+	= |x|$ is continuous, it follows that $M$ is a $1$-dimensional topological 
+	submanifold of $\R^2$. Note that $f$ is smooth away from $x = 0$, 
+	so $M \setminus \{(0, 0)\}$ is a $1$-dimensional submanifold of class $C^\infty$. 
+
+	However, we claim that $M$ is not a submanifold of class $C^r$ for some $r \geq 1$. 
+	Suppose otherwise, so at the point $(0, 0) \in M$, there exists 
+	an open neighbourhood $V$ of $(0, 0)$, an open set $U \subset \R$, 
+	and a homeomorphism $\alpha : U \subset \R \to V \subset M \subset \R^2$ 
+	such that $\alpha$ is of class $C^r$ and $D\alpha$ has maximal 
+	rank $1$ everywhere on $U$. In particular, this means that 
+	$D\alpha(t) = \alpha'(t) \neq (0, 0)$ for all $t \in U$. But 
+	$\alpha'(t)$ is tangent to $M$ at $\alpha(t)$, which gives two possibilities: 
+	\begin{itemize}
+		\item If $\alpha(t)$ is on the line $y = x$, then $\alpha'(t)$ is a 
+		direction vector of $y = x$. This means that for some $c : I 
+		\subset \R \to \R$, we have 
+		\[ \alpha'(t) = c(t) \begin{pmatrix}
+			1 \\ 1 
+		\end{pmatrix}. \] 
+		Since $\alpha$ is of class $C^r$ where $r \geq 1$, this means  
+		$\alpha'(t)$ is continuous, so $c : I \to \R$ is continuous.
+		\item If $\alpha(t)$ is on the line $y = -x$, then $\alpha'(t)$ 
+		is a direction vector of $y = -x$. Then for some $d : I' \subset \R \to \R$, 
+		we have 
+		\[ \alpha'(t) = d(t) \begin{pmatrix}
+			1 \\ - 1 
+		\end{pmatrix}. \] 
+		The same argument shows that $d : I' \to \R$ is continuous.
+	\end{itemize}
+	But $\alpha$ is a bijection, so $(0, 0) = \alpha(t_0)$ for some $t_0 \in U$. 
+	By the continuity of $\alpha'(t)$, we obtain 
+	\[ \lim_{t\to t_0^-} \alpha'(t) = \lim_{t\to t_0^+} \alpha'(t). \] 
+	Without loss of generality, suppose that $\alpha(t)$ is moving along $M$ 
+	from left to right. (We can parametrize in the other direction otherwise.) 
+	Then if $t < t_0$, then we are in the second case above, whereas if 
+	$t > t_0$, then we are in the first case. This implies that 
+	\[ \lim_{t\to t_0^-} \alpha'(t) = \lim_{t\to t_0^-} d(t) \begin{pmatrix}
+		1 \\ -1 
+	\end{pmatrix} = \lim_{t\to t_0^+} c(t) \begin{pmatrix}
+		1 \\ 1 
+	\end{pmatrix} = \lim_{t\to t_0^+} \alpha'(t). \] 
+	But these vectors are not parallel to each other, so 
+	$\lim_{t\to t_0^-} d(t) = \lim_{t\to t_0^+} c(t) = 0$. This implies that 
+	$\alpha'(t_0) = (0, 0)$, which contradicts the fact that $D\alpha(t) 
+	= \alpha'(t)$ has rank $1$ for all $t \in U$. 
+\end{solution}
+
+\item
+True of false? 
+\begin{enumerate}
+\item Every topological submanifold of $\R^n$ is also a submanifold of $\R^n$ of class $C^r$ for some $r \geq 1$.
+
+\begin{solution}
+	False, take the graph of $f(x) = |x|$.
+\end{solution}
+
+\item Every submanifold of $\R^n$ of class $C^r$ for some $r \geq 1$ is also a topological submanifold of $\R^n$.
+
+\begin{solution}
+	True. 
+\end{solution}
+
+\item A subset of $\R^n$ that is not a topological submanifold may be a submanifold of class $C^r$ for some $r \geq 1$. 
+
+\begin{solution}
+	False; consider the contrapositive of (b). 
+\end{solution}
+
+\item Every topological submanifold of $\R^n$ admits an atlas of class $C^r$ for some $r \geq 1$.
+
+\begin{solution}
+	False. If a topological submanifold of $\R^n$ admits an atlas of class 
+	$C^r$ for some $r \geq 1$, then it is a submanifold of $\R^n$ of 
+	class $C^r$, but this is not true of all topological submanifolds by (a). 
+\end{solution}
+
+\item Every coordinate chart of class $C^r$, $r \geq 1$, of a submanifold is a homeomorphism.
+
+\begin{solution}
+	True. 
+\end{solution}
+
+\item Every coordinate chart of class $C^r$, $r \geq 1$, of a submanifold is an embedding.
+
+\begin{solution}
+	True. 
+\end{solution}
+
+\item Let $\alpha: U \subset \R^k \rightarrow V \subset M \subset \R^n$ be a coordinate chart of class $C^r$, $r \geq 1$, of a $k$-dimensional submanifold $M$ of $\R^n$. Then, $\alpha^{-1}: V \subset \R^n \rightarrow U \subset \R^k$ is also of class $C^r$.
+
+\begin{solution}
+	True. 
+\end{solution}
+
+\item Every immersion is a homeomorphism.
+
+\begin{solution}
+	False; take the parametrization $\alpha(t) = (t^2-1, t(t^2-1))$ of the $\alpha$-curve. 
+\end{solution}
+
+\item Every embedding is a homeomorphism. 
+
+\begin{solution}
+	True. 
+\end{solution}
+
+\item Every submanifold of $\R^n$ is also an immersed submanifold of $\R^n$ of class $C^r$. 
+
+\begin{solution}
+	True; the coordinate charts are embeddings and therefore immersions.
+\end{solution}
+
+\item The $n$-sphere admits an atlas that consists of a single chart.
+
+\begin{solution}
+	False. The $n$-sphere is compact, and hence closed and bounded by Heine-Borel. 
+	The domain of a coordinate chart is an open set. 
+	Since homeomorphisms send closed sets to closed sets and the only 
+	open and closed set in $\R^{n+1}$ is $\varnothing$, it is impossible 
+	to use a single chart. 
+\end{solution}
+
+\item Every $k$-dimensional submanifold of $\R^n$  of class $C^r$ , $r \geq 1$, is locally the graph of a function $f: U \subset \R^r \rightarrow \R^{n-k}$ of class $C^r$.
+
+\begin{solution}
+	True.
+\end{solution}
+
+\item Every submanifold of $\R^n$  of class $C^r$ , $r \geq 1$, is locally the zero set a function $F: U \subset \R^n \rightarrow \R^{n-k}$ of class $C^r$ of maximal rank (that is, $DF$ has maximal rank $n-k$ on $F^{-1}(0)$).
+
+\begin{solution}
+	True. 
+\end{solution}
+
+\end{enumerate}
+
+\item 
+Determine whether the following sets are topological submanifolds of $\mathbb{R}^n$ or submanifolds of $\R^n$ of class $C^r$ for some $r \geq 1$. Justify your answers!
+
+\begin{enumerate}
+\item $\R^n$.
+
+\begin{solution}
+	$\R^n$ is a submanifold of $\R^n$ of class $C^\infty$ since we can 
+	choose the identity map on $\R^n$ as the coordinate chart.  
+\end{solution}
+
+\item An open subset $U$ of $\R^n$.
+
+\begin{solution}
+	This is a submanifold of $\R^n$ of class $C^\infty$; take the identity 
+	map on $U$ as the coordinate chart. 
+\end{solution}
+
+\item The graph of a continuous function $f: U \subset \R^k \rightarrow \R^{n-k}$.
+
+\begin{solution}
+	This is a $k$-dimensional topological submanifold of $\R^n$. If 
+	$M = \{(x, f(x)) \in \R^k \times \R^{n-k} : x \in U\}$ is the graph, 
+	then $\alpha : U \subset \R^k \to M \subset \R^n$ given by 
+	$x \mapsto (x, f(x))$ is a homeomorphism with inverse 
+	$(x_1, \dots, x_n) \mapsto (x_1, \dots, x_k)$. 
+\end{solution}
+
+\item The graph of a function $f: U \subset \R^k \rightarrow \R^{n-k}$ of class $C^r$ for some $r \geq 1$.
+
+\begin{solution}
+	This is a $k$-dimensional submanifold of class $C^r$. Take the same 
+	homeomorphism $\alpha : U \subset \R^k \to M \subset \R^n$ 
+	defined by $x \mapsto (x, f(x))$ as above. This is of class 
+	$C^r$ since $f$ is of class $C^r$ and $D\alpha(x)$ has 
+	rank $k$ for all $x \in U$ since the upper part of $D\alpha(x)$ 
+	is the $k \times k$ identity matrix.
+\end{solution}
+
+\item The zero set of a continuous function $F: U \subset \R^n \rightarrow \R^{n-k}$.
+
+\begin{solution}
+	This is not a topological submanifold of $\R^n$ in general. 
+	Consider the $\alpha$-curve, which is the zero set of 
+	$f(x, y) = y^2 - x^2(x+1)$ but is not a topological submanifold of $\R^2$.  
+\end{solution}
+
+\item The zero set of a function $F: U \subset \R^n \rightarrow \R^{n-k}$ of class $C^r$, $r \geq 1$, of maximal rank.
+
+\begin{solution}
+	This is a $k$-dimensional submanifold of class $C^r$; in fact, this is 
+	an equivalent characterization.
+\end{solution}
+
+\item
+$\{ (x,y) \in \mathbb{R}^2: y=x^2, -1 \leq x \leq 1 \} \cup \{ (x,y) \in \mathbb{R}^2: y=1, -1 \leq x \leq 1 \} \subset \mathbb{R}^2$.
+
+\begin{solution}
+	This is a $1$-dimensional topological submanifold of $\R^2$, but 
+	not a submanifold of $\R^2$ of class $C^r$ by considering the 
+	points $(\pm1, 1)$, which lie on both curves. 
+\end{solution}
+
+\item
+The $\alpha$-curve $\{ (x,y) \in \mathbb{R}^2: y^2 = x^2(x+1) \} \subset \mathbb{R}^2$. For a picture, \href{http://maabooks.blogspot.com/2012/03/algebraic-curves-questions-and.html}{see} (second picture).
+
+\begin{solution}
+	Not a topological submanifold of $\R^2$.
+\end{solution}
+
+\item
+$\{ (x,y) \in \mathbb{R}^2: xy = 1 \} \subset \mathbb{R}^2$.
+
+\begin{solution}
+	This is a smooth submanifold of $\R^2$ since it is the graph 
+	of the smooth function $f(x) = 1/x$ on $x \in \R \setminus \{0\}$. 
+\end{solution}
+
+\item
+The cylinder $\{ (x,y,z) \in \mathbb{R}^3: x^2+y^2 = 1 \} \subset \mathbb{R}^3$.
+
+\begin{solution}
+	Smooth submanifold of $\R^3$ since it is the graph of the smooth 
+	function $f(x) = x^2+y^2-1$ on $x \in \R$. 
+\end{solution}
+
+\item
+The cone $\{ (x,y,z) \in \mathbb{R}^3:  z = \sqrt{x^2+y^2} \} \subset \mathbb{R}^3$.
+
+\begin{solution}
+	Topological submanifold of $\R^3$ since it is the graph of the continuous 
+	function $f(x, y) = \sqrt{x^2+y^2}$, but not a submanifold of $\R^3$ 
+	of class $C^r$ for some $r \geq 1$ by considering the point $(0, 0, 0)$ 
+	in the cone. 
+\end{solution}
+
+\item
+The double cone $\{ (x,y,z) \in \mathbb{R}^3:  z^2 = x^2+y^2 \} \subset \mathbb{R}^3$.
+
+\begin{solution}
+	Not a topological submanifold of $\R^3$ by considering $(0, 0, 0)$.
+\end{solution}
+
+\item
+The twisted cubic $\{ (x,y,z) \in \mathbb{R}^3: y = x^2, z = x^3 \} \subset \mathbb{R}^3$.
+
+\begin{solution}
+	Smooth submanifold of $\R^3$, since it is the graph of $f(x) = (x^2, x^3)$.
+\end{solution}
+
+\item
+$\{ (x,y,z) \in \mathbb{R}^3: y=-1 \} \cup \{ (x,y,z) \in \mathbb{R}^3: x=y=0 \} \subset \mathbb{R}^3$.
+
+\begin{solution}
+	Neither; one of the sets is $2$-dimensional while the other is $1$-dimensional.
+\end{solution}
+
+\item
+The $n$-sphere $S^n = \{ (x_1,\dots,x_{n+1}) \in \mathbb{R}^{n+1}:  x_1^2+\cdots+x_{n+1}^2 = 1 \} \subset \mathbb{R}^{n+1}$.
+
+\begin{solution}
+	Smooth submanifold of $\R^{n+1}$ since it is the zero set of the function
+	$f(x_1, \dots, x_{n+1}) = x_1^2 + \cdots + x_{n+1}^2 - 1$. 
+\end{solution}
+
+\item
+The general linear group $GL(n,\R) = \{ A \in M_{n \times n}(\R) : \det A \neq 0 \} \subset M_{n \times n} = \R^{n^2}$. 
+
+\begin{solution}
+	Note that $\det$ is a smooth function as it is a polynomial 
+	of the matrix entries. Then $\R \setminus \{0\}$ is open, 
+	and therefore $\text{GL}(n, \R)$ being the preimage of 
+	$\det$ under $\R \setminus \{0\}$ is also open. Therefore, 
+	$\text{GL}(n, \R)$ is a smooth submanifold of $M_{n\times n}(\R)$.
+\end{solution}
+
+\item
+The special linear group $SL(2,\R) = \{ A \in M_{2 \times 2}(\R) : \det A = 1 \} \subset M_{2 \times 2} = \R^4$. 
+
+\begin{solution}
+	Note that $\det A = a_1 a_4 - a_2 a_3$ and so $\text{SL}(2, \R)$ 
+	is the zero set of the function $F(a_1, a_2, a_3, a_4) = 
+	a_1 a_4 - a_2 a_3 - 1$. Then $\text{SL}(2, \R)$ is a smooth 
+	submanifold of $\R^4$: we see that $F$ is smooth and 
+	for any $A \in \text{SL}(2, \R)$, we have 
+	\[ DF(A) = (a_4, -a_3, -a_2, a_1). \] 
+	Note that $A$ is not the zero matrix since $\det A = 1$, so 
+	$DF(A)$ has rank $1$ for all $A \in \text{SL}(2, \R)$.
+\end{solution}
+
+\end{enumerate}
+
+
+\item
+Construct a smooth atlas for the following smooth submanifolds.
+\begin{enumerate}
+\item $\R^n$.
+
+\begin{solution}
+	The identity map on $\R^n$. 
+\end{solution}
+
+\item An open subset $U$ of $\R^n$.
+
+\begin{solution}
+	The identity map on $U$. 
+\end{solution}
+
+\item
+The general linear group $GL(n,\R) = \{ A \in M_{n \times n}(\R) : \det A \neq 0 \} \subset M_{n \times n} = \R^{n^2}$. 
+
+\begin{solution}
+	The identity map on $\text{GL}(n, \R)$ since it is open.
+\end{solution}
+
+\item The graph of a function $F: U \subset \R^k \rightarrow \R^{n-k}$ of class $C^r$ for some $r \geq 1$.
+
+\begin{solution}
+	The map $U \subset \R^k \to \R^n$ defined by $x \mapsto (x, F(x))$.
+\end{solution}
+
+\item The cubic $\{ (x,y) \in \R^2 : x = y^3 \} \subset \R^2$.
+
+\begin{solution}
+	The map $\R \to \R^2$ defined by $x \mapsto (x, x^{1/3})$.
+\end{solution}
+
+\item The hyperbola $\{ (x,y) \in \R^2 : xy = 1 \} \subset \R^2$.
+
+\begin{solution}
+	The map $\R \setminus \{0\} \to \R^2$ defined by $x \mapsto 
+	(x, 1/x)$. 
+\end{solution}
+
+\item The unit circle $S^1 = \{ (x,y) \in \R^2: x^2+y^2=1 \} \subset \R^2$.
+
+\begin{solution}
+	The maps $\alpha_1 : (0, 2\pi) \subset \R \to S^1 \setminus \{(1, 0)\}$ 
+	and $\alpha_2 : (-\pi, \pi) \subset \R \to S^1 \setminus \{(-1, 0)\}$, 
+	both defined by $t \mapsto (\cos t, \sin t)$. 
+\end{solution}
+
+\item
+The twisted cubic $\{ (x,y,z) \in \mathbb{R}^3: y = x^2, z = x^3 \} \subset \mathbb{R}^3$.
+
+\begin{solution}
+	The map $t \mapsto (t, t^2, t^3)$.
+\end{solution}
+
+\item The plane $\{ (x,y,z) \in \R^3: x+y+z = 1 \} \subset \R^3$.
+
+\begin{solution}
+	This is the graph of the function $f(x, y) = 1-x-y$, so we can take 
+	the chart $(x, y) \mapsto (x, y, 1-x-y)$. 
+\end{solution}
+
+\item The paraboloid $\{ (x,y,z) \in \R^3: y = x^2+z^2+1 \} \subset \R^3$.
+
+\begin{solution}
+	This is the graph of the function $f(x, z) = x^2 + z^2 + 1$, 
+	so we can take the chart $(x, z) \mapsto (x, x^2 + z^2 + 1, z)$. 
+\end{solution}
+
+\item The open unit ball $\{ (x,y,z) \in \R^3: x^2+y^2+z^2 < 1 \} \subset \R^3$.
+
+\begin{solution}
+	Note that $B_1((0, 0, 0)) \subset \R^3$ is open, so we can take the identity map.
+\end{solution}
+\end{enumerate}
+
+\item
+One version of the {\em Invariance of Dimension Theorem} states that if $m>n$ and $U$ is an open subset of $\R^m$, then there exists no continuous injective mapping from $U$ to $\R^n$. Use this to prove the following:
+\begin{enumerate}
+\item $\R^m$ is homeomorphic to $\R^n$ if and only if $m=n$.
+
+\begin{solution}
+	We see that $m = n$ implies $\R^m = \R^n$, so there is 
+	nothing to prove. Conversely, suppose that 
+	$\R^m$ is homeomorphic to $\R^n$. Then there is a continuous injective mapping 
+	$f : \R^m \to \R^n$, so $m \leq n$ by the Invariance of Dimension Theorem. 
+	Similarly, we see that 
+	$f^{-1} : \R^n \to \R^m$ is a continuous injective mapping, so 
+	$n \leq m$ and hence $m = n$. 
+\end{solution}
+
+\item If $M \subset \R^n$ is a $k$-dimensional submanifold of $\R^n$, then $k \leq n$.
+
+\begin{solution}
+	Let $M \subset \R^n$ be a $k$-dimensional submanifold of $\R^n$. 
+	Then for all $p \in M$, there exists a neighbourhood $V$ of $p$, 
+	an open set $U \subset \R^k$, and a homeomorphism 
+	$\alpha : U \subset \R^k \to V \subset M \subset \R^n$. In particular, 
+	we have that $\alpha$ is a continuous injective mapping from 
+	$U$ to $\R^n$, so we must have $k \leq n$ by the Invariance of Dimension Theorem.
+\end{solution}
+
+\end{enumerate}
+\end{enumerate}
+
+\newpage 
+\noindent
+{\bf B. Velocity vectors, pushforwards, and tangents spaces.}
+
+\begin{enumerate}
+\item
+Define the following:
+\begin{enumerate}
+\item
+The velocity vector of a parametrised curve $\gamma: (\alpha,\beta) \rightarrow \R^n$ of class $C^r$, $r \geq 1$. 
+
+\begin{solution}
+	The velocity vector is $\gamma'(t)$.
+\end{solution}
+
+\item
+The tangent space $T_{\vec{x}}(\R^n)$ to $\R^n$ at $\vec{x} \in \R^n$.
+
+\begin{solution}
+	The tangent space $T_{\vec x}(\R^n)$ to $\R^n$ at $\vec{x} \in \R^n$ is 
+	\[ T_{\vec{x}}(\R^n) = \{(\vec x; \vec v) : \vec v \in \R^n\}. \] 
+\end{solution}
+\item
+The pushforward $\alpha_*$ of a map $\alpha: U \rightarrow \R^n$ of class $C^r$, $r \geq 1$, where $U$ is an open subset of $\R^k$.
+
+\begin{solution}
+	The pushward $\alpha_*$ of the map $\alpha : U \to \R^n$ is defined by
+	\begin{align*}
+		\alpha_* : T_{\vec x}\R^k &\to T_p\R^n \\ 
+		(\vec x; \vec v) &\mapsto (p; D\alpha(\vec x)\vec v), 
+	\end{align*} 
+	where $\vec x \in U$ and $p = \alpha(\vec x)$. 
+\end{solution}
+
+\item
+The tangent space of $T_pM$ to a $k$-submanifold of $\R^n$ of class $C^r$ at $p \in M$.
+
+\begin{solution}
+	Let $\alpha : U \subset \R^k \to V \subset M \subset \R^n$ be a coordinate chart about $p$. The tangent space of $M$ at $p$ is defined as 
+	\[ T_pM := \alpha_*(T_{x_0}\R^k) \subset T_p\R^n, \] 
+	where $x_0 \in U$ is the unique point such that $p = \alpha(x_0)$. 
+\end{solution}
+\end{enumerate}
+
+\item
+Prove that, for all $\vec{x} \in \R^n$,
+\[ T_{\vec{x}} \R^n = \{ (\vec{x};\vec{v}) : \mbox{ $\vec{v}$ is the velocity vector at $\vec{x}$ of a parametrised curve $\gamma$ passing through $\vec{x}$} \}.\]
+
+\begin{solution}
+	Let $\vec x \in \R^n$. For all $\vec v \in \R^n$, consider the 
+	parametrized curve $\gamma(t) = \vec x + t\vec v$, where $t \in \R$. 
+	Observe that $\gamma'(t) = \vec v$. In particular, at $t = 0$, we have 
+	$\gamma(0) = \vec x$ and $\gamma'(0) = \vec v$, so $\vec v$ is the 
+	velocity vector at $\vec x$.
+\end{solution}
+
+\item
+Let $M$ be a $k$-dimensional submanifold of $\R^n$ of class $C^r$, $r \geq 1$. Show that $\dim_{\R} T_pM = k$ for all $p \in M$.
+
+\begin{solution}
+	Let $p \in M$. Note that $T_pM = \alpha_*(T_{x_0}\R^k)$ where $x_0 \in U$ is the 
+	unique point such that $\alpha(x_0) = p$. We see that 
+	$D\alpha$ has rank $k$ everywhere, so the image of the map
+	\[ \alpha_*(x_0; \vec v) = (p; D\alpha(x_0)\vec v), \]
+	namely $T_pM$, must be of dimension $k$. 
+\end{solution}
+
+\item Compute the tangent space at the given point.
+\begin{enumerate}
+\item 
+$T_pU$ for any point $p$ in the open set $U \subset \R^n$.
+
+\begin{solution}
+	The identity map $\alpha : U \to U$ has $D\alpha(x) = I_{n\times n}$ 
+	for all $x \in U$. By definition, we have $T_pU = \alpha_*(T_p\R^n)$ 
+	for all $p \in U$ since $p$ is the unique point for which 
+	$\alpha(p) = p$. Then for all $(p; v) \in T_p\R^n$, we see that  
+	\[ \alpha_*(p; \vec v) = (p; D\alpha(p)\vec v) = (p; \vec v), \] 
+	which implies that $T_pU = T_p\R^n$. 
+\end{solution}
+\item The graph of a function $f : U \subset \R^k \rightarrow \R^{n-k}$ of class $C^r$, where $U$ is an open subset of $\R^k$. Take any $p \in M$.
+
+\begin{solution}
+	Consider the $C^r$ map $\alpha : U \subset \R^k \to \R^{n-k}$ given by 
+	$\vec x \mapsto (\vec x, f(\vec x))$. We have that 
+	\[ D\alpha(\vec x) = \left[ \begin{array}{c}
+		I_{k\times k} \\ \hline 
+		Df(\vec x)
+	\end{array} \right], \] 
+	where $Df(\vec x)$ is an $(n-k) \times k$ matrix for all $\vec x \in U$. Now, let $p \in M$ 
+	so that $p = \alpha(\vec x_0) = (\vec x_0, f(\vec x_0))$ for some $\vec x_0 \in U$. 
+	Then we find that 
+	\[ T_pM = \text{span}_{\R} \left\{ \left[ \begin{array}{c} 
+		\vec e_i \\ \hline \partial f(\vec x_0)/\partial x_i \end{array} \right] 
+		: i = 1, \dots, k \right\}, \] 
+	where $\vec e_1, \dots, \vec e_k$ is the standard basis for $\R^k$. 
+	In particular, these are the columns of $D\alpha(\vec x_0)$. 
+\end{solution}
+
+\item The zero set $M$ of a function $F : U \subset \R^n \rightarrow \R^{n-k}$ of class $C^r$, where $U$ is an open set in $\R^n$, such that $DF(p)$ has rank $n-k$ for all $p \in M$. Take any $p \in M$.
+
+\begin{solution}
+	Here, we use Problem 1 of Assignment 3. Let $M$ be a 
+	$k$-dimensional submanifold of $\R^n$ of class $C^r$ with $r \geq 1$ 
+	and let $p \in M$. Then $(p; \vec v)$ is a tangent vector to $M$ at $p$ 
+	if and only if there exists a parametrized curve $\gamma : (-\varepsilon, 
+	\varepsilon) \to \R^n$ of class $C^r$ whose image lies in $M$ 
+	and is such that $(p; \vec v) = (\gamma(0); \gamma'(0))$. 
+
+	We now show that $T_pM = \{(p; \vec v) \in M \times \R^n : DF(p)\vec v = 
+	\vec 0\} = \ker(DF(p))$. Let $(p; \vec v) \in T_pM$. Then 
+	there exists a curve $\gamma : (-\varepsilon, \varepsilon) \to \R^n$ 
+	of class $C^r$ on $M$ such that $(p; \vec v) = (\gamma(0); \gamma'(0))$. 
+	We have $F(\gamma(t)) = \vec 0$ for all $t \in (-\varepsilon, \varepsilon)$, 
+	so by the chain rule, we have 
+	\[ DF(p)\vec v = DF(\gamma(0))\gamma'(0) = \frac{\rm d}{{\rm d}t} F(\gamma(t)) 
+	\Big|_{t=0} = 0. \] 
+	Then $T_pM \subset \ker(DF(p))$. But $T_pM$ has dimension $k$. 
+	Since $DF(p)$ has rank $n-k$ for all $p \in M$, we see that 
+	$\ker(DF(p))$ is a $k$-dimensional subspace of $\R^n$. Since 
+	$T_pM$ is a subspace of $\ker(DF(p))$ with both of dimension $k$, 
+	this implies that they are equal, as desired. 
+\end{solution}
+
+\item The sphere $S^n$ in $\R^{n+1}$ at any point in $S^n$.
+
+\begin{solution}
+	Note that $S^n$ is the zero set of the function 
+	$F(x_1, \dots, x_{n+1}) = x_1^2 + \cdots + x_{n+1}^2 - 1$ 
+	with $DF(x_1, \dots, x_{n+1}) = (2x_1, \dots, 2x_{n+1})$. 
+	Let $\vec x = (x_1, \dots, x_{n+1}) \in S^1$. Then we have 
+	\begin{align*}
+		T_{\vec{x}}S^n &= \ker(DF(\vec x)) \\ 
+		&= \{\vec v \in \R^{n+1} : (2x_1, \dots, 2x_{n+1}) \cdot \vec v = 0\} \\ 
+		&= \{\vec v \in \R^{n+1} : x_1v_1 + \cdots + x_{n+1}v_{n+1} = 0\}. 
+	\end{align*}
+\end{solution}
+
+\item $T_I GL(n, \R)$ where $I$ is the identity $n \times n$ matrix.
+
+\begin{solution}
+	We recall that $\text{GL}(n, \R)$ is open in $M_{n\times n}(\R)$, 
+	so using (a), we have that 
+	\[ T_I \text{GL}(n, \R) = T_I M_{n\times n}(\R) \simeq M_{n\times n}(\R). \] 
+\end{solution}
+
+\item $T_ISL(2, \R)$ where $I$ is the identity $2 \times 2$ matrix.
+
+\begin{solution}
+	We see that $\text{SL}(2, \R)$ is the zero set of the map 
+	$F(a_1, a_2, a_3, a_4) = a_1a_4 - a_2a_3 - 1$. Then $DF(a_1, 
+	a_2, a_3, a_4) = (a_4, -a_3, -a_2, a_1)$
+	with $DF(I) = (1, 0, 0, 1)$. 
+	Applying (c) yields 
+	\begin{align*}
+		T_I \text{SL}(2, \R) 
+		&= \ker(DF(I)) \\ 
+		&= \{B \in M_{2\times 2}(\R) : (1, 0, 0, 1) \cdot (b_1, b_2, 
+		b_3, b_4) = 0\} \\ 
+		&= \{B \in M_{2\times 2}(\R) : b_1 + b_4 = 0\} \\ 
+		&= \{B \in M_{2\times 2}(\R) : \tr B = 0\}. 
+	\end{align*}
+\end{solution}
+\end{enumerate}
+
+\end{enumerate}
+
+\newpage 
+\noindent
+{\bf C. Curves.}
+
+\begin{enumerate}
+\item Let $\gamma: (\alpha,\beta) \rightarrow \R$ be a parametrised curve of class $C^r$, $r \geq 3$. Define the following:
+\begin{enumerate}
+\item The velocity, speed and acceleration of $\gamma$ at $t \in (\alpha,\beta)$.
+
+\begin{solution}
+	The velocity of $\gamma$ at $t \in (\alpha, \beta)$ is $\gamma'(t)$. 
+	The speed is $\|\gamma'(t)\|$ and the acceleration is $\gamma''(t)$. 
+\end{solution}
+
+\item The arclength of $\gamma$ starting that the point $\gamma(t_0)$ for any $t_0 \in (\alpha,\beta)$.
+
+\begin{solution}
+	The arclength of $\gamma$ starting at the point $\gamma(t_0)$ is 
+	\[ s(t) := \int_{t_0}^t \|\gamma'(t)\|\,{\rm d}t. \] 
+\end{solution}
+
+\item The curve $\gamma$ is regular.
+
+\begin{solution}
+	A curve $\gamma$ is regular if $\gamma'(t) \neq \vec0$ for all $t \in (\alpha, \beta)$.
+\end{solution}
+
+\item The curve $\gamma$ is unit-speed.
+
+\begin{solution}
+	A curve $\gamma$ is unit-speed if $\|\gamma'(t)\| = 1$ for all $t \in (\alpha, \beta)$.
+\end{solution}
+
+\item The curvature $\kappa(t)$ of $\gamma$ at $\gamma(t)$ for all $t \in (\alpha,\beta)$ (whether the parametrisation is unit-speed or just regular).
+
+\begin{solution}
+	When $\gamma$ is unit-speed, we have $\kappa(t) = \|\gamma''(t)\|$. 
+	If $\gamma$ is regular, we have 
+	\[ \kappa(t) = \frac{\|\gamma'(t) \times \gamma''(t)\|}{\|\gamma'(t)\|^3}. \] 
+\end{solution}
+
+\item The torsion $\tau(t)$ at points where $\kappa(t) > 0$ (whether the parametrisation is unit-speed or just regular).
+
+\begin{solution}
+	When $\gamma$ is unit-speed, we define $\tau : (\alpha, \beta) 
+	\to \R$ to be the scalar function such that $\frac{{\rm d}}{{\rm d}t} 
+	B(t) = -\tau(t)N(t)$. In the general case where $\gamma$ is regular, we have 
+	\[ \tau(t) = \frac{(\gamma'(t) \times \gamma''(t)) \cdot \gamma'''(t)}
+	{\|\gamma'(t) \times \gamma''(t)\|^2}. \] 
+\end{solution}
+
+\item The Frenet frame of $\gamma$ (whether the parametrisation is unit-speed or just regular).
+
+\begin{solution}
+	We define the Frenet frame of $\gamma$ to be $\{T, N, B\}$, where 
+	$T$ is the unit tangent vector, $N$ is the principal unit normal, 
+	and $B$ is the unit binormal. 
+	When $\gamma$ is unit-speed, we have $T(t) = \gamma'(t)$, 
+	$N(t) = \gamma''(t)/\kappa(t) = \gamma''(t)/\|\gamma''(t)\|$, 
+	and $B(t) = T(t) \times N(t)$. When $\gamma$ is regular, we have 
+	\begin{align*}
+		T(t) &= \frac{\gamma'(t)}{\|\gamma'(t)\|}, \\ 
+		B(t) &= \frac{\gamma'(t) \times \gamma''(t)}{\|\gamma'(t) \times \gamma''(t)\|}, \\ 
+		N(t) &= B(t) \times T(t). 
+	\end{align*}
+\end{solution}
+
+\item Frenet-Serret equations for unit-speed curves.
+
+\begin{solution}
+	The Frenet-Serret equations are $\frac{{\rm d}T}{{\rm d}s} 
+	= \kappa T$, $\frac{{\rm d}N}{{\rm d}s} = -\kappa T + \tau B$, and 
+	$\frac{{\rm d}B}{{\rm d}s} = -\tau N$. More compactly, they 
+	can be written as the matrix equation 
+	\[ \begin{bmatrix}
+		\frac{{\rm d}T}{{\rm d}s} \\[5pt] 
+		\frac{{\rm d}N}{{\rm d}s} \\[5pt]
+		\frac{{\rm d}B}{{\rm d}s}
+	\end{bmatrix} = \begin{bmatrix}
+		0 & \kappa & 0 \\ 
+		-\kappa & 0 & \tau \\ 
+		0 & -\tau & 0  
+	\end{bmatrix} \begin{bmatrix}
+		T \\ N \\ B 
+	\end{bmatrix}. \]
+\end{solution}
+ \end{enumerate}
+
+\item Let $u: (\alpha,\beta) \rightarrow \R^n, t \mapsto u(t)$, be a vector-valued function of class $C^r$, $r \geq 1$, such that $\| u(t) \| = c$ for all $t \in (\alpha,\beta)$, for some fixed $c \in \R^{>0}$. Show that $u(t) \cdot \dot{u}(t) = 0$ for all $t \in (\alpha,\beta)$. In particular, if $\gamma$ is a unit-speed curve, then $\gamma''(t)$ is either zero or perpendicular to $\gamma'(t)$ for all $t \in (\alpha,\beta)$. 
+
+\begin{solution}
+	Note that $u(t) \cdot u(t) = \|u(t)\|^2 = c^2$ for all $t \in (\alpha, \beta)$. 
+	Then 
+	\begin{align*}
+		0 = \frac{\rm d}{{\rm d}t} (u(t) \cdot u(t)) 
+		= u'(t) \cdot u(t) + u(t) \cdot u'(t) = 2u(t) \cdot u'(t), 
+	\end{align*}
+	and therefore $u(t) \cdot u'(t) = 0$ for all $t \in (\alpha, \beta)$. 
+	For a unit-speed curve $\gamma$, we can set $u(t) = \gamma'(t)$ so that 
+	$\gamma'(t) \cdot \gamma''(t) = 0$ for all $t \in (\alpha, \beta)$. 
+	This implies that $\gamma''(t)$ is either zero or perpendicular to 
+	$\gamma'(t)$ for all $t \in (\alpha, \beta)$. 
+\end{solution}
+
+\item Prove that any regular curve $\gamma: (\alpha,\beta) \rightarrow \R$ of class $C^r$, $r \geq 1$, can be reparametrised in terms of arclength.
+
+\begin{solution}
+	Note that the arclength function $s$ of $\gamma$ is smooth with 
+	$\frac{{\rm d}s}{{\rm d}t} = \|\gamma'(t)\| > 0$ for all $t 
+	\in (\alpha, \beta)$ since $\gamma$ is regular. Then $s$ is strictly 
+	increasing on $(\alpha, \beta)$ and its inverse is smooth by the 
+	Inverse Function Theorem. Then $s = s(t)$ and $t = t(s)$ (where 
+	$t = s^{-1}$) are both smooth on their domains, and one can 
+	parametrize $s$ in terms of arclength via 
+	\[ \gamma(t) = \gamma(t(s)) = \tilde\gamma(s), \] 
+	where we define $\tilde\gamma = \gamma \circ t$. 
+\end{solution}
+
+\item Compute the curvature and torsion of the circular helix $\gamma(t) = (4\cos t,4\sin t, 3t), t \in \R$.
+
+\begin{solution}
+	Note that $\gamma'(t) = (-4\sin t, 4\cos t, 3)$ with 
+	$\|\gamma'(t)\| = 5$, so $\gamma$ is regular but not unit-speed. 
+	Next, we have $\gamma''(t) = (-4\cos t, -4\sin t, 0)$ so that 
+	\[ \gamma'(t) \times \gamma''(t) = 
+	(-4\sin t, 4\cos t, 3) \times (-4\cos t, -4\sin t, 0) 
+	= (12\sin t, -12\cos t, 16). \] 
+	This gives us $\|\gamma'(t) \times \gamma''(t)\| = 20$, so the 
+	curvature of $\gamma$ at $\gamma(t)$ is 
+	\[ \kappa(t) = \frac{\|\gamma'(t) \times \gamma''(t)\|}{\|\gamma'(t)\|^3} 
+	= \frac{20}{5^3} = \frac{4}{25}. \] 
+	Next, we have $\gamma'''(t) = (4\sin t, -4\cos t, 0)$ so that 
+	\[ (\gamma'(t) \times \gamma''(t)) \cdot \gamma'''(t) 
+	= (12\sin t, -12\cos t, 16) \cdot (4\sin t, -4\cos t, 0) = 48. \] 
+	It follows that the torsion of $\gamma$ at $\gamma(t)$ is 
+	\[ \tau(t) = \frac{(\gamma'(t) \times \gamma''(t)) \cdot \gamma'''(t)}
+	{\|\gamma'(t) \times \gamma''(t)\|^2} = \frac{48}{20^2} = \frac{3}{25}. \] 
+\end{solution}
+
+\item Consider the following unit-speed curve $$\displaystyle \gamma(s) = 
+\left( \frac{1}{3}(1+s)^{3/2},\frac{1}{3}(1-s)^{3/2},\frac{s}{\sqrt{2}}\right), s\in (-1,1).$$
+Find the Frenet frame $\{ T,N,B \}$ and the compute the curvature and the torsion at a general point on the curve. 
+
+\begin{solution}
+	First, the unit tangent vector to $\gamma$ at $\gamma(s)$ is
+	\[ T(s) = \gamma'(s) = \left( \frac12(1+s)^{1/2}, -\frac12(1-s)^{1/2}, 
+	\frac{1}{\sqrt{2}} \right). \] 
+	Next, we see that 
+	\[ \gamma''(s) = \left( \frac14(1+s)^{-1/2}, \frac14(1-s)^{1/2}, 0 \right), \] 
+	so the curvature is 
+	\[ \kappa(s) = \|\gamma''(s)\| = \frac{1}{\sqrt{8(1-s^2)}} > 0. \] 
+	Then the principal unit normal is 
+	\[ N(s) = \frac{\gamma''(s)}{\kappa(s)} = \frac{1}{\sqrt{2}} 
+	\left( (1-s)^{1/2}, (1+s)^{1/2}, 0 \right). \] 
+	The unit binormal is then 
+	\[ B(s) = T(s) \times N(s) = \left( -\frac12(1+s)^{1/2}, 
+	\frac12(1-s)^{1/2}, \frac{1}{\sqrt{2}} \right). \] 
+	Note that 
+	\[ \frac{{\rm d}}{{\rm d}s} B(s) = 
+	\left( -\frac14(1+s)^{-1/2}, -\frac14(1+s)^{-1/2}, 0 \right) 
+	= -\gamma''(s) = -\kappa(s) N(s), \] 
+	which implies that the torsion is 
+	\[ \tau(s) = \kappa(s) = \frac{1}{\sqrt{8(1-s^2)}}. \] 
+\end{solution}
+
+\item
+Let $\gamma(t)$, $t \in (\alpha,\beta)$, be a smooth regular curve in $\mathbb{R}^3$. Prove that $\gamma$ parametrises a straight line if and only if $\kappa(t) = 0$ for all $t \in (\alpha,\beta)$. 
+
+\begin{solution}
+	Without loss of generality, we assume that $\gamma$ is parametrized 
+	using arclength so that it is unit-speed. 
+	Suppose that $\gamma(t) = \vec{x} + t\vec{v}$ is a straight line in $\R^3$. 
+	Then we have $\gamma'(t) = \vec{v}$ and $\gamma''(t) = \vec 0$ 
+	so that $\kappa(t) = \|\gamma''(t)\| = 0$ for all $t \in (\alpha, \beta)$. 
+	All of these steps are in fact reversible, so we are done. 
+\end{solution}
+
+\item Let $\gamma(t)$ be a smooth regular curve in $\mathbb{R}^3$. Prove that $\gamma'(t)$ and $\gamma''(t)$ are linearly dependent (that is, $\gamma''(t) = c(t)\gamma'(t)$ for some smooth function $c$) if and only if $\gamma(t)$ parametrises a straight line.
+
+\begin{solution}
+	Suppose that $\gamma''(t) = c(t)\gamma'(t)$
+	for some smooth scalar function $c$. Then 
+	$\gamma'(t) \times \gamma''(t) = \vec 0$ for all $t \in 
+	(\alpha, \beta)$ (since they are parallel), which implies that 
+	\[ \kappa(t) = \frac{\|\gamma'(t) \times \gamma''(t)\|}{\|\gamma'(t)\|^3} 
+	= \frac{0}{\|\gamma'(t)\|^3} = 0 \] 
+	for all $t \in (\alpha, \beta)$. Applying the previous problem, 
+	this means that $\gamma$ parametrizes a straight line. 
+	These steps are reversible and thus the converse holds.
+\end{solution}
+
+\item
+Let $\gamma(t)$, $t \in (\alpha,\beta)$, be a smooth regular curve in $\mathbb{R}^3$ such that $\kappa(t) > 0$ for all $t \in (\alpha,\beta)$. Prove that $\gamma(t)$ is a plane curve if and only if its torsion $\tau(t)$ is equal to 0 at every $t \in (\alpha,\beta)$. Moreover, if it is a plane curve, then it is contained in the plane passing through
+$\gamma(t_0)$ with normal vector $B(t_0)$ for any $t_0 \in (\alpha,\beta)$.
+
+\begin{solution}
+	$(\Rightarrow)$ Suppose that $\gamma(t)$ is a plane curve. Let 
+	$t_0 \in (\alpha, \beta)$. Note that $\gamma$ is a plane curve 
+	if and only if every point $\gamma(t)$ is contained in some fixed plane 
+	$\Pi$ in $\R^3$. Then $\gamma(t_0) \in \Pi$. If $\mathbf n_0$ is a 
+	unit normal to $\Pi$, then for any $t \in (\alpha, \beta)$, the 
+	vector going from $\gamma(t_0)$ to $\gamma(t)$ is parallel to $\Pi$ 
+	and thus perpendicular to $\mathbf n_0$. This implies that 
+	$\mathbf n_0 \cdot (\gamma(t) - \gamma(t_0)) = 0$, or equivalently 
+	$\mathbf n_0 \cdot \gamma(t) = \mathbf n_0 \cdot \gamma(t_0)$ for all 
+	$t \in (\alpha, \beta)$. The right-hand side is a constant, so we have 
+	\[ 0 = \frac{\rm d}{{\rm d}t} (\mathbf n_0 \cdot \gamma(t)) 
+	= \frac{{\rm d}}{{\rm d}t} (\mathbf n_0) \cdot \gamma(t) 
+	+ \mathbf n_0 \cdot \gamma'(t) = \mathbf n_0 \cdot T(t). \]
+	Similarly, we have $\mathbf n_0 \cdot \gamma''(t) = 0$ with 
+	$\gamma''(t) = \kappa(t) N(t)$ for all $t \in (\alpha, \beta)$, so 
+	\[ \mathbf n_0 \cdot N(t) = 0. \]
+	Then $\mathbf n_0 \perp T(t)$ and $\mathbf n_0 \perp N(t)$ implies that 
+	$\mathbf n_0 = \pm T(t) \times N(t) = \pm B(t)$. In particular, we have 
+	\[ \frac{{\rm d}B}{{\rm d}t}(t) = \vec 0 \] 
+	for all $t \in (\alpha, \beta)$, which implies that $\tau(t) = 0$ 
+	for all $t \in (\alpha, \beta)$ since $\frac{{\rm d}B}{{\rm d}t}(t) 
+	= -\tau(t)N(t)$ by the Frenet-Serret equations with $N(t) \neq \vec 0$ 
+	for all $t \in (\alpha, \beta)$. 
+
+	$(\Leftarrow)$ Suppose that $\tau(t) = 0$ for all $t \in (\alpha, \beta)$. 
+	Then $\frac{{\rm d}B}{{\rm d}t}(t) = \vec 0$ and hence $B(t) = 
+	\mathbf n_0$ for all $t \in (\alpha, \beta)$ for some fixed 
+	$\mathbf n_0 \in \R^3$. We have $T(t) \perp \mathbf n_0$ for all 
+	$t \in (\alpha, \beta)$, which implies that $T(t) \cdot \mathbf n_0 = 0$. 
+	But $T(t) = \gamma'(t)$, and the product rule gives 
+	\[ \frac{{\rm d}}{{\rm d}t} (\gamma(t) \cdot \mathbf n_0) 
+	= \gamma'(t) \cdot \mathbf n_0 + \gamma(t) \cdot \frac{\rm d}{{\rm d}t}
+	(\mathbf n_0) = T(t) \cdot \mathbf n_0 = 0 \] 
+	since $\frac{{\rm d}}{{\rm d}t}(\mathbf n_0) = \vec 0$ and 
+	$T(t) \cdot \mathbf n_0 = 0$. It follows that $\gamma(t) \cdot \mathbf n_0 
+	= c$ for some constant $c \in \R$. Fixing $t_0 \in (\alpha, \beta)$, 
+	we observe that 
+	\[ (\gamma(t) - \gamma(t_0)) \cdot \mathbf n_0 = \gamma(t) \cdot 
+	\mathbf n_0 - \gamma(t_0) \cdot \mathbf n_0 = c - c = 0 \] 
+	for all $t \in (\alpha, \beta)$. This means that $\gamma$ is 
+	contained in the plane passing through $\gamma(t_0)$ normal to 
+	$B(t_0) = \mathbf n_0$, and $\gamma$ is a plane curve. 
+\end{solution}
+
+\item
+Show that $\gamma(t) = (t,1+t^{-1},t^{-1}-t)$, $t>0$, is a plane curve and find the equation of the plane in which it lies. 
+
+\begin{solution}
+	By the previous problem, it is enough to show that $\tau(t) = 0$ for all 
+	$t > 0$. We have $\gamma'(t) = (1, -t^{-2}, -t^{-2} - 1)$,
+	$\gamma''(t) = 2t^{-3}(0, 1, 1)$, and $\gamma'''(t) = -6t^{-4}(0, 1, 1)$. 
+	This gives us $\gamma'(t) \times \gamma''(t) = 2t^{-3}(1, -1, 1)$ 
+	and $(\gamma'(t) \times \gamma''(t)) \cdot \gamma'''(t) 
+	= 0$, which implies that $\tau(t) = 0$ for all $t > 0$. Therefore, 
+	$\gamma$ is a plane curve. 
+
+	To determine the equation of the plane, we solve for $a, b, c, d \in \R$
+	such that 
+	\[ at + b(1+t^{-1}) + c(t^{-1} - t) = d. \] 
+	This gives us $(b-d) + (a-c)t + (b+c)t^{-1} = 0$, so 
+	we have $b = d$, $a = c$, and $b = -c$. Setting $c = 1$, 
+	we have that $a = 1$ and $b = d = -1$. Then $\gamma$ is 
+	contained in the plane $x - y + z = -1$. 
+
+	Alternatively, the unit binormal vector is 
+	\[ B(t) = \frac{\gamma'(t) \times \gamma''(t)}{\|\gamma'(t) \times \gamma''(t)\|}
+	= \frac{1}{\sqrt{3}}(1, -1, 1) \] 
+	for all $t \in (\alpha, \beta)$, which is a normal vector to the plane 
+	that $\gamma$ lies in. Since $\gamma(1) = (1, 2, 0)$ is a point on the curve 
+	and therefore the plane, we have that 
+	\[ (x-1, y-2, z) \cdot (1, -1, 1) = 0. \] 
+	This gives the same plane $x - y + z = -1$. 
+\end{solution}
+
+\item
+State the Fundamental Theorem of Space Curves.
+
+\begin{solution}
+	A rigid motion of $\R^3$ is a rotation followed by a translation. 
+	That is, a rigid motion of $\R^3$ is an affine map $M : \R^3 \to \R^3$ 
+	of the form $M(v) = Av + b$ where $A$ is an element of the 
+	special orthogonal group 
+	$\text{SO}(3) = \{C \in M_{3\times 3}(\R) : C^T C = I_{3\times 3},\, 
+	\det C = 1\}$. 
+
+	The Fundamental Theorem of Space Curves states that given two 
+	unit-speed curves $\gamma_1$ and $\gamma_2$ with the same curvature 
+	$\kappa(s)$ and the same torsion $\tau(s)$ for all $s \in (\alpha, \beta)$, 
+	there exists a rigid motion $M$ of $\R^3$ such that $\gamma_2(s) = M(\gamma_1(s))$
+	for all $s \in (\alpha, \beta)$. Moreover, if $k$ and $t$ are functions 
+	of class $C^3$ with $k > 0$ everywhere, then there exists a unit-speed curve 
+	in $\R^3$ whose curvature is $k$ and whose torsion is $t$. 
+\end{solution}
+
+\item
+Show that $\gamma(t)=(2+\sqrt{2}\cos t, 1 - \sin t, 3 + \sin t)$, $t \in \mathbb{R}$, is a circle. 
+
+\begin{solution}
+	By the Fundamental Theorem of Space Curves, every circle has 
+	constant (positive) curvature and zero torsion. We verify that 
+	this is true for $\gamma$. Note that $\gamma'(t) = 
+	(-\sqrt{2} \sin t, -\cos t, \cos t)$,
+	$\gamma''(t) = (-\sqrt{2}\cos t, \sin t, -\sin t)$, and 
+	$\gamma'''(t) = (\sqrt{2}\sin t, \cos t, -\cos t)$. 
+	We have that $\|\gamma'(t)\| = \sqrt{2}$ and 
+	$\gamma'(t) \times \gamma''(t) = (0, -\sqrt{2}, -\sqrt{2})$
+	so that $\|\gamma'(t) \times \gamma''(t)\| = 2$ and 
+	$(\gamma'(t) \times \gamma''(t)) \cdot \gamma'''(t) = 0$. 
+	This implies that the curvature is 
+	\[ \kappa(t) = \frac{\|\gamma'(t) \times \gamma''(t)\|}{\|\gamma'(t)\|^3} 
+	= \frac{2}{(\sqrt{2})^3} = \frac{1}{\sqrt{2}} > 0, \] 
+	which is constant, and the torsion is 
+	\[ \tau(t) = \frac{(\gamma'(t) \times \gamma''(t)) \times \gamma'''(t)}
+	{\|\gamma'(t) \times \gamma''(t)\|^2} = 0. \]
+\end{solution}
+
+\end{enumerate}
+
+\newpage 
+\noindent
+{\bf D. Surfaces.}
+
+\begin{enumerate}
+\item
+Let $S$ be a smooth surface in $\R^3$ and $\sigma: U \subset \R^2 \rightarrow V \subset S$ be a smooth coordinate chart. Define the following:
+\begin{enumerate}
+\item
+The standard unit normal, first and second fundamental forms of $\sigma$.
+
+\begin{solution}
+	Let $p_0 = \sigma(u_0, v_0)$ for some $(u_0, v_0) \in U$. 
+	The standard unit normal is
+	\[ N_\sigma(u_0, v_0) = \frac{\sigma_u(u_0, v_0) \times \sigma_v(u_0, v_0)}
+	{\|\sigma_u(u_0, v_0) \times \sigma_v(u_0, v_0)\|}. \] 
+	The first fundamental form of $\sigma$ is 
+	\[ {\cal F}_{\text{I}} = \begin{bmatrix}
+		\sigma_u \cdot \sigma_u & \sigma_u \cdot \sigma_v \\ 
+		\sigma_v \cdot \sigma_u & \sigma_v \cdot \sigma_v
+	\end{bmatrix}, \] 
+	and the second fundamental form of $\sigma$ is 
+	\[ {\cal F}_{\text{II}} = \begin{bmatrix}
+		\sigma_{uu} \cdot N_\sigma & \sigma_{uv} \cdot N_\sigma \\ 
+		\sigma_{vu} \cdot N_\sigma & \sigma_{vv} \cdot N_\sigma
+	\end{bmatrix}. \] 
+\end{solution}
+\item
+The principal, normal and geodesic curvatures of $\sigma$.
+
+\begin{solution}
+	The principal curvatures of $\sigma$ are the eigenvalues $\kappa_1$ 
+	and $\kappa_2$ of the shape operator ${\cal W} := {\cal F}_{\text{I}}^{-1} 
+	{\cal F}_{\text{II}}$. For a unit-speed curve $\gamma : (\alpha, \beta) 
+	\to V \subset S$ contained in the coordinate patch $\sigma$ and a 
+	point $p_0 = \gamma(t_0)$, the normal curvature is
+	\[ \kappa_n := \gamma''(t_0) \cdot N_\sigma, \] 
+	whereas the geodesic curvature is
+	\[ \kappa_g := \gamma''(t_0) \cdot (N_\sigma \times \gamma'(t_0)). \] 
+\end{solution}
+\item 
+The Gaussian and mean curvatures of $\sigma$.
+
+\begin{solution}
+	For the shape operator ${\cal W} = {\cal F}_{\text{I}}^{-1} 
+	{\cal F}_{\text{II}}$, the Gaussian curvature of $\sigma$ is 
+	$K := \det {\cal W}$ and the mean curvature of $\sigma$ is 
+	$H := \frac12 \tr{\cal W}$. 
+\end{solution}
+\item
+The geodesics of $\sigma$.
+
+\begin{solution}
+	We call a unit-speed curve $\gamma : (\alpha, \beta) \to V \subset S$ 
+	that is contained in the coordinate patch $\sigma$ a geodesic 
+	if $\kappa_g = 0$ everywhere. Equivalently, we have that 
+	$\gamma''(t) = \vec 0$ or $\gamma''(t) \parallel N_\sigma$ for all 
+	$t \in (\alpha, \beta)$. 
+\end{solution}
+
+\end{enumerate}
+
+\item
+Let $\sigma: U \subset \R^2 \rightarrow V \subset S$ and $\tilde{\sigma}: \tilde{U} \subset \R^2 \rightarrow \tilde{V} \subset S$ be smooth coordinate charts of a surface $S$ with $V \cap \tilde{V}$. Set $\Phi := \sigma^{-1} \circ \tilde{\sigma}: \tilde{\sigma}^{-1}(V \cap \tilde{V}) \rightarrow \sigma^{-1}(V \cap \tilde{V})$ so that $\tilde{\sigma} = \sigma \circ \Phi$. 
+\begin{enumerate}
+\item Show that $N_{\tilde{\sigma}} = \pm N_\sigma$, where $\pm$ is the sign of $\det(D \Phi)$.
+
+\begin{solution}
+	Note that $\Phi$ is a smooth diffeomorphism with components 
+	\[ (\tilde u, \tilde v) \mapsto (u(\tilde u, \tilde v), v(\tilde u, \tilde v)). \] 
+	By the chain rule, we have $D\tilde\sigma = D\sigma D\Phi$, or more explicitly 
+	\[ \left[ \begin{array}{c|c} 
+		\!\!\!\tilde\sigma_{\tilde u} & \tilde\sigma_{\tilde v}\!\!\!
+	\end{array} \right] = \left[ \begin{array}{c|c} 
+		\!\!\!\sigma_u & \sigma_v\!\!\!
+	\end{array} \right] D\Phi. \]
+	Here, $D\Phi$ is the change of basis matrix of $T_pS$. Note that 
+	\[ D\Phi = \begin{bmatrix}
+		\partial u/\partial\tilde u & \partial u/\partial\tilde v \\ 
+		\partial v/\partial\tilde u & \partial v/\partial\tilde v 
+	\end{bmatrix}. \] 
+	Moreover, we have 
+	\begin{align*}
+		\tilde\sigma_{\tilde u} &= \sigma_u \cdot \frac{\partial u}{\partial \tilde u} 
+		+ \sigma_v \cdot \frac{\partial v}{\partial\tilde u}, \\ 
+		\tilde\sigma_{\tilde v} &= \sigma_u \cdot \frac{\partial u}{\partial \tilde v} 
+		+ \sigma_v \cdot \frac{\partial v}{\partial\tilde v},
+	\end{align*}
+	which implies that 
+	\begin{align*}
+		\tilde\sigma_{\tilde u} \times \tilde\sigma_{\tilde v} 
+		&= \left( \sigma_u \cdot \frac{\partial u}{\partial \tilde u} 
+		+ \sigma_v \cdot \frac{\partial v}{\partial\tilde u} \right) 
+		\times \left( \sigma_u \cdot \frac{\partial u}{\partial \tilde v} 
+		+ \sigma_v \cdot \frac{\partial v}{\partial\tilde v} \right) \\ 
+		&= (\sigma_u \times \sigma_u) \left( \frac{\partial u}{\partial\tilde u} 
+		\frac{\partial v}{\partial\tilde v} \right) + (\sigma_u \times \sigma_v) 
+		\left( \frac{\partial u}{\partial\tilde u} \frac{\partial v}{\partial\tilde v}
+		- \frac{\partial v}{\partial\tilde u} \frac{\partial u}{\partial\tilde v} \right) 
+		+ (\sigma_v \times \sigma_v) \left( \frac{\partial v}{\partial\tilde u}
+		\frac{\partial v}{\partial\tilde v} \right) \\ 
+		&= \left( \frac{\partial u}{\partial\tilde u} \frac{\partial v}{\partial\tilde v}
+		- \frac{\partial v}{\partial\tilde u} \frac{\partial u}{\partial\tilde v} \right)
+		(\sigma_u \times \sigma_v) = (\det D\Phi)(\sigma_u \times \sigma_v), 
+	\end{align*}
+	where we used the fact that $\sigma_u \times \sigma_u = 
+	\sigma_v \times \sigma_v = \vec 0$. It follows that 
+	\[ N_{\tilde\sigma} = \frac{\tilde\sigma_{\tilde u} \times \tilde\sigma_{\tilde v}}
+	{\|\tilde\sigma_{\tilde u} \times \tilde\sigma_{\tilde v}\|} 
+	= \frac{\det D\Phi}{\lvert\det D\Phi\rvert} \frac{\sigma_u \times \sigma_v}
+	{\|\sigma_u \times \sigma_v\|} = \pm N_\sigma, \] 
+	where $\pm$ is the sign of $\det D\Phi$. 
+\end{solution}
+
+\item
+Recall that if $\mathcal{F}_I, \mathcal{F}_{II}$ and $\widetilde{\mathcal{F}}_I, \widetilde{\mathcal{F}}_{II}$ are the first and second fundamental forms of $\sigma$ and $\tilde{\sigma}$, respectively, then
+\[ \widetilde{\mathcal{F}}_I = (D \Phi)^T \mathcal{F}_I (D \Phi)\]
+and
+\[ \widetilde{\mathcal{F}}_{II} = \pm (D \Phi)^T \mathcal{F}_{II} (D \Phi)\]
+where $\pm$ is the sign of $\det(D \Phi)$.
+\begin{enumerate}
+\item
+Let $\mathcal{W}$ and $\tilde{\mathcal{W}}$ be the shape operators associated to $\sigma$ and $\tilde{\sigma}$ respectively. Show that $\tilde{\mathcal{W}} = \pm (D \Phi)^{-1}\mathcal{W} (D \Phi)$, where $\pm$ is the sign of $\det(D \Phi)$.
+
+\begin{solution}
+	Observe that 
+	\begin{align*}
+		\tilde{\cal W} = \tilde{\cal F}_{\text{I}}^{-1} \tilde{\cal F}_{\text{II}} 
+		&= \pm [(D\Phi)^T {\cal F}_{\text{I}} (D\Phi)]^{-1} [(D\Phi)^T {\cal F}_{\text{II}} (D\Phi)] \\ 
+		&= \pm (D\Phi)^{-1} {\cal F}_{\text{I}}^{-1} ((D\Phi)^T)^{-1} (D\Phi)^T {\cal F}_{\text{II}} (D\Phi) \\ 
+		&= \pm (D\Phi)^{-1} {\cal F}_{\text{I}}^{-1} {\cal F}_{\text{II}} (D\Phi) \\
+		&= \pm (D\Phi)^{-1} {\cal W} (D\Phi), 
+	\end{align*}
+	where $\pm$ is the sign of $\det D\Phi$. 
+\end{solution}
+
+\item
+Show that $\tilde{K} = K$ and $\tilde{H} = \pm H$, i.e., Gaussian curvature is invariant under reparametrisations, whereas mean curvature may change sign under reparametrisations.
+Moreover, show that the principal curvatures change as follows under reparametrisations: 
+$\widetilde{\kappa}_1 = \pm \kappa_1$ and $\widetilde{\kappa}_2 = \pm \kappa_2$.
+
+\begin{solution}
+	Using the previous part and noting that we are working 
+	with $2\times 2$ matrices, we have by the multiplicativity of 
+	determinant that 
+	\[ \tilde K = \det \tilde{\cal W} = 
+	(\pm1)^2 \det((D\Phi)^{-1} {\cal W} (D\Phi)) = \det{\cal W} = K. \] 
+	Similarly, we know that similar matrices have the same trace, so 
+	\[ \tilde H = \frac12\tr\tilde{\cal W} 
+	= \frac12 \tr(\pm (D\Phi)^{-1} {\cal W} (D\Phi)) 
+	= \pm \frac12 \tr{\cal W} = H. \] 
+	Next, we use the fact that similar matrices have the same eigenvalues. 
+	The principal curvatures are the eigenvalues of the shape operator, 
+	so $\kappa_1$ and $\kappa_2$ are the eigenvalues of ${\cal W}$ 
+	whereas $\tilde\kappa_1$ and $\tilde\kappa_2$ are the eigenvalues of 
+	$\tilde{\cal W}$. If $\tilde {\cal W} = (D\Phi)^{-1} {\cal W} (D\Phi)$, 
+	then $\tilde {\cal W}$ has the same eigenvalues as ${\cal W}$ 
+	so that (up to reordering) $\tilde\kappa_1 = \kappa_1$ and 
+	$\tilde\kappa_2 = \kappa_2$. If we had $\tilde{\cal W} 
+	= - (D\Phi)^{-1} {\cal W} (D\Phi)$, then this means that 
+	$\tilde{\cal W}$ and $-{\cal W}$ are similar and have the same 
+	eigenvalues. This implies that $\tilde\kappa_1 = -\kappa_1$ and 
+	$\tilde\kappa_2 = -\kappa_2$. 
+\end{solution}
+
+\end{enumerate}
+
+\item
+A smooth surface is called {\em flat} if its Gaussian curvature is everywhere zero. Use (b) to show that the notion of flat surface is independent of the atlas chosen.
+
+\begin{solution}
+	Consider the two coordinate charts $\sigma$ and $\tilde\sigma$ with $V \cap 
+	\tilde V \neq \varnothing$. By part (b), we know that $K = \tilde K$. 
+	Then the Gaussian curvature is independent of the choice of coordinate 
+	chart, and therefore the notion of flatness is independent of 
+	the choice of atlas.
+\end{solution}
+
+\item
+A smooth surface is called {\em minimal} if its mean curvature is everywhere zero. Use (b) to show that the notion of minimal surface is independent of the atlas chosen. 
+
+\begin{solution}
+	By part (b), we have $H = \tilde H$. In particular, if $H = 0$ everywhere, 
+	then $\tilde H = 0$ everywhere as well. This means that the notion of 
+	minimal surface is independent of the choice of atlas.
+\end{solution}
+
+\item
+Show that the Gaussian curvature of a minimal surface is $\leq 0$ everywhere.
+
+\begin{solution}
+	By part (d), the notion of minimal surface is independent of the choice of 
+	atlas. Therefore, take any atlas and let $\sigma$ be a coordinate chart 
+	in the atlas. 
+	Let $\kappa_1$ and $\kappa_2$ be the principal curvatures of $\sigma$. 
+	For a minimal surface, we have that $H = \frac12(\kappa_1 + \kappa_2) = 0$, 
+	which implies that $\kappa_1 = -\kappa_2$. This implies that 
+	$K = \kappa_1 \kappa_2 = -\kappa_1^2 \leq 0$. 
+\end{solution}
+
+\item
+Show that if a unit-speed curve on a smooth surface has zero normal {\em and} geodesic curvatures everywhere, it is part of a straight line.
+
+\begin{solution}
+	We know that $\kappa^2 = \kappa_n^2 + \kappa_g^2$ for a 
+	unit-speed curve, so if 
+	$\kappa_n = \kappa_g = 0$ everywhere, then $\kappa = 0$ everywhere.
+	By Problem C.6, the curve parametrizes a straight line.
+\end{solution}
+
+\end{enumerate}
+		
+\item
+Let $S$ be the graph of a smooth function $f: U\subset \R^2 \rightarrow \R$ with $U$ an open subset of $\R^2$. Show that at a critical point $(x_0,y_0) \in U$ of $f$, the Gaussian curvature of $S$ is equal to the determinant of the Hessian matrix $H(f)(x_0,y_0)$ of $f$ at $(x_0,y_0)$.
+
+\begin{solution}
+	Note that a coordinate chart for $S$ is $\sigma : U \subset \R^2 
+	\to S \subset \R^3$ defined by 
+	\[ (u, v) \mapsto (u, v, f(u, v)). \] 
+	We have that $\sigma_u = (1, 0, f_u)$ and 
+	$\sigma_v = (0, 1, f_v)$, so the first fundamental 
+	form of $\sigma$ is 
+	\[ {\cal F}_{\text{I}} = \begin{bmatrix}
+		1 + (f_u)^2 & f_u f_v \\ 
+		f_u f_v & 1 + (f_v)^2
+	\end{bmatrix}. \] 
+	Next, we see that $\sigma_u \times \sigma_v = (-f_u, -f_v, 1)$ 
+	and $\|\sigma_u \times \sigma_v\| = \sqrt{1 + (f_u)^2 + (f_v)^2}$, so 
+	\[ N_\sigma = \frac{1}{\sqrt{1+(f_u)^2+(f_v)^2}} (-f_u, -f_v, 1). \] 
+	Moreover, we have $\sigma_{uu} = (0, 0, f_{uu})$, $\sigma_{uv} 
+	= (0, 0, f_{uv})$ and $\sigma_{vv} = (0, 0, f_{vv})$ so that 
+	\[ {\cal F}_{\text{II}} = \frac{1}{\sqrt{1+(f_u)^2+(f_v)^2}} 
+	\begin{bmatrix}
+		f_{uu} & f_{uv} \\ 
+		f_{vu} & f_{vv}
+	\end{bmatrix} = \frac{1}{\sqrt{1+(f_u)^2+(f_v)^2}} H(f). \] 
+	At a critical point $(u_0, v_0) \in U$ of $f$, we have that 
+	\[ f_u(u_0, v_0) = f_v(u_0, v_0) = 0. \]
+	At such a point, we have ${\cal F}_{\text{I}} = I_{2\times 2}$ 
+	and ${\cal F}_{\text{II}} = H(f)$ so that the Gaussian curvature is 
+	\[ K = \det{\cal W} = \det H(f). \] 
+\end{solution}
+
+\item
+Let $S$ be the smooth surface given by $z=ax^2+by^2$, $a,b \in \mathbb{R}$. Show that:
+\begin{enumerate}
+\item Every point on $S$ is elliptic if and only if $ab > 0$, in which case $S$ is an elliptic paraboloid.
+		
+\item Every point on $S$ is hyperbolic if and only if $ab < 0$, in which case $S$ is a hyperbolic paraboloid (that is, a saddle surface).
+
+\item Every point on $S$ is parabolic if and only if $ab = 0$ and $a \neq 0$ or $b \neq 0$, in which case $S$ is a parabolic cylinder.
+
+\item Every point on $S$ is planar if and only if $a = b = 0$, in which case $S$ is the $xy$-plane ($z=0$).
+\end{enumerate}
+
+\item
+Classify all the points on the regular surface patch $\sigma(u,v) = (u,v,u^3+v^2), \ (u,v) \in \mathbb{R}^2$, as to being elliptic, hyperbolic, parabolic, or planar.
+
+\item
+Let $S$ be the circular cylinder $x^2+y^2=1$. Consider the atlas $\{ (S_i, \sigma_i)\}_{i=1}^2$ of $S$,
+where each $S_i$ is the image in $\mathbb{R}^3$ of the smooth coordinate charts
+\[ \sigma_i(u,v) = (\cos u, \sin u, v), \]
+with $(u,v) \in (0,2\pi) \times \mathbb{R}$ when $i=1$, 
+and $(u,v) \in (-\pi,\pi) \times \mathbb{R}$ when $i=2$.
+\begin{enumerate}
+\item
+Find the principal curvatures $\kappa_1, \kappa_2$ of $S$ at every point.
+
+\item
+Show that the normal curvature $\kappa_n$ of any unit-speed curve $\gamma$ on $S$ is such that
+\[ -1 \leq \kappa_n \leq 0.\]
+
+\item
+Is the cylinder $S$ a flat surface? a minimal surface? Justify your answer. (See problem 2 for a definition of {\em flat} and {\em minimal}.)
+\end{enumerate}
+
+\item
+Let $\gamma: (\alpha,\beta) \rightarrow \mathbb{R}^3$ be a smooth unit-speed curve whose curvature is everywhere non-zero, and is such that the map 
+\[ \sigma(v,s) = \gamma(s) + v\gamma'(s), s \in (\alpha,\beta), v > 0,\]
+is a homeomorphism.
+\begin{enumerate}
+\item
+Show that $\sigma$ is  a smooth embedding.
+
+\item
+Show that the smooth surface determined by $\sigma$ is flat. (See problem 2 for a definition of {\em flat}.)
+
+{\em Hint:} Start by showing that $L=M=0$ everywhere. Conclude that $K = 0$ everywhere.
+\end{enumerate}
+
+\item 
+Let $\gamma: (\alpha, \beta) \rightarrow \mathbb{R}^3$ be a smooth whose curvature is everywhere non-zero, and let $\{ T,N,B \}$
+be its Frenet frame. Suppose that the map
+\[ \sigma(v,s) = \gamma(s) + vB(s),\]
+$s \in (\alpha, \beta) , v \in (-\epsilon,\epsilon)$, is a homeomorphism for small enough $\epsilon > 0$. Let $S$ be image of $\sigma$ in $\mathbb{R}^3$.
+\begin{enumerate}
+\item Show that S is a smooth surface.
+\item Show that $\gamma$ is a geodesic of $\sigma$ and that every point on $\gamma$ is either hyperbolic or parabolic.
+\end{enumerate}
+
+
+\item
+\begin{enumerate}
+\item
+Let $\gamma$ be a unit-speed curve on a smooth surface $S$. Show that  $\gamma$ is a geodesic if and only if $\kappa_g = 0$.
+
+\item
+Prove or disprove (by giving a counterexample) the following statements:
+\begin{enumerate}
+
+
+\item
+If the unit-speed curve $\gamma$ is a plane curve, then $\kappa_g = \pm \kappa$.
+
+\item
+If the unit-speed curve $\gamma$ is a geodesic, then $\kappa_n = \pm \kappa$.
+
+\item
+Let $p$ and $q$ be two points on a smooth surface $S$, and let $\gamma$ be a geodesic joining $p$ and $q$. Then, $\gamma$ is the path of shortest length from $p$ to $q$.
+\end{enumerate}
+
+\item
+Give an example of an isometry which is not a translation, rotation, or reflection. 
+
+\item
+Describe all geodesics on a plane, a sphere and a cylinder. 
+\end{enumerate}
+\end{enumerate}
+
+
+\noindent
+{\bf E. Integration.}
+
+\begin{enumerate}
+\item 
+Let $M$ be a smooth $k$-dimensional submanifold of $\R^n$ and $\alpha: U \subset \R^k \rightarrow V \subset M$ be a smooth coordinate chart of $M$. Assume that $U$ is bounded.
+Define the following:
+\begin{enumerate}
+\item The first fundamental form of $\alpha$.
+\item The scalar integral of a smooth function $f$ on $U$.
+\item The line integral of a smooth vector field on a smooth curve.
+\item A hypersurface in $\R^n$.
+\item An orientation of a hypersurface in $\R^n$.
+\item The integral of a smooth vector field on a hypersurface in $\R^n$.
+
+\end{enumerate}
+
+\item
+Let $\gamma: (\alpha, \beta) \rightarrow \mathbb{R}^n$ be a smooth regular curve. Verify that the formula for the integral of a scalar function on $\gamma$ is equivalent to
+\[  \int_\gamma f \ ds = \int_\alpha^\beta f(\gamma(t))\| \gamma'(t) \| dt\] 
+for any smooth scalar function $f:(\alpha,\beta) \rightarrow \R$.
+
+\item
+Let $S$ be a surface in $\R^3$ and $\sigma: U \subset \R^2 \rightarrow V \subset S$ be a smooth coordinate chart with $V$ bounded. Show that the formulas for the integrals of a scalar function or a vector field on $V$ can be expressed in terms of $\sigma$ as:
+\begin{enumerate}
+\item
+$\int_V f \ dVol = \int_U f(\sigma(u,v))\| \sigma_u \times \sigma_v \| dudv$ for any smooth scalar function $f:V \rightarrow \R$.
+\item
+$\int_V F \cdot dVol = \int_U F(\sigma(u,v)) \cdot (\sigma_u \times \sigma_v ) dudv$ with respect to the orientation $N_\sigma$ on $V$.
+\end{enumerate}
+
+\item Prove that any smooth hypersurface $M$ in $\R^n$ is locally orientable. That is, for any point $p \in M$, there exists an open neighbourhood $V$ of $p$ in $M$ such that $V$ is an orientable hypersurface.
+
+\item Prove that if $M$ be a smooth bounded $n$-dimensional submanifold of $\R^n$,  then $\int_M f dVol$ is just the standard multiple integral $\int_M f(x_1,\dots,x_n)dx_1dx_2 \cdots dx_n$ for any smooth scalar function $f$ on $M$.
+
+\item
+		\begin{enumerate}
+		\item
+		Evaluate the line integral $\int_\gamma x^3yds$ along part of the line $\gamma(t) = (t,-t)$, $t \in [-1, 2]$, in $\mathbb{R}^2$.
+		
+		\item
+		Evaluate the line integral $\int_\gamma F \cdot dr$ of the vector field $F(x,y,z) = (yz,xz,xy)$ along part of the twisted cubic $\gamma(t) = (t,t^2,t^3)$, $t \in [0,1]$, in $\mathbb{R}^3$.
+		
+		\item
+		Evaluate the surface integral $\int_S 6xz dA$ where 
+		\[ S = \{ (x,y,z) \in \R^3:  -1 \leq x \leq 3, 0 \leq y \leq 4, z=1-x-y \} \] 
+		is the portion of the plane $x+y+z = 1$ lying above the rectangle $[-1,3] \times [0,4]$ in the $xy$-plane.
+		
+		\item
+		Evaluate the surface integral $\int_S y dA$ where $S$ is the portion of the cylinder $x^2+y^2 = 3$ that lies between $z=0$ and $z=6$. 
+		
+		\item
+		Evaluate the integral $\int_R z dV$ where $R$ is the rectangular box $[-1,4] \times [0,3] \times [-2,5]$ in $\mathbb{R}^3$.
+		
+		\item
+		Evaluate the integral of the vector field $F(x,y,z) = (-y,x,z)$ on the piece of paraboloid $S$ in $\R^3$ parametrised $\sigma(u, v, u^2+v^2)$, $(u,v) \in [0,1] \times [0,3]$, with respect to the orientation $N_\sigma$.
+		
+		\item
+		Evaluate the integral of the vector field $F(x,y,z) = (xy,2,z-1)$ on the half-cylinder $C$ in $\R^3$ parametrised $\sigma(\cos u, \sin u, v)$, $(u,v) \in [0,\pi] \times [2,4]$, with respect to the orientation $N_\sigma$.		
+		\end{enumerate}
+\end{enumerate}
+
+
+\end{document}
