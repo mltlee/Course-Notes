@@ -1297,8 +1297,113 @@ Let $S$ be the smooth surface given by $z=ax^2+by^2$, $a,b \in \mathbb{R}$. Show
 \item Every point on $S$ is planar if and only if $a = b = 0$, in which case $S$ is the $xy$-plane ($z=0$).
 \end{enumerate}
 
+\begin{solution}
+	We first compute the shape operator. Note that $\sigma(u, v) = 
+	(u, v, au^2 + bv^2)$ is a smooth coordinate chart for $S$, 
+	so we have $\sigma_u = (1, 0, 2au)$ and $\sigma_v = (0, 1, 2bv)$. 
+	This implies that 
+	\[ {\cal F}_{\text{I}} = \begin{bmatrix}
+		1 + 4a^2u^2 & 4abuv \\ 
+		4abuv & 1 + 4b^2v^2 
+	\end{bmatrix}. \] 
+	Note that $\det{\cal F}_{\text{I}} = (1+4a^2u^2)(1+4b^2v^2) 
+	- (4abuv)^2 = 1 + 4a^2u^2 + 4b^2v^2$, so we have 
+	\[ {\cal F}_{\text{I}}^{-1} = 
+		\frac{1}{1+4a^2u^2 + 4b^2v^2} \begin{bmatrix}
+			1+4a^2u^2 & -4abuv \\ 
+			-4abuv & 1+4b^2v^2
+		\end{bmatrix}. \] 
+	Next, we have $\sigma_u \times \sigma_v = (-2au, -2bv, 1)$, so 
+	$\|\sigma_u \times \sigma_v\| = \sqrt{1+4a^2u^2 + 4b^2v^2}$ and 
+	\[ N_\sigma = \frac{1}{\sqrt{1+4a^2u^2 + 4b^2v^2}} (-2au, -2bv, 1). \] 
+	Then $\sigma_{uu} = (0, 0, 2a)$, $\sigma_{uv} = (0, 0, 0)$ and 
+	$\sigma_{vv} = (0, 0, 2b)$, giving us 
+	\[ {\cal F}_{\text{II}} = \frac{2}{\sqrt{1+4a^2u^2 + 4b^2v^2}} 
+	\begin{bmatrix}
+		a & 0 \\ 0 & b
+	\end{bmatrix}. \] 
+	Therefore, the shape operator is 
+	\[ {\cal W} = {\cal F}_{\text{I}}^{-1} {\cal F}_{\text{II}} 
+	= \frac{2}{(1+4a^2u^2 + 4b^2v^2)^{3/2}} \begin{bmatrix}
+		a(1+4a^2u^2) & -4ab^2uv \\ 
+		-4a^2buv & b(1+4b^2v^2)
+	\end{bmatrix}. \] 
+	The Gaussian curvature is 
+	\begin{align*} 
+		K = \det{\cal W} &= \frac{4}{(1+4a^2u^2+4b^2v^2)^3} [ab (1+4a^2u^2)(1+4b^2v^2) 
+		- (-4ab^2uv)(-4a^2buv)] \\ 
+		&= \frac{4ab}{(1+4a^2u^2+4b^2v^2)^3} [(1 + 4a^2u^2)(1+4b^2v^2) 
+		- (4abuv)^2] \\ 
+		&= \frac{4ab}{(1+4a^2u^2+4b^2v^2)^2}, 
+	\end{align*}
+	and the mean curvature is 
+	\[ H = \frac12 \tr{\cal W} = \frac{a(1+4a^2u^2) + b(1+4b^2v^2)}
+	{(1+4a^2u^2 + 4b^2v^2)^{3/2}}. \]
+	\begin{enumerate}[(a)]
+		\item Observe that $K > 0$ if and only if $ab > 0$, with points on 
+		$S$ being elliptic there. 
+		\item We have $K < 0$ if and only if $ab < 0$, in which we have 
+		hyperbolic points. 
+		\item Suppose every point on $S$ is parabolic so that 
+		$K = 0$ but $H \neq 0$. Then $ab = 0$ since $K = 0$, 
+		and we must have $a \neq 0$ or $b \neq 0$ for 
+		otherwise $H = 0$. Conversely, if $ab = 0$ with 
+		$a \neq 0$ or $b \neq 0$, then $H \neq 0$ and $K = 0$.
+		\item Note that $K = H = 0$ if and only if $a = b = 0$. 
+	\end{enumerate}
+\end{solution}
+
 \item
 Classify all the points on the regular surface patch $\sigma(u,v) = (u,v,u^3+v^2), \ (u,v) \in \mathbb{R}^2$, as to being elliptic, hyperbolic, parabolic, or planar.
+
+\begin{solution}
+	We will use Problem D.3 to simplify computations a little. 
+	Note that $\sigma$ corresponds to the graph of the function 
+	$f(u, v) = u^3+v^2$ with $f_u = 3u^2$ and $f_v = 2v$, 
+	as well as $f_{uu} = 6u$, $f_{uv} = 0$, and $f_{vv} = 2$. 
+	This tells us that
+	\[ {\cal F}_{\text{I}} = \begin{bmatrix} 
+		1 + (f_u)^2 & f_u f_v \\ 
+		f_u f_v & 1 + (f_v)^2 
+	\end{bmatrix} = \begin{bmatrix}
+		1+9u^4 & 6u^2v \\ 
+		6u^2v & 1+4v^2
+	\end{bmatrix} \] 
+	and we also saw in that problem that 
+	\[ {\cal F}_{\text{II}} = \frac{1}{\sqrt{1+(f_u)^2+(f_v)^2}} 
+	\begin{bmatrix}
+		f_{uu} & f_{uv} \\ 
+		f_{vu} & f_{vv} 
+	\end{bmatrix} = \frac{1}{\sqrt{1+9u^4+4v^2}} \begin{bmatrix}
+		6u & 0 \\ 0 & 2
+	\end{bmatrix}. \] 
+	Now, observe that $\det{\cal F}_{\text{I}} 
+	= (1+9u^4)(1+4v^2) - (6u^2v)^2 = 1+9u^4+4v^2$, which implies that 
+	\[ {\cal F}_{\text{I}}^{-1} = \frac{1}{1+9u^4+4v^2} 
+	\begin{bmatrix}
+		1+9u^4 & -6u^2v \\ -6u^2v & 1+4v^2
+	\end{bmatrix}. \] 
+	Then the shape operator is 
+	\[ {\cal W} = {\cal F}_{\text{I}}^{-1} {\cal F}_{\text{II}} 
+	= \frac{1}{(1+9u^4+4v^2)^{3/2}} \begin{bmatrix}
+		6u(1+9u^4) & -12u^2v \\ 
+		-36u^3v & 2(1+4v^2)
+	\end{bmatrix}. \] 
+	The Gaussian curvature is 
+	\begin{align*} 
+		K = \det{\cal W} &= \frac{1}{(1+9u^4+4v^2)^3} 
+		[12u(1+9u^4)(1+4v^2) - (-12u^2v)(-36u^3v)] \\ 
+		&= \frac{12u}{(1+9u^4+4v^2)^3} [(1+9u^4)(1+4v^2) - 36u^4v^2] \\ 
+		&= \frac{12u}{(1+9u^4+4v^2)^2}, 
+	\end{align*}
+	and the mean curvature is 
+	\[ H = \frac12\tr{\cal W} = \frac{3u(1+9u^4) + (1+4v^2)}
+	{(1 + 9u^4 + 4v^2)^{3/2}}. \] 
+	Let $(u, v) \in \R^2$. We see that $\sigma(u, v)$ is elliptic for 
+	points where $u > 0$ and hyperbolic for points where $u < 0$. 
+	When $u = 0$, note that $H > 0$ for all $v \in \R$, so 
+	$\sigma(u, v)$ is parabolic there. 
+\end{solution}
 
 \item
 Let $S$ be the circular cylinder $x^2+y^2=1$. Consider the atlas $\{ (S_i, \sigma_i)\}_{i=1}^2$ of $S$,
@@ -1310,12 +1415,49 @@ and $(u,v) \in (-\pi,\pi) \times \mathbb{R}$ when $i=2$.
 \item
 Find the principal curvatures $\kappa_1, \kappa_2$ of $S$ at every point.
 
+\begin{solution}
+	We first compute the shape operator. Since $\sigma_1$ and $\sigma_2$ 
+	are described using the same function but over different domains, 
+	we will denote them simply by $\sigma$ for now. We have 
+	$\sigma_u = (-\sin u, \cos u, 0)$ and $\sigma_v = (0, 0, 1)$ so that 
+	\[ {\cal F}_{\text{I}} = \begin{bmatrix}
+		1 & 0 \\ 0 & 1
+	\end{bmatrix}. \] 
+	Next, we see that $N_\sigma = \sigma_u \times \sigma_v = (\cos u, \sin u, 0)$
+	with $\sigma_{uu} = (-\cos u, -\sin u, 0)$ and $\sigma_{uv} = \sigma_{vv} = (0, 0, 0)$, so 
+	\[ {\cal F}_{\text{II}} = \begin{bmatrix}
+		-1 & 0 \\ 0 & 0
+	\end{bmatrix}. \] 
+	It follows that the shape operator is 
+	\[ {\cal W} = {\cal F}_{\text{I}}^{-1} {\cal F}_{\text{II}} = \begin{bmatrix}
+		-1 & 0 \\ 0 & 0 
+	\end{bmatrix}. \] 
+	The principal curvatures are the eigenvalues of ${\cal W}$, namely 
+	$\kappa_1 = 0$ and $\kappa_2 = -1$. 
+\end{solution}
+
 \item
 Show that the normal curvature $\kappa_n$ of any unit-speed curve $\gamma$ on $S$ is such that
 \[ -1 \leq \kappa_n \leq 0.\]
 
+\begin{solution}
+	We recall that the principal curvatures $\kappa_1$ and $\kappa_2$ 
+	are the maximum and minimum values of the normal curvature $\kappa_n$. 
+	This implies that $-1 \leq \kappa_n \leq 0$. 
+\end{solution}
+
 \item
 Is the cylinder $S$ a flat surface? a minimal surface? Justify your answer. (See problem 2 for a definition of {\em flat} and {\em minimal}.)
+
+\begin{solution}
+	For convenience, we restate the definitions here. A smooth surface is 
+	flat if its Gaussian curvature is everywhere zero, and minimal 
+	if its mean curvature is everywhere zero. 
+	In this case, we have $K = \det{\cal W} = 0$ and $H = 
+	\frac12\tr{\cal W} = -\frac12$, so the cylinder $S$ is a flat surface 
+	but not minimal. 
+\end{solution}
+
 \end{enumerate}
 
 \item
@@ -1326,11 +1468,59 @@ is a homeomorphism.
 \item
 Show that $\sigma$ is  a smooth embedding.
 
+\begin{solution}
+	Since $\gamma$ is smooth, we know that $\sigma$ is smooth. Note that 
+	\[ D\sigma(v, s) = (\gamma'(s), \gamma'(s) + v\gamma''(s)). \] 
+	This is nonzero everywhere since $\gamma$ is unit-speed. 
+	Moreover, we know that $\gamma'(s) \cdot \gamma''(s) = 0$. 
+	Since the curvature of $\gamma$ is everywhere nonzero, this implies that 
+	$\gamma'(s) \neq \vec 0$ for all $s \in (\alpha, \beta)$ 
+	and therefore $\gamma'(s) \perp \gamma''(s)$. In particular, 
+	we know that $\gamma'(s)$ and $\gamma'(s) + v\gamma''(s)$ are 
+	linearly independent since $v > 0$, so $D\sigma$ has maximal rank $2$ everywhere. 
+	Finally, it is given that $\sigma$ is a homeomorphism, so $\sigma$ is 
+	an embedding.
+\end{solution}
+
 \item
 Show that the smooth surface determined by $\sigma$ is flat. (See problem 2 for a definition of {\em flat}.)
 
 {\em Hint:} Start by showing that $L=M=0$ everywhere. Conclude that $K = 0$ everywhere.
 \end{enumerate}
+
+\begin{solution}
+	Since $K = \det{\cal W} = (\det{\cal F}_{\text{I}})^{-1} 
+	\det{\cal F}_{\text{II}}$ by the multiplicativity of the determinant, 
+	it is enough to show that 
+	$\det{\cal F}_{\text{II}} = 0$. We first compute 
+	\[ {\cal F}_{\text{II}} = \begin{bmatrix}
+		\sigma_{vv} \cdot N_\sigma & \sigma_{vs} \cdot N_\sigma \\ 
+		\sigma_{sv} \cdot N_\sigma & \sigma_{ss} \cdot N_\sigma 
+	\end{bmatrix} = \begin{bmatrix}
+		L & M \\ M & N
+	\end{bmatrix}. \] 
+	We have $\sigma_v = \gamma'(s)$ and $\sigma_s = \gamma'(s) + v\gamma''(s)$. 
+	Note that $T(s) = \gamma'(s)$ and $N(s) = \gamma''(s)/\|\gamma''(s)\|$, 
+	and moreover, we know that  
+	\[ B(s) = T(s) \times N(s) = \frac{\gamma'(s) \times \gamma''(s)}
+	{\|\gamma''(s)\|} \] 
+	with $\|B(s)\| = 1/\|\gamma''(s)\|$ since $\|T(s)\| = \|N(s)\| = 1$. 
+	In particular, we have 
+	\begin{align*} 
+		\sigma_v \times \sigma_s 
+		= \gamma'(s) \times (\gamma'(s) + v\gamma''(s)) 
+		= v\gamma'(s) \times \gamma''(s) 
+		= v \frac{B(s)}{\|B(s)\|} = vB(s)
+	\end{align*} 
+	and therefore $N_\sigma = B(s)$ since $\|B(s)\| = 1$ and
+	$\|\sigma_v \times \sigma_s\| = v$. 
+	Finally, we compute that $\sigma_{vv} = \vec 0$ and $\sigma_{vs} 
+	= \gamma''(s) = \kappa(s)N(s)$. 
+	Observe that $L = \sigma_{vv} \cdot N_\sigma = 0$ 
+	and $M = \sigma_{vs} \cdot N_\sigma = \gamma''(s) \cdot B(s) 
+	= \kappa(s)N(s) \cdot B(s) = 0$, so it follows that 
+	$\det{\cal F}_{\text{II}} = 0$.
+\end{solution}
 
 \item 
 Let $\gamma: (\alpha, \beta) \rightarrow \mathbb{R}^3$ be a smooth whose curvature is everywhere non-zero, and let $\{ T,N,B \}$
@@ -1338,8 +1528,57 @@ be its Frenet frame. Suppose that the map
 \[ \sigma(v,s) = \gamma(s) + vB(s),\]
 $s \in (\alpha, \beta) , v \in (-\epsilon,\epsilon)$, is a homeomorphism for small enough $\epsilon > 0$. Let $S$ be image of $\sigma$ in $\mathbb{R}^3$.
 \begin{enumerate}
-\item Show that S is a smooth surface.
+\item Show that $S$ is a smooth surface.
+
+\begin{solution}
+	Since $\sigma$ is a smooth homeomorphism with $S$ as its image, 
+	it is enough to show that $D\sigma$ has maximal rank everywhere. 
+	Note that 
+	\[ D\sigma(v, s) = \left(B(s), \gamma'(s) + v \frac{{\rm d}}{{\rm d}s} B(s) 
+	\right) = (B(s), T(s) - v\tau(s)N(s)), \] 
+	where we used the Frenet-Serret equations. To show that $\sigma_v = B(s)$ 
+	and $\sigma_s = T(s) - v\tau(s)N(s)$ are linearly independent, we can show 
+	that the area of the parallelogram spanned by them is nonzero. 
+	Indeed, we have that 
+	\begin{align*} 
+		\sigma_v \times \sigma_s
+		&= B(s) \times T(s) - v\tau(s) B(s) \times N(s) \\
+		&= N(s) + v\tau(s) N(s) \times B(s) \\
+		& = N(s) + v\tau(s) T(s). 
+	\end{align*}
+	Since $N(s) \perp T(s)$, this implies that 
+	\[ \|\sigma_v \times \sigma_s\| = 1 + v^2\tau(s)^2 > 0. \] 
+	Therefore, $\sigma$ is a smooth embedding and $S$ is a smooth surface. 
+\end{solution}
+
 \item Show that $\gamma$ is a geodesic of $\sigma$ and that every point on $\gamma$ is either hyperbolic or parabolic.
+
+\begin{solution}
+	Note that $\gamma(s) = \sigma(0, s)$ with $\gamma''(s) = 
+	\kappa(s) N(s) = \kappa(s) N_\sigma(0, s)$, so $\gamma$ is a 
+	geodesic of $\sigma$. Next, we have $\sigma_v = B(s)$ 
+	and $\sigma_s = T(s)$ on $\gamma$, which implies that 
+	$\sigma_v \cdot \sigma_v = \sigma_s \cdot \sigma_s = 1$ and $
+	\sigma_v \cdot \sigma_s = 0$. Thus, the first fundamental form is 
+	\[ {\cal F}_{\text{I}} = \begin{bmatrix}
+		1 & 0 \\ 0 & 1
+	\end{bmatrix}. \] 
+	Recall that $N_\sigma(0, s) = N(s)$. Moreover, we have 
+	$\sigma_{vv} = \vec 0$. The Frenet-Serret equations imply that 
+	$\sigma_{vs} = \frac{{\rm d}}{{\rm d}s} B(s) = -\tau(s)N(s)$ and 
+	$\sigma_{ss} = \frac{{\rm d}}{{\rm d}s} T(s) = \kappa(s) N(s)$. Then 
+	\[ {\cal W} = {\cal F}_{\text{II}} = \begin{bmatrix}
+		0 & -\tau(s) \\ 
+		-\tau(s) & \kappa(s)
+	\end{bmatrix} \] 
+	since ${\cal F}_{\text{I}} = I_{2\times 2}$. Notice that 
+	$K = \det{\cal W} = -\tau(s)^2 \leq 0$ and $H = \frac12\tr{\cal W} = 
+	\frac12\kappa(s) > 0$ since the curvature is everywhere nonzero. 
+	In particular, we either have $H < 0$ so that the point on 
+	$\gamma$ is hyperbolic, or $H = 0$ and $K \neq 0$ so that the point 
+	is parabolic.
+\end{solution}
+
 \end{enumerate}
 
 
@@ -1347,6 +1586,17 @@ $s \in (\alpha, \beta) , v \in (-\epsilon,\epsilon)$, is a homeomorphism for sma
 \begin{enumerate}
 \item
 Let $\gamma$ be a unit-speed curve on a smooth surface $S$. Show that  $\gamma$ is a geodesic if and only if $\kappa_g = 0$.
+
+\begin{solution}
+	By definition, $\gamma$ is a geodesic if for all $s \in (\alpha, \beta)$, 
+	we have $\gamma''(s) = \vec 0$ or $\gamma''(s) \parallel N_\sigma$. 
+	This implies that $\kappa_g = \gamma''(s) \cdot (N_\sigma \times \gamma'(s)) 
+	= 0$. In the case that $\gamma''(s) = \vec 0$, this is clear. 
+	Otherwise, we have $\gamma''(s) \parallel N_\sigma$. 
+	Since $N_\sigma \perp N_\sigma \times \gamma'(s)$ by the
+	definition of the cross product, we have
+	$\gamma''(s) \perp (N_\sigma \times \gamma'(s))$ as well. 
+\end{solution}
 
 \item
 Prove or disprove (by giving a counterexample) the following statements:
@@ -1356,36 +1606,136 @@ Prove or disprove (by giving a counterexample) the following statements:
 \item
 If the unit-speed curve $\gamma$ is a plane curve, then $\kappa_g = \pm \kappa$.
 
+\begin{solution}
+	False. The great circles on a sphere are geodesics, but are also 
+	plane curves as they are obtained by intersecting the sphere 
+	with a plane passing through the origin. By (a), we have 
+	$\kappa_g = 0$ everywhere. However, we have seen that the 
+	curvature of a sphere of radius $a$ is $\kappa = 1/a$, so 
+	$\kappa_g \neq \pm\kappa$. 
+\end{solution}
+
 \item
 If the unit-speed curve $\gamma$ is a geodesic, then $\kappa_n = \pm \kappa$.
 
+\begin{solution}
+	True. We have that $\kappa^2 = \kappa_n^2 + \kappa_g^2$. Since 
+	$\gamma$ is a geodesic, we have by (a) that $\kappa_g = 0$, so 
+	$\kappa^2 = \kappa_n^2$ and $\kappa_n = \pm\kappa$. 
+\end{solution}
+
 \item
 Let $p$ and $q$ be two points on a smooth surface $S$, and let $\gamma$ be a geodesic joining $p$ and $q$. Then, $\gamma$ is the path of shortest length from $p$ to $q$.
+
+\begin{solution}
+	False. Pick two points $p$ and $q$ on a great circle of a sphere which are not 
+	antipodal. Then there are two arcs from $p$ to $q$ which are both 
+	geodesics, but one has greater length than the other. 
+\end{solution}
+
 \end{enumerate}
 
 \item
 Give an example of an isometry which is not a translation, rotation, or reflection. 
 
+\begin{solution}
+	Let $S_1 = \{(x, y, z) \in \R^3 : z = 0,\, 0 < x < 2\pi\}$ be a 
+	subset of the $xy$-plane and $S_2 = \{(x, y, z) \in \R^3 : 
+	x^2 + y^2 = 1,\, x \neq 1\}$ be the cylinder of radius $1$ minus the 
+	line $x = 1$. Consider the diffeomorphism 
+	\begin{align*}
+		\Phi : S_1 &\to S_2 \\ 
+		(x, y, 0) &\mapsto (\cos x, \sin x, y).
+	\end{align*}
+	Define $\sigma : \R^2 \to S_1$ by $(u, v) \mapsto (u, v, 0)$ and let 
+	\begin{align*}
+		\tilde\sigma = \Phi \circ \sigma : \R^2 &\to S_2 \\ 
+		(u, v) &\mapsto (\cos u, \sin u, v). 
+	\end{align*}
+	Then $\tilde\sigma$ is the usual parametrization of the cylinder. 
+	We have seen in class that ${\cal F}_{\text{I}} = \tilde{\cal F}_{\text{I}} 
+	= I_{2\times 2}$, so $\Phi$ is an isometry.
+\end{solution}
+
 \item
 Describe all geodesics on a plane, a sphere and a cylinder. 
+
+\begin{solution}
+	The geodesics on a plane with coordinate $\sigma(u, v) 
+	= p_0 + uw_1 + vw_2$ are the lines
+	\[ \gamma(t) = \sigma(at+b, ct+d). \] 
+	The geodesics on a sphere are the great circles. To find the geodesics of a 
+	cylinder, one can use the isometry we gave in part (c), which gives a 
+	one-to-one correspondence between geodesics on the plane 
+	and geodesics on the cylinder. Here, the geodesics on the cylinder 
+	are the images of the lines in the plane under the isometry $\Phi$, so we have 
+	\[ \gamma(t) = \Phi(at+b, ct+d, 0) = (\cos(at+b), \sin(at+b), ct+d). \] 
+	This is a line if $a = 0$, a circle of $c = 0$, and a helix if $a$ and 
+	$c$ are both nonzero. 
+\end{solution}
 \end{enumerate}
 \end{enumerate}
 
-
+\newpage 
 \noindent
 {\bf E. Integration.}
 
 \begin{enumerate}
 \item 
-Let $M$ be a smooth $k$-dimensional submanifold of $\R^n$ and $\alpha: U \subset \R^k \rightarrow V \subset M$ be a smooth coordinate chart of $M$. Assume that $U$ is bounded.
+Let $M$ be a smooth $k$-dimensional submanifold of $\R^n$ and $\alpha: U \subset \R^k \rightarrow V \subset M$ be a smooth coordinate chart of $M$. Assume that $V$ is bounded.
 Define the following:
 \begin{enumerate}
 \item The first fundamental form of $\alpha$.
-\item The scalar integral of a smooth function $f$ on $U$.
+
+\begin{solution}
+	The first fundamental form of $\alpha$ is defined to be 
+	\[ {\cal F}_{\text{I}} := D\alpha^T D\alpha. \] 
+\end{solution}
+\item The scalar integral of a smooth function $f$ on $V$.
+
+\begin{solution}
+	The scalar integral of a smooth function $f$ on $V$ is 
+	\[ \int_V f\,\text{dVol} := \int_U f(\alpha(u)) \sqrt{\det{\cal F}_{\text{I}}} 
+	\,{\rm d}u_1 \cdots {\rm d}u_k. \] 
+\end{solution}
+
 \item The line integral of a smooth vector field on a smooth curve.
+
+\begin{solution}
+	Let $\gamma : [a, b] \to \R^n$ be a smooth regular curve contained 
+	in $\R^n$, and $F : U \to \R^n$ be a smooth vector field defined 
+	on an open set $U \subset \R^n$ containing $\gamma$. The line 
+	integral of $F$ on $\gamma$ is defined to be
+	\[ \int_\gamma F \cdot {\rm d}r := \int_a^b F(\gamma(t)) \cdot \gamma'(t) 
+	\,{\rm d}t. \] 
+\end{solution}
+
 \item A hypersurface in $\R^n$.
+
+\begin{solution}
+	A hypersurface is a smooth $(n-1)$-dimensional submanifold of $\R^n$, 
+	where $n > 3$. 
+\end{solution}
+
 \item An orientation of a hypersurface in $\R^n$.
+
+\begin{solution}
+	A hypersurface $M$ in $\R^n$ is orientable if it admits a smooth unit 
+	normal vector $N$. There are two possible choices for the 
+	smooth unit normal vector $N$; such a choice of $N$ 
+	is called an orientation of $M$.
+\end{solution}
+
 \item The integral of a smooth vector field on a hypersurface in $\R^n$.
+
+\begin{solution}
+	Let $F : V \to \R^n$ be a smooth vector field, and let 
+	$B$ be a bounded subset of $V$. Let 
+	$N$ be a unit normal vector to $M$ (i.e. an orientation). Then we define 
+	\[ \int_B F \cdot \text{dVol} = \int_B (F \cdot N)\,{\rm dVol}, \] 
+	where the latter integral is the scalar integral 
+	of the smooth function $F \cdot N$ as defined in (b). 
+\end{solution}
 
 \end{enumerate}
 
@@ -1394,44 +1744,215 @@ Let $\gamma: (\alpha, \beta) \rightarrow \mathbb{R}^n$ be a smooth regular curve
 \[  \int_\gamma f \ ds = \int_\alpha^\beta f(\gamma(t))\| \gamma'(t) \| dt\] 
 for any smooth scalar function $f:(\alpha,\beta) \rightarrow \R$.
 
+\begin{solution}
+	Note that $D\gamma(t) = \gamma'(t)$, so ${\cal F}_{\text{I}}$ is a 
+	$1\times 1$ matrix with 
+	\[ {\cal F}_{\text{I}} = D\gamma(t)^T D\gamma(t) 
+	= \gamma'(t)^T \gamma'(t) = \gamma'(t) \cdot \gamma'(t) 
+	= \|\gamma'(t)\|^2. \] 
+	It follows that $\det{\cal F}_{\text{I}} = {\cal F}_{\text{I}} 
+	= \|\gamma'(t)\|^2$, and therefore 
+	\[ \int_\gamma f\,{\rm d}s = 
+	\int_\alpha^\beta f(\gamma(t)) \sqrt{\det{\cal F}_{\text{I}}}\,{\rm d}t 
+	= \int_\alpha^\beta f(\gamma(t)) \|\gamma'(t)\|\,{\rm d}t. \] 
+\end{solution}
+
 \item
 Let $S$ be a surface in $\R^3$ and $\sigma: U \subset \R^2 \rightarrow V \subset S$ be a smooth coordinate chart with $V$ bounded. Show that the formulas for the integrals of a scalar function or a vector field on $V$ can be expressed in terms of $\sigma$ as:
 \begin{enumerate}
 \item
 $\int_V f \ dVol = \int_U f(\sigma(u,v))\| \sigma_u \times \sigma_v \| dudv$ for any smooth scalar function $f:V \rightarrow \R$.
+
+\begin{solution}
+	From our study of surfaces, we have $\det{\cal F}_{\text{I}} 
+	= \|\sigma_u \times \sigma_v\|^2$, so $\sqrt{\det{\cal F}_{\text{I}}} 
+	= \|\sigma_u \times \sigma_v\|$ and the formula follows by definition.
+\end{solution}
+
 \item
 $\int_V F \cdot dVol = \int_U F(\sigma(u,v)) \cdot (\sigma_u \times \sigma_v ) dudv$ with respect to the orientation $N_\sigma$ on $V$.
+
+\begin{solution}
+	Using the definition and part (a), we have that 
+	\begin{align*}
+		\int_V F \cdot \text{dVol} 
+		&= \int_V (F \cdot N_\sigma)\,{\rm d}A \\ 
+		&= \int_U F(\sigma(u, v)) \cdot N_\sigma \|\sigma_u \times \sigma_v\|\,{\rm d}u\,{\rm d}v \\ 
+		&= \int_U F(\sigma(u, v)) \cdot \frac{\sigma_u \times \sigma_v}{\|\sigma_u \times \sigma_v\|} \|\sigma_u \times \sigma_v\|\,{\rm d}u\,{\rm d}v \\ 
+		&= \int_U F(\sigma(u, v)) \cdot (\sigma_u \times \sigma_v)\,{\rm d}u\,{\rm d}v. 
+	\end{align*}
+\end{solution}
+
 \end{enumerate}
 
 \item Prove that any smooth hypersurface $M$ in $\R^n$ is locally orientable. That is, for any point $p \in M$, there exists an open neighbourhood $V$ of $p$ in $M$ such that $V$ is an orientable hypersurface.
 
+\begin{solution}
+	The zero set of a smooth scalar function $G : V \subset \R^n \to \R$ 
+	with $\nabla G$ of maximal rank everywhere on an open set $V \subset \R^n$ 
+	is orientable with possible orientations $\pm\nabla G/\|\nabla G\|$. 
+	Since any smooth hypersurface $M$ in $\R^n$ is locally the zero set of such a function, 
+	it follows that $M$ is locally orientable. 
+\end{solution}
+
 \item Prove that if $M$ be a smooth bounded $n$-dimensional submanifold of $\R^n$,  then $\int_M f dVol$ is just the standard multiple integral $\int_M f(x_1,\dots,x_n)dx_1dx_2 \cdots dx_n$ for any smooth scalar function $f$ on $M$.
 
+\begin{solution}
+	We know that the definition of the scalar integral is independent 
+	of the choice of coordinate chart. Let $M$ be a smooth 
+	bounded $n$-dimensional submanifold of $\R^n$. Then $M$ is an 
+	open set in $\R^n$, and we can simply take $\alpha = \text{Id}_M$ 
+	as the coordinate chart which has $D\alpha = I_{n\times n}$ 
+	and therefore ${\cal F}_{\text{I}} = D\alpha^T D\alpha = I_{n\times n}$. 
+	Then $\sqrt{\det {\cal F}_{\text{I}}} = 1$, so 
+	\[ \int_M f\,{\rm dVol} = \int_M f(\alpha(x_1, \dots, x_n)) 
+	\sqrt{\det{\cal F}_{\text{I}}}\,{\rm d}x_1 \cdots {\rm d}x_n 
+	= \int_M f(x_1, \dots, x_n)\,{\rm d}x_1 \cdots {\rm d}x_n. \] 
+\end{solution}
+
 \item
-		\begin{enumerate}
-		\item
-		Evaluate the line integral $\int_\gamma x^3yds$ along part of the line $\gamma(t) = (t,-t)$, $t \in [-1, 2]$, in $\mathbb{R}^2$.
-		
-		\item
-		Evaluate the line integral $\int_\gamma F \cdot dr$ of the vector field $F(x,y,z) = (yz,xz,xy)$ along part of the twisted cubic $\gamma(t) = (t,t^2,t^3)$, $t \in [0,1]$, in $\mathbb{R}^3$.
-		
-		\item
-		Evaluate the surface integral $\int_S 6xz dA$ where 
-		\[ S = \{ (x,y,z) \in \R^3:  -1 \leq x \leq 3, 0 \leq y \leq 4, z=1-x-y \} \] 
-		is the portion of the plane $x+y+z = 1$ lying above the rectangle $[-1,3] \times [0,4]$ in the $xy$-plane.
-		
-		\item
-		Evaluate the surface integral $\int_S y dA$ where $S$ is the portion of the cylinder $x^2+y^2 = 3$ that lies between $z=0$ and $z=6$. 
-		
-		\item
-		Evaluate the integral $\int_R z dV$ where $R$ is the rectangular box $[-1,4] \times [0,3] \times [-2,5]$ in $\mathbb{R}^3$.
-		
-		\item
-		Evaluate the integral of the vector field $F(x,y,z) = (-y,x,z)$ on the piece of paraboloid $S$ in $\R^3$ parametrised $\sigma(u, v, u^2+v^2)$, $(u,v) \in [0,1] \times [0,3]$, with respect to the orientation $N_\sigma$.
-		
-		\item
-		Evaluate the integral of the vector field $F(x,y,z) = (xy,2,z-1)$ on the half-cylinder $C$ in $\R^3$ parametrised $\sigma(\cos u, \sin u, v)$, $(u,v) \in [0,\pi] \times [2,4]$, with respect to the orientation $N_\sigma$.		
-		\end{enumerate}
+\begin{enumerate}
+\item
+Evaluate the line integral $\int_\gamma x^3yds$ along part of the line $\gamma(t) = (t,-t)$, $t \in [-1, 2]$, in $\mathbb{R}^2$.
+
+\begin{solution}
+	Let $f(x, y) = x^3 y$. We have $f(\gamma(t)) = -t^4$ and 
+	$\gamma'(t) = (1, -1)$ so that $\|\gamma'(t)\| = \sqrt{2}$. 
+	Therefore, using the result from Problem E.2, we obtain 
+	\begin{align*}
+		\int_\gamma x^3 y\,{\rm d}s 
+		&= \int_{-1}^2 f(\gamma(t))\|\gamma'(t)\|\,{\rm d}t \\ 
+		&= -\sqrt{2} \int_{-1}^2 t^4\,{\rm d}t \\ 
+		&= -\sqrt{2} \left[ \frac{t^5}{5} \right]_{-1}^2 
+		= -\sqrt{2} \left( \frac{32}{5} - \frac15 \right) = 
+		-\frac{31\sqrt{2}}{5}. 
+	\end{align*}
+\end{solution}
+
+\item
+Evaluate the line integral $\int_\gamma F \cdot dr$ of the vector field $F(x,y,z) = (yz,xz,xy)$ along part of the twisted cubic $\gamma(t) = (t,t^2,t^3)$, $t \in [0,1]$, in $\mathbb{R}^3$.
+
+\begin{solution}
+	We have $F(\gamma(t)) = (t^5, t^4, t^3)$ and $\gamma'(t) = 
+	(1, 2t, 3t^2)$ so that 
+	\[ F(\gamma(t)) \cdot \gamma'(t) = (t^5, t^4, t^3) 
+	\cdot (1, 2t, 3t^2) = 6t^5. \] 
+	From this, we obtain 
+	\[ \int_\gamma F\cdot{\rm d}r = \int_0^1 F(\gamma(t)) 
+	\cdot \gamma'(t)\,{\rm d}t = \int_0^1 6t^5\,{\rm d}t 
+	= 1^6 - 0^6 = 1. \] 
+\end{solution}
+
+\item
+Evaluate the surface integral $\int_S 6xz dA$ where 
+\[ S = \{ (x,y,z) \in \R^3:  -1 \leq x \leq 3, 0 \leq y \leq 4, z=1-x-y \} \] 
+is the portion of the plane $x+y+z = 1$ lying above the rectangle $[-1,3] \times [0,4]$ in the $xy$-plane.
+
+\begin{solution}
+	We can parametrize the surface $S$ with the coordinate chart 
+	\[ \sigma(u, v) = (u, v, 1-u-v), \] 
+	where $(u, v) \in U = [-1, 3] \times [0, 4]$. Note that 
+	$\sigma_u = (1, 0, -1)$ and $\sigma_v = (0, 1, -1)$, so 
+	$\sigma_u \times \sigma_v = (1, 1, 1)$ and $\|\sigma_u \times 
+	\sigma_v\| = \sqrt{3}$. Next, for the smooth scalar 
+	function $f(x, y, z) = 6xz$, we have 
+	\[ f(\sigma(u, v)) = 6u(1-u-v). \] 
+	Applying part (a) of Problem E.3 gives 
+	\begin{align*}
+		\int_S 6xz\,{\rm d}A 
+		&= \int_0^4 \int_{-1}^3 f(\sigma(u, v)) \|\sigma_u \times \sigma_v\|\,{\rm d}u\,{\rm d}v \\ 
+		&= 6\sqrt{3} \int_0^4 \int_{-1}^3 (u - u^2 - uv)\,{\rm d}u\,{\rm d}v \\ 
+		&= 6\sqrt{3} \int_0^4 \left[ \frac{u^2}{2} - \frac{u^3}{3} - \frac{u^2v}{2} \right]_{-1}^3{\rm d}v \\ 
+		&= 6\sqrt{3} \int_0^4 \left[ \left( \frac92 - 9 - \frac{9v}2 \right) - \left( \frac12 + \frac13 - \frac{v}2 \right) \right]{\rm d}v \\ 
+		&= 6\sqrt{3} \int_0^4 \left( -\frac{16}{3} - 4v \right){\rm d}v \\ 
+		&= 6\sqrt{3} \left[ -\frac{16}{3}v - 2v^2 \right]_0^4 
+		= -320\sqrt{3}. 
+	\end{align*}
+\end{solution}
+
+\item
+Evaluate the surface integral $\int_S y dA$ where $S$ is the portion of the cylinder $x^2+y^2 = 3$ that lies between $z=0$ and $z=6$. 
+
+\begin{solution}
+	Here, we can parametrize $S$ using the chart 
+	\[ \sigma(u, v) = (\sqrt 3\cos u, \sqrt 3\sin u, v) \] 
+	where $(u, v) \in U = [0, 2\pi] \times [0, 6]$. We have 
+	$\sigma_u = (-\sqrt 3\sin u, \sqrt 3\cos u, 0)$ and $\sigma_v = 
+	(0, 0, 1)$ so that $\sigma_u \times \sigma_v = 
+	(\sqrt 3\cos u, \sqrt 3\sin u, 0)$ with $\|\sigma_u \times \sigma_v\| = \sqrt 3$. 
+	Moreover, we have the scalar function $f(x, y, z) = y$ and 
+	$f(\sigma(u, v)) = \sqrt 3\sin u$. Putting everything together,we have  
+	\begin{align*}
+		\int_S y\,{\rm d}A 
+		&= \int_0^6 \int_0^{2\pi} f(\sigma(u, v)) \|\sigma_u\times \sigma_v\|\,{\rm d}u\,{\rm d}v 
+		= 3 \int_0^6 \int_0^{2\pi} \sin u \,{\rm d}u\,{\rm d}v \\ 
+		&= 3 \int_0^6 (-\cos 2\pi + \cos 0) \,{\rm d}v 
+		= 3 \int_0^6 0\,{\rm d}v = 0.
+	\end{align*}
+\end{solution}
+
+\item
+Evaluate the integral $\int_R z dV$ where $R$ is the rectangular box $[-1,4] \times [0,3] \times [-2,5]$ in $\mathbb{R}^3$.
+
+\begin{solution}
+	Since $R$ is a $3$-dimensional smooth submanifold of $\R^3$, 
+	we can perform a standard triple integral by Problem E.5. Then we have 
+	\begin{align*} 
+		\int_R z\,{\rm d}V 
+		&= \int_{-2}^5 \int_0^3 \int_{-1}^4 z\,{\rm d}x\,{\rm d}y\,{\rm d}z 
+		= 5 \int_{-2}^5 \int_0^3 z\,{\rm d}y\,{\rm d}z \\ 
+		&= 15 \int_{-2}^5 z\,{\rm d}z  
+		= 15 \left[ \frac{z^2}{2} \right]_{-2}^5 = 
+		15\left( \frac{25}{2} - 2 \right) = \frac{315}{2}.
+	\end{align*}
+\end{solution}
+
+\item
+Evaluate the integral of the vector field $F(x,y,z) = (-y,x,z)$ on the piece of 
+paraboloid $S$ in $\R^3$ parametrised by $\sigma(u, v) = (u, v, u^2+v^2)$, $(u,v) \in [0,1] \times [0,3]$, with respect to the orientation $N_\sigma$.
+
+\begin{solution}
+	First, we have that $F(\sigma(u, v)) = (-v, u, u^2 + v^2)$. 
+	Next, we have $\sigma_u = (1, 0, 2u)$ and $\sigma_v = (0, 1, 2v)$, so 
+	$\sigma_u \times \sigma_v = (-2u, -2v, 1)$. Then 
+	\[ F(\sigma(u, v)) \cdot (\sigma_u \times \sigma_v) 
+	= (-v, u, u^2+v^2) \cdot (-2u, -2v, 1) = u^2+v^2. \]
+	Note that $S$ is bounded, and applying part (b) of Problem E.3 gives 
+	\begin{align*}
+		\int_S F\cdot {\rm dVol} &= \int_0^3 \int_0^1 
+		F(\sigma(u, v)) \cdot (\sigma_u \times \sigma_v)\,{\rm d}u\,{\rm d}v \\ 
+		&= \int_0^3 \int_0^1 (u^2 + v^2)\,{\rm d}u\,{\rm d}v \\ 
+		&= \int_0^3 \left[ \frac{u^3}{3} + uv^2 \right]_0^1 {\rm d}v \\ 
+		&= \int_0^3 \left( \frac13 + v^2 \right){\rm d}v \\ 
+		&= \left[ \frac{v}{3} + \frac{v^3}{3} \right]_0^3 = 
+		1 + 9 = 10. 
+	\end{align*}
+\end{solution}
+
+\item
+Evaluate the integral of the vector field $F(x,y,z) = (xy,2,z-1)$ on the 
+half-cylinder $C$ in $\R^3$ parametrised by $\sigma(u, v) = (\cos u, \sin u, v)$, $(u,v) \in [0,\pi] \times [2,4]$, with respect to the orientation $N_\sigma$.		
+
+\begin{solution}
+	We have $F(x, y, z) = (\cos u \sin u, 2, v-1)$. Moreover, 
+	we see that $\sigma_u = (-\sin u, \cos u, 0)$ and $\sigma_v 
+	= (0, 0, 1)$, so $\sigma_u \times \sigma_v = 
+	(\cos u, \sin u, 0)$ and 
+	\[ F(\sigma(u, v)) \cdot (\sigma_u \times \sigma_v) = 
+	(\cos u \sin u, 2, v-1) \cdot (\cos u, \sin u, 0) = 
+	\cos^2 u \sin u + 2\sin u. \] 
+	Moreover, $C$ is bounded. Therefore, we can apply part (b) of 
+	Problem E.3 to obtain 
+	\begin{align*}
+		\int_C F \cdot{\rm dVol} 
+		&= \int_2^4 \int_0^\pi (\cos^2 u \sin u + 2\sin u)\,{\rm d}u\,{\rm d}v \\ 
+		&= \int_2^4 \left[ -\frac13\cos^3 u - 2\cos u \right]_0^\pi {\rm d}v \\ 
+		&= \int_2^4 \left[ \left( \frac13 + 2 \right) - \left( -\frac13 - 2 \right) \right]{\rm d}v \\ 
+		&= \int_2^4 \frac{14}3\,{\rm d}v = \frac{28}{3}. 
+	\end{align*}
+\end{solution}
+
+\end{enumerate}
 \end{enumerate}
 
 
