@@ -68,3 +68,226 @@ uncapacitated facility location problem, except that the facility costs
 are $\lambda$ and there is an extra constant term $-\lambda k$ in the 
 objective function. 
 
+\subsection{Approximation Algorithm for $k$-median} \label{subsec:9.3}
+We want to use the primal-dual algorithm for the uncapacitated facility 
+location problem, where all the facility costs are $f_i = \lambda$ 
+for some choice of $\lambda \geq 0$. How do we get a performance 
+guarantee? Recall from the previous section (just after the statement
+of Lemma~\ref{lemma:8.3}) that the algorithm opens a set $S \subseteq F$ 
+of facilities and constructs a feasible dual $(v, w)$ such that 
+\[ c(S) + \sum_{i\in S} f_i = \sum_{j\in D} \min_{i\in S} c_{ij} + \sum_{i\in S} f_i \leq 3 
+\sum_{j\in D} v_j. \] 
+In fact, this claim can be slightly strengthened to the following: 
+
+\begin{exercise}{ex:9.1}
+    The primal-dual algorithm for the uncapacitated facility location 
+    problem outputs a set $S \subseteq F$ of facilities and a 
+    constructs a feasible dual solution $(v, w)$ such that 
+    \[ c(S) + 3 \sum_{i\in S} f_i \leq 3 \sum_{j\in D} v_j. \]
+\end{exercise}\vspace{-0.25cm}
+Substituting $f_i = \lambda$ and rearranging this gives 
+\begin{equation}\label{eqn:9.1}
+    c(S) \leq 3 \left( \sum_{j\in D} v_j - \lambda|S| \right).
+\end{equation}
+Note that if, by chance, the algorithm opens a set of facilities $S$ such that 
+$|S| = k$, then we have 
+\[ c(S) \leq 3\left( \sum_{j\in D} v_j - \lambda k \right) \leq 
+3 \cdot \text{OPT}_{\text{LDualLP}} = \text{OPT}_{\text{LPrimalLP}} 
+\leq \text{OPT}_{\text{PrimalIP}}. \]
+This follows because $(v, w)$ is feasible for (LDualLP). Therefore, 
+a natural idea is to try to find a value for $\lambda \geq 0$ such that 
+the uncapacitated facility location algorithm outputs a set of 
+facilities $S \subseteq F$ with $|S| = k$. We do this by way of 
+binary search. To begin, we need two initial values of $\lambda$, one 
+of which the uncapacitated facility location algorithm opens 
+at least $k$ facilities, and another for which it opens at most $k$ facilities. 
+\begin{itemize}
+    \item Consider what happens for $\lambda = 0$. If the algorithm 
+    opens less than $k$ facilities, then we can open an additional 
+    $k - |S|$ facilities at no additional costs and still get the 
+    approximation guarantee. Therefore, we may assume that for 
+    $\lambda = 0$, the algorithm opens more than $k$ facilities. 
+    \item Consider $\lambda = \sum_{i\in F} \sum_{j\in D} c_{ij}$. 
+    In this case, the algorithm opens just one facility since 
+    this cost to open a facility is extremely expensive and 
+    exceeds the sum of any combination of assignment costs. 
+\end{itemize}
+Therefore, we can start with the values $\lambda_1 = 0$ and 
+$\lambda_2 = \sum_{i\in F} \sum_{j\in D} c_{ij}$. As we discussed above, 
+these two values of $\lambda$ return solutions $S_1$ and $S_2$ 
+(respectively) for which $|S_1| > k$ and $|S_2| < k$. We run the algorithm 
+for $\lambda = \frac12(\lambda_1 + \lambda_2)$. 
+\begin{enumerate}[(i)]
+    \item If the algorithm 
+    returns a solution $S$ with exactly $k$ facilities, then we are done 
+    and obtain a solution of cost at most $3 \cdot \text{OPT}_{\text{PrimalIP}}$.
+    \item If $S$ has more than $k$ facilities, then set $\lambda_1 = \lambda$ 
+    and $S_1 = S$. Otherwise, $S$ has less than $k$ facilities, so we set 
+    $\lambda_2 = \lambda$ and $S_2 = S$. 
+\end{enumerate} 
+We repeat this process until the algorithm finds a solution with exactly 
+$k$ facilities, or the interval $\lambda_2 - \lambda_1$ becomes small enough, 
+at which point we can obtain a solution for the $k$-median problem 
+by appropriately combining the solutions from $S_1$ and $S_2$. 
+
+Let $c_{\min}$ be the smallest 
+nonzero assignment cost; set $c_{\min} = 0$ if they are all zero. 
+Without loss of generality, we assume that $0 < c_{\min} \leq 
+\text{OPT}_{\text{PrimalIP}}$. 
+The second inequality certainly holds as each client needs to be assigned 
+to a facility in a feasible solution, and the first can be assumed for otherwise 
+$c_{ij} = 0$ for all $i \in F$ and $j \in D$ so that $\text{OPT}_{\text{PrimalIP}} = 0$. 
+In this case, we can find a solution to the $k$-median in polynomial time 
+by simply picking $k$ arbitrary facilities. 
+
+We will run the binary search until either 
+the algorithm finds a solution with exactly $k$ facilities, or 
+\[ \lambda_2 - \lambda_1 \leq \frac{\eps c_{\min}}{|F|} \] 
+for some error parameter $\eps > 0$. 
+In the latter case, we will use $S_1$ and $S_2$ to obtain a solution $S$
+in polynomial time such that $|S| = k$ and $c(S) \leq 6(1+\eps) \cdot 
+\text{OPT}_{\text{PrimalIP}}$. This gives us a $6(1+\eps)$-approximation 
+algorithm for the $k$-median problem. Note that the binary search makes 
+\[ \log \left( \frac{\sum_{i\in F} \sum_{j\in D} c_{ij}}{\eps c_{\min}/|F|} 
+\right) = \log \left( \frac{|F| \cdot \sum_{i\in F} \sum_{j\in D} c_{ij}}{\eps c_{\min}} \right) \] 
+calls to the uncapacitated facility location algorithm, so the overall 
+algorithm runs in polynomial time.
+
+We only need to analyze the case where the binary search 
+terminates with $\lambda_2 - \lambda_1 \leq \eps c_{\min}/|F|$, 
+where $S_1$ and $S_2$ are the facilities obtained by the algorithm such that 
+$|S_1| > k$ and $|S_2| < k$. Let $(v^1, w^1)$ and $(v^2, w^2)$ be the 
+corresponding solutions to (LDualLP). From inequality (\ref{eqn:9.1}), we have that 
+\begin{align}
+    c(S_1) &\leq 3 \left( \sum_{j\in D} v_j^1 - \lambda_1 |S_1| \right), \label{eqn:9.2} \\
+    c(S_2) &\leq 3 \left( \sum_{j\in D} v_j^2 - \lambda_2 |S_2| \right). \label{eqn:9.3}
+\end{align}
+We now show how to use $S_1$ and $S_2$ to obtain a solution $S$ in 
+polynomial time with $|S| = k$ and $c(S) \leq 6(1+\eps) \cdot 
+\text{OPT}_{\text{PrimalIP}}$. First, we need to relate the costs 
+of the two solutions to $\text{OPT}_{\text{PrimalIP}}$. Find 
+$\alpha_1, \alpha_2 \geq 0$ such that $\alpha_1 + \alpha_2 = 1$ and 
+$\alpha_1|S_1| + \alpha_2|S_2| = k$. This implies that 
+\begin{align*}
+    \alpha_1 &= \frac{k-|S_2|}{|S_1|-|S_2|}, \qquad \alpha_2 
+    = \frac{|S_1|-k}{|S_1|-|S_2|}. 
+\end{align*} 
+Note that we can obtain a dual solution $(\tilde v, \tilde w)$ by setting 
+$\tilde v = \alpha_1 v^1 + \alpha_2 v^2$ and $\tilde w = 
+\alpha_1 w^1 + \alpha_2 w^2$. We know that $(v^2, w^2)$ is 
+feasible for (LDualLP) with facility costs $\lambda_2$. Moreover, 
+$(v^1, w^1)$ is feasible for (LDualLP) with facility costs $\lambda_1$, 
+and we know that $\lambda_1 \leq \lambda_2$. It follows that 
+\[ \sum_{j\in D} w_{ij}^1 \leq \lambda_1 \leq \lambda_2 \] 
+for all $i \in F$, implying that $(v^1, w^1)$ is feasible for (LDualLP) with facility 
+costs $\lambda_2$ as well. Therefore, $(\tilde v, \tilde w)$ is feasible for 
+(LDualLP) with facility costs $\lambda_2$ since it is a convex combination of 
+two feasible dual solutions. We now prove the following lemma, 
+which states that the convex combination of the costs of $S_1$ and $S_2$ 
+is close to the cost of an optimal solution.
+
+\begin{lemma}{lemma:9.2}
+    We have $\alpha_1 c(S_1) + \alpha_2 c(S_2) \leq 3(1+\eps) \cdot 
+    \text{OPT}_{\text{PrimalIP}}$. 
+\end{lemma}\vspace{-0.25cm} 
+\begin{pf}[Lemma~\ref{lemma:9.2}]
+    First, observe that 
+    \begin{align*}
+        c(S_1) \leq 3 \left( \sum_{j\in D} v_j^1 - \lambda_1 |S_1| \right) 
+        &= 3 \left( \sum_{j\in D} v_j^1 - \lambda_2 |S_1| \right) 
+        + 3(\lambda_2 - \lambda_1) |S_1| \\ 
+        &\leq 3 \left( \sum_{j\in D} v_j^1 - \lambda_2 |S_1| \right) 
+        + 3 \cdot \frac{\eps c_{\min}}{|F|} |S_1| \\ 
+        &\leq 3 \left( \sum_{j\in D} v_j^1 - \lambda_2 |S_1| \right) 
+        + 3\eps \cdot \text{OPT}_{\text{PrimalIP}},
+    \end{align*}
+    where the first inequality is inequality (\ref{eqn:9.2}), and the 
+    last inequality uses the fact that $|S_1| \leq |F|$ and 
+    $c_{\min} \leq \text{OPT}_{\text{PrimalIP}}$. Moreover, 
+    inequality (\ref{eqn:9.3}) states that 
+    \[ c(S_2) \leq 3\left( \sum_{j\in D} v_j^2 - \lambda_2 |S_2| \right). \] 
+    Recall from our earlier discussion that $(\tilde v, \tilde w)$ is a feasible dual solution 
+    to (LDualLP) for facility costs $\lambda_2$ where $\tilde v = 
+    \alpha_1 v^1 + \alpha_2 v^2$ and $\tilde w = \alpha_1 w^1 + \alpha_2 w^2$. 
+    Moreover, we have $\alpha_1 |S_1| + \alpha_2 |S_2| = k$ and 
+    $\alpha_1 \leq 1$. 
+    By taking the convex combination of these inequalities, we obtain 
+    \begin{align*} 
+        \alpha_1 c(S_1) + \alpha_2 c(S_2) 
+        &\leq 3\alpha_1 \left( \sum_{j\in D} v_j^1 - \lambda_2 |S_1| \right) 
+        + 3\alpha_1\eps \cdot \text{OPT}_{\text{PrimalIP}} + 
+        3\alpha_2 \left( \sum_{j\in D} v_j^2 - \lambda_2 |S_2| \right) \\ 
+        &= 3 \sum_{j\in D} (\alpha_1 v_j^1 + \alpha_2 v_j^2) - 3\lambda_2 
+        (\alpha_1 |S_1| + \alpha_2 |S_2|) + 3\alpha_1\eps \cdot 
+        \text{OPT}_{\text{PrimalIP}} \\ 
+        &\leq 3 \left( \sum_{j\in D} \tilde v_j - \lambda_2 k \right) 
+        + 3\eps \cdot \text{OPT}_{\text{PrimalIP}}  
+        \leq 3(1 + \eps) \cdot \text{OPT}_{\text{PrimalIP}},
+    \end{align*}
+    where the last inequality uses the fact that $(\tilde v, \tilde w)$ 
+    is feasible for (LDualLP) with respect to $\lambda_2$. \qed 
+\end{pf}\vspace{-0.25cm} 
+
+\subsection{Case Analysis}
+The algorithm now splits into two cases: the easier case where 
+$\alpha_2 \geq 1/2$, and a harder 
+case where $\alpha_2 < 1/2$. When $\alpha_2 \geq 1/2$, 
+we see that $S_2$ is a feasible solution for the original problem and 
+Lemma~\ref{lemma:9.2} implies that 
+\[ c(S_2) \leq 2\alpha_2 c(S_2) \leq 2(\alpha_1 c(S_1) + \alpha_2 c(S_2)) 
+\leq 6(1+\eps) \cdot \text{OPT}_{\text{PrimalIP}}. \] 
+For all $j \in D$, let $c(j, S) = \min_{i\in S} c_{ij}$ so that $\sum_{j\in D} c(j, S) = c(S)$. 
+We will give a randomized algorithm for the remaining case where $\alpha_2 < 1/2$. 
+\begin{enumerate}
+    \item For each facility $i \in S_2$, we open the closest facility $h \in S_1$; that 
+    is, the facility $h \in S_1$ minimizing $c_{ih}$.
+    \item If Step 1 doesn't open $|S_2|$ facilities of $S_1$ (because some facilities in $S_2$ are 
+    close to the same facility in $S_1$), then we open some arbitrary 
+    facilities in $S_1$ so that exactly $|S_2|$ are opened. 
+    \item Choose a random subset of $k - |S_2|$ of the remaining $|S_1| - |S_2|$ facilities, 
+    and open these ones.
+\end{enumerate}
+Let $S$ be the resulting set of facilities opened. To finish our 
+analysis, we prove the following lemma. 
+
+\begin{lemma}{lemma:9.3}
+    If $\alpha_2 < 1/2$, then opening the facilities as above has expected 
+    cost $\mathbb{E}[c(S)] \leq 6(1+\eps) \cdot \text{OPT}_{\text{PrimalIP}}$. 
+\end{lemma}\vspace{-0.25cm}
+\begin{pf}[Lemma~\ref{lemma:9.3}]
+    To prove the lemma, we consider the expected cost of assigning a given 
+    client $j \in D$ to a facility opened by the randomized algorithm. 
+    Suppose that the facility $1 \in S_1$ is the open facility in $S_1$ 
+    closest to $j$, so $c_{1j} = c(j, S_1)$. Similarly, let $2 \in S_2$ 
+    be the open facility in $S_2$ closest to $j$ so that $c_{2j} = 
+    c(j, S_2)$. 
+    
+    Note that with probability $(k-|S_2|)/(|S_1|-|S_2|) = \alpha_1$, 
+    the facility $1 \in S_1$ is opened in the randomized step 
+    of the algorithm if it has not been opened in the first step of the algorithm. 
+    Therefore, with probability at least $\alpha_1$, the cost of 
+    assigning $j$ to the closest open facility in $S$ is at most $c_{1j} = 
+    c(j, S_1)$. 
+    
+    With probability at most $1 - \alpha_1 = \alpha_2$, 
+    facility $1 \in S_1$ is not opened. In this case, we can at worst assign 
+    $j$ to a facility opened in the first step of the algorithm; 
+    in particular, we assign $j$ to the facility in $S_1$ closest to 
+    $2 \in S_2$. Let $i \in S_1$ be the closest facility to $2 \in S_2$. 
+    By the triangle inequality, we have 
+    \[ c_{ij} \leq c_{i2} + c_{2j}. \] 
+    Moreover, we know that $c_{i2} \leq c_{12}$ since $i$ is the closest 
+    facility in $S_1$ to $2 \in S_2$, so 
+    \[ c_{ij} \leq c_{12} + c_{2j}. \] 
+    Using the triangle equality again, we have $c_{12} \leq c_{1j} + c_{2j}$, so 
+    \[ c_{ij} \leq c_{1j} + c_{2j} + c_{2j} = c(j, S_1) + 2c(j, S_2). \] 
+    Therefore, the expected cost of assigning $j$ to the closest facility in $S$ is 
+    \[ \mathbb{E}[c(j, S)] \leq \alpha_1 c(j, S_1) + \alpha_2
+    (c(j, S_1) + 2c(j, S_2)) = c(j, S_1) + 2\alpha_2 c(j, S_2). \] 
+    Since $\alpha_2 < 1/2$, we have $\alpha_1 = 1 - \alpha_2 > 1/2$, 
+    implying that 
+    \[ \mathbb{E}[c(j, S)] \leq 2(\alpha_1 c(j, S_1) + \alpha_2 c(j, S_2)). \] 
+    Summing over all $j \in D$ and applying Lemma~\ref{lemma:9.2} gives 
+    \[ \mathbb{E}[c(S)] \leq 2(\alpha_1 c(S_1) + \alpha_2 c(S_2)) \leq 
+    6(1+\eps) \cdot \text{OPT}_{\text{PrimalIP}}. \tag*{\qed} \] 
+\end{pf}
