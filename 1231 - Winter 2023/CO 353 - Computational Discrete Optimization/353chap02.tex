@@ -107,22 +107,45 @@ spanning tree.
     Finally, observe that 
     \[ c(T) - c(T') = c_{e'} - c_e > 0 \] 
     because we have $e = \argmin_{f\in S} c_f$ and $e' \neq e$ with 
-    $e' \in \delta(S)$, as well as the assumption that the edge 
-    costs $c_e$ for $e \in E$ were distinct. But $T'$ has lower cost 
-    than $T$, contradicting our assumption that $T$ was a minimum 
+    $e' \in \delta(S)$, and the edge 
+    costs $c_e$ for $e \in E$ are distinct. But $c(T') < c(T)$, contradicting 
+    our assumption that $T$ was a minimum 
     spanning tree. \qed
 \end{pf}\vspace{-0.25cm}
 
 The following property relating cycles to minimum spanning trees 
 can also be proved similarly to Theorem~\ref{theo:2.2}. 
-The main idea is to try to create shortcuts using the edges in the cycle. 
 
 \begin{theo}[Cycle Property]{theo:2.3}
     Let $G = (V, E)$ be connected with distinct edge costs 
     $c_e$ for $e \in E$. Let $C$ be a cycle in $G$ and let 
     \[ e = \argmax_{f\in C} c_f. \] 
     Then no minimum spanning tree contains the edge $e$. 
-\end{theo}
+\end{theo}\vspace{-0.25cm}
+\begin{pf}[Theorem~\ref{theo:2.3}]
+    Let $T = (V, F)$ be a spanning tree containing $e$, 
+and suppose that the endpoints of $e$ are $v$ and $w$. We show that $T$ 
+does not have the smallest possible cost. Similar to the proof of the 
+cut property, we do this by exchanging $e$ with an edge $e'$ 
+of cheaper cost in a way that we still obtain a spanning tree. 
+
+By deleting $e$ from $T$, we obtain a graph with two components: $S$ 
+containing $v$ and $V \setminus S$ containing $w$. The edge we are 
+replacing $e$ with should have one end in $S$ and the other in $V \setminus S$ 
+to connect the components back together. 
+
+To find such an edge, we follow the cycle $C$. Note that the edges in 
+$C \setminus \{e\}$ together form a path $P$ from $v$ to $w$. If 
+we follow $P$ from $v$ to $w$, we will begin at $S$ and end in $V \setminus S$, 
+so there is some edge $e'$ in $P$ that crosses from $S$ to $V \setminus S$. 
+Let $T' = (V, (F \cup \{e'\}) \setminus \{e\})$. Note that $T'$ 
+has $|V| - 1$ edges and is connected by our above argument, so it is a tree 
+by the fundamental theorem of trees. Moreover, we have $c_{e'} < c_e$ 
+since $e$ is the edge of maximum cost in $C$ with $e' \in C$ so that 
+$c(T) - c(T') = c_e - c_{e'} > 0$.
+Then $c(T) > c(T')$, so $T'$ is a spanning tree of $G$ with smaller cost 
+than $T$. It follows that $T$ is not a minimum spanning tree. \qed
+\end{pf}\vspace{-0.25cm}
 
 \subsection{Prim's Algorithm}\label{subsec:2.3}
 Prim's algorithm takes the idea of the cut property (Theorem~\ref{theo:2.2}) 
@@ -163,7 +186,7 @@ Let's run Prim's algorithm on a simple example. Consider the following
 graph $G = (V, E)$, and suppose that at Step 1, we pick $v_1$ to be 
 the initial vertex. 
 \begin{center}
-    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+    \begin{tikzpicture}[node distance={22.5mm}, main/.style = {draw, circle}] 
         \node[main, color=blue] (1) {$v_1$}; 
         \node[main] (2) [right of=1] {$v_2$};
         \node[main] (3) [right of=2] {$v_3$}; 
@@ -185,7 +208,7 @@ Then at the first iteration of Step 2.1, we have $\delta(A) =
 At Step 2.2, we set $A = \{v_1, v_2\}$ and $T = \{v_1v_2\}$. 
 
 \begin{center}
-    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+    \begin{tikzpicture}[node distance={22.5mm}, main/.style = {draw, circle}] 
         \node[main, color=blue] (1) {$v_1$}; 
         \node[main, color=blue] (2) [right of=1] {$v_2$};
         \node[main] (3) [right of=2] {$v_3$}; 
@@ -207,7 +230,7 @@ we set $A = \{v_1, v_2, v_4\}$ and $T = \{v_1v_2, v_2v_4\}$ at the next iteratio
 Continuing in this fashion, we obtain the following minimum spanning tree.
 
 \begin{center}
-    \begin{tikzpicture}[node distance={30mm}, main/.style = {draw, circle}] 
+    \begin{tikzpicture}[node distance={22.5mm}, main/.style = {draw, circle}] 
         \node[main, color=blue] (1) {$v_1$}; 
         \node[main, color=blue] (2) [right of=1] {$v_2$};
         \node[main, color=blue] (3) [right of=2] {$v_3$}; 
@@ -321,7 +344,6 @@ notions to the definitions we have.
     Then $G$ has no $u, v$-path if and only if there exists $S \subseteq V$ 
     such that $u \in S$, $v \notin S$, and $\delta(S) \cap E = \varnothing$. 
 \end{enumerate}
-\newpage
 \begin{pf}[correctness of Kruskal's algorithm]
     Let $T$ denote the output set consisting of edges. We know that $T$ is 
     acyclic by construction because Step 2 of the algorithm rules 
@@ -372,45 +394,62 @@ of Step 2, so Kruskal's algorithm takes $O(m\log n) = O(m\log m)$
 time (since $n-1 \leq m \leq n^2$ when $G$ is connected).
 
 \subsection{Maximum Spacing Clustering}\label{subsec:2.5}
-Given a set $U = \{p_1, \dots, p_n\}$ of $n$ objects and a distance 
-$d(p_i, p_j) = d(p_j, p_i) \geq 0$ between points, we wish to find a 
-{\bf $k$-clustering} (a partition $C_1, \dots, C_k$ of the set $U$) with 
-maximum spacing 
-\[ \max_{C_1, \dots, C_k \text{ partition of } U} 
-\left\{ \min_{1\leq i<j\leq k} \left\{ \min_{p\in C_i, q \in C_j} 
-d(p, q) \right\} \right\}. \] 
-Note that $k$ is fixed above, and the term inside the maximum is the 
-{\bf spacing} of the $k$-clustering $C_1, \dots, C_k$.
+We are given a set $U = \{p_1, \dots, p_n\}$
+of $n$ objects and a distance $d(p_i, p_j)$ between points. 
+We require that $d(p_i, p_i) = 0$ and $d(p_i, p_j) = d(p_j, p_i) > 0$ 
+for distinct $p_i$ and $p_j$. A {\bf $k$-clustering} of $U$ is a 
+partition of $U$ into $k$ nonempty sets $C_1, \dots, C_k$. 
+The {\bf spacing} of a $k$-clustering is the minimum distance 
+between any pair of points lying in different clusters. We want 
+points in different clusters to be far apart from each other, 
+so a natural goal is to seek the $k$-clustering 
+with the maximum possible spacing. That is, over all 
+$k$-clusterings $C_1, \dots, C_k$ of $U$, we want to maximize 
+\[ \min_{1\leq i < j\leq k} \left\{ \min_{p\in C_i, q\in C_j} d(p, q) \right\}. \]
 
-We can solve this problem with an adaptation of Kruskal's algorithm, 
-called the {\bf single linkage clustering algorithm}.
-We can view it as being equivalent to working over the complete 
-graph $K_n$ on the points $p_1, \dots, p_n$,
-and the edge costs corresponding to the distances. Here,
-we can stop early once we hit $k$ clusters.
+{\bf Single linkage clustering algorithm.} Consider the complete
+graph $K_n$ on the vertex set $U$ with the edge costs given by 
+the distances. The connected components will be the clusters. 
+We want to bring nearby points together into the 
+same cluster as rapidly as possible so that they don't end up 
+in different clusters that are close together. We see that 
+if we sort by ascending distances and skip over edges where 
+both endpoints are already in the same cluster, then we avoid 
+cycles and end up with a union of trees. 
 
-\begin{mdframed}[
-    linewidth=1pt,
-    linecolor=black,
-    bottomline=false,topline=false,rightline=false,
-    innerrightmargin=0pt,innertopmargin=0pt,innerbottommargin=0pt,
-    innerleftmargin=1em,% Distance between vertical rule & proof content
-    skipabove=0.75\baselineskip
-]
-{\bf Input.} A set $U = \{p_1, \dots, p_n\}$ with 
-distances $d(p_i, p_j) \geq 0$ between points, and a fixed integer $k$.
+Note that this procedure is precisely Kruskal's algorithm. The only difference 
+is that we are looking for a $k$-clustering, so we stop once we hit $k$ 
+connected components. That is, we 
+are running Kruskal's algorithm but stopping it before it 
+adds the last $k-1$ edges. This is equivalent to taking the 
+full minimum spanning tree and deleting the $k-1$ most expensive edges 
+and defining the $k$-clustering to be the resulting connected 
+components $C_1, \dots, C_k$. We show that this is a 
+$k$-clustering of maximum spacing.
 
-{\bf Output.} A $k$-clustering of $U$ with maximum spacing.
-\begin{enumerate}[leftmargin=1.75cm, label={Step \arabic*.}]
-    \item {\bf (Initialization.)} Start with $n$ clusters, each containing 
-    its own object from $p_1, \dots, p_n$. 
+\begin{pf}[correctness of the single linkage clustering algorithm] 
+Let ${\cal C}$ denote the clustering 
+$C_1, \dots, C_k$. The spacing of ${\cal C}$ is the length 
+$d^*$ of the $(k-1)$-th most expensive edge in the minimum spanning tree; 
+this is the length of the edge that Kruskal's algorithm would have added 
+next at the moment we stopped it. 
 
-    \item While $\# \text{clusters} > k$:
-    \begin{enumerate}[label={}]
-        \item {\bf (Merge clusters.)} Merge the clusters $C$ and $C'$ 
-        that achieve 
-        \[ \min_{C\neq C' \text{ clusters}} \left\{ \min_{p\in C, q\in C'} 
-        d(p, q) \right\}. \] 
-    \end{enumerate}
-\end{enumerate}
-\end{mdframed}\vspace{-0.15cm}
+Let ${\cal C}'$ be another $k$-clustering which partitions $U$ 
+into nonempty sets $C'_1, \dots, C'_k$. We show that the spacing of ${\cal C}'$ 
+is at most $d^*$.
+Since ${\cal C}$ and ${\cal C}'$ are not equal, it must be that one of 
+the clusters $C_r$ is not a subset of any of the $k$ sets $C'_s$ in ${\cal C}'$. 
+Hence, there are points $p_i, p_j \in C_r$ that belong to different 
+clusters in ${\cal C}'$, say $p_i \in C'_s$ and $p_j \in C'_t$ with 
+$C'_s \neq C'_t$. 
+
+Since $p_i$ and $p_j$ are in the same component $C_r$, it must be that 
+Kruskal's algorithm added all the edges of a $p_i, p_j$-path $P$ 
+before we stopped it. In particular, each edge in $P$ has length at most $d^*$. 
+But $p_i \in C'_s$ and $p_j \notin C'_t$, so let $p'$ be the first 
+node on $P$ that does not belong to $C'_s$ and let $p$ be the node on $P$
+that comes just before $p'$. Then $d(p, p') \leq d^*$ since the edge 
+from $p$ to $p'$ was added by Kruskal's algorithm. But $p$ and $p'$ 
+belong to different clusters in ${\cal C}'$, so the spacing of ${\cal C}'$ 
+is at most $d^*$, as desired. \qed 
+\end{pf}
